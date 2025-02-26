@@ -510,6 +510,7 @@ namespace Graphs {
             if (error == "") {
                 this.file = file;
                 this.unsaved = false;
+                notify_property ("unsaved");
             } else {
                 throw new ProjectParseError.INVALID_PROJECT (error);
             }

@@ -49,7 +49,10 @@ namespace Graphs {
         private unowned Adw.HeaderBar content_footerbar { get; }
 
         [GtkChild]
-        protected unowned Adw.WindowTitle content_title { get; }
+        private unowned Adw.WindowTitle content_title { get; }
+
+        [GtkChild]
+        private unowned Adw.WindowTitle sidebar_title { get; }
 
         [GtkChild]
         private unowned Overlay drag_overlay { get; }
@@ -167,24 +170,53 @@ namespace Graphs {
 
             data.items_changed.connect (on_items_changed);
             data.selection_changed.connect (on_selection_changed);
-
-            // Inhibit session end when there is unsaved data present
-            data.notify["unsaved"].connect (() => {
-                if (data.unsaved) {
-                    application.inhibit (
-                        this,
-                        ApplicationInhibitFlags.LOGOUT,
-                        content_title.get_title ()
-                    );
-                } else if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
-                }
-            });
+            data.notify["unsaved"].connect (on_unsaved_change);
 
             on_items_changed ();
+            on_unsaved_change ();
             if (application.debug) {
                 add_css_class ("devel");
-                set_title (_("Graphs (Development)"));
+                sidebar_title.set_title (_("Graphs (Development)"));
+            }
+        }
+
+        /**
+         * Inhibit session end when there is unsaved data present.
+         * Disable save actions if there is no unsaved data.
+         * Update window title.
+         */
+        private void on_unsaved_change () {
+            var application = application as Application;
+
+            string title;
+            string path;
+            if (data.file == null) {
+                title = _("Untitled Project");
+                path = _("Draft");
+            } else {
+                title = Tools.get_filename (data.file);
+                path = application.python_helper.get_friendly_path (data.file);
+            }
+            // Translators: Window title that will be formatted with the project name.
+            set_title (_("Graphs — %s").printf (title));
+            content_title.set_subtitle (path);
+
+            var save_action = lookup_action ("save-project") as SimpleAction;
+            var save_as_action = lookup_action ("save-project-as") as SimpleAction;
+            if (data.unsaved) {
+                this._inhibit_cookie = application.inhibit (
+                    this,
+                    ApplicationInhibitFlags.LOGOUT,
+                    title
+                );
+                save_action.set_enabled (true);
+                save_as_action.set_enabled (true);
+                content_title.set_title ("• " + title);
+            } else {
+                if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                save_action.set_enabled (false);
+                save_as_action.set_enabled (false);
+                content_title.set_title (title);
             }
         }
 

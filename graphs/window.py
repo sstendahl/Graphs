@@ -1,9 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main window."""
-import os
-from gettext import gettext as _
-from urllib.parse import unquote, urlparse
-
 from gi.repository import Graphs
 
 from graphs import item
@@ -25,34 +21,7 @@ class PythonWindow(Graphs.Window):
             "style_changed",
             self._on_style_changed,
         )
-        self.props.data.connect(
-            "notify::unsaved",
-            self._on_unsaved_changed,
-        )
         self._reload_canvas()
-        self._on_unsaved_changed(self.props.data, None)
-
-    def _on_unsaved_changed(self, data: Graphs.Data, _a) -> None:
-        file = data.get_file()
-        if file is None:
-            title = _("Untitled Project")
-            path = _("Draft")
-        else:
-            title = Graphs.tools_get_filename(file)
-            uri_parse = urlparse(file.get_uri())
-            filepath = os.path.dirname(
-                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-            )
-            if filepath.startswith("/var"):
-                # Fix for rpm-ostree distros, where home is placed in /var/home
-                filepath = filepath.replace("/var", "", 1)
-            path = filepath.replace(os.path.expanduser("~"), "~")
-            if path.startswith(f"/run/user/{os.getuid()}/doc/"):
-                path = _("Document Portal")
-        if data.get_unsaved():
-            title = "• " + title
-        self.props.content_title.set_title(title)
-        self.props.content_title.set_subtitle(path)
 
     def _on_style_changed(
         self,
