@@ -54,7 +54,7 @@ To run the beta version by default, the following command can be used:
 sudo flatpak make-current se.sjoerd.Graphs beta
 ```
 Note that the `sudo` is neccesary here, as it sets the current branch on the system level. To install this on a per-user basis, the flag `--user` can be used in the  previous commands. 
-To switch back to the stable version simply run the above command replacing `beta` with `stable`. A beta version is also available in the beta channel of the Snap Store.
+To switch back to the stable version simply run the above command replacing `beta` with `stable`.
 We are always looking for feedback, so feel free to report any issues or suggestions on the GitLab [issue tracker](https://gitlab.gnome.org/World/Graphs/-/issues).
 
 ## Contributing
