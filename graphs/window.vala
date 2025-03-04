@@ -159,7 +159,7 @@ namespace Graphs {
         protected void setup () {
             var application = application as Application;
 
-            Actions.setup (application, this);
+            Actions.setup_local (this);
 
             this.operations = new Operations (this);
 
