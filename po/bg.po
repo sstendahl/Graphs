@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-27 02:10+0000\n"
-"PO-Revision-Date: 2025-02-27 06:20+0100\n"
+"POT-Creation-Date: 2025-03-04 16:18+0000\n"
+"PO-Revision-Date: 2025-03-04 19:59+0100\n"
 "Last-Translator: twlvnn <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Gtranslator 47.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Графики"
 
@@ -268,7 +268,7 @@ msgstr "Добавяне на напасване към данните"
 msgid "Toggle Sidebar"
 msgstr "Превключване на страничната лента"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
 #: data/ui/window.blp:425
 msgid "Canvas Failed to Load"
 msgstr "Канавата не може да се зареди"
@@ -644,7 +644,7 @@ msgid "Transparent Background"
 msgstr "Прозрачен фон"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Стил"
 
@@ -664,7 +664,7 @@ msgstr "Настройки на фигурата"
 msgid "Labels"
 msgstr "Етикети"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Заглавие"
 
@@ -1344,11 +1344,11 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Отваряне на стил"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
 msgid "Graphs Style Editor"
 msgstr "Редактор на стила на графиките"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
 msgstr "Отваряне на менюто на програмата"
@@ -1365,42 +1365,42 @@ msgstr "Отваряне…"
 msgid "Open Preview"
 msgstr "Отваряне на предварителния преглед"
 
-#: data/ui/style-editor-window.blp:199
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+msgid "Open Style…"
+msgstr "Отваряне на стил…"
+
+#: data/ui/style-editor-window.blp:204
 msgid "Save Style…"
 msgstr "Запазване на стила…"
 
-#: data/ui/style-editor-window.blp:200
+#: data/ui/style-editor-window.blp:205
 msgid "Save Style as…"
 msgstr "Запазване на стила като…"
 
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
 #: data/ui/window.blp:458
 msgid "Keyboard Shortcuts"
 msgstr "Клавишни комбинации"
 
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
 #: data/ui/window.blp:459
 msgid "Help"
 msgstr "Помощ"
 
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
 #: data/ui/window.blp:460
 msgid "About Graphs"
 msgstr "Относно „Графики“"
 
-#: data/ui/style-editor-window.blp:212
-msgid "Open Style…"
-msgstr "Отваряне на стил…"
-
-#: data/ui/style-preview.blp:55
+#: data/ui/style-preview.blp:51
 msgid "Open"
 msgstr "Отваряне"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:56
 msgid "Open With…"
 msgstr "Отваряне с…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:61
 msgid "Delete…"
 msgstr "Изтриване…"
 
@@ -1675,37 +1675,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повтаряне на действието"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
-#, c-format
-msgid "Deleted %s"
-msgstr "%s е изтрито"
-
-#: graphs/actions.vala:172
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "Поддържани файлове"
-
-#: graphs/actions.vala:176
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "ASCII файлове"
-
-#: graphs/actions.vala:180
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/actions.vala:183
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/application.py:29
-#, python-brace-format
-msgid "Could not load {font}"
-msgstr "{font} не може да зареди"
-
-#: graphs/application.vala:97
+#: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr ""
 "Twlvnn Kraftwerk &lt;<a "
@@ -1717,6 +1687,36 @@ msgstr ""
 "a> ни.\n"
 "Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
 "newticket'>съответния раздел</a>."
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "%s е изтрито"
+
+#: graphs/actions.vala:241
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "Поддържани файлове"
+
+#: graphs/actions.vala:245
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "ASCII файлове"
+
+#: graphs/actions.vala:249
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/actions.vala:252
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
+
+#: graphs/application.py:29
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "{font} не може да зареди"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1756,22 +1756,22 @@ msgstr "Сума на R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри на напасване за %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:114
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "{stylename} не може да се разчете, зареждане на системен стил"
 
-#: graphs/data.py:118
+#: graphs/data.py:119
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "Стилът на начертаване {stylename} не съществува, зареждане на системен стил"
 
-#: graphs/data.py:483
+#: graphs/data.py:503
 msgid "Failed to parse project file"
 msgstr "Файлът с проект не може да се разчете"
 
-#: graphs/data.py:491
+#: graphs/data.py:511
 msgid "Failed to load project"
 msgstr "Проектът не може да се зареди"
 
@@ -1910,11 +1910,11 @@ msgstr "Неуспешно внасяне, указателят на колон�
 msgid "Unable to import from file"
 msgstr "Не може да се внесе от файла"
 
-#: graphs/project.py:46
+#: graphs/project.py:47
 msgid "Project file is missing data"
 msgstr "Липсват данни във файла за проекта"
 
-#: graphs/project.py:59
+#: graphs/project.py:60
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проектът е от по-нова, несъвместима версия на „Графики“"
 
@@ -1940,13 +1940,19 @@ msgstr "Цвят {number}"
 msgid "Example Item"
 msgstr "Примерен елемент"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Етикет за X"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Етикет за Y"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Редактор на стила на графиките — „%s“"
 
 #: graphs/style_io.py:76
 #, python-brace-format
