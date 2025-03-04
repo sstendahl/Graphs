@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-26 13:30+0000\n"
-"PO-Revision-Date: 2025-02-26 21:01+0200\n"
+"POT-Creation-Date: 2025-03-04 10:32+0000\n"
+"PO-Revision-Date: 2025-03-04 15:13+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Lokalize 23.04.3\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Графіки"
 
@@ -275,7 +275,7 @@ msgstr "Додати апроксимацію даних"
 msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
 #: data/ui/window.blp:425
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
@@ -651,7 +651,7 @@ msgid "Transparent Background"
 msgstr "Прозоре тло"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Стиль"
 
@@ -671,7 +671,7 @@ msgstr "Параметри рисунка"
 msgid "Labels"
 msgstr "Мітки"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1350,11 +1350,11 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Відкрити стиль"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
 msgid "Graphs Style Editor"
 msgstr "Редактор стилю графіка"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
 msgstr "Відкрити меню програми"
@@ -1371,42 +1371,42 @@ msgstr "Відкрити…"
 msgid "Open Preview"
 msgstr "Попередньо переглянути"
 
-#: data/ui/style-editor-window.blp:199
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+msgid "Open Style…"
+msgstr "Відкрити стиль…"
+
+#: data/ui/style-editor-window.blp:204
 msgid "Save Style…"
 msgstr "Зберегти стиль…"
 
-#: data/ui/style-editor-window.blp:200
+#: data/ui/style-editor-window.blp:205
 msgid "Save Style as…"
 msgstr "Зберегти стиль як…"
 
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
 #: data/ui/window.blp:458
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
 #: data/ui/window.blp:459
 msgid "Help"
 msgstr "Довідка"
 
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
 #: data/ui/window.blp:460
 msgid "About Graphs"
 msgstr "Про «Графіки»"
 
-#: data/ui/style-editor-window.blp:212
-msgid "Open Style…"
-msgstr "Відкрити стиль…"
-
-#: data/ui/style-preview.blp:55
+#: data/ui/style-preview.blp:51
 msgid "Open"
 msgstr "Відкрити"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:56
 msgid "Open With…"
 msgstr "Відкрити за допомогою…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:61
 msgid "Delete…"
 msgstr "Вилучити…"
 
@@ -1685,27 +1685,31 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повторити дію"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:42
+msgid "translator-credits"
+msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
 
-#: graphs/actions.vala:172
+#: graphs/actions.vala:241
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
-#: graphs/actions.vala:176
+#: graphs/actions.vala:245
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
-#: graphs/actions.vala:180
+#: graphs/actions.vala:249
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/actions.vala:183
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
@@ -1714,10 +1718,6 @@ msgstr "xry Leybold"
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
-
-#: graphs/application.vala:97
-msgid "translator-credits"
-msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1942,13 +1942,20 @@ msgstr "Колір {number}"
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Мітка Y"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+#| msgid "Graphs Style Editor"
+msgid "Graphs Style Editor — %s"
+msgstr "Редактор стилю графіка – %s"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2012,7 +2019,6 @@ msgstr "Чернетка"
 #. Translators: Window title that will be formatted with the project name.
 #: graphs/window.vala:201
 #, c-format
-#| msgid "Graphs"
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
