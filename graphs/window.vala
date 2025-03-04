@@ -215,7 +215,7 @@ namespace Graphs {
             } else {
                 if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
                 save_action.set_enabled (false);
-                save_as_action.set_enabled (false);
+                save_as_action.set_enabled (data.file != null);
                 content_title.set_title (title);
             }
         }
