@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
+import logging
 from gettext import gettext as _
 
 from gi.repository import Gio
@@ -68,6 +69,13 @@ class ProjectMigrator:
         return self._project_dict
 
     def _migrate_v2(self):
+        logging.debug("migrating project v1 to v2")
+        # Figure settings entries are now properly stored in hyphon-case
+        self._project_dict["figure-settings"] = {
+            key.replace("_", "-"): value
+            for key, value in self._project_dict["figure-settings"].items()
+        }
+
         # Migrate v1 to v2
         self._migrate_inserted_scale(2)  # log2 scale added
 
@@ -109,7 +117,7 @@ class ProjectMigrator:
         """Handle a new scale being inserted at scale_index."""
         figure_settings = self._project_dict["figure-settings"]
         for prefix in ("left", "right", "top", "bottom"):
-            axis = prefix + "_scale"
+            axis = prefix + "-scale"
             if figure_settings[axis] >= scale_index:
                 figure_settings[axis] = figure_settings[axis] + 1
 

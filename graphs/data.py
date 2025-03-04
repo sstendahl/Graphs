@@ -455,7 +455,7 @@ class Data(Graphs.Data):
             "version": self.get_version(),
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
-                key: figure_settings.get_property(key)
+                key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
             },
             "history-states": self._history_states,
@@ -469,6 +469,7 @@ class Data(Graphs.Data):
         # Load data
         figure_settings = self.get_figure_settings()
         for key, value in project_dict["figure-settings"].items():
+            key = key.replace("-", "_")
             if figure_settings.get_property(key) != value:
                 figure_settings.set_property(key, value)
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
