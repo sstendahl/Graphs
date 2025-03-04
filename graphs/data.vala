@@ -185,6 +185,7 @@ namespace Graphs {
         }
 
         public bool set_selection (Bitset selection, Bitset mask) {
+            if (mask.is_empty ()) return true;
             _notify_selection_changed = false;
             uint index = 0;
             foreach (Item item in _items) {

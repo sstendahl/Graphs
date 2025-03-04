@@ -6,8 +6,9 @@ import logging
 import math
 from collections.abc import Iterator
 from gettext import gettext as _
+from operator import itemgetter
 
-from gi.repository import GObject, Gio, Graphs
+from gi.repository import GObject, Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
 
@@ -220,10 +221,18 @@ class Data(Graphs.Data):
             return
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
+        selected = Gtk.Bitset.new_empty()
+        mask = Gtk.Bitset.new_empty()
         for change_type, change in reversed(batch):
             match ChangeType(change_type):
                 case ChangeType.ITEM_PROPERTY_CHANGED:
-                    self[change[0]].set_property(change[1], change[2])
+                    index, prop, value = itemgetter(0, 1, 2)(change)
+                    if prop == "selected":
+                        mask.add(index)
+                        if value:
+                            selected.add(index)
+                    else:
+                        self[index].set_property(prop, value)
                 case ChangeType.ITEM_ADDED:
                     self._remove_item(self.last())
                 case ChangeType.ITEM_REMOVED:
@@ -239,6 +248,7 @@ class Data(Graphs.Data):
                         change[0],
                         change[1],
                     )
+        self.set_selection(selected, mask)
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
         )
@@ -254,10 +264,18 @@ class Data(Graphs.Data):
             return
         self._history_pos += 1
         state = self._history_states[self._history_pos]
+        selected = Gtk.Bitset.new_empty()
+        mask = Gtk.Bitset.new_empty()
         for change_type, change in state[0]:
             match ChangeType(change_type):
                 case ChangeType.ITEM_PROPERTY_CHANGED:
-                    self[change[0]].set_property(change[1], change[3])
+                    index, prop, value = itemgetter(0, 1, 3)(change)
+                    if prop == "selected":
+                        mask.add(index)
+                        if value:
+                            selected.add(index)
+                    else:
+                        self[index].set_property(prop, value)
                 case ChangeType.ITEM_ADDED:
                     self._add_item(
                         item.new_from_dict(copy.deepcopy(change)),
@@ -273,6 +291,7 @@ class Data(Graphs.Data):
                         change[0],
                         change[2],
                     )
+        self.set_selection(selected, mask)
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
