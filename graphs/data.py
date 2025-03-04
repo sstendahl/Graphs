@@ -498,11 +498,8 @@ class Data(Graphs.Data):
         try:
             project_dict = project.read_project_file(file)
         except project.ProjectParseError as error:
+            logging.exception(error)
             return error.message
-        except Exception:
-            msg = _("Failed to parse project file")
-            logging.exception(msg)
-            return msg
         current_data = self.get_project_dict()
         try:
             self.load_from_project_dict(project_dict)

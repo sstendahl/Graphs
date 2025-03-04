@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
+import copy
 import logging
 from gettext import gettext as _
+from operator import itemgetter
 
-from gi.repository import Gio
+from gi.repository import Gio, Graphs
 
-from graphs import file_io, migrate
+from graphs import file_io, item, migrate
+from graphs.data import ChangeType
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -80,17 +83,22 @@ class ProjectMigrator:
         self._migrate_inserted_scale(2)  # log2 scale added
 
         # Handle items no longer making use of uuid
-        def _item_dict_without_uuid(item):
-            return {key: value for key, value in item.items() if key != "uuid"}
+        def _item_dict_without_uuid(item_):
+            return {
+                key: value
+                for key, value in item_.items()
+                if key != "uuid"
+            }
 
         item_positions = []
         data = []
-        for item in self._project_dict["data"]:
-            item_positions.append(item["uuid"])
-            data.append(_item_dict_without_uuid(item))
+        for item_ in self._project_dict["data"]:
+            item_positions.append(item_["uuid"])
+            data.append(_item_dict_without_uuid(item_))
         self._project_dict["data"] = data
         history_states = self._project_dict["history-states"]
         n_states = len(history_states)
+        # TODO: handle position at != -1
         for state_index, state in enumerate(reversed(history_states)):
             state_index = n_states - state_index - 1
             n_changes = len(state[0])
@@ -136,13 +144,68 @@ class ProjectMigrator:
                             change_index][1][i] = val + 1
 
 
+class ProjectValidator:
+    """Validate the project."""
+
+    def __init__(self, project_dict: dict):
+        project_dict = copy.deepcopy(project_dict)
+
+        self.figure_settings = Graphs.FigureSettings()
+        for key, value in project_dict["figure-settings"].items():
+            key = key.replace("-", "_")
+            if self.figure_settings.get_property(key) != value:
+                self.figure_settings.set_property(key, value)
+        self.items = [item.new_from_dict(d) for d in project_dict["data"]]
+
+        self.history_states = project_dict["history-states"]
+        self.history_pos = project_dict["history-position"]
+        self.view_history_states = project_dict["view-history-states"]
+        self.view_history_pos = project_dict["view-history-position"]
+
+    def validate(self):
+        """Run through the history states."""
+        if self.history_pos != -1:
+            # TODO: run redos until the history pos is at -1
+            pass
+        for history_state in reversed(self.history_states):
+            self.figure_settings.set_limits(history_state[1])
+            for change_type, change in reversed(history_state[0]):
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        index, prop, value = itemgetter(0, 1, 2)(change)
+                        self.items[index].set_property(prop, value)
+                    case ChangeType.ITEM_ADDED:
+                        self.items.pop()
+                    case ChangeType.ITEM_REMOVED:
+                        item_ = item.new_from_dict(copy.deepcopy(change[1]))
+                        self.items.insert(change[0], item_)
+                    case ChangeType.ITEMS_SWAPPED:
+                        item_ = self.items.pop(change[1])
+                        self.items.insert(change[0], item_)
+                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                        self.figure_settings.set_property(change[0], change[1])
+
+
 def read_project_file(file: Gio.File) -> dict:
     """Read a project dict from file and account for migration."""
     try:
         project_dict = file_io.parse_json(file)
     except UnicodeDecodeError:
-        project_dict = migrate.migrate_project(file)
-    return ProjectMigrator(project_dict).migrate()
+        try:
+            project_dict = migrate.migrate_project(file)
+        except Exception as e:
+            raise ProjectParseError(_("Failed to do legacy migration")) from e
+    except Exception as e:
+        raise ProjectParseError(_("Failed to parse project file")) from e
+    try:
+        project_dict = ProjectMigrator(project_dict).migrate()
+    except Exception as e:
+        raise ProjectParseError(_("Failed to migrate project")) from e
+    try:
+        ProjectValidator(project_dict).validate()
+    except Exception as e:
+        raise ProjectParseError(_("Failed to validate project")) from e
+    return project_dict
 
 
 def save_project_dict(file: Gio.File, project_dict: dict) -> None:
