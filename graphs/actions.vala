@@ -5,7 +5,76 @@ using Gtk;
 
 namespace Graphs {
     namespace Actions {
-        public void setup (Application application, Window window) {
+        public void setup_global (Application application) {
+            var quit_action = new SimpleAction ("quit", null);
+            quit_action.activate.connect (application.quit_action);
+            application.add_action (quit_action);
+            application.set_accels_for_action ("app.quit", {"<control>q"});
+
+            var about_action = new SimpleAction ("about", null);
+            about_action.activate.connect (() => {
+                var file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");
+                string release_notes;
+                try {
+                    release_notes = (string) file.load_bytes ().get_data ();
+                } catch {
+                    release_notes = "";
+                }
+
+                var dialog = new Adw.AboutDialog () {
+                    application_name = _("Graphs"),
+                    application_icon = application.application_id,
+                    website = Config.HOMEPAGE_URL,
+                    developer_name = Config.AUTHOR,
+                    issue_url = Config.ISSUE_URL,
+                    version = application.version,
+                    developers = {
+                        "Sjoerd Stendahl <contact@sjoerd.se>",
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>"
+                    },
+                    designers = {
+                        "Sjoerd Stendahl <contact@sjoerd.se>",
+                        "Christoph Matthias Kohnen <mail@cmkohnen.de>",
+                        "Tobias Bernard <tbernard@gnome.org>"
+                    },
+                    copyright = "© " + Config.COPYRIGHT,
+                    license_type = License.GPL_3_0,
+                    translator_credits = _("translator-credits"),
+                    release_notes = release_notes
+                };
+                dialog.present (application.active_window);
+            });
+            application.add_action (about_action);
+
+            var help_action = new SimpleAction ("help", null);
+            help_action.activate.connect (() => {
+                try {
+                    AppInfo.launch_default_for_uri (
+                        "help:graphs",
+                        application.active_window.get_display ().get_app_launch_context ()
+                    );
+                } catch { assert_not_reached (); }
+            });
+            application.add_action (help_action);
+            application.set_accels_for_action ("app.help", {"F1"});
+
+            var new_project_action = new SimpleAction ("new-project", null);
+            new_project_action.activate.connect (() => {
+                var window = application.create_main_window ();
+                window.present ();
+            });
+            application.add_action (new_project_action);
+
+            var style_editor_action = new SimpleAction ("style-editor", null);
+            style_editor_action.activate.connect (() => {
+                var style_editor = application.create_style_editor ();
+                style_editor.present ();
+            });
+            application.add_action (style_editor_action);
+        }
+
+        public void setup_local (Window window) {
+            var application = window.application as Application;
             var data = window.data;
 
             var toggle_sidebar_action = new SimpleAction ("toggle-sidebar", null);
