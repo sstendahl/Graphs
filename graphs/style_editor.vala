@@ -29,17 +29,36 @@ namespace Graphs {
             get { return canvas_bin.get_child () as Canvas; }
             set { canvas_bin.set_child (value); }
         }
+        protected string stylename {
+            set {
+                this._stylename = value;
+                // Translators: Window title that will be formatted with the stylename.
+                set_title (_("Graphs Style Editor — %s").printf (value));
+
+                if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                    _inhibit_cookie = application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        value
+                    );
+                }
+            }
+        }
 
         protected CssProvider headerbar_provider { get; private set; }
         protected bool unsaved { get; set; default = false; }
         private File _file;
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
+        private string _stylename;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
         construct {
+            var application = application as Application;
+
             this.headerbar_provider = new CssProvider ();
             content_headerbar.get_style_context ().add_provider (
                 headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -50,6 +69,7 @@ namespace Graphs {
                 if (_file == null) return;
                 save ();
             });
+            save_action.set_enabled (false);
             add_action (save_action);
 
             var save_as_action = new SimpleAction ("save-style-as", null);
@@ -69,12 +89,18 @@ namespace Graphs {
 
             var open_action = new SimpleAction ("open-style", null);
             open_action.activate.connect (() => {
-                if (_file != null) return;
                 var dialog = new FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.open.begin (this, null, (d, response) => {
                     try {
-                        load (dialog.open.end (response));
+                        var file = dialog.open.end (response);
+                        if (_file == null || !unsaved) {
+                            load (file);
+                        } else {
+                            var new_window = application.create_style_editor ();
+                            new_window.load (file);
+                            new_window.present ();
+                        }
                     } catch {}
                 });
             });
@@ -83,13 +109,15 @@ namespace Graphs {
             // Inhibit session end when there is unsaved data present
             notify["unsaved"].connect (() => {
                 if (unsaved) {
-                    application.inhibit (
+                    _inhibit_cookie = application.inhibit (
                         this,
                         ApplicationInhibitFlags.LOGOUT,
-                        title
+                        _stylename
                     );
-                } else if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
+                    save_action.set_enabled (true);
+                } else {
+                    if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                    save_action.set_enabled (false);
                 }
             });
 

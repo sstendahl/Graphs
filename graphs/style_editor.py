@@ -503,6 +503,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
                 item.set_color(color_cycle[index % len(color_cycle)])
                 for prop, value in item._extract_params(params).items():
                     item.set_property(prop, value)
+            self.set_stylename(style_editor.graphs_params["name"])
 
         canvas = Canvas(params, self._test_items, False)
         canvas.props.title = _("Title")
