@@ -28,15 +28,11 @@ template $GraphsStylePreview: Adw.Bin {
           valign: start;
           margin-end: 4;
           margin-top: 4;
+          menu-model: style_menu;
 
           styles [
             "flat",
           ]
-
-          popover: PopoverMenu {
-            has-arrow: false;
-            menu-model: style_menu;
-          };
         }
 
         child: Picture picture {};
