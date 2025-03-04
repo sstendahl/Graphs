@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-26 13:30+0000\n"
-"PO-Revision-Date: 2025-02-23 00:22+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-03-04 10:32+0000\n"
+"PO-Revision-Date: 2025-03-04 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Graphs"
 
@@ -274,7 +274,7 @@ msgstr "Verilere Uy Ekle"
 msgid "Toggle Sidebar"
 msgstr "Kenar Çubuğunu Aç/Kapa"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
 #: data/ui/window.blp:425
 msgid "Canvas Failed to Load"
 msgstr "Tuval Yüklenemedi"
@@ -650,7 +650,7 @@ msgid "Transparent Background"
 msgstr "Saydam Arka Plan"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Biçem"
 
@@ -670,7 +670,7 @@ msgstr "Şekil Ayarları"
 msgid "Labels"
 msgstr "Etiketler"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Başlık"
 
@@ -1348,11 +1348,11 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Biçem Aç"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
 msgid "Graphs Style Editor"
 msgstr "Graphs Biçem Düzenleyici"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
 msgstr "Uygulama Menüsünü Aç"
@@ -1369,42 +1369,42 @@ msgstr "Aç…"
 msgid "Open Preview"
 msgstr "Ön İzleme Aç"
 
-#: data/ui/style-editor-window.blp:199
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+msgid "Open Style…"
+msgstr "Biçem Aç…"
+
+#: data/ui/style-editor-window.blp:204
 msgid "Save Style…"
 msgstr "Biçemi Kaydet…"
 
-#: data/ui/style-editor-window.blp:200
+#: data/ui/style-editor-window.blp:205
 msgid "Save Style as…"
 msgstr "Biçemi Farklı Kaydet…"
 
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
 #: data/ui/window.blp:458
 msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
 #: data/ui/window.blp:459
 msgid "Help"
 msgstr "Yardım"
 
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
 #: data/ui/window.blp:460
 msgid "About Graphs"
 msgstr "Graphs Hakkında"
 
-#: data/ui/style-editor-window.blp:212
-msgid "Open Style…"
-msgstr "Biçem Aç…"
-
-#: data/ui/style-preview.blp:55
+#: data/ui/style-preview.blp:51
 msgid "Open"
 msgstr "Aç"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:56
 msgid "Open With…"
 msgstr "Birlikte Aç…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:61
 msgid "Delete…"
 msgstr "Sil…"
 
@@ -1680,27 +1680,33 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Son İşlemi Yinele"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:42
+msgid "translator-credits"
+msgstr ""
+"Sabri Ünal <yakushabb@gmail.com>\n"
+"Emin Tufan Çetin <etcetin@gmail.com>"
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "%s silindi"
 
-#: graphs/actions.vala:172
+#: graphs/actions.vala:241
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Desteklenen dosyalar"
 
-#: graphs/actions.vala:176
+#: graphs/actions.vala:245
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII dosyalar"
 
-#: graphs/actions.vala:180
+#: graphs/actions.vala:249
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:183
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1709,12 +1715,6 @@ msgstr "Leybold xry"
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font} yüklenemedi"
-
-#: graphs/application.vala:97
-msgid "translator-credits"
-msgstr ""
-"Sabri Ünal <yakushabb@gmail.com>\n"
-"Emin Tufan Çetin <etcetin@gmail.com>"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1934,13 +1934,19 @@ msgstr "Renk {number}"
 msgid "Example Item"
 msgstr "Örnek Öge"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X Etiketi"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y Etiketi"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Graphs Biçem Düzenleyici — %s"
 
 #: graphs/style_io.py:76
 #, python-brace-format
