@@ -8,7 +8,7 @@ from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
 
-from gi.repository import GObject, Gio, Gtk, Graphs
+from gi.repository import GObject, Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
 
