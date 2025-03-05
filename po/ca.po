@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-03 15:14+0000\n"
-"PO-Revision-Date: 2025-03-03 21:58+0100\n"
+"POT-Creation-Date: 2025-03-04 16:18+0000\n"
+"PO-Revision-Date: 2025-03-04 22:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: Catalan <Catalan>\n"
 "Language: ca\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Generator: Poedit 3.2.2\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Gràfics"
 
@@ -95,11 +95,11 @@ msgstr "Generar dades a partir d’una equació"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
-msgstr ""
+msgstr "Gestionar fulls d'estil dels gràfics"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
-msgstr ""
+msgstr "Manipular les dades importades"
 
 #: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
@@ -252,7 +252,7 @@ msgstr "Logarítmica"
 #: data/ui/curve-fitting.blp:74
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
-msgstr ""
+msgstr "Sigmoide logística"
 
 #: data/ui/curve-fitting.blp:75
 msgctxt "regression-type"
@@ -272,10 +272,10 @@ msgstr "Afegeix ajust a les dades"
 msgid "Toggle Sidebar"
 msgstr "Mostra o amaga la barra lateral"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
 #: data/ui/window.blp:425
 msgid "Canvas Failed to Load"
-msgstr ""
+msgstr "Ha fallat la càrrega del llenç"
 
 #: data/ui/curve-fitting.blp:156
 msgid "Optimization Method"
@@ -424,22 +424,22 @@ msgstr "Cercle"
 #: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
-msgstr ""
+msgstr "Triangle avall"
 
 #: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
-msgstr ""
+msgstr "Triangle amunt"
 
 #: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
-msgstr ""
+msgstr "Triangle esquerra"
 
 #: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
-msgstr ""
+msgstr "Triangle dret"
 
 #: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
@@ -648,7 +648,7 @@ msgid "Transparent Background"
 msgstr "Fons transparent"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Estil"
 
@@ -666,63 +666,63 @@ msgstr "Paràmetres de la figura"
 
 #: data/ui/figure-settings-page.blp:26
 msgid "Labels"
-msgstr "Etiqueta"
+msgstr "Etiquetes"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Títol"
 
 #: data/ui/figure-settings-page.blp:34
 msgid "Bottom X Axis Label"
-msgstr ""
+msgstr "Etiqueta de l'eix X inferior"
 
 #: data/ui/figure-settings-page.blp:39
 msgid "Top X Axis Label"
-msgstr ""
+msgstr "Etiqueta de l'eix X superior"
 
 #: data/ui/figure-settings-page.blp:44
 msgid "Left Y Axis Label"
-msgstr ""
+msgstr "Etiqueta de l'eix Y esquerre"
 
 #: data/ui/figure-settings-page.blp:49
 msgid "Right Y Axis Label"
-msgstr ""
+msgstr "Etiqueta de l'eix Y dret"
 
 #: data/ui/figure-settings-page.blp:54
 msgid "Axis Limits"
-msgstr "Límits de l'eix"
+msgstr "Límits dels eixos"
 
 #: data/ui/figure-settings-page.blp:68
 msgid "Bottom X Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix X inferior"
 
 #: data/ui/figure-settings-page.blp:74
 msgid "Bottom X Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix X inferior"
 
 #: data/ui/figure-settings-page.blp:87
 msgid "Top X Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix X superior"
 
 #: data/ui/figure-settings-page.blp:93
 msgid "Top X Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix X superior"
 
 #: data/ui/figure-settings-page.blp:106
 msgid "Left Y Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix Y esquerre"
 
 #: data/ui/figure-settings-page.blp:112
 msgid "Left Y Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix Y esquerre"
 
 #: data/ui/figure-settings-page.blp:125
 msgid "Right Y Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix Y dret"
 
 #: data/ui/figure-settings-page.blp:131
 msgid "Right Y Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix Y dret"
 
 #: data/ui/figure-settings-page.blp:139
 msgid "Scaling"
@@ -730,19 +730,19 @@ msgstr "Escalat"
 
 #: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
 msgid "Bottom X Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix X inferior"
 
 #: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
 msgid "Top X Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix X superior"
 
 #: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
 msgid "Left Y Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix Y esquerre"
 
 #: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
 msgid "Right Y Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix Y dret"
 
 #: data/ui/figure-settings-page.blp:207
 msgid "Appearance"
@@ -784,22 +784,22 @@ msgstr "Inferior dreta"
 #: data/ui/figure-settings-page.blp:224
 msgctxt "legend-position"
 msgid "Center Left"
-msgstr ""
+msgstr "Centre a l'esquerra"
 
 #: data/ui/figure-settings-page.blp:225
 msgctxt "legend-position"
 msgid "Center Right"
-msgstr ""
+msgstr "Centre a la dreta"
 
 #: data/ui/figure-settings-page.blp:226
 msgctxt "legend-position"
 msgid "Lower Center"
-msgstr ""
+msgstr "Centre inferior"
 
 #: data/ui/figure-settings-page.blp:227
 msgctxt "legend-position"
 msgid "Upper Center"
-msgstr ""
+msgstr "Centre superior"
 
 #: data/ui/figure-settings-page.blp:228
 msgctxt "legend-position"
@@ -808,11 +808,11 @@ msgstr "Centre"
 
 #: data/ui/figure-settings-page.blp:234
 msgid "Hide Unselected Items"
-msgstr ""
+msgstr "Amaga els elements no seleccionats"
 
 #: data/ui/figure-settings-page.blp:256
 msgid "Set as Default"
-msgstr ""
+msgstr "Estableix com a predeterminat"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -848,7 +848,7 @@ msgstr "Importa"
 
 #: data/ui/import-columns.blp:6
 msgid "Delimiter"
-msgstr ""
+msgstr "Delimitador"
 
 #: data/ui/import-columns.blp:7
 msgid "Character sequence used to split values"
@@ -913,7 +913,7 @@ msgstr "Columna X"
 
 #: data/ui/import-columns.blp:42
 msgid "X-data column index"
-msgstr ""
+msgstr "Índex de la columna de dades X"
 
 #: data/ui/import-columns.blp:52
 msgid "Column Y"
@@ -921,19 +921,19 @@ msgstr "Columna Y"
 
 #: data/ui/import-columns.blp:54
 msgid "Y-data column index"
-msgstr ""
+msgstr "Índex de columna de dades Y"
 
 #: data/ui/import-columns.blp:63
 msgid "Skip Rows"
-msgstr ""
+msgstr "Omet les files"
 
 #: data/ui/import-columns.blp:64
 msgid "Ignored row indices"
-msgstr ""
+msgstr "Índexs de les files ignorades"
 
 #: data/ui/item-box.blp:20
 msgid "Pick Color"
-msgstr ""
+msgstr "Trieu el color"
 
 #: data/ui/item-box.blp:54
 msgid "Move Item"
@@ -964,12 +964,13 @@ msgid "Cut"
 msgstr "Retalla"
 
 #: data/ui/operations.blp:62
+#, fuzzy
 msgid "Shift all data vertically with respect to each other"
-msgstr ""
+msgstr "Desplaça totes les dades verticalment"
 
 #: data/ui/operations.blp:73
 msgid "Shift"
-msgstr ""
+msgstr "Desplaça"
 
 #: data/ui/operations.blp:79
 msgid "Normalize data"
@@ -1033,11 +1034,11 @@ msgstr "Transformada ràpida de Fourier inversa"
 
 #: data/ui/operations.blp:217
 msgid "Perform custom transformations on the data"
-msgstr ""
+msgstr "Realitza transformacions personalitzades a les dades"
 
 #: data/ui/operations.blp:229
 msgid "Custom Transformation"
-msgstr ""
+msgstr "Transformació personalitzada"
 
 #: data/ui/operations.blp:237
 msgid "Modify"
@@ -1045,19 +1046,19 @@ msgstr "Modifica"
 
 #: data/ui/operations.blp:267
 msgid "Translate X"
-msgstr ""
+msgstr "Trasllada en X"
 
 #: data/ui/operations.blp:294
 msgid "Translate Y"
-msgstr ""
+msgstr "Trasllada en Y"
 
 #: data/ui/operations.blp:321
 msgid "Multiply X"
-msgstr ""
+msgstr "Multiplica en X"
 
 #: data/ui/operations.blp:348
 msgid "Multiply Y"
-msgstr ""
+msgstr "Multiplica en Y"
 
 #: data/ui/operations.blp:359
 msgid "At Maximum Y Value"
@@ -1069,11 +1070,11 @@ msgstr ""
 
 #: data/ui/operations.blp:374 data/ui/smoothen-settings.blp:35
 msgid "Savitzky–Golay Filter"
-msgstr ""
+msgstr "Filtre Savitzky–Golay"
 
 #: data/ui/operations.blp:380 data/ui/smoothen-settings.blp:58
 msgid "Moving Average"
-msgstr ""
+msgstr "Mitjana mòbil"
 
 #: data/ui/operations.blp:388
 msgid "Advanced Settings"
@@ -1081,7 +1082,7 @@ msgstr "Paràmetres avançats"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
-msgstr ""
+msgstr "Paràmetres de suavitat"
 
 #: data/ui/smoothen-settings.blp:38
 msgid "Span percentage"
@@ -1090,10 +1091,12 @@ msgstr ""
 #: data/ui/smoothen-settings.blp:39
 msgid "What percentage of the data span to use for the filter window"
 msgstr ""
+"Quin percentatge de l'espai de dades s'ha d'utilitzar per a la finestra del "
+"filtre"
 
 #: data/ui/smoothen-settings.blp:48
 msgid "Polynomial degree"
-msgstr ""
+msgstr "Grau polinòmic"
 
 #: data/ui/smoothen-settings.blp:61
 msgid "Box points"
@@ -1101,7 +1104,7 @@ msgstr ""
 
 #: data/ui/smoothen-settings.blp:62
 msgid "Amount of points to use when calculating a moving average"
-msgstr ""
+msgstr "Quantitat de punts a utilitzar quan es calcula una mitjana mòbil"
 
 #: data/ui/style-color-box.blp:20
 msgid "Edit"
@@ -1129,11 +1132,11 @@ msgstr "Mida del títol en relació amb la mida del text"
 
 #: data/ui/style-editor-box.blp:42
 msgid "Label Size"
-msgstr ""
+msgstr "Mida de les etiquetes"
 
 #: data/ui/style-editor-box.blp:43
 msgid "Label size in relation to text size"
-msgstr ""
+msgstr "Mida de les etiquetes en relació amb la mida del text"
 
 #: data/ui/style-editor-box.blp:59
 msgid "Lines"
@@ -1149,59 +1152,59 @@ msgstr "Amplada dels eixos"
 
 #: data/ui/style-editor-box.blp:163
 msgid "Draw Frame"
-msgstr ""
+msgstr "Dibuixa el marc"
 
 #: data/ui/style-editor-box.blp:168
 msgid "Ticks"
-msgstr ""
+msgstr "Marques"
 
 #: data/ui/style-editor-box.blp:171
 msgid "Tick Directions"
-msgstr ""
+msgstr "Direcció de les marques"
 
 #: data/ui/style-editor-box.blp:175
 msgid "Inwards"
-msgstr ""
+msgstr "Interiors"
 
 #: data/ui/style-editor-box.blp:176
 msgid "Outwards"
-msgstr ""
+msgstr "Exteriors"
 
 #: data/ui/style-editor-box.blp:182
 msgid "Minor Ticks"
-msgstr ""
+msgstr "Marques menors"
 
 #: data/ui/style-editor-box.blp:186
 msgid "Major Tick Width"
-msgstr ""
+msgstr "Amplada de les marques principals"
 
 #: data/ui/style-editor-box.blp:201
 msgid "Minor Tick Width"
-msgstr ""
+msgstr "Amplada de les marques menors"
 
 #: data/ui/style-editor-box.blp:217
 msgid "Major Tick Length"
-msgstr ""
+msgstr "Longitud de les marques principals"
 
 #: data/ui/style-editor-box.blp:232
 msgid "Minor Tick Length"
-msgstr ""
+msgstr "Longitud de les marques menors"
 
 #: data/ui/style-editor-box.blp:248
 msgid "Ticks on Bottom Axis"
-msgstr ""
+msgstr "Marques a l'eix inferior"
 
 #: data/ui/style-editor-box.blp:252
 msgid "Ticks on Left Axis"
-msgstr ""
+msgstr "Marques a l'eix esquerre"
 
 #: data/ui/style-editor-box.blp:256
 msgid "Ticks on Right Axis"
-msgstr ""
+msgstr "Marques a l'eix dret"
 
 #: data/ui/style-editor-box.blp:260
 msgid "Ticks on Top Axis"
-msgstr ""
+msgstr "Marques a l'eix superior"
 
 #: data/ui/style-editor-box.blp:265
 msgid "Grid"
@@ -1221,35 +1224,35 @@ msgstr "Opacitat de la graella"
 
 #: data/ui/style-editor-box.blp:305
 msgid "Padding"
-msgstr ""
+msgstr "Separació"
 
 #: data/ui/style-editor-box.blp:306
 msgid "Padding for different parts of the figure"
-msgstr ""
+msgstr "Separació per a diferents parts de la figura"
 
 #: data/ui/style-editor-box.blp:309
 msgid "Value Padding"
-msgstr ""
+msgstr "Separació entre els valors"
 
 #: data/ui/style-editor-box.blp:310
 msgid "Padding between axes and values"
-msgstr ""
+msgstr "Separació entre els eixos i els valors"
 
 #: data/ui/style-editor-box.blp:325
 msgid "Label Padding"
-msgstr ""
+msgstr "Separació de les estiquetes"
 
 #: data/ui/style-editor-box.blp:326
 msgid "Padding between axes and labels"
-msgstr ""
+msgstr "Separació entre els eixos i les etiquetes"
 
 #: data/ui/style-editor-box.blp:341
 msgid "Title Padding"
-msgstr ""
+msgstr "Separació del títol"
 
 #: data/ui/style-editor-box.blp:342
 msgid "Padding between axes and the title"
-msgstr ""
+msgstr "Separació entre els eixos i el títol"
 
 #: data/ui/style-editor-box.blp:358
 msgid "Colors"
@@ -1257,11 +1260,11 @@ msgstr "Colors"
 
 #: data/ui/style-editor-box.blp:362
 msgid "Label text might be hard to read"
-msgstr ""
+msgstr "El text de l'etiqueta pot ser difícil de llegir"
 
 #: data/ui/style-editor-box.blp:374
 msgid "Poor Contrast"
-msgstr ""
+msgstr "Poc contrast"
 
 #: data/ui/style-editor-box.blp:389
 msgid "Text Color"
@@ -1275,7 +1278,7 @@ msgstr "Canvia el color"
 
 #: data/ui/style-editor-box.blp:416
 msgid "Tick Color"
-msgstr ""
+msgstr "Color de les marques"
 
 #: data/ui/style-editor-box.blp:443
 msgid "Axis Color"
@@ -1346,14 +1349,14 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Obre l'estil"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
 msgid "Graphs Style Editor"
-msgstr ""
+msgstr "Editor d'estil del Gràfics"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Obre el menú d'aplicacions"
 
 #: data/ui/style-editor-window.blp:71
 msgid "Open a Style"
@@ -1367,48 +1370,48 @@ msgstr "Obre…"
 msgid "Open Preview"
 msgstr "Obre la previsualització"
 
-#: data/ui/style-editor-window.blp:199
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+msgid "Open Style…"
+msgstr "Obre un estil…"
+
+#: data/ui/style-editor-window.blp:204
 msgid "Save Style…"
 msgstr "Desa l'estil…"
 
-#: data/ui/style-editor-window.blp:200
+#: data/ui/style-editor-window.blp:205
 msgid "Save Style as…"
 msgstr "Anomena i desa l'estil…"
 
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
 #: data/ui/window.blp:458
 msgid "Keyboard Shortcuts"
 msgstr "Dreceres de teclat"
 
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
 #: data/ui/window.blp:459
 msgid "Help"
 msgstr "Ajuda"
 
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
 #: data/ui/window.blp:460
 msgid "About Graphs"
 msgstr "Quant al Gràfics"
 
-#: data/ui/style-editor-window.blp:212
-msgid "Open Style…"
-msgstr "Obre un estil…"
-
-#: data/ui/style-preview.blp:55
+#: data/ui/style-preview.blp:51
 msgid "Open"
 msgstr "Obre"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:56
 msgid "Open With…"
 msgstr "Obre amb…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:61
 msgid "Delete…"
 msgstr "Suprimeix…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
-msgstr ""
+msgstr "Transforma les dades"
 
 #: data/ui/transform.blp:34
 msgid "More info"
@@ -1431,11 +1434,11 @@ msgstr "X ="
 
 #: data/ui/transform.blp:73
 msgid "Discard Unselected Data"
-msgstr ""
+msgstr "Descarta les dades no seleccionades"
 
 #: data/ui/window.blp:195
 msgid "Drop Here to Import"
-msgstr ""
+msgstr "Deixeu anar aquí per importar-les"
 
 #: data/ui/window.blp:220
 msgid "Add New Data"
@@ -1447,23 +1450,24 @@ msgstr "No hi ha dades"
 
 #: data/ui/window.blp:244
 msgid "Add data from a file or manually as an equation"
-msgstr ""
+msgstr "Afegiu dades d'un fitxer o manualment com a equació"
 
 #: data/ui/window.blp:293
 msgid "Pan Mode. Click and drag to pan"
-msgstr ""
+msgstr "Mode de desplaçament. Feu clic i arrossegueu per a desplaçar"
 
 #: data/ui/window.blp:300
 msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr ""
+msgstr "Mode d'ampliació. Seleccioneu una àrea de la figura a ampliar"
 
 #: data/ui/window.blp:307
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr ""
+"Mode de selecció. Feu clic i arrossegueu per a fer una selecció de dades"
 
 #: data/ui/window.blp:330
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Mostra la barra lateral"
 
 #: data/ui/window.blp:338 data/ui/window.blp:384 graphs/window.vala:375
 msgid "Undo"
@@ -1475,15 +1479,15 @@ msgstr "Refés"
 
 #: data/ui/window.blp:351 data/ui/window.blp:398
 msgid "View Menu"
-msgstr ""
+msgstr "Menú de vista"
 
 #: data/ui/window.blp:361 data/ui/window.blp:407
 msgid "Next View"
-msgstr ""
+msgstr "Vista següent"
 
 #: data/ui/window.blp:369 data/ui/window.blp:415
 msgid "Previous View"
-msgstr ""
+msgstr "Vista anterior"
 
 #: data/ui/window.blp:435
 msgid "New Project"
@@ -1523,12 +1527,12 @@ msgstr "Genera dades…"
 
 #: data/ui/window.blp:474
 msgid "Optimize Limits"
-msgstr ""
+msgstr "Optimitza els límits"
 
 #: data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
-msgstr ""
+msgstr "Obre els paràmetres de la figura"
 
 #: data/ui/window-shortcuts.blp:40
 msgctxt "shortcut window"
@@ -1538,12 +1542,12 @@ msgstr "Canvia de mode"
 #: data/ui/window-shortcuts.blp:43
 msgctxt "shortcut window"
 msgid "Pan Mode"
-msgstr ""
+msgstr "Mode de desplaçament"
 
 #: data/ui/window-shortcuts.blp:48
 msgctxt "shortcut window"
 msgid "Zoom Mode"
-msgstr ""
+msgstr "Mode d'ampliació"
 
 #: data/ui/window-shortcuts.blp:53
 msgctxt "shortcut window"
@@ -1558,12 +1562,12 @@ msgstr "Noves dades"
 #: data/ui/window-shortcuts.blp:62
 msgctxt "shortcut window"
 msgid "Add Data from File"
-msgstr ""
+msgstr "Afegeix dades des d'un fitxer"
 
 #: data/ui/window-shortcuts.blp:67
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
-msgstr ""
+msgstr "Afegeix dades des d'una equació"
 
 #: data/ui/window-shortcuts.blp:72
 msgctxt "shortcut window"
@@ -1598,7 +1602,7 @@ msgstr "Exporta les dades"
 #: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
 msgid "Export Figure"
-msgstr ""
+msgstr "Exporta la figura"
 
 #: data/ui/window-shortcuts.blp:106
 msgctxt "shortcut window"
@@ -1618,17 +1622,17 @@ msgstr "Vista"
 #: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Previous View"
-msgstr ""
+msgstr "Vista anterior"
 
 #: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
 msgid "Next View"
-msgstr ""
+msgstr "Vista següent"
 
 #: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Optimize limits"
-msgstr ""
+msgstr "Optimitza els límits"
 
 #: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
@@ -1643,12 +1647,12 @@ msgstr "Allunya"
 #: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
 msgctxt "shortcut window"
 msgid "Select None"
-msgstr ""
+msgstr "No en seleccionis cap"
 
 #: data/ui/window-shortcuts.blp:150
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Mostra o amaga la barra lateral"
 
 #: data/ui/window-shortcuts.blp:156
 msgctxt "shortcut window"
@@ -1670,39 +1674,39 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Refés l'acció"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:42
+msgid "translator-credits"
+msgstr "Victor Dargallo <victordargallo@disroot.org>"
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "S'ha suprimit %s"
 
-#: graphs/actions.vala:172
+#: graphs/actions.vala:241
 msgctxt "file-filter"
 msgid "Supported files"
-msgstr ""
+msgstr "Fitxers admesos"
 
-#: graphs/actions.vala:176
+#: graphs/actions.vala:245
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Fitxers ASCII"
 
-#: graphs/actions.vala:180
+#: graphs/actions.vala:249
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
-msgstr ""
+msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:183
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "Leybold xry"
-msgstr ""
+msgstr "Leybold xry"
 
 #: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
-msgstr ""
-
-#: graphs/application.vala:97
-msgid "translator-credits"
-msgstr "Víctor Dargallo"
+msgstr "No s'ha pogut carregar {font}"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1729,35 +1733,39 @@ msgstr ""
 #: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
-msgstr ""
+msgstr "Suma de R²: {R2}"
 
 #: graphs/curve_fitting.vala:150
 #, c-format
 msgid "Fitting Parameters for %s"
-msgstr ""
+msgstr "Paràmetres d'ajust per a %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:114
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
+"No s'ha pogut analitzar {stylename}, s'està carregant l'estil preferit del "
+"sistema"
 
-#: graphs/data.py:118
+#: graphs/data.py:119
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
+"L'estil de traçat {stylename} no existeix, s'està carregant el preferit del "
+"sistema"
 
-#: graphs/data.py:483
+#: graphs/data.py:503
 msgid "Failed to parse project file"
-msgstr ""
+msgstr "No s'ha pogut analitzar el fitxer del projecte"
 
-#: graphs/data.py:491
+#: graphs/data.py:511
 msgid "Failed to load project"
-msgstr ""
+msgstr "No s'ha pogut carregar el projecte"
 
 #: graphs/export_figure.vala:44
 msgctxt "filename"
 msgid "Exported Figure"
-msgstr ""
+msgstr "Figura exportada"
 
 #: graphs/export_items.vala:10
 msgid "No data to export"
@@ -1770,35 +1778,35 @@ msgstr "Fitxers de text"
 
 #: graphs/figure_settings.vala:162
 msgid "X Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix X"
 
 #: graphs/figure_settings.vala:163
 msgid "Y Axis Minimum"
-msgstr ""
+msgstr "Mínim de l'eix Y"
 
 #: graphs/figure_settings.vala:165
 msgid "X Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix X"
 
 #: graphs/figure_settings.vala:166
 msgid "Y Axis Maximum"
-msgstr ""
+msgstr "Màxim de l'eix Y"
 
 #: graphs/figure_settings.vala:176 graphs/window.vala:417
 msgid "X Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix X"
 
 #: graphs/figure_settings.vala:177 graphs/figure_settings.vala:181
 msgid "X Axis Label"
-msgstr ""
+msgstr "Etiqueta de l'eix X"
 
 #: graphs/figure_settings.vala:180 graphs/window.vala:422
 msgid "Y Axis Scale"
-msgstr ""
+msgstr "Escala de l'eix Y"
 
 #: graphs/figure_settings.vala:281
 msgid "Defaults Updated"
-msgstr ""
+msgstr "S'han actualitzat els valors predeterminats"
 
 #: graphs/figure_settings.vala:315
 #, c-format
@@ -1807,15 +1815,15 @@ msgstr "Esteu segur que voleu suprimir %s?"
 
 #: graphs/item.py:69
 msgid "Dataset"
-msgstr ""
+msgstr "Conjunt de dades"
 
 #: graphs/item.py:106
 msgid "Generated Dataset"
-msgstr ""
+msgstr "Conjunt de dades generat"
 
 #: graphs/item.py:224
 msgid "Label"
-msgstr ""
+msgstr "Etiqueta"
 
 #: graphs/item.py:253
 msgid "Fill"
@@ -1824,42 +1832,44 @@ msgstr "Omple"
 #: graphs/misc.vala:16
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
-msgstr ""
+msgstr "Fitxer d'estil Matplotlib"
 
 #: graphs/operations.py:253
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
+"No s'ha pogut realitzar la transformació, assegureu-vos que la sintaxi sigui "
+"correcta"
 
 #: graphs/operations.py:296 graphs/operations.py:604
 msgid "No data found within the highlighted area"
-msgstr ""
+msgstr "No s'han trobat dades a l'àrea ressaltada"
 
 #: graphs/operations.py:307
 msgid "Combined Data"
-msgstr ""
+msgstr "Dades combinades"
 
 #: graphs/operations.py:441
 #, python-brace-format
 msgid ""
 "The operation on {item.props.name} did not result in a plottable equation"
-msgstr ""
+msgstr "L'operació a {item.props.name} no ha donat lloc a una equació traçable"
 
 #: graphs/operations.py:450
 msgid "Operation not supported for equations."
-msgstr ""
+msgstr "Operació no admesa per a equacions."
 
 #: graphs/operations.py:610
 msgid "Operation not supported for data items"
-msgstr ""
+msgstr "Operació no admesa per als elements de dades"
 
 #: graphs/operations.py:613
 #, python-brace-format
 msgid "{name}: Error performing the operation"
-msgstr ""
+msgstr "{name}: S'ha produït un error en realitzar l'operació"
 
 #: graphs/operations.py:619
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
+msgstr "S'han descartat les dades que es trobaven fora de l'àrea ressaltada"
 
 #: graphs/parse_file.py:56
 msgid "Intensity (cps)"
@@ -1886,11 +1896,11 @@ msgstr ""
 msgid "Unable to import from file"
 msgstr "No s'ha pogut importar del fitxer"
 
-#: graphs/project.py:46
+#: graphs/project.py:47
 msgid "Project file is missing data"
 msgstr "Falten dades al fitxer del projecte"
 
-#: graphs/project.py:59
+#: graphs/project.py:60
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "El projecte prové d’una versió més nova incompatible del Gràfics"
 
@@ -1916,38 +1926,44 @@ msgstr "Color {number}"
 msgid "Example Item"
 msgstr "Element d'exemple"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Eix X"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Eix Y"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Editor d'estil del Gràfics — %s"
 
 #: graphs/style_io.py:76
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
-msgstr ""
+msgstr "Falta dos punts al fitxer {file}, línia {line}"
 
 #: graphs/style_io.py:84
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
-msgstr ""
+msgstr "Paràmetre {param} no relacionat amb l'estil al fitxer {file}"
 
 #: graphs/style_io.py:87
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
-msgstr ""
+msgstr "S'ha ignorat el paràmetre {param} al fitxer {file}"
 
 #: graphs/style_io.py:91
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
-msgstr ""
+msgstr "Clau duplicada al fitxer {file}, a la línia {line}"
 
 #: graphs/style_io.py:111
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
-msgstr ""
+msgstr "Valor incorrecte al fitxer {file} a la línia {line}"
 
 #: graphs/style_io.py:116
 #, python-brace-format
@@ -1996,4 +2012,4 @@ msgstr ""
 #: graphs/window.vala:390
 msgctxt "scale"
 msgid "Inverse Root"
-msgstr ""
+msgstr "Arrel inversa"
