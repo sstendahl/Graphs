@@ -42,12 +42,6 @@ class Data(Graphs.Data):
         self.connect("python_method_request", self._on_python_method_request)
         self._selected_style_params = None
         self.setup()
-        limits = self.props.figure_settings.get_limits()
-        self._history_states = [([], limits)]
-        self._history_pos = -1
-        self._view_history_states = [limits]
-        self._view_history_pos = -1
-        self._set_data_copy()
         self.props.figure_settings.connect(
             "notify",
             self._on_figure_settings_change,
@@ -127,6 +121,14 @@ class Data(Graphs.Data):
         self.set_color_cycle(
             self._selected_style_params["axes.prop_cycle"].by_key()["color"],
         )
+
+    def _init_history_states(self) -> None:
+        limits = self.props.figure_settings.get_limits()
+        self._history_states = [([], limits)]
+        self._history_pos = -1
+        self._view_history_states = [limits]
+        self._view_history_pos = -1
+        self._set_data_copy()
 
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:

@@ -95,6 +95,7 @@ namespace Graphs {
 
             handle_style_change ();
             _update_used_positions ();
+            python_method_request.emit ("_init_history_states");
         }
 
         // Section ListModel
@@ -224,6 +225,24 @@ namespace Graphs {
         // End section SelectionModel
 
         // Section management
+
+        public void clear () {
+            uint n_items = get_n_items ();
+            _items.clear ();
+            _update_used_positions ();
+            items_changed.emit (0, n_items, 0);
+            python_method_request.emit ("_init_history_states");
+            this.can_undo = false;
+            this.can_redo = false;
+            this.can_view_back = false;
+            this.can_view_forward = false;
+
+            // TODO: reset figure settings & style
+
+            this.file = null;
+            this.unsaved = false;
+            notify_property ("unsaved");
+        }
 
         protected void _update_used_positions () {
             if (_items.size == 0) {
