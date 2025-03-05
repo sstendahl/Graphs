@@ -28,23 +28,17 @@ class Data(Graphs.Data):
     __gtype_name__ = "GraphsPythonData"
 
     def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
-        self.connect("python_method_request", self._on_python_method_request)
         self._selected_style_params = None
-        self.setup()
-        self.props.figure_settings.connect(
-            "notify",
-            self._on_figure_settings_change,
-        )
+        super().__init__(application=application)
         self.connect("load_request", self._on_load_request)
         self.connect("position_changed", self._on_position_changed)
         self.connect("item_changed", self._on_item_changed)
         self.connect("item_added", self._on_item_added)
         self.connect("item_deleted", self._on_item_deleted)
-
-    @staticmethod
-    def _on_python_method_request(self, method: str) -> None:
-        getattr(self, method)()
+        self.connect(
+            "figure_settings_changed",
+            self._on_figure_settings_changed,
+        )
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
@@ -155,19 +149,16 @@ class Data(Graphs.Data):
             ),
         ))
 
-    def _on_figure_settings_change(
-        self,
-        figure_settings: Graphs.FigureSettings,
-        param: GObject.ParamSpec,
-    ) -> None:
-        if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
+    @staticmethod
+    def _on_figure_settings_changed(self, prop: str) -> None:
+        if prop in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
         self._current_batch.append((
             ChangeType.FIGURE_SETTINGS_CHANGED.value,
             (
-                param.name,
-                copy.deepcopy(self._figure_settings_copy[param.name]),
-                copy.deepcopy(figure_settings.get_property(param.name)),
+                prop,
+                copy.deepcopy(self._figure_settings_copy[prop]),
+                copy.deepcopy(self.props.figure_settings.get_property(prop)),
             ),
         ))
 
@@ -459,11 +450,10 @@ class Data(Graphs.Data):
     def load_from_project_dict(self, project_dict: dict) -> None:
         """Load data from dict."""
         # Load data
-        figure_settings = self.get_figure_settings()
-        for key, value in project_dict["figure-settings"].items():
-            key = key.replace("-", "_")
-            if figure_settings.get_property(key) != value:
-                figure_settings.set_property(key, value)
+        self.set_figure_settings(Graphs.FigureSettings(**{
+                key.replace("-", "_"): value
+                for key, value in project_dict["figure-settings"].items()
+        }))
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
 
         # Set clipboard
@@ -472,7 +462,6 @@ class Data(Graphs.Data):
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
         self._view_history_pos = project_dict["view-history-position"]
-        self.unsaved = False
 
         # Set clipboard/view buttons
         self.props.can_undo = \
