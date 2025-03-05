@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
 
-from gi.repository import GObject, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
 from graphs.misc import ChangeType
@@ -450,10 +450,14 @@ class Data(Graphs.Data):
     def load_from_project_dict(self, project_dict: dict) -> None:
         """Load data from dict."""
         # Load data
-        self.set_figure_settings(Graphs.FigureSettings(**{
-                key.replace("-", "_"): value
-                for key, value in project_dict["figure-settings"].items()
-        }))
+        self.set_figure_settings(
+            Graphs.FigureSettings(
+                **{
+                    key.replace("-", "_"): value
+                    for (key, value) in project_dict["figure-settings"].items()
+                },
+            ),
+        )
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
 
         # Set clipboard

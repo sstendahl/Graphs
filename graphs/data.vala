@@ -12,7 +12,7 @@ namespace Graphs {
         public bool can_view_back { get; protected set; default = false; }
         public bool can_view_forward { get; protected set; default = false; }
         public File file { get; set; }
-        [CCode(notify = false)]
+        [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
 
