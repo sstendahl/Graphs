@@ -76,7 +76,7 @@ class ProjectMigrator:
         # Figure settings entries are now properly stored in hyphon-case
         self._project_dict["figure-settings"] = {
             key.replace("_", "-"): value
-            for key, value in self._project_dict["figure-settings"].items()
+            for (key, value) in self._project_dict["figure-settings"].items()
         }
 
         # Migrate v1 to v2
@@ -86,8 +86,7 @@ class ProjectMigrator:
         def _item_dict_without_uuid(item_):
             return {
                 key: value
-                for key, value in item_.items()
-                if key != "uuid"
+                for (key, value) in item_.items() if key != "uuid"
             }
 
         item_positions = []
@@ -148,26 +147,35 @@ class ProjectValidator:
     """Validate the project."""
 
     def __init__(self, project_dict: dict):
-        project_dict = copy.deepcopy(project_dict)
-
-        self.figure_settings = Graphs.FigureSettings()
-        for key, value in project_dict["figure-settings"].items():
-            key = key.replace("-", "_")
-            if self.figure_settings.get_property(key) != value:
-                self.figure_settings.set_property(key, value)
-        self.items = [item.new_from_dict(d) for d in project_dict["data"]]
-
-        self.history_states = project_dict["history-states"]
-        self.history_pos = project_dict["history-position"]
-        self.view_history_states = project_dict["view-history-states"]
-        self.view_history_pos = project_dict["view-history-position"]
+        self.project_dict = copy.deepcopy(project_dict)
 
     def validate(self):
         """Run through the history states."""
-        if self.history_pos != -1:
+        # Validate Figure Settings
+        self.figure_settings = Graphs.FigureSettings(
+            **{
+                key.replace("-", "_"): val
+                for (key, val) in self.project_dict["figure-settings"].items()
+            },
+        )
+
+        # Validate items
+        self.items = [item.new_from_dict(d) for d in self.project_dict["data"]]
+
+        # Validate view history
+        view_history_states = self.project_dict["view-history-states"]
+        for history_state in view_history_states:
+            self.figure_settings.set_limits(history_state)
+        view_history_pos = self.project_dict["view-history-position"]
+        assert view_history_pos < 0
+        assert view_history_pos >= -len(view_history_states)
+
+        # Validate data history
+        history_pos = self.project_dict["history-position"]
+        if history_pos != -1:
             # TODO: run redos until the history pos is at -1
             pass
-        for history_state in reversed(self.history_states):
+        for history_state in reversed(self.project_dict["history-states"]):
             self.figure_settings.set_limits(history_state[1])
             for change_type, change in reversed(history_state[0]):
                 match ChangeType(change_type):
