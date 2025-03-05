@@ -183,12 +183,15 @@ namespace Graphs {
 
             string title;
             string path;
+            var close_action = lookup_action ("close-project") as SimpleAction;
             if (data.file == null) {
                 title = _("Untitled Project");
                 path = _("Draft");
+                close_action.set_enabled (false);
             } else {
                 title = Tools.get_filename (data.file);
                 path = application.python_helper.get_friendly_path (data.file);
+                close_action.set_enabled (true);
             }
             // Translators: Window title that will be formatted with the project name.
             set_title (_("Graphs — %s").printf (title));
