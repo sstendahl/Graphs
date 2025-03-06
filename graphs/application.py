@@ -16,7 +16,7 @@ class PythonApplication(Graphs.Application):
 
         from gettext import gettext as _
 
-        from graphs import operations, styles
+        from graphs.styles import StyleManager
         from graphs.python_helper import PythonHelper
 
         from matplotlib import font_manager
@@ -32,8 +32,7 @@ class PythonApplication(Graphs.Application):
         # https://bugzilla.gnome.org/show_bug.cgi?id=687522
         self._python_helper = PythonHelper(self)
         self.props.python_helper = self._python_helper
-        self._figure_style_manager = styles.StyleManager(self)
+        self._figure_style_manager = StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
 
-        self.connect("operation_invoked", operations.perform_operation)
         Graphs.Application.do_startup(self)

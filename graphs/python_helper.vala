@@ -70,5 +70,10 @@ namespace Graphs {
         public string get_friendly_path (File file) {
             return get_friendly_path_request (file);
         }
+
+        protected signal void perform_operation_request (Window window, string name);
+        public void perform_operation (Window window, string name) {
+            perform_operation_request.emit (window, name);
+        }
     }
 }
