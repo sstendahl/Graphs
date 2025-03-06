@@ -54,7 +54,8 @@ class ProjectMigrator:
     def migrate(self) -> dict:
         """Perform needed migrations."""
         try:
-            project_version = self._project_dict["project-version"]
+            project_version = int(self._project_dict["project-version"])
+            assert project_version > 0
         except KeyError:
             project_version = 1
 
@@ -178,14 +179,15 @@ class ProjectValidator:
         view_history_states = self.project_dict["view-history-states"]
         for history_state in view_history_states:
             self.figure_settings.set_limits(history_state)
-        view_history_pos = self.project_dict["view-history-position"]
+        view_history_pos = int(self.project_dict["view-history-position"])
         assert view_history_pos < 0
-        assert view_history_pos >= -len(view_history_states)
+        assert abs(view_history_pos) <= len(view_history_states)
 
         # Validate data history
         history_states = self.project_dict["history-states"]
-        history_pos = self.project_dict["history-position"]
+        history_pos = int(self.project_dict["history-position"])
         assert history_pos < 0
+        assert abs(history_pos) <= len(history_states)
         while history_pos < -1:
             for (change_type, change) in history_states[history_pos][0]:
                 match ChangeType(change_type):
