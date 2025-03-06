@@ -8,7 +8,7 @@ from operator import itemgetter
 from gi.repository import Gio, Graphs
 
 from graphs import file_io, item, migrate
-from graphs.data import ChangeType
+from graphs.misc import ChangeType
 
 CURRENT_PROJECT_VERSION = 2
 

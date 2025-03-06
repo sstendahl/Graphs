@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Data management module."""
 import copy
-import enum
 import logging
 import math
 from collections.abc import Iterator
@@ -11,6 +10,7 @@ from operator import itemgetter
 from gi.repository import GObject, Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
+from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
@@ -20,16 +20,6 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min_selected",
     "max_selected",
 ]
-
-
-class ChangeType(enum.Enum):
-    """Enum for handling changetypes."""
-
-    ITEM_PROPERTY_CHANGED = 0
-    ITEM_ADDED = 1
-    ITEM_REMOVED = 2
-    ITEMS_SWAPPED = 3
-    FIGURE_SETTINGS_CHANGED = 4
 
 
 class Data(Graphs.Data):
