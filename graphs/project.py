@@ -79,7 +79,6 @@ class ProjectMigrator:
             for (key, value) in self._project_dict["figure-settings"].items()
         }
 
-        # Migrate v1 to v2
         self._migrate_inserted_scale(2)  # log2 scale added
 
         # Handle items no longer making use of uuid
@@ -97,27 +96,40 @@ class ProjectMigrator:
         self._project_dict["data"] = data
         history_states = self._project_dict["history-states"]
         n_states = len(history_states)
-        # TODO: handle position at != -1
+        history_pos = self._project_dict["history-position"]
+        while history_pos < 1:
+            for (change_type, change) in history_states[history_pos][0]:
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_ADDED:
+                        item_positions.append(change["uuid"])
+                    case ChangeType.ITEM_REMOVED:
+                        item_positions.remove(change[1]["uuid"])
+                    case ChangeType.ITEMS_SWAPPED:
+                        uuid = item_positions.pop(change[0])
+                        item_positions.insert(change[1], uuid)
+            history_pos += 1
         for state_index, state in enumerate(reversed(history_states)):
             state_index = n_states - state_index - 1
             n_changes = len(state[0])
-            for change_index, changeset in enumerate(reversed(state[0])):
+            for change_index, (change_type, change) \
+                    in enumerate(reversed(state[0])):
                 change_index = n_changes - change_index - 1
-                change_type, change = changeset
-                if change_type == 1:
-                    item_positions.remove(change["uuid"])
-                    history_states[state_index][0][change_index][1] = \
-                        _item_dict_without_uuid(change)
-                elif change_type == 2:
-                    r_index = change[0]
-                    item_positions = item_positions[:r_index] \
-                        + [change[1]["uuid"]] \
-                        + item_positions[r_index:]
-                    history_states[state_index][0][change_index][1] = \
-                        (change[0], _item_dict_without_uuid(change[1]))
-                elif change_type == 0:
-                    change[0] = item_positions.index(change[0])
-                    history_states[state_index][0][change_index][1] = change
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_ADDED:
+                        item_positions.remove(change["uuid"])
+                        history_states[state_index][0][change_index][1] = \
+                            _item_dict_without_uuid(change)
+                    case ChangeType.ITEM_REMOVED:
+                        item_positions.insert(change[0], change[1]["uuid"])
+                        history_states[state_index][0][change_index][1] = \
+                            [change[0], _item_dict_without_uuid(change[1])]
+                    case ChangeType.ITEMS_SWAPPED:
+                        uuid = item_positions.pop(change[1])
+                        item_positions.insert(change[0], uuid)
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        change[0] = item_positions.index(change[0])
+                        history_states[state_index][0][change_index][1] = \
+                            change
         self._project_dict["history-states"] = history_states
 
     def _migrate_inserted_scale(self, scale_index: int) -> None:
@@ -171,11 +183,27 @@ class ProjectValidator:
         assert view_history_pos >= -len(view_history_states)
 
         # Validate data history
+        history_states = self.project_dict["history-states"]
         history_pos = self.project_dict["history-position"]
-        if history_pos != -1:
-            # TODO: run redos until the history pos is at -1
-            pass
-        for history_state in reversed(self.project_dict["history-states"]):
+        assert history_pos < 0
+        while history_pos < -1:
+            for (change_type, change) in history_states[history_pos][0]:
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        index, prop, value = itemgetter(0, 1, 3)(change)
+                        self.items[index].set_property(prop, value)
+                    case ChangeType.ITEM_ADDED:
+                        item_dict_copy = copy.deepcopy(change)
+                        self.items.append(item.new_from_dict(item_dict_copy))
+                    case ChangeType.ITEM_REMOVED:
+                        self.items.pop(change[0])
+                    case ChangeType.ITEMS_SWAPPED:
+                        item_ = self.items.pop(change[0])
+                        self.items.insert(change[1], item_)
+                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                        self.figure_settings.set_property(change[0], change[2])
+            history_pos += 1
+        for history_state in reversed(history_states):
             self.figure_settings.set_limits(history_state[1])
             for change_type, change in reversed(history_state[0]):
                 match ChangeType(change_type):
