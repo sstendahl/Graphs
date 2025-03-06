@@ -17,9 +17,6 @@ namespace Graphs {
         public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; protected set; }
 
-        public signal void operation_invoked (string name);
-        protected signal void setup_request ();
-
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
         private uint _css_counter = 0;

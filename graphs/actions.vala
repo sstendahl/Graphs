@@ -142,7 +142,7 @@ namespace Graphs {
                 "perform_operation", new VariantType ("s")
             );
             operation_action.activate.connect ((a, target) => {
-                application.operation_invoked.emit (target.get_string ());
+                application.python_helper.perform_operation (window, target.get_string ());
             });
             window.add_action (operation_action);
 
