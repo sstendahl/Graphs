@@ -68,8 +68,10 @@ class ProjectMigrator:
             return self._project_dict
 
         # Migrate a project one version at a time
-        for version in range(CURRENT_PROJECT_VERSION - project_version):
-            getattr(self, f"_migrate_v{version + 2}")()
+        current_version = project_version
+        while current_version < CURRENT_PROJECT_VERSION:
+            current_version += 1
+            getattr(self, f"_migrate_v{current_version}")()
         return self._project_dict
 
     def _migrate_v2(self):
