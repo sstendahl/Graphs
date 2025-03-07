@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-04 16:18+0000\n"
-"PO-Revision-Date: 2025-03-05 14:43+0100\n"
+"POT-Creation-Date: 2025-03-07 10:30+0000\n"
+"PO-Revision-Date: 2025-03-07 13:01+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -1751,22 +1751,18 @@ msgstr "Vsota R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:114
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:119
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:503
-msgid "Failed to parse project file"
-msgstr "Razčlenjevanje projektne datoteke ni uspelo"
-
-#: graphs/data.py:511
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -1903,13 +1899,29 @@ msgstr "Uvoz ni uspel, indeks stolpca ni v obsegu"
 msgid "Unable to import from file"
 msgstr "Uvoz iz datoteke ni mogoč"
 
-#: graphs/project.py:47
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "V datoteki projekta manjkajo podatki"
 
-#: graphs/project.py:60
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "Migracija opuščenega je spodletela"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Razčlenjevanje projektne datoteke ni uspelo"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "Migriranje projekta ni uspelo"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "Preverjanje projekta ni uspelo"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
