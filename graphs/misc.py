@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Miscallaneous constants."""
+import enum
+
 from gi.repository import Graphs
 
 # Type hints
@@ -21,6 +23,16 @@ class InvalidEquationError(Exception):
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)
+
+
+class ChangeType(enum.Enum):
+    """Enum for handling changetypes."""
+
+    ITEM_PROPERTY_CHANGED = 0
+    ITEM_ADDED = 1
+    ITEM_REMOVED = 2
+    ITEMS_SWAPPED = 3
+    FIGURE_SETTINGS_CHANGED = 4
 
 
 LEGEND_POSITIONS = [

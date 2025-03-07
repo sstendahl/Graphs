@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
+import copy
 import logging
 from gettext import gettext as _
+from operator import itemgetter
 
-from gi.repository import Gio
+from gi.repository import Gio, Graphs
 
-from graphs import file_io, migrate
+from graphs import file_io, item, migrate
+from graphs.misc import ChangeType
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -51,7 +54,8 @@ class ProjectMigrator:
     def migrate(self) -> dict:
         """Perform needed migrations."""
         try:
-            project_version = self._project_dict["project-version"]
+            project_version = int(self._project_dict["project-version"])
+            assert project_version > 0
         except KeyError:
             project_version = 1
 
@@ -64,8 +68,10 @@ class ProjectMigrator:
             return self._project_dict
 
         # Migrate a project one version at a time
-        for version in range(CURRENT_PROJECT_VERSION - project_version):
-            getattr(self, f"_migrate_v{version + 2}")()
+        current_version = project_version
+        while current_version < CURRENT_PROJECT_VERSION:
+            current_version += 1
+            getattr(self, f"_migrate_v{current_version}")()
         return self._project_dict
 
     def _migrate_v2(self):
@@ -73,44 +79,60 @@ class ProjectMigrator:
         # Figure settings entries are now properly stored in hyphon-case
         self._project_dict["figure-settings"] = {
             key.replace("_", "-"): value
-            for key, value in self._project_dict["figure-settings"].items()
+            for (key, value) in self._project_dict["figure-settings"].items()
         }
 
-        # Migrate v1 to v2
         self._migrate_inserted_scale(2)  # log2 scale added
 
         # Handle items no longer making use of uuid
-        def _item_dict_without_uuid(item):
-            return {key: value for key, value in item.items() if key != "uuid"}
+        def _item_dict_without_uuid(item_):
+            return {
+                key: value
+                for (key, value) in item_.items() if key != "uuid"
+            }
 
         item_positions = []
         data = []
-        for item in self._project_dict["data"]:
-            item_positions.append(item["uuid"])
-            data.append(_item_dict_without_uuid(item))
+        for item_ in self._project_dict["data"]:
+            item_positions.append(item_["uuid"])
+            data.append(_item_dict_without_uuid(item_))
         self._project_dict["data"] = data
         history_states = self._project_dict["history-states"]
         n_states = len(history_states)
+        history_pos = self._project_dict["history-position"]
+        while history_pos < 1:
+            for (change_type, change) in history_states[history_pos][0]:
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_ADDED:
+                        item_positions.append(change["uuid"])
+                    case ChangeType.ITEM_REMOVED:
+                        item_positions.remove(change[1]["uuid"])
+                    case ChangeType.ITEMS_SWAPPED:
+                        uuid = item_positions.pop(change[0])
+                        item_positions.insert(change[1], uuid)
+            history_pos += 1
         for state_index, state in enumerate(reversed(history_states)):
             state_index = n_states - state_index - 1
             n_changes = len(state[0])
-            for change_index, changeset in enumerate(reversed(state[0])):
+            for change_index, (change_type, change) \
+                    in enumerate(reversed(state[0])):
                 change_index = n_changes - change_index - 1
-                change_type, change = changeset
-                if change_type == 1:
-                    item_positions.remove(change["uuid"])
-                    history_states[state_index][0][change_index][1] = \
-                        _item_dict_without_uuid(change)
-                elif change_type == 2:
-                    r_index = change[0]
-                    item_positions = item_positions[:r_index] \
-                        + [change[1]["uuid"]] \
-                        + item_positions[r_index:]
-                    history_states[state_index][0][change_index][1] = \
-                        (change[0], _item_dict_without_uuid(change[1]))
-                elif change_type == 0:
-                    change[0] = item_positions.index(change[0])
-                    history_states[state_index][0][change_index][1] = change
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_ADDED:
+                        item_positions.remove(change["uuid"])
+                        history_states[state_index][0][change_index][1] = \
+                            _item_dict_without_uuid(change)
+                    case ChangeType.ITEM_REMOVED:
+                        item_positions.insert(change[0], change[1]["uuid"])
+                        history_states[state_index][0][change_index][1] = \
+                            [change[0], _item_dict_without_uuid(change[1])]
+                    case ChangeType.ITEMS_SWAPPED:
+                        uuid = item_positions.pop(change[1])
+                        item_positions.insert(change[0], uuid)
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        change[0] = item_positions.index(change[0])
+                        history_states[state_index][0][change_index][1] = \
+                            change
         self._project_dict["history-states"] = history_states
 
     def _migrate_inserted_scale(self, scale_index: int) -> None:
@@ -136,13 +158,94 @@ class ProjectMigrator:
                             change_index][1][i] = val + 1
 
 
+class ProjectValidator:
+    """Validate the project."""
+
+    def __init__(self, project_dict: dict):
+        self.project_dict = copy.deepcopy(project_dict)
+
+    def validate(self):
+        """Run through the history states."""
+        # Validate Figure Settings
+        self.figure_settings = Graphs.FigureSettings(
+            **{
+                key.replace("-", "_"): val
+                for (key, val) in self.project_dict["figure-settings"].items()
+            },
+        )
+
+        # Validate items
+        self.items = [item.new_from_dict(d) for d in self.project_dict["data"]]
+
+        # Validate view history
+        view_history_states = self.project_dict["view-history-states"]
+        for history_state in view_history_states:
+            self.figure_settings.set_limits(history_state)
+        view_history_pos = int(self.project_dict["view-history-position"])
+        assert view_history_pos < 0
+        assert abs(view_history_pos) <= len(view_history_states)
+
+        # Validate data history
+        history_states = self.project_dict["history-states"]
+        history_pos = int(self.project_dict["history-position"])
+        assert history_pos < 0
+        assert abs(history_pos) <= len(history_states)
+        while history_pos < -1:
+            for (change_type, change) in history_states[history_pos][0]:
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        index, prop, value = itemgetter(0, 1, 3)(change)
+                        self.items[index].set_property(prop, value)
+                    case ChangeType.ITEM_ADDED:
+                        item_dict_copy = copy.deepcopy(change)
+                        self.items.append(item.new_from_dict(item_dict_copy))
+                    case ChangeType.ITEM_REMOVED:
+                        self.items.pop(change[0])
+                    case ChangeType.ITEMS_SWAPPED:
+                        item_ = self.items.pop(change[0])
+                        self.items.insert(change[1], item_)
+                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                        self.figure_settings.set_property(change[0], change[2])
+            history_pos += 1
+        for history_state in reversed(history_states):
+            self.figure_settings.set_limits(history_state[1])
+            for change_type, change in reversed(history_state[0]):
+                match ChangeType(change_type):
+                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                        index, prop, value = itemgetter(0, 1, 2)(change)
+                        self.items[index].set_property(prop, value)
+                    case ChangeType.ITEM_ADDED:
+                        self.items.pop()
+                    case ChangeType.ITEM_REMOVED:
+                        item_ = item.new_from_dict(copy.deepcopy(change[1]))
+                        self.items.insert(change[0], item_)
+                    case ChangeType.ITEMS_SWAPPED:
+                        item_ = self.items.pop(change[1])
+                        self.items.insert(change[0], item_)
+                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                        self.figure_settings.set_property(change[0], change[1])
+
+
 def read_project_file(file: Gio.File) -> dict:
     """Read a project dict from file and account for migration."""
     try:
         project_dict = file_io.parse_json(file)
     except UnicodeDecodeError:
-        project_dict = migrate.migrate_project(file)
-    return ProjectMigrator(project_dict).migrate()
+        try:
+            project_dict = migrate.migrate_project(file)
+        except Exception as e:
+            raise ProjectParseError(_("Failed to do legacy migration")) from e
+    except Exception as e:
+        raise ProjectParseError(_("Failed to parse project file")) from e
+    try:
+        project_dict = ProjectMigrator(project_dict).migrate()
+    except Exception as e:
+        raise ProjectParseError(_("Failed to migrate project")) from e
+    try:
+        ProjectValidator(project_dict).validate()
+    except Exception as e:
+        raise ProjectParseError(_("Failed to validate project")) from e
+    return project_dict
 
 
 def save_project_dict(file: Gio.File, project_dict: dict) -> None:
