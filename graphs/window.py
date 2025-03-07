@@ -9,6 +9,14 @@ from graphs.data import Data
 from matplotlib import rcParams, rcParamsDefault
 
 
+CSS_TEMPLATE = """
+.canvas-view#{name} {{
+    background-color: {background_color};
+    color: {color};
+}}
+"""
+
+
 class PythonWindow(Graphs.Window):
     """The main window class."""
 
@@ -67,11 +75,11 @@ class PythonWindow(Graphs.Window):
         canvas.connect("view_changed", on_view_changed)
 
         # Set headerbar color and contrast
-        self.props.headerbar_provider.load_from_string(
-            "headerbar#canvas-headerbar { "
-            f"background-color: {params['figure.facecolor']}; "
-            f"color: {params['text.color']}; "
-            "}",
+        css = CSS_TEMPLATE.format(
+            name=self.props.content_view.get_name(),
+            background_color=params["figure.facecolor"],
+            color=params["text.color"],
         )
+        self.props.css_provider.load_from_string(css)
 
         self.set_canvas(canvas)

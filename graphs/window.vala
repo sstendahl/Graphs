@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+using Gdk;
 using Gtk;
 using Adw;
 
@@ -43,12 +44,6 @@ namespace Graphs {
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
         [GtkChild]
-        private unowned Adw.HeaderBar content_headerbar { get; }
-
-        [GtkChild]
-        private unowned Adw.HeaderBar content_footerbar { get; }
-
-        [GtkChild]
         private unowned Adw.WindowTitle content_title { get; }
 
         [GtkChild]
@@ -66,9 +61,11 @@ namespace Graphs {
         [GtkChild]
         private unowned Stack itemlist_stack { get; }
 
-        public Data data { get; construct set; }
+        [GtkChild]
+        protected unowned Adw.ToolbarView content_view { get; }
 
-        protected CssProvider headerbar_provider { get; private set; }
+        public Data data { get; construct set; }
+        protected CssProvider css_provider { get; private set; }
 
         public int mode {
             set {
@@ -102,14 +99,14 @@ namespace Graphs {
         private uint _inhibit_cookie = 0;
         private Menu _scales_section = new Menu ();
 
-        construct {
-            this.headerbar_provider = new CssProvider ();
-            content_headerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+        protected void setup () {
+            var application = application as Application;
+
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_footerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
+            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
             var item_drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
@@ -138,13 +135,13 @@ namespace Graphs {
                 }
             });
             file_drop_target.drop.connect ((drop, val, x, y) => {
-                var application = application as Application;
                 var file_list = ((Gdk.FileList) val).get_files ();
                 File[] files = {};
                 for (uint i = 0; i < file_list.length (); i++) {
                     files += file_list.nth_data (i);
                 }
                 application.python_helper.import_from_files (this, files);
+                return true;
             });
             drag_overlay.add_controller (file_drop_target);
 
@@ -154,10 +151,6 @@ namespace Graphs {
 
             var view_menu = view_menu_button.get_menu_model () as Menu;
             view_menu.append_section (null, _scales_section);
-        }
-
-        protected void setup () {
-            var application = application as Application;
 
             Actions.setup_local (this);
 

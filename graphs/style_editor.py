@@ -456,6 +456,12 @@ _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
 _PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
 _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
+CSS_TEMPLATE = """
+.canvas-view#{name} {{
+    background-color: {background_color};
+    color: {color};
+}}
+"""
 
 
 class PythonStyleEditor(Graphs.StyleEditor):
@@ -465,6 +471,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
+        self.setup()
 
         style_editor = StyleEditorBox(self)
         style_editor.connect("params-changed", self._on_params_changed)
@@ -512,12 +519,12 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self.set_canvas(canvas)
 
         # Set headerbar color
-        self.get_headerbar_provider().load_from_string(
-            "headerbar#preview-headerbar { "
-            f"background-color: {params['figure.facecolor']}; "
-            f"color: {params['text.color']}; "
-            "}",
+        css = CSS_TEMPLATE.format(
+            name=self.props.content_view.get_name(),
+            background_color=params["figure.facecolor"],
+            color=params["text.color"],
         )
+        self.props.css_provider.load_from_string(css)
 
         if changes_unsaved:
             self.set_unsaved(True)
