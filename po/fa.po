@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-26 13:30+0000\n"
-"PO-Revision-Date: 2025-03-03 18:43+0330\n"
+"POT-Creation-Date: 2025-03-07 10:30+0000\n"
+"PO-Revision-Date: 2025-03-08 02:11+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "نمودارها"
 
@@ -259,7 +259,7 @@ msgstr "افزودن برازش به داده‌ها"
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
 #: data/ui/window.blp:425
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
@@ -635,7 +635,7 @@ msgid "Transparent Background"
 msgstr "پس‌زمینهٔ شفاف"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "سبک"
 
@@ -655,7 +655,7 @@ msgstr "تنظیمات شکل"
 msgid "Labels"
 msgstr "برچسب‌ها"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "عنوان"
 
@@ -1333,11 +1333,11 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "گشودن سبک"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
 msgid "Graphs Style Editor"
 msgstr "ویرایشگر سبک نمودارها"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
 msgstr "گشودن فهرست برنامه"
@@ -1354,42 +1354,42 @@ msgstr "گشودن…"
 msgid "Open Preview"
 msgstr "گشودن پیش‌نمایش"
 
-#: data/ui/style-editor-window.blp:199
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+msgid "Open Style…"
+msgstr "گشودن سبک…"
+
+#: data/ui/style-editor-window.blp:204
 msgid "Save Style…"
 msgstr "ذخیرهٔ سبک…"
 
-#: data/ui/style-editor-window.blp:200
+#: data/ui/style-editor-window.blp:205
 msgid "Save Style as…"
 msgstr "ذخیرهٔ سبک به شکل…"
 
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
 #: data/ui/window.blp:458
 msgid "Keyboard Shortcuts"
 msgstr "میان‌برهای صفحه‌کلید"
 
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
 #: data/ui/window.blp:459
 msgid "Help"
 msgstr "راهنما"
 
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
 #: data/ui/window.blp:460
 msgid "About Graphs"
 msgstr "دربارهٔ نمودارها"
 
-#: data/ui/style-editor-window.blp:212
-msgid "Open Style…"
-msgstr "گشودن سبک…"
-
-#: data/ui/style-preview.blp:55
+#: data/ui/style-preview.blp:51
 msgid "Open"
 msgstr "گشودن"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:56
 msgid "Open With…"
 msgstr "گشودن با…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:61
 msgid "Delete…"
 msgstr "حذف…"
 
@@ -1663,27 +1663,31 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "انجام دوبارهٔ کنش"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:42
+msgid "translator-credits"
+msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
 
-#: graphs/actions.vala:172
+#: graphs/actions.vala:241
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "پرونده‌های پشتیبانی شده"
 
-#: graphs/actions.vala:176
+#: graphs/actions.vala:245
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "پرونده‌های اسکی"
 
-#: graphs/actions.vala:180
+#: graphs/actions.vala:249
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:183
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1692,10 +1696,6 @@ msgstr "Leybold xry"
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "نتوانست {font} را بار کند"
-
-#: graphs/application.vala:97
-msgid "translator-credits"
-msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1735,21 +1735,17 @@ msgstr "جمع R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "نتوانست {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
 
-#: graphs/data.py:118
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "سبک نمودار {stylename} وجود ندارد. بار کردن ترجیح سامانه"
 
-#: graphs/data.py:483
-msgid "Failed to parse project file"
-msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
-
-#: graphs/data.py:491
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "شکست در بار کردن پروژه"
 
@@ -1883,13 +1879,29 @@ msgstr "درون‌ریزی شکست خورد. اندیس ستون بیرون ا
 msgid "Unable to import from file"
 msgstr "ناتوان در درون‌ریزی از پرونده"
 
-#: graphs/project.py:46
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "پروندهٔ پروژه داده‌ای ندارد"
 
-#: graphs/project.py:59
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "پروژه از نگارشی جدیدتر و ناسازگار آمده"
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "شکست در مهاجرت به جدید"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "شکست در مهاجرت دادن پروژه"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "شکست در صحت‌سنجی پروژه"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
@@ -1913,13 +1925,19 @@ msgstr "رنگ {number}"
 msgid "Example Item"
 msgstr "مورد مثال"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "برچسب X"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "برچسب Y"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "ویرایشگر سبک نمودارها— %s"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2009,9 +2027,6 @@ msgstr "ریشهٔ معکوس"
 
 #~ msgid "Line Properties"
 #~ msgstr "ویژگی‌های خط"
-
-#~ msgid "Unable to do transformation"
-#~ msgstr "ناتوان در انجام تبدیل‌ها"
 
 #~ msgid "The operation on "
 #~ msgstr "عملیات روی"
