@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for migrating old data to new structures."""
 import contextlib
+import logging
 import pickle
 import sys
 
@@ -125,6 +126,7 @@ _DEFAULT_VIEW = [0, 1, 0, 10, 0, 1, 0, 10]
 
 def migrate_project(file: Gio.File) -> dict:
     """Migrate pickle-based project."""
+    logging.debug("Migrating legacy project")
     sys.modules["graphs.misc"] = sys.modules[__name__]
     sys.modules["graphs.item"] = sys.modules[__name__]
     with gio_pyio.open(file, "rb") as wrapper:
@@ -132,7 +134,7 @@ def migrate_project(file: Gio.File) -> dict:
 
     figure_settings = project["plot_settings"].migrate()
     current_limits = [figure_settings[key] for key in misc.LIMITS]
-    history_pos = project["clipboard_pos"]
+    history_pos = int(project["clipboard_pos"])
     history_states = _migrate_clipboard(
         project["datadict_clipboard"],
         history_pos,
@@ -140,7 +142,8 @@ def migrate_project(file: Gio.File) -> dict:
     )
 
     return {
-        "version": project["version"],
+        "version": str(project["version"]),
+        "project-version": 1,
         "data": [item.migrate() for item in project["data"].values()],
         "figure-settings": figure_settings,
         "history-states": history_states,
@@ -155,15 +158,15 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
         return []
     new_clipboard = []
     if len(clipboard) > 100:
-        clipboard = clipboard[len(clipboard) - 100:]
+        clipboard = list(clipboard[len(clipboard) - 100:])
     states = [{
         item.key: item.migrate()
         for item in state.values()
     } for state in clipboard]
-    new_clipboard.append(([], _DEFAULT_VIEW.copy()))
+    new_clipboard.append([[], _DEFAULT_VIEW.copy()])
     initial_items = states[1].values()
     new_clipboard.append((
-        [(1, item) for item in initial_items],
+        [[1, item] for item in initial_items],
         _get_limits(initial_items),
     ))
     if len(states) > 2:
@@ -174,27 +177,27 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
             if len(current_state) < len(previous_state):
                 for key, item in previous_state.copy().items():
                     if key not in current_state:
-                        batch.append((2, previous_state.index(item), item))
+                        batch.append([2, [previous_state.index(item), item]])
                         previous_state.pop(item)
             for count_2, (key, item) in enumerate(current_state.items()):
                 if key in previous_state:
                     previous_index = list(previous_state.keys()).index(key)
                     if previous_index != count_2:
-                        batch.append((3, (previous_index, count_2)))
+                        batch.append([3, [previous_index, count_2]])
                     else:
                         for key_2, value in item.items():
                             previous_value = previous_state[key][key_2]
                             if value != previous_value:
                                 batch.append(
-                                    (0, (key, key_2, previous_value, value)),
+                                    [0, [key, key_2, previous_value, value]],
                                 )
                 else:
-                    batch.append((1, item))
+                    batch.append([1, item])
             if clipboard_pos == count - len(states) + 1:
                 limits = _get_limits(current_state.values())
             else:
                 limits = current_limits
-            new_clipboard.append((batch, limits))
+            new_clipboard.append([batch, limits])
     return new_clipboard
 
 
