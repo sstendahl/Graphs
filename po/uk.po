@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-04 10:32+0000\n"
-"PO-Revision-Date: 2025-03-04 15:13+0200\n"
+"POT-Creation-Date: 2025-03-07 10:30+0000\n"
+"PO-Revision-Date: 2025-03-08 22:32+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1757,23 +1757,19 @@ msgstr "Сума R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
 
-#: graphs/data.py:118
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
 
-#: graphs/data.py:483
-msgid "Failed to parse project file"
-msgstr "Не вдалося обробити файл проєкту"
-
-#: graphs/data.py:491
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -1912,13 +1908,32 @@ msgstr "Не вдалося імпортувати, індекс стовпчи�
 msgid "Unable to import from file"
 msgstr "Не вдалося імпортувати дані з файла"
 
-#: graphs/project.py:46
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "У файлі проєкту не вистачає даних"
 
-#: graphs/project.py:59
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проєкт походить з нової несумісної версії «Графіків»"
+
+#: graphs/project.py:237
+#| msgid "Unable to do transformation"
+msgid "Failed to do legacy migration"
+msgstr "Не вдалося перенести дані зі старої версії"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Не вдалося обробити файл проєкту"
+
+#: graphs/project.py:243
+#| msgid "Failed to load project"
+msgid "Failed to migrate project"
+msgstr "Не вдалося перенести проєкт"
+
+#: graphs/project.py:247
+#| msgid "Failed to load project"
+msgid "Failed to validate project"
+msgstr "Не вдалося перевірити проєкт"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
@@ -1953,7 +1968,6 @@ msgstr "Мітка Y"
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor.vala:36
 #, c-format
-#| msgid "Graphs Style Editor"
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
@@ -2049,9 +2063,6 @@ msgstr "Обернена коренева"
 
 #~ msgid "Line Properties"
 #~ msgstr "Властивості лінії"
-
-#~ msgid "Unable to do transformation"
-#~ msgstr "Не вдалося виконати перетворення"
 
 #~ msgid "The operation on "
 #~ msgstr "Дія над "
