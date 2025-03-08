@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-04 16:18+0000\n"
-"PO-Revision-Date: 2025-03-05 19:55+0800\n"
+"POT-Creation-Date: 2025-03-07 10:30+0000\n"
+"PO-Revision-Date: 2025-03-08 10:50+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1737,21 +1737,17 @@ msgstr "R² 的总和：{R2}"
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:114
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "无法解析 {stylename}，加载系统首选样式"
 
-#: graphs/data.py:119
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:503
-msgid "Failed to parse project file"
-msgstr "解析工程文件失败"
-
-#: graphs/data.py:511
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -1886,13 +1882,29 @@ msgstr "导入失败，列索引超出范围"
 msgid "Unable to import from file"
 msgstr "无法从文件导入"
 
-#: graphs/project.py:47
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "工程文件缺失数据"
 
-#: graphs/project.py:60
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "旧版本文件迁移失败"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "解析工程文件失败"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "迁移工程失败"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "校验工程失败"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
@@ -2018,9 +2030,6 @@ msgstr "逆平方根"
 
 #~ msgid "Line Properties"
 #~ msgstr "线条属性"
-
-#~ msgid "Unable to do transformation"
-#~ msgstr "无法执行变换"
 
 #~ msgid "The operation on "
 #~ msgstr "操作于"
