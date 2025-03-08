@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-05 13:44+0000\n"
-"PO-Revision-Date: 2025-03-05 20:58-0300\n"
+"POT-Creation-Date: 2025-03-08 09:00+0000\n"
+"PO-Revision-Date: 2025-03-08 09:17-0300\n"
 "Last-Translator: Álvaro Burns\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
@@ -1756,7 +1756,7 @@ msgid "Fitting Parameters for %s"
 msgstr "Ajustando parâmetros para %s"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:114
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
@@ -1764,18 +1764,14 @@ msgstr ""
 "sistema"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:119
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "O estilo de plotagem {stylename} não existe. Carregando o estilo predefinido "
 "do sistema"
 
-#: graphs/data.py:503
-msgid "Failed to parse project file"
-msgstr "Falha ao analisar o arquivo do projeto"
-
-#: graphs/data.py:511
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
@@ -1912,13 +1908,29 @@ msgstr "Falha na importação. Índice da coluna fora do intervalo"
 msgid "Unable to import from file"
 msgstr "Não foi possível importar do arquivo"
 
-#: graphs/project.py:47
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "Está faltando dados no arquivo do projeto"
 
-#: graphs/project.py:60
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "O projeto é de uma versão mais nova incompatível do Gráficos."
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "Falha ao fazer migração legada"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Falha ao analisar o arquivo do projeto"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "Falha ao migrar o projeto"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "Falha ao validar o projeto"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
@@ -2047,9 +2059,6 @@ msgstr "Raiz inversa"
 
 #~ msgid "Line Properties"
 #~ msgstr "Propriedades da linha"
-
-#~ msgid "Unable to do transformation"
-#~ msgstr "Não é possível fazer a transformação"
 
 #~ msgid "Step Size"
 #~ msgstr "Taxa de variação"
