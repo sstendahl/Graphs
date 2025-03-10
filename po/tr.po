@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-04 10:32+0000\n"
+"POT-Creation-Date: 2025-03-07 10:30+0000\n"
 "PO-Revision-Date: 2025-03-04 08:00+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
@@ -1754,21 +1754,17 @@ msgstr "R² toplamı: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "%s için Uyum Parametreleri"
 
-#: graphs/data.py:113
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "{stylename} ayrıştırılamadı, yükleme yeğlediği biçem yükleniyor"
 
-#: graphs/data.py:118
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Çizim biçemi {stylename} yok, yükleme sistemi tercih edildi"
 
-#: graphs/data.py:483
-msgid "Failed to parse project file"
-msgstr "Proje dosyası ayrıştırılamadı"
-
-#: graphs/data.py:491
+#: graphs/data.py:498
 msgid "Failed to load project"
 msgstr "Proje yüklenemedi"
 
@@ -1904,13 +1900,29 @@ msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
 msgid "Unable to import from file"
 msgstr "Dosyadan içe aktarılamadı"
 
-#: graphs/project.py:46
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "Proje dosyasında veri eksik"
 
-#: graphs/project.py:59
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Proje, Graphsʼın daha yeni ve uyumsuz sürümüne ait"
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "Eski göç ettirme yapılamadı"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Proje dosyası ayrıştırılamadı"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "Proje göç ettirilemedi"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "Proje doğrulanamadı"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
