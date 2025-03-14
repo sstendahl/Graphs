@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-26 12:54+0000\n"
-"PO-Revision-Date: 2024-08-06 13:30+0300\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2025-03-11 08:02+0000\n"
+"PO-Revision-Date: 2025-03-14 18:57+0200\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos+l10n@iki.fi>\n"
 "Language-Team: Finnish <lokalisointi-lista@googlegroups.com>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
@@ -18,17 +18,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:9 graphs/about.vala:23
-#| msgid "About Graphs"
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:7
 msgid "Plot and manipulate data"
 msgstr "Plottaa ja manipuloi dataa"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:12
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -38,14 +37,14 @@ msgid ""
 "transformations on the data."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:19
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -56,33 +55,33 @@ msgid ""
 "be suitable for any other desktop environment as well."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:36
+#: data/se.sjoerd.Graphs.metainfo.xml.in:36
 msgid "Plot and manipulate any data"
 msgstr "Plottaa ja manipuloi mitä tahansa dataa"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:40
+#: data/se.sjoerd.Graphs.metainfo.xml.in:40
 msgid "Full support for light and dark mode"
 msgstr "Täysi tuki vaalealle ja tummalle tilalle"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:44
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Generate data from an equation"
 msgstr "Luo uusi data yhtälöstä"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:48
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Manage plot stylesheets"
 msgstr "Hallitse plottien tyylisivuja"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:52
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Manipulate imported data"
 msgstr "Manipuloi tuotua dataa"
 
-#: data/se.sjoerd.Graphs.desktop.in:10
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualisation;Visualization;Fitting;xrdml;"
@@ -91,181 +90,49 @@ msgstr ""
 "Visualisation;Visualization;Fitting;xrdml;plottaus;graafi;tiede;matematiikka;"
 "yhtälöt;visualisointi;"
 
-#: data/ui/add-equation.blp:6
-msgid "Add Equation"
-msgstr "Lisää yhtälö"
+#: data/se.sjoerd.Graphs.desktop.in:16
+msgid "New Window"
+msgstr "Uusi ikkuna"
 
-#: data/ui/add-equation.blp:16 data/ui/add-style.blp:15 data/ui/dialogs.blp:8
-#: data/ui/dialogs.blp:19 data/ui/dialogs.blp:29 data/ui/export-figure.blp:15
-#: data/ui/import.blp:15 data/ui/transform.blp:16
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:454
+msgid "Style Editor"
+msgstr "Tyylimuokkain"
+
+#: data/ui/dialogs/delete-style.blp:5
+msgid "Delete Style?"
+msgstr "Poistetaanko tyyli?"
+
+#: data/ui/dialogs/delete-style.blp:7
+#: data/ui/dialogs/reset-import-settings.blp:8
+#: data/ui/dialogs/save-project-changes.blp:8
+#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:17
+#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
+#: data/ui/generate-data.blp:17 data/ui/import.blp:16 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Peru"
 
-#: data/ui/add-equation.blp:22 data/ui/add-style.blp:21
-msgid "Add"
-msgstr "Lisää"
+#: data/ui/dialogs/delete-style.blp:8
+msgid "Delete"
+msgstr "Poista"
 
-#: data/ui/add-equation.blp:41 data/ui/curve-fitting.blp:66
-#: data/ui/transform.blp:56
-msgid "Y ="
-msgstr "Y ="
+#: data/ui/dialogs/reset-import-settings.blp:5
+msgid "Reset to Defaults?"
+msgstr "Palautetaanko oletukset?"
 
-#: data/ui/add-equation.blp:49
-msgid "Enter a mathematical expression to generate data from"
-msgstr "Kirjoita matemaattinen lauseke, josta data luodaan"
+#: data/ui/dialogs/reset-import-settings.blp:6
+msgid "Are you sure you want to reset the import settings?"
+msgstr "Haluatko varmasti nollata tuonnin asetukset?"
 
-#: data/ui/add-equation.blp:57
-msgid "Name (optional)"
-msgstr "Nimi (valinnainen)"
+#: data/ui/dialogs/reset-import-settings.blp:9
+msgid "Reset"
+msgstr "Palauta"
 
-#: data/ui/add-equation.blp:70
-msgid "X Start"
-msgstr "X alku"
-
-#: data/ui/add-equation.blp:78
-msgid "X Stop"
-msgstr "X loppu"
-
-#: data/ui/add-equation.blp:86
-msgid "Step Size"
-msgstr "Askelkoko"
-
-#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:35
-msgid "Add New Style"
-msgstr "Lisää uusi tyyli"
-
-#: data/ui/add-style.blp:33
-msgid "Template"
-msgstr "Mallipohja"
-
-#: data/ui/add-style.blp:38 data/ui/edit-item.blp:21
-msgid "Name"
-msgstr "Nimi"
-
-#: data/ui/curve-fitting.blp:27 data/ui/item-box.blp:59
-msgid "Curve Fitting"
-msgstr "Käyrän sovitus"
-
-#: data/ui/curve-fitting.blp:32
-msgid "Open Curve Fitting Menu"
-msgstr "Avaa käyrän sovitusvalikko"
-
-#: data/ui/curve-fitting.blp:50
-msgid "Equation"
-msgstr "Yhtälö"
-
-#: data/ui/curve-fitting.blp:53
-msgctxt "regression-type"
-msgid "Linear"
-msgstr "Lineaarinen"
-
-#: data/ui/curve-fitting.blp:54
-msgctxt "regression-type"
-msgid "Quadratic"
-msgstr "Kvadraattinen"
-
-#: data/ui/curve-fitting.blp:55
-msgctxt "regression-type"
-msgid "Exponential"
-msgstr "Eksponentiaalinen"
-
-#: data/ui/curve-fitting.blp:56
-#, fuzzy
-#| msgid "Lower Left"
-msgctxt "regression-type"
-msgid "Power Law"
-msgstr "Vasen ala"
-
-#: data/ui/curve-fitting.blp:57
-msgctxt "regression-type"
-msgid "Logarithmic"
-msgstr "Logaritminen"
-
-#: data/ui/curve-fitting.blp:58
-msgctxt "regression-type"
-msgid "Sigmoid Logistic"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:59
-msgctxt "regression-type"
-msgid "Gaussian"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:60
-msgctxt "regression-type"
-msgid "Custom"
-msgstr "Mukautettu"
-
-#: data/ui/curve-fitting.blp:93
-msgid "Add Fit to Data"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:109 data/ui/window.blp:599 graphs/window.vala:302
-msgid "Toggle Sidebar"
-msgstr "Sivupalkki päälle/pois"
-
-#: data/ui/curve-fitting.blp:121 data/ui/window.blp:639
-msgid "Canvas Failed to Load"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:131
-msgid "Optimization Method"
-msgstr "Optimointitapa"
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:134
-#, fuzzy
-#| msgid "Levenberg-Marquardt"
-msgctxt "optimization"
-msgid "Levenberg-Marquardt"
-msgstr "Levenberg-Marquardt"
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:140
-msgctxt "optimization"
-msgid "Trust Region Reflective"
-msgstr ""
-
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:146
-msgctxt "optimization"
-msgid "Dogbox"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:152
-msgid "Confidence Bounds"
-msgstr ""
-
-#: data/ui/curve-fitting.blp:154
-#, fuzzy
-#| msgid "None"
-msgctxt "confidence"
-msgid "None"
-msgstr "Ei mitään"
-
-#: data/ui/curve-fitting.blp:160
-#, no-c-format
-msgctxt "confidence"
-msgid "1σ: 68% Confidence"
-msgstr "1σ: 68% varmuus"
-
-#: data/ui/curve-fitting.blp:166
-#, no-c-format
-msgctxt "confidence"
-msgid "2σ: 95% Confidence"
-msgstr "2σ: 95% varmuus"
-
-#: data/ui/curve-fitting.blp:172
-#, no-c-format
-msgctxt "confidence"
-msgid "3σ: 99.7% Confidence"
-msgstr "3σ: 99,7% varmuus"
-
-#: data/ui/dialogs.blp:5
+#: data/ui/dialogs/save-project-changes.blp:5
+#: data/ui/dialogs/save-style-changes.blp:5
 msgid "Save Changes?"
 msgstr "Tallennetaanko muutokset?"
 
-#: data/ui/dialogs.blp:6
+#: data/ui/dialogs/save-project-changes.blp:6
 msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
@@ -273,521 +140,728 @@ msgstr ""
 "Nykyinen projekti sisältää tallentamattomia muutoksia. Tallentamattomat "
 "muutokset katoavat pysyvästi."
 
-#: data/ui/dialogs.blp:9
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9
 msgid "Discard"
 msgstr "Hylkää"
 
-#: data/ui/dialogs.blp:10
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
 msgid "Save"
 msgstr "Tallenna"
 
-#: data/ui/dialogs.blp:17
-msgid "Delete Style?"
-msgstr "Poistetaanko tyyli?"
+#: data/ui/dialogs/save-style-changes.blp:6
+msgid ""
+"Current style contains unsaved changes, changes that are not saved will be "
+"permanently lost."
+msgstr ""
+"Nykyinen tyyli sisältää tallentamattomia muutoksia. Tallentamattomat "
+"muutokset katoavat pysyvästi."
 
-#: data/ui/dialogs.blp:20 data/ui/style-preview.blp:39
-msgid "Delete"
-msgstr "Poista"
+#: data/ui/add-equation.blp:6
+msgid "Add Equation"
+msgstr "Lisää yhtälö"
 
-#: data/ui/dialogs.blp:27
-msgid "Reset to Defaults?"
-msgstr "Palautetaanko oletukset?"
+#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
+msgid "Add"
+msgstr "Lisää"
 
-#: data/ui/dialogs.blp:30
-msgid "Reset"
-msgstr "Palauta"
+#: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
+msgid "Enter a mathematical expression"
+msgstr "Kirjoita matemaattinen lauseke"
 
-#: data/ui/edit-item.blp:11
-msgid "Selected Item"
-msgstr "Valittu kohde"
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
+#: data/ui/edit-item-equation.blp:13 data/ui/edit-item-generated-data.blp:13
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+msgid "Y ="
+msgstr "Y ="
 
-#: data/ui/edit-item.blp:12
-msgid "Choose which item to edit"
-msgstr "Valitse muokattava kohde"
+#: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
+msgid "Name (optional)"
+msgstr "Nimi (valinnainen)"
 
-#: data/ui/edit-item.blp:18
-msgid "Data"
-msgstr "Data"
+#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:38
+msgid "Add New Style"
+msgstr "Lisää uusi tyyli"
 
-#: data/ui/edit-item.blp:26
+#: data/ui/add-style.blp:39
+msgid "Template"
+msgstr "Mallipohja"
+
+#: data/ui/add-style.blp:44 data/ui/edit-item.blp:30
+msgid "Name"
+msgstr "Nimi"
+
+#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+msgid "Curve Fitting"
+msgstr "Käyrän sovitus"
+
+#: data/ui/curve-fitting.blp:43
+msgid "Open Curve Fitting Menu"
+msgstr "Avaa käyrän sovitusvalikko"
+
+#: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9
+#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:176
+msgid "Equation"
+msgstr "Yhtälö"
+
+#: data/ui/curve-fitting.blp:69
+msgctxt "regression-type"
+msgid "Linear"
+msgstr "Lineaarinen"
+
+#: data/ui/curve-fitting.blp:70
+msgctxt "regression-type"
+msgid "Quadratic"
+msgstr "Kvadraattinen"
+
+#: data/ui/curve-fitting.blp:71
+msgctxt "regression-type"
+msgid "Exponential"
+msgstr "Eksponentiaalinen"
+
+#: data/ui/curve-fitting.blp:72
+#, fuzzy
+#| msgid "Lower Left"
+msgctxt "regression-type"
+msgid "Power Law"
+msgstr "Vasen ala"
+
+#: data/ui/curve-fitting.blp:73
+msgctxt "regression-type"
+msgid "Logarithmic"
+msgstr "Logaritminen"
+
+#: data/ui/curve-fitting.blp:74
+msgctxt "regression-type"
+msgid "Sigmoid Logistic"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:75
+msgctxt "regression-type"
+msgid "Gaussian"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:76
+msgctxt "regression-type"
+msgid "Custom"
+msgstr "Mukautettu"
+
+#: data/ui/curve-fitting.blp:115
+msgid "Add Fit to Data"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:134
+msgid "Toggle Sidebar"
+msgstr "Sivupalkki päälle/pois"
+
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
+#: data/ui/window.blp:425
+msgid "Canvas Failed to Load"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:156
+msgid "Optimization Method"
+msgstr "Optimointitapa"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:160
+#, fuzzy
+#| msgid "Levenberg-Marquardt"
+msgctxt "optimization"
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:167
+msgctxt "optimization"
+msgid "Trust Region Reflective"
+msgstr ""
+
+#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:174
+msgctxt "optimization"
+msgid "Dogbox"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:181
+msgid "Confidence Bounds"
+msgstr ""
+
+#: data/ui/curve-fitting.blp:184
+#, fuzzy
+#| msgid "None"
+msgctxt "confidence"
+msgid "None"
+msgstr "Ei mitään"
+
+#: data/ui/curve-fitting.blp:191
+#, no-c-format
+msgctxt "confidence"
+msgid "1σ: 68% Confidence"
+msgstr "1σ: 68% varmuus"
+
+#: data/ui/curve-fitting.blp:198
+#, no-c-format
+msgctxt "confidence"
+msgid "2σ: 95% Confidence"
+msgstr "2σ: 95% varmuus"
+
+#: data/ui/curve-fitting.blp:205
+#, no-c-format
+msgctxt "confidence"
+msgid "3σ: 99.7% Confidence"
+msgstr "3σ: 99,7% varmuus"
+
+#: data/ui/edit-item.blp:27
+msgid "Name and Position"
+msgstr "Nimi ja sijainti"
+
+#: data/ui/edit-item.blp:35
 msgid "X-Axis Position"
 msgstr "X-akselin sijainti"
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:39
 msgid "Bottom"
 msgstr ""
 
-#: data/ui/edit-item.blp:28
+#: data/ui/edit-item.blp:40
 msgid "Top"
 msgstr ""
 
-#: data/ui/edit-item.blp:33
+#: data/ui/edit-item.blp:46
 msgid "Y-Axis Position"
 msgstr "Y-akselin sijainti"
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:50
 msgid "Left"
 msgstr ""
 
-#: data/ui/edit-item.blp:35
+#: data/ui/edit-item.blp:51
 msgid "Right"
 msgstr ""
 
-#: data/ui/edit-item.blp:42
-msgid "Line Properties"
-msgstr "Viivan ominaisuudet"
+#: data/ui/edit-item-data.blp:8
+msgid "Line and Markers"
+msgstr ""
 
-#: data/ui/edit-item.blp:45 data/ui/style-editor.blp:74
+#: data/ui/edit-item-data.blp:11 data/ui/edit-item-equation.blp:25
+#: data/ui/style-editor-box.blp:62
 msgid "Linestyle"
 msgstr "Viivan tyyli"
 
-#: data/ui/edit-item.blp:48 data/ui/style-editor.blp:77
+#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Ei mitään"
 
-#: data/ui/edit-item.blp:49 data/ui/style-editor.blp:78
+#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
+#: data/ui/style-editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Kiinteä"
 
-#: data/ui/edit-item.blp:50 data/ui/style-editor.blp:79
+#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
+#: data/ui/style-editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr ""
 
-#: data/ui/edit-item.blp:51 data/ui/style-editor.blp:80
+#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
+#: data/ui/style-editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr ""
 
-#: data/ui/edit-item.blp:52 data/ui/style-editor.blp:81
+#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
+#: data/ui/style-editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr ""
 
-#: data/ui/edit-item.blp:59 data/ui/style-editor.blp:88
+#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
+#: data/ui/style-editor-box.blp:77
 msgid "Linewidth"
 msgstr "Viivan paksuus"
 
-#: data/ui/edit-item.blp:73 data/ui/style-editor.blp:103
+#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:94
 msgid "Markers"
 msgstr ""
 
-#: data/ui/edit-item.blp:76 data/ui/style-editor.blp:106
-#, fuzzy
-#| msgid "None"
+#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Ei mitään"
 
-#: data/ui/edit-item.blp:77 data/ui/style-editor.blp:107
+#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
-msgstr ""
+msgstr "Piste"
 
-#: data/ui/edit-item.blp:78 data/ui/style-editor.blp:108
+#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr ""
 
-#: data/ui/edit-item.blp:79 data/ui/style-editor.blp:109
+#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
-msgstr ""
+msgstr "Ympyrä"
 
-#: data/ui/edit-item.blp:80 data/ui/style-editor.blp:110
+#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr ""
 
-#: data/ui/edit-item.blp:81 data/ui/style-editor.blp:111
+#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr ""
 
-#: data/ui/edit-item.blp:82 data/ui/style-editor.blp:112
+#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr ""
 
-#: data/ui/edit-item.blp:83 data/ui/style-editor.blp:113
+#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr ""
 
-#: data/ui/edit-item.blp:84 data/ui/style-editor.blp:114
-#, fuzzy
-#| msgid "Octagon"
+#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Kahdeksankulmio"
 
-#: data/ui/edit-item.blp:85 data/ui/style-editor.blp:115
-#, fuzzy
-#| msgid "Square"
+#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Neliö"
 
-#: data/ui/edit-item.blp:86 data/ui/style-editor.blp:116
-#, fuzzy
-#| msgid "Pentagon"
+#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Viisikulmio"
 
-#: data/ui/edit-item.blp:87 data/ui/style-editor.blp:117
-#, fuzzy
-#| msgid "Star"
+#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Tähti"
 
-#: data/ui/edit-item.blp:88 data/ui/style-editor.blp:118
-#, fuzzy
-#| msgid "Hexagon 1"
+#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Kuusikulmio 1"
 
-#: data/ui/edit-item.blp:89 data/ui/style-editor.blp:119
-#, fuzzy
-#| msgid "Hexagon 2"
+#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Kuusikulmio 2"
 
-#: data/ui/edit-item.blp:90 data/ui/style-editor.blp:120
+#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
-msgstr ""
+msgstr "Plus"
 
-#: data/ui/edit-item.blp:91 data/ui/style-editor.blp:121
-#, fuzzy
+#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:114
 #| msgid "X"
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:93 data/ui/style-editor.blp:123
+#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
-msgstr ""
+msgstr "Timantti"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item.blp:95 data/ui/style-editor.blp:125
+#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
-msgstr ""
+msgstr "Ohut timantti"
 
-#: data/ui/edit-item.blp:96 data/ui/style-editor.blp:126
+#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
-msgstr ""
+msgstr "Pystyviiva"
 
-#: data/ui/edit-item.blp:97 data/ui/style-editor.blp:127
+#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
-msgstr ""
+msgstr "Vaakaviiva"
 
-#: data/ui/edit-item.blp:98 data/ui/style-editor.blp:128
+#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
-msgstr ""
+msgstr "Täytetty plus"
 
-#: data/ui/edit-item.blp:99 data/ui/style-editor.blp:129
+#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
-msgstr ""
+msgstr "Täytetty X"
 
-#: data/ui/edit-item.blp:106 data/ui/style-editor.blp:136
+#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:128
 msgid "Marker Size"
 msgstr ""
+
+#: data/ui/edit-item-equation.blp:17 data/ui/edit-item-generated-data.blp:17
+msgid "Simplify"
+msgstr ""
+
+#: data/ui/edit-item-equation.blp:22
+#, fuzzy
+#| msgid "Lines"
+msgid "Line"
+msgstr "Viivat"
+
+#: data/ui/edit-item-generated-data.blp:29 data/ui/generate-data.blp:72
+msgid "X Start"
+msgstr "X alku"
+
+#: data/ui/edit-item-generated-data.blp:35 data/ui/generate-data.blp:79
+msgid "X Stop"
+msgstr "X loppu"
+
+#: data/ui/edit-item-generated-data.blp:43 data/ui/generate-data.blp:88
+msgid "Steps"
+msgstr "Askeleet"
+
+#: data/ui/edit-item-generated-data.blp:53 data/ui/generate-data.blp:98
+#, fuzzy
+#| msgid "Scaling"
+msgid "Scale"
+msgstr "Skaalaus"
+
+#: data/ui/edit-item-generated-data.blp:54 data/ui/generate-data.blp:99
+msgid "Determines the spacing between data points"
+msgstr "Määrittää datapisteiden välistyksen"
+
+#: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
+#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
+#: graphs/window.vala:385
+msgctxt "scale"
+msgid "Linear"
+msgstr "Lineaarinen"
+
+#: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
+#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
+#: graphs/window.vala:386
+#| msgctxt "scale"
+#| msgid "Logarithmic"
+msgctxt "scale"
+msgid "Logarithmic (Base 10)"
+msgstr "Logaritminen (kymmenkantainen)"
+
+#: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
+#: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
+#: graphs/window.vala:387
+#| msgctxt "scale"
+#| msgid "Logarithmic"
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Logaritminen (kaksikantainen)"
+
+#: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
+#: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
+#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
+#: graphs/window.vala:388
+msgctxt "scale"
+msgid "Radians"
+msgstr "Radiaanit"
+
+#: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
+#: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
+#: graphs/window.vala:389
+msgctxt "scale"
+msgid "Square Root"
+msgstr "Neliöjuuri"
+
+#: data/ui/edit-item-generated-data.blp:63 data/ui/figure-settings-page.blp:152
+#: data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
+#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+msgctxt "scale"
+msgid "Inverse"
+msgstr "Käänteinen"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "Vie kaavio"
 
-#: data/ui/export-figure.blp:21 graphs/export_figure.vala:51
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
 msgid "Export"
 msgstr "Vie"
 
-#: data/ui/export-figure.blp:35
+#: data/ui/export-figure.blp:41
 msgid "File Format"
 msgstr "Tiedostomuoto"
 
-#: data/ui/export-figure.blp:38
+#: data/ui/export-figure.blp:46
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "Encapsulated PostScript"
 
-#: data/ui/export-figure.blp:39
+#: data/ui/export-figure.blp:47
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:40
+#: data/ui/export-figure.blp:48
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:49
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:42
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: data/ui/export-figure.blp:43
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:44
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:58
 msgid "Resolution (dpi)"
 msgstr "Tarkkuus (dpi)"
 
-#: data/ui/export-figure.blp:57
+#: data/ui/export-figure.blp:67
 msgid "Transparent Background"
 msgstr "Läpinäkyvä tausta"
 
-#: data/ui/figure-settings-dialog.blp:28 data/ui/figure-settings-page.blp:210
+#: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Tyyli"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:660
+#: data/ui/figure-settings-dialog.blp:76
+#| msgid "Export Data…"
+msgid "Import Style…"
+msgstr "Tuo tyyli…"
+
+#: data/ui/figure-settings-dialog.blp:81
+#| msgid "Delete Style?"
+msgid "Create Style…"
+msgstr "Luo tyyli…"
+
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:450
 msgid "Figure Settings"
 msgstr "Kaavion asetukset"
 
-#: data/ui/figure-settings-page.blp:21
+#: data/ui/figure-settings-page.blp:26
 msgid "Labels"
 msgstr "Selitteet"
 
-#: data/ui/figure-settings-page.blp:24
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Otsikko"
 
-#: data/ui/figure-settings-page.blp:29
+#: data/ui/figure-settings-page.blp:34
 msgid "Bottom X Axis Label"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:34
+#: data/ui/figure-settings-page.blp:39
 msgid "Top X Axis Label"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:39
+#: data/ui/figure-settings-page.blp:44
 msgid "Left Y Axis Label"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:44
+#: data/ui/figure-settings-page.blp:49
 msgid "Right Y Axis Label"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:49
+#: data/ui/figure-settings-page.blp:54
 msgid "Axis Limits"
 msgstr "Akselin rajat"
 
-#: data/ui/figure-settings-page.blp:60
+#: data/ui/figure-settings-page.blp:68
 msgid "Bottom X Axis Minimum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:65
+#: data/ui/figure-settings-page.blp:74
 msgid "Bottom X Axis Maximum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:76
+#: data/ui/figure-settings-page.blp:87
 msgid "Top X Axis Minimum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:81
+#: data/ui/figure-settings-page.blp:93
 msgid "Top X Axis Maximum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:92
+#: data/ui/figure-settings-page.blp:106
 msgid "Left Y Axis Minimum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:97
+#: data/ui/figure-settings-page.blp:112
 msgid "Left Y Axis Maximum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:108
+#: data/ui/figure-settings-page.blp:125
 msgid "Right Y Axis Minimum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:113
+#: data/ui/figure-settings-page.blp:131
 msgid "Right Y Axis Maximum"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:121
+#: data/ui/figure-settings-page.blp:139
 msgid "Scaling"
 msgstr "Skaalaus"
 
-#: data/ui/figure-settings-page.blp:125 graphs/window.vala:342
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
 msgid "Bottom X Axis Scale"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:128 data/ui/figure-settings-page.blp:142
-#: data/ui/figure-settings-page.blp:156 data/ui/figure-settings-page.blp:170
-#: graphs/window.vala:312
-msgctxt "scale"
-msgid "Linear"
-msgstr "Lineaarinen"
-
-#: data/ui/figure-settings-page.blp:129 data/ui/figure-settings-page.blp:143
-#: data/ui/figure-settings-page.blp:157 data/ui/figure-settings-page.blp:171
-#: graphs/window.vala:313
-msgctxt "scale"
-msgid "Logarithmic"
-msgstr "Logaritminen"
-
-#: data/ui/figure-settings-page.blp:130 data/ui/figure-settings-page.blp:144
-#: data/ui/figure-settings-page.blp:158 data/ui/figure-settings-page.blp:172
-#: graphs/window.vala:314
-msgctxt "scale"
-msgid "Radians"
-msgstr "Radiaanit"
-
-#: data/ui/figure-settings-page.blp:131 data/ui/figure-settings-page.blp:145
-#: data/ui/figure-settings-page.blp:159 data/ui/figure-settings-page.blp:173
-#: graphs/window.vala:315
-msgctxt "scale"
-msgid "Square Root"
-msgstr "Neliöjuuri"
-
-#: data/ui/figure-settings-page.blp:132 data/ui/figure-settings-page.blp:146
-#: data/ui/figure-settings-page.blp:160 data/ui/figure-settings-page.blp:174
-msgctxt "scale"
-msgid "Inverse"
-msgstr "Käänteinen"
-
-#: data/ui/figure-settings-page.blp:139 graphs/window.vala:343
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
 msgid "Top X Axis Scale"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:153 graphs/window.vala:348
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
 msgid "Left Y Axis Scale"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:167 graphs/window.vala:347
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
 msgid "Right Y Axis Scale"
 msgstr ""
 
-#: data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:207
 msgid "Appearance"
 msgstr "Ulkoasu"
 
-#: data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:210
 msgid "Show Legend"
 msgstr "Näytä selite"
 
-#: data/ui/figure-settings-page.blp:187
+#: data/ui/figure-settings-page.blp:214
 msgid "Legend Position"
 msgstr "Selitteen sijainti"
 
-#: data/ui/figure-settings-page.blp:191
+#: data/ui/figure-settings-page.blp:219
 #, fuzzy
 #| msgid "Auto"
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Automaattinen"
 
-#: data/ui/figure-settings-page.blp:192
+#: data/ui/figure-settings-page.blp:220
 #, fuzzy
 #| msgid "Upper Right"
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Oikea ylä"
 
-#: data/ui/figure-settings-page.blp:193
+#: data/ui/figure-settings-page.blp:221
 #, fuzzy
 #| msgid "Upper Left"
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Oikea vasen"
 
-#: data/ui/figure-settings-page.blp:194
+#: data/ui/figure-settings-page.blp:222
 #, fuzzy
 #| msgid "Lower Left"
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Vasen ala"
 
-#: data/ui/figure-settings-page.blp:195
+#: data/ui/figure-settings-page.blp:223
 #, fuzzy
 #| msgid "Lower Right"
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Oikea ala"
 
-#: data/ui/figure-settings-page.blp:196
+#: data/ui/figure-settings-page.blp:224
 #, fuzzy
 #| msgid "Upper Left"
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Oikea vasen"
 
-#: data/ui/figure-settings-page.blp:197
+#: data/ui/figure-settings-page.blp:225
 #, fuzzy
 #| msgid "Upper Right"
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Oikea ylä"
 
-#: data/ui/figure-settings-page.blp:198
+#: data/ui/figure-settings-page.blp:226
 #, fuzzy
 #| msgid "Lower Left"
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Vasen ala"
 
-#: data/ui/figure-settings-page.blp:199
+#: data/ui/figure-settings-page.blp:227
 #, fuzzy
 #| msgid "Upper Left"
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Oikea vasen"
 
-#: data/ui/figure-settings-page.blp:200
+#: data/ui/figure-settings-page.blp:228
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Keskitä"
 
-#: data/ui/figure-settings-page.blp:206
+#: data/ui/figure-settings-page.blp:234
 msgid "Hide Unselected Items"
 msgstr "Piilota valitsemattomat kohteet"
 
-#: data/ui/figure-settings-page.blp:228
+#: data/ui/figure-settings-page.blp:256
 msgid "Set as Default"
 msgstr "Aseta oletukseksi"
 
-#: data/ui/fitting-parameters.blp:26
+#: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
 msgstr "Alustava veikkaus"
 
-#: data/ui/fitting-parameters.blp:38
+#: data/ui/fitting-parameters.blp:45
 msgid "Minimum"
 msgstr "Vähintään"
 
-#: data/ui/fitting-parameters.blp:49
+#: data/ui/fitting-parameters.blp:59
 msgid "Maximum"
 msgstr "Enintään"
 
+#: data/ui/generate-data.blp:6
+msgid "Generate Data"
+msgstr "Luo dataa"
+
+#: data/ui/generate-data.blp:23
+msgid "Generate"
+msgstr "Luo"
+
 #: data/ui/import.blp:6
-msgid "Modify Import Parameters"
+#, fuzzy
+#| msgid "Modify Import Parameters"
+msgid "Import Parameters"
 msgstr "Muokkaa tuontiparametrejä"
 
 #: data/ui/import.blp:27
+#| msgid "Reset to Defaults?"
+msgid "Reset to Defaults…"
+msgstr "Palauta oletusarvot…"
+
+#: data/ui/import.blp:32
 msgid "Import"
 msgstr "Tuo"
 
@@ -799,503 +873,570 @@ msgstr "Erotin"
 msgid "Character sequence used to split values"
 msgstr "Arvot erottava merkkijono"
 
-#: data/ui/import-columns.blp:11
+#: data/ui/import-columns.blp:12
 msgctxt "delimiter"
 msgid "Whitespace"
 msgstr "Tyhjätila"
 
-#: data/ui/import-columns.blp:12
+#: data/ui/import-columns.blp:13
 msgctxt "delimiter"
 msgid "Tab"
 msgstr "Sarkain"
 
-#: data/ui/import-columns.blp:13
+#: data/ui/import-columns.blp:14
 msgctxt "delimiter"
 msgid "Colon (:)"
 msgstr "Kaksoispiste (:)"
 
-#: data/ui/import-columns.blp:14
+#: data/ui/import-columns.blp:15
 msgctxt "delimiter"
 msgid "Semicolon (;)"
 msgstr "Puolipiste (;)"
 
-#: data/ui/import-columns.blp:15
+#: data/ui/import-columns.blp:16
 msgctxt "delimiter"
 msgid "Decimal comma (,)"
 msgstr "Desimaalipilkku (,)"
 
-#: data/ui/import-columns.blp:16
+#: data/ui/import-columns.blp:17
 msgctxt "delimiter"
 msgid "Decimal point (.)"
 msgstr "Desimaalipiste (.)"
 
-#: data/ui/import-columns.blp:17
+#: data/ui/import-columns.blp:18
 msgctxt "delimiter"
 msgid "Custom"
 msgstr "Mukautettu"
 
-#: data/ui/import-columns.blp:24
+#: data/ui/import-columns.blp:26
 msgid "Custom Delimiter"
 msgstr "Mukautettu erotin"
 
-#: data/ui/import-columns.blp:28
+#: data/ui/import-columns.blp:30
 msgid "Decimal Separator"
 msgstr "Desimaalierotin"
 
-#: data/ui/import-columns.blp:31
+#: data/ui/import-columns.blp:34
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "Desimaalipilkku (,)"
 
-#: data/ui/import-columns.blp:32
+#: data/ui/import-columns.blp:35
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "Desimaalipiste (.)"
 
-#: data/ui/import-columns.blp:38
+#: data/ui/import-columns.blp:41
 msgid "Column X"
 msgstr "Sarake X"
 
-#: data/ui/import-columns.blp:39
+#: data/ui/import-columns.blp:42
 msgid "X-data column index"
 msgstr "X-datan sarakeindeksi"
 
-#: data/ui/import-columns.blp:48
+#: data/ui/import-columns.blp:52
 msgid "Column Y"
 msgstr "Sarake Y"
 
-#: data/ui/import-columns.blp:50
+#: data/ui/import-columns.blp:54
 msgid "Y-data column index"
 msgstr "Y-datan sarakeindeksi"
 
-#: data/ui/import-columns.blp:59
+#: data/ui/import-columns.blp:63
 msgid "Skip Rows"
 msgstr ""
 
-#: data/ui/import-columns.blp:60
+#: data/ui/import-columns.blp:64
 msgid "Ignored row indices"
 msgstr ""
 
-#: data/ui/item-box.blp:17
+#: data/ui/item-box.blp:20
 msgid "Pick Color"
 msgstr "Valitse väri"
 
-#: data/ui/item-box.blp:46
-msgid "Move Item "
-msgstr "Siirrä kohde "
+#: data/ui/item-box.blp:54
+msgid "Move Item"
+msgstr "Siirrä kohde"
 
-#: data/ui/item-box.blp:63
+#: data/ui/item-box.blp:75
 msgid "Remove Item"
 msgstr "Poista kohde"
 
-#: data/ui/shortcuts.blp:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Yleiset"
+#: data/ui/operations.blp:20
+msgid "Adjust"
+msgstr "Säädä"
 
-#: data/ui/shortcuts.blp:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Näytä pikanäppäimet"
+#: data/ui/operations.blp:30
+msgid "Combine all selected data"
+msgstr "Yhdistä kaikki valittu data"
 
-#: data/ui/shortcuts.blp:19
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "Avaa ohje"
+#: data/ui/operations.blp:41
+msgid "Combine"
+msgstr "Yhdistä"
 
-#: data/ui/shortcuts.blp:24
-msgctxt "shortcut window"
-msgid "Open Figure Settings"
-msgstr "Avaa kaavion asetukset"
+#: data/ui/operations.blp:46
+msgid "Cut selected data"
+msgstr "Leikkaa valittu data"
 
-#: data/ui/shortcuts.blp:29
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "Sulje sovellus"
+#: data/ui/operations.blp:57
+msgid "Cut"
+msgstr "Leikkaa"
 
-#: data/ui/shortcuts.blp:33
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "Sulje sovelluksen ikkuna"
+#: data/ui/operations.blp:62
+msgid "Shift all data vertically with respect to each other"
+msgstr ""
 
-#: data/ui/shortcuts.blp:39
-msgctxt "shortcut window"
-msgid "Mode Switching"
-msgstr "Tilan vaihtaminen"
+#: data/ui/operations.blp:73
+msgid "Shift"
+msgstr ""
 
-#: data/ui/shortcuts.blp:42
-msgctxt "shortcut window"
-msgid "Pan Mode"
-msgstr "Liikkumistila"
+#: data/ui/operations.blp:79
+msgid "Normalize data"
+msgstr "Normalisoi data"
 
-#: data/ui/shortcuts.blp:47
-msgctxt "shortcut window"
-msgid "Zoom Mode"
-msgstr "Suurennustila"
+#: data/ui/operations.blp:90
+msgid "Normalize"
+msgstr "Normalisoi"
 
-#: data/ui/shortcuts.blp:52
-msgctxt "shortcut window"
-msgid "Select Mode"
-msgstr "Valintatila"
+#: data/ui/operations.blp:96
+msgid "Smoothen data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:58
-msgctxt "shortcut window"
-msgid "New Data"
-msgstr "Uusi data"
+#: data/ui/operations.blp:110
+msgid "Smoothen"
+msgstr "Tasoita"
 
-#: data/ui/shortcuts.blp:61
-msgctxt "shortcut window"
-msgid "Add Data from Equation"
-msgstr "Lisää data yhtälöstä"
+#: data/ui/operations.blp:116
+msgid "Center data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:66
-msgctxt "shortcut window"
-msgid "Add Data from File"
-msgstr "Uusi data tiedostosta"
+#: data/ui/operations.blp:129
+msgid "Center"
+msgstr "Keskitä"
 
-#: data/ui/shortcuts.blp:71
-msgctxt "shortcut window"
-msgid "New Project"
-msgstr "Uusi projekti"
+#: data/ui/operations.blp:137 data/ui/transform.blp:23
+msgid "Transform"
+msgstr "Muunna"
 
-#: data/ui/shortcuts.blp:76
-msgctxt "shortcut window"
-msgid "Open Project"
-msgstr "Avaa projekti"
+#: data/ui/operations.blp:147
+msgid "Get the derivative of the data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:81
-msgctxt "shortcut window"
-msgid "Delete Selected Data"
-msgstr "Poista valittu data"
+#: data/ui/operations.blp:158
+msgid "Derivative"
+msgstr "Derivaatti"
 
-#: data/ui/shortcuts.blp:87
-msgctxt "shortcut window"
-msgid "Save and Export"
-msgstr "Tallennus ja vienti"
+#: data/ui/operations.blp:164
+msgid "Get the indefinite integral of the data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:89
-msgctxt "shortcut window"
-msgid "Export Data"
-msgstr "Vie data"
+#: data/ui/operations.blp:175
+msgid "Integral"
+msgstr "Integraali"
 
-#: data/ui/shortcuts.blp:93
-msgctxt "shortcut window"
-msgid "Export Figure"
-msgstr "Vie kaavio"
+#: data/ui/operations.blp:181
+msgid "Get the Fast Fourier Transform of the data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:97
-msgctxt "shortcut window"
-msgid "Save Project"
-msgstr "Tallenna projekti"
+#: data/ui/operations.blp:193
+msgid "FFT"
+msgstr "FFT"
 
-#: data/ui/shortcuts.blp:101
-msgctxt "shortcut window"
-msgid "Save Project As"
-msgstr "Tallenna projekti nimellä"
+#: data/ui/operations.blp:199
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:107
-msgctxt "shortcut window"
-msgid "View"
-msgstr "Näytä"
+#: data/ui/operations.blp:211
+msgid "Inverse FFT"
+msgstr "Käänteinen FFT"
 
-#: data/ui/shortcuts.blp:110
-msgctxt "shortcut window"
-msgid "Previous View"
-msgstr "Edellinen näkymä"
+#: data/ui/operations.blp:217
+msgid "Perform custom transformations on the data"
+msgstr ""
 
-#: data/ui/shortcuts.blp:115
-msgctxt "shortcut window"
-msgid "Next View"
-msgstr "Seuraava näkymä"
+#: data/ui/operations.blp:229
+msgid "Custom Transformation"
+msgstr "Mukautettu muunnos"
 
-#: data/ui/shortcuts.blp:120
-msgctxt "shortcut window"
-msgid "Optimize limits"
-msgstr "Optimoi rajat"
+#: data/ui/operations.blp:237
+msgid "Modify"
+msgstr "Muokkaa"
 
-#: data/ui/shortcuts.blp:125
-msgctxt "shortcut window"
-msgid "Zoom in"
-msgstr "Lähennä"
+#: data/ui/operations.blp:267
+msgid "Translate X"
+msgstr "Translatoi X"
 
-#: data/ui/shortcuts.blp:130
-msgctxt "shortcut window"
-msgid "Zoom out"
-msgstr "Loitonna"
+#: data/ui/operations.blp:294
+msgid "Translate Y"
+msgstr "Translatoi Y"
 
-#: data/ui/shortcuts.blp:135 data/ui/shortcuts.blp:155
-msgctxt "shortcut window"
-msgid "Select None"
-msgstr "Tyhjennä valinta"
+#: data/ui/operations.blp:321
+msgid "Multiply X"
+msgstr "Kerro X"
 
-#: data/ui/shortcuts.blp:141
-msgctxt "shortcut window"
-msgid "Toggle Sidebar"
-msgstr "Sivupalkki päälle/pois"
+#: data/ui/operations.blp:348
+msgid "Multiply Y"
+msgstr "Kerro Y"
 
-#: data/ui/shortcuts.blp:147
-msgctxt "shortcut window"
-msgid "Actions"
-msgstr "Toiminnot"
+#: data/ui/operations.blp:359
+msgid "At Maximum Y Value"
+msgstr "Suurimpaan Y-arvoon"
 
-#: data/ui/shortcuts.blp:150
-msgctxt "shortcut window"
-msgid "Select All"
-msgstr "Valitse kaikki"
+#: data/ui/operations.blp:365
+msgid "At Middle X Value"
+msgstr "Keskimmäiseen X-arvoon"
 
-#: data/ui/shortcuts.blp:160
-msgctxt "shortcut window"
-msgid "Undo Action"
-msgstr "Kumoa toiminto"
+#: data/ui/operations.blp:374 data/ui/smoothen-settings.blp:35
+msgid "Savitzky–Golay Filter"
+msgstr "Savitzky–Golay-suodatin"
 
-#: data/ui/shortcuts.blp:165
-msgctxt "shortcut window"
-msgid "Redo Action"
-msgstr "Tee toiminto uudelleen"
+#: data/ui/operations.blp:380 data/ui/smoothen-settings.blp:58
+msgid "Moving Average"
+msgstr "Liukuva keskiarvo"
+
+#: data/ui/operations.blp:388
+msgid "Advanced Settings"
+msgstr "Lisäasetukset"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
 msgstr ""
 
-#: data/ui/smoothen-settings.blp:30 data/ui/window.blp:695
-msgid "Savitzky–Golay Filter"
-msgstr "Savitzky–Golay-suodatin"
-
-#: data/ui/smoothen-settings.blp:32
+#: data/ui/smoothen-settings.blp:38
 msgid "Span percentage"
 msgstr ""
 
-#: data/ui/smoothen-settings.blp:33
+#: data/ui/smoothen-settings.blp:39
 msgid "What percentage of the data span to use for the filter window"
 msgstr ""
 
-#: data/ui/smoothen-settings.blp:40
+#: data/ui/smoothen-settings.blp:48
 msgid "Polynomial degree"
 msgstr ""
 
-#: data/ui/smoothen-settings.blp:48 data/ui/window.blp:700
-msgid "Moving Average"
-msgstr "Liukuva keskiarvo"
-
-#: data/ui/smoothen-settings.blp:50
+#: data/ui/smoothen-settings.blp:61
 msgid "Box points"
 msgstr ""
 
-#: data/ui/smoothen-settings.blp:51
+#: data/ui/smoothen-settings.blp:62
 msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 
-#: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:30
+#: data/ui/style-color-box.blp:20
 msgid "Edit"
 msgstr "Muokkaa"
 
-#: data/ui/style-color-box.blp:29
+#: data/ui/style-color-box.blp:35
 msgid "Remove"
 msgstr "Poista"
 
-#: data/ui/style-editor.blp:5
-msgid "Error - No Style selected"
-msgstr "Virhe - Tyyliä ei ole valittu"
-
-#: data/ui/style-editor.blp:27
+#: data/ui/style-editor-box.blp:10
 msgid "Style Name"
 msgstr "Tyylin nimi"
 
-#: data/ui/style-editor.blp:31
+#: data/ui/style-editor-box.blp:14
 msgid "Font"
 msgstr "Fontti"
 
-#: data/ui/style-editor.blp:42
+#: data/ui/style-editor-box.blp:26
 msgid "Title Size"
 msgstr "Otsikon koko"
 
-#: data/ui/style-editor.blp:43
+#: data/ui/style-editor-box.blp:27
 msgid "Title size in relation to text size"
 msgstr "Otsikon koko suhteessa tekstin kokoon"
 
-#: data/ui/style-editor.blp:56
+#: data/ui/style-editor-box.blp:42
 msgid "Label Size"
 msgstr "Nimekkeen koko"
 
-#: data/ui/style-editor.blp:57
+#: data/ui/style-editor-box.blp:43
 msgid "Label size in relation to text size"
 msgstr "Selitteen koko suhteessa tekstin kokoon"
 
-#: data/ui/style-editor.blp:71
+#: data/ui/style-editor-box.blp:59
 msgid "Lines"
 msgstr "Viivat"
 
-#: data/ui/style-editor.blp:152
+#: data/ui/style-editor-box.blp:146
 msgid "Axes"
 msgstr "Akselit"
 
-#: data/ui/style-editor.blp:155
+#: data/ui/style-editor-box.blp:149
 msgid "Axis Width"
 msgstr "Akselin leveys"
 
-#: data/ui/style-editor.blp:168
+#: data/ui/style-editor-box.blp:163
 msgid "Draw Frame"
 msgstr ""
 
-#: data/ui/style-editor.blp:173
+#: data/ui/style-editor-box.blp:168
 msgid "Ticks"
 msgstr ""
 
-#: data/ui/style-editor.blp:176
+#: data/ui/style-editor-box.blp:171
 msgid "Tick Directions"
 msgstr ""
 
-#: data/ui/style-editor.blp:178
+#: data/ui/style-editor-box.blp:175
 msgid "Inwards"
 msgstr "Sisäänpäin"
 
-#: data/ui/style-editor.blp:178
+#: data/ui/style-editor-box.blp:176
 msgid "Outwards"
 msgstr "Ulospäin"
 
-#: data/ui/style-editor.blp:183
+#: data/ui/style-editor-box.blp:182
 msgid "Minor Ticks"
 msgstr ""
 
-#: data/ui/style-editor.blp:187
+#: data/ui/style-editor-box.blp:186
 msgid "Major Tick Width"
 msgstr ""
 
-#: data/ui/style-editor.blp:200
+#: data/ui/style-editor-box.blp:201
 msgid "Minor Tick Width"
 msgstr ""
 
-#: data/ui/style-editor.blp:214
+#: data/ui/style-editor-box.blp:217
 msgid "Major Tick Length"
 msgstr ""
 
-#: data/ui/style-editor.blp:227
+#: data/ui/style-editor-box.blp:232
 msgid "Minor Tick Length"
 msgstr ""
 
-#: data/ui/style-editor.blp:241
+#: data/ui/style-editor-box.blp:248
 msgid "Ticks on Bottom Axis"
 msgstr ""
 
-#: data/ui/style-editor.blp:245
+#: data/ui/style-editor-box.blp:252
 msgid "Ticks on Left Axis"
 msgstr ""
 
-#: data/ui/style-editor.blp:249
+#: data/ui/style-editor-box.blp:256
 msgid "Ticks on Right Axis"
 msgstr ""
 
-#: data/ui/style-editor.blp:253
+#: data/ui/style-editor-box.blp:260
 msgid "Ticks on Top Axis"
 msgstr ""
 
-#: data/ui/style-editor.blp:258
+#: data/ui/style-editor-box.blp:265
 msgid "Grid"
 msgstr "Ruudukko"
 
-#: data/ui/style-editor.blp:261
+#: data/ui/style-editor-box.blp:268
 msgid "Show Grid"
 msgstr "Näytä ruudukko"
 
-#: data/ui/style-editor.blp:265
+#: data/ui/style-editor-box.blp:272
 msgid "Grid Width"
 msgstr "Ruudukon leveys"
 
-#: data/ui/style-editor.blp:279
+#: data/ui/style-editor-box.blp:288
 msgid "Grid Opacity"
 msgstr "Ruudukon peittokyky"
 
-#: data/ui/style-editor.blp:294
+#: data/ui/style-editor-box.blp:305
 msgid "Padding"
 msgstr "Täyte"
 
-#: data/ui/style-editor.blp:295
+#: data/ui/style-editor-box.blp:306
 msgid "Padding for different parts of the figure"
 msgstr "Kaavion eri osien välillä oleva täyte"
 
-#: data/ui/style-editor.blp:298
+#: data/ui/style-editor-box.blp:309
 msgid "Value Padding"
 msgstr "Arvon täyte"
 
-#: data/ui/style-editor.blp:299
+#: data/ui/style-editor-box.blp:310
 msgid "Padding between axes and values"
 msgstr "Täyte akselin ja arvojen välillä"
 
-#: data/ui/style-editor.blp:312
+#: data/ui/style-editor-box.blp:325
 msgid "Label Padding"
 msgstr "Selitteen täyte"
 
-#: data/ui/style-editor.blp:313
+#: data/ui/style-editor-box.blp:326
 msgid "Padding between axes and labels"
 msgstr ""
 
-#: data/ui/style-editor.blp:326
+#: data/ui/style-editor-box.blp:341
 msgid "Title Padding"
 msgstr "Otsikon täyte"
 
-#: data/ui/style-editor.blp:327
+#: data/ui/style-editor-box.blp:342
 msgid "Padding between axes and the title"
 msgstr "Täyte akselien ja otsikon välillä"
 
-#: data/ui/style-editor.blp:341
+#: data/ui/style-editor-box.blp:358
 msgid "Colors"
 msgstr "Värit"
 
-#: data/ui/style-editor.blp:346
+#: data/ui/style-editor-box.blp:362
 msgid "Label text might be hard to read"
 msgstr "Selitetekstiä voi olla vaikea lukea"
 
-#: data/ui/style-editor.blp:351
+#: data/ui/style-editor-box.blp:374
 msgid "Poor Contrast"
 msgstr "Heikko kontrasti"
 
-#: data/ui/style-editor.blp:366
+#: data/ui/style-editor-box.blp:389
 msgid "Text Color"
 msgstr "Tekstin väri"
 
-#: data/ui/style-editor.blp:371 data/ui/style-editor.blp:393
-#: data/ui/style-editor.blp:415 data/ui/style-editor.blp:437
-#: data/ui/style-editor.blp:459 data/ui/style-editor.blp:481
+#: data/ui/style-editor-box.blp:394 data/ui/style-editor-box.blp:421
+#: data/ui/style-editor-box.blp:448 data/ui/style-editor-box.blp:475
+#: data/ui/style-editor-box.blp:502 data/ui/style-editor-box.blp:529
 msgid "Change Color"
 msgstr "Vaihda väri"
 
-#: data/ui/style-editor.blp:388
+#: data/ui/style-editor-box.blp:416
 msgid "Tick Color"
 msgstr ""
 
-#: data/ui/style-editor.blp:410
+#: data/ui/style-editor-box.blp:443
 msgid "Axis Color"
 msgstr "Akselin väri"
 
-#: data/ui/style-editor.blp:432
+#: data/ui/style-editor-box.blp:470
 msgid "Grid Color"
 msgstr "Ruudukon väri"
 
-#: data/ui/style-editor.blp:454
+#: data/ui/style-editor-box.blp:497
 msgid "Background Color"
 msgstr "Taustaväri"
 
-#: data/ui/style-editor.blp:476
+#: data/ui/style-editor-box.blp:524
 msgid "Outline Color"
 msgstr ""
 
-#: data/ui/style-editor.blp:495
+#: data/ui/style-editor-box.blp:547
 msgid "Line Colors"
 msgstr "Viivojen värit"
 
-#: data/ui/style-editor.blp:501
+#: data/ui/style-editor-box.blp:559
 msgid "Add Color"
 msgstr "Lisää väri"
+
+#: data/ui/style-editor-shortcuts.blp:11 data/ui/window-shortcuts.blp:11
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Yleiset"
+
+#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Näytä pikanäppäimet"
+
+#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:19
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "Avaa ohje"
+
+#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "Sulje sovellus"
+
+#: data/ui/style-editor-shortcuts.blp:29 data/ui/window-shortcuts.blp:34
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "Sulje sovelluksen ikkuna"
+
+#: data/ui/style-editor-shortcuts.blp:35
+msgctxt "shortcut window"
+msgid "Save"
+msgstr "Tallenna"
+
+#: data/ui/style-editor-shortcuts.blp:38
+msgctxt "shortcut window"
+msgid "Save Style"
+msgstr "Tallenna tyyli"
+
+#: data/ui/style-editor-shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Save Style As"
+msgstr "Tallenna tyyli nimellä"
+
+#: data/ui/style-editor-shortcuts.blp:48
+msgctxt "shortcut window"
+msgid "Open Style"
+msgstr "Avaa tyyli"
+
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
+msgid "Graphs Style Editor"
+msgstr ""
+
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
+#: data/ui/window.blp:229
+msgid "Open Application Menu"
+msgstr "Avaa sovellusvalikko"
+
+#: data/ui/style-editor-window.blp:71
+msgid "Open a Style"
+msgstr "Avaa tyyli"
+
+#: data/ui/style-editor-window.blp:73
+msgid "Open…"
+msgstr "Avaa…"
+
+#: data/ui/style-editor-window.blp:134
+msgid "Open Preview"
+msgstr "Avaa esikatselu"
+
+#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+#| msgid "Open Project…"
+msgid "Open Style…"
+msgstr "Avaa tyyli…"
+
+#: data/ui/style-editor-window.blp:204
+#| msgid "Save Project…"
+msgid "Save Style…"
+msgstr "Tallenna tyyli…"
+
+#: data/ui/style-editor-window.blp:205
+#| msgid "Save Project as…"
+msgid "Save Style as…"
+msgstr "Tallenna tyyli nimellä…"
+
+#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
+#: data/ui/window.blp:458
+msgid "Keyboard Shortcuts"
+msgstr "Pikanäppäimet"
+
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
+#: data/ui/window.blp:459
+msgid "Help"
+msgstr "Ohje"
+
+#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
+#: data/ui/window.blp:460
+msgid "About Graphs"
+msgstr "Tietoja - Graphs"
+
+#: data/ui/style-preview.blp:51
+msgid "Open"
+msgstr "Avaa"
+
+#: data/ui/style-preview.blp:56
+msgid "Open With…"
+msgstr "Avaa sovelluksella…"
+
+#: data/ui/style-preview.blp:61
+msgid "Delete…"
+msgstr "Poista…"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
 msgstr "Muunna dataa"
 
-#: data/ui/transform.blp:22 data/ui/window.blp:394
-msgid "Transform"
-msgstr "Muunna"
+#: data/ui/transform.blp:34
+msgid "More info"
+msgstr ""
 
-#: data/ui/transform.blp:35
+#: data/ui/transform.blp:44
 msgid ""
 "Additional variables:\n"
 "x_min, y_min\n"
@@ -1306,294 +1447,297 @@ msgid ""
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
 
-#: data/ui/transform.blp:40
-msgid "More info"
-msgstr ""
-
-#: data/ui/transform.blp:51
+#: data/ui/transform.blp:63
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:61
+#: data/ui/transform.blp:73
 msgid "Discard Unselected Data"
 msgstr "Hylkää valitsematon data"
 
-#: data/ui/window.blp:182
+#: data/ui/window.blp:195
+msgid "Drop Here to Import"
+msgstr "Pudota tähän tuodaksesi"
+
+#: data/ui/window.blp:220
 msgid "Add New Data"
 msgstr "Lisää uusi data"
 
-#: data/ui/window.blp:190
-msgid "Open Application Menu"
-msgstr "Avaa sovellusvalikko"
-
-#: data/ui/window.blp:219
+#: data/ui/window.blp:243
 msgid "No Data"
 msgstr "Ei dataa"
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:244
 msgid "Add data from a file or manually as an equation"
 msgstr "Lisää dataa tiedostosta tai manuaalisesti yhtälön muodossa"
 
-#: data/ui/window.blp:241
+#: data/ui/window.blp:293
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Liikkumistila. Napsauta ja vedä liikkuaksesi"
 
-#: data/ui/window.blp:247
+#: data/ui/window.blp:300
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Suurennustila. Valitse alue suurennettavaksi"
 
-#: data/ui/window.blp:253
+#: data/ui/window.blp:307
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Valintatila. Napsauta ja raahaa tehdäksesi valinnan datasta"
 
-#: data/ui/window.blp:284
-msgid "Adjust"
-msgstr "Säädä"
+#: data/ui/window.blp:330
+msgid "Show Sidebar"
+msgstr "Näytä sivupalkki"
 
-#: data/ui/window.blp:299
-msgid "Shift"
-msgstr ""
-
-#: data/ui/window.blp:301
-msgid "Shift all data vertically with respect to each other"
-msgstr ""
-
-#: data/ui/window.blp:316
-msgid "Normalize"
-msgstr "Normalisoi"
-
-#: data/ui/window.blp:318
-msgid "Normalize data"
-msgstr "Normalisoi data"
-
-#: data/ui/window.blp:334
-msgid "Smoothen"
-msgstr "Tasoita"
-
-#: data/ui/window.blp:336
-msgid "Smoothen data"
-msgstr ""
-
-#: data/ui/window.blp:351
-msgid "Center"
-msgstr "Keskitä"
-
-#: data/ui/window.blp:353
-msgid "Center data"
-msgstr ""
-
-#: data/ui/window.blp:368
-msgid "Combine"
-msgstr "Yhdistä"
-
-#: data/ui/window.blp:370
-msgid "Combine all selected data"
-msgstr "Yhdistä kaikki valittu data"
-
-#: data/ui/window.blp:384
-msgid "Cut"
-msgstr "Leikkaa"
-
-#: data/ui/window.blp:386
-msgid "Cut selected data"
-msgstr "Leikkaa valittu data"
-
-#: data/ui/window.blp:410
-msgid "Derivative"
-msgstr "Derivaatti"
-
-#: data/ui/window.blp:412
-msgid "Get the derivative of the data"
-msgstr ""
-
-#: data/ui/window.blp:426
-msgid "Integral"
-msgstr "Integraali"
-
-#: data/ui/window.blp:428
-msgid "Get the indefinite integral of the data"
-msgstr ""
-
-#: data/ui/window.blp:442
-msgid "FFT"
-msgstr "FFT"
-
-#: data/ui/window.blp:444
-msgid "Get the Fast Fourier Transform of the data"
-msgstr ""
-
-#: data/ui/window.blp:458
-msgid "Inverse FFT"
-msgstr "Käänteinen FFT"
-
-#: data/ui/window.blp:460
-msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr ""
-
-#: data/ui/window.blp:475
-msgid "Custom Transformation"
-msgstr "Mukautettu muunnos"
-
-#: data/ui/window.blp:477
-msgid "Perform custom transformations on the data"
-msgstr ""
-
-#: data/ui/window.blp:485
-msgid "Modify"
-msgstr "Muokkaa"
-
-#: data/ui/window.blp:506
-msgid "Translate X"
-msgstr "Translatoi X"
-
-#: data/ui/window.blp:529
-msgid "Translate Y"
-msgstr "Translatoi Y"
-
-#: data/ui/window.blp:552
-msgid "Multiply X"
-msgstr "Kerro X"
-
-#: data/ui/window.blp:575
-msgid "Multiply Y"
-msgstr "Kerro Y"
-
-#: data/ui/window.blp:606 graphs/window.vala:283
+#: data/ui/window.blp:338 data/ui/window.blp:384 graphs/window.vala:375
 msgid "Undo"
 msgstr "Kumoa"
 
-#: data/ui/window.blp:611
+#: data/ui/window.blp:344 data/ui/window.blp:391
 msgid "Redo"
 msgstr "Tee uudelleen"
 
-#: data/ui/window.blp:616
+#: data/ui/window.blp:351 data/ui/window.blp:398
 msgid "View Menu"
 msgstr "Näkymävalikko"
 
-#: data/ui/window.blp:624
+#: data/ui/window.blp:361 data/ui/window.blp:407
 msgid "Next View"
 msgstr "Seuraava näkymä"
 
-#: data/ui/window.blp:630
+#: data/ui/window.blp:369 data/ui/window.blp:415
 msgid "Previous View"
 msgstr "Edellinen näkymä"
 
-#: data/ui/window.blp:648
+#: data/ui/window.blp:435
 msgid "New Project"
 msgstr "Uusi projekti"
 
-#: data/ui/window.blp:651
+#: data/ui/window.blp:439
 msgid "Save Project…"
 msgstr "Tallenna projekti…"
 
-#: data/ui/window.blp:652
+#: data/ui/window.blp:440
 msgid "Save Project as…"
 msgstr "Tallenna projekti nimellä…"
 
-#: data/ui/window.blp:653
+#: data/ui/window.blp:441
 msgid "Open Project…"
 msgstr "Avaa projekti…"
 
-#: data/ui/window.blp:656
+#: data/ui/window.blp:445
 msgid "Export Data…"
 msgstr "Vie data…"
 
-#: data/ui/window.blp:657
+#: data/ui/window.blp:446
 msgid "Export Figure…"
 msgstr "Vie kaavio…"
 
-#: data/ui/window.blp:663
-msgid "Keyboard Shortcuts"
-msgstr "Pikanäppäimet"
-
-#: data/ui/window.blp:664
-msgid "Help"
-msgstr "Ohje"
-
-#: data/ui/window.blp:665
-msgid "About Graphs"
-msgstr "Tietoja - Graphs"
-
-#: data/ui/window.blp:671
+#: data/ui/window.blp:466
 msgid "Add Data from File…"
 msgstr "Lisää data tiedostosta…"
 
-#: data/ui/window.blp:672
+#: data/ui/window.blp:467
 msgid "Add Equation…"
 msgstr "Lisää yhtälö…"
 
-#: data/ui/window.blp:681
-msgid "At Maximum Y Value"
-msgstr "Suurimpaan Y-arvoon"
+#: data/ui/window.blp:468
+#| msgid "Export Data…"
+msgid "Generate Data…"
+msgstr "Luo dataa…"
 
-#: data/ui/window.blp:686
-msgid "At Middle X Value"
-msgstr "Keskimmäiseen X-arvoon"
+#: data/ui/window.blp:474
+msgid "Optimize Limits"
+msgstr ""
 
-#: data/ui/window.blp:707
-msgid "Advanced Settings"
-msgstr "Lisäasetukset"
+#: data/ui/window-shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Open Figure Settings"
+msgstr "Avaa kaavion asetukset"
 
-#: graphs/about.vala:40
+#: data/ui/window-shortcuts.blp:40
+msgctxt "shortcut window"
+msgid "Mode Switching"
+msgstr "Tilan vaihtaminen"
+
+#: data/ui/window-shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Pan Mode"
+msgstr "Liikkumistila"
+
+#: data/ui/window-shortcuts.blp:48
+msgctxt "shortcut window"
+msgid "Zoom Mode"
+msgstr "Suurennustila"
+
+#: data/ui/window-shortcuts.blp:53
+msgctxt "shortcut window"
+msgid "Select Mode"
+msgstr "Valintatila"
+
+#: data/ui/window-shortcuts.blp:59
+msgctxt "shortcut window"
+msgid "New Data"
+msgstr "Uusi data"
+
+#: data/ui/window-shortcuts.blp:62
+msgctxt "shortcut window"
+msgid "Add Data from File"
+msgstr "Uusi data tiedostosta"
+
+#: data/ui/window-shortcuts.blp:67
+msgctxt "shortcut window"
+msgid "Add Data from Equation"
+msgstr "Lisää data yhtälöstä"
+
+#: data/ui/window-shortcuts.blp:72
+msgctxt "shortcut window"
+msgid "Generate Data"
+msgstr "Luo dataa"
+
+#: data/ui/window-shortcuts.blp:77
+msgctxt "shortcut window"
+msgid "New Project"
+msgstr "Uusi projekti"
+
+#: data/ui/window-shortcuts.blp:82
+msgctxt "shortcut window"
+msgid "Open Project"
+msgstr "Avaa projekti"
+
+#: data/ui/window-shortcuts.blp:87
+msgctxt "shortcut window"
+msgid "Delete Selected Data"
+msgstr "Poista valittu data"
+
+#: data/ui/window-shortcuts.blp:93
+msgctxt "shortcut window"
+msgid "Save and Export"
+msgstr "Tallennus ja vienti"
+
+#: data/ui/window-shortcuts.blp:96
+msgctxt "shortcut window"
+msgid "Export Data"
+msgstr "Vie data"
+
+#: data/ui/window-shortcuts.blp:101
+msgctxt "shortcut window"
+msgid "Export Figure"
+msgstr "Vie kaavio"
+
+#: data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
+msgid "Save Project"
+msgstr "Tallenna projekti"
+
+#: data/ui/window-shortcuts.blp:111
+msgctxt "shortcut window"
+msgid "Save Project As"
+msgstr "Tallenna projekti nimellä"
+
+#: data/ui/window-shortcuts.blp:117
+msgctxt "shortcut window"
+msgid "View"
+msgstr "Näytä"
+
+#: data/ui/window-shortcuts.blp:120
+msgctxt "shortcut window"
+msgid "Previous View"
+msgstr "Edellinen näkymä"
+
+#: data/ui/window-shortcuts.blp:125
+msgctxt "shortcut window"
+msgid "Next View"
+msgstr "Seuraava näkymä"
+
+#: data/ui/window-shortcuts.blp:130
+msgctxt "shortcut window"
+msgid "Optimize limits"
+msgstr "Optimoi rajat"
+
+#: data/ui/window-shortcuts.blp:135
+msgctxt "shortcut window"
+msgid "Zoom in"
+msgstr "Lähennä"
+
+#: data/ui/window-shortcuts.blp:140
+msgctxt "shortcut window"
+msgid "Zoom out"
+msgstr "Loitonna"
+
+#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
+msgctxt "shortcut window"
+msgid "Select None"
+msgstr "Tyhjennä valinta"
+
+#: data/ui/window-shortcuts.blp:150
+msgctxt "shortcut window"
+msgid "Toggle Sidebar"
+msgstr "Sivupalkki päälle/pois"
+
+#: data/ui/window-shortcuts.blp:156
+msgctxt "shortcut window"
+msgid "Actions"
+msgstr "Toiminnot"
+
+#: data/ui/window-shortcuts.blp:159
+msgctxt "shortcut window"
+msgid "Select All"
+msgstr "Valitse kaikki"
+
+#: data/ui/window-shortcuts.blp:169
+msgctxt "shortcut window"
+msgid "Undo Action"
+msgstr "Kumoa toiminto"
+
+#: data/ui/window-shortcuts.blp:174
+msgctxt "shortcut window"
+msgid "Redo Action"
+msgstr "Tee toiminto uudelleen"
+
+#: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr "Jiri Grönroos"
 
-#: graphs/actions.py:40
+#: graphs/actions.vala:214 graphs/item_box.vala:59
+#, c-format
+msgid "Deleted %s"
+msgstr "Poistettu %s"
+
+#: graphs/actions.vala:241
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Tuetut tiedostot"
 
-#: graphs/actions.py:43
+#: graphs/actions.vala:245
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII-tiedostot"
 
-#: graphs/actions.py:44
-#| msgid "PANalytical XRDML"
+#: graphs/actions.vala:249
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.py:45
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr ""
 
-#: graphs/actions.py:89
-#, python-brace-format
-msgid "{error} - Unable to add data from equation"
-msgstr "{error} - Dataa ei voitu lisätä yhtälöstä"
-
-#: graphs/actions.py:102
-msgid "No data to export"
-msgstr "Ei dataa vietäväksi"
-
-#: graphs/actions.py:120
-msgid "Exported Figure"
-msgstr "Viety kaavio"
-
-#: graphs/application.py:38
+#: graphs/application.py:29
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Ei voitu ladata fonttia {font}"
 
-#: graphs/application.vala:259 graphs/item_box.vala:58
-#, c-format
-#| msgid "Delete"
-msgid "Deleted %s"
-msgstr "Poistettu %s"
-
-#: graphs/curve_fitting.py:180
+#: graphs/curve_fitting.py:181
 msgid "Results:"
 msgstr "Tulokset:"
 
-#: graphs/curve_fitting.py:184
+#: graphs/curve_fitting.py:185
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:188
+#: graphs/curve_fitting.py:189
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
@@ -1601,119 +1745,146 @@ msgstr ""
 "Kirjoita kelvollinen yhtälö\n"
 "aloittaaksesi sovituksen"
 
-#: graphs/curve_fitting.py:192
+#: graphs/curve_fitting.py:193
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
 msgstr ""
 
-#: graphs/curve_fitting.py:205
+#: graphs/curve_fitting.py:206
 #, python-brace-format
 msgid "Sum of R²: {R2}"
 msgstr "R²:n summa: {R2}"
 
-#: graphs/curve_fitting.vala:136
+#: graphs/curve_fitting.vala:150
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Sovitusparametrit kohteelle %s"
 
-#: graphs/data.py:72
-msgid "Untitled Project"
-msgstr "Nimetön projekti"
+#: graphs/data.py:104
+#, python-brace-format
+msgid "Could not parse {stylename}, loading system preferred style"
+msgstr ""
+"Tyyliä {stylename} ei voitu jäsentää, ladataan järjestelmän ensisijainen "
+"tyyli"
 
-#: graphs/data.py:73
-msgid "Draft"
-msgstr "Luonnos"
+#: graphs/data.py:109
+#, python-brace-format
+msgid "Plot style {stylename} does not exist loading system preferred"
+msgstr ""
 
-#: graphs/export_data.py:32
-msgctxt "file-filter"
-msgid "Text Files"
-msgstr "Tekstitiedostot"
+#: graphs/data.py:498
+msgid "Failed to load project"
+msgstr "Projektin lataaminen epäonnistui"
 
-#: graphs/export_figure.vala:45
+#: graphs/export_figure.vala:44
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Viety kaavio"
 
-#: graphs/figure_settings.vala:156
+#: graphs/export_items.vala:10
+msgid "No data to export"
+msgstr "Ei dataa vietäväksi"
+
+#: graphs/export_items.vala:32
+msgctxt "file-filter"
+msgid "Text Files"
+msgstr "Tekstitiedostot"
+
+#: graphs/figure_settings.vala:162
 msgid "X Axis Minimum"
-msgstr ""
+msgstr "X-akseli vähintään"
 
-#: graphs/figure_settings.vala:157
+#: graphs/figure_settings.vala:163
 msgid "Y Axis Minimum"
-msgstr ""
+msgstr "Y-akseli vähintään"
 
-#: graphs/figure_settings.vala:159
+#: graphs/figure_settings.vala:165
 msgid "X Axis Maximum"
-msgstr ""
+msgstr "X-akseli enintään"
 
-#: graphs/figure_settings.vala:160
+#: graphs/figure_settings.vala:166
 msgid "Y Axis Maximum"
-msgstr ""
+msgstr "Y-akseli enintään"
 
-#: graphs/figure_settings.vala:170 graphs/window.vala:344
+#: graphs/figure_settings.vala:176 graphs/window.vala:417
 msgid "X Axis Scale"
 msgstr "X-akselin skaalaus"
 
-#: graphs/figure_settings.vala:171 graphs/figure_settings.vala:175
+#: graphs/figure_settings.vala:177 graphs/figure_settings.vala:181
 msgid "X Axis Label"
 msgstr "X-sarakkeen nimeke"
 
-#: graphs/figure_settings.vala:174 graphs/window.vala:349
+#: graphs/figure_settings.vala:180 graphs/window.vala:422
 msgid "Y Axis Scale"
 msgstr "Y-akselin skaalaus"
 
-#: graphs/figure_settings.vala:198
+#: graphs/figure_settings.vala:281
 msgid "Defaults Updated"
 msgstr "Oletukset päivitetty"
 
-#: graphs/figure_settings.vala:248
+#: graphs/figure_settings.vala:315
 #, c-format
-#| msgid "Are you sure you want to delete {self.style.get_name()}?"
 msgid "Are you sure you want to delete %s?"
 msgstr "Haluatko varmasti poistaa %s?"
 
-#: graphs/file_import.vala:40
-msgid "Are you sure you want to reset the import settings?"
-msgstr "Haluatko varmasti nollata tuonnin asetukset?"
-
-#: graphs/item.py:86
+#: graphs/item.py:69
 msgid "Dataset"
 msgstr "Datasetti"
 
-#: graphs/item.py:120
+#: graphs/item.py:106
+msgid "Generated Dataset"
+msgstr "Luotu datasetti"
+
+#: graphs/item.py:224
 msgid "Label"
 msgstr "Selite"
 
-#: graphs/item.py:136
+#: graphs/item.py:253
 msgid "Fill"
-msgstr ""
+msgstr "Täytä"
 
-#: graphs/misc.py:107
+#: graphs/misc.vala:16
 msgctxt "file-filter"
-msgid "Graphs Project File"
-msgstr "Graphs-projektitiedosto"
+msgid "Matplotlib Style File"
+msgstr "Matplotlib-tyylitiedosto"
 
-#: graphs/operations.py:129
-#, python-brace-format
-msgid "{name}: Unable to do transformation, make sure the syntax is correct"
+#: graphs/operations.py:253
+#, fuzzy
+#| msgid "{name}: Unable to do transformation, make sure the syntax is correct"
+msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "{name}: Muunnosta ei voi tehdä, varmista että syntaksi on oikein"
 
-#: graphs/operations.py:133
-msgid "Unable to do transformation"
-msgstr "Muunnosta ei voi tehdä"
-
-#: graphs/operations.py:197
-msgid "Data that was outside of the highlighted area has been discarded"
-msgstr ""
-
-#: graphs/operations.py:234
+#: graphs/operations.py:296 graphs/operations.py:604
 msgid "No data found within the highlighted area"
 msgstr "Korostetun alueen sisältä ei löytynyt dataa"
 
-#: graphs/operations.py:479
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "Yhdistetty data"
+
+#: graphs/operations.py:441
+#, python-brace-format
+msgid ""
+"The operation on {item.props.name} did not result in a plottable equation"
+msgstr ""
+
+#: graphs/operations.py:450
+msgid "Operation not supported for equations."
+msgstr ""
+
+#: graphs/operations.py:610
+msgid "Operation not supported for data items"
+msgstr ""
+
+#: graphs/operations.py:613
+#, python-brace-format
+msgid "{name}: Error performing the operation"
+msgstr "{name}: Virhe suorittaessa toimintoa"
+
+#: graphs/operations.py:619
+msgid "Data that was outside of the highlighted area has been discarded"
+msgstr ""
 
 #: graphs/parse_file.py:56
 msgid "Intensity (cps)"
@@ -1731,94 +1902,175 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/parse_file.py:155
+#: graphs/parse_file.py:153
 msgid "Import failed, column index out of range"
 msgstr ""
 
-#: graphs/parse_file.py:174
+#: graphs/parse_file.py:172
 msgid "Unable to import from file"
 msgstr "Tuonti tiedostosta epäonnistui"
 
-#: graphs/style_editor.py:366
+#: graphs/project.py:50
+msgid "Project file is missing data"
+msgstr "Projektitiedostosta puuttuu dataa"
+
+#: graphs/project.py:64
+msgid "Project is from a newer incompatible version of Graphs"
+msgstr ""
+
+#: graphs/project.py:237
+#, fuzzy
+#| msgid "Unable to do transformation"
+msgid "Failed to do legacy migration"
+msgstr "Muunnosta ei voi tehdä"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Projektitiedoston jäsentäminen epäonnistui"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr ""
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "Projektin validointi epäonnistui"
+
+#: graphs/project.vala:15
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Graphs-projektitiedosto"
+
+#: graphs/project.vala:22
+msgid "Saved Project"
+msgstr "Tallennettu proejkti"
+
+#: graphs/project.vala:37
+msgid "Project"
+msgstr "Projekti"
+
+#: graphs/style_editor.py:411
 #, python-brace-format
-#| msgid "Color {}"
 msgid "Color {number}"
 msgstr "Väri {number}"
 
-#: graphs/style_io.py:75
+#: graphs/style_editor.py:489
+msgid "Example Item"
+msgstr "Esimerkkitietue"
+
+#: graphs/style_editor.py:510 graphs/style_io.py:181
+msgid "X Label"
+msgstr "X-selite"
+
+#: graphs/style_editor.py:511 graphs/style_io.py:182
+msgid "Y Label"
+msgstr "Y-selite"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:36
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Graphs-tyylimuokkain — %s"
+
+#: graphs/style_io.py:76
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr ""
 
-#: graphs/style_io.py:83
+#: graphs/style_io.py:84
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr ""
 
-#: graphs/style_io.py:86
+#: graphs/style_io.py:87
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr ""
 
-#: graphs/style_io.py:89
+#: graphs/style_io.py:91
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr ""
 
-#: graphs/style_io.py:106
+#: graphs/style_io.py:111
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr ""
 
-#: graphs/style_io.py:112
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Ei voitu jäsentää tiedostoa {filename}"
 
-#: graphs/style_io.py:171
-msgid "X Label"
-msgstr "X-selite"
-
-#: graphs/style_io.py:172
-msgid "Y Label"
-msgstr "Y-selite"
-
-#: graphs/styles.py:166
+#: graphs/style_io.py:125
 #, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"Tyyliä {stylename} ei voitu jäsentää, ladataan järjestelmän ensisijainen "
-"tyyli"
-
-#: graphs/styles.py:174
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
+msgid "File {file}, does not contain name tag"
 msgstr ""
 
-#: graphs/styles.vala:81
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Järjestelmä"
 
-#: graphs/utilities.py:122
+#: graphs/utilities.py:400
+msgid "Document Portal"
+msgstr ""
+
+#: graphs/utilities.vala:209
 msgid "All Files"
 msgstr "Kaikki tiedostot"
 
-#: graphs/window.vala:220
+#: graphs/window.vala:179
 msgid "Graphs (Development)"
 msgstr "Graphs (kehitys)"
 
-#: graphs/window.vala:273
+#: graphs/window.vala:194
+msgid "Untitled Project"
+msgstr "Nimetön projekti"
+
+#: graphs/window.vala:195
+msgid "Draft"
+msgstr "Luonnos"
+
+#. Translators: Window title that will be formatted with the project name.
+#: graphs/window.vala:201
+#, c-format
+#| msgid "Graphs"
+msgid "Graphs — %s"
+msgstr "Graphs — %s"
+
+#: graphs/window.vala:365
 msgid "Open Location"
 msgstr "Avaa sijainti"
 
-#: graphs/window.vala:307
-msgid "Optimize Limits"
-msgstr ""
-
-#: graphs/window.vala:316
+#: graphs/window.vala:390
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Käänteinen juuri"
+
+#~ msgid "Step Size"
+#~ msgstr "Askelkoko"
+
+#~ msgid "Selected Item"
+#~ msgstr "Valittu kohde"
+
+#~ msgid "Choose which item to edit"
+#~ msgstr "Valitse muokattava kohde"
+
+#~ msgid "Data"
+#~ msgstr "Data"
+
+#~ msgid "Line Properties"
+#~ msgstr "Viivan ominaisuudet"
+
+#~ msgid "Error - No Style selected"
+#~ msgstr "Virhe - Tyyliä ei ole valittu"
+
+#, python-brace-format
+#~ msgid "{error} - Unable to add data from equation"
+#~ msgstr "{error} - Dataa ei voitu lisätä yhtälöstä"
+
+#~ msgid "Exported Figure"
+#~ msgstr "Viety kaavio"
 
 #~ msgid "Y = "
 #~ msgstr "Y = "
@@ -1830,14 +2082,8 @@ msgstr "Käänteinen juuri"
 #~ msgid "Deleted {name}"
 #~ msgstr "Poistettu {name}"
 
-#~ msgid "Saved Project"
-#~ msgstr "Tallennettu proejkti"
-
 #~ msgid "Y Axis Label"
 #~ msgstr "Y-akselin selite"
 
 #~ msgid "Item {} already exists"
 #~ msgstr "Kohde {} on jo olemassa"
-
-#~ msgid "Exported Data"
-#~ msgstr "Viety data"
