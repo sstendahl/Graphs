@@ -318,11 +318,13 @@ template $GraphsWindow: Adw.ApplicationWindow {
         }
       };
 
-      content: Adw.ToolbarView {
-        [top]
-        Adw.HeaderBar content_headerbar {
-          name: "canvas-headerbar";
+      content: Adw.ToolbarView content_view {
+        styles [
+          "canvas-view",
+        ]
 
+        [top]
+        Adw.HeaderBar {
           title-widget: Adw.WindowTitle content_title {};
 
           ToggleButton {

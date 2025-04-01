@@ -22,6 +22,7 @@ namespace Graphs {
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
+        private uint _css_counter = 0;
 
         private const OptionEntry[] OPTION_ENTRIES = {
             { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
@@ -156,6 +157,11 @@ namespace Graphs {
             var style_editor = python_helper.create_style_editor ();
             style_editors.add (style_editor);
             return style_editor;
+        }
+
+        public uint get_next_css_counter () {
+            _css_counter++;
+            return _css_counter;
         }
 
         /**

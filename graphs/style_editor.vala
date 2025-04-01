@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+using Gdk;
 using Gtk;
 using Adw;
 
@@ -19,7 +20,7 @@ namespace Graphs {
         private unowned Stack stack { get; }
 
         [GtkChild]
-        protected unowned Adw.HeaderBar content_headerbar { get; }
+        protected unowned Adw.ToolbarView content_view { get; }
 
         protected Gtk.Box editor_box {
             get { return editor_bin.get_child () as Gtk.Box; }
@@ -46,7 +47,7 @@ namespace Graphs {
             }
         }
 
-        protected CssProvider headerbar_provider { get; private set; }
+        protected CssProvider css_provider { get; private set; }
         protected bool unsaved { get; set; default = false; }
         private File _file;
         private bool _force_close = false;
@@ -56,13 +57,14 @@ namespace Graphs {
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
-        construct {
+        protected void setup () {
             var application = application as Application;
 
-            this.headerbar_provider = new CssProvider ();
-            content_headerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
