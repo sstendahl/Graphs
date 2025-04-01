@@ -69,6 +69,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
         content: Adw.StatusPage {
           title: _("Open a Style");
+
           Button {
             label: _("Open…");
             halign: center;
@@ -82,6 +83,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
         };
       };
     }
+
     StackPage {
       child: Adw.MultiLayoutView multi_layout_view {
         Adw.Layout side_by_side_layout {
@@ -101,9 +103,13 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
               Separator {}
             }
 
-            Adw.ToolbarView {
+            Adw.ToolbarView content_view {
+              styles [
+                "canvas-view",
+              ]
+
               [top]
-              Adw.HeaderBar content_headerbar {
+              Adw.HeaderBar {
                 name: "preview-headerbar";
                 show-title: false;
               }
