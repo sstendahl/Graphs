@@ -18,9 +18,9 @@ import scipy
 import sympy
 
 
-def perform_operation(application: Graphs.Application, name: str) -> None:
+def perform_operation(window: Graphs.Window, name: str) -> None:
     """Perform an operation."""
-    window = application.get_active_window()
+    application = window.get_application()
     interaction_mode = window.get_mode()
     if name == "cut" and interaction_mode != 2:
         return

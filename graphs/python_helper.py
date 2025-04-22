@@ -7,6 +7,7 @@ from graphs import (
     edit_item,
     export_items,
     file_import,
+    operations,
     utilities,
 )
 from graphs.item import EquationItem, GeneratedDataItem
@@ -26,6 +27,7 @@ _REQUEST_NAMES = (
     "create_style_editor_request",
     "create_window_request",
     "get_friendly_path_request",
+    "perform_operation_request",
 )
 
 
@@ -141,3 +143,11 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_get_friendly_path_request(self, file: Gio.File) -> str:
         return utilities.get_friendly_path(file)
+
+    @staticmethod
+    def _on_perform_operation_request(
+        self,
+        window: Graphs.Window,
+        name: str,
+    ) -> None:
+        operations.perform_operation(window, name)
