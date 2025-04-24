@@ -42,6 +42,14 @@ if (appstreamcli.found())
   )
 endif
 
+configure_file(
+        input: application_id + '.service.in',
+       output: application_id + '.service',
+configuration: conf,
+      install: true,
+  install_dir: join_paths(datadir, 'dbus-1', 'services'),
+)
+
 install_data(application_id + '.gschema.xml',
   install_dir: join_paths(datadir, 'glib-2.0/schemas'),
 )
