@@ -6,6 +6,7 @@ Terminal=false
 Type=Application
 Categories=Education;Science
 StartupNotify=true
+DBusActivatable=true
 MimeType=application/graphs;text/mplstyle;text/plain;text/xy;text/dat;text/csv;text/xrdml;text/xry;text/txt
 Keywords=Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;
 X-Purism-FormFactor=Workstation;Mobile;

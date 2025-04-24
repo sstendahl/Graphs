@@ -125,7 +125,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control><shift>N";
-      action: "action(app.new-project)";
+      action: "action(app.new-window)";
     }
 
     Shortcut {
@@ -434,7 +434,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
 menu primary_menu {
   section {
-    item (_("New Project"), "app.new-project")
+    item (_("New Project"), "app.new-window")
   }
 
   section {

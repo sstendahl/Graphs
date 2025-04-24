@@ -58,12 +58,12 @@ namespace Graphs {
             application.add_action (help_action);
             application.set_accels_for_action ("app.help", {"F1"});
 
-            var new_project_action = new SimpleAction ("new-project", null);
-            new_project_action.activate.connect (() => {
+            var new_window_action = new SimpleAction ("new-window", null);
+            new_window_action.activate.connect (() => {
                 var window = application.create_main_window ();
                 window.present ();
             });
-            application.add_action (new_project_action);
+            application.add_action (new_window_action);
 
             var style_editor_action = new SimpleAction ("style-editor", null);
             style_editor_action.activate.connect (() => {
