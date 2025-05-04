@@ -43,7 +43,7 @@ configure_file(
 config_dep = valac.find_library('config',
   dirs: join_paths(meson.project_source_root(), 'graphs'),
 )
-graphs_lib = shared_library('libgraphs',
+graphs_lib = shared_library('graphs',
   files(
     'actions.vala',
     'add_equation.vala',
@@ -78,7 +78,7 @@ graphs_lib = shared_library('libgraphs',
           install_dir: [true],
 )
 
-custom_target('libgraphs typelib',
+custom_target('graphs typelib',
        output: 'Graphs-1.typelib',
       depends: graphs_lib,
       install: true,
