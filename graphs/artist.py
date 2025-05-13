@@ -12,6 +12,10 @@ from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
 
+def _ellipsize(name: str) -> str:
+    return name[:40] + "…" if len(name) > 40 else name
+
+
 def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
     """
     Create a new artist for an item.
@@ -61,7 +65,7 @@ class ItemArtistWrapper(GObject.Object):
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._artist.set_label(Graphs.tools_shorten_label(name, 40))
+        self._artist.set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
@@ -146,7 +150,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._artist = axis.plot(
             item.props.xdata,
             item.props.ydata,
-            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
@@ -176,7 +180,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._artist = axis.plot(
             [],
             [],
-            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle + 1],
@@ -289,7 +293,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
             item.props.xanchor,
             item.props.yanchor,
             item.props.text,
-            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
             clip_on=True,
@@ -316,7 +320,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
         self._artist = axis.fill_between(
             *item.props.data,
-            label=Graphs.tools_shorten_label(item.get_name(), 40),
+            label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
         )
