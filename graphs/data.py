@@ -34,7 +34,7 @@ class Data(Graphs.Data):
         self.connect("position_changed", self._on_position_changed)
         self.connect("item_changed", self._on_item_changed)
         self.connect("item_added", self._on_item_added)
-        self.connect("item_deleted", self._on_item_deleted)
+        self.connect("item_removed", self._on_item_removed)
         self.connect(
             "figure_settings_changed",
             self._on_figure_settings_changed,
@@ -130,10 +130,10 @@ class Data(Graphs.Data):
         ))
 
     @staticmethod
-    def _on_item_deleted(self, item_: Graphs.Item) -> None:
+    def _on_item_removed(self, item_: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             ChangeType.ITEM_REMOVED.value,
-            (self.index(item_), item_.to_dict()),
+            (index, item_.to_dict()),
         ))
 
     @staticmethod
@@ -217,7 +217,7 @@ class Data(Graphs.Data):
                     else:
                         self[index].set_property(prop, value)
                 case ChangeType.ITEM_ADDED:
-                    self._remove_item(self.last())
+                    self._remove_item(self.get_n_items() - 1)
                 case ChangeType.ITEM_REMOVED:
                     self._add_item(
                         item.new_from_dict(copy.deepcopy(change[1])),
@@ -266,7 +266,7 @@ class Data(Graphs.Data):
                         True,
                     )
                 case ChangeType.ITEM_REMOVED:
-                    self._remove_item(self.get_item(change[0]))
+                    self._remove_item(change[0])
                 case ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[1], change[0])
                 case ChangeType.FIGURE_SETTINGS_CHANGED:
