@@ -235,6 +235,13 @@ namespace Graphs {
             });
             window.add_action (open_project_action);
 
+            var close_project_action = new SimpleAction ("close-project", null);
+            close_project_action.activate.connect (() => {
+                Project.close (window);
+            });
+            close_project_action.set_enabled (false);
+            window.add_action (close_project_action);
+
             var add_data_action_filters = Tools.create_file_filters (
                 true,
                 Tools.create_file_filter (

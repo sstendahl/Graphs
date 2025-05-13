@@ -7,17 +7,30 @@ namespace Graphs {
      */
     public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
         public Application application { get; construct set; }
-        public FigureSettings figure_settings { get; private set; }
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; protected set; default = false; }
         public bool can_view_forward { get; protected set; default = false; }
         public File file { get; set; }
+        [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
+        }
+
+        private FigureSettings _figure_settings;
+        public FigureSettings figure_settings {
+            get { return this._figure_settings; }
+            protected set {
+                this._figure_settings = value;
+                value.notify["custom-style"].connect (_on_custom_style);
+                value.notify["use-custom-style"].connect (_on_use_custom_style);
+                value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
+                _update_used_positions ();
+                handle_style_change ();
+            }
         }
 
         private bool[] _used_positions;
@@ -28,7 +41,6 @@ namespace Graphs {
         private bool _notify_selection_changed = true;
 
         public signal void style_changed (bool recolor_items);
-        protected signal void python_method_request (string method);
         protected signal string load_request (File file);
 
         // Clipboard signals
@@ -36,14 +48,12 @@ namespace Graphs {
         protected signal void item_changed (Item item, string prop_name);
         protected signal void item_added (Item item);
         protected signal void item_deleted (Item item);
+        protected signal void figure_settings_changed (string prop);
 
         construct {
             this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
             items_changed.connect (_update_used_positions);
-        }
-
-        protected void setup () {
             this._settings = application.get_settings_child ("figure");
             this.figure_settings = new FigureSettings (_settings);
 
@@ -89,12 +99,11 @@ namespace Graphs {
                     }
                 }
             });
+            run_python_method ("_init_history_states");
+        }
 
-            figure_settings.notify["custom-style"].connect (_on_custom_style);
-            figure_settings.notify["use-custom-style"].connect (_on_use_custom_style);
-
-            handle_style_change ();
-            _update_used_positions ();
+        private void run_python_method (string method) {
+            application.python_helper.run_method (this, method);
         }
 
         // Section ListModel
@@ -225,6 +234,21 @@ namespace Graphs {
 
         // Section management
 
+        public void clear () {
+            uint n_items = get_n_items ();
+            _items.clear ();
+            items_changed.emit (0, n_items, 0);
+            this.can_undo = false;
+            this.can_redo = false;
+            this.can_view_back = false;
+            this.can_view_forward = false;
+            this.figure_settings = new FigureSettings (_settings);
+            run_python_method ("_init_history_states");
+            this.file = null;
+            this.unsaved = false;
+            notify_property ("unsaved");
+        }
+
         protected void _update_used_positions () {
             if (_items.size == 0) {
                 _used_positions = {true, false, true, false};
@@ -337,8 +361,8 @@ namespace Graphs {
                 item_added.emit (item);
             }
             items_changed.emit (prev_size, 0, items.length);
-            python_method_request.emit ("_optimize_limits");
-            python_method_request.emit ("_add_history_state");
+            run_python_method ("_optimize_limits");
+            run_python_method ("_add_history_state");
         }
 
         public void set_items (Item[] items) {
@@ -367,7 +391,7 @@ namespace Graphs {
                     }
                 }
             }
-            python_method_request.emit ("_add_history_state");
+            run_python_method ("_add_history_state");
         }
 
         // End section management
@@ -376,7 +400,7 @@ namespace Graphs {
 
         private void handle_style_change (bool recolor_items = false) {
             notify_property ("selected_stylename");
-            python_method_request.emit ("_update_selected_style");
+            run_python_method ("_update_selected_style");
             style_changed.emit (recolor_items);
         }
 
@@ -466,7 +490,7 @@ namespace Graphs {
         }
 
         public void optimize_limits () {
-            python_method_request.emit ("_optimize_limits");
+            run_python_method ("_optimize_limits");
         }
 
         // End section misc
@@ -474,27 +498,27 @@ namespace Graphs {
         // Section history
 
         public void add_history_state () {
-            python_method_request.emit ("_add_history_state");
+            run_python_method ("_add_history_state");
         }
 
         public void undo () {
-            python_method_request.emit ("_undo");
+            run_python_method ("_undo");
         }
 
         public void redo () {
-            python_method_request.emit ("_redo");
+            run_python_method ("_redo");
         }
 
         public void add_view_history_state () {
-            python_method_request.emit ("_add_view_history_state");
+            run_python_method ("_add_view_history_state");
         }
 
         public void view_back () {
-            python_method_request.emit ("_view_back");
+            run_python_method ("_view_back");
         }
 
         public void view_forward () {
-            python_method_request.emit ("_view_forward");
+            run_python_method ("_view_forward");
         }
 
         // End section history
@@ -502,8 +526,9 @@ namespace Graphs {
         // Section save & load
 
         public void save () {
-            python_method_request.emit ("_save");
+            run_python_method ("_save");
             this.unsaved = false;
+            notify_property ("unsaved");
         }
 
         public void load (File file) throws ProjectParseError {
