@@ -215,7 +215,7 @@ namespace Graphs {
         }
 
         public string stylename {
-            set { label.set_label (Tools.shorten_label (value)); }
+            set { label.set_label (value); }
         }
 
         public Texture preview {
