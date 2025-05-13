@@ -47,7 +47,7 @@ namespace Graphs {
         protected signal void position_changed (uint index1, uint index2);
         protected signal void item_changed (Item item, string prop_name);
         protected signal void item_added (Item item);
-        protected signal void item_deleted (Item item);
+        protected signal void item_removed (Item item, uint index);
         protected signal void figure_settings_changed (string prop);
 
         construct {
@@ -276,8 +276,7 @@ namespace Graphs {
             if (notify) items_changed.emit (index, 0, 1);
         }
 
-        protected void _remove_item (Item item) {
-            uint index = this.index (item);
+        protected void _remove_item (uint index) {
             _items.remove_at ((int) index);
             items_changed.emit (index, 1, 0);
         }
@@ -377,8 +376,9 @@ namespace Graphs {
 
         public void delete_items (Item[] items) {
             foreach (Item item in items) {
-                item_deleted.emit (item);
-                _remove_item (item);
+                uint index = this.index (item);
+                item_removed.emit (item, index);
+                _remove_item (index);
                 int[] positions = { item.xposition, item.yposition + 2 };
                 foreach (int position in positions) {
                     string direction = DIRECTION_NAMES[position];
