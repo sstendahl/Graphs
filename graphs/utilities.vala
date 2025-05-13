@@ -111,17 +111,6 @@ namespace Graphs {
             return max_value / min_value;
         }
 
-        /**
-         * Shorten a label
-         *
-         * @param max_length Maximum length
-         */
-        public string shorten_label (string label, uint max_length = 20) {
-            if (label.length > max_length) {
-                return label.substring (0, max_length - 1) + "…";
-            } else return label;
-        }
-
         public string get_duplicate_string (string original, string[] used) {
             if (!(original in used)) return original;
             string old_str = original;
