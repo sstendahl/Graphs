@@ -38,10 +38,10 @@ python.install_sources(
 
 configure_file(
          output: 'config.h',
-  configuration: vala_conf
+  configuration: vala_conf,
 )
 config_dep = valac.find_library('config',
-  dirs: meson.project_source_root () / 'graphs'
+  dirs: join_paths(meson.project_source_root(), 'graphs'),
 )
 graphs_lib = shared_library('graphs',
   files(
@@ -73,16 +73,23 @@ graphs_lib = shared_library('graphs',
              vala_gir: 'Graphs-1.gir',
          dependencies: dependencies + config_dep,
   include_directories: include_directories('.'),
-            link_args: ['-lm',],
+            link_args: ['-lm'],
               install: true,
           install_dir: [true],
 )
 
 custom_target('graphs typelib',
-      command: [find_program('g-ir-compiler'), '--shared-library', 'libgraphs.so', '--output', '@OUTPUT@', meson.current_build_dir() / 'Graphs-1.gir'],
        output: 'Graphs-1.typelib',
       depends: graphs_lib,
       install: true,
-  install_dir: get_option('libdir') / 'girepository-1.0',
+  install_dir: join_paths(libdir, 'girepository-1.0'),
+      command: [
+        find_program('g-ir-compiler'),
+        '--shared-library',
+        'libgraphs.so',
+        '--output',
+        '@OUTPUT@',
+        join_paths(meson.current_build_dir(), 'Graphs-1.gir'),
+      ],
  )
 devenv.set('GI_TYPELIB_PATH', meson.current_build_dir())
