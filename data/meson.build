@@ -202,13 +202,15 @@ gresource_bundle = gnome.compile_resources(application_id, gresource,
 devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
-icon_name = ('@0@.svg').format(application_id)
-symbolic_icon_name = ('@0@-symbolic.svg').format(application_id)
 if debug
-  icon_name = ('@0@.Devel.svg').format(application_id)
+  icon_name = application_id + '.Devel.svg'
+else
+  icon_name = application_id + '.svg'
 endif
+symbolic_icon_name = application_id + '-symbolic.svg'
 install_data(join_paths(scalable_dir, icon_name),
   install_dir: join_paths(datadir, scalable_dir),
+       rename: application_id + '.svg',
 )
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
 install_data(join_paths(symbolic_dir, symbolic_icon_name),
