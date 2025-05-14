@@ -205,34 +205,34 @@ namespace Graphs {
         /**
          * Get the friendly path of a file.
          */
-        string get_friendly_path(File file) {
-            string uri = file.get_uri();
+        string get_friendly_path (File file) {
+            string uri = file.get_uri ();
             Uri parsed;
             try {
-                parsed = Uri.parse(uri, UriFlags.NONE);
+                parsed = Uri.parse (uri, UriFlags.NONE);
             } catch (UriError error) {
                 return "";
             }
 
-            string path = Uri.unescape_string(parsed.get_path());
-            string host = parsed.get_host();
-            string full_path = Path.build_filename(host + path);
-            string filepath = Path.get_dirname(full_path);
+            string path = Uri.unescape_string (parsed.get_path());
+            string host = parsed.get_host ();
+            string full_path = Path.build_filename (host + path);
+            string filepath = Path.get_dirname (full_path);
 
             // Fix for rpm-ostree distros, where home is placed in /var/home
-            if (filepath.has_prefix("/var")) {
-                filepath = filepath.substring(4);
+            if (filepath.has_prefix ("/var")) {
+                filepath = filepath.substring (4);
             }
 
             // Replace home directory with ~
             string home = Environment.get_home_dir();
-            if (filepath.has_prefix(home)) {
-                filepath = "~" + filepath.substring(home.length);
+            if (filepath.has_prefix (home)) {
+                filepath = "~" + filepath.substring (home.length);
             }
 
             // Replace document portal path with a user-friendly label
-            int uid = (int) Posix.getuid();
-            if (filepath.has_prefix(@"/run/user/$uid/doc/")) {
+            int uid = (int) Posix.getuid ();
+            if (filepath.has_prefix (@"/run/user/$uid/doc/")) {
                 filepath = _("Document Portal");
             }
 

@@ -4,12 +4,7 @@ import ast
 import contextlib
 import math
 import operator as op
-import os
 import re
-from gettext import gettext as _
-from urllib.parse import unquote, urlparse
-
-from gi.repository import Gio
 
 from graphs import scales
 from graphs.misc import FUNCTIONS
@@ -384,4 +379,3 @@ def get_free_variables(equation_name: str) -> list:
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
     return list(set(re.findall(pattern, equation_name)))
-
