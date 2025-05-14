@@ -214,7 +214,7 @@ namespace Graphs {
                 return "";
             }
 
-            string path = Uri.unescape_string (parsed.get_path());
+            string path = Uri.unescape_string (parsed.get_path ());
             string host = parsed.get_host ();
             string full_path = Path.build_filename (host + path);
             string filepath = Path.get_dirname (full_path);
@@ -225,7 +225,7 @@ namespace Graphs {
             }
 
             // Replace home directory with ~
-            string home = Environment.get_home_dir();
+            string home = Environment.get_home_dir ();
             if (filepath.has_prefix (home)) {
                 filepath = "~" + filepath.substring (home.length);
             }
