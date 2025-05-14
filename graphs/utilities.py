@@ -25,7 +25,7 @@ def sig_fig_round(number: float, digits: int) -> float:
     """Round a number to the specified number of significant digits."""
     try:
         # Convert to scientific notation, and get power
-        power = "{:e}".format(float(number)).split("e")[1]
+        power = f"{float(number):e}".split("e")[1]
     except IndexError:
         return None
     return round(float(number), -(int(power) - digits + 1))
@@ -53,13 +53,13 @@ def get_value_at_fraction(
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(10, log_value)
-    elif scale == scales.Scale.LOG2:
+    if scale == scales.Scale.LOG2:
         log_start = numpy.log2(start)
         log_end = numpy.log2(end)
         log_range = log_end - log_start
         log_value = log_start + log_range * fraction
         return pow(2, log_value)
-    elif scale == scales.Scale.SQUAREROOT:
+    if scale == scales.Scale.SQUAREROOT:
         # Use min limit as defined by scales.py
         sqrt_start = max(0, numpy.sqrt(start))
         sqrt_end = numpy.sqrt(end)
@@ -67,11 +67,12 @@ def get_value_at_fraction(
         # Square root value does not really work for negative fractions
         sqrt_value = sqrt_start + sqrt_range * max(0, fraction)
         return sqrt_value * sqrt_value
-    elif scale == scales.Scale.INVERSE:
+    if scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
         start = end / 10 if start <= 0 < end else start
         scaled_range = 1 / start - 1 / end
         return 1 / (1 / end + fraction * scaled_range)
+    raise ValueError
 
 
 def get_fraction_at_value(
@@ -95,13 +96,13 @@ def get_fraction_at_value(
         log_value = numpy.log10(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
-    elif scale == scales.Scale.LOG2:
+    if scale == scales.Scale.LOG2:
         log_start = numpy.log2(start)
         log_end = numpy.log2(end)
         log_value = numpy.log2(value)
         log_range = log_end - log_start
         return (log_value - log_start) / log_range
-    elif scale == scales.Scale.SQUAREROOT:
+    if scale == scales.Scale.SQUAREROOT:
         # Use min limit as defined by scales.py
         start = max(0, start)
         sqrt_start = numpy.sqrt(start)
@@ -109,7 +110,7 @@ def get_fraction_at_value(
         sqrt_value = numpy.sqrt(value)
         sqrt_range = sqrt_end - sqrt_start
         return (sqrt_value - sqrt_start) / sqrt_range
-    elif scale == scales.Scale.INVERSE:
+    if scale == scales.Scale.INVERSE:
         # Use min limit as defined by scales.py if min equals zero
         start = end / 10 if start <= 0 < end else start
         scaled_range = 1 / start - 1 / end
@@ -117,6 +118,7 @@ def get_fraction_at_value(
         # Calculate the scaled percentage corresponding to the data point
         scaled_data_point = 1 / value
         return (scaled_data_point - 1 / end) / scaled_range
+    raise ValueError
 
 
 def string_to_float(string: str) -> float:
@@ -244,8 +246,7 @@ def preprocess(string: str) -> str:
         var, exp2 = match.group(1), match.group(2).lower()
         if var in FUNCTIONS:
             return f"{var}{exp2}"
-        else:
-            return f"{var}*{exp2}"
+        return f"{var}*{exp2}"
 
     string = string.lower()
     string = string.replace(",", ".")
@@ -356,7 +357,7 @@ def validate_equation(equation: str, limits: tuple = None) -> bool:
     """Validate whether an equation can be parsed."""
     equation = preprocess(equation)
     validate, _ = equation_to_data(equation, limits, steps=10)
-    return (validate is not None)
+    return validate is not None
 
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
