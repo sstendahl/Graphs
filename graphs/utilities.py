@@ -385,17 +385,3 @@ def get_free_variables(equation_name: str) -> list:
     )
     return list(set(re.findall(pattern, equation_name)))
 
-
-def get_friendly_path(file: Gio.File) -> str:
-    """Get the friendly path of a file used for displaying in UI."""
-    uri_parse = urlparse(file.get_uri())
-    filepath = os.path.dirname(
-        os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-    )
-    if filepath.startswith("/var"):
-        # Fix for rpm-ostree distros, where home is placed in /var/home
-        filepath = filepath.replace("/var", "", 1)
-    filepath = filepath.replace(os.path.expanduser("~"), "~")
-    if filepath.startswith(f"/run/user/{os.getuid()}/doc/"):
-        filepath = _("Document Portal")
-    return filepath
