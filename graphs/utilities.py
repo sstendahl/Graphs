@@ -44,35 +44,36 @@ def get_value_at_fraction(
     fraction) of the length this axis is selected given the start and end range
     of this axis.
     """
-    scale = scales.Scale(scale)
-    if scale in (scales.Scale.LINEAR, scales.Scale.RADIANS):
-        return start + fraction * (end - start)
-    if scale == scales.Scale.LOG:
-        log_start = numpy.log10(start)
-        log_end = numpy.log10(end)
-        log_range = log_end - log_start
-        log_value = log_start + log_range * fraction
-        return pow(10, log_value)
-    if scale == scales.Scale.LOG2:
-        log_start = numpy.log2(start)
-        log_end = numpy.log2(end)
-        log_range = log_end - log_start
-        log_value = log_start + log_range * fraction
-        return pow(2, log_value)
-    if scale == scales.Scale.SQUAREROOT:
-        # Use min limit as defined by scales.py
-        sqrt_start = max(0, numpy.sqrt(start))
-        sqrt_end = numpy.sqrt(end)
-        sqrt_range = sqrt_end - sqrt_start
-        # Square root value does not really work for negative fractions
-        sqrt_value = sqrt_start + sqrt_range * max(0, fraction)
-        return sqrt_value * sqrt_value
-    if scale == scales.Scale.INVERSE:
-        # Use min limit as defined by scales.py if min equals zero
-        start = end / 10 if start <= 0 < end else start
-        scaled_range = 1 / start - 1 / end
-        return 1 / (1 / end + fraction * scaled_range)
-    raise ValueError
+    match scales.Scale(scale):
+        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+            return start + fraction * (end - start)
+        case scales.Scale.LOG:
+            log_start = numpy.log10(start)
+            log_end = numpy.log10(end)
+            log_range = log_end - log_start
+            log_value = log_start + log_range * fraction
+            return pow(10, log_value)
+        case scales.Scale.LOG2:
+            log_start = numpy.log2(start)
+            log_end = numpy.log2(end)
+            log_range = log_end - log_start
+            log_value = log_start + log_range * fraction
+            return pow(2, log_value)
+        case scales.Scale.SQUAREROOT:
+            # Use min limit as defined by scales.py
+            sqrt_start = max(0, numpy.sqrt(start))
+            sqrt_end = numpy.sqrt(end)
+            sqrt_range = sqrt_end - sqrt_start
+            # Square root value does not really work for negative fractions
+            sqrt_value = sqrt_start + sqrt_range * max(0, fraction)
+            return sqrt_value * sqrt_value
+        case scales.Scale.INVERSE:
+            # Use min limit as defined by scales.py if min equals zero
+            start = end / 10 if start <= 0 < end else start
+            scaled_range = 1 / start - 1 / end
+            return 1 / (1 / end + fraction * scaled_range)
+        case _:
+            raise ValueError
 
 
 def get_fraction_at_value(
@@ -87,38 +88,39 @@ def get_fraction_at_value(
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    scale = scales.Scale(scale)
-    if scale in (scales.Scale.LINEAR, scales.Scale.RADIANS):
-        return (value - start) / (end - start)
-    if scale == scales.Scale.LOG:
-        log_start = numpy.log10(start)
-        log_end = numpy.log10(end)
-        log_value = numpy.log10(value)
-        log_range = log_end - log_start
-        return (log_value - log_start) / log_range
-    if scale == scales.Scale.LOG2:
-        log_start = numpy.log2(start)
-        log_end = numpy.log2(end)
-        log_value = numpy.log2(value)
-        log_range = log_end - log_start
-        return (log_value - log_start) / log_range
-    if scale == scales.Scale.SQUAREROOT:
-        # Use min limit as defined by scales.py
-        start = max(0, start)
-        sqrt_start = numpy.sqrt(start)
-        sqrt_end = numpy.sqrt(end)
-        sqrt_value = numpy.sqrt(value)
-        sqrt_range = sqrt_end - sqrt_start
-        return (sqrt_value - sqrt_start) / sqrt_range
-    if scale == scales.Scale.INVERSE:
-        # Use min limit as defined by scales.py if min equals zero
-        start = end / 10 if start <= 0 < end else start
-        scaled_range = 1 / start - 1 / end
+    match scales.Scale(scale):
+        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+            return (value - start) / (end - start)
+        case scales.Scale.LOG:
+            log_start = numpy.log10(start)
+            log_end = numpy.log10(end)
+            log_value = numpy.log10(value)
+            log_range = log_end - log_start
+            return (log_value - log_start) / log_range
+        case scales.Scale.LOG2:
+            log_start = numpy.log2(start)
+            log_end = numpy.log2(end)
+            log_value = numpy.log2(value)
+            log_range = log_end - log_start
+            return (log_value - log_start) / log_range
+        case scales.Scale.SQUAREROOT:
+            # Use min limit as defined by scales.py
+            start = max(0, start)
+            sqrt_start = numpy.sqrt(start)
+            sqrt_end = numpy.sqrt(end)
+            sqrt_value = numpy.sqrt(value)
+            sqrt_range = sqrt_end - sqrt_start
+            return (sqrt_value - sqrt_start) / sqrt_range
+        case scales.Scale.INVERSE:
+            # Use min limit as defined by scales.py if min equals zero
+            start = end / 10 if start <= 0 < end else start
+            scaled_range = 1 / start - 1 / end
 
-        # Calculate the scaled percentage corresponding to the data point
-        scaled_data_point = 1 / value
-        return (scaled_data_point - 1 / end) / scaled_range
-    raise ValueError
+            # Calculate the scaled percentage corresponding to the data point
+            scaled_data_point = 1 / value
+            return (scaled_data_point - 1 / end) / scaled_range
+        case _:
+            raise ValueError
 
 
 def string_to_float(string: str) -> float:
@@ -330,6 +332,8 @@ def create_equidistant_xdata(
         case scales.Scale.INVERSE:
             xdata = \
                 (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps)).tolist()
+        case _:
+            raise ValueError
     return xdata
 
 
