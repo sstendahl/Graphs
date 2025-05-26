@@ -6,7 +6,7 @@
   <name>Graphs</name>
   <summary>Plot and manipulate data</summary>
   <developer id="se.sjoerd">
-    <name>@AUTHOR@</name>
+    <name>The Graphs Developers</name>
   </developer>
   <description>
     <p>
@@ -25,12 +25,12 @@
     </p>
   </description>
   <launchable type="desktop-id">@APPLICATION_ID@.desktop</launchable>
-  <translation type="gettext">graphs</translation>
+  <translation type="gettext">@GETTEXT_PACKAGE@</translation>
   <url type="bugtracker">@ISSUE_URL@</url>
   <url type="help">@HELP_URL@</url>
   <url type="homepage">@HOMEPAGE_URL@</url>
   <url type="vcs-browser">@VCS_URL@</url>
-  <url type="translate">https://l10n.gnome.org/module/Graphs/</url>
+  <url type="translate">@TRANSLATION_URL@</url>
   <screenshots>
     <screenshot type="default">
       <caption>Plot and manipulate any data</caption>
