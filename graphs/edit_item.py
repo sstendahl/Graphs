@@ -120,4 +120,4 @@ class EditItemDialog(Adw.Dialog):
     @Gtk.Template.Callback()
     def on_close(self, _a) -> None:
         """Handle dialog closing."""
-        self.props.data.add_history_state()
+        self.props.data.add_history_state(None)
