@@ -190,7 +190,7 @@ namespace Graphs {
                 close_action.set_enabled (false);
             } else {
                 title = Tools.get_filename (data.file);
-                path = application.python_helper.get_friendly_path (data.file);
+                path = Tools.get_friendly_path (data.file);
                 close_action.set_enabled (true);
             }
             // Translators: Window title that will be formatted with the project name.

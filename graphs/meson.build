@@ -74,6 +74,7 @@ graphs_lib = shared_library('graphs',
          dependencies: dependencies + config_dep,
   include_directories: include_directories('.'),
             link_args: ['-lm'],
+            vala_args: ['--pkg=posix'],
               install: true,
           install_dir: [true],
 )
