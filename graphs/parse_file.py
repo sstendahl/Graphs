@@ -128,10 +128,10 @@ def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
             continue
         values = re.split(delimiter, line)
         if separator == ",":
-            values = (
+            values = [
                 string.replace(",", _PH).replace(".", ", ").replace(_PH, ".")
                 for string in values
-            )
+            ]
         try:
             if len(values) == 1:
                 float_value = utilities.string_to_float(values[0])
