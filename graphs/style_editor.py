@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
 
-from graphs import style_io
+from graphs import misc, style_io
 from graphs.canvas import Canvas
 from graphs.item import DataItem
 
@@ -60,31 +60,8 @@ STYLE_DICT = {
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
 }
 VALUE_DICT = {
-    "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
-    "markers": [
-        "none",
-        ".",
-        ",",
-        "o",
-        "v",
-        "^",
-        "<",
-        ">",
-        "8",
-        "s",
-        "p",
-        "*",
-        "h",
-        "H",
-        "+",
-        "x",
-        "D",
-        "d",
-        "|",
-        "_",
-        "P",
-        "X",
-    ],
+    "linestyle": misc.LINESTYLES,
+    "markers": misc.MARKERSTYLES,
     "tick_direction": ["in", "out"],
 }
 FONT_STYLE_DICT = {
