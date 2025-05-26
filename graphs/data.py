@@ -39,6 +39,10 @@ class Data(Graphs.Data):
             "figure_settings_changed",
             self._on_figure_settings_changed,
         )
+        self.connect(
+            "add_history_state_request",
+            self._on_add_history_state_request,
+        )
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
@@ -172,11 +176,12 @@ class Data(Graphs.Data):
             for prop in dir(self.props.figure_settings.props)
         })
 
-    def add_history_state_with_limits(self, old_limits: misc.Limits) -> None:
-        """Add a state to the clipboard with old_limits set."""
-        self._add_history_state(old_limits)
-
-    def _add_history_state(self, old_limits: misc.Limits = None) -> None:
+    @staticmethod
+    def _on_add_history_state_request(
+        self,
+        limits: misc.Limits,
+        l: int,
+    ) -> None:
         """Add a state to the clipboard."""
         if not self._current_batch:
             return
@@ -186,17 +191,15 @@ class Data(Graphs.Data):
         self._history_states.append(
             (self._current_batch, self.get_figure_settings().get_limits()),
         )
-        if old_limits is not None:
+        if l > 0:
+            assert l == 8
             old_state = self._history_states[-2][1]
             for index in range(8):
-                old_state[index] = old_limits[index]
-        self.props.can_redo = False
-        self.props.can_undo = True
+                old_state[index] = limits[index]
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
-        self.props.unsaved = True
 
     def _undo(self) -> None:
         """Undo the latest change that was added to the clipboard."""
@@ -239,7 +242,6 @@ class Data(Graphs.Data):
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self._set_data_copy()
-        self._add_view_history_state()
 
     def _redo(self) -> None:
         """Redo the latest change that was added to the clipboard."""
@@ -279,7 +281,6 @@ class Data(Graphs.Data):
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._set_data_copy()
-        self._add_view_history_state()
 
     def _add_view_history_state(self) -> None:
         """Add the view to the view history."""
@@ -299,9 +300,6 @@ class Data(Graphs.Data):
             self._view_history_states = self._view_history_states[1::]
         self._view_history_pos = -1
         self._view_history_states.append(limits)
-        self.props.can_view_back = True
-        self.props.can_view_forward = False
-        self.props.unsaved = True
 
     def _view_back(self) -> None:
         """Move the view to the previous value in the view history."""
@@ -429,7 +427,6 @@ class Data(Graphs.Data):
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
-        self._add_view_history_state()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""

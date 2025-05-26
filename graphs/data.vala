@@ -42,6 +42,7 @@ namespace Graphs {
 
         public signal void style_changed (bool recolor_items);
         protected signal string load_request (File file);
+        protected signal void add_history_state_request (double[] old_limits);
 
         // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
@@ -360,8 +361,8 @@ namespace Graphs {
                 item_added.emit (item);
             }
             items_changed.emit (prev_size, 0, items.length);
-            run_python_method ("_optimize_limits");
-            run_python_method ("_add_history_state");
+            optimize_limits ();
+            add_history_state ();
         }
 
         public void set_items (Item[] items) {
@@ -391,7 +392,7 @@ namespace Graphs {
                     }
                 }
             }
-            run_python_method ("_add_history_state");
+            add_history_state ();
         }
 
         // End section management
@@ -491,26 +492,37 @@ namespace Graphs {
 
         public void optimize_limits () {
             run_python_method ("_optimize_limits");
+            add_view_history_state ();
         }
 
         // End section misc
 
         // Section history
 
-        public void add_history_state () {
-            run_python_method ("_add_history_state");
+        public void add_history_state (double[]? old_limits = null) {
+            add_history_state_request.emit (old_limits);
+            this.can_undo = true;
+            this.can_redo = false;
+            this.unsaved = true;
+            notify_property ("unsaved");
         }
 
         public void undo () {
             run_python_method ("_undo");
+            add_view_history_state ();
         }
 
         public void redo () {
             run_python_method ("_redo");
+            add_view_history_state ();
         }
 
         public void add_view_history_state () {
             run_python_method ("_add_view_history_state");
+            this.can_view_back = true;
+            this.can_view_forward = false;
+            this.unsaved = true;
+            notify_property ("unsaved");
         }
 
         public void view_back () {
