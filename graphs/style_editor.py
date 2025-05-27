@@ -1,4 +1,5 @@
 """Style editor."""
+import asyncio
 import contextlib
 from gettext import gettext as _
 
@@ -454,10 +455,13 @@ class PythonStyleEditor(Graphs.StyleEditor):
         style_editor.connect("params-changed", self._on_params_changed)
         self.set_editor_box(style_editor)
         self._test_items = Gio.ListStore()
-        self._on_params_changed(style_editor, False)
         self._initialize_test_items()
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
+
+        self._background_task = asyncio.create_task(
+            self._reload_canvas(style_editor),
+        )
 
     def _initialize_test_items(self):
         """Initialize example test items with predefined preview data."""
@@ -476,6 +480,18 @@ class PythonStyleEditor(Graphs.StyleEditor):
             )
 
     def _on_params_changed(self, style_editor, changes_unsaved=True):
+        self._background_task.cancel()
+        self._background_task = asyncio.create_task(
+            self._reload_canvas(style_editor, changes_unsaved, 0.5),
+        )
+
+    async def _reload_canvas(
+        self,
+        style_editor: StyleEditorBox,
+        changes_unsaved: bool = False,
+        timeout: bool = 0,
+    ) -> None:
+        await asyncio.sleep(timeout)
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
             params = style_manager.get_system_style_params()
