@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-13 11:57+0000\n"
-"PO-Revision-Date: 2025-05-13 15:37+0300\n"
+"POT-Creation-Date: 2025-05-27 14:54+0000\n"
+"PO-Revision-Date: 2025-05-27 20:09+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -671,7 +671,7 @@ msgstr "Параметри рисунка"
 msgid "Labels"
 msgstr "Мітки"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:516
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1517,7 +1517,6 @@ msgid "Open Project…"
 msgstr "Відкрити проєкт…"
 
 #: data/ui/window.blp:444
-#| msgid "New Project"
 msgid "Close Project"
 msgstr "Закрити проєкт"
 
@@ -1690,6 +1689,11 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повторити дію"
 
+#: graphs/actions.vala:28
+#| msgid "Graphs (Development)"
+msgid "The Graphs Developers"
+msgstr "Розробники «Графіків»"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
@@ -1762,19 +1766,19 @@ msgstr "Сума R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:92
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
 
-#: graphs/data.py:493
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -1950,20 +1954,20 @@ msgstr "Збережений проєкт"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/style_editor.py:411
+#: graphs/style_editor.py:389
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Колір {number}"
 
-#: graphs/style_editor.py:496
+#: graphs/style_editor.py:477
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor.py:517 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor.py:518 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Мітка Y"
 
@@ -2012,13 +2016,13 @@ msgstr "У файлі {file} не міститься теґу name"
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "Портал документів"
-
 #: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "усі файли"
+
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "Портал документів"
 
 #: graphs/window.vala:172
 msgid "Graphs (Development)"
