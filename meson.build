@@ -69,6 +69,7 @@ vala_conf.set_quoted('COPYRIGHT', copyright)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
+  '-w',
   language: 'c'
 )
 
