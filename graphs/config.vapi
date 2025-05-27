@@ -5,7 +5,6 @@ namespace Config {
     public const string LOCALEDIR;
 
     public const string VERSION;
-    public const string AUTHOR;
     public const string HOMEPAGE_URL;
     public const string ISSUE_URL;
     public const string COPYRIGHT;
