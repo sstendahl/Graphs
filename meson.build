@@ -25,7 +25,7 @@ homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
 help_url = 'https://world.pages.gitlab.gnome.org/Graphs/help/'
-author = 'Sjoerd Stendahl et al.'
+translation_url = 'https://l10n.gnome.org/module/Graphs/'
 
 i18n = import('i18n')
 gnome = import('gnome')
@@ -47,23 +47,22 @@ endif
 conf = configuration_data()
 conf.set('APPLICATION_ID', application_id)
 conf.set('GETTEXT_PACKAGE', meson.project_name())
-conf.set('AUTHOR', author)
 conf.set('COPYRIGHT', copyright)
-conf.set('VCS_URL', vcs_url)
-conf.set('ISSUE_URL', issue_url)
-conf.set('HELP_URL', help_url)
 conf.set('BINDIR', bindir)
 conf.set('LOCALEDIR', localedir)
 conf.set('PKGDATADIR', pkgdatadir)
 conf.set('PROJECT_NAME', meson.project_name())
 conf.set('HOMEPAGE_URL', homepage_url)
+conf.set('VCS_URL', vcs_url)
+conf.set('ISSUE_URL', issue_url)
+conf.set('HELP_URL', help_url)
+conf.set('TRANSLATION_URL', translation_url)
 conf.set('DEBUG', debug)
 
 vala_conf = configuration_data()
 vala_conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 vala_conf.set_quoted('LOCALEDIR', localedir)
 vala_conf.set_quoted('VERSION', version)
-vala_conf.set_quoted('AUTHOR', author)
 vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
 vala_conf.set_quoted('ISSUE_URL', issue_url)
 vala_conf.set_quoted('COPYRIGHT', copyright)

@@ -25,7 +25,7 @@ namespace Graphs {
                     application_name = _("Graphs"),
                     application_icon = application.application_id,
                     website = Config.HOMEPAGE_URL,
-                    developer_name = Config.AUTHOR,
+                    developer_name = _("The Graphs Developers"),
                     issue_url = Config.ISSUE_URL,
                     version = application.version,
                     developers = {
