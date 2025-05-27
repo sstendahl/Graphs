@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-13 11:57+0000\n"
-"PO-Revision-Date: 2025-05-16 16:47+0800\n"
+"POT-Creation-Date: 2025-05-27 08:42+0000\n"
+"PO-Revision-Date: 2025-05-27 18:48+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -654,7 +654,7 @@ msgstr "图表设置"
 msgid "Labels"
 msgstr "标签"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:516
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:493
 msgid "Title"
 msgstr "标题"
 
@@ -1667,6 +1667,10 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "重做动作"
 
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Graphs 开发者们"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr ""
@@ -1741,17 +1745,17 @@ msgstr "R² 的总和：{R2}"
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:92
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "无法解析 {stylename}，加载系统首选样式"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "绘图样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:493
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -1923,20 +1927,20 @@ msgstr "保存的工程"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/style_editor.py:411
+#: graphs/style_editor.py:388
 #, python-brace-format
 msgid "Color {number}"
 msgstr "颜色 {number}"
 
-#: graphs/style_editor.py:496
+#: graphs/style_editor.py:473
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:517 graphs/style_io.py:181
+#: graphs/style_editor.py:494 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:518 graphs/style_io.py:182
+#: graphs/style_editor.py:495 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -1985,13 +1989,13 @@ msgstr "文件 {file} 不包含名称标签"
 msgid "System"
 msgstr "系统"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "文档门户"
-
 #: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "所有文件"
+
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "文档门户"
 
 #: graphs/window.vala:172
 msgid "Graphs (Development)"
