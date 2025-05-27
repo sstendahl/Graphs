@@ -42,6 +42,7 @@ debug = get_option('buildtype') == 'debug'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
+  add_project_arguments(['--define=DEBUG'], language: 'vala')
 endif
 
 conf = configuration_data()
