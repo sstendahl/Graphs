@@ -60,7 +60,9 @@ namespace Graphs {
                     new_window.data.load (file);
                     new_window.present ();
                 } catch (ProjectParseError e) {
-                    window.add_toast_string (e.message);
+                    var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
+                    error_dialog.set_body (e.message);
+                    error_dialog.present (window);
                     if (new_window != null) {
                         new_window.close ();
                         application.on_main_window_closed (new_window);
