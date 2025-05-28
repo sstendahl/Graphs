@@ -26,6 +26,7 @@ vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
 help_url = 'https://world.pages.gitlab.gnome.org/Graphs/help/'
 translation_url = 'https://l10n.gnome.org/module/Graphs/'
+contribute_url = 'https://welcome.gnome.org/app/Graphs/'
 
 i18n = import('i18n')
 gnome = import('gnome')
@@ -58,6 +59,7 @@ conf.set('VCS_URL', vcs_url)
 conf.set('ISSUE_URL', issue_url)
 conf.set('HELP_URL', help_url)
 conf.set('TRANSLATION_URL', translation_url)
+conf.set('CONTRIBUTE_URL', contribute_url)
 conf.set('DEBUG', debug)
 
 vala_conf = configuration_data()
