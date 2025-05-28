@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-13 11:57+0000\n"
-"PO-Revision-Date: 2025-05-14 19:28+0200\n"
+"POT-Creation-Date: 2025-05-28 14:26+0000\n"
+"PO-Revision-Date: 2025-05-28 20:13+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -25,11 +25,31 @@ msgstr ""
 msgid "Graphs"
 msgstr "Grafi"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "Rišite grafe in ravnajte s podatki"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "Popolna podpora za svetli in temni način"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "Tvorite podatke iz enačbe"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "Urejajte slogovne predloge grafov"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "Enostavno ravnajte z uvoženimi podatki"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "Rišite grafe in manipulirajte s podatki"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -45,7 +65,7 @@ msgstr ""
 "prevajanja, množenja, sredinjenja in glajenja podatkov ter uporaba kakršnih "
 "koli preoblikovanj po meri podatkov."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -55,7 +75,7 @@ msgstr ""
 "ponuja obsežne možnosti prilagajanja sloga grafa. Slogovne predloge lahko "
 "natančno prilagodite po svojih željah."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -74,7 +94,7 @@ msgstr ""
 "okolje GNOME, vendar bi morali biti primerni tudi za poljubno drugo namizno "
 "okolje."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -82,30 +102,10 @@ msgstr ""
 "Za vse povratne informacije, vprašanja ali splošne težave vnesite težavo na "
 "strani GitLab."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "Rišite grafe in ravnajte s podatki"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "Popolna podpora za svetli in temni način"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "Tvorite podatke iz enačbe"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "Urejajte slogovne predloge grafov"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "Enostavno ravnajte z uvoženimi podatki"
-
 #: data/se.sjoerd.Graphs.desktop.in:12
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Visualization;Fitting;xrdml;"
 msgstr ""
 "risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafikon;"
 "vizualizacija;vizualizacijo;prileganje;xrdml;"
@@ -669,7 +669,7 @@ msgstr "Nastavitve slike"
 msgid "Labels"
 msgstr "Oznake"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:516
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Naziv"
 
@@ -1683,6 +1683,10 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Ponovi dejanje"
 
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Razvijalci Grafov"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
@@ -1755,18 +1759,18 @@ msgstr "Vsota R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:92
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "Ni bilo mogoče razčleniti {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Slog grafa {stylename} ne obstaja; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:493
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -1940,20 +1944,20 @@ msgstr "Shranjeni projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/style_editor.py:411
+#: graphs/style_editor.py:389
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Barva {number}"
 
-#: graphs/style_editor.py:496
+#: graphs/style_editor.py:477
 msgid "Example Item"
 msgstr "Primer elementa"
 
-#: graphs/style_editor.py:517 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/style_editor.py:518 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Oznaka Y"
 
@@ -2002,13 +2006,13 @@ msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "Portal dokumentov"
-
 #: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "Vse datoteke"
+
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "Portal dokumentov"
 
 #: graphs/window.vala:172
 msgid "Graphs (Development)"
