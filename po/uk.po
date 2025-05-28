@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-27 14:54+0000\n"
-"PO-Revision-Date: 2025-05-27 20:09+0300\n"
+"POT-Creation-Date: 2025-05-28 14:26+0000\n"
+"PO-Revision-Date: 2025-05-28 22:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -24,11 +24,31 @@ msgstr ""
 msgid "Graphs"
 msgstr "Графіки"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "Креслення і робота з будь-якими даними"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "Повна підтримка світлого і темного режимів"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "Породження даних на основі рівняння"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "Керування таблицями стилів креслення"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "Робота із імпортованими даними"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "Креслення і робота з даними"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -45,7 +65,7 @@ msgstr ""
 "згладжування даних, а також застосування до даних будь-яких спеціальних "
 "перетворень."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -56,7 +76,7 @@ msgstr ""
 "графіків. Ви можете налаштувати та персоналізувати таблиці стилів на свій "
 "смак."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -75,7 +95,7 @@ msgstr ""
 "вдосконалення. «Графіки» створено для роботи у середовищі GNOME, але їх "
 "також можна використовувати у будь-якому іншому робочому середовищі."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -83,33 +103,16 @@ msgstr ""
 "Про відгуки, питання та загальні проблеми можна повідомляти за допомогою "
 "створення запису вади на сторінці GitLab."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "Креслення і робота з будь-якими даними"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "Повна підтримка світлого і темного режимів"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "Породження даних на основі рівняння"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "Керування таблицями стилів креслення"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "Робота із імпортованими даними"
-
 #: data/se.sjoerd.Graphs.desktop.in:12
+#| msgid ""
+#| "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
+#| "Visualisation;Visualization;Fitting;xrdml;"
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;креслення;графік;креслення;наука;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;креслення;графік;креслення;наука;"
 "математика;рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:17
@@ -1690,7 +1693,6 @@ msgid "Redo Action"
 msgstr "Повторити дію"
 
 #: graphs/actions.vala:28
-#| msgid "Graphs (Development)"
 msgid "The Graphs Developers"
 msgstr "Розробники «Графіків»"
 
