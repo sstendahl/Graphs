@@ -2,18 +2,18 @@
 # Copyright (C) 2025 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024-2025.
 # Álvaro Burns <>, 2025.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-13 11:57+0000\n"
-"PO-Revision-Date: 2025-05-13 19:40-0300\n"
-"Last-Translator: Álvaro Burns <>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
+"POT-Creation-Date: 2025-05-28 08:59+0000\n"
+"PO-Revision-Date: 2025-05-28 08:10-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -26,11 +26,31 @@ msgstr ""
 msgid "Graphs"
 msgstr "Gráficos"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "Plote e manipule dados"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "Suporte total para modo claro e escuro"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "Gere dados a partir de uma equação"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "Edite folhas de estilo de plotagem"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "Manipule dados importados com facilidade"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:65
 msgid "Plot and manipulate data"
 msgstr "Plote e manipule dados"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -46,7 +66,7 @@ msgstr ""
 "de selecionar, recortar, traduzir, multiplicar, centralizar e suavizar "
 "dados, bem como aplicar quaisquer transformações personalizadas neles."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -57,7 +77,7 @@ msgstr ""
 "gráficos. Você pode ajustar e personalizar as folhas de estilo de acordo com "
 "sua preferência."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -76,33 +96,13 @@ msgstr ""
 "GNOME, mas também deve ser adequado para qualquer outro ambiente de área de "
 "trabalho."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr ""
 "Para qualquer feedback, perguntas ou problemas gerais, registre um problema "
 "na página do GitLab."
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "Plote e manipule dados"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "Suporte total para modo claro e escuro"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "Gere dados a partir de uma equação"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "Edite folhas de estilo de plotagem"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "Manipule dados importados com facilidade"
 
 #: data/se.sjoerd.Graphs.desktop.in:12
 msgid ""
@@ -672,7 +672,7 @@ msgstr "Ajustes da figura"
 msgid "Labels"
 msgstr "Camadas"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:516
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "Título"
 
@@ -1685,6 +1685,10 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Refaz ação"
 
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Os desenvolvedores do Graphs"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr ""
@@ -1760,7 +1764,7 @@ msgid "Fitting Parameters for %s"
 msgstr "Ajustando parâmetros para %s"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:92
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
@@ -1768,14 +1772,14 @@ msgstr ""
 "sistema"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "O estilo de plotagem {stylename} não existe. Carregando o estilo predefinido "
 "do sistema"
 
-#: graphs/data.py:493
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
@@ -1949,20 +1953,20 @@ msgstr "Projeto salvo"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/style_editor.py:411
+#: graphs/style_editor.py:389
 #, python-brace-format
 msgid "Color {number}"
 msgstr "Cor {number}"
 
-#: graphs/style_editor.py:496
+#: graphs/style_editor.py:477
 msgid "Example Item"
 msgstr "Exemplo de item"
 
-#: graphs/style_editor.py:517 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Rótulo X"
 
-#: graphs/style_editor.py:518 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Rótulo Y"
 
@@ -2011,13 +2015,13 @@ msgstr "Arquivo {file}, não contém uma etiqueta de nome"
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "Portal de documentos"
-
 #: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "Todos os arquivos"
+
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "Portal de documentos"
 
 #: graphs/window.vala:172
 msgid "Graphs (Development)"
