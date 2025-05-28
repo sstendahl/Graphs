@@ -62,6 +62,22 @@
     </screenshot>
   </screenshots>
 
+  <keywords>
+    <keyword>Plotting</keyword>
+    <keyword>Plot</keyword>
+    <keyword>Graph</keyword>
+    <keyword>Graphing</keyword>
+    <keyword>Science</keyword>
+    <keyword>Mathematics</keyword>
+    <keyword>Math</keyword>
+    <keyword>Equations</keyword>
+    <keyword>Data</keyword>
+    <keyword>Visualisation</keyword>
+    <keyword>Visualization</keyword>
+    <keyword>Fitting</keyword>
+    <keyword>xrdml</keyword>
+	</keywords>
+
   <summary>Plot and manipulate data</summary>
   <description>
     <p>Graphs is a simple, yet powerful tool that allows you to plot and manipulate your data with ease.
