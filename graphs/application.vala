@@ -14,7 +14,6 @@ namespace Graphs {
     public class Application : Adw.Application {
         public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
-        public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; protected set; }
 
         private Gee.List<Window> main_windows;

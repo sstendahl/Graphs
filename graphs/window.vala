@@ -167,10 +167,10 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
-            if (application.debug) {
-                add_css_class ("devel");
-                sidebar_title.set_title (_("Graphs (Development)"));
-            }
+#if DEBUG
+            add_css_class ("devel");
+            sidebar_title.set_title (_("Graphs (Development)"));
+#endif
         }
 
         /**
