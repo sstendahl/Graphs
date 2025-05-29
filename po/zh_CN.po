@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-27 08:42+0000\n"
-"PO-Revision-Date: 2025-05-27 18:48+0800\n"
+"POT-Creation-Date: 2025-05-28 14:26+0000\n"
+"PO-Revision-Date: 2025-05-30 07:00+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -23,11 +23,31 @@ msgstr ""
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "绘制和处理任意数据"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "完全支持亮色和暗色模式"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "从方程式生成数据"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "管理绘制样式表"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "处理导入的数据"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "绘制和处理数据"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -40,7 +60,7 @@ msgstr ""
 "类型中导入，或通过方程式生成。所有数据都可使用多种操作进行处理，如选择、剪"
 "切、平移、相乘、置中和平滑数据，或者对数据应用任意自定义转换。"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -49,7 +69,7 @@ msgstr ""
 "此外，Graphs 还支持在导入的数据上进行曲线拟合且为绘制样式提供了扩展的自定义选"
 "项。您可以随自己喜好来调整和个性化样式表。"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -64,40 +84,20 @@ msgstr ""
 "选项可使其在像 Inkscape 的软件中做进一步调整。图表是以 GNOME 环境为标准编写"
 "的，但应同样适用于其它任何桌面环境。"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
 msgstr "若有任何反馈、问题或常规议题，请在 GitLab 页面上提交议案。"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "绘制和处理任意数据"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "完全支持亮色和暗色模式"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "从方程式生成数据"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "管理绘制样式表"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "处理导入的数据"
-
 #: data/se.sjoerd.Graphs.desktop.in:12
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Visualization;Fitting;xrdml;"
 msgstr ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;绘制;图表;科学;数学;方程式;等式;公"
-"式;数据;可视化;拟合;"
+"Visualization;Fitting;xrdml;绘制;图表;科学;数学;方程式;等式;公式;数据;可视化;"
+"拟合;"
 
 #: data/se.sjoerd.Graphs.desktop.in:17
 msgid "New Window"
@@ -654,7 +654,7 @@ msgstr "图表设置"
 msgid "Labels"
 msgstr "标签"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:493
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "标题"
 
@@ -1927,20 +1927,20 @@ msgstr "保存的工程"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/style_editor.py:388
+#: graphs/style_editor.py:389
 #, python-brace-format
 msgid "Color {number}"
 msgstr "颜色 {number}"
 
-#: graphs/style_editor.py:473
+#: graphs/style_editor.py:477
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:494 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:495 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y 标签"
 
