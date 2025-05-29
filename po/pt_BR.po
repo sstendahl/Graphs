@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024-2025.
-# Álvaro Burns <>, 2025.
 # Juliano de Souza Camargo <julianosc@pm.me>, 2024-2025.
+# Álvaro Burns <>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 08:59+0000\n"
-"PO-Revision-Date: 2025-05-28 08:10-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"POT-Creation-Date: 2025-05-28 14:26+0000\n"
+"PO-Revision-Date: 2025-05-28 21:46-0300\n"
+"Last-Translator: Álvaro Burns <>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -46,11 +46,11 @@ msgstr "Edite folhas de estilo de plotagem"
 msgid "Manipulate imported data"
 msgstr "Manipule dados importados com facilidade"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:65
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "Plote e manipule dados"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -66,7 +66,7 @@ msgstr ""
 "de selecionar, recortar, traduzir, multiplicar, centralizar e suavizar "
 "dados, bem como aplicar quaisquer transformações personalizadas neles."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -77,7 +77,7 @@ msgstr ""
 "gráficos. Você pode ajustar e personalizar as folhas de estilo de acordo com "
 "sua preferência."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -96,7 +96,7 @@ msgstr ""
 "GNOME, mas também deve ser adequado para qualquer outro ambiente de área de "
 "trabalho."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -107,11 +107,11 @@ msgstr ""
 #: data/se.sjoerd.Graphs.desktop.in:12
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Visualization;Fitting;xrdml;"
 msgstr ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;Plotagem;Gráfico;Ciência;"
-"Matemática;Equações;Dados;Visualização;xrdml;"
+"Visualisation;Fitting;xrdml;Plotagem;Gráfico;Ciência;Matemática;Equações;"
+"Dados;Visualização;"
 
 #: data/se.sjoerd.Graphs.desktop.in:17
 msgid "New Window"
