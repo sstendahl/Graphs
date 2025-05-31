@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-13 11:57+0000\n"
-"PO-Revision-Date: 2025-05-15 05:35+0200\n"
+"POT-Creation-Date: 2025-05-28 14:26+0000\n"
+"PO-Revision-Date: 2025-05-31 02:38+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -23,11 +23,31 @@ msgstr ""
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "დახატეთ და შეცვალეთ ნებისმიერი მონაცემი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "ღია და მუქი რეჟიმის სრული მხარდაჭერა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "მონაცემების გენერაცია განტოლებიდან"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "ნახაზის სტილის ცხრილების ჩასწორება"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "ადვილად შეცვალეთ შემოტანილ მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "დახატეთ და შეცვალეთ მონაცემები"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -43,7 +63,7 @@ msgstr ""
 "ამოჭრა, გადატანა, გამრავლება, დაცენტრება და მოგლუვება. ასევე, ამ მონაცემებზე "
 "ნებისმიერი თქვენთვის სასურველი ტრანსფორმაცია შეგიძლიათ, შეასრულოთ."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -53,7 +73,7 @@ msgstr ""
 "მონაცემებზე და გთავაზობთ მრავალმხირივი მორგების პარამეტრებს ნახაზების "
 "სტილისთვის. შეგიძლიათ ისე მოირგოთ ისინი, როგორც გნებავთ."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -71,7 +91,7 @@ msgstr ""
 "ჩასასწორებლად, როგორიცაა Inkscape. Graphs დაწერილია GNOME-ის გარემოსთვის, "
 "მაგრამ სხვა სამუშაო მაგიდაზეც არ უნდა ჰქონდეს პრობლემები."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -79,29 +99,9 @@ msgstr ""
 "ნებისმიერი უკუკავშირისთვის, კითხვებისთვის თუ ზოგადი პრობლემებისთვის, "
 "გახსენით პრობლემის ბილეთი GitLab-ის გვერდზე."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "დახატეთ და შეცვალეთ ნებისმიერი მონაცემი"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "ღია და მუქი რეჟიმის სრული მხარდაჭერა"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "მონაცემების გენერაცია განტოლებიდან"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "ნახაზის სტილის ცხრილების ჩასწორება"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "ადვილად შეცვალეთ შემოტანილ მონაცემები"
-
 #: data/se.sjoerd.Graphs.desktop.in:12
-msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
-msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;ხაზვა;გრაფიკა;გრაფიკები;მათემატიკა;განტოლება;მონაცემები;ვიზუალიზაცია;"
+msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualization;Fitting;xrdml;"
+msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;ხაზვა;გრაფიკა;გრაფიკები;მათემატიკა;განტოლება;მონაცემები;ვიზუალიზაცია;Fitting;xrdml;"
 
 #: data/se.sjoerd.Graphs.desktop.in:17
 msgid "New Window"
@@ -662,7 +662,7 @@ msgstr "ფიგურის პარამეტრები"
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:516
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
 msgid "Title"
 msgstr "სათაური"
 
@@ -1677,6 +1677,10 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "ქმედების გამეორება"
 
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Graphs-ის პროგრამისტები"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr "ეკატერინე პაპავა"
@@ -1749,20 +1753,20 @@ msgstr "R²-ის ჯამი: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
 
-#: graphs/data.py:92
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr ""
 "ხაზვის სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის "
 "ნაგულისხმევი სტილი"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr ""
 "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/data.py:493
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
@@ -1935,20 +1939,20 @@ msgstr "შენახული პროექტი"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/style_editor.py:411
+#: graphs/style_editor.py:389
 #, python-brace-format
 msgid "Color {number}"
 msgstr "ფერი {number}"
 
-#: graphs/style_editor.py:496
+#: graphs/style_editor.py:477
 msgid "Example Item"
 msgstr "მაგალითი ელემენტი"
 
-#: graphs/style_editor.py:517 graphs/style_io.py:181
+#: graphs/style_editor.py:510 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X ჭდე"
 
-#: graphs/style_editor.py:518 graphs/style_io.py:182
+#: graphs/style_editor.py:511 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y ჭდე"
 
@@ -1997,13 +2001,13 @@ msgstr "ფაილი {file} სახელის ჭდე არ შეი�
 msgid "System"
 msgstr "სისტემური"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "დოკუმენტის პორტალი"
-
 #: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "ყველა ფაილი"
+
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "დოკუმენტის პორტალი"
 
 #: graphs/window.vala:172
 msgid "Graphs (Development)"
