@@ -247,10 +247,27 @@ class StyleEditorBox(Gtk.Box):
             list_box.remove(list_box.get_last_child())
         if self.line_colors:
             for index in range(len(self.line_colors)):
-                list_box.append(_StyleColorBox(self, index))
+                list_box.append(self._create_color_box(index))
         else:
             self.line_colors.append("#000000")
-            list_box.append(_StyleColorBox(self, 0))
+            list_box.append(self._create_color_box(0))
+
+    def _create_color_box(self, index: int) -> Graphs.StyleColorBox:
+
+        def on_color_removed(_box):
+            self.line_colors.pop(index)
+            self.reload_line_colors()
+            self.update_line_colors()
+
+        def on_color_changed(_box, color):
+            self.line_colors[index] = color
+            self.update_line_colors()
+
+        color = self.line_colors[index]
+        box = Graphs.StyleColorBox.new(index, color)
+        box.connect("color-removed", on_color_removed)
+        box.connect("color-changed", on_color_changed)
+        return box
 
     def update_line_colors(self):
         """Update line colors in params."""
@@ -373,61 +390,6 @@ class StyleEditorBox(Gtk.Box):
         self.line_colors.append("#000000")
         self.reload_line_colors()
         self.update_line_colors()
-
-
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-color-box.ui")
-class _StyleColorBox(Gtk.Box):
-    __gtype_name__ = "GraphsStyleColorBox"
-    label = Gtk.Template.Child()
-    color_button = Gtk.Template.Child()
-
-    parent = GObject.Property(type=StyleEditorBox)
-    index = GObject.Property(type=int, default=0)
-
-    def __init__(self, parent, index):
-        super().__init__(parent=parent, index=index)
-        self.label.set_label(_("Color {number}").format(number=index + 1))
-        self.provider = Gtk.CssProvider()
-        self.color_button.get_style_context().add_provider(
-            self.provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-        )
-        self._reload_color()
-
-    def _reload_color(self):
-        color = self.props.parent.line_colors[self.props.index]
-        self.provider.load_from_string(f"button {{ color: {color}; }}")
-
-    @Gtk.Template.Callback()
-    def on_color_choose(self, _button):
-        """Handle a clicked color button."""
-
-        def on_accept(dialog, result):
-            with contextlib.suppress(GLib.GError):
-                color = dialog.choose_rgba_finish(result)
-                if color is not None:
-                    self.props.parent.line_colors[self.props.index] = \
-                        Graphs.tools_rgba_to_hex(color)
-                    self._reload_color()
-                    self.props.parent.update_line_colors()
-
-        dialog = Gtk.ColorDialog()
-        dialog.set_with_alpha(False)
-        dialog.choose_rgba(
-            self.props.parent.window,
-            Graphs.tools_hex_to_rgba(
-                self.props.parent.line_colors[self.props.index],
-            ),
-            None,
-            on_accept,
-        )
-
-    @Gtk.Template.Callback()
-    def on_delete(self, _button):
-        """Handle deletion."""
-        self.props.parent.line_colors.pop(self.props.index)
-        self.props.parent.reload_line_colors()
-        self.props.parent.update_line_colors()
 
 
 _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
