@@ -387,9 +387,18 @@ class StyleEditorBox(Gtk.Box):
     @Gtk.Template.Callback()
     def add_color(self, _button):
         """Add a color."""
-        self.line_colors.append("#000000")
-        self.reload_line_colors()
-        self.update_line_colors()
+
+        def on_accept(dialog, result):
+            with contextlib.suppress(GLib.GError):
+                color = dialog.choose_rgba_finish(result)
+                if color is not None:
+                    self.line_colors.append(Graphs.tools_rgba_to_hex(color))
+                    self.reload_line_colors()
+                    self.update_line_colors()
+
+        dialog = Gtk.ColorDialog.new()
+        dialog.set_with_alpha(False)
+        dialog.choose_rgba(self.window, None, None, on_accept)
 
 
 _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
