@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 14:26+0000\n"
-"PO-Revision-Date: 2025-05-28 22:32+0300\n"
+"POT-Creation-Date: 2025-06-03 12:23+0000\n"
+"PO-Revision-Date: 2025-06-03 20:41+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -104,16 +104,13 @@ msgstr ""
 "створення запису вади на сторінці GitLab."
 
 #: data/se.sjoerd.Graphs.desktop.in:12
-#| msgid ""
-#| "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-#| "Visualisation;Visualization;Fitting;xrdml;"
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
 "Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
-"ation;Fitting;xrdml;креслення;графік;креслення;наука;"
-"математика;рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
+"Visualization;Fitting;xrdml;креслення;графік;креслення;наука;математика;"
+"рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:17
 msgid "New Window"
@@ -674,7 +671,7 @@ msgstr "Параметри рисунка"
 msgid "Labels"
 msgstr "Мітки"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1956,20 +1953,15 @@ msgstr "Збережений проєкт"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/style_editor.py:389
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Колір {number}"
-
-#: graphs/style_editor.py:477
+#: graphs/style_editor.py:448
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:481 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:482 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Мітка Y"
 
@@ -1978,6 +1970,12 @@ msgstr "Мітка Y"
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+#| msgid "Colors"
+msgid "Color %d"
+msgstr "Колір %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2052,6 +2050,10 @@ msgstr "Відкрити адресу"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
+
+#, python-brace-format
+#~ msgid "Color {number}"
+#~ msgstr "Колір {number}"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "Помилка — не вибрано стилю"
