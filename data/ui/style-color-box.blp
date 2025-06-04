@@ -4,6 +4,15 @@ using Adw 1;
 template $GraphsStyleColorBox: Adw.ActionRow {
   title-lines: 1;
 
+  [prefix]
+  Image {
+    icon-name: "list-drag-handle-symbolic";
+
+    styles [
+      "drag-handle",
+    ]
+  }
+
   [suffix]
   Button color_button {
     tooltip-text: _("Edit");
