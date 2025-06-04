@@ -178,10 +178,7 @@ namespace Graphs {
      * Style Color Box
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-color-box.ui")]
-    public class StyleColorBox : Gtk.Box {
-
-        [GtkChild]
-        private unowned Gtk.Label label { get; }
+    public class StyleColorBox : Adw.ActionRow {
 
         [GtkChild]
         private unowned Gtk.Button color_button { get; }
@@ -199,7 +196,7 @@ namespace Graphs {
         }
 
         public StyleColorBox (int index, string color) {
-            this.label.set_label (_("Color %d").printf (index + 1));
+            this.set_title (_("Color %d").printf (index + 1));
             this.color = color;
             load_color ();
         }
