@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 14:26+0000\n"
-"PO-Revision-Date: 2025-05-30 15:29+0330\n"
+"POT-Creation-Date: 2025-06-03 12:23+0000\n"
+"PO-Revision-Date: 2025-06-04 12:17+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -655,7 +655,7 @@ msgstr "تنظیمات شکل"
 msgid "Labels"
 msgstr "برچسب‌ها"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
 msgid "Title"
 msgstr "عنوان"
 
@@ -1924,20 +1924,15 @@ msgstr "پروژه‌های ذخیره شده"
 msgid "Project"
 msgstr "پروژه"
 
-#: graphs/style_editor.py:389
-#, python-brace-format
-msgid "Color {number}"
-msgstr "رنگ {number}"
-
-#: graphs/style_editor.py:477
+#: graphs/style_editor.py:448
 msgid "Example Item"
 msgstr "مورد مثال"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:481 graphs/style_io.py:181
 msgid "X Label"
 msgstr "برچسب X"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:482 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "برچسب Y"
 
@@ -1946,6 +1941,11 @@ msgstr "برچسب Y"
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "ویرایشگر سبک نمودارها— %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+msgid "Color %d"
+msgstr "رنگ %Id"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2020,6 +2020,10 @@ msgstr "گشودن مکان"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"
+
+#, python-brace-format
+#~ msgid "Color {number}"
+#~ msgstr "رنگ {number}"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "خطا - هیچ سبکی گزیده نشده"
