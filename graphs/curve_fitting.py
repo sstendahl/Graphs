@@ -24,9 +24,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         super().__init__(window=window)
         application = window.get_application()
         Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
-        self.connect("equation_change", self.on_equation_change)
-        self.connect("fit_curve_request", self.fit_curve)
-        self.connect("add_fit_request", self.add_fit)
+        self.connect("equation-change", self.on_equation_change)
+        self.connect("fit-curve-request", self.fit_curve)
+        self.connect("add-fit-request", self.add_fit)
         self.fitting_parameters = FittingParameterContainer()
         style = \
             application.get_figure_style_manager().get_system_style_params()

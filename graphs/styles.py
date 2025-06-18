@@ -43,8 +43,8 @@ class StyleManager(Graphs.StyleManager):
             and gtk_theme.lower().startswith("yaru") \
             else "Adwaita"
         super().__init__(application=application)
-        self.connect("style_request", self._on_style_request)
-        self.connect("create_style_request", self._on_create_style_request)
+        self.connect("style-request", self._on_style_request)
+        self.connect("create-style-request", self._on_create_style_request)
 
         self.setup(self._system_style_name.lower())
         self._update_system_style()

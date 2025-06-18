@@ -30,17 +30,17 @@ class Data(Graphs.Data):
     def __init__(self, application: Graphs.Application):
         self._selected_style_params = None
         super().__init__(application=application)
-        self.connect("load_request", self._on_load_request)
-        self.connect("position_changed", self._on_position_changed)
-        self.connect("item_changed", self._on_item_changed)
-        self.connect("item_added", self._on_item_added)
-        self.connect("item_removed", self._on_item_removed)
+        self.connect("load-request", self._on_load_request)
+        self.connect("position-changed", self._on_position_changed)
+        self.connect("item-changed", self._on_item_changed)
+        self.connect("item-added", self._on_item_added)
+        self.connect("item-removed", self._on_item_removed)
         self.connect(
-            "figure_settings_changed",
+            "figure-settings-changed",
             self._on_figure_settings_changed,
         )
         self.connect(
-            "add_history_state_request",
+            "add-history-state-request",
             self._on_add_history_state_request,
         )
 
