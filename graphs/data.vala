@@ -29,7 +29,7 @@ namespace Graphs {
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
                 value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
                 _update_used_positions ();
-                handle_style_change ();
+                handle_style_change.begin ();
             }
         }
 
@@ -63,7 +63,7 @@ namespace Graphs {
             style_manager.style_changed.connect (stylename => {
                 if (!figure_settings.use_custom_style) return;
                 if (figure_settings.custom_style == stylename) {
-                    handle_style_change ();
+                    handle_style_change.begin ();
                 }
             });
             style_manager.style_deleted.connect (stylename => {
@@ -80,7 +80,7 @@ namespace Graphs {
 
             application.style_manager.notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
-                    handle_style_change ();
+                    handle_style_change.begin ();
                 }
             });
 
@@ -399,7 +399,7 @@ namespace Graphs {
 
         // Section style
 
-        private void handle_style_change (bool recolor_items = false) {
+        private async void handle_style_change (bool recolor_items = false) {
             notify_property ("selected_stylename");
             run_python_method ("_update_selected_style");
             style_changed.emit (recolor_items);
@@ -568,16 +568,16 @@ namespace Graphs {
             items_changed.emit (0, 0, 0);
         }
 
-        private void _on_use_custom_style () {
+        private async void _on_use_custom_style () {
             if (figure_settings.use_custom_style) {
-                _on_custom_style ();
+                yield _on_custom_style ();
             } else {
                 style_selection_model.set_selected (0);
-                handle_style_change (true);
+                yield handle_style_change (true);
             }
         }
 
-        private void _on_custom_style () {
+        private async void _on_custom_style () {
             if (!figure_settings.use_custom_style) return;
             var style_model = style_selection_model.get_model ();
             for (uint i = 1; i < style_model.get_n_items (); i++) {
@@ -587,7 +587,7 @@ namespace Graphs {
                     break;
                 }
             }
-            handle_style_change (true);
+            yield handle_style_change (true);
         }
 
         // End section listeners

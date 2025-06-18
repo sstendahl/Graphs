@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 14:26+0000\n"
-"PO-Revision-Date: 2025-05-31 02:38+0200\n"
+"POT-Creation-Date: 2025-06-03 12:23+0000\n"
+"PO-Revision-Date: 2025-06-08 04:48+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -662,7 +662,7 @@ msgstr "ფიგურის პარამეტრები"
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
 msgid "Title"
 msgstr "სათაური"
 
@@ -1939,20 +1939,15 @@ msgstr "შენახული პროექტი"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/style_editor.py:389
-#, python-brace-format
-msgid "Color {number}"
-msgstr "ფერი {number}"
-
-#: graphs/style_editor.py:477
+#: graphs/style_editor.py:448
 msgid "Example Item"
 msgstr "მაგალითი ელემენტი"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:481 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X ჭდე"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:482 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y ჭდე"
 
@@ -1961,6 +1956,11 @@ msgstr "Y ჭდე"
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "გრაფიკების სტილის რედაქტორი — %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+msgid "Color %d"
+msgstr "ფერი %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2035,6 +2035,10 @@ msgstr "მდებარეობის გახსნა"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ინვერსიული ფესვი"
+
+#, python-brace-format
+#~ msgid "Color {number}"
+#~ msgstr "ფერი {number}"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "შეცდომა - სტილი აღმოჩენილი არაა"

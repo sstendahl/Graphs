@@ -99,7 +99,7 @@ namespace Graphs {
             } catch { assert_not_reached (); }
         }
 
-        private void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
+        private async void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
             Style? style = null;
             switch (event_type) {

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 14:26+0000\n"
-"PO-Revision-Date: 2025-05-30 07:00+0800\n"
+"POT-Creation-Date: 2025-06-03 12:23+0000\n"
+"PO-Revision-Date: 2025-06-04 09:19+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -654,7 +654,7 @@ msgstr "图表设置"
 msgid "Labels"
 msgstr "标签"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
 msgid "Title"
 msgstr "标题"
 
@@ -1927,20 +1927,15 @@ msgstr "保存的工程"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/style_editor.py:389
-#, python-brace-format
-msgid "Color {number}"
-msgstr "颜色 {number}"
-
-#: graphs/style_editor.py:477
+#: graphs/style_editor.py:448
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:481 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:482 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -1949,6 +1944,11 @@ msgstr "Y 标签"
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Graphs 样式编辑器 — %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+msgid "Color %d"
+msgstr "颜色 %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2023,6 +2023,10 @@ msgstr "打开位置"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "逆平方根"
+
+#, python-brace-format
+#~ msgid "Color {number}"
+#~ msgstr "颜色 {number}"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "错误 - 未选择样式"
