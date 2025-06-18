@@ -129,7 +129,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if interactive:
             self._setup_interactive()
 
-        self.connect("save_request", self._save)
+        self.connect("save-request", self._save)
         self.connect(
             "zoom_request",
             lambda _self, factor: self.zoom(factor, False),

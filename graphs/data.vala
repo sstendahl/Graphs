@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gee;
 using Gtk;
+
 namespace Graphs {
     /**
      * Data class

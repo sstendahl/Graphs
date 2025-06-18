@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
 using Gdk;
-using Gtk;
 using Gee;
+using Gtk;
 
 namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};

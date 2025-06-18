@@ -26,7 +26,7 @@ class PythonWindow(Graphs.Window):
         super().__init__(application=application, data=Data(application))
         self.setup()
         self.props.data.connect(
-            "style_changed",
+            "style-changed",
             self._on_style_changed,
         )
         self._reload_canvas()
@@ -71,8 +71,8 @@ class PythonWindow(Graphs.Window):
         def on_view_changed(_canvas):
             self.props.data.add_view_history_state()
 
-        canvas.connect("edit_request", on_edit_request)
-        canvas.connect("view_changed", on_view_changed)
+        canvas.connect("edit-request", on_edit_request)
+        canvas.connect("view-changed", on_view_changed)
 
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(

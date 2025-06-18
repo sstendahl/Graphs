@@ -175,8 +175,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
-        self._axis.figure.canvas.connect("view_changed", self._generate_data)
-        self._axis.figure.canvas.connect("view_action", self._generate_data)
+        self._axis.figure.canvas.connect("view-changed", self._generate_data)
+        self._axis.figure.canvas.connect("view-action", self._generate_data)
         self._artist = axis.plot(
             [],
             [],

@@ -14,19 +14,19 @@ from graphs.item import EquationItem, GeneratedDataItem
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
-_REQUEST_NAMES = (
-    "python_method_request",
-    "edit_item_dialog_request",
-    "curve_fitting_dialog_request",
-    "evaluate_string_request",
-    "import_from_files_request",
-    "export_items_request",
-    "add_equation_request",
-    "generate_data_request",
-    "validate_equation_request",
-    "create_style_editor_request",
-    "create_window_request",
-    "perform_operation_request",
+_REQUESTS = (
+    "python-method",
+    "edit-item-dialog",
+    "curve-fitting_dialog",
+    "evaluate-string",
+    "import-from-files",
+    "export-items",
+    "add-equation",
+    "generate-data",
+    "validate-equation",
+    "create-style-editor",
+    "create-window",
+    "perform-operation",
 )
 
 
@@ -36,10 +36,11 @@ class PythonHelper(Graphs.PythonHelper):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
 
-        for request_name in _REQUEST_NAMES:
+        for request in _REQUESTS:
+            request = request + "-request"
             self.connect(
-                request_name,
-                getattr(self, "_on_" + request_name),
+                request,
+                getattr(self, "_on_" + request.replace("-", "_")),
             )
 
     @staticmethod
