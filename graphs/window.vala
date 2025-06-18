@@ -137,7 +137,7 @@ namespace Graphs {
                 for (uint i = 0; i < file_list.length (); i++) {
                     files += file_list.nth_data (i);
                 }
-                (application as Application).python_helper.import_from_files (this, files);
+                ((Application) application).python_helper.import_from_files (this, files);
                 return true;
             });
             drag_overlay.add_controller (file_drop_target);
@@ -183,8 +183,6 @@ namespace Graphs {
          * Update window title.
          */
         private void on_unsaved_change () {
-            var application = application as Application;
-
             string title;
             string path;
             var close_action = lookup_action ("close-project") as SimpleAction;
