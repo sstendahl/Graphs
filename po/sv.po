@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-02-26 13:31+0000\n"
-"PO-Revision-Date: 2025-02-26 20:48+0100\n"
+"POT-Creation-Date: 2025-06-18 11:10+0000\n"
+"PO-Revision-Date: 2025-06-18 22:56+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -17,18 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n>1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/application.vala:80
+#: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Graphs"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "Plotta och manipulera vilka data som helst"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "Fullt stöd för ljust och mörkt läge"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "Generera data från en ekvation"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "Hantera plottstilmallar"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "Manipulera importerade data"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "Plotta och manipulera data"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -43,7 +63,7 @@ msgstr ""
 "som att markera, klippa ut, förskjuta, multiplicera, centrera och jämna ut "
 "data, samt att tillämpa anpassade transformationer."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -53,7 +73,7 @@ msgstr ""
 "möjligt att ändra stilen på dina plottar. Det går att skapa och ändra dina "
 "mallar helt enligt dina önskemål."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -71,7 +91,7 @@ msgstr ""
 "för ytterligare anpassning och förfining. Graphs är skrivet med GNOME-miljön "
 "i åtanke, men bör vara lämpligt för andra skrivbordsmiljöer också."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -79,35 +99,15 @@ msgstr ""
 "För eventuell feedback, frågor eller allmänna problem, skicka in ett ärende "
 "på GitLab-sidan."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "Plotta och manipulera vilka data som helst"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "Fullt stöd för ljust och mörkt läge"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "Generera data från en ekvation"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "Hantera plottstilmallar"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "Manipulera importerade data"
-
-#: data/se.sjoerd.Graphs.desktop.in:11
-msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
+#: data/se.sjoerd.Graphs.desktop.in:12
+msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualization;Fitting;xrdml;"
 msgstr "Plotta;Graf;Grafer;Vetenskap;Matte;Matematik;Ekvation;Data;Plot;Visualisering;Anpassning;xrdml;"
 
-#: data/se.sjoerd.Graphs.desktop.in:16
+#: data/se.sjoerd.Graphs.desktop.in:17
 msgid "New Window"
 msgstr "Nytt fönster"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:454
+#: data/se.sjoerd.Graphs.desktop.in:21 data/ui/window.blp:457
 msgid "Style Editor"
 msgstr "Stilredigerare"
 
@@ -266,8 +266,8 @@ msgstr "Lägg till som data"
 msgid "Toggle Sidebar"
 msgstr "Växla sidofält"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:189
-#: data/ui/window.blp:425
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200
+#: data/ui/window.blp:427
 msgid "Canvas Failed to Load"
 msgstr "Kanvasen kunde inte laddas"
 
@@ -543,7 +543,7 @@ msgstr "Avgör avståndet mellan datapunkter"
 #: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
 #: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
 #: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
-#: graphs/window.vala:385
+#: graphs/window.vala:381
 msgctxt "scale"
 msgid "Linear"
 msgstr "Linjär"
@@ -551,7 +551,7 @@ msgstr "Linjär"
 #: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
 #: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
 #: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
-#: graphs/window.vala:386
+#: graphs/window.vala:382
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Logaritmisk (bas 10)"
@@ -559,7 +559,7 @@ msgstr "Logaritmisk (bas 10)"
 #: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
 #: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
 #: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
-#: graphs/window.vala:387
+#: graphs/window.vala:383
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Logaritmisk (bas 2)"
@@ -567,7 +567,7 @@ msgstr "Logaritmisk (bas 2)"
 #: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
 #: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
 #: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
-#: graphs/window.vala:388
+#: graphs/window.vala:384
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianer"
@@ -575,7 +575,7 @@ msgstr "Radianer"
 #: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
 #: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
 #: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
-#: graphs/window.vala:389
+#: graphs/window.vala:385
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Kvadratrot"
@@ -643,7 +643,7 @@ msgid "Transparent Background"
 msgstr "Transparent bakgrund"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:60
+#: graphs/style_editor.vala:83
 msgid "Style"
 msgstr "Stil"
 
@@ -655,7 +655,7 @@ msgstr "Importera stil…"
 msgid "Create Style…"
 msgstr "Skapa stil…"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:450
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:453
 msgid "Figure Settings"
 msgstr "Figurinställningar"
 
@@ -663,7 +663,7 @@ msgstr "Figurinställningar"
 msgid "Labels"
 msgstr "Etiketter"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:508
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:474
 msgid "Title"
 msgstr "Plottitel"
 
@@ -723,19 +723,19 @@ msgstr "Höger Y-axelmaximum"
 msgid "Scaling"
 msgstr "Skalning"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:411
 msgid "Bottom X Axis Scale"
 msgstr "Nedre X-axelskala"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:412
 msgid "Top X Axis Scale"
 msgstr "Övre X-axelskala"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:417
 msgid "Left Y Axis Scale"
 msgstr "Vänster Y-axelskala"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:416
 msgid "Right Y Axis Scale"
 msgstr "Höger Y-axelskala"
 
@@ -1098,11 +1098,11 @@ msgstr "Antal punkter"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "Antal punkter att använda vid beräkning av glidande medelvärde"
 
-#: data/ui/style-color-box.blp:20
+#: data/ui/style-color-box.blp:18
 msgid "Edit"
 msgstr "Ändra"
 
-#: data/ui/style-color-box.blp:35
+#: data/ui/style-color-box.blp:36
 msgid "Remove"
 msgstr "Ta bort"
 
@@ -1341,11 +1341,11 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Öppna stil"
 
-#: data/ui/style-editor-window.blp:5
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:168
 msgid "Graphs Style Editor"
 msgstr "Graphs stilredigerare"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:164
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175
 #: data/ui/window.blp:229
 msgid "Open Application Menu"
 msgstr "Öppna programmenyn"
@@ -1354,50 +1354,50 @@ msgstr "Öppna programmenyn"
 msgid "Open a Style"
 msgstr "Öppna en stil"
 
-#: data/ui/style-editor-window.blp:73
+#: data/ui/style-editor-window.blp:74
 msgid "Open…"
 msgstr "Öppna…"
 
-#: data/ui/style-editor-window.blp:134
+#: data/ui/style-editor-window.blp:141
 msgid "Open Preview"
 msgstr "Öppna förhandsgranskning"
 
-#: data/ui/style-editor-window.blp:199
-msgid "Save Style…"
-msgstr "Spara stil…"
-
-#: data/ui/style-editor-window.blp:200
-msgid "Save Style as…"
-msgstr "Spara stil som…"
-
-#: data/ui/style-editor-window.blp:204 data/ui/style-editor-window.blp:216
-#: data/ui/window.blp:458
-msgid "Keyboard Shortcuts"
-msgstr "Tangentbordsgenvägar"
-
-#: data/ui/style-editor-window.blp:205 data/ui/style-editor-window.blp:217
-#: data/ui/window.blp:459
-msgid "Help"
-msgstr "Hjälp"
-
-#: data/ui/style-editor-window.blp:206 data/ui/style-editor-window.blp:218
-#: data/ui/window.blp:460
-msgid "About Graphs"
-msgstr "Om Graphs"
-
-#: data/ui/style-editor-window.blp:212
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:224
 msgid "Open Style…"
 msgstr "Öppna stil…"
 
-#: data/ui/style-preview.blp:55
+#: data/ui/style-editor-window.blp:211
+msgid "Save Style…"
+msgstr "Spara stil…"
+
+#: data/ui/style-editor-window.blp:212
+msgid "Save Style as…"
+msgstr "Spara stil som…"
+
+#: data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228
+#: data/ui/window.blp:461
+msgid "Keyboard Shortcuts"
+msgstr "Tangentbordsgenvägar"
+
+#: data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229
+#: data/ui/window.blp:462
+msgid "Help"
+msgstr "Hjälp"
+
+#: data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230
+#: data/ui/window.blp:463
+msgid "About Graphs"
+msgstr "Om Graphs"
+
+#: data/ui/style-preview.blp:52
 msgid "Open"
 msgstr "Öppna"
 
-#: data/ui/style-preview.blp:60
+#: data/ui/style-preview.blp:57
 msgid "Open With…"
 msgstr "Öppna med…"
 
-#: data/ui/style-preview.blp:65
+#: data/ui/style-preview.blp:62
 msgid "Delete…"
 msgstr "Ta bort…"
 
@@ -1463,67 +1463,71 @@ msgstr "Zoomläge. Välj ett område i figuren för att zooma in"
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Markeringsläge. Klicka och dra för att göra en datamarkering"
 
-#: data/ui/window.blp:330
+#: data/ui/window.blp:332
 msgid "Show Sidebar"
 msgstr "Visa sidopanel"
 
-#: data/ui/window.blp:338 data/ui/window.blp:384 graphs/window.vala:375
+#: data/ui/window.blp:340 data/ui/window.blp:386 graphs/window.vala:371
 msgid "Undo"
 msgstr "Ångra"
 
-#: data/ui/window.blp:344 data/ui/window.blp:391
+#: data/ui/window.blp:346 data/ui/window.blp:393
 msgid "Redo"
 msgstr "Gör om"
 
-#: data/ui/window.blp:351 data/ui/window.blp:398
+#: data/ui/window.blp:353 data/ui/window.blp:400
 msgid "View Menu"
 msgstr "Vymeny"
 
-#: data/ui/window.blp:361 data/ui/window.blp:407
+#: data/ui/window.blp:363 data/ui/window.blp:409
 msgid "Next View"
 msgstr "Nästa vy"
 
-#: data/ui/window.blp:369 data/ui/window.blp:415
+#: data/ui/window.blp:371 data/ui/window.blp:417
 msgid "Previous View"
 msgstr "Föregående vy"
 
-#: data/ui/window.blp:435
+#: data/ui/window.blp:437
 msgid "New Project"
 msgstr "Nytt projekt"
 
-#: data/ui/window.blp:439
+#: data/ui/window.blp:441
 msgid "Save Project…"
 msgstr "Spara projekt…"
 
-#: data/ui/window.blp:440
+#: data/ui/window.blp:442
 msgid "Save Project as…"
 msgstr "Spara projekt som…"
 
-#: data/ui/window.blp:441
+#: data/ui/window.blp:443
 msgid "Open Project…"
 msgstr "Öppna projekt…"
 
-#: data/ui/window.blp:445
+#: data/ui/window.blp:444
+msgid "Close Project"
+msgstr "Stäng projekt"
+
+#: data/ui/window.blp:448
 msgid "Export Data…"
 msgstr "Exportera data…"
 
-#: data/ui/window.blp:446
+#: data/ui/window.blp:449
 msgid "Export Figure…"
 msgstr "Exportera figur…"
 
-#: data/ui/window.blp:466
+#: data/ui/window.blp:469
 msgid "Add Data from File…"
 msgstr "Lägg till data från fil…"
 
-#: data/ui/window.blp:467
+#: data/ui/window.blp:470
 msgid "Add Equation…"
 msgstr "Lägg till ekvation…"
 
-#: data/ui/window.blp:468
+#: data/ui/window.blp:471
 msgid "Generate Data…"
 msgstr "Generera data…"
 
-#: data/ui/window.blp:474
+#: data/ui/window.blp:477
 msgid "Optimize Limits"
 msgstr "Optimera gränser"
 
@@ -1672,27 +1676,37 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Gör om åtgärd"
 
-#: graphs/actions.vala:145 graphs/item_box.vala:59
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Graphs-utvecklarna"
+
+#: graphs/actions.vala:42
+msgid "translator-credits"
+msgstr ""
+"Sjoerd Stendahl <contact@sjoerd.se>\n"
+"Anders Jonsson <anders.jonsson@norsjovallen.se>"
+
+#: graphs/actions.vala:214 graphs/item_box.vala:59
 #, c-format
 msgid "Deleted %s"
 msgstr "Tog bort %s"
 
-#: graphs/actions.vala:172
+#: graphs/actions.vala:248
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Filer som stöds"
 
-#: graphs/actions.vala:176
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII-filer"
 
-#: graphs/actions.vala:180
+#: graphs/actions.vala:256
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:183
+#: graphs/actions.vala:259
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1701,12 +1715,6 @@ msgstr "Leybold xry"
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Kunde inte ladda {font}"
-
-#: graphs/application.vala:97
-msgid "translator-credits"
-msgstr ""
-"Sjoerd Stendahl <contact@sjoerd.se>\n"
-"Anders Jonsson <anders.jonsson@norsjovallen.se>"
 
 #: graphs/curve_fitting.py:181
 msgid "Results:"
@@ -1746,21 +1754,17 @@ msgstr "Summa av R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Anpassningsparametrar för %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:96
 #, python-brace-format
 msgid "Could not parse {stylename}, loading system preferred style"
 msgstr "Kunde inte tolka {stylename}, laddar systemstil istället"
 
-#: graphs/data.py:118
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Plot style {stylename} does not exist loading system preferred"
 msgstr "Plotstil {stylename} finns inte, laddar systemstil istället"
 
-#: graphs/data.py:483
-msgid "Failed to parse project file"
-msgstr "Misslyckades med att tolka projektfilen"
-
-#: graphs/data.py:491
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "Misslyckades med att läsa in projekt"
 
@@ -1794,7 +1798,7 @@ msgstr "X-axelmaximum"
 msgid "Y Axis Maximum"
 msgstr "Y-axelmaximum"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:417
+#: graphs/figure_settings.vala:176 graphs/window.vala:413
 msgid "X Axis Scale"
 msgstr "X-axelskala"
 
@@ -1802,7 +1806,7 @@ msgstr "X-axelskala"
 msgid "X Axis Label"
 msgstr "X-axeletikett"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:422
+#: graphs/figure_settings.vala:180 graphs/window.vala:418
 msgid "Y Axis Scale"
 msgstr "Y-axelskala"
 
@@ -1879,7 +1883,7 @@ msgstr "Intensitet (cps)"
 
 #: graphs/parse_file.py:70
 msgid "Invalid .xry format"
-msgstr "Ogiltigt .xry format"
+msgstr "Ogiltigt .xry-format"
 
 #: graphs/parse_file.py:85
 msgid "β (°)"
@@ -1897,13 +1901,29 @@ msgstr "Importfel, kolumnindex är för högt"
 msgid "Unable to import from file"
 msgstr "Kan inte importera filen"
 
-#: graphs/project.py:46
+#: graphs/project.py:50
 msgid "Project file is missing data"
 msgstr "Projektfilen saknar data"
 
-#: graphs/project.py:59
+#: graphs/project.py:64
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Projektet är från en nyare inkompatibel version av Graphs"
+
+#: graphs/project.py:237
+msgid "Failed to do legacy migration"
+msgstr "Misslyckades med att utföra migrering från äldre format"
+
+#: graphs/project.py:239
+msgid "Failed to parse project file"
+msgstr "Misslyckades med att tolka projektfilen"
+
+#: graphs/project.py:243
+msgid "Failed to migrate project"
+msgstr "Misslyckades med att migrera projekt"
+
+#: graphs/project.py:247
+msgid "Failed to validate project"
+msgstr "Misslyckades med att validera projekt"
 
 #: graphs/project.vala:15
 msgctxt "file-filter"
@@ -1918,22 +1938,28 @@ msgstr "Sparat projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/style_editor.py:411
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Färg {number}"
-
-#: graphs/style_editor.py:489
+#: graphs/style_editor.py:442
 msgid "Example Item"
 msgstr "Exempelobjekt"
 
-#: graphs/style_editor.py:509 graphs/style_io.py:181
+#: graphs/style_editor.py:475 graphs/style_io.py:181
 msgid "X Label"
 msgstr "X-etikett"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:182
+#: graphs/style_editor.py:476 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Y-etikett"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor.vala:38
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Graphs stilredigerare — %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+msgid "Color %d"
+msgstr "Färg %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -1974,40 +2000,44 @@ msgstr "Filen {file} innehåller ingen namntagg"
 msgid "System"
 msgstr "System"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "Dokumentportal"
-
-#: graphs/utilities.vala:209
+#: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "Alla filer"
 
-#: graphs/window.vala:179
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "Dokumentportal"
+
+#: graphs/window.vala:172
 msgid "Graphs (Development)"
 msgstr "Graphs (utveckling)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:188
 msgid "Untitled Project"
 msgstr "Namnlöst projekt"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:189
 msgid "Draft"
 msgstr "Utkast"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:197
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:365
+#: graphs/window.vala:361
 msgid "Open Location"
 msgstr "Öppna plats"
 
-#: graphs/window.vala:390
+#: graphs/window.vala:386
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Inverterad rot"
+
+#, python-brace-format
+#~ msgid "Color {number}"
+#~ msgstr "Färg {number}"
 
 #~ msgid "Error - No Style selected"
 #~ msgstr "Fel - Ingen stil vald"
@@ -2026,9 +2056,6 @@ msgstr "Inverterad rot"
 
 #~ msgid "Line Properties"
 #~ msgstr "Linjeegenskaper"
-
-#~ msgid "Unable to do transformation"
-#~ msgstr "Kan inte utföra transformationen"
 
 #~ msgid "The operation on "
 #~ msgstr "Operationen på "
