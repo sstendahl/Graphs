@@ -133,9 +133,11 @@ namespace Graphs {
             });
             file_drop_target.drop.connect ((drop, val, x, y) => {
                 var file_list = ((Gdk.FileList) val).get_files ();
-                File[] files = {};
-                for (uint i = 0; i < file_list.length (); i++) {
-                    files += file_list.nth_data (i);
+                File[] files = new File[file_list.length ()];
+                uint i = 0;
+                foreach (File file in file_list) {
+                    files[i] = file;
+                    i++;
                 }
                 ((Application) application).python_helper.import_from_files (this, files);
                 return true;
