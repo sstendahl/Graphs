@@ -2,6 +2,7 @@
 using Gdk;
 using Gtk;
 using Adw;
+using Gee;
 
 namespace Graphs {
     /**
@@ -228,6 +229,55 @@ namespace Graphs {
         [GtkCallback]
         private void on_delete () {
             color_removed.emit ();
+        }
+    }
+
+    public class StyleColorManager : Object {
+        private ListBox box;
+        private ArrayList<string> colors = new ArrayList<string> ();
+
+        public signal void colors_changed ();
+
+        public StyleColorManager (ListBox box) {
+            this.box = box;
+        }
+
+        public void set_colors (string[] colors) {
+            this.colors.clear ();
+            this.colors.add_all_array (colors);
+            reload_color_boxes ();
+        }
+
+        public void add_color (string color) {
+            this.colors.add (color);
+            append_style_color_box (this.colors.size - 1);
+            colors_changed.emit ();
+        }
+
+        public string[] get_colors () {
+            return this.colors.to_array ();
+        }
+
+        private void append_style_color_box (int index) {
+            var box = new StyleColorBox (index, this.colors[index]);
+            box.color_removed.connect (() => {
+                this.colors.remove_at (index);
+                reload_color_boxes ();
+                colors_changed.emit ();
+            });
+            box.color_changed.connect ((b, color) => {
+                this.colors[index] = color;
+                colors_changed.emit ();
+            });
+            this.box.append (box);
+        }
+
+        private void reload_color_boxes () {
+            if (this.colors.is_empty) this.colors.add ("#000000");
+            this.box.remove_all ();
+            for (int i = 0; i < this.colors.size; i++) {
+                append_style_color_box (i);
+            }
         }
     }
 }
