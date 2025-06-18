@@ -240,7 +240,7 @@ namespace Graphs {
         public StyleColorManager (ListBox box) {
             this.box = box;
 
-            var drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            var drop_target = new Gtk.DropTarget (typeof (StyleColorBox), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as StyleColorBox?;
                 var target_row = box.get_row_at_y ((int) y) as StyleColorBox?;
@@ -310,7 +310,7 @@ namespace Graphs {
                 drag_x = x;
                 drag_y = y;
 
-                Value val = Value (typeof (Adw.ActionRow));
+                Value val = Value (typeof (StyleColorBox));
                 val.set_object (row);
 
                 return new Gdk.ContentProvider.for_value (val);

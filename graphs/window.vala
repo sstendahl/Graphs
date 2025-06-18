@@ -108,7 +108,7 @@ namespace Graphs {
             );
             content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
-            var item_drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as ItemBox?;
                 var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
@@ -238,7 +238,7 @@ namespace Graphs {
             foreach (Item item in data) {
                 string typename = item.get_type ().name ();
                 bool data_item = typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem";
-                item_list.append (create_box_for_item (item, index, data_item));
+                append_item_row (item, index, data_item);
 
                 items_selected = items_selected || item.selected;
                 data_items_selected = data_items_selected || (item.selected && data_item);
@@ -279,7 +279,7 @@ namespace Graphs {
             export_data_action.set_enabled (items_selected);
         }
 
-        private ItemBox create_box_for_item (Item item, uint index, bool is_data_item) {
+        private void append_item_row (Item item, uint index, bool is_data_item) {
             var row = new ItemBox (this, item, index);
             row.setup_interactions (is_data_item);
 
@@ -299,7 +299,7 @@ namespace Graphs {
                 drag_x = x;
                 drag_y = y;
 
-                Value val = Value (typeof (Adw.ActionRow));
+                Value val = Value (typeof (ItemBox));
                 val.set_object (row);
 
                 return new Gdk.ContentProvider.for_value (val);
@@ -325,7 +325,7 @@ namespace Graphs {
             drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
             drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
 
-            return row;
+            item_list.append (row);
         }
 
         /**
