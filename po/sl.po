@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-05-28 14:26+0000\n"
-"PO-Revision-Date: 2025-05-28 20:13+0200\n"
+"POT-Creation-Date: 2025-06-03 12:23+0000\n"
+"PO-Revision-Date: 2025-06-08 00:53+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -669,7 +669,7 @@ msgstr "Nastavitve slike"
 msgid "Labels"
 msgstr "Oznake"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
 msgid "Title"
 msgstr "Naziv"
 
@@ -1944,20 +1944,15 @@ msgstr "Shranjeni projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/style_editor.py:389
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Barva {number}"
-
-#: graphs/style_editor.py:477
+#: graphs/style_editor.py:448
 msgid "Example Item"
 msgstr "Primer elementa"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:481 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:482 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Oznaka Y"
 
@@ -1966,6 +1961,11 @@ msgstr "Oznaka Y"
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Urejevalnik sloga grafov — %s"
+
+#: graphs/style_editor.vala:201
+#, c-format
+msgid "Color %d"
+msgstr "Barve %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
