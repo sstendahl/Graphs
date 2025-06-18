@@ -58,14 +58,11 @@ namespace Graphs {
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
-        protected void setup () {
-            var application = application as Application;
-
+        construct {
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
@@ -100,7 +97,7 @@ namespace Graphs {
                         if (_file == null || !unsaved) {
                             load (file);
                         } else {
-                            var new_window = application.create_style_editor ();
+                            var new_window = ((Application) application).create_style_editor ();
                             new_window.load (file);
                             new_window.present ();
                         }
@@ -109,7 +106,11 @@ namespace Graphs {
             });
             add_action (open_action);
 
-            // Inhibit session end when there is unsaved data present
+            string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
+            var builder = new Builder.from_resource (path);
+            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
+
+             // Inhibit session end when there is unsaved data present
             notify["unsaved"].connect (() => {
                 if (unsaved) {
                     _inhibit_cookie = application.inhibit (
@@ -123,10 +124,6 @@ namespace Graphs {
                     save_action.set_enabled (false);
                 }
             });
-
-            string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
-            var builder = new Builder.from_resource (path);
-            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
         }
 
         public void load (File file) {
