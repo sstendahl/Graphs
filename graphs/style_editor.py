@@ -132,6 +132,10 @@ class StyleEditorBox(Gtk.Box):
         self.window = window
         self.params, self.graphs_params = None, None
 
+        self._style_color_manager = Graphs.StyleColorManager.new(
+            self.line_colors_box,
+        )
+
         self.titlesize.set_format_value_func(_title_format_function)
         self.labelsize.set_format_value_func(_title_format_function)
 
@@ -170,8 +174,12 @@ class StyleEditorBox(Gtk.Box):
         self.font_chooser.connect("notify::font-desc", self._on_font_change)
         self.titlesize.connect("value-changed", self._on_titlesize_change)
         self.labelsize.connect("value-changed", self._on_labelsize_change)
+        self._style_color_manager.connect(
+            "colors-changed",
+            self._on_line_colors_changed,
+        )
 
-    def load_style(self, file: Gio.File):
+    def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
         self.params, self.graphs_params = None, None
         application = self.window.get_application()
@@ -229,55 +237,31 @@ class StyleEditorBox(Gtk.Box):
         self._check_contrast()
 
         # line colors
-        self.line_colors = style_params["axes.prop_cycle"].by_key()["color"]
-        self.reload_line_colors()
+        self._style_color_manager.set_colors(
+            style_params["axes.prop_cycle"].by_key()["color"],
+        )
 
         self.params, self.graphs_params = style_params, graphs_params
 
         return stylename
 
-    def save_style(self, file: Gio.File):
+    def save_style(self, file: Gio.File) -> None:
         """Save style params to file."""
         style_io.write(file, self.params, self.graphs_params)
 
-    def reload_line_colors(self):
-        """Reload UI representation of line colors."""
-        list_box = self.line_colors_box
-        while list_box.get_last_child() is not None:
-            list_box.remove(list_box.get_last_child())
-        if self.line_colors:
-            for index in range(len(self.line_colors)):
-                list_box.append(self._create_color_box(index))
-        else:
-            self.line_colors.append("#000000")
-            list_box.append(self._create_color_box(0))
-
-    def _create_color_box(self, index: int) -> Graphs.StyleColorBox:
-
-        def on_color_removed(_box):
-            self.line_colors.pop(index)
-            self.reload_line_colors()
-            self.update_line_colors()
-
-        def on_color_changed(_box, color):
-            self.line_colors[index] = color
-            self.update_line_colors()
-
-        color = self.line_colors[index]
-        box = Graphs.StyleColorBox.new(index, color)
-        box.connect("color-removed", on_color_removed)
-        box.connect("color-changed", on_color_changed)
-        return box
-
-    def update_line_colors(self):
+    def _on_line_colors_changed(
+        self,
+        style_color_manager: Graphs.StyleColorManager,
+    ) -> None:
         """Update line colors in params."""
         if self.params is None:
             return
-        self.params["axes.prop_cycle"] = cycler(color=self.line_colors)
-        self.params["patch.facecolor"] = self.line_colors[0]
+        line_colors = style_color_manager.get_colors()
+        self.params["axes.prop_cycle"] = cycler(color=line_colors)
+        self.params["patch.facecolor"] = line_colors[0]
         self.emit("params-changed")
 
-    def _on_font_change(self, chooser, _param):
+    def _on_font_change(self, chooser: Gtk.FontChooser, _param) -> None:
         if self.params is None:
             return
         font_description = chooser.get_font_desc()
@@ -306,7 +290,7 @@ class StyleEditorBox(Gtk.Box):
             FONT_VARIANT_DICT[font_description.get_variant()]
         self.emit("params-changed")
 
-    def _on_titlesize_change(self, entry):
+    def _on_titlesize_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
             return
         titlesize = round(entry.get_value() / 2 * self.font_size, 1)
@@ -314,20 +298,20 @@ class StyleEditorBox(Gtk.Box):
         self.params["axes.titlesize"] = titlesize
         self.emit("params-changed")
 
-    def _on_labelsize_change(self, entry):
+    def _on_labelsize_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
             return
         labelsize = round(entry.get_value() / 2 * self.font_size, 1)
         self.params["axes.labelsize"] = labelsize
         self.emit("params-changed")
 
-    def _on_name_change(self, entry):
+    def _on_name_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
             return
         self.graphs_params["name"] = entry.get_text()
         self.emit("params-changed")
 
-    def _apply_value(self, key, value):
+    def _apply_value(self, key: str, value) -> None:
         if self.params is None:
             return
         with contextlib.suppress(KeyError):
@@ -336,7 +320,7 @@ class StyleEditorBox(Gtk.Box):
             self.params[item] = value
         self.emit("params-changed")
 
-    def _on_color_change(self, button, key):
+    def _on_color_change(self, button: Gtk.Button, key: str) -> None:
         """Handle color change."""
 
         def on_accept(dialog, result):
@@ -355,19 +339,29 @@ class StyleEditorBox(Gtk.Box):
         dialog.set_with_alpha(False)
         dialog.choose_rgba(self.window, button.color, None, on_accept)
 
-    def _on_entry_change(self, entry, key):
+    def _on_entry_change(self, entry: Gtk.Entry, key: str) -> None:
         self._apply_value(key, str(entry.get_text()))
 
-    def _on_combo_change(self, comborow, _param, key):
+    def _on_combo_change(
+        self,
+        comborow: Adw.ComboRow,
+        _param,
+        key: str,
+    ) -> None:
         self._apply_value(key, comborow.get_selected())
 
-    def _on_scale_change(self, scale, key):
+    def _on_scale_change(self, scale: Gtk.Scale, key: str) -> None:
         self._apply_value(key, scale.get_value())
 
-    def _on_switch_change(self, switchrow, _param, key):
+    def _on_switch_change(
+        self,
+        switchrow: Adw.SwitchRow,
+        _param,
+        key: str,
+    ) -> None:
         self._apply_value(key, bool(switchrow.get_active()))
 
-    def _check_contrast(self):
+    def _check_contrast(self) -> None:
         contrast = Graphs.tools_get_contrast(
             self.outline_color.color,
             self.text_color.color,
@@ -375,26 +369,25 @@ class StyleEditorBox(Gtk.Box):
         self.poor_contrast_warning.set_visible(contrast < 4.5)
 
     @Gtk.Template.Callback()
-    def on_linestyle(self, comborow, _b):
+    def _on_linestyle(self, comborow: Adw.ComboRow, _b) -> None:
         """Handle linestyle selection."""
         self.linewidth.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
-    def on_markers(self, comborow, _b):
+    def _on_markers(self, comborow: Adw.ComboRow, _b) -> None:
         """Handle marker selection."""
         self.markersize.set_sensitive(comborow.get_selected() != 0)
 
     @Gtk.Template.Callback()
-    def add_color(self, _button):
+    def _add_color(self, _button) -> None:
         """Add a color."""
 
         def on_accept(dialog, result):
             with contextlib.suppress(GLib.GError):
                 color = dialog.choose_rgba_finish(result)
                 if color is not None:
-                    self.line_colors.append(Graphs.tools_rgba_to_hex(color))
-                    self.reload_line_colors()
-                    self.update_line_colors()
+                    color = Graphs.tools_rgba_to_hex(color)
+                    self._style_color_manager.add_color(color)
 
         dialog = Gtk.ColorDialog.new()
         dialog.set_with_alpha(False)
@@ -468,7 +461,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
             params = style_manager.get_system_style_params()
         else:
             params = style_editor.params
-            color_cycle = style_editor.line_colors
+            color_cycle = params["axes.prop_cycle"].by_key()["color"]
             for index, item in enumerate(self._test_items):
                 # Wrap around the color_cycle using the % operator
                 item.set_color(color_cycle[index % len(color_cycle)])
@@ -499,7 +492,9 @@ class PythonStyleEditor(Graphs.StyleEditor):
         style_editor = self.get_editor_box()
         name = style_editor.load_style(file)
         self.set_title(name)
-        self._on_params_changed(style_editor, False)
+        self._background_task = asyncio.create_task(
+            self._reload_canvas(style_editor, False, 0),
+        )
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:
