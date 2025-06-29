@@ -99,14 +99,11 @@ namespace Graphs {
         private uint _inhibit_cookie = 0;
         private Menu _scales_section = new Menu ();
 
-        protected void setup () {
-            var application = application as Application;
-
+        construct {
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
@@ -136,11 +133,13 @@ namespace Graphs {
             });
             file_drop_target.drop.connect ((drop, val, x, y) => {
                 var file_list = ((Gdk.FileList) val).get_files ();
-                File[] files = {};
-                for (uint i = 0; i < file_list.length (); i++) {
-                    files += file_list.nth_data (i);
+                File[] files = new File[file_list.length ()];
+                uint i = 0;
+                foreach (File file in file_list) {
+                    files[i] = file;
+                    i++;
                 }
-                application.python_helper.import_from_files (this, files);
+                ((Application) application).python_helper.import_from_files (this, files);
                 return true;
             });
             drag_overlay.add_controller (file_drop_target);
@@ -151,6 +150,17 @@ namespace Graphs {
 
             var view_menu = view_menu_button.get_menu_model () as Menu;
             view_menu.append_section (null, _scales_section);
+
+#if DEBUG
+            add_css_class ("devel");
+            sidebar_title.set_title (_("Graphs (Development)"));
+#endif
+        }
+
+        protected void setup () {
+            var application = application as Application;
+
+            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
             Actions.setup_local (this);
 
@@ -167,10 +177,6 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
-#if DEBUG
-            add_css_class ("devel");
-            sidebar_title.set_title (_("Graphs (Development)"));
-#endif
         }
 
         /**
@@ -179,8 +185,6 @@ namespace Graphs {
          * Update window title.
          */
         private void on_unsaved_change () {
-            var application = application as Application;
-
             string title;
             string path;
             var close_action = lookup_action ("close-project") as SimpleAction;
