@@ -25,10 +25,6 @@ namespace Graphs {
                 var columns_group = new ColumnsGroup (settings.get_child ("columns"));
                 mode_box.append (columns_group);
             }
-            if ("sql" in modes) {
-                var sql_group = new SqlGroup (settings.get_child ("columns"));
-                mode_box.append (sql_group);
-            }
             present (window);
         }
 
@@ -51,14 +47,6 @@ namespace Graphs {
             dialog.present (this);
         }
     }
-
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import-sql.ui")]
-    public class SqlGroup : Adw.PreferencesGroup {
-        public SqlGroup (GLib.Settings settings) {
-            Tools.bind_settings_to_widgets (settings, this);
-        }
-    }
-
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import-columns.ui")]
     public class ColumnsGroup : Adw.PreferencesGroup {

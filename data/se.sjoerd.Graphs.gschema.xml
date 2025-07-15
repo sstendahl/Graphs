@@ -211,10 +211,6 @@
 
   <schema id="se.sjoerd.Graphs.import-params">
     <child name="columns" schema="se.sjoerd.Graphs.import-params.columns"/>
-    <child name="sql" schema="se.sjoerd.Graphs.import-params.sql"/>
-  </schema>
-
-  <schema id="se.sjoerd.Graphs.import-params.sql">
   </schema>
 
   <schema id="se.sjoerd.Graphs.import-params.columns">

@@ -7,7 +7,6 @@ from graphs import (
     edit_item,
     export_items,
     file_import,
-    parse_file,
     operations,
     utilities,
 )
@@ -84,16 +83,6 @@ class PythonHelper(Graphs.PythonHelper):
         _n_files: int,
     ) -> None:
         return file_import.import_from_files(window, files)
-
-    @staticmethod
-    def _on_import_from_sql_request(
-        self,
-        window: Graphs.Window,
-        files: list[Gio.File],
-        _n_files: int,
-    ) -> None:
-        print("WOW")
-        return parse_file.import_from_sql(window, files)
 
     @staticmethod
     def _on_export_items_request(

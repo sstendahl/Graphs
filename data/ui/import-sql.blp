@@ -1,64 +1,69 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsSqlGroup: Adw.PreferencesGroup {
-  Adw.ComboRow delimiter {
-    title: _("Table");
-    subtitle: _("Choose which table to import from the database");
+template $GraphsImportSqlDialog: Adw.Dialog {
+  content-width: 450;
+  title: _("Import Parameters");
+  focus-widget: confirm_button;
 
-    model: StringList {
-      strings [
-        C_("delimiter", "Whitespace"),
-        C_("delimiter", "Tab"),
-        C_("delimiter", "Colon (:)"),
-        C_("delimiter", "Semicolon (;)"),
-        C_("delimiter", "Decimal comma (,)"),
-        C_("delimiter", "Decimal point (.)"),
-        C_("delimiter", "Custom"),
-      ]
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Box {
+        orientation: horizontal;
+        spacing: 10;
+
+        Button confirm_button {
+          label: _("Import");
+          clicked => $on_accept();
+
+          styles [
+            "suggested-action",
+          ]
+        }
+      }
+    }
+
+    content: ScrolledWindow {
+      propagate-natural-height: true;
+
+      child: Viewport {
+        child: Adw.Clamp {
+          margin-start: 12;
+          margin-end: 12;
+          margin-top: 12;
+          margin-bottom: 12;
+
+          Box mode_box {
+            orientation: vertical;
+            spacing: 10;
+            Adw.PreferencesGroup {
+            Adw.ComboRow table_list {
+                title: _("Database Table");
+              }
+
+              Adw.ComboRow column_x {
+                title: _("Column X");
+
+              }
+
+              Adw.ComboRow column_y {
+                title: _("Column Y");
+              }
+            }
+
+          }
+        };
+      };
     };
-  }
-
-  Adw.ComboRow column_x {
-    title: _("Column X");
-
-    model: StringList {
-      strings [
-        C_("delimiter", "Whitespace"),
-        C_("delimiter", "Tab"),
-        C_("delimiter", "Colon (:)"),
-        C_("delimiter", "Semicolon (;)"),
-        C_("delimiter", "Decimal comma (,)"),
-        C_("delimiter", "Decimal point (.)"),
-        C_("delimiter", "Custom"),
-      ]
-    };
-  }
-
-  Adw.ComboRow column_y {
-    title: _("Column Y");
-    selectable: false;
-
-    model: StringList {
-      strings [
-        C_("delimiter", "Whitespace"),
-        C_("delimiter", "Tab"),
-        C_("delimiter", "Colon (:)"),
-        C_("delimiter", "Semicolon (;)"),
-        C_("delimiter", "Decimal comma (,)"),
-        C_("delimiter", "Decimal point (.)"),
-        C_("delimiter", "Custom"),
-      ]
-    };
-  }
-
-  Adw.SpinRow skip_rows {
-    title: _("Skip Rows");
-    subtitle: _("Ignored row indices");
-
-    adjustment: Adjustment {
-      step-increment: 1;
-      upper: 9999;
-    };
-  }
+  };
 }

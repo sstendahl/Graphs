@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing files to usable data."""
 import re
-import sqlite3
 from gettext import gettext as _
+from numbers import Real
 
 from gi.repository import Gio, Graphs
 
@@ -20,35 +20,27 @@ def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
     return list(map(item.new_from_dict, project_dict["data"]))
 
 
-def import_from_sql(_params, _style, file: Gio.File) -> misc.ItemList:
-    """Import data from project file."""
-    con = sqlite3.connect(file)
-    cursor = con.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-    tables = [table[0] for table in cursor.fetchall()]
+def import_from_sql(_params, style, data: dict) -> misc.ItemList:
+    """Import data from sqlite database file."""
+    item_ = item.DataItem.new(style, name=data["name"])
 
-    table_data = {}
-
-    for table in tables:
-        # Get column names
-        cursor.execute(f"PRAGMA table_info({table})")
-        columns = [row[1] for row in cursor.fetchall()]
-
-        # Fetch all data from the table
-        cursor.execute(f"SELECT * FROM {table};")
-        rows = cursor.fetchall()
-
-        # Store data in a dictionary
-        table_data[table] =  \
-            {col: [row[i] for row in rows] for i, col in enumerate(columns)}
-        for table, columns in table_data.items():
+    for index, selected_data in enumerate(zip(data["xdata"], data["ydata"])):
+        xdata, ydata = selected_data
+        if index == 0:
+            item_.set_xlabel(xdata)
+            item_.set_ylabel(ydata)
             continue
-            print(f"Table: {table}")
-            for column, values in columns.items():
-                print(f"  Column: {column} -> {values}")
-            print(type(columns))
 
-  #  return list(map(item.new_from_dict, project_dict["data"]))
+        if isinstance(xdata, Real) and isinstance(ydata, Real):
+            item_.xdata.append(xdata)
+            item_.ydata.append(ydata)
+        else:
+            continue
+
+    if not item_.xdata:
+        raise ParseError(_("Unable to import data from database, make sure the"
+                           " entries contain real-valued numbers"))
+    return [item_]
 
 
 def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
