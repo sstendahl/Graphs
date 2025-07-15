@@ -42,15 +42,24 @@ if (appstreamcli.found())
   )
 endif
 
-install_data(application_id + '.gschema.xml',
-  install_dir: join_paths(datadir, 'glib-2.0/schemas'),
-)
-gnome.compile_schemas(
-  depend_files: [application_id + '.gschema.xml'],
+configure_file(
+        input: application_id + '.service.in',
+       output: application_id + '.service',
+configuration: conf,
+      install: true,
+  install_dir: join_paths(datadir, 'dbus-1', 'services'),
 )
 
 install_data(application_id + '.mime.xml',
-  install_dir: get_option('datadir') / 'mime/packages',
+  install_dir: join_paths(datadir, 'mime', 'packages'),
+)
+
+install_data(application_id + '.gschema.xml',
+  install_dir: join_paths(datadir, 'glib-2.0', 'schemas'),
+)
+
+gnome.compile_schemas(
+  depend_files: [application_id + '.gschema.xml'],
 )
 
 compile_schemas = find_program('glib-compile-schemas', required: false)
@@ -62,6 +71,7 @@ endif
 
 blueprint_files = [
   'ui/dialogs/delete-style.blp',
+  'ui/dialogs/invalid-project.blp',
   'ui/dialogs/reset-import-settings.blp',
   'ui/dialogs/save-project-changes.blp',
   'ui/dialogs/save-style-changes.blp',
@@ -101,7 +111,13 @@ endforeach
 blueprints = custom_target('blueprints',
     input: files(blueprint_files),
    output: '.',
-  command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+  command: [
+    find_program('blueprint-compiler'),
+    'batch-compile',
+    '@OUTPUT@',
+    '@CURRENT_SOURCE_DIR@',
+    '@INPUT@',
+  ],
 )
 
 styles = files(
@@ -124,7 +140,7 @@ styles = files(
   'styles/yaru-dark.mplstyle',
 )
 
-icons = files (
+icons = files(
   'icons/axes-one-quadrant-symbolic.svg',
   'icons/center-symbolic.svg',
   'icons/check-round-outline-whole-symbolic.svg',
@@ -188,16 +204,17 @@ gresource_bundle = gnome.compile_resources(application_id, gresource,
 devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
-icon_name = ('@0@.svg').format(application_id)
 if debug
-  icon_name = ('@0@.Devel.svg').format(application_id)
+  icon_name = application_id + '.Devel.svg'
+else
+  icon_name = application_id + '.svg'
 endif
+symbolic_icon_name = application_id + '-symbolic.svg'
 install_data(join_paths(scalable_dir, icon_name),
-       rename: ('@0@.svg').format(application_id),
   install_dir: join_paths(datadir, scalable_dir),
+       rename: application_id + '.svg',
 )
-
 symbolic_dir = join_paths('icons', 'hicolor', 'symbolic', 'apps')
-install_data(join_paths(symbolic_dir, ('@0@-symbolic.svg').format(application_id)),
+install_data(join_paths(symbolic_dir, symbolic_icon_name),
   install_dir: join_paths(datadir, symbolic_dir),
 )

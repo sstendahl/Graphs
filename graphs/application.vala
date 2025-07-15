@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
 using Gdk;
-using Gtk;
 using Gee;
+using Gtk;
 
 namespace Graphs {
     private const string[] X_DIRECTIONS = {"top", "bottom"};
@@ -14,14 +14,11 @@ namespace Graphs {
     public class Application : Adw.Application {
         public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
-        public bool debug { get; construct set; default = false; }
         public PythonHelper python_helper { get; protected set; }
-
-        public signal void operation_invoked (string name);
-        protected signal void setup_request ();
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
+        private uint _css_counter = 0;
 
         private const OptionEntry[] OPTION_ENTRIES = {
             { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
@@ -52,80 +49,7 @@ namespace Graphs {
 
             Gtk.Window.set_default_icon_name (application_id);
 
-            var quit_action = new SimpleAction ("quit", null);
-            quit_action.activate.connect (() => {
-                // We need to cast to array here as the list size might change
-                // during iteration
-                foreach (Window window in main_windows.to_array ()) {
-                    window.close ();
-                }
-                foreach (StyleEditor style_editor in style_editors.to_array ()) {
-                    style_editor.close ();
-                }
-            });
-            add_action (quit_action);
-            set_accels_for_action ("app.quit", {"<control>q"});
-
-            var about_action = new SimpleAction ("about", null);
-            about_action.activate.connect (() => {
-                var file = File.new_for_uri ("resource:///se/sjoerd/Graphs/whats_new");
-                string release_notes;
-                try {
-                    release_notes = (string) file.load_bytes ().get_data ();
-                } catch {
-                    release_notes = "";
-                }
-
-                var dialog = new Adw.AboutDialog () {
-                    application_name = _("Graphs"),
-                    application_icon = application_id,
-                    website = Config.HOMEPAGE_URL,
-                    developer_name = Config.AUTHOR,
-                    issue_url = Config.ISSUE_URL,
-                    version = version,
-                    developers = {
-                        "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Matthias Kohnen <mail@cmkohnen.de>"
-                    },
-                    designers = {
-                        "Sjoerd Stendahl <contact@sjoerd.se>",
-                        "Christoph Matthias Kohnen <mail@cmkohnen.de>",
-                        "Tobias Bernard <tbernard@gnome.org>"
-                    },
-                    copyright = "© " + Config.COPYRIGHT,
-                    license_type = License.GPL_3_0,
-                    translator_credits = _("translator-credits"),
-                    release_notes = release_notes
-                };
-                dialog.present (active_window);
-            });
-            add_action (about_action);
-
-            var help_action = new SimpleAction ("help", null);
-            help_action.activate.connect (() => {
-                try {
-                    AppInfo.launch_default_for_uri (
-                        "help:graphs",
-                        active_window.get_display ().get_app_launch_context ()
-                    );
-                } catch { assert_not_reached (); }
-            });
-            add_action (help_action);
-            set_accels_for_action ("app.help", {"F1"});
-
-            var new_project_action = new SimpleAction ("new_project", null);
-            new_project_action.activate.connect (() => {
-                var window = create_main_window ();
-                window.present ();
-            });
-            add_action (new_project_action);
-
-            var style_editor_action = new SimpleAction ("style_editor", null);
-            style_editor_action.activate.connect (() => {
-                var style_editor = create_style_editor ();
-                style_editor.present ();
-            });
-            add_action (style_editor_action);
+            Actions.setup_global (this);
         }
 
         /**
@@ -231,6 +155,11 @@ namespace Graphs {
             return style_editor;
         }
 
+        public uint get_next_css_counter () {
+            _css_counter++;
+            return _css_counter;
+        }
+
         /**
          * Retrieve a child of the applications settings.
          *
@@ -257,6 +186,17 @@ namespace Graphs {
         private void try_quit () {
             if (main_windows.size == 0 && style_editors.size == 0) {
                 quit ();
+            }
+        }
+
+        public void quit_action () {
+            // We need to cast to array here as the list size might change
+            // during iteration
+            foreach (Window window in main_windows.to_array ()) {
+                window.close ();
+            }
+            foreach (StyleEditor style_editor in style_editors.to_array ()) {
+                style_editor.close ();
             }
         }
     }

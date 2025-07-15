@@ -5,10 +5,12 @@ import logging
 import math
 from collections.abc import Iterator
 from gettext import gettext as _
+from operator import itemgetter
 
-from gi.repository import GObject, Gio, Graphs
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
+from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
@@ -26,29 +28,21 @@ class Data(Graphs.Data):
     __gtype_name__ = "GraphsPythonData"
 
     def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
-        self.connect("python_method_request", self._on_python_method_request)
         self._selected_style_params = None
-        self.setup()
-        limits = self.props.figure_settings.get_limits()
-        self._history_states = [([], limits)]
-        self._history_pos = -1
-        self._view_history_states = [limits]
-        self._view_history_pos = -1
-        self._set_data_copy()
-        self.props.figure_settings.connect(
-            "notify",
-            self._on_figure_settings_change,
+        super().__init__(application=application)
+        self.connect("load-request", self._on_load_request)
+        self.connect("position-changed", self._on_position_changed)
+        self.connect("item-changed", self._on_item_changed)
+        self.connect("item-added", self._on_item_added)
+        self.connect("item-removed", self._on_item_removed)
+        self.connect(
+            "figure-settings-changed",
+            self._on_figure_settings_changed,
         )
-        self.connect("load_request", self._on_load_request)
-        self.connect("position_changed", self._on_position_changed)
-        self.connect("item_changed", self._on_item_changed)
-        self.connect("item_added", self._on_item_added)
-        self.connect("item_deleted", self._on_item_deleted)
-
-    @staticmethod
-    def _on_python_method_request(self, method: str) -> None:
-        getattr(self, method)()
+        self.connect(
+            "add-history-state-request",
+            self._on_add_history_state_request,
+        )
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
@@ -63,11 +57,9 @@ class Data(Graphs.Data):
                 return
             yield item_
 
-    def __getitem__(self, getter: str | int):
+    def __getitem__(self, pos: int):
         """Magic alias for retrieving items."""
-        if isinstance(getter, str):
-            return self.get_for_uuid(getter)
-        return self.get_item(getter)
+        return self.get_item(pos)
 
     def get_old_selected_style_params(self) -> RcParams:
         """Get the old selected style properties."""
@@ -118,65 +110,78 @@ class Data(Graphs.Data):
             self._selected_style_params["axes.prop_cycle"].by_key()["color"],
         )
 
+    def _init_history_states(self) -> None:
+        limits = self.props.figure_settings.get_limits()
+        self._history_states = [([], limits)]
+        self._history_pos = -1
+        self._view_history_states = [limits]
+        self._view_history_pos = -1
+        self._set_data_copy()
+
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
-        self._current_batch.append((3, (index2, index1)))
+        self._current_batch.append((
+            ChangeType.ITEMS_SWAPPED.value,
+            (index2, index1),
+        ))
 
     @staticmethod
     def _on_item_added(self, item_: Graphs.Item) -> None:
-        self._current_batch.append((1, copy.deepcopy(item_.to_dict())))
+        self._current_batch.append((
+            ChangeType.ITEM_ADDED.value,
+            copy.deepcopy(item_.to_dict()),
+        ))
 
     @staticmethod
-    def _on_item_deleted(self, item_: Graphs.Item) -> None:
-        self._current_batch.append((2, (self.index(item_), item_.to_dict())))
+    def _on_item_removed(self, item_: Graphs.Item, index: int) -> None:
+        self._current_batch.append((
+            ChangeType.ITEM_REMOVED.value,
+            (index, item_.to_dict()),
+        ))
 
     @staticmethod
     def _on_item_changed(self, item_: Graphs.Item, prop: str) -> None:
+        index = self.index(item_)
         self._current_batch.append((
-            0,
+            ChangeType.ITEM_PROPERTY_CHANGED.value,
             (
-                item_.get_uuid(),
+                index,
                 prop,
-                copy.deepcopy(self._data_copy[item_.get_uuid()][prop]),
+                copy.deepcopy(self._data_copy[index][prop]),
                 copy.deepcopy(item_.get_property(prop)),
             ),
         ))
 
-    def _on_figure_settings_change(
-        self,
-        figure_settings: Graphs.FigureSettings,
-        param: GObject.ParamSpec,
-    ) -> None:
-        if param.name in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
+    @staticmethod
+    def _on_figure_settings_changed(self, prop: str) -> None:
+        if prop in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
         self._current_batch.append((
-            4,
+            ChangeType.FIGURE_SETTINGS_CHANGED.value,
             (
-                param.name,
-                copy.deepcopy(self._figure_settings_copy[param.name]),
-                copy.deepcopy(figure_settings.get_property(param.name)),
+                prop,
+                copy.deepcopy(self._figure_settings_copy[prop]),
+                copy.deepcopy(self.props.figure_settings.get_property(prop)),
             ),
         ))
 
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy({
-            item_.get_uuid(): item_.to_dict()
-            for item_ in self
-        })
+        self._data_copy = copy.deepcopy([item_.to_dict() for item_ in self])
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
             for prop in dir(self.props.figure_settings.props)
         })
 
-    def add_history_state_with_limits(self, old_limits: misc.Limits) -> None:
-        """Add a state to the clipboard with old_limits set."""
-        self._add_history_state(old_limits)
-
-    def _add_history_state(self, old_limits: misc.Limits = None) -> None:
+    @staticmethod
+    def _on_add_history_state_request(
+        self,
+        limits: misc.Limits,
+        l: int,
+    ) -> None:
         """Add a state to the clipboard."""
         if not self._current_batch:
             return
@@ -186,17 +191,15 @@ class Data(Graphs.Data):
         self._history_states.append(
             (self._current_batch, self.get_figure_settings().get_limits()),
         )
-        if old_limits is not None:
+        if l > 0:
+            assert l == 8
             old_state = self._history_states[-2][1]
             for index in range(8):
-                old_state[index] = old_limits[index]
-        self.props.can_redo = False
-        self.props.can_undo = True
+                old_state[index] = limits[index]
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
-        self.props.unsaved = True
 
     def _undo(self) -> None:
         """Undo the latest change that was added to the clipboard."""
@@ -204,24 +207,34 @@ class Data(Graphs.Data):
             return
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
+        selected = Gtk.Bitset.new_empty()
+        mask = Gtk.Bitset.new_empty()
         for change_type, change in reversed(batch):
-            if change_type == 0:
-                self[change[0]].set_property(change[1], change[2])
-            elif change_type == 1:
-                self._remove_item(self.get_for_uuid(change["uuid"]))
-            elif change_type == 2:
-                self._add_item(
-                    item.new_from_dict(copy.deepcopy(change[1])),
-                    change[0],
-                    True,
-                )
-            elif change_type == 3:
-                self.change_position(change[0], change[1])
-            elif change_type == 4:
-                self.props.figure_settings.set_property(
-                    change[0],
-                    change[1],
-                )
+            match ChangeType(change_type):
+                case ChangeType.ITEM_PROPERTY_CHANGED:
+                    index, prop, value = itemgetter(0, 1, 2)(change)
+                    if prop == "selected":
+                        mask.add(index)
+                        if value:
+                            selected.add(index)
+                    else:
+                        self[index].set_property(prop, value)
+                case ChangeType.ITEM_ADDED:
+                    self._remove_item(self.get_n_items() - 1)
+                case ChangeType.ITEM_REMOVED:
+                    self._add_item(
+                        item.new_from_dict(copy.deepcopy(change[1])),
+                        change[0],
+                        True,
+                    )
+                case ChangeType.ITEMS_SWAPPED:
+                    self.change_position(change[0], change[1])
+                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    self.props.figure_settings.set_property(
+                        change[0],
+                        change[1],
+                    )
+        self.set_selection(selected, mask)
         self.get_figure_settings().set_limits(
             self._history_states[self._history_pos][1],
         )
@@ -229,7 +242,6 @@ class Data(Graphs.Data):
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self._set_data_copy()
-        self._add_view_history_state()
 
     def _redo(self) -> None:
         """Redo the latest change that was added to the clipboard."""
@@ -237,29 +249,38 @@ class Data(Graphs.Data):
             return
         self._history_pos += 1
         state = self._history_states[self._history_pos]
+        selected = Gtk.Bitset.new_empty()
+        mask = Gtk.Bitset.new_empty()
         for change_type, change in state[0]:
-            if change_type == 0:
-                self[change[0]].set_property(change[1], change[3])
-            elif change_type == 1:
-                self._add_item(
-                    item.new_from_dict(copy.deepcopy(change)),
-                    -1,
-                    True,
-                )
-            elif change_type == 2:
-                self._remove_item(self.get_for_uuid(change[1]["uuid"]))
-            elif change_type == 3:
-                self.change_position(change[1], change[0])
-            elif change_type == 4:
-                self.props.figure_settings.set_property(
-                    change[0],
-                    change[2],
-                )
+            match ChangeType(change_type):
+                case ChangeType.ITEM_PROPERTY_CHANGED:
+                    index, prop, value = itemgetter(0, 1, 3)(change)
+                    if prop == "selected":
+                        mask.add(index)
+                        if value:
+                            selected.add(index)
+                    else:
+                        self[index].set_property(prop, value)
+                case ChangeType.ITEM_ADDED:
+                    self._add_item(
+                        item.new_from_dict(copy.deepcopy(change)),
+                        -1,
+                        True,
+                    )
+                case ChangeType.ITEM_REMOVED:
+                    self._remove_item(change[0])
+                case ChangeType.ITEMS_SWAPPED:
+                    self.change_position(change[1], change[0])
+                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    self.props.figure_settings.set_property(
+                        change[0],
+                        change[2],
+                    )
+        self.set_selection(selected, mask)
         self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._set_data_copy()
-        self._add_view_history_state()
 
     def _add_view_history_state(self) -> None:
         """Add the view to the view history."""
@@ -279,9 +300,6 @@ class Data(Graphs.Data):
             self._view_history_states = self._view_history_states[1::]
         self._view_history_pos = -1
         self._view_history_states.append(limits)
-        self.props.can_view_back = True
-        self.props.can_view_forward = False
-        self.props.unsaved = True
 
     def _view_back(self) -> None:
         """Move the view to the previous value in the view history."""
@@ -409,7 +427,6 @@ class Data(Graphs.Data):
                 max_all *= padding_factor
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
-        self._add_view_history_state()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
@@ -418,7 +435,7 @@ class Data(Graphs.Data):
             "version": self.get_version(),
             "data": [item_.to_dict() for item_ in self],
             "figure-settings": {
-                key: figure_settings.get_property(key)
+                key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
             },
             "history-states": self._history_states,
@@ -430,10 +447,14 @@ class Data(Graphs.Data):
     def load_from_project_dict(self, project_dict: dict) -> None:
         """Load data from dict."""
         # Load data
-        figure_settings = self.get_figure_settings()
-        for key, value in project_dict["figure-settings"].items():
-            if figure_settings.get_property(key) != value:
-                figure_settings.set_property(key, value)
+        self.set_figure_settings(
+            Graphs.FigureSettings(
+                **{
+                    key.replace("-", "_"): value
+                    for (key, value) in project_dict["figure-settings"].items()
+                },
+            ),
+        )
         self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
 
         # Set clipboard
@@ -442,7 +463,6 @@ class Data(Graphs.Data):
         self._history_pos = project_dict["history-position"]
         self._view_history_states = project_dict["view-history-states"]
         self._view_history_pos = project_dict["view-history-position"]
-        self.unsaved = False
 
         # Set clipboard/view buttons
         self.props.can_undo = \
@@ -460,13 +480,14 @@ class Data(Graphs.Data):
         try:
             project_dict = project.read_project_file(file)
         except project.ProjectParseError as error:
+            logging.exception(error)
             return error.message
-        except Exception:
-            return _("Failed to parse project file")
         current_data = self.get_project_dict()
         try:
             self.load_from_project_dict(project_dict)
         except Exception:
             self.load_from_project_dict(current_data)
-            return _("Failed to load project")
+            msg = _("Failed to load project")
+            logging.exception(msg)
+            return msg
         return ""

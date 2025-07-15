@@ -1,9 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main window."""
-import os
-from gettext import gettext as _
-from urllib.parse import unquote, urlparse
-
 from gi.repository import Graphs
 
 from graphs import item
@@ -11,6 +7,14 @@ from graphs.canvas import Canvas
 from graphs.data import Data
 
 from matplotlib import rcParams, rcParamsDefault
+
+
+CSS_TEMPLATE = """
+.canvas-view#{name} {{
+    background-color: {background_color};
+    color: {color};
+}}
+"""
 
 
 class PythonWindow(Graphs.Window):
@@ -22,37 +26,10 @@ class PythonWindow(Graphs.Window):
         super().__init__(application=application, data=Data(application))
         self.setup()
         self.props.data.connect(
-            "style_changed",
+            "style-changed",
             self._on_style_changed,
         )
-        self.props.data.connect(
-            "notify::unsaved",
-            self._on_unsaved_changed,
-        )
         self._reload_canvas()
-        self._on_unsaved_changed(self.props.data, None)
-
-    def _on_unsaved_changed(self, data: Graphs.Data, _a) -> None:
-        file = data.get_file()
-        if file is None:
-            title = _("Untitled Project")
-            path = _("Draft")
-        else:
-            title = Graphs.tools_get_filename(file)
-            uri_parse = urlparse(file.get_uri())
-            filepath = os.path.dirname(
-                os.path.join(uri_parse.netloc, unquote(uri_parse.path)),
-            )
-            if filepath.startswith("/var"):
-                # Fix for rpm-ostree distros, where home is placed in /var/home
-                filepath = filepath.replace("/var", "", 1)
-            path = filepath.replace(os.path.expanduser("~"), "~")
-            if path.startswith(f"/run/user/{os.getuid()}/doc/"):
-                path = _("Document Portal")
-        if data.get_unsaved():
-            title = "• " + title
-        self.props.content_title.set_title(title)
-        self.props.content_title.set_subtitle(path)
 
     def _on_style_changed(
         self,
@@ -94,15 +71,15 @@ class PythonWindow(Graphs.Window):
         def on_view_changed(_canvas):
             self.props.data.add_view_history_state()
 
-        canvas.connect("edit_request", on_edit_request)
-        canvas.connect("view_changed", on_view_changed)
+        canvas.connect("edit-request", on_edit_request)
+        canvas.connect("view-changed", on_view_changed)
 
         # Set headerbar color and contrast
-        self.props.headerbar_provider.load_from_string(
-            "headerbar#canvas-headerbar { "
-            f"background-color: {params['figure.facecolor']}; "
-            f"color: {params['text.color']}; "
-            "}",
+        css = CSS_TEMPLATE.format(
+            name=self.props.content_view.get_name(),
+            background_color=params["figure.facecolor"],
+            color=params["text.color"],
         )
+        self.props.css_provider.load_from_string(css)
 
         self.set_canvas(canvas)

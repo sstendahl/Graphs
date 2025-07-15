@@ -9,6 +9,7 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import logging
 import math
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
@@ -128,7 +129,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if interactive:
             self._setup_interactive()
 
-        self.connect("save_request", self._save)
+        self.connect("save-request", self._save)
         self.connect(
             "zoom_request",
             lambda _self, factor: self.zoom(factor, False),
@@ -439,6 +440,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         return value1, value2
 
     def _redraw(self, *_args) -> None:
+        logging.debug("redrawing canvas")
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]

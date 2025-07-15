@@ -21,17 +21,17 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>S";
-      action: "action(win.save_style)";
+      action: "action(win.save-style)";
     }
 
     Shortcut {
       trigger: "<control><shift>S";
-      action: "action(win.save_style_as)";
+      action: "action(win.save-style-as)";
     }
 
     Shortcut {
       trigger: "<control>O";
-      action: "action(win.open_style)";
+      action: "action(win.open-style)";
     }
   }
 
@@ -69,10 +69,11 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
         content: Adw.StatusPage {
           title: _("Open a Style");
+
           Button {
             label: _("Open…");
             halign: center;
-            action-name: "win.open_style";
+            action-name: "win.open-style";
 
             styles [
               "pill",
@@ -82,6 +83,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
         };
       };
     }
+
     StackPage {
       child: Adw.MultiLayoutView multi_layout_view {
         Adw.Layout side_by_side_layout {
@@ -101,10 +103,15 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
               Separator {}
             }
 
-            Adw.ToolbarView {
+            Adw.ToolbarView content_view {
+              styles [
+                "canvas-view",
+              ]
+
               [top]
-              Adw.HeaderBar content_headerbar {
+              Adw.HeaderBar {
                 name: "preview-headerbar";
+                show-start-title-buttons: false;
                 show-title: false;
               }
 
@@ -157,6 +164,10 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
           Adw.HeaderBar editor_headerbar {
             show-end-title-buttons: false;
 
+            title-widget: Adw.WindowTitle {
+              title: _("Graphs Style Editor");
+            };
+
             [end]
             MenuButton {
               icon-name: "open-menu-symbolic";
@@ -196,8 +207,9 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
 menu primary_menu {
   section {
-    item (_("Save Style…"), "win.save_style")
-    item (_("Save Style as…"), "win.save_style_as")
+    item (_("Open Style…"), "win.open-style")
+    item (_("Save Style…"), "win.save-style")
+    item (_("Save Style as…"), "win.save-style-as")
   }
 
   section {
@@ -209,7 +221,7 @@ menu primary_menu {
 
 menu empty_menu {
   section {
-    item (_("Open Style…"), "win.open_style")
+    item (_("Open Style…"), "win.open-style")
   }
 
   section {

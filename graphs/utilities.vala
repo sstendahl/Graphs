@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
 using Gdk;
+using Gtk;
 
 namespace Graphs {
     namespace Tools {
@@ -111,17 +111,6 @@ namespace Graphs {
             return max_value / min_value;
         }
 
-        /**
-         * Shorten a label
-         *
-         * @param max_length Maximum length
-         */
-        public string shorten_label (string label, uint max_length = 20) {
-            if (label.length > max_length) {
-                return label.substring (0, max_length - 1) + "…";
-            } else return label;
-        }
-
         public string get_duplicate_string (string original, string[] used) {
             if (!(original in used)) return original;
             string old_str = original;
@@ -211,6 +200,43 @@ namespace Graphs {
                 list_store.append (all_filter);
             }
             return list_store;
+        }
+
+        /**
+         * Get the friendly path of a file.
+         */
+        string get_friendly_path (File file) {
+            string uri = file.get_uri ();
+            Uri parsed;
+            try {
+                parsed = Uri.parse (uri, UriFlags.NONE);
+            } catch (UriError error) {
+                return "";
+            }
+
+            string path = Uri.unescape_string (parsed.get_path ());
+            string host = parsed.get_host ();
+            string full_path = Path.build_filename (host + path);
+            string filepath = Path.get_dirname (full_path);
+
+            // Fix for rpm-ostree distros, where home is placed in /var/home
+            if (filepath.has_prefix ("/var")) {
+                filepath = filepath.substring (4);
+            }
+
+            // Replace home directory with ~
+            string home = Environment.get_home_dir ();
+            if (filepath.has_prefix (home)) {
+                filepath = "~" + filepath.substring (home.length);
+            }
+
+            // Replace document portal path with a user-friendly label
+            int uid = (int) Posix.getuid ();
+            if (filepath.has_prefix (@"/run/user/$uid/doc/")) {
+                filepath = _("Document Portal");
+            }
+
+            return filepath;
         }
     }
 }

@@ -30,12 +30,13 @@ namespace Graphs {
             Tools.bind_settings_to_widgets (
                 application.get_settings_child ("export-figure"), this
             );
+            on_file_format ();
             present (window);
         }
 
         [GtkCallback]
         private void on_file_format () {
-            dpi.set_visible (file_format.get_selected () in FORMATS_WITH_DPI);
+            dpi.set_sensitive (file_format.get_selected () in FORMATS_WITH_DPI);
         }
 
         [GtkCallback]

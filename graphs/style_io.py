@@ -165,6 +165,7 @@ def create_preview(
     file: typing.IO,
     params: RcParams,
     file_format: str = "svg",
+    dpi: int = 100,
 ) -> None:
     """Create preview of params and write it to file."""
     with rc_context(params):
@@ -179,4 +180,4 @@ def create_preview(
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
         axis.set_xlabel(_("Y Label"))
-        figure.savefig(file, format=file_format)
+        figure.savefig(file, format=file_format, dpi=dpi)

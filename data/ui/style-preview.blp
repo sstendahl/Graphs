@@ -7,8 +7,8 @@ template $GraphsStylePreview: Adw.Bin {
       orientation: vertical;
 
       Overlay {
-        height-request: 96;
-        width-request: 156;
+        height-request: 93;
+        width-request: 155;
 
         [overlay]
         Image {
@@ -28,15 +28,11 @@ template $GraphsStylePreview: Adw.Bin {
           valign: start;
           margin-end: 4;
           margin-top: 4;
+          menu-model: style_menu;
 
           styles [
             "flat",
           ]
-
-          popover: PopoverMenu {
-            has-arrow: false;
-            menu-model: style_menu;
-          };
         }
 
         child: Picture picture {};
@@ -44,6 +40,7 @@ template $GraphsStylePreview: Adw.Bin {
 
       Label label {
         margin-top: 8;
+        ellipsize: end;
       }
     };
   };

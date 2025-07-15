@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
 using Adw;
+using Gdk;
+using Gee;
+using Gtk;
 
 namespace Graphs {
     /**
@@ -19,7 +21,7 @@ namespace Graphs {
         private unowned Stack stack { get; }
 
         [GtkChild]
-        protected unowned Adw.HeaderBar content_headerbar { get; }
+        protected unowned Adw.ToolbarView content_view { get; }
 
         protected Gtk.Box editor_box {
             get { return editor_bin.get_child () as Gtk.Box; }
@@ -29,30 +31,48 @@ namespace Graphs {
             get { return canvas_bin.get_child () as Canvas; }
             set { canvas_bin.set_child (value); }
         }
+        protected string stylename {
+            set {
+                this._stylename = value;
+                // Translators: Window title that will be formatted with the stylename.
+                set_title (_("Graphs Style Editor — %s").printf (value));
 
-        protected CssProvider headerbar_provider { get; private set; }
+                if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                    _inhibit_cookie = application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        value
+                    );
+                }
+            }
+        }
+
+        protected CssProvider css_provider { get; private set; }
         protected bool unsaved { get; set; default = false; }
         private File _file;
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
+        private string _stylename;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
         construct {
-            this.headerbar_provider = new CssProvider ();
-            content_headerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            var save_action = new SimpleAction ("save_style", null);
+            var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
                 if (_file == null) return;
                 save ();
             });
+            save_action.set_enabled (false);
             add_action (save_action);
 
-            var save_as_action = new SimpleAction ("save_style_as", null);
+            var save_as_action = new SimpleAction ("save-style-as", null);
             save_as_action.activate.connect (() => {
                 if (_file == null) return;
                 var dialog = new FileDialog ();
@@ -67,35 +87,43 @@ namespace Graphs {
             });
             add_action (save_as_action);
 
-            var open_action = new SimpleAction ("open_style", null);
+            var open_action = new SimpleAction ("open-style", null);
             open_action.activate.connect (() => {
-                if (_file != null) return;
                 var dialog = new FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.open.begin (this, null, (d, response) => {
                     try {
-                        load (dialog.open.end (response));
+                        var file = dialog.open.end (response);
+                        if (_file == null || !unsaved) {
+                            load (file);
+                        } else {
+                            var new_window = ((Application) application).create_style_editor ();
+                            new_window.load (file);
+                            new_window.present ();
+                        }
                     } catch {}
                 });
             });
             add_action (open_action);
 
-            // Inhibit session end when there is unsaved data present
-            notify["unsaved"].connect (() => {
-                if (unsaved) {
-                    application.inhibit (
-                        this,
-                        ApplicationInhibitFlags.LOGOUT,
-                        title
-                    );
-                } else if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
-                }
-            });
-
             string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
             var builder = new Builder.from_resource (path);
             set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
+
+             // Inhibit session end when there is unsaved data present
+            notify["unsaved"].connect (() => {
+                if (unsaved) {
+                    _inhibit_cookie = application.inhibit (
+                        this,
+                        ApplicationInhibitFlags.LOGOUT,
+                        _stylename
+                    );
+                    save_action.set_enabled (true);
+                } else {
+                    if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                    save_action.set_enabled (false);
+                }
+            });
         }
 
         public void load (File file) {
@@ -140,6 +168,180 @@ namespace Graphs {
 
             application.on_style_editor_closed (this);
             return false;
+        }
+    }
+
+    /**
+     * Style Color Box
+     */
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-color-box.ui")]
+    public class StyleColorBox : Adw.ActionRow {
+        public int index { get; construct set; }
+
+        [GtkChild]
+        private unowned Gtk.Button color_button { get; }
+
+        private CssProvider provider = new CssProvider ();
+        private string color;
+
+        public signal void color_changed (string color);
+        public signal void color_removed ();
+
+        construct {
+            this.color_button.get_style_context ().add_provider (
+                this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        }
+
+        public StyleColorBox (int index, string color) {
+            Object (index: index);
+            this.set_title (_("Color %d").printf (index + 1));
+            this.color = color;
+            load_color ();
+        }
+
+        private void load_color () {
+            this.provider.load_from_string (@"button { color: $color; }");
+        }
+
+        [GtkCallback]
+        private void on_color_choose () {
+            var dialog = new ColorDialog () { with_alpha = false };
+            dialog.choose_rgba.begin (
+                this.get_root () as Gtk.Window,
+                Tools.hex_to_rgba (color),
+                null,
+                (d, result) => {
+                    try {
+                        color = Tools.rgba_to_hex (dialog.choose_rgba.end (result));
+                        load_color ();
+                        color_changed.emit (color);
+                    } catch {}
+
+                }
+            );
+        }
+
+        [GtkCallback]
+        private void on_delete () {
+            color_removed.emit ();
+        }
+    }
+
+    public class StyleColorManager : Object {
+        private ListBox box;
+        private ArrayList<string> colors = new ArrayList<string> ();
+
+        public signal void colors_changed ();
+
+        public StyleColorManager (ListBox box) {
+            this.box = box;
+
+            var drop_target = new Gtk.DropTarget (typeof (StyleColorBox), Gdk.DragAction.MOVE);
+            drop_target.drop.connect ((drop, val, x, y) => {
+                var value_row = val.get_object () as StyleColorBox?;
+                var target_row = box.get_row_at_y ((int) y) as StyleColorBox?;
+                // If value or the target row is null, do not accept the drop
+                if (value_row == null || target_row == null) {
+                    return false;
+                }
+
+                change_position (target_row.index, value_row.index);
+                target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
+
+                return true;
+            });
+            box.add_controller (drop_target);
+        }
+
+        public void set_colors (string[] colors) {
+            this.colors.clear ();
+            this.colors.add_all_array (colors);
+            reload_color_boxes ();
+        }
+
+        public void add_color (string color) {
+            this.colors.add (color);
+            append_style_color_box (this.colors.size - 1);
+            colors_changed.emit ();
+        }
+
+        public string[] get_colors () {
+            return this.colors.to_array ();
+        }
+
+        public void change_position (int index1, int index2) {
+            if (index1 == index2) return;
+            string color = this.colors[index2];
+            this.colors.remove_at (index2);
+            this.colors.insert (index1, color);
+            reload_color_boxes ();
+            colors_changed.emit ();
+        }
+
+        private void append_style_color_box (int index) {
+            var row = new StyleColorBox (index, this.colors[index]);
+            row.color_removed.connect (() => {
+                this.colors.remove_at (index);
+                reload_color_boxes ();
+                colors_changed.emit ();
+            });
+            row.color_changed.connect ((b, color) => {
+                this.colors[index] = color;
+                colors_changed.emit ();
+            });
+
+            double drag_x = 0.0;
+            double drag_y = 0.0;
+
+            var drop_controller = new Gtk.DropControllerMotion ();
+            var drag_source = new Gtk.DragSource () {
+                actions = Gdk.DragAction.MOVE
+            };
+
+            row.add_controller (drag_source);
+            row.add_controller (drop_controller);
+
+            // Drag handling
+            drag_source.prepare.connect ((x, y) => {
+                drag_x = x;
+                drag_y = y;
+
+                Value val = Value (typeof (StyleColorBox));
+                val.set_object (row);
+
+                return new Gdk.ContentProvider.for_value (val);
+            });
+
+            drag_source.drag_begin.connect ((drag) => {
+                var drag_widget = new Gtk.ListBox ();
+                drag_widget.set_size_request (row.get_width (), row.get_height ());
+                drag_widget.add_css_class ("boxed-list");
+
+                var drag_row = new StyleColorBox (index, this.colors[index]);
+
+                drag_widget.append (drag_row);
+                drag_widget.drag_highlight_row (drag_row);
+
+                var icon = Gtk.DragIcon.get_for_drag (drag) as Gtk.DragIcon;
+                icon.child = drag_widget;
+
+                drag.set_hotspot ((int) drag_x, (int) drag_y);
+            });
+
+            // Update row visuals during DnD operation
+            drop_controller.enter.connect (() => this.box.drag_highlight_row (row));
+            drop_controller.leave.connect (() => this.box.drag_unhighlight_row ());
+
+            this.box.append (row);
+        }
+
+        private void reload_color_boxes () {
+            if (this.colors.is_empty) this.colors.add ("#000000");
+            this.box.remove_all ();
+            for (int i = 0; i < this.colors.size; i++) {
+                append_style_color_box (i);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
 using Adw;
+using Gdk;
+using Gtk;
 
 namespace Graphs {
     /**
@@ -43,13 +44,10 @@ namespace Graphs {
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
         [GtkChild]
-        private unowned Adw.HeaderBar content_headerbar { get; }
+        private unowned Adw.WindowTitle content_title { get; }
 
         [GtkChild]
-        private unowned Adw.HeaderBar content_footerbar { get; }
-
-        [GtkChild]
-        protected unowned Adw.WindowTitle content_title { get; }
+        private unowned Adw.WindowTitle sidebar_title { get; }
 
         [GtkChild]
         private unowned Overlay drag_overlay { get; }
@@ -63,9 +61,11 @@ namespace Graphs {
         [GtkChild]
         private unowned Stack itemlist_stack { get; }
 
-        public Data data { get; construct set; }
+        [GtkChild]
+        protected unowned Adw.ToolbarView content_view { get; }
 
-        protected CssProvider headerbar_provider { get; private set; }
+        public Data data { get; construct set; }
+        protected CssProvider css_provider { get; private set; }
 
         public int mode {
             set {
@@ -100,15 +100,12 @@ namespace Graphs {
         private Menu _scales_section = new Menu ();
 
         construct {
-            this.headerbar_provider = new CssProvider ();
-            content_headerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
-            content_footerbar.get_style_context ().add_provider (
-                headerbar_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
-            var item_drop_target = new Gtk.DropTarget (typeof (Adw.ActionRow), Gdk.DragAction.MOVE);
+            var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as ItemBox?;
                 var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
@@ -135,13 +132,15 @@ namespace Graphs {
                 }
             });
             file_drop_target.drop.connect ((drop, val, x, y) => {
-                var application = application as Application;
                 var file_list = ((Gdk.FileList) val).get_files ();
-                File[] files = {};
-                for (uint i = 0; i < file_list.length (); i++) {
-                    files += file_list.nth_data (i);
+                File[] files = new File[file_list.length ()];
+                uint i = 0;
+                foreach (File file in file_list) {
+                    files[i] = file;
+                    i++;
                 }
-                application.python_helper.import_from_files (this, files);
+                ((Application) application).python_helper.import_from_files (this, files);
+                return true;
             });
             drag_overlay.add_controller (file_drop_target);
 
@@ -151,12 +150,19 @@ namespace Graphs {
 
             var view_menu = view_menu_button.get_menu_model () as Menu;
             view_menu.append_section (null, _scales_section);
+
+#if DEBUG
+            add_css_class ("devel");
+            sidebar_title.set_title (_("Graphs (Development)"));
+#endif
         }
 
         protected void setup () {
             var application = application as Application;
 
-            Actions.setup (application, this);
+            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
+
+            Actions.setup_local (this);
 
             this.operations = new Operations (this);
 
@@ -167,32 +173,58 @@ namespace Graphs {
 
             data.items_changed.connect (on_items_changed);
             data.selection_changed.connect (on_selection_changed);
-
-            // Inhibit session end when there is unsaved data present
-            data.notify["unsaved"].connect (() => {
-                if (data.unsaved) {
-                    application.inhibit (
-                        this,
-                        ApplicationInhibitFlags.LOGOUT,
-                        content_title.get_title ()
-                    );
-                } else if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
-                }
-            });
+            data.notify["unsaved"].connect (on_unsaved_change);
 
             on_items_changed ();
-            if (application.debug) {
-                add_css_class ("devel");
-                set_title (_("Graphs (Development)"));
+            on_unsaved_change ();
+        }
+
+        /**
+         * Inhibit session end when there is unsaved data present.
+         * Disable save actions if there is no unsaved data.
+         * Update window title.
+         */
+        private void on_unsaved_change () {
+            string title;
+            string path;
+            var close_action = lookup_action ("close-project") as SimpleAction;
+            if (data.file == null) {
+                title = _("Untitled Project");
+                path = _("Draft");
+                close_action.set_enabled (false);
+            } else {
+                title = Tools.get_filename (data.file);
+                path = Tools.get_friendly_path (data.file);
+                close_action.set_enabled (true);
+            }
+            // Translators: Window title that will be formatted with the project name.
+            set_title (_("Graphs — %s").printf (title));
+            content_title.set_subtitle (path);
+
+            var save_action = lookup_action ("save-project") as SimpleAction;
+            var save_as_action = lookup_action ("save-project-as") as SimpleAction;
+            if (data.unsaved) {
+                this._inhibit_cookie = application.inhibit (
+                    this,
+                    ApplicationInhibitFlags.LOGOUT,
+                    title
+                );
+                save_action.set_enabled (true);
+                save_as_action.set_enabled (true);
+                content_title.set_title ("• " + title);
+            } else {
+                if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                save_action.set_enabled (false);
+                save_as_action.set_enabled (data.file != null);
+                content_title.set_title (title);
             }
         }
 
         private void on_items_changed () {
             update_scales_section ();
             item_list.remove_all ();
-            var export_data_action = lookup_action ("export_data") as SimpleAction;
-            var optimize_limits_action = lookup_action ("optimize_limits") as SimpleAction;
+            var export_data_action = lookup_action ("export-data") as SimpleAction;
+            var optimize_limits_action = lookup_action ("optimize-limits") as SimpleAction;
             if (data.is_empty ()) {
                 itemlist_stack.get_pages ().select_item (0, true);
                 operations.shift_button.set_sensitive (false);
@@ -210,7 +242,7 @@ namespace Graphs {
             foreach (Item item in data) {
                 string typename = item.get_type ().name ();
                 bool data_item = typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem";
-                item_list.append (create_box_for_item (item, index, data_item));
+                append_item_row (item, index, data_item);
 
                 items_selected = items_selected || item.selected;
                 data_items_selected = data_items_selected || (item.selected && data_item);
@@ -225,7 +257,7 @@ namespace Graphs {
         }
 
         private void on_selection_changed () {
-            var export_data_action = lookup_action ("export_data") as SimpleAction;
+            var export_data_action = lookup_action ("export-data") as SimpleAction;
             if (data.is_empty ()) {
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
@@ -251,7 +283,7 @@ namespace Graphs {
             export_data_action.set_enabled (items_selected);
         }
 
-        private ItemBox create_box_for_item (Item item, uint index, bool is_data_item) {
+        private void append_item_row (Item item, uint index, bool is_data_item) {
             var row = new ItemBox (this, item, index);
             row.setup_interactions (is_data_item);
 
@@ -271,7 +303,7 @@ namespace Graphs {
                 drag_x = x;
                 drag_y = y;
 
-                Value val = Value (typeof (Adw.ActionRow));
+                Value val = Value (typeof (ItemBox));
                 val.set_object (row);
 
                 return new Gdk.ContentProvider.for_value (val);
@@ -297,7 +329,7 @@ namespace Graphs {
             drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
             drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
 
-            return row;
+            item_list.append (row);
         }
 
         /**

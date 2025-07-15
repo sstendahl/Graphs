@@ -44,28 +44,56 @@ namespace Graphs {
             }
         }
 
-        private void _pick_and_load (Window window) {
+        public void open (Window window) {
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
             dialog.open.begin (window, null, (d, response) => {
+                Window? new_window = null;
+                Application application = window.application as Application;
                 try {
                     var file = dialog.open.end (response);
-                    window.data.load (file);
+                    if (!window.data.unsaved && window.data.file == null) {
+                        window.data.load (file);
+                        return;
+                    }
+                    new_window = application.create_main_window ();
+                    new_window.data.load (file);
+                    new_window.present ();
                 } catch (ProjectParseError e) {
-                    window.add_toast_string (e.message);
+                    var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
+                    error_dialog.set_body (e.message);
+                    error_dialog.present (window);
+                    if (new_window != null) {
+                        new_window.close ();
+                        application.on_main_window_closed (new_window);
+                    }
                 } catch {}
             });
         }
 
-        public void open (Window window) {
-            if (!window.data.unsaved && window.data.file == null) {
-                _pick_and_load (window);
+        public void close (Window window) {
+            if (!window.data.unsaved) {
+                window.data.clear ();
                 return;
             }
-            Application application = window.application as Application;
-            var new_window = application.create_main_window ();
-            new_window.present ();
-            _pick_and_load (new_window);
+            var dialog = Tools.build_dialog ("save_project_changes") as Adw.AlertDialog;
+            dialog.response.connect ((d, response) => {
+                switch (response) {
+                    case "discard": {
+                        window.data.clear ();
+                        break;
+                    }
+                    case "save": {
+                        save.begin (window, false, (o, result) => {
+                            if (save.end (result)) {
+                                window.data.clear ();
+                            }
+                        });
+                        break;
+                    }
+                }
+            });
+            dialog.present (window);
         }
     }
 }

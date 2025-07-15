@@ -18,9 +18,9 @@ import scipy
 import sympy
 
 
-def perform_operation(application: Graphs.Application, name: str) -> None:
+def perform_operation(window: Graphs.Window, name: str) -> None:
     """Perform an operation."""
-    window = application.get_active_window()
+    application = window.get_application()
     interaction_mode = window.get_mode()
     if name == "cut" and interaction_mode != 2:
         return
@@ -71,7 +71,7 @@ def perform_operation(application: Graphs.Application, name: str) -> None:
             all_success = success or all_success
     if all_success:
         data.optimize_limits()
-        data.add_history_state_with_limits(old_limits)
+        data.add_history_state(old_limits)
 
 
 class DataHelper():
@@ -257,7 +257,7 @@ class CommonOperations():
                     window.add_toast_string(toast)
 
                 data.optimize_limits()
-                data.add_history_state_with_limits(old_limits)
+                data.add_history_state(old_limits)
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
