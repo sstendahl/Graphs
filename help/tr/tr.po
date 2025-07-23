@@ -1,0 +1,407 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2025-06-29 09:11+0000\n"
+"PO-Revision-Date: 2025-07-22 17:31+0300\n"
+"Last-Translator: Erdem Uygun <uygun.erdem@proton.me>\n"
+"Language-Team: \n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.2\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "çevirmen-katkıları"
+
+#. (itstool) path: page/title
+#: C/curve_fitting.page:8
+msgid "Curve Fitting"
+msgstr "Eğri Uyumlandırma"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:10
+msgid "Fitting data"
+msgstr "Veri uyumlandırma"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:11
+msgid ""
+"Curve fitting allows for a powerful analysis method for your imported data. "
+"To start curve fitting on a data set, press the three vertical dots on the "
+"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
+"Curve Fitting dialog for the selected data set. An extensive list of "
+"predefined equations can be chosen from the dropdown. The corresponding "
+"mathematical formula is shown in the same card."
+msgstr ""
+"Eğri uyumlandırma, içe aktardığınız veriler için güçlü bir analiz yöntemi "
+"sunar. Bir veri kümesinde eğri uyumlandırmaya başlamak için, uyumlandırmak "
+"istediğiniz öğenin üzerindeki üç dikey noktaya basın ve \"Eğri "
+"Uyumlandırma\"yı seçin. Bu, seçilen veri kümesi için Eğri Uyumlandırma "
+"iletişim kutusunu açar. Tanımlı denklemlerin kapsamlı bir listesi açılır "
+"menüden seçilebilir. İlgili matematiksel formül aynı kartta gösterilir."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/curve_fitting.page:19
+msgctxt "_"
+msgid ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+msgstr ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:23
+msgid "Bounds"
+msgstr "Sınırlar"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:24
+msgid ""
+"Each detected parameter in the formula will be shown in the sidebar. Here an "
+"initial guess can be set for the fit, as well as the minimum and maximum "
+"value for this parameter. Make sure that the initial guess is in between the "
+"bounds, and that the minimum bound is smaller than the maximum bound. If you "
+"don't want to use any bounds for the parameter, you can set the bounds to "
+"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
+"maximum bound respectively."
+msgstr ""
+"Formüldeki her tespit edilen parametre kenar çubuğunda gösterilecektir. "
+"Burada uyumlandırma için bir başlangıç tahmini ile birlikte bu parametreye "
+"ait minimum ve maksimum değerler ayarlanabilir. Başlangıç tahmininin "
+"sınırlar dahilinde olduğundan ve minimum sınırın maksimum sınırdan küçük "
+"olduğundan emin olun. Parametre için herhangi bir sınır kullanmak "
+"istemiyorsanız, minimum ve maksimum sınırlar için sırasıyla <code>-inf</"
+"code> ve <code>inf</code> kullanarak sınırları sonsuz olarak "
+"ayarlayabilirsiniz."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:36
+msgid "Results"
+msgstr "Sonuçlar"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:37
+msgid ""
+"Below the fitting parameters, a box is shown with the resulting parameters "
+"of the fit. Apart of the final results, a margin is shown as well for each "
+"parameter as well as the sum of R² indicating the goodness of the fit. The "
+"margin can be set using the primary menu in the Curve Fitting dialog as a "
+"multiple of the standard deviation, corresponding to an uncertainty margin "
+"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+msgstr ""
+"Uyumlandırma parametrelerinin altında, uyumlandırmanın sonuç parametrelerini "
+"gösteren bir kutu yer alır. Nihai sonuçların yanı sıra, her parametre için "
+"bir hata payı ve uyumlandırmanın başarısını gösteren R² toplamı da "
+"gösterilir. Hata payı, Eğri Uyumlandırma iletişim kutusundaki birincil menü "
+"kullanılarak standart sapmanın bir katı olarak ayarlanabilir; bu da "
+"sırasıyla 1σ, 2σ veya 3σ standart sapma için %65, %95 veya %99,7'lik bir "
+"belirsizlik payına karşılık gelir."
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:45
+msgid ""
+"Please note that like all fits, that this standard deviation is mostly a "
+"measure of how well the data agrees with the corresponding model. Factors "
+"such as whether this model is actually physically correct, if there's any "
+"systemic errors in the measurements, and if the parameters are correlated to "
+"each other is not taken into account when fitting data. This is an inherent "
+"property of all curve fitting, and a common point of confusion, leading to "
+"misleading error bars on data points even in scientifically published data."
+msgstr ""
+"Lütfen unutmayın ki tüm uyumlandırmalar gibi, bu standart sapma da "
+"çoğunlukla verilerin ilgili modelle ne kadar iyi uyuştuğunun bir ölçüsüdür. "
+"Bu modelin gerçekten fiziksel olarak doğru olup olmadığı, ölçümlerde "
+"herhangi bir sistematik hata bulunup bulunmadığı ve parametrelerin "
+"birbiriyle ilişkili olup olmadığı gibi faktörler, veri uyumlandırma "
+"sırasında dikkate alınmaz. Bu, tüm eğri uyumlandırmanın doğasında bulunan "
+"bir özelliktir ve yaygın bir karışıklık noktasıdır; bilimsel olarak "
+"yayınlanmış verilerde bile yanıltıcı hata çubuklarına yol açar."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:57
+msgid "Fitting algorithms"
+msgstr "Uyumlandırma algoritmaları"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:58
+msgid ""
+"When performing a fit, there are three different fitting algorithms to "
+"choose from, these can be set from the primary menu."
+msgstr ""
+"Bir uyumlandırma gerçekleştirilirken, aralarından seçim yapabileceğiniz üç "
+"farklı uyumlandırma algoritması bulunur, bunlar birincil menüden "
+"ayarlanabilir."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:64
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:65
+msgid ""
+"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
+"algorithm that performs very efficiently. However, it does not handle bounds "
+"for the fitting parameters."
+msgstr ""
+"Levenberg-Marquardt algoritması, geleneksel olarak oldukça popüler ve çok "
+"verimli performans gösteren bir algoritmadır. Ancak, uyumlandırma "
+"parametreleri için sınırları yönetmez."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:68
+msgid "Trust Region"
+msgstr "Güven Bölgesi"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:69
+msgid ""
+"The Trust Region Reflective algorithm is well-suited for solving large "
+"problems with bounds. This method generally performs well for most cases and "
+"should probably be used for most cases."
+msgstr ""
+"Güven Bölgesi Yansıtmalı algoritma, sınırlı büyük problemleri çözmek için "
+"oldukça uygundur. Bu yöntem genellikle çoğu durumda iyi performans gösterir "
+"ve muhtemelen çoğu durumda kullanılmalıdır."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:72
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:73
+msgid ""
+"The Dogbox algorithm uses rectangular trust regions and typically works well "
+"with small problems involving bounds."
+msgstr ""
+"Dogbox algoritması dikdörtgen güven bölgeleri kullanır ve genellikle sınırlı "
+"küçük problemlerle iyi çalışır."
+
+#. (itstool) path: page/title
+#: C/import.page:8
+msgid "Importing Data"
+msgstr "Veri İçe Aktarma"
+
+#. (itstool) path: page/p
+#: C/import.page:9
+msgid ""
+"There are two primary ways to import new data in Graphs, importing data "
+"directly by file or generating new data using an equation."
+msgstr ""
+"Graphs'ta yeni veri aktarmanın iki ana yolu vardır: doğrudan dosyadan veri "
+"aktarmak veya bir denklem kullanarak yeni veri üretmek."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:14
+msgctxt "_"
+msgid ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+msgstr ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+
+#. (itstool) path: page/p
+#: C/import.page:16
+msgid ""
+"A wide array of filetypes are supported when importing data by file. Graphs "
+"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
+"files that are saved in a column format such as most .csv files, .dat "
+"files, .xy files or plain text. Finally, data from other Graphs projects can "
+"be imported into the current project as well, simply by adding new data as "
+"usual, but by selecting a project file instead."
+msgstr ""
+"Dosyadan veri aktarırken çok çeşitli dosya türleri desteklenir. Graphs şu "
+"anda Panalytical .xrdml dosyalarını, Leybold .xry dosyalarını ve çoğu .csv "
+"dosyası, .dat dosyası, .xy dosyası veya düz metin gibi sütun formatında "
+"kaydedilmiş dosyaları desteklemektedir. Son olarak, diğer Graphs "
+"projelerindeki veriler de mevcut projeye aktarılabilir; bunun için her "
+"zamanki gibi yeni veri eklemeniz yeterli olur ancak bir proje dosyası "
+"seçmeniz gerekir."
+
+#. (itstool) path: page/p
+#: C/import.page:25
+msgid ""
+"When using a custom delimiter during the import, an extra field will be "
+"visible to enter the delimiter of choice. This field recognizes regular "
+"expressions. For example, to choose a delimiter that looks for whitespace, "
+"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
+"code> denotes that the delimiter is a whitespace character, and the <code>+</"
+"code> denotes that at least one or more whitespace is required. Thus this "
+"input looks for any amount of whitespaces including tabs. Note that this "
+"particular input is equivalent to the default Whitespace option."
+msgstr ""
+"Aktarma sırasında özel bir ayırıcı kullanıldığında, seçilen ayırıcıyı girmek "
+"için ek bir alan görünür olacaktır. Bu alan düzenli ifadeleri tanır. "
+"Örneğin, boşluk karakteri arayan bir ayırıcı seçmek için ayırıcı olarak "
+"<code>\\s+</code> girilebilir. Bu örnekte, <code>\\s</code> ayırıcının bir "
+"boşluk karakteri olduğunu, <code>+</code> ise en az bir veya daha fazla "
+"boşluk gerektiğini belirtir. Böylece bu girdi, sekmeler de dahil olmak üzere "
+"herhangi bir miktarda boşluk arar. Bu özel girdinin varsayılan Boşluk "
+"seçeneğine eşdeğer olduğunu unutmayın."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:36
+msgctxt "_"
+msgid ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+msgstr ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+
+#. (itstool) path: page/p
+#: C/import.page:38
+msgid ""
+"The other way to import data is to generate data directly using an equation. "
+"This can be done using the \"Add Equation\" button found in the top-left "
+"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
+"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
+"quadratic equation could for instance be created using <code>x²+5</code> as "
+"input. Be aware that trigonometric functions are using radians by default. "
+"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
+"function. For instance <code>cosd(x)</code> generates a cosine where the x "
+"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
+"with the x-coordinate in radians."
+msgstr ""
+"Veri aktarmanın diğer yolu, doğrudan bir denklem kullanarak veri üretmektir. "
+"Bu, sol üst köşede bulunan \"Denklem Ekle\" düğmesi kullanılarak veya "
+"<cmd>Ctrl+Alt+N</cmd> tuşlarına basılarak yapılabilir. En yaygın kullanılan "
+"sözdizimi kabul edilir; burada <code>x</code> x-koordinatını belirtir. "
+"Örneğin, <code>x²+5</code> girişi kullanılarak basit bir ikinci dereceden "
+"denklem oluşturulabilir. Trigonometrik fonksiyonların varsayılan olarak "
+"radyan kullandığını unutmayın. Derece kullanmak isterseniz, trigonometrik "
+"fonksiyona yalnızca bir <code>d</code> eklemeniz yeterlidir. Örneğin, "
+"<code>cosd(x)</code> x koordinatının derece olarak verildiği bir kosinüs "
+"üretirken, <code>cos(x)</code> x-koordinatının radyan olarak verildiği bir "
+"kosinüs üretir."
+
+#. (itstool) path: page/title
+#: C/index.page:10
+msgid "<_:media-1/> Graphs"
+msgstr "<_:media-1/> Graphs"
+
+#. (itstool) path: section/title
+#: C/index.page:16
+msgid "How to"
+msgstr "Nasıl yapılır"
+
+#. (itstool) path: section/p
+#: C/index.page:17
+msgid ""
+"There's multiple how-to guides available for Graphs. These can be found here."
+msgstr ""
+"Graphs için birden fazla \"nasıl yapılır\" rehberi mevcuttur. Bunlara "
+"buradan ulaşılabilir."
+
+#. (itstool) path: page/title
+#: C/manipulate.page:8
+msgid "Manipulating Data"
+msgstr "Veri Manipülasyonu"
+
+#. (itstool) path: page/p
+#: C/manipulate.page:10
+msgid ""
+"There are many different ways to manipulate data using Graphs. All data is "
+"treated the same using Graphs, independent what file it is imported from, or "
+"if it's a generated equation. When selecting a part of the canvas using the "
+"Highlight tool, only the highlight area will be manipulated."
+msgstr ""
+"Graphs kullanarak verileri manipüle etmenin birçok farklı yolu vardır. Tüm "
+"veriler, hangi dosyadan aktarıldığına veya üretilmiş bir denklem olup "
+"olmadığına bakılmaksızın Graphs tarafından aynı şekilde işlenir. Vurgulama "
+"aracı kullanılarak tuvalin bir kısmı seçildiğinde, yalnızca vurgulanan alan "
+"manipüle edilecektir."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:18
+msgid "Smoothening"
+msgstr "Pürüzsüzleştirme"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:19
+msgid ""
+"The smoothening action has two different modes, a rolling average or the "
+"Savitzky-Galov filter. The moving average simply works iterating through the "
+"data set, and replacing each point by the average of the last few data "
+"points that were encountered, this way sharp outliers are ignored but "
+"details may be lost. Sudden actual changes in the data may also be detected "
+"later when a smoothening has been applied. Another way to smoothen the data "
+"is the Savitzky-Galov. The difference with the moving average, is that not a "
+"simple average is used for the last data points, but instead a polynomial "
+"function is fitted between the data points. This makes it possible to filter "
+"the underlaying signal still quite nicely out of very noisy data."
+msgstr ""
+"Pürüzsüzleştirme eyleminin iki farklı modu vardır: yuvarlanan ortalama veya "
+"Savitzky-Golay filtresi. Hareketli ortalama, veri kümesi üzerinde yineleme "
+"yaparak çalışır ve her noktayı karşılaşılan son birkaç veri noktasının "
+"ortalamasıyla değiştirir; bu şekilde keskin aykırı değerler göz ardı edilir "
+"ancak detaylar kaybolabilir. Verideki ani gerçek değişiklikler de bir "
+"pürüzsüzleştirme uygulandıktan sonra daha geç tespit edilebilir. Verileri "
+"pürüzsüzleştirmenin başka bir yolu da Savitzky-Golay'dır. Hareketli "
+"ortalamadan farkı, son veri noktaları için basit bir ortalama "
+"kullanılmaması, bunun yerine veri noktaları arasına polinom bir fonksiyonun "
+"uydurulmasıdır. Bu, temel sinyali çok gürültülü verilerden bile oldukça "
+"düzgün bir şekilde filtrelemeyi mümkün kılar."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:34
+msgid "Custom Transformations"
+msgstr "Özel Dönüşümler"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:35
+msgid ""
+"Another way to manipulate the data is by using custom transformations. This "
+"field transforms both X and Y coordinate piece by piece according to an "
+"equation of choice. For instance, to take the square of all Y-coordinates, "
+"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
+"on the x-data field. Note that the input coordinates are not case-sensitive."
+msgstr ""
+"Veriyi manipüle etmenin başka bir yolu da özel dönüşümleri kullanmaktır. Bu "
+"alan, hem X hem de Y koordinatını seçilen bir denkleme göre parça parça "
+"dönüştürür. Örneğin, tüm Y koordinatlarının karesini almak için, y-veri "
+"alanına basitçe <code>Y = Y²</code> ve x-veri alanına <code>X = X</code> "
+"olarak ayarlayın. Girdi koordinatlarının büyük/küçük harfe duyarlı "
+"olmadığını unutmayın."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/manipulate.page:42
+msgctxt "_"
+msgid ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+msgstr ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+
+#. (itstool) path: p/link
+#: C/legal.xml:3
+msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr "Creative Commons Atıf-Benzer Paylaşım 4.0 Uluslararası Lisansı"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Bu eser, <_:link-1/> altında lisanslanmıştır."
