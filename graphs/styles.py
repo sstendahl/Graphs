@@ -102,3 +102,7 @@ class StyleManager(Graphs.StyleManager):
         )
         graphs_params["name"] = new_name
         style_io.write(destination, style_params, graphs_params)
+
+        style_editor = self.get_application().create_style_editor()
+        style_editor.load(destination)
+        style_editor.present()
