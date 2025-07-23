@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-06-03 12:23+0000\n"
-"PO-Revision-Date: 2025-06-03 20:41+0300\n"
+"POT-Creation-Date: 2025-07-23 13:21+0000\n"
+"PO-Revision-Date: 2025-07-23 20:02+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19,7 +19,7 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/window.blp:214 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Графіки"
@@ -103,20 +103,20 @@ msgstr ""
 "Про відгуки, питання та загальні проблеми можна повідомляти за допомогою "
 "створення запису вади на сторінці GitLab."
 
-#: data/se.sjoerd.Graphs.desktop.in:12
+#: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualization;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualization;Fitting;xrdml;креслення;графік;креслення;наука;математика;"
-"рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані"
+";креслити;рисунок;візуалізація;апроксимація;"
 
-#: data/se.sjoerd.Graphs.desktop.in:17
+#: data/se.sjoerd.Graphs.desktop.in:16
 msgid "New Window"
 msgstr "Нове вікно"
 
-#: data/se.sjoerd.Graphs.desktop.in:21 data/ui/window.blp:457
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:457
 msgid "Style Editor"
 msgstr "Редактор стилю"
 
@@ -551,7 +551,7 @@ msgstr "Визначає інтервали між точками даних"
 #: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
 #: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
 #: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
-#: graphs/window.vala:381
+#: graphs/window.vala:385
 msgctxt "scale"
 msgid "Linear"
 msgstr "Лінійна"
@@ -559,7 +559,7 @@ msgstr "Лінійна"
 #: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
 #: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
 #: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
-#: graphs/window.vala:382
+#: graphs/window.vala:386
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Логарифмічна (з основою 10)"
@@ -567,7 +567,7 @@ msgstr "Логарифмічна (з основою 10)"
 #: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
 #: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
 #: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
-#: graphs/window.vala:383
+#: graphs/window.vala:387
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Логарифмічна (з основою 2)"
@@ -575,7 +575,7 @@ msgstr "Логарифмічна (з основою 2)"
 #: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
 #: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
 #: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
-#: graphs/window.vala:384
+#: graphs/window.vala:388
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радіани"
@@ -583,7 +583,7 @@ msgstr "Радіани"
 #: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
 #: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
 #: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
-#: graphs/window.vala:385
+#: graphs/window.vala:389
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Квадратний корінь"
@@ -651,7 +651,7 @@ msgid "Transparent Background"
 msgstr "Прозоре тло"
 
 #: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238
-#: graphs/style_editor.vala:82
+#: graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Стиль"
 
@@ -671,7 +671,7 @@ msgstr "Параметри рисунка"
 msgid "Labels"
 msgstr "Мітки"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:480
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:476
 msgid "Title"
 msgstr "Заголовок"
 
@@ -731,19 +731,19 @@ msgstr "Максимум на правій вісі y"
 msgid "Scaling"
 msgstr "Масштабування"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:411
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
 msgid "Bottom X Axis Scale"
 msgstr "Шкала нижньої вісі X"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:412
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
 msgid "Top X Axis Scale"
 msgstr "Шкала верхньої вісі x"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:417
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
 msgid "Left Y Axis Scale"
 msgstr "Шкала лівої вісі y"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:416
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
 msgid "Right Y Axis Scale"
 msgstr "Шкала правої вісі y"
 
@@ -1107,11 +1107,11 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Кількість точок, які слід використати при обчисленні рухомого середнього"
 
-#: data/ui/style-color-box.blp:20
+#: data/ui/style-color-box.blp:18
 msgid "Edit"
 msgstr "Змінити"
 
-#: data/ui/style-color-box.blp:35
+#: data/ui/style-color-box.blp:36
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -1480,7 +1480,7 @@ msgstr ""
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:340 data/ui/window.blp:386 graphs/window.vala:371
+#: data/ui/window.blp:340 data/ui/window.blp:386 graphs/window.vala:375
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -1765,17 +1765,13 @@ msgstr "Сума R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:96
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
+#: graphs/data.py:97
+msgid "system preferred style"
+msgstr "пріоритетний стиль системи"
 
-#: graphs/data.py:101
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
+#: graphs/data.py:102
+msgid "loading system preferred"
+msgstr "завантаження пріоритетного для системи"
 
 #: graphs/data.py:490
 msgid "Failed to load project"
@@ -1811,7 +1807,7 @@ msgstr "Максимум на вісі x"
 msgid "Y Axis Maximum"
 msgstr "Максимум на вісі y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:413
+#: graphs/figure_settings.vala:176 graphs/window.vala:417
 msgid "X Axis Scale"
 msgstr "Шкала вісі X"
 
@@ -1819,7 +1815,7 @@ msgstr "Шкала вісі X"
 msgid "X Axis Label"
 msgstr "Мітка вісі x"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:418
+#: graphs/figure_settings.vala:180 graphs/window.vala:422
 msgid "Y Axis Scale"
 msgstr "Шкала вісі y"
 
@@ -1867,13 +1863,11 @@ msgstr "У підсвіченій області даних не знайден�
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:441
-#, python-brace-format
-msgid ""
-"The operation on {item.props.name} did not result in a plottable equation"
-msgstr ""
-"Дія над {item.props.name} не призвела до створення придатного до побудови "
-"рівняння"
+#: graphs/operations.py:442
+#| msgid ""
+#| "The operation on {item.props.name} did not result in a plottable equation"
+msgid " did not result in a plottable equation"
+msgstr " не призвела до створення придатного до побудови рівняння"
 
 #: graphs/operations.py:450
 msgid "Operation not supported for equations."
@@ -1953,27 +1947,26 @@ msgstr "Збережений проєкт"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/style_editor.py:448
+#: graphs/style_editor.py:444
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor.py:481 graphs/style_io.py:181
+#: graphs/style_editor.py:477 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor.py:482 graphs/style_io.py:182
+#: graphs/style_editor.py:478 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Мітка Y"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor.vala:37
+#: graphs/style_editor.vala:38
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
-#: graphs/style_editor.vala:201
+#: graphs/style_editor.vala:198
 #, c-format
-#| msgid "Colors"
 msgid "Color %d"
 msgstr "Колір %d"
 
@@ -2024,32 +2017,42 @@ msgstr "усі файли"
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:172
+#: graphs/window.vala:156
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:188
+#: graphs/window.vala:192
 msgid "Untitled Project"
 msgstr "Проєкт без назви"
 
-#: graphs/window.vala:189
+#: graphs/window.vala:193
 msgid "Draft"
 msgstr "Чернетка"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:197
+#: graphs/window.vala:201
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
-#: graphs/window.vala:361
+#: graphs/window.vala:365
 msgid "Open Location"
 msgstr "Відкрити адресу"
 
-#: graphs/window.vala:386
+#: graphs/window.vala:390
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
+
+#, python-brace-format
+#~ msgid "Could not parse {stylename}, loading system preferred style"
+#~ msgstr ""
+#~ "Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
+
+#, python-brace-format
+#~ msgid "Plot style {stylename} does not exist loading system preferred"
+#~ msgstr ""
+#~ "Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
 
 #, python-brace-format
 #~ msgid "Color {number}"
