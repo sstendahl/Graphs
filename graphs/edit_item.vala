@@ -3,6 +3,40 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-item.ui")]
+    public class EditItemItemBox : Box {
+
+        [GtkChild]
+        public unowned Adw.EntryRow name_entry { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow xposition { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow yposition { get; }
+
+        public EditItemItemBox (Item item) {
+            item.bind_property (
+                "name",
+                name_entry,
+                "text",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "xposition",
+                xposition,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "yposition",
+                yposition,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+        }
+    }
+
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-data.ui")]
     public class EditItemDataItemBox : Box {
 

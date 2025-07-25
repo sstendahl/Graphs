@@ -46,9 +46,6 @@ namespace Graphs {
          */
         public void setup_interactions (bool is_data_item) {
             var application = window.application as Application;
-            this.activated.connect (() => {
-                application.python_helper.create_edit_item_dialog (window, item);
-            });
 
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
