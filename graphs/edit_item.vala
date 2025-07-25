@@ -3,7 +3,41 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/base.ui")]
+    public class EditItemBaseBox : Box {
+
+        [GtkChild]
+        public unowned Adw.EntryRow name_entry { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow xposition { get; }
+
+        [GtkChild]
+        public unowned Adw.ComboRow yposition { get; }
+
+        public EditItemBaseBox (Item item) {
+            item.bind_property (
+                "name",
+                name_entry,
+                "text",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "xposition",
+                xposition,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "yposition",
+                yposition,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+        }
+    }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/data.ui")]
     public class EditItemDataItemBox : Box {
 
         [GtkChild]
@@ -29,7 +63,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-equation.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation.ui")]
     public class EditItemEquationItemBox : Box {
 
         [GtkChild]
@@ -45,7 +79,7 @@ namespace Graphs {
         public unowned Scale linewidth { get; }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-generated-data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/generated-data.ui")]
     public class EditItemGeneratedDataItemBox : Box {
 
         [GtkChild]

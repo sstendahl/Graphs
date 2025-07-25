@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import (
     curve_fitting,
@@ -16,7 +16,6 @@ from graphs.window import PythonWindow
 
 _REQUESTS = (
     "python-method",
-    "edit-item-dialog",
     "curve-fitting_dialog",
     "evaluate-string",
     "import-from-files",
@@ -27,6 +26,7 @@ _REQUESTS = (
     "create-style-editor",
     "create-window",
     "perform-operation",
+    "create-item-settings",
 )
 
 
@@ -46,14 +46,6 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_python_method_request(self, obj, method: str) -> None:
         getattr(obj, method)()
-
-    @staticmethod
-    def _on_edit_item_dialog_request(
-        self,
-        window: Graphs.Window,
-        item: Graphs.Item,
-    ) -> None:
-        return edit_item.EditItemDialog(window, item)
 
     @staticmethod
     def _on_curve_fitting_dialog_request(
@@ -147,3 +139,11 @@ class PythonHelper(Graphs.PythonHelper):
         name: str,
     ) -> None:
         operations.perform_operation(window, name)
+
+    @staticmethod
+    def _on_create_item_settings_request(
+        self,
+        edit_item_box: Gtk.Box,
+        item: Graphs.Item,
+    ) -> Gtk.Widget:
+        return edit_item.create_item_settings(edit_item_box, item)

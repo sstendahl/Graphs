@@ -11,11 +11,6 @@ namespace Graphs {
             python_method_request.emit (object, method);
         }
 
-        protected signal Widget edit_item_dialog_request (Window window, Item item);
-        public Widget create_edit_item_dialog (Window window, Item item) {
-            return edit_item_dialog_request.emit (window, item);
-        }
-
         protected signal CurveFittingDialog curve_fitting_dialog_request (Window window, Item item);
         public CurveFittingDialog create_curve_fitting_dialog (Window window, Item item) {
             return curve_fitting_dialog_request.emit (window, item);
@@ -69,6 +64,11 @@ namespace Graphs {
         protected signal void perform_operation_request (Window window, string name);
         public void perform_operation (Window window, string name) {
             perform_operation_request.emit (window, name);
+        }
+
+        protected signal void create_item_settings_request (Box box, Item item);
+        public void create_item_settings (Box box, Item item) {
+            create_item_settings_request.emit (box, item);
         }
     }
 }
