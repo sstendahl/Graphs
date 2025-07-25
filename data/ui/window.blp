@@ -318,27 +318,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
           };
         }
 
-        Adw.NavigationPage edit_page {
-          title: _("Edit Item");
-          child: Adw.ToolbarView {
-            [top]
-            Adw.HeaderBar {}
-
-            ScrolledWindow {
-              propagate-natural-height: true;
-              child: Viewport {
-                Box edit_item_box {
-                  orientation: vertical;
-                  spacing: 12;
-                  margin-top: 12;
-                  margin-bottom: 12;
-                  margin-start: 12;
-                  margin-end: 12;
-                }
-              };
-            }
-          };
-        }
+        $GraphsEditItemPage edit_page {}
       };
 
       content: Adw.ToolbarView content_view {

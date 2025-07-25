@@ -10,12 +10,12 @@ configure_file(
 
 python.install_sources(
   files(
+    'sidebar/edit_item.py',
     'application.py',
     'artist.py',
     'canvas.py',
     'curve_fitting.py',
     'data.py',
-    'edit_item.py',
     'export_items.py',
     'file_import.py',
     'file_io.py',
@@ -33,7 +33,8 @@ python.install_sources(
     'utilities.py',
     'window.py',
   ),
-  subdir: meson.project_name(),
+  preserve_path: true,
+         subdir: meson.project_name(),
 )
 
 configure_file(
@@ -45,13 +46,13 @@ config_dep = valac.find_library('config',
 )
 graphs_lib = shared_library('graphs',
   files(
+    'sidebar/edit_item.vala',
     'actions.vala',
     'add_equation.vala',
     'application.vala',
     'canvas.vala',
     'curve_fitting.vala',
     'data.vala',
-    'edit_item.vala',
     'export_figure.vala',
     'export_items.vala',
     'figure_settings.vala',

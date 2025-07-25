@@ -62,16 +62,14 @@ namespace Graphs {
         protected unowned Adw.ToolbarView content_view { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationView sidebar_navigation_view { get; }
+        private unowned Adw.NavigationView sidebar_navigation_view { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationPage sidebar_page { get; }
+        private unowned Adw.NavigationPage sidebar_page { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationPage edit_page { get; }
+        private unowned EditItemPage edit_page { get; }
 
-        [GtkChild]
-        protected unowned Box edit_item_box { get; }
 
         public Data data { get; construct set; }
         protected CssProvider css_provider { get; private set; }
@@ -350,16 +348,11 @@ namespace Graphs {
         }
 
         public void edit_item (Item item) {
-            Widget widget;
-            while ((widget = edit_item_box.get_last_child ()) != null) {
-                edit_item_box.remove (widget);
-            }
-
-            var base_settings = new EditItemBaseBox (item);
-            edit_item_box.append (base_settings);
+            edit_page.clear();
+            edit_page.append (new EditItemBaseBox (item));
 
             var application = application as Application;
-            application.python_helper.create_item_settings (edit_item_box, item);
+            application.python_helper.create_item_settings (edit_page, item);
 
             sidebar_navigation_view.push (edit_page);
         }

@@ -4,12 +4,12 @@ from gi.repository import Gio, Graphs, Gtk
 
 from graphs import (
     curve_fitting,
-    edit_item,
     export_items,
     file_import,
     operations,
     utilities,
 )
+from graphs.sidebar import edit_item
 from graphs.item import EquationItem, GeneratedDataItem
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
