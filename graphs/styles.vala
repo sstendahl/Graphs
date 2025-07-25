@@ -9,6 +9,14 @@ namespace Graphs {
         return strcmp (a.name.down (), b.name.down ());
     }
 
+    public string filename_from_stylename (string name) {
+        var filename = name.replace(" ", "-");
+        filename = filename.replace("(", "");
+        filename = filename.replace(")", "");
+        filename = filename.down();
+        return filename + ".mplstyle";
+    }
+
     /**
      * Style manager
      */
@@ -20,7 +28,7 @@ namespace Graphs {
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
 
-        protected signal void create_style_request (Style template, string name);
+        protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
 
         construct {
@@ -152,12 +160,17 @@ namespace Graphs {
             return stylenames;
         }
 
-        public void create_style (uint template, string name) {
+        public File create_style (uint template, string name) {
             string new_name = Tools.get_duplicate_string (
                 name, list_stylenames ()
             );
             var style = style_model.get_item (template) as Style;
-            create_style_request.emit (style, new_name);
+            var filename = filename_from_stylename (new_name);
+            try {
+                var destination = style_dir.get_child_for_display_name (filename);
+                create_style_request.emit (style, destination, new_name);
+                return destination;
+            } catch { assert_not_reached (); }
         }
 
         private int find_style_for_file (File file, out Style? style) {
@@ -286,8 +299,12 @@ namespace Graphs {
         [GtkCallback]
         private void on_accept () {
             uint template = style_templates.get_selected () + 1;
-            style_manager.create_style (template, new_style_name.get_text ());
+            var file = style_manager.create_style (template, new_style_name.get_text ());
             close ();
+
+            var style_editor = style_manager.application.create_style_editor ();
+            style_editor.load (file);
+            style_editor.present ();
         }
     }
 }
