@@ -47,9 +47,6 @@ namespace Graphs {
         private unowned Adw.WindowTitle content_title { get; }
 
         [GtkChild]
-        private unowned Adw.WindowTitle sidebar_title { get; }
-
-        [GtkChild]
         private unowned Overlay drag_overlay { get; }
 
         [GtkChild]
@@ -63,6 +60,18 @@ namespace Graphs {
 
         [GtkChild]
         protected unowned Adw.ToolbarView content_view { get; }
+
+        [GtkChild]
+        protected unowned Adw.NavigationView sidebar_navigation_view { get; }
+
+        [GtkChild]
+        protected unowned Adw.NavigationPage sidebar_page { get; }
+
+        [GtkChild]
+        protected unowned Adw.NavigationPage edit_page { get; }
+
+        [GtkChild]
+        protected unowned Box edit_item_box { get; }
 
         public Data data { get; construct set; }
         protected CssProvider css_provider { get; private set; }
@@ -151,9 +160,13 @@ namespace Graphs {
             var view_menu = view_menu_button.get_menu_model () as Menu;
             view_menu.append_section (null, _scales_section);
 
+            sidebar_navigation_view.popped.connect (() => {
+                data.add_history_state ();
+            });
+
 #if DEBUG
             add_css_class ("devel");
-            sidebar_title.set_title (_("Graphs (Development)"));
+            sidebar_page.set_title (_("Graphs (Development)"));
 #endif
         }
 
@@ -329,7 +342,26 @@ namespace Graphs {
             drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
             drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
 
+            row.activated.connect (() => {
+                edit_item (item);
+            });
+
             item_list.append (row);
+        }
+
+        public void edit_item (Item item) {
+            Widget widget;
+            while ((widget = edit_item_box.get_last_child ()) != null) {
+                edit_item_box.remove (widget);
+            }
+
+            var base_settings = new EditItemBaseBox (item);
+            edit_item_box.append (base_settings);
+
+            var application = application as Application;
+            application.python_helper.create_item_settings (edit_item_box, item);
+
+            sidebar_navigation_view.push (edit_page);
         }
 
         /**

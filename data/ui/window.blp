@@ -205,115 +205,138 @@ template $GraphsWindow: Adw.ApplicationWindow {
       enable-show-gesture: bind overlay_split_view.collapsed;
       enable-hide-gesture: bind overlay_split_view.collapsed;
 
-      sidebar: Adw.ToolbarView {
+      sidebar: Adw.NavigationView sidebar_navigation_view {
         width-request: 350;
 
-        [top]
-        Adw.HeaderBar sidebar_headerbar {
-          title-widget: Adw.WindowTitle sidebar_title {
-            title: _("Graphs");
-          };
+        Adw.NavigationPage sidebar_page {
+          title: _("Graphs");
+          child: Adw.ToolbarView {
+            [top]
+            Adw.HeaderBar {
+              [start]
+              MenuButton add_button {
+                icon-name: "list-add-symbolic";
+                tooltip-text: _("Add New Data");
+                always-show-arrow: true;
+                menu-model: add_data_menu;
+              }
 
-          [start]
-          MenuButton add_button {
-            icon-name: "list-add-symbolic";
-            tooltip-text: _("Add New Data");
-            always-show-arrow: true;
-            menu-model: add_data_menu;
-          }
+              [end]
+              MenuButton {
+                icon-name: "open-menu-symbolic";
+                menu-model: primary_menu;
+                tooltip-text: _("Open Application Menu");
+                primary: true;
+              }
+            }
 
-          [end]
-          MenuButton {
-            icon-name: "open-menu-symbolic";
-            menu-model: primary_menu;
-            tooltip-text: _("Open Application Menu");
-            primary: true;
-          }
-        }
+            ScrolledWindow {
+              child: Viewport {
+                child: Box {
+                  orientation: vertical;
 
-        ScrolledWindow {
-          child: Viewport {
-            child: Box {
-              orientation: vertical;
-
-              Stack itemlist_stack {
-                StackPage {
-                  child: Adw.StatusPage {
-                    icon-name: "list-compact";
-                    title: _("No Data");
-                    description: _("Add data from a file or manually as an equation");
-
-                    styles [
-                      "compact",
-                    ]
-                  };
-                }
-
-                StackPage {
-                  child: ScrolledWindow scrollwindow_itemlist {
-                    vexpand: true;
-                    hexpand: true;
-                    hscrollbar-policy: never;
-
-                    Viewport {
-                      ListBox item_list {
-                        margin-bottom: 12;
-                        margin-top: 6;
-                        margin-start: 12;
-                        margin-end: 12;
-                        vexpand: false;
-                        hexpand: true;
-                        valign: start;
-                        selection-mode: none;
+                  Stack itemlist_stack {
+                    StackPage {
+                      child: Adw.StatusPage {
+                        icon-name: "list-compact";
+                        title: _("No Data");
+                        description: _("Add data from a file or manually as an equation");
 
                         styles [
-                          "boxed-list",
+                          "compact",
                         ]
-                      }
+                      };
                     }
-                  };
+
+                    StackPage {
+                      child: ScrolledWindow scrollwindow_itemlist {
+                        vexpand: true;
+                        hexpand: true;
+                        hscrollbar-policy: never;
+
+                        Viewport {
+                          ListBox item_list {
+                            margin-bottom: 12;
+                            margin-top: 6;
+                            margin-start: 12;
+                            margin-end: 12;
+                            vexpand: false;
+                            hexpand: true;
+                            valign: start;
+                            selection-mode: none;
+
+                            styles [
+                              "boxed-list",
+                            ]
+                          }
+                        }
+                      };
+                    }
+                  }
+
+                  Separator {
+                    orientation: horizontal;
+                  }
+
+                  Box {
+                    spacing: 10;
+                    margin-top: 12;
+                    margin-bottom: 12;
+                    margin-start: 12;
+                    margin-end: 12;
+
+                    ToggleButton pan_button {
+                      icon-name: "move-tool-symbolic";
+                      action-name: "win.mode-pan";
+                      hexpand: true;
+                      tooltip-text: _("Pan Mode. Click and drag to pan");
+                    }
+
+                    ToggleButton zoom_button {
+                      icon-name: "loupe-symbolic";
+                      action-name: "win.mode-zoom";
+                      hexpand: true;
+                      tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
+                    }
+
+                    ToggleButton select_button {
+                      icon-name: "edit-select-all-symbolic";
+                      action-name: "win.mode-select";
+                      hexpand: true;
+                      tooltip-text: _("Select Mode. Click and drag to make a selection of data");
+                    }
+                  }
+
+                  Separator {
+                    orientation: horizontal;
+                  }
+
+                  Adw.Bin operations_bin {}
+                };
+              };
+            }
+          };
+        }
+
+        Adw.NavigationPage edit_page {
+          title: _("Edit Item");
+          child: Adw.ToolbarView {
+            [top]
+            Adw.HeaderBar {}
+
+            ScrolledWindow {
+              propagate-natural-height: true;
+              child: Viewport {
+                Box edit_item_box {
+                  orientation: vertical;
+                  spacing: 12;
+                  margin-top: 12;
+                  margin-bottom: 12;
+                  margin-start: 12;
+                  margin-end: 12;
                 }
-              }
-
-              Separator {
-                orientation: horizontal;
-              }
-
-              Box {
-                spacing: 10;
-                margin-top: 12;
-                margin-bottom: 12;
-                margin-start: 12;
-                margin-end: 12;
-
-                ToggleButton pan_button {
-                  icon-name: "move-tool-symbolic";
-                  action-name: "win.mode-pan";
-                  hexpand: true;
-                  tooltip-text: _("Pan Mode. Click and drag to pan");
-                }
-
-                ToggleButton zoom_button {
-                  icon-name: "loupe-symbolic";
-                  action-name: "win.mode-zoom";
-                  hexpand: true;
-                  tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
-                }
-
-                ToggleButton select_button {
-                  icon-name: "edit-select-all-symbolic";
-                  action-name: "win.mode-select";
-                  hexpand: true;
-                  tooltip-text: _("Select Mode. Click and drag to make a selection of data");
-                }
-              }
-
-              Separator {
-                orientation: horizontal;
-              }
-
-              Adw.Bin operations_bin {}
-            };
+              };
+            }
           };
         }
       };

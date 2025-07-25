@@ -1,0 +1,35 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemBaseBox: Box {
+  Adw.PreferencesGroup {
+    title: _("Name and Position");
+
+    Adw.EntryRow name_entry {
+      title: _("Name");
+      max-width-chars: 25;
+    }
+
+    Adw.ComboRow xposition {
+      title: _("X-Axis Position");
+
+      model: StringList {
+        strings [
+          _("Bottom"),
+          _("Top"),
+        ]
+      };
+    }
+
+    Adw.ComboRow yposition {
+      title: _("Y-Axis Position");
+
+      model: StringList {
+        strings [
+          _("Left"),
+          _("Right"),
+        ]
+      };
+    }
+  }
+}
