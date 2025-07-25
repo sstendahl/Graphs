@@ -10,11 +10,6 @@ from graphs import style_io
 from matplotlib import RcParams
 
 
-def _generate_filename(name: str) -> str:
-    name = name.replace("(", "").replace(")", "")
-    return f"{name.lower().replace(' ', '-')}.mplstyle"
-
-
 def _is_style_bright(params: RcParams):
     return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
 
@@ -79,7 +74,7 @@ class StyleManager(Graphs.StyleManager):
         system_style = self._system_style_name
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"
-        filename = _generate_filename(system_style)
+        filename = Graphs.filename_from_stylename(system_style)
         self._system_style_params = style_io.parse(
             Gio.File.new_for_uri(
                 "resource:///se/sjoerd/Graphs/styles/" + filename,
@@ -90,19 +85,13 @@ class StyleManager(Graphs.StyleManager):
     def _on_create_style_request(
         self,
         template: Graphs.Style,
+        destination: Gio.File,
         new_name: str,
     ) -> None:
         """Copy a style."""
-        destination = self.props.style_dir.get_child_for_display_name(
-            _generate_filename(new_name),
-        )
         style_params, graphs_params = style_io.parse(
             template.get_file(),
             self._system_style_params,
         )
         graphs_params["name"] = new_name
         style_io.write(destination, style_params, graphs_params)
-
-        style_editor = self.get_application().create_style_editor()
-        style_editor.load(destination)
-        style_editor.present()
