@@ -3,8 +3,8 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-item.ui")]
-    public class EditItemItemBox : Box {
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/base.ui")]
+    public class EditItemBaseBox : Box {
 
         [GtkChild]
         public unowned Adw.EntryRow name_entry { get; }
@@ -15,7 +15,7 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.ComboRow yposition { get; }
 
-        public EditItemItemBox (Item item) {
+        public EditItemBaseBox (Item item) {
             item.bind_property (
                 "name",
                 name_entry,
@@ -37,7 +37,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/data.ui")]
     public class EditItemDataItemBox : Box {
 
         [GtkChild]
@@ -63,7 +63,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-equation.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation.ui")]
     public class EditItemEquationItemBox : Box {
 
         [GtkChild]
@@ -79,7 +79,7 @@ namespace Graphs {
         public unowned Scale linewidth { get; }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item-generated-data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/generated-data.ui")]
     public class EditItemGeneratedDataItemBox : Box {
 
         [GtkChild]

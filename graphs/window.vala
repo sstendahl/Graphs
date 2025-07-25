@@ -355,7 +355,7 @@ namespace Graphs {
                 edit_item_box.remove (widget);
             }
 
-            var base_settings = new EditItemItemBox (item);
+            var base_settings = new EditItemBaseBox (item);
             edit_item_box.append (base_settings);
 
             var application = application as Application;
