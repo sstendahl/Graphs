@@ -10,10 +10,10 @@ namespace Graphs {
     }
 
     public string filename_from_stylename (string name) {
-        var filename = name.replace(" ", "-");
-        filename = filename.replace("(", "");
-        filename = filename.replace(")", "");
-        filename = filename.down();
+        var filename = name.replace (" ", "-");
+        filename = filename.replace ("(", "");
+        filename = filename.replace (")", "");
+        filename = filename.down ();
         return filename + ".mplstyle";
     }
 
