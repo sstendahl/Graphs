@@ -6,9 +6,24 @@ namespace Graphs {
     public class PythonHelper : Object {
         public Application application { protected get; construct set; }
 
-        protected signal void python_method_request (Object object, string method);
-        public void run_method (Object object, string method) {
-            python_method_request.emit (object, method);
+        protected signal Item add_equation_request (Window window, string name);
+        public Item add_equation (Window window, string name) {
+            return add_equation_request.emit (window, name);
+        }
+
+        protected signal void create_item_settings_request (Box box, Item item);
+        public void create_item_settings (Box box, Item item) {
+            create_item_settings_request.emit (box, item);
+        }
+
+        protected signal StyleEditor create_style_editor_request ();
+        public StyleEditor create_style_editor () {
+            return create_style_editor_request.emit ();
+        }
+
+        protected signal Window create_window_request ();
+        public Window create_window () {
+            return create_window_request ();
         }
 
         protected signal CurveFittingDialog curve_fitting_dialog_request (Window window, Item item);
@@ -26,24 +41,9 @@ namespace Graphs {
             } else return null;
         }
 
-        protected signal bool validate_equation_request (string input);
-        public bool validate_equation (string input) {
-            return validate_equation_request.emit (input);
-        }
-
-        protected signal void import_from_files_request (Window window, File[] files);
-        public void import_from_files (Window window, File[] files) {
-            import_from_files_request.emit (window, files);
-        }
-
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public void export_items (Window window, string mode, File file, Item[] items) {
             export_items_request.emit (window, mode, file, items);
-        }
-
-        protected signal Item add_equation_request (Window window, string name);
-        public Item add_equation (Window window, string name) {
-            return add_equation_request.emit (window, name);
         }
 
         protected signal Item generate_data_request (Window window, string name);
@@ -51,14 +51,9 @@ namespace Graphs {
             return generate_data_request.emit (window, name);
         }
 
-        protected signal StyleEditor create_style_editor_request ();
-        public StyleEditor create_style_editor () {
-            return create_style_editor_request.emit ();
-        }
-
-        protected signal Window create_window_request ();
-        public Window create_window () {
-            return create_window_request ();
+        protected signal void import_from_files_request (Window window, File[] files);
+        public void import_from_files (Window window, File[] files) {
+            import_from_files_request.emit (window, files);
         }
 
         protected signal void perform_operation_request (Window window, string name);
@@ -66,9 +61,14 @@ namespace Graphs {
             perform_operation_request.emit (window, name);
         }
 
-        protected signal void create_item_settings_request (Box box, Item item);
-        public void create_item_settings (Box box, Item item) {
-            create_item_settings_request.emit (box, item);
+        protected signal void python_method_request (Object object, string method);
+        public void run_method (Object object, string method) {
+            python_method_request.emit (object, method);
+        }
+
+        protected signal bool validate_equation_request (string input);
+        public bool validate_equation (string input) {
+            return validate_equation_request.emit (input);
         }
     }
 }
