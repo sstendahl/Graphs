@@ -321,7 +321,7 @@ namespace Graphs {
         }
 
         public void edit_item (Item item) {
-            edit_page.clear();
+            edit_page.clear ();
             edit_page.append (new EditItemBaseBox (item));
 
             var application = application as Application;

@@ -9,8 +9,8 @@ from graphs import (
     operations,
     utilities,
 )
-from graphs.sidebar import edit_item
 from graphs.item import EquationItem, GeneratedDataItem
+from graphs.sidebar import edit_item
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
