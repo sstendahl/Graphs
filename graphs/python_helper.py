@@ -15,18 +15,18 @@ from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
 _REQUESTS = (
-    "python-method",
-    "curve-fitting_dialog",
-    "evaluate-string",
-    "import-from-files",
-    "export-items",
     "add-equation",
-    "generate-data",
-    "validate-equation",
+    "create-item-settings",
     "create-style-editor",
     "create-window",
+    "curve-fitting-dialog",
+    "evaluate-string",
+    "export-items",
+    "generate-data",
+    "import-from-files",
     "perform-operation",
-    "create-item-settings",
+    "python-method",
+    "validate-equation",
 )
 
 
@@ -44,8 +44,36 @@ class PythonHelper(Graphs.PythonHelper):
             )
 
     @staticmethod
-    def _on_python_method_request(self, obj, method: str) -> None:
-        getattr(obj, method)()
+    def _on_add_equation_request(
+        self,
+        window: Graphs.Window,
+        name: str,
+    ) -> EquationItem:
+        settings = self.props.application.get_settings_child("add-equation")
+        equation = settings.get_string("equation")
+        if name == "":
+            name = f"Y = {settings.get_string('equation')}"
+        return EquationItem.new(
+            window.get_data().get_selected_style_params(),
+            equation,
+            name=name,
+        )
+
+    @staticmethod
+    def _on_create_item_settings_request(
+        self,
+        edit_item_box: Gtk.Box,
+        item: Graphs.Item,
+    ) -> Gtk.Widget:
+        return edit_item.create_item_settings(edit_item_box, item)
+
+    @staticmethod
+    def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
+        return PythonStyleEditor(self.props.application)
+
+    @staticmethod
+    def _on_create_window_request(self) -> Graphs.Window:
+        return PythonWindow(self.props.application)
 
     @staticmethod
     def _on_curve_fitting_dialog_request(
@@ -64,19 +92,6 @@ class PythonHelper(Graphs.PythonHelper):
         return True
 
     @staticmethod
-    def _on_validate_equation_request(self, equation: str) -> None:
-        return utilities.validate_equation(equation)
-
-    @staticmethod
-    def _on_import_from_files_request(
-        self,
-        window: Graphs.Window,
-        files: list[Gio.File],
-        _n_files: int,
-    ) -> None:
-        return file_import.import_from_files(window, files)
-
-    @staticmethod
     def _on_export_items_request(
         self,
         window: Graphs.Window,
@@ -87,22 +102,6 @@ class PythonHelper(Graphs.PythonHelper):
     ) -> None:
         figure_settings = window.get_data().get_figure_settings()
         return export_items.export_items(mode, file, items, figure_settings)
-
-    @staticmethod
-    def _on_add_equation_request(
-        self,
-        window: Graphs.Window,
-        name: str,
-    ) -> EquationItem:
-        settings = self.props.application.get_settings_child("add-equation")
-        equation = settings.get_string("equation")
-        if name == "":
-            name = f"Y = {settings.get_string('equation')}"
-        return EquationItem.new(
-            window.get_data().get_selected_style_params(),
-            equation,
-            name=name,
-        )
 
     @staticmethod
     def _on_generate_data_request(
@@ -125,12 +124,13 @@ class PythonHelper(Graphs.PythonHelper):
         )
 
     @staticmethod
-    def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
-        return PythonStyleEditor(self.props.application)
-
-    @staticmethod
-    def _on_create_window_request(self) -> Graphs.Window:
-        return PythonWindow(self.props.application)
+    def _on_import_from_files_request(
+        self,
+        window: Graphs.Window,
+        files: list[Gio.File],
+        _n_files: int,
+    ) -> None:
+        return file_import.import_from_files(window, files)
 
     @staticmethod
     def _on_perform_operation_request(
@@ -141,9 +141,9 @@ class PythonHelper(Graphs.PythonHelper):
         operations.perform_operation(window, name)
 
     @staticmethod
-    def _on_create_item_settings_request(
-        self,
-        edit_item_box: Gtk.Box,
-        item: Graphs.Item,
-    ) -> Gtk.Widget:
-        return edit_item.create_item_settings(edit_item_box, item)
+    def _on_python_method_request(self, obj, method: str) -> None:
+        getattr(obj, method)()
+
+    @staticmethod
+    def _on_validate_equation_request(self, equation: str) -> None:
+        return utilities.validate_equation(equation)
