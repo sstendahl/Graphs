@@ -1,0 +1,15 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsImportFileRow: Adw.ActionRow {
+  title-lines: 1;
+  activatable: true;
+
+  [suffix]
+  Label mode {}
+
+  [suffix]
+  Image {
+    icon-name: "go-next-symbolic";
+  }
+}

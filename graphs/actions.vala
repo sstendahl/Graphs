@@ -271,7 +271,7 @@ namespace Graphs {
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                             files += files_list_model.get_item (i) as File;
                         }
-                        application.python_helper.import_from_files (window, files);
+                        application.data_importer.import_from_files (window, files);
                     } catch {}
                 });
             });

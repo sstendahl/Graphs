@@ -1,0 +1,108 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsImportDialog: Adw.Dialog {
+  content-width: 450;
+  content-height: 350;
+  focus-widget: confirm_button;
+
+  child: Adw.NavigationView navigation_view {
+
+    Adw.NavigationPage file_list_page {
+      title: _("Import Parameters");
+
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-end-title-buttons: false;
+
+          [start]
+          Button {
+            label: _("Cancel");
+            action-name: "window.close";
+          }
+
+          [end]
+          Button confirm_button {
+            label: _("Import");
+            clicked => $on_accept();
+
+            styles [
+              "suggested-action",
+            ]
+          }
+        }
+
+        content: ScrolledWindow {
+          propagate-natural-height: true;
+
+          child: Viewport {
+            child: Adw.Clamp {
+              margin-start: 12;
+              margin-end: 12;
+              margin-top: 12;
+              margin-bottom: 12;
+
+              ListBox file_list {
+                selection-mode: none;
+                vexpand: false;
+
+                styles [
+                  "boxed-list",
+                ]
+              }
+            };
+          };
+        };
+      };
+    }
+
+    Adw.NavigationPage file_settings_page {
+      title: "";
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          show-end-title-buttons: false;
+        }
+
+        content: ScrolledWindow {
+          propagate-natural-height: true;
+
+          child: Viewport {
+            child: Adw.Clamp {
+              margin-start: 12;
+              margin-end: 12;
+              margin-top: 12;
+              margin-bottom: 12;
+
+              Box {
+                orientation: vertical;
+                spacing: 10;
+
+                Adw.PreferencesGroup {
+                  Adw.ComboRow mode {
+                    title: _("Import Mode");
+                    model: StringList {
+                      strings [
+                        C_("import-mode", "Project"),
+                        C_("import-mode", "Columns"),
+                        C_("import-mode", "xrdml"),
+                        C_("import-mode", "xry"),
+                      ]
+                    };
+                    notify::selected => $on_mode();
+                  }
+                }
+
+                Box file_settings_box {
+                  orientation: vertical;
+                  spacing: 10;
+                }
+              }
+            };
+          };
+        };
+      };
+    }
+  };
+}

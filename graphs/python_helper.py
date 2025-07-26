@@ -6,7 +6,6 @@ from graphs import (
     curve_fitting,
     edit_item,
     export_items,
-    file_import,
     operations,
     utilities,
 )
@@ -23,7 +22,6 @@ _REQUESTS = (
     "evaluate-string",
     "export-items",
     "generate-data",
-    "import-from-files",
     "perform-operation",
     "python-method",
     "validate-equation",
@@ -122,15 +120,6 @@ class PythonHelper(Graphs.PythonHelper):
             settings.get_int("scale"),
             name=name,
         )
-
-    @staticmethod
-    def _on_import_from_files_request(
-        self,
-        window: Graphs.Window,
-        files: list[Gio.File],
-        _n_files: int,
-    ) -> None:
-        return file_import.import_from_files(window, files)
 
     @staticmethod
     def _on_perform_operation_request(

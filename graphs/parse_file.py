@@ -13,15 +13,15 @@ from graphs.misc import ParseError
 import numpy
 
 
-def import_from_project(_params, _style, file: Gio.File) -> misc.ItemList:
+def import_from_project(params, _style) -> misc.ItemList:
     """Import data from project file."""
-    project_dict = project.read_project_file(file)
+    project_dict = project.read_project_file(params.get_file())
     return list(map(item.new_from_dict, project_dict["data"]))
 
 
-def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
+def import_from_xrdml(params, style) -> misc.ItemList:
     """Import data from xrdml file."""
-    content = file_io.parse_xml(file)
+    content = file_io.parse_xml(params.get_file())
     intensities = content.getElementsByTagName("intensities")
     counting_time = content.getElementsByTagName("commonCountingTime")
     counting_time = float(counting_time[0].firstChild.data)
@@ -51,16 +51,20 @@ def import_from_xrdml(_params, style, file: Gio.File) -> misc.ItemList:
             style,
             xdata,
             ydata,
-            name=Graphs.tools_get_filename(file),
+            name=Graphs.tools_get_filename(params.get_file()),
             xlabel=f"{scan_axis} ({unit})",
             ylabel=_("Intensity (cps)"),
         ),
     ]
 
 
-def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
+def import_from_xry(params, style) -> misc.ItemList:
     """Import data from .xry files used by Leybold X-ray apparatus."""
-    with gio_pyio.open(file, "rt", encoding="ISO-8859-1") as wrapper:
+    with gio_pyio.open(
+        params.get_file(),
+        "rt",
+        encoding="ISO-8859-1",
+    ) as wrapper:
 
         def skip(lines: int):
             for _count in range(lines):
@@ -77,7 +81,7 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
         info = wrapper.readline().strip().split()
         item_count = int(info[0])
 
-        name = Graphs.tools_get_filename(file)
+        name = Graphs.tools_get_filename(params.get_file())
         items = [
             item.DataItem.new(
                 style,
@@ -111,8 +115,9 @@ def import_from_xry(_params, style, file: Gio.File) -> misc.ItemList:
 _PH = "dVldZaXqENhuPLPw"
 
 
-def import_from_columns(params, style, file: Gio.File) -> misc.ItemList:
+def import_from_columns(params, style) -> misc.ItemList:
     """Import data from columns file."""
+    file = params.get_file()
     item_ = item.DataItem.new(style, name=Graphs.tools_get_filename(file))
     column_x = params.get_int("column-x")
     column_y = params.get_int("column-y")

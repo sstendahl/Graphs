@@ -51,11 +51,6 @@ namespace Graphs {
             return generate_data_request.emit (window, name);
         }
 
-        protected signal void import_from_files_request (Window window, File[] files);
-        public void import_from_files (Window window, File[] files) {
-            import_from_files_request.emit (window, files);
-        }
-
         protected signal void perform_operation_request (Window window, string name);
         public void perform_operation (Window window, string name) {
             perform_operation_request.emit (window, name);

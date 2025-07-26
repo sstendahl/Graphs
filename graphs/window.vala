@@ -148,7 +148,7 @@ namespace Graphs {
                     files[i] = file;
                     i++;
                 }
-                ((Application) application).python_helper.import_from_files (this, files);
+                ((Application) application).data_importer.import_from_files (this, files);
                 return true;
             });
             drag_overlay.add_controller (file_drop_target);
