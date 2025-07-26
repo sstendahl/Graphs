@@ -5,7 +5,6 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
   Adw.ComboRow delimiter {
     title: _("Delimiter");
     subtitle: _("Character sequence used to split values");
-    notify::selected => $on_delimiter();
 
     model: StringList {
       strings [

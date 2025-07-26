@@ -104,7 +104,7 @@ namespace Graphs {
         }
 
         public void set_string (string key, string val) {
-            set_value(key, new Variant.string (val));
+            set_value (key, new Variant.string (val));
         }
 
         public string get_string (string key) {
@@ -112,7 +112,7 @@ namespace Graphs {
         }
 
         public void set_int (string key, int val) {
-            set_value(key, new Variant.int32 (val));
+            set_value (key, new Variant.int32 (val));
         }
 
         public int get_int (string key) {
@@ -273,9 +273,11 @@ namespace Graphs {
         public unowned Adw.SpinRow skip_rows { get; }
 
         public ColumnsGroup (ImportSettings settings) {
-            delimiter.set_selected (ColumnsDelimiter.parse (settings.get_string("delimiter")));
+            delimiter.set_selected (ColumnsDelimiter.parse (settings.get_string ("delimiter")));
             delimiter.notify["selected"].connect (() => {
-                settings.set_string ("delimiter", ((ColumnsDelimiter) delimiter.get_selected ()).friendly_string ());
+                ColumnsDelimiter selected = delimiter.get_selected ();
+                settings.set_string ("delimiter", selected.friendly_string ());
+                custom_delimiter.set_sensitive (selected == ColumnsDelimiter.CUSTOM);
             });
 
             custom_delimiter.set_text (settings.get_string ("custom-delimiter"));
@@ -283,7 +285,7 @@ namespace Graphs {
                 settings.set_string ("custom-delimiter", custom_delimiter.get_text ());
             });
 
-            separator.set_selected (ColumnsSeparator.parse (settings.get_string("separator")));
+            separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
             separator.notify["selected"].connect (() => {
                 settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
             });
@@ -302,11 +304,6 @@ namespace Graphs {
             skip_rows.notify["value"].connect (() => {
                 settings.set_int ("skip-rows", (int) skip_rows.get_value ());
             });
-        }
-
-        [GtkCallback]
-        private void on_delimiter () {
-            custom_delimiter.set_sensitive (delimiter.get_selected () == 6);
         }
     }
 }
