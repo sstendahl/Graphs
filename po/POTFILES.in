@@ -10,6 +10,9 @@ data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
 data/ui/edit-item/generated-data.blp
+data/ui/import/dialog.blp
+data/ui/import/file-row.blp
+data/ui/import/mode-columns.blp
 data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
@@ -18,8 +21,6 @@ data/ui/figure-settings-dialog.blp
 data/ui/figure-settings-page.blp
 data/ui/fitting-parameters.blp
 data/ui/generate-data.blp
-data/ui/import.blp
-data/ui/import-columns.blp
 data/ui/item-box.blp
 data/ui/operations.blp
 data/ui/smoothen-settings.blp

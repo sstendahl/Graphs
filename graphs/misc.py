@@ -56,6 +56,10 @@ DELIMITERS = {
     "period": ".",
     "custom": "custom",
 }
+SEPARATORS = {
+    "comma": ",",
+    "period": ".",
+}
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [
     "none",

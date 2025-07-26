@@ -121,7 +121,7 @@ def import_from_columns(params, style) -> misc.ItemList:
     item_ = item.DataItem.new(style, name=Graphs.tools_get_filename(file))
     column_x = params.get_int("column-x")
     column_y = params.get_int("column-y")
-    separator = params.get_string("separator").replace(" ", "")
+    separator = misc.SEPARATORS[params.get_string("separator")]
     skip_rows = params.get_int("skip-rows")
     delimiter = misc.DELIMITERS[params.get_string("delimiter")]
     if delimiter == "custom":

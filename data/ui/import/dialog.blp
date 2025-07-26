@@ -2,8 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsImportDialog: Adw.Dialog {
-  content-width: 450;
-  content-height: 350;
+  content-width: 640;
+  content-height: 576;
   focus-widget: confirm_button;
 
   child: Adw.NavigationView navigation_view {
@@ -46,6 +46,7 @@ template $GraphsImportDialog: Adw.Dialog {
               ListBox file_list {
                 selection-mode: none;
                 vexpand: false;
+                valign: start;
 
                 styles [
                   "boxed-list",
