@@ -40,6 +40,19 @@ vala-lint:
   script:
     - io.elementary.vala-lint graphs
 
+potfiles:
+  stage: .pre
+  script:
+    - |
+      while read -r file; do
+        [[ -z "$file" || "$file" == \#* ]] && continue
+
+        if [ ! -f "$file" ]; then
+          echo "Potfiles missing file."
+          exit 1
+        fi
+      done < po/POTFILES.in
+
 pages:
   image: debian:latest
   script:
