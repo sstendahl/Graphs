@@ -157,7 +157,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       overlay_split_view.collapsed: true;
       undo_button.visible: false;
       content_footerbar.visible: true;
-      scrollwindow_itemlist.vscrollbar-policy: never;
+      main_page.height_limited: true;
     }
   }
 
@@ -166,7 +166,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
     condition ("min-width: 700sp and max-height: 410sp")
 
     setters {
-      scrollwindow_itemlist.vscrollbar-policy: never;
+      main_page.height_limited: true;
     }
   }
 
@@ -208,137 +208,9 @@ template $GraphsWindow: Adw.ApplicationWindow {
       sidebar: Adw.NavigationView sidebar_navigation_view {
         width-request: 350;
 
-        Adw.NavigationPage sidebar_page {
-          title: _("Graphs");
-          child: Adw.ToolbarView {
-            [top]
-            Adw.HeaderBar {
-              [start]
-              MenuButton add_button {
-                icon-name: "list-add-symbolic";
-                tooltip-text: _("Add New Data");
-                always-show-arrow: true;
-                menu-model: add_data_menu;
-              }
+        $GraphsMainSidebarPage main_page {}
 
-              [end]
-              MenuButton {
-                icon-name: "open-menu-symbolic";
-                menu-model: primary_menu;
-                tooltip-text: _("Open Application Menu");
-                primary: true;
-              }
-            }
-
-            ScrolledWindow {
-              child: Viewport {
-                child: Box {
-                  orientation: vertical;
-
-                  Stack itemlist_stack {
-                    StackPage {
-                      child: Adw.StatusPage {
-                        icon-name: "list-compact";
-                        title: _("No Data");
-                        description: _("Add data from a file or manually as an equation");
-
-                        styles [
-                          "compact",
-                        ]
-                      };
-                    }
-
-                    StackPage {
-                      child: ScrolledWindow scrollwindow_itemlist {
-                        vexpand: true;
-                        hexpand: true;
-                        hscrollbar-policy: never;
-
-                        Viewport {
-                          ListBox item_list {
-                            margin-bottom: 12;
-                            margin-top: 6;
-                            margin-start: 12;
-                            margin-end: 12;
-                            vexpand: false;
-                            hexpand: true;
-                            valign: start;
-                            selection-mode: none;
-
-                            styles [
-                              "boxed-list",
-                            ]
-                          }
-                        }
-                      };
-                    }
-                  }
-
-                  Separator {
-                    orientation: horizontal;
-                  }
-
-                  Box {
-                    spacing: 10;
-                    margin-top: 12;
-                    margin-bottom: 12;
-                    margin-start: 12;
-                    margin-end: 12;
-
-                    ToggleButton pan_button {
-                      icon-name: "move-tool-symbolic";
-                      action-name: "win.mode-pan";
-                      hexpand: true;
-                      tooltip-text: _("Pan Mode. Click and drag to pan");
-                    }
-
-                    ToggleButton zoom_button {
-                      icon-name: "loupe-symbolic";
-                      action-name: "win.mode-zoom";
-                      hexpand: true;
-                      tooltip-text: _("Zoom Mode. Select an area on the figure to zoom in");
-                    }
-
-                    ToggleButton select_button {
-                      icon-name: "edit-select-all-symbolic";
-                      action-name: "win.mode-select";
-                      hexpand: true;
-                      tooltip-text: _("Select Mode. Click and drag to make a selection of data");
-                    }
-                  }
-
-                  Separator {
-                    orientation: horizontal;
-                  }
-
-                  Adw.Bin operations_bin {}
-                };
-              };
-            }
-          };
-        }
-
-        Adw.NavigationPage edit_page {
-          title: _("Edit Item");
-          child: Adw.ToolbarView {
-            [top]
-            Adw.HeaderBar {}
-
-            ScrolledWindow {
-              propagate-natural-height: true;
-              child: Viewport {
-                Box edit_item_box {
-                  orientation: vertical;
-                  spacing: 12;
-                  margin-top: 12;
-                  margin-bottom: 12;
-                  margin-start: 12;
-                  margin-end: 12;
-                }
-              };
-            }
-          };
-        }
+        $GraphsEditItemPage edit_page {}
       };
 
       content: Adw.ToolbarView content_view {
@@ -453,46 +325,6 @@ template $GraphsWindow: Adw.ApplicationWindow {
       };
     };
   };
-}
-
-menu primary_menu {
-  section {
-    item (_("New Project"), "app.new-window")
-  }
-
-  section {
-    item (_("Save Project…"), "win.save-project")
-    item (_("Save Project as…"), "win.save-project-as")
-    item (_("Open Project…"), "win.open-project")
-    item (_("Close Project"), "win.close-project")
-  }
-
-  section {
-    item (_("Export Data…"), "win.export-data")
-    item (_("Export Figure…"), "win.export-figure")
-  }
-
-  section {
-    item (_("Figure Settings"), "win.figure-settings")
-  }
-
-  section {
-    item (_("Style Editor"), "app.style-editor")
-  }
-
-  section {
-    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
-    item (_("Help"), "app.help")
-    item (_("About Graphs"), "app.about")
-  }
-}
-
-menu add_data_menu {
-  section {
-    item (_("Add Data from File…"), "win.add-data")
-    item (_("Add Equation…"), "win.add-equation")
-    item (_("Generate Data…"), "win.generate-data")
-  }
 }
 
 menu view_menu {

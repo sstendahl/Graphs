@@ -10,6 +10,8 @@ data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
 data/ui/edit-item/generated-data.blp
+data/ui/sidebar/edit-item.blp
+data/ui/sidebar/main.blp
 data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
@@ -31,6 +33,10 @@ data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
+graphs/sidebar/edit_item.py
+graphs/sidebar/edit_item.vala
+graphs/sidebar/main.vala
+graphs/sidebar/operations.vala
 graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.py
@@ -42,8 +48,6 @@ graphs/curve_fitting.py
 graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
-graphs/edit_item.py
-graphs/edit_item.vala
 graphs/export_figure.vala
 graphs/export_items.py
 graphs/export_items.vala
@@ -59,7 +63,6 @@ graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala
 graphs/operations.py
-graphs/operations.vala
 graphs/parse_file.py
 graphs/project.py
 graphs/project.vala
