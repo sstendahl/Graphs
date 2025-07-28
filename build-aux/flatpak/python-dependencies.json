@@ -14,11 +14,11 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.30/OpenBLAS-0.3.30.tar.gz",
+                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.30.tar.gz",
                     "sha256": "27342cff518646afb4c2b976d809102e368957974c250a25ccc965e53063c95d",
                     "x-checker-data": {
                         "type": "anitya",
-                        "project-id": "2540",
+                        "project-id": 2540,
                         "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
                     }
                 }
@@ -82,8 +82,11 @@
                     "name": "numpy",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"numpy\""
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation -Csetup-args=-Dallow-noblas=false \"numpy\""
                     ],
+                    "build-options": {
+                        "ldflags": "-lgfortran"
+                    },
                     "sources": [
                         {
                             "type": "file",
@@ -104,22 +107,30 @@
             "build-commands": [],
             "modules": [
                 {
+                    "name": "ply",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"ply\""
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz",
+                            "sha256": "00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "ply"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "pythran",
                     "buildsystem": "simple",
                     "build-commands": [
                         "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"pythran\""
                     ],
                     "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/a3/58/35da89ee790598a0700ea49b2a66594140f44dec458c07e8e3d4979137fc/ply-3.11-py2.py3-none-any.whl",
-                            "sha256": "096f9b8350b65ebd2fd1346b12452efe5b9607f7482813ffca50c22722a807ce",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "ply",
-                                "packagetype": "bdist_wheel"
-                            }
-                        },
                         {
                             "type": "file",
                             "url": "https://files.pythonhosted.org/packages/a3/61/8001b38461d751cd1a0c3a6ae84346796a5758123f3ed97a1b121dfbf4f3/gast-0.6.0-py3-none-any.whl",
@@ -177,6 +188,9 @@
                     "build-commands": [
                         "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"scipy\""
                     ],
+                    "build-options": {
+                        "ldflags": "-lgfortran"
+                    },
                     "sources": [
                         {
                             "type": "file",
@@ -281,17 +295,16 @@
                     "name": "fonttools",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"fonttools\""
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"fonttools\""
                     ],
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/d0/9c/df0ef2c51845a13043e5088f7bb988ca6cd5bb82d5d4203d6a158aa58cf2/fonttools-4.59.0-py3-none-any.whl",
-                            "sha256": "241313683afd3baacb32a6bd124d0bce7404bc5280e12e291bae1b9bba28711d",
+                            "url": "https://files.pythonhosted.org/packages/8a/27/ec3c723bfdf86f34c5c82bf6305df3e0f0d8ea798d2d3a7cb0c0a866d286/fonttools-4.59.0.tar.gz",
+                            "sha256": "be392ec3529e2f57faa28709d60723a763904f71a2b63aabe14fee6648fe3b14",
                             "x-checker-data": {
                                 "type": "pypi",
-                                "name": "fonttools",
-                                "packagetype": "bdist_wheel"
+                                "name": "fonttools"
                             }
                         }
                     ]
@@ -371,15 +384,27 @@
                     ]
                 },
                 {
+                    "name": "qhull",
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/qhull/qhull",
+                            "commit": "613debeaea72ee66626dace9ba1a2eff11b5d37d",
+                            "tag": "v8.0.2",
+                            "x-checker-data": {
+                                "type": "git",
+                                "tag-pattern": "^v([\\d.]+)$"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "matplotlib",
                     "buildsystem": "simple",
-                    "build-options": {
-                        "build-args": [
-                            "--share=network"
-                        ]
-                    },
                     "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"matplotlib\""
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation --config-settings=setup-args=\"-Dsystem-freetype=true\" --config-settings=setup-args=\"-Dsystem-qhull=true\" \"matplotlib\""
                     ],
                     "sources": [
                         {
@@ -437,7 +462,7 @@
             "build-commands": [],
             "modules": [
                 {
-                    "name": "sympy",
+                    "name": "gio-pyio",
                     "buildsystem": "simple",
                     "build-commands": [
                         "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"gio-pyio\""
