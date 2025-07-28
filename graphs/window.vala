@@ -90,9 +90,10 @@ namespace Graphs {
                 var value_row = val.get_object () as ItemBox?;
                 var target_row = main_page.item_list.get_row_at_y ((int) y) as ItemBox?;
                 // If value or the target row is null, do not accept the drop
-                if (value_row == null || target_row == null) {
-                    return false;
-                }
+                if (value_row == null || target_row == null) return false;
+
+                // Reject if the value row is not from this instance
+                if (value_row.window != this) return false;
 
                 target_row.change_position (value_row.get_index ());
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);

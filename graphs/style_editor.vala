@@ -183,6 +183,7 @@ namespace Graphs {
 
         private CssProvider provider = new CssProvider ();
         private string color;
+        public StyleColorManager color_manager;
 
         public signal void color_changed (string color);
         public signal void color_removed ();
@@ -193,9 +194,10 @@ namespace Graphs {
             );
         }
 
-        public StyleColorBox (int index, string color) {
+        public StyleColorBox (StyleColorManager color_manager, int index, string color) {
             Object (index: index);
             this.set_title (_("Color %d").printf (index + 1));
+            this.color_manager = color_manager;
             this.color = color;
             load_color ();
         }
@@ -242,9 +244,10 @@ namespace Graphs {
                 var value_row = val.get_object () as StyleColorBox?;
                 var target_row = box.get_row_at_y ((int) y) as StyleColorBox?;
                 // If value or the target row is null, do not accept the drop
-                if (value_row == null || target_row == null) {
-                    return false;
-                }
+                if (value_row == null || target_row == null) return false;
+
+                // Reject if the value row is not from this instance
+                if (value_row.color_manager != this) return false;
 
                 change_position (target_row.index, value_row.index);
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
@@ -280,7 +283,7 @@ namespace Graphs {
         }
 
         private void append_style_color_box (int index) {
-            var row = new StyleColorBox (index, this.colors[index]);
+            var row = new StyleColorBox (this, index, this.colors[index]);
             row.color_removed.connect (() => {
                 this.colors.remove_at (index);
                 reload_color_boxes ();
@@ -318,7 +321,7 @@ namespace Graphs {
                 drag_widget.set_size_request (row.get_width (), row.get_height ());
                 drag_widget.add_css_class ("boxed-list");
 
-                var drag_row = new StyleColorBox (index, this.colors[index]);
+                var drag_row = new StyleColorBox (this, index, this.colors[index]);
 
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
