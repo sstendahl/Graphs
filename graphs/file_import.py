@@ -5,6 +5,8 @@ Module for importing data from files.
     Functions:
         import_from_files
 """
+import logging
+from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Gee, Graphs
@@ -89,3 +91,7 @@ class DataImporter(Graphs.DataImporter):
             return ""
         except ParseError as error:
             return error.message
+        except Exception:
+            message = _("Import failed")
+            logging.exception(message)
+            return message
