@@ -26,18 +26,6 @@ namespace Graphs {
         private unowned MenuButton view_menu_button { get; }
 
         [GtkChild]
-        private unowned ToggleButton pan_button { get; }
-
-        [GtkChild]
-        private unowned ToggleButton zoom_button { get; }
-
-        [GtkChild]
-        private unowned ToggleButton select_button { get; }
-
-        [GtkChild]
-        private unowned ListBox item_list { get; }
-
-        [GtkChild]
         public unowned Adw.OverlaySplitView overlay_split_view { get; }
 
         [GtkChild]
@@ -53,41 +41,24 @@ namespace Graphs {
         private unowned Revealer drag_revealer { get; }
 
         [GtkChild]
-        private unowned Adw.Bin operations_bin { get; }
-
-        [GtkChild]
-        private unowned Stack itemlist_stack { get; }
-
-        [GtkChild]
         protected unowned Adw.ToolbarView content_view { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationView sidebar_navigation_view { get; }
+        private unowned Adw.NavigationView sidebar_navigation_view { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationPage sidebar_page { get; }
+        private unowned MainSidebarPage main_page { get; }
 
         [GtkChild]
-        protected unowned Adw.NavigationPage edit_page { get; }
+        private unowned EditItemPage edit_page { get; }
 
-        [GtkChild]
-        protected unowned Box edit_item_box { get; }
 
         public Data data { get; construct set; }
         protected CssProvider css_provider { get; private set; }
 
         public int mode {
-            set {
-                pan_button.set_active (value == 0);
-                zoom_button.set_active (value == 1);
-                select_button.set_active (value == 2);
-            }
-            get {
-                if (pan_button.get_active ()) return 0;
-                if (zoom_button.get_active ()) return 1;
-                if (select_button.get_active ()) return 2;
-                return -1;
-            }
+            get { return main_page.mode; }
+            set { main_page.mode = value; }
         }
 
         public Canvas canvas {
@@ -99,9 +70,9 @@ namespace Graphs {
             }
         }
 
-        protected Operations operations {
-            get { return operations_bin.get_child () as Operations; }
-            private set { operations_bin.set_child (value); }
+        public Operations operations {
+            get { return main_page.operations; }
+            set { main_page.operations = value; }
         }
 
         private bool _force_close = false;
@@ -117,7 +88,7 @@ namespace Graphs {
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = val.get_object () as ItemBox?;
-                var target_row = item_list.get_row_at_y ((int) y) as ItemBox?;
+                var target_row = main_page.item_list.get_row_at_y ((int) y) as ItemBox?;
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) {
                     return false;
@@ -128,7 +99,7 @@ namespace Graphs {
 
                 return true;
             });
-            item_list.add_controller (item_drop_target);
+            main_page.item_list.add_controller (item_drop_target);
 
             var file_drop_target = new Gtk.DropTarget (typeof (Gdk.FileList), Gdk.DragAction.COPY);
             file_drop_target.notify["current-drop"].connect (() => {
@@ -166,7 +137,7 @@ namespace Graphs {
 
 #if DEBUG
             add_css_class ("devel");
-            sidebar_page.set_title (_("Graphs (Development)"));
+            main_page.set_title (_("Graphs (Development)"));
 #endif
         }
 
@@ -235,11 +206,11 @@ namespace Graphs {
 
         private void on_items_changed () {
             update_scales_section ();
-            item_list.remove_all ();
+            main_page.item_list.remove_all ();
             var export_data_action = lookup_action ("export-data") as SimpleAction;
             var optimize_limits_action = lookup_action ("optimize-limits") as SimpleAction;
             if (data.is_empty ()) {
-                itemlist_stack.get_pages ().select_item (0, true);
+                main_page.set_show_empty_data_page (true);
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
                 operations.set_cut_sensitivity (false);
@@ -248,7 +219,7 @@ namespace Graphs {
                 optimize_limits_action.set_enabled (false);
                 return;
             }
-            itemlist_stack.get_pages ().select_item (1, true);
+            main_page.set_show_empty_data_page (false);
             bool items_selected = false;
             bool data_items_selected = false;
             uint index = 0;
@@ -263,7 +234,7 @@ namespace Graphs {
             }
             operations.shift_button.set_sensitive (items_selected);
             operations.smoothen_button.set_sensitive (data_items_selected);
-            operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
+            operations.set_cut_sensitivity (data_items_selected && mode == 2);
             operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
             optimize_limits_action.set_enabled (true);
@@ -291,7 +262,7 @@ namespace Graphs {
             }
             operations.shift_button.set_sensitive (items_selected);
             operations.smoothen_button.set_sensitive (data_items_selected);
-            operations.set_cut_sensitivity (data_items_selected && select_button.get_active ());
+            operations.set_cut_sensitivity (data_items_selected && mode == 2);
             operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
         }
@@ -339,27 +310,22 @@ namespace Graphs {
             });
 
             // Update row visuals during DnD operation
-            drop_controller.enter.connect (() => item_list.drag_highlight_row (row));
-            drop_controller.leave.connect (() => item_list.drag_unhighlight_row ());
+            drop_controller.enter.connect (() => main_page.item_list.drag_highlight_row (row));
+            drop_controller.leave.connect (() => main_page.item_list.drag_unhighlight_row ());
 
             row.activated.connect (() => {
                 edit_item (item);
             });
 
-            item_list.append (row);
+            main_page.item_list.append (row);
         }
 
         public void edit_item (Item item) {
-            Widget widget;
-            while ((widget = edit_item_box.get_last_child ()) != null) {
-                edit_item_box.remove (widget);
-            }
-
-            var base_settings = new EditItemBaseBox (item);
-            edit_item_box.append (base_settings);
+            edit_page.clear ();
+            edit_page.append (new EditItemBaseBox (item));
 
             var application = application as Application;
-            application.python_helper.create_item_settings (edit_item_box, item);
+            application.python_helper.create_item_settings (edit_page, item);
 
             sidebar_navigation_view.push (edit_page);
         }
