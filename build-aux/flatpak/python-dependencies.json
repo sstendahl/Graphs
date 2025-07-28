@@ -1,306 +1,106 @@
 {
     "name": "python-dependencies",
     "buildsystem": "simple",
-    "build-commands": [
-        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --config-settings=setup-args=--cross-file=${PWD}/${FLATPAK_ARCH}.ini \"numpy\" \"scipy\" \"matplotlib\" \"numexpr\" \"sympy\" \"gio-pyio\""
-    ],
-    "build-options": {
-        "env": {
-            "ATLAS": "None",
-            "BLAS": "/app/lib",
-            "LAPACK": "/app/lib",
-            "LDFLAGS": "-shared",
-            "FC": "/usr/lib/sdk/gfortran-62/bin/gfortran",
-            "PATH": "/app/bin:/usr/bin:/usr/lib/sdk/gfortran-62/bin",
-            "CONFIGURE_ARGS": "--host=${FLATPAK_ARCH}-unknown-linux-gnu"
+    "build-commands": [],
+    "modules" : [
+        {
+            "name": "python-numpy",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\""
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
+                    "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "packaging",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/7e/b1/8e63033b259e0a4e40dd1ec4a9fee17718016845048b43a36ec67d62e6fe/pyproject_metadata-0.9.1-py3-none-any.whl",
+                    "sha256": "ee5efde548c3ed9b75a354fc319d5afd25e9585fa918a34f62f904cc731973ad",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "pyproject-metadata",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/8e/6e/b9dfeac98dd508f88bcaff134ee0bf5e602caf3ccb5a12b5dd9466206df1/meson-1.8.2-py3-none-any.whl",
+                    "sha256": "274b49dbe26e00c9a591442dd30f4ae9da8ce11ce53d0f4682cd10a45d50f6fd",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "meson",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/28/58/66db620a8a7ccb32633de9f403fe49f1b63c68ca94e5c340ec5cceeb9821/meson_python-0.18.0-py3-none-any.whl",
+                    "sha256": "3b0fe051551cc238f5febb873247c0949cd60ded556efa130aa57021804868e2",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "meson-python",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/25/d6/ef8557d5e75cc57d55df579af4976935ee111a85bbee4a5b72354e257066/cython-3.1.2-py3-none-any.whl",
+                    "sha256": "d23fd7ffd7457205f08571a42b108a3cf993e83a59fe4d72b42e6fc592cf2639",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "Cython",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/7e/19/f7821ef31aab01fa7dc8ebe697ece88ec4f7a0fdd3155dab2dfee4b00e5c/patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
+                    "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
+                    "only-arches": "x86_64",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "patchelf",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/d1/50/107fea848ecfd851d473b079cab79107487d72c4c3cdb25b9d2603a24ca2/patchelf-0.17.2.4-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.musllinux_1_1_aarch64.whl",
+                    "sha256": "2931a1b5b85f3549661898af7bf746afbda7903c7c9a967cfc998a3563f84fad",
+                    "only-arches": "aarch64",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "patchelf",
+                        "packagetype": "bdist_wheel"
+                    }
+                },
+                {
+                    "type": "file",
+                    "url": "https://files.pythonhosted.org/packages/37/7d/3fec4199c5ffb892bed55cff901e4f39a58c81df9c44c280499e92cad264/numpy-2.3.2.tar.gz",
+                    "sha256": "e0486a11ec30cdecb53f184d496d1c6a20786c81e55e41640270130056f8ee48",
+                    "x-checker-data": {
+                        "type": "pypi",
+                        "name": "numpy"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "python-numpy",
+            "buildsystem": "simple",
+            "build-commands": [
+                "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"numpy\""
+            ],
+            "sources": [
+            ]
         }
-    },
-    "sources": [
-        {
-          "type": "file",
-          "path": "x86_64.ini",
-          "dest-filename": "x86_64.ini",
-          "only-arches": "x86_64"
-        },
-        {
-          "type": "file",
-          "path": "aarch64.ini",
-          "dest-filename": "aarch64.ini",
-          "only-arches": "aarch64"
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl",
-            "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "packaging",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/7e/b1/8e63033b259e0a4e40dd1ec4a9fee17718016845048b43a36ec67d62e6fe/pyproject_metadata-0.9.1-py3-none-any.whl",
-            "sha256": "ee5efde548c3ed9b75a354fc319d5afd25e9585fa918a34f62f904cc731973ad",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "pyproject-metadata",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/8e/6e/b9dfeac98dd508f88bcaff134ee0bf5e602caf3ccb5a12b5dd9466206df1/meson-1.8.2-py3-none-any.whl",
-            "sha256": "274b49dbe26e00c9a591442dd30f4ae9da8ce11ce53d0f4682cd10a45d50f6fd",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "meson",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/28/58/66db620a8a7ccb32633de9f403fe49f1b63c68ca94e5c340ec5cceeb9821/meson_python-0.18.0-py3-none-any.whl",
-            "sha256": "3b0fe051551cc238f5febb873247c0949cd60ded556efa130aa57021804868e2",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "meson-python",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/25/d6/ef8557d5e75cc57d55df579af4976935ee111a85bbee4a5b72354e257066/cython-3.1.2-py3-none-any.whl",
-            "sha256": "d23fd7ffd7457205f08571a42b108a3cf993e83a59fe4d72b42e6fc592cf2639",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "Cython",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/7e/19/f7821ef31aab01fa7dc8ebe697ece88ec4f7a0fdd3155dab2dfee4b00e5c/patchelf-0.17.2.4-py3-none-manylinux1_x86_64.manylinux_2_5_x86_64.musllinux_1_1_x86_64.whl",
-            "sha256": "d9b35ebfada70c02679ad036407d9724ffe1255122ba4ac5e4be5868618a5689",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "patchelf",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/d1/50/107fea848ecfd851d473b079cab79107487d72c4c3cdb25b9d2603a24ca2/patchelf-0.17.2.4-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.musllinux_1_1_aarch64.whl",
-            "sha256": "2931a1b5b85f3549661898af7bf746afbda7903c7c9a967cfc998a3563f84fad",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "patchelf",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/37/7d/3fec4199c5ffb892bed55cff901e4f39a58c81df9c44c280499e92cad264/numpy-2.3.2.tar.gz",
-            "sha256": "e0486a11ec30cdecb53f184d496d1c6a20786c81e55e41640270130056f8ee48",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "numpy"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/0b/1f/03f52c282437a168ee2c7c14a1a0d0781a9a4a8962d84ac05c06b4c5b555/scipy-1.15.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "271e3713e645149ea5ea3e97b57fdab61ce61333f97cfae392c28ba786f9bb49",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "scipy"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/56/30/a6f08f84ee5b7b28b4c597aca4cbe545535c39fe911845a96414700b64ba/scipy-1.15.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "c05045d8b9bfd807ee1b9f38761993297b10b245f012b11b13b91ba8945f7e45",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "scipy"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
-            "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "python-dateutil",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl",
-            "sha256": "a749938e02d6fd0b59b356ca504a24982314bb090c383e3cf201c95ef7e2bfcf",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "pyparsing",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/fe/7c/d8b1330458e4d2f3f45d9508796d7caf0c0d3764c00c823d10f6f1a3b76d/pillow-11.2.1-cp312-cp312-manylinux_2_28_x86_64.whl",
-            "sha256": "b2dbea1012ccb784a65349f57bbc93730b96e85b42e9bf7b01ef40443db720b4",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "Pillow"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e4/3a/427e4cb0b9e177efbc1a84798ed20498c4f233abde003c06d2650a6d60cb/pillow-11.2.1-cp312-cp312-manylinux_2_28_aarch64.whl",
-            "sha256": "3e645b020f3209a0181a418bffe7b4a93171eef6c4ef6cc20980b30bebf17b7d",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "Pillow"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/a8/32/b8a1c8965e4f72482ff2d1ac2cd670ce0b542f203c8e1d34e7c3e6925da7/contourpy-1.3.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "f26b383144cf2d2c29f01a1e8170f50dacf0eac02d64139dcd709a8ac4eb3cfe",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "contourpy"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e7/bb/7bd49e1f4fa805772d9fd130e0d375554ebc771ed7172f48dfcd4ca61549/contourpy-1.3.2-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "106fab697af11456fcba3e352ad50effe493a90f893fca6c2ca5c033820cea92",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "contourpy"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/bc/b3/9458adb9472e61a998c8c4d95cfdfec91c73c53a375b30b1428310f923e4/kiwisolver-1.4.8-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "cc978a80a0db3a66d25767b03688f1147a69e6237175c0f4ffffaaedf744055a",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "kiwisolver"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/29/61/39d30b99954e6b46f760e6289c12fede2ab96a254c443639052d1b573fbc/kiwisolver-1.4.8-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "257af1622860e51b1a9d0ce387bf5c2c4f36a90594cb9514f55b074bcc787cfc",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "kiwisolver"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/9b/1f/4417c26e26a1feab85a27e927f7a73d8aabc84544be8ba108ce4aa90eb1e/fonttools-4.58.0-py3-none-any.whl",
-            "sha256": "c96c36880be2268be409df7b08c5b5dacac1827083461a6bc2cb07b8cbcec1d7",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "fonttools",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
-            "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "cycler",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/c4/91/ba0ae1ff4b3f30972ad01cd4a8029e70a0ec3b8ea5be04764b128b66f763/matplotlib-3.10.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
-            "sha256": "ed70453fd99733293ace1aec568255bc51c6361cb0da94fa5ebf0649fdb2150a",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "matplotlib"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/e7/75/70c9d2306203148cc7902a961240c5927dd8728afedf35e6a77e105a2985/matplotlib-3.10.3-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl",
-            "sha256": "748ebc3470c253e770b17d8b0557f0aa85cf8c63fd52f1a61af5b27ec0b7ffee",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "matplotlib"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/7d/9c/6b671dd3fb67d7e7da93cb76b7c5277743f310a216b7856bb18776bb3371/numexpr-2.10.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
-            "sha256": "97298b14f0105a794bea06fd9fbc5c423bd3ff4d88cbc618860b83eb7a436ad6",
-            "only-arches": "x86_64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "numexpr"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/0a/52/0ed3b306d8c9944129bce97fec73a2caff13adbd7e1df148d546d7eb2d4d/numexpr-2.10.2-cp312-cp312-manylinux_2_27_aarch64.manylinux_2_28_aarch64.whl",
-            "sha256": "5191ba8f2975cb9703afc04ae845a929e193498c0e8bcd408ecb147b35978470",
-            "only-arches": "aarch64",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "numexpr"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/43/e3/7d92a15f894aa0c9c4b49b8ee9ac9850d6e63b03c9c32c0367a13ae62209/mpmath-1.3.0-py3-none-any.whl",
-            "sha256": "a0b2b9fe80bbcd81a6647ff13108738cfb482d481d826cc0e02f5b35e5c88d2c",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "mpmath",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/a2/09/77d55d46fd61b4a135c444fc97158ef34a095e5681d0a6c10b75bf356191/sympy-1.14.0-py3-none-any.whl",
-            "sha256": "e091cc3e99d2141a0ba2847328f5479b05d94a6635cb96148ccb3f34671bd8f5",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "sympy",
-                "packagetype": "bdist_wheel"
-            }
-        },
-        {
-            "type": "file",
-            "url": "https://files.pythonhosted.org/packages/46/88/96afb5571b9aefa314b3f63ff01f1180f6f0f7bfac1585be5740f78c41db/gio_pyio-0.0.6-py3-none-any.whl",
-            "sha256": "300b73f4904fb933c751f19b08667e0b91fc73e35aca863cd72c1595aa480134",
-            "x-checker-data": {
-                "type": "pypi",
-                "name": "gio-pyio",
-                "packagetype": "bdist_wheel"
-            }
-        }
-    ],
-    "cleanup": [
-        "/bin"
     ]
 }
