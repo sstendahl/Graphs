@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-07-25 11:57+0000\n"
-"PO-Revision-Date: 2025-07-25 17:02+0330\n"
+"POT-Creation-Date: 2025-07-27 00:43+0000\n"
+"PO-Revision-Date: 2025-07-27 07:57+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "Language: fa\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.6\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/window.blp:214 graphs/actions.vala:25
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/window.blp:212 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "نمودارها"
 
@@ -85,7 +85,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;;Vi
 msgid "New Window"
 msgstr "پنجرهٔ جدید"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:457
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:480
 msgid "Style Editor"
 msgstr "ویرایشگر سبک"
 
@@ -134,6 +134,268 @@ msgstr "ذخیره"
 msgid "Current style contains unsaved changes, changes that are not saved will be permanently lost."
 msgstr "سبک کنونی تغییرات ذخیره نشده‌ای دارد. تغییراتی که ذخیره نشده‌اند برای همیشه از دست خواهند رفت."
 
+#: data/ui/edit-item/base.blp:6
+msgid "Name and Position"
+msgstr "نام و موقعیت"
+
+#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+msgid "Name"
+msgstr "نام"
+
+#: data/ui/edit-item/base.blp:14
+msgid "X-Axis Position"
+msgstr "موقعیت محور X"
+
+#: data/ui/edit-item/base.blp:18
+msgid "Bottom"
+msgstr "پایین"
+
+#: data/ui/edit-item/base.blp:19
+msgid "Top"
+msgstr "بالا"
+
+#: data/ui/edit-item/base.blp:25
+msgid "Y-Axis Position"
+msgstr "موقعیت محور Y"
+
+#: data/ui/edit-item/base.blp:29
+msgid "Left"
+msgstr "راست"
+
+#: data/ui/edit-item/base.blp:30
+msgid "Right"
+msgstr "چپ"
+
+#: data/ui/edit-item/data.blp:8
+msgid "Line and Markers"
+msgstr "خط و نشانه‌ها"
+
+#: data/ui/edit-item/data.blp:11 data/ui/edit-item/equation.blp:25 data/ui/style-editor-box.blp:62
+msgid "Linestyle"
+msgstr "سبک خط"
+
+#: data/ui/edit-item/data.blp:16 data/ui/style-editor-box.blp:67
+msgctxt "linestyle"
+msgid "None"
+msgstr "هیچ‌کدام"
+
+#: data/ui/edit-item/data.blp:17 data/ui/edit-item/equation.blp:29 data/ui/style-editor-box.blp:68
+msgctxt "linestyle"
+msgid "Solid"
+msgstr "پر"
+
+#: data/ui/edit-item/data.blp:18 data/ui/edit-item/equation.blp:30 data/ui/style-editor-box.blp:69
+msgctxt "linestyle"
+msgid "Dotted"
+msgstr "نقطه‌چین"
+
+#: data/ui/edit-item/data.blp:19 data/ui/edit-item/equation.blp:31 data/ui/style-editor-box.blp:70
+msgctxt "linestyle"
+msgid "Dashed"
+msgstr "خط‌چین"
+
+#: data/ui/edit-item/data.blp:20 data/ui/edit-item/equation.blp:32 data/ui/style-editor-box.blp:71
+msgctxt "linestyle"
+msgid "Dashdot"
+msgstr "خط‌چین"
+
+#: data/ui/edit-item/data.blp:26 data/ui/edit-item/equation.blp:38 data/ui/style-editor-box.blp:77
+msgid "Linewidth"
+msgstr "پهنای خط"
+
+#: data/ui/edit-item/data.blp:41 data/ui/style-editor-box.blp:94
+msgid "Markers"
+msgstr "نشانه‌ها"
+
+#: data/ui/edit-item/data.blp:46 data/ui/style-editor-box.blp:99
+msgctxt "markerstyle"
+msgid "None"
+msgstr "هیچ‌کدام"
+
+#: data/ui/edit-item/data.blp:47 data/ui/style-editor-box.blp:100
+msgctxt "markerstyle"
+msgid "Point"
+msgstr "نقطه"
+
+#: data/ui/edit-item/data.blp:48 data/ui/style-editor-box.blp:101
+msgctxt "markerstyle"
+msgid "Pixel"
+msgstr "پیکسل"
+
+#: data/ui/edit-item/data.blp:49 data/ui/style-editor-box.blp:102
+msgctxt "markerstyle"
+msgid "Circle"
+msgstr "حلقه"
+
+#: data/ui/edit-item/data.blp:50 data/ui/style-editor-box.blp:103
+msgctxt "markerstyle"
+msgid "Triangle Down"
+msgstr "سه‌گوش به پایین"
+
+#: data/ui/edit-item/data.blp:51 data/ui/style-editor-box.blp:104
+msgctxt "markerstyle"
+msgid "Triangle Up"
+msgstr "سه‌گوش به بالا"
+
+#: data/ui/edit-item/data.blp:52 data/ui/style-editor-box.blp:105
+msgctxt "markerstyle"
+msgid "Triangle Left"
+msgstr "سه‌گوش به چپ"
+
+#: data/ui/edit-item/data.blp:53 data/ui/style-editor-box.blp:106
+msgctxt "markerstyle"
+msgid "Triangle Right"
+msgstr "سه‌گوش به راست"
+
+#: data/ui/edit-item/data.blp:54 data/ui/style-editor-box.blp:107
+msgctxt "markerstyle"
+msgid "Octagon"
+msgstr "هشت‌گوش"
+
+#: data/ui/edit-item/data.blp:55 data/ui/style-editor-box.blp:108
+msgctxt "markerstyle"
+msgid "Square"
+msgstr "مربّع"
+
+#: data/ui/edit-item/data.blp:56 data/ui/style-editor-box.blp:109
+msgctxt "markerstyle"
+msgid "Pentagon"
+msgstr "پنج‌گوش"
+
+#: data/ui/edit-item/data.blp:57 data/ui/style-editor-box.blp:110
+msgctxt "markerstyle"
+msgid "Star"
+msgstr "ستاره"
+
+#: data/ui/edit-item/data.blp:58 data/ui/style-editor-box.blp:111
+msgctxt "markerstyle"
+msgid "Hexagon 1"
+msgstr "شش‌گوش ۱"
+
+#: data/ui/edit-item/data.blp:59 data/ui/style-editor-box.blp:112
+msgctxt "markerstyle"
+msgid "Hexagon 2"
+msgstr "شش‌گوش ۲"
+
+#: data/ui/edit-item/data.blp:60 data/ui/style-editor-box.blp:113
+msgctxt "markerstyle"
+msgid "Plus"
+msgstr "مثبت"
+
+#: data/ui/edit-item/data.blp:61 data/ui/style-editor-box.blp:114
+msgctxt "markerstyle"
+msgid "X"
+msgstr "‏X"
+
+#. Translators: Diamond as in Cards Symbol
+#: data/ui/edit-item/data.blp:63 data/ui/style-editor-box.blp:116
+msgctxt "markerstyle"
+msgid "Diamond"
+msgstr "لوزی"
+
+#. Translators: Diamond as in Cards Symbol
+#: data/ui/edit-item/data.blp:65 data/ui/style-editor-box.blp:118
+msgctxt "markerstyle"
+msgid "Thin Diamond"
+msgstr "لوزی لاغر"
+
+#: data/ui/edit-item/data.blp:66 data/ui/style-editor-box.blp:119
+msgctxt "markerstyle"
+msgid "Vertical Line"
+msgstr "خط عمودی"
+
+#: data/ui/edit-item/data.blp:67 data/ui/style-editor-box.blp:120
+msgctxt "markerstyle"
+msgid "Horizontal Line"
+msgstr "خط افقی"
+
+#: data/ui/edit-item/data.blp:68 data/ui/style-editor-box.blp:121
+msgctxt "markerstyle"
+msgid "Filled Plus"
+msgstr "به علاوهٔ توپر"
+
+#: data/ui/edit-item/data.blp:69 data/ui/style-editor-box.blp:122
+msgctxt "markerstyle"
+msgid "Filled X"
+msgstr "X توپر"
+
+#: data/ui/edit-item/data.blp:75 data/ui/style-editor-box.blp:128
+msgid "Marker Size"
+msgstr "اندازهٔ نشانگر"
+
+#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:65 graphs/item.py:176
+msgid "Equation"
+msgstr "معادله"
+
+#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:68
+msgid "Y ="
+msgstr "Y ="
+
+#: data/ui/edit-item/equation.blp:17 data/ui/edit-item/generated-data.blp:17
+msgid "Simplify"
+msgstr "ساده سازی"
+
+#: data/ui/edit-item/equation.blp:22
+msgid "Line"
+msgstr "خط"
+
+#: data/ui/edit-item/generated-data.blp:29 data/ui/generate-data.blp:72
+msgid "X Start"
+msgstr "آغاز X"
+
+#: data/ui/edit-item/generated-data.blp:35 data/ui/generate-data.blp:79
+msgid "X Stop"
+msgstr "پایان X"
+
+#: data/ui/edit-item/generated-data.blp:43 data/ui/generate-data.blp:88
+msgid "Steps"
+msgstr "گام‌ها"
+
+#: data/ui/edit-item/generated-data.blp:53 data/ui/generate-data.blp:98
+msgid "Scale"
+msgstr "مقیاس"
+
+#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
+msgid "Determines the spacing between data points"
+msgstr "تشخیص فاصله گذاری بین نقطه‌های داده"
+
+#: data/ui/edit-item/generated-data.blp:58 data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
+#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103 graphs/window.vala:417
+msgctxt "scale"
+msgid "Linear"
+msgstr "خطی"
+
+#: data/ui/edit-item/generated-data.blp:59 data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
+#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104 graphs/window.vala:418
+msgctxt "scale"
+msgid "Logarithmic (Base 10)"
+msgstr "لگاریتمی (پایه ۱۰)"
+
+#: data/ui/edit-item/generated-data.blp:60 data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105 graphs/window.vala:419
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "لگاریتمی (پایه ۲)"
+
+#: data/ui/edit-item/generated-data.blp:61 data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
+#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106 graphs/window.vala:420
+msgctxt "scale"
+msgid "Radians"
+msgstr "رادیان"
+
+#: data/ui/edit-item/generated-data.blp:62 data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107 graphs/window.vala:421
+msgctxt "scale"
+msgid "Square Root"
+msgstr "ریشهٔ مربّع"
+
+#: data/ui/edit-item/generated-data.blp:63 data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
+#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+msgctxt "scale"
+msgid "Inverse"
+msgstr "وارون"
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "افزودن معادله"
@@ -145,11 +407,6 @@ msgstr "افزودن"
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "ورود عبارتی ریاضی"
-
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83 data/ui/edit-item-equation.blp:13 data/ui/edit-item-generated-data.blp:13 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:68
-msgid "Y ="
-msgstr "Y ="
 
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
@@ -163,10 +420,6 @@ msgstr "افزودن سبک جدید"
 msgid "Template"
 msgstr "الگو"
 
-#: data/ui/add-style.blp:44 data/ui/edit-item.blp:30
-msgid "Name"
-msgstr "نام"
-
 #: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "برازش منحنی"
@@ -174,10 +427,6 @@ msgstr "برازش منحنی"
 #: data/ui/curve-fitting.blp:43
 msgid "Open Curve Fitting Menu"
 msgstr "گشودن فهرست برازش منحنی"
-
-#: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9 data/ui/edit-item-generated-data.blp:9 graphs/item.py:176
-msgid "Equation"
-msgstr "معادله"
 
 #: data/ui/curve-fitting.blp:69
 msgctxt "regression-type"
@@ -227,7 +476,7 @@ msgstr "افزودن برازش به داده‌ها"
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:427
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:450
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
 
@@ -279,255 +528,6 @@ msgstr "۲σ: ۹۵٪ اطمینان"
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "۳σ: ۹۹٫۷٪ اطمینان"
-
-#: data/ui/edit-item.blp:27
-msgid "Name and Position"
-msgstr "نام و موقعیت"
-
-#: data/ui/edit-item.blp:35
-msgid "X-Axis Position"
-msgstr "موقعیت محور X"
-
-#: data/ui/edit-item.blp:39
-msgid "Bottom"
-msgstr "پایین"
-
-#: data/ui/edit-item.blp:40
-msgid "Top"
-msgstr "بالا"
-
-#: data/ui/edit-item.blp:46
-msgid "Y-Axis Position"
-msgstr "موقعیت محور Y"
-
-#: data/ui/edit-item.blp:50
-msgid "Left"
-msgstr "راست"
-
-#: data/ui/edit-item.blp:51
-msgid "Right"
-msgstr "چپ"
-
-#: data/ui/edit-item-data.blp:8
-msgid "Line and Markers"
-msgstr "خط و نشانه‌ها"
-
-#: data/ui/edit-item-data.blp:11 data/ui/edit-item-equation.blp:25 data/ui/style-editor-box.blp:62
-msgid "Linestyle"
-msgstr "سبک خط"
-
-#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
-msgctxt "linestyle"
-msgid "None"
-msgstr "هیچ‌کدام"
-
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29 data/ui/style-editor-box.blp:68
-msgctxt "linestyle"
-msgid "Solid"
-msgstr "پر"
-
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30 data/ui/style-editor-box.blp:69
-msgctxt "linestyle"
-msgid "Dotted"
-msgstr "نقطه‌چین"
-
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31 data/ui/style-editor-box.blp:70
-msgctxt "linestyle"
-msgid "Dashed"
-msgstr "خط‌چین"
-
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32 data/ui/style-editor-box.blp:71
-msgctxt "linestyle"
-msgid "Dashdot"
-msgstr "خط‌چین"
-
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38 data/ui/style-editor-box.blp:77
-msgid "Linewidth"
-msgstr "پهنای خط"
-
-#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:94
-msgid "Markers"
-msgstr "نشانه‌ها"
-
-#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:99
-msgctxt "markerstyle"
-msgid "None"
-msgstr "هیچ‌کدام"
-
-#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:100
-msgctxt "markerstyle"
-msgid "Point"
-msgstr "نقطه"
-
-#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:101
-msgctxt "markerstyle"
-msgid "Pixel"
-msgstr "پیکسل"
-
-#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:102
-msgctxt "markerstyle"
-msgid "Circle"
-msgstr "حلقه"
-
-#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:103
-msgctxt "markerstyle"
-msgid "Triangle Down"
-msgstr "سه‌گوش به پایین"
-
-#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:104
-msgctxt "markerstyle"
-msgid "Triangle Up"
-msgstr "سه‌گوش به بالا"
-
-#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:105
-msgctxt "markerstyle"
-msgid "Triangle Left"
-msgstr "سه‌گوش به چپ"
-
-#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:106
-msgctxt "markerstyle"
-msgid "Triangle Right"
-msgstr "سه‌گوش به راست"
-
-#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:107
-msgctxt "markerstyle"
-msgid "Octagon"
-msgstr "هشت‌گوش"
-
-#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:108
-msgctxt "markerstyle"
-msgid "Square"
-msgstr "مربّع"
-
-#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:109
-msgctxt "markerstyle"
-msgid "Pentagon"
-msgstr "پنج‌گوش"
-
-#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:110
-msgctxt "markerstyle"
-msgid "Star"
-msgstr "ستاره"
-
-#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:111
-msgctxt "markerstyle"
-msgid "Hexagon 1"
-msgstr "شش‌گوش ۱"
-
-#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:112
-msgctxt "markerstyle"
-msgid "Hexagon 2"
-msgstr "شش‌گوش ۲"
-
-#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:113
-msgctxt "markerstyle"
-msgid "Plus"
-msgstr "مثبت"
-
-#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:114
-msgctxt "markerstyle"
-msgid "X"
-msgstr "‏X"
-
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:116
-msgctxt "markerstyle"
-msgid "Diamond"
-msgstr "لوزی"
-
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:118
-msgctxt "markerstyle"
-msgid "Thin Diamond"
-msgstr "لوزی لاغر"
-
-#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:119
-msgctxt "markerstyle"
-msgid "Vertical Line"
-msgstr "خط عمودی"
-
-#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:120
-msgctxt "markerstyle"
-msgid "Horizontal Line"
-msgstr "خط افقی"
-
-#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:121
-msgctxt "markerstyle"
-msgid "Filled Plus"
-msgstr "به علاوهٔ توپر"
-
-#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:122
-msgctxt "markerstyle"
-msgid "Filled X"
-msgstr "X توپر"
-
-#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:128
-msgid "Marker Size"
-msgstr "اندازهٔ نشانگر"
-
-#: data/ui/edit-item-equation.blp:17 data/ui/edit-item-generated-data.blp:17
-msgid "Simplify"
-msgstr "ساده سازی"
-
-#: data/ui/edit-item-equation.blp:22
-msgid "Line"
-msgstr "خط"
-
-#: data/ui/edit-item-generated-data.blp:29 data/ui/generate-data.blp:72
-msgid "X Start"
-msgstr "آغاز X"
-
-#: data/ui/edit-item-generated-data.blp:35 data/ui/generate-data.blp:79
-msgid "X Stop"
-msgstr "پایان X"
-
-#: data/ui/edit-item-generated-data.blp:43 data/ui/generate-data.blp:88
-msgid "Steps"
-msgstr "گام‌ها"
-
-#: data/ui/edit-item-generated-data.blp:53 data/ui/generate-data.blp:98
-msgid "Scale"
-msgstr "مقیاس"
-
-#: data/ui/edit-item-generated-data.blp:54 data/ui/generate-data.blp:99
-msgid "Determines the spacing between data points"
-msgstr "تشخیص فاصله گذاری بین نقطه‌های داده"
-
-#: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
-#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103 graphs/window.vala:385
-msgctxt "scale"
-msgid "Linear"
-msgstr "خطی"
-
-#: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
-#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104 graphs/window.vala:386
-msgctxt "scale"
-msgid "Logarithmic (Base 10)"
-msgstr "لگاریتمی (پایه ۱۰)"
-
-#: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
-#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105 graphs/window.vala:387
-msgctxt "scale"
-msgid "Logarithmic (Base 2)"
-msgstr "لگاریتمی (پایه ۲)"
-
-#: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
-#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106 graphs/window.vala:388
-msgctxt "scale"
-msgid "Radians"
-msgstr "رادیان"
-
-#: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
-#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107 graphs/window.vala:389
-msgctxt "scale"
-msgid "Square Root"
-msgstr "ریشهٔ مربّع"
-
-#: data/ui/edit-item-generated-data.blp:63 data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
-#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
-msgctxt "scale"
-msgid "Inverse"
-msgstr "وارون"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -596,7 +596,7 @@ msgstr "درون‌ریزی سبک…"
 msgid "Create Style…"
 msgstr "ایجاد سبک…"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:453
+#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:476
 msgid "Figure Settings"
 msgstr "تنظیمات شکل"
 
@@ -664,19 +664,19 @@ msgstr "بیشینهٔ محور Y راست"
 msgid "Scaling"
 msgstr "مقیاس"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:447
 msgid "Bottom X Axis Scale"
 msgstr "مقیاس محور X پایین"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:448
 msgid "Top X Axis Scale"
 msgstr "مقیاس محور X بالا"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:453
 msgid "Left Y Axis Scale"
 msgstr "مقیاس محور Y چپ"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:452
 msgid "Right Y Axis Scale"
 msgstr "مقیاس محور Y راست"
 
@@ -1285,7 +1285,7 @@ msgstr "گشودن سبک"
 msgid "Graphs Style Editor"
 msgstr "ویرایشگر سبک نمودارها"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175 data/ui/window.blp:229
+#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175 data/ui/window.blp:228
 msgid "Open Application Menu"
 msgstr "گشودن فهرست برنامه"
 
@@ -1313,15 +1313,15 @@ msgstr "ذخیرهٔ سبک…"
 msgid "Save Style as…"
 msgstr "ذخیرهٔ سبک به شکل…"
 
-#: data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228 data/ui/window.blp:461
+#: data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228 data/ui/window.blp:484
 msgid "Keyboard Shortcuts"
 msgstr "میان‌برهای صفحه‌کلید"
 
-#: data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229 data/ui/window.blp:462
+#: data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229 data/ui/window.blp:485
 msgid "Help"
 msgstr "راهنما"
 
-#: data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230 data/ui/window.blp:463
+#: data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230 data/ui/window.blp:486
 msgid "About Graphs"
 msgstr "دربارهٔ نمودارها"
 
@@ -1374,95 +1374,99 @@ msgstr "دور انداختن داده‌های ناگزیده"
 msgid "Drop Here to Import"
 msgstr "انداختن در این‌جا برای درون‌ریزی"
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:219
 msgid "Add New Data"
 msgstr "افزودن داده‌های جدید"
 
-#: data/ui/window.blp:243
+#: data/ui/window.blp:242
 msgid "No Data"
 msgstr "بدون داده"
 
-#: data/ui/window.blp:244
+#: data/ui/window.blp:243
 msgid "Add data from a file or manually as an equation"
 msgstr "افزودن داده‌ها از پرونده‌ها یا دستی به صورت معادله"
 
-#: data/ui/window.blp:293
+#: data/ui/window.blp:292
 msgid "Pan Mode. Click and drag to pan"
 msgstr "حالت جابه‌جایی. کلیک کردن و کشیدن برای جابه‌جایی"
 
-#: data/ui/window.blp:300
+#: data/ui/window.blp:299
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "حالت بزرگ‌نمایی. گزینش ناحیه‌ای روی شکل برای بزرگ‌نمایی"
 
-#: data/ui/window.blp:307
+#: data/ui/window.blp:306
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "حالت گزینش. کلیک کردن و کشیدن برای گزیدن داده‌ها"
 
-#: data/ui/window.blp:332
+#: data/ui/window.blp:322
+msgid "Edit Item"
+msgstr "ویرایش مورد"
+
+#: data/ui/window.blp:355
 msgid "Show Sidebar"
 msgstr "نمایش نوار کناری"
 
-#: data/ui/window.blp:340 data/ui/window.blp:386 graphs/window.vala:375
+#: data/ui/window.blp:363 data/ui/window.blp:409 graphs/window.vala:407
 msgid "Undo"
 msgstr "برگردان"
 
-#: data/ui/window.blp:346 data/ui/window.blp:393
+#: data/ui/window.blp:369 data/ui/window.blp:416
 msgid "Redo"
 msgstr "انجام دوباره"
 
-#: data/ui/window.blp:353 data/ui/window.blp:400
+#: data/ui/window.blp:376 data/ui/window.blp:423
 msgid "View Menu"
 msgstr "فهرست نما"
 
-#: data/ui/window.blp:363 data/ui/window.blp:409
+#: data/ui/window.blp:386 data/ui/window.blp:432
 msgid "Next View"
 msgstr "نمای بعدی"
 
-#: data/ui/window.blp:371 data/ui/window.blp:417
+#: data/ui/window.blp:394 data/ui/window.blp:440
 msgid "Previous View"
 msgstr "نمای پیشین"
 
-#: data/ui/window.blp:437
+#: data/ui/window.blp:460
 msgid "New Project"
 msgstr "پروژهٔ جدید"
 
-#: data/ui/window.blp:441
+#: data/ui/window.blp:464
 msgid "Save Project…"
 msgstr "ذخیرهٔ پروژه…"
 
-#: data/ui/window.blp:442
+#: data/ui/window.blp:465
 msgid "Save Project as…"
 msgstr "ذخیرهٔ پروژه به شکل…"
 
-#: data/ui/window.blp:443
+#: data/ui/window.blp:466
 msgid "Open Project…"
 msgstr "گشودن پروژه…"
 
-#: data/ui/window.blp:444
+#: data/ui/window.blp:467
 msgid "Close Project"
 msgstr "بستن پروژه"
 
-#: data/ui/window.blp:448
+#: data/ui/window.blp:471
 msgid "Export Data…"
 msgstr "برون‌ریزی داده‌ها…"
 
-#: data/ui/window.blp:449
+#: data/ui/window.blp:472
 msgid "Export Figure…"
 msgstr "برون‌ریزی شکل…"
 
-#: data/ui/window.blp:469
+#: data/ui/window.blp:492
 msgid "Add Data from File…"
 msgstr "افزودن داده‌ها از پرونده…"
 
-#: data/ui/window.blp:470
+#: data/ui/window.blp:493
 msgid "Add Equation…"
 msgstr "افزودن معادله…"
 
-#: data/ui/window.blp:471
+#: data/ui/window.blp:494
 msgid "Generate Data…"
 msgstr "تولید داده…"
 
-#: data/ui/window.blp:477
+#: data/ui/window.blp:500
 msgid "Optimize Limits"
 msgstr "بهینه‌سازی کران‌ها"
 
@@ -1619,7 +1623,7 @@ msgstr "توسعه‌دهندگان نمودارها"
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: graphs/actions.vala:214 graphs/item_box.vala:59
+#: graphs/actions.vala:214 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
@@ -1729,7 +1733,7 @@ msgstr "بیشینهٔ محور X"
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:417
+#: graphs/figure_settings.vala:176 graphs/window.vala:449
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
@@ -1737,7 +1741,7 @@ msgstr "مقیاس محور X"
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:422
+#: graphs/figure_settings.vala:180 graphs/window.vala:454
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
@@ -1935,29 +1939,29 @@ msgstr "همهٔ پرونده‌ها"
 msgid "Document Portal"
 msgstr "درگاه سند"
 
-#: graphs/window.vala:156
+#: graphs/window.vala:169
 msgid "Graphs (Development)"
 msgstr "نمودارها (توسعه)"
 
-#: graphs/window.vala:192
+#: graphs/window.vala:205
 msgid "Untitled Project"
 msgstr "پروژهٔ بی‌عنوان"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:206
 msgid "Draft"
 msgstr "پیش‌نویس"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:214
 #, c-format
 msgid "Graphs — %s"
 msgstr "نمودارها — %s"
 
-#: graphs/window.vala:365
+#: graphs/window.vala:397
 msgid "Open Location"
 msgstr "گشودن مکان"
 
-#: graphs/window.vala:390
+#: graphs/window.vala:422
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "ریشهٔ معکوس"

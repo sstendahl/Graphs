@@ -11,9 +11,9 @@ namespace Graphs {
             return add_equation_request.emit (window, name);
         }
 
-        protected signal void create_item_settings_request (Box box, Item item);
-        public void create_item_settings (Box box, Item item) {
-            create_item_settings_request.emit (box, item);
+        protected signal void create_item_settings_request (EditItemPage page, Item item);
+        public void create_item_settings (EditItemPage page, Item item) {
+            create_item_settings_request.emit (page, item);
         }
 
         protected signal StyleEditor create_style_editor_request ();

@@ -3,6 +3,25 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item.ui")]
+    public class EditItemPage : Adw.NavigationPage {
+        [GtkChild]
+        private unowned Box edit_item_box { get; }
+
+        public EditItemPage () {}
+
+        public void clear () {
+            Widget widget;
+            while ((widget = edit_item_box.get_last_child ()) != null) {
+                edit_item_box.remove (widget);
+            }
+        }
+
+        public void append (Widget widget) {
+            edit_item_box.append (widget);
+        }
+    }
+
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/base.ui")]
     public class EditItemBaseBox : Box {
 

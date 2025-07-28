@@ -79,9 +79,14 @@ blueprint_files = [
   'ui/edit-item/data.blp',
   'ui/edit-item/equation.blp',
   'ui/edit-item/generated-data.blp',
+<<<<<<< HEAD
   'ui/import/dialog.blp',
   'ui/import/file-row.blp',
   'ui/import/mode-columns.blp',
+=======
+  'ui/sidebar/edit-item.blp',
+  'ui/sidebar/main.blp',
+>>>>>>> main
   'ui/add-equation.blp',
   'ui/add-style.blp',
   'ui/curve-fitting.blp',

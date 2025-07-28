@@ -9,9 +9,9 @@ import sympy
 
 
 def create_item_settings(
-    edit_item_box: Gtk.Box,
+    edit_page: Graphs.EditItemPage,
     item: Graphs.Item,
-) -> Gtk.Widget:
+) -> None:
     """Greate settings widgets and append them to edit_item_box."""
     if isinstance(item, GeneratedDataItem):
         box = Graphs.EditItemGeneratedDataItemBox.new()
@@ -32,7 +32,7 @@ def create_item_settings(
             "selected",
             1 | 2,
         )
-        edit_item_box.append(box)
+        edit_page.append(box)
     if isinstance(item, DataItem):
         box = Graphs.EditItemDataItemBox.new()
         for prop in ("linestyle", "markerstyle"):
@@ -49,7 +49,7 @@ def create_item_settings(
                 "value",
                 1 | 2,
             )
-        edit_item_box.append(box)
+        edit_page.append(box)
     elif isinstance(item, EquationItem):
         box = Graphs.EditItemEquationItemBox.new()
         _setup_equation(item, box)
@@ -65,7 +65,7 @@ def create_item_settings(
             "value",
             1 | 2,
         )
-        edit_item_box.append(box)
+        edit_page.append(box)
 
 
 def _setup_equation(item: Graphs.Item, box: Gtk.Box) -> None:
