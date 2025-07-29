@@ -189,7 +189,7 @@ namespace Graphs {
             var save_action = lookup_action ("save-project") as SimpleAction;
             var save_as_action = lookup_action ("save-project-as") as SimpleAction;
             if (data.unsaved) {
-                this._inhibit_cookie = application.inhibit (
+                if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                     this,
                     ApplicationInhibitFlags.LOGOUT,
                     title
@@ -198,7 +198,10 @@ namespace Graphs {
                 save_as_action.set_enabled (true);
                 content_title.set_title ("• " + title);
             } else {
-                if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                    _inhibit_cookie = 0;
+                }
                 save_action.set_enabled (false);
                 save_as_action.set_enabled (data.file != null);
                 content_title.set_title (title);
