@@ -228,10 +228,26 @@
                     ]
                 },
                 {
+                    "name": "Raqm",
+                    "buildsystem": "meson",
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/HOST-Oman/libraqm",
+                            "commit": "8876579006425f14f7686063c6cff889c1c01940",
+                            "tag": "v0.10.2",
+                            "x-checker-data": {
+                                "type": "git",
+                                "tag-pattern": "^v([\\d.]+)$"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "pillow",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"pillow\""
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"pillow\" -C zlib=enable -C jpeg=enable -C tiff=enable -C freetype=enable -C raqm=enable -C lcms=enable -C webp=enable -C jpeg2000=enable -C avif=enable"
                     ],
                     "sources": [
                         {
