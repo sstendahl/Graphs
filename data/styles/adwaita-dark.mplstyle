@@ -3,7 +3,7 @@
 
 # font
 font.family: sans-serif
-font.sans-serif: Cantarell
+font.sans-serif: Adwaita Sans
 font.style: normal
 font.weight: 400
 axes.titleweight: 400
@@ -72,7 +72,7 @@ axes.grid: True
 axes.grid.which: major
 axes.grid.axis: both
 grid.linewidth: 0.6
-grid.alpha: 1.0
+grid.alpha: 0.6
 grid.linestyle: -
 
 # padding
@@ -92,9 +92,9 @@ xtick.color: C0BFBC
 ytick.color: C0BFBC
 axes.edgecolor: C0BFBC
 grid.color: 77767B
-axes.facecolor: 242424
-figure.facecolor: 242424
-figure.edgecolor: 242424
+axes.facecolor: 222226
+figure.facecolor: 222226
+figure.edgecolor: 222226
 
 axes.prop_cycle: cycler('color', ['1A5FB4', '26A269', 'E5A50A', 'C64600', 'A51D2D', '613583', '63452C', '9A9996'])
 patch.facecolor: 1A5FB4
