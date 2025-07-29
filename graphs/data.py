@@ -98,7 +98,7 @@ class Data(Graphs.Data):
                         ).format(stylename=stylename)
                     break
             error_msg = _(
-                "style {stylename} does not exist, "
+                "Style {stylename} does not exist, "
                 "loading system preferred style",
             ).format(stylename=stylename)
         if error_msg is not None:
