@@ -12,6 +12,12 @@ include:
     CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
     BUNDLE: "se.sjoerd.Graphs.flatpak"
   interruptible: true
+  cache:
+    key: "$CI_JOB_NAME"
+    paths:
+      - .flatpak-builder/downloads
+      - .flatpak-builder/git
+      - .flatpak-builder/cache
 
 # Build Flatpak for x86_64
 flatpak@x86_64:
