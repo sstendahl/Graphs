@@ -206,35 +206,45 @@
             ]
         },
         {
-            "name": "python-numexpr",
-            "buildsystem": "simple",
-            "build-commands": [],
-            "modules": [
-                {
-                    "name": "numexpr",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"numexpr\""
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/d2/8f/2cc977e91adbfbcdb6b49fdb9147e1d1c7566eb2c0c1e737e9a47020b5ca/numexpr-2.11.0.tar.gz",
-                            "sha256": "75b2c01a4eda2e7c357bc67a3f5c3dd76506c15b5fd4dc42845ef2e182181bad",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "numexpr"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "python-matplotlib",
             "buildsystem": "simple",
             "build-commands": [],
             "modules": [
+                {
+                    "name": "qhull",
+                    "buildsystem": "cmake-ninja",
+                    "builddir": true,
+                    "sources": [
+                        {
+                            "type": "git",
+                            "url": "https://github.com/qhull/qhull",
+                            "commit": "613debeaea72ee66626dace9ba1a2eff11b5d37d",
+                            "tag": "v8.0.2",
+                            "x-checker-data": {
+                                "type": "git",
+                                "tag-pattern": "^v([\\d.]+)$"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "pillow",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"pillow\""
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/f3/0d/d0d6dea55cd152ce3d6767bb38a8fc10e33796ba4ba210cbab9354b6d238/pillow-11.3.0.tar.gz",
+                            "sha256": "3828ee7586cd0b2091b6209e5ad53e20d0649bbe87164a459d0676e035e8f523",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "pillow"
+                            }
+                        }
+                    ]
+                },
                 {
                     "name": "contourpy",
                     "buildsystem": "simple",
@@ -249,44 +259,6 @@
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "contourpy"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "cycler",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cycler\""
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
-                            "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "cycler",
-                                "packagetype": "bdist_wheel"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "python-dateutil",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-dateutil\""
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
-                            "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "python-dateutil",
-                                "packagetype": "bdist_wheel"
                             }
                         }
                     ]
@@ -347,6 +319,44 @@
                     ]
                 },
                 {
+                    "name": "cycler",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"cycler\""
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl",
+                            "sha256": "85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "cycler",
+                                "packagetype": "bdist_wheel"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "python-dateutil",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"python-dateutil\""
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
+                            "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "python-dateutil",
+                                "packagetype": "bdist_wheel"
+                            }
+                        }
+                    ]
+                },
+                {
                     "name": "pyparsing",
                     "buildsystem": "simple",
                     "build-commands": [
@@ -366,41 +376,6 @@
                     ]
                 },
                 {
-                    "name": "pillow",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"pillow\""
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/f3/0d/d0d6dea55cd152ce3d6767bb38a8fc10e33796ba4ba210cbab9354b6d238/pillow-11.3.0.tar.gz",
-                            "sha256": "3828ee7586cd0b2091b6209e5ad53e20d0649bbe87164a459d0676e035e8f523",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "pillow"
-                            }
-                        }
-                    ]
-                },
-                {
-                    "name": "qhull",
-                    "buildsystem": "cmake-ninja",
-                    "builddir": true,
-                    "sources": [
-                        {
-                            "type": "git",
-                            "url": "https://github.com/qhull/qhull",
-                            "commit": "613debeaea72ee66626dace9ba1a2eff11b5d37d",
-                            "tag": "v8.0.2",
-                            "x-checker-data": {
-                                "type": "git",
-                                "tag-pattern": "^v([\\d.]+)$"
-                            }
-                        }
-                    ]
-                },
-                {
                     "name": "matplotlib",
                     "buildsystem": "simple",
                     "build-commands": [
@@ -414,6 +389,31 @@
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "matplotlib"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "python-numexpr",
+            "buildsystem": "simple",
+            "build-commands": [],
+            "modules": [
+                {
+                    "name": "numexpr",
+                    "buildsystem": "simple",
+                    "build-commands": [
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"numexpr\""
+                    ],
+                    "sources": [
+                        {
+                            "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/d2/8f/2cc977e91adbfbcdb6b49fdb9147e1d1c7566eb2c0c1e737e9a47020b5ca/numexpr-2.11.0.tar.gz",
+                            "sha256": "75b2c01a4eda2e7c357bc67a3f5c3dd76506c15b5fd4dc42845ef2e182181bad",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "numexpr"
                             }
                         }
                     ]
