@@ -113,14 +113,17 @@ namespace Graphs {
              // Inhibit session end when there is unsaved data present
             notify["unsaved"].connect (() => {
                 if (unsaved) {
-                    _inhibit_cookie = application.inhibit (
+                    if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                         this,
                         ApplicationInhibitFlags.LOGOUT,
                         _stylename
                     );
                     save_action.set_enabled (true);
                 } else {
-                    if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                    if (_inhibit_cookie > 0) {
+                        application.uninhibit (_inhibit_cookie);
+                        _inhibit_cookie = 0;
+                    }
                     save_action.set_enabled (false);
                 }
             });
