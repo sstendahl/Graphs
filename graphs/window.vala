@@ -75,6 +75,10 @@ namespace Graphs {
             set { main_page.operations = value; }
         }
 
+        public bool is_main_view {
+            get { return sidebar_navigation_view.get_visible_page () == main_page; }
+        }
+
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
         private Menu _scales_section = new Menu ();
@@ -132,8 +136,12 @@ namespace Graphs {
             var view_menu = view_menu_button.get_menu_model () as Menu;
             view_menu.append_section (null, _scales_section);
 
+            sidebar_navigation_view.pushed.connect (() => {
+                update_history_buttons ();
+            });
             sidebar_navigation_view.popped.connect (() => {
                 data.add_history_state ();
+                update_history_buttons ();
             });
 
 #if DEBUG
@@ -151,8 +159,10 @@ namespace Graphs {
 
             this.operations = new Operations (this);
 
-            data.bind_property ("can_undo", undo_button, "sensitive", 2);
-            data.bind_property ("can_redo", redo_button, "sensitive", 2);
+            data.notify["can-undo"].connect (update_history_buttons);
+            data.notify["can-redo"].connect (update_history_buttons);
+            update_history_buttons ();
+
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
@@ -162,6 +172,12 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
+        }
+
+        private void update_history_buttons () {
+            bool enable = is_main_view;
+            undo_button.set_sensitive (enable && data.can_undo);
+            redo_button.set_sensitive (enable && data.can_redo);
         }
 
         /**
