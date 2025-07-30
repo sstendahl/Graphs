@@ -7,6 +7,7 @@ inline-stack-switcher {
 }
 
 inline-stack-switcher button {
+  border-radius: 6px;
   padding: 2px 15px;
   transition: 200ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transition-property: outline-color, outline-width, outline-offset, background, box-shadow;
