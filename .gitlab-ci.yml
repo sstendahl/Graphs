@@ -54,7 +54,7 @@ potfiles:
         [[ -z "$file" || "$file" == \#* ]] && continue
 
         if [ ! -f "$file" ]; then
-          echo "Potfiles missing file."
+          echo "Potfiles missing file $file"
           exit 1
         fi
       done < po/POTFILES.in

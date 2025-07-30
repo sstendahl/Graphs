@@ -206,7 +206,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
       enable-hide-gesture: bind overlay_split_view.collapsed;
 
       sidebar: Adw.NavigationView sidebar_navigation_view {
-        width-request: 350;
+        width-request: 360;
 
         $GraphsMainSidebarPage main_page {}
 
@@ -222,6 +222,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
         Adw.HeaderBar {
           title-widget: Adw.WindowTitle content_title {};
 
+          [start]
           ToggleButton {
             icon-name: "sidebar-show-symbolic";
             tooltip-text: _("Show Sidebar");
@@ -229,12 +230,14 @@ template $GraphsWindow: Adw.ApplicationWindow {
             visible: bind overlay_split_view.collapsed;
           }
 
+          [start]
           Button undo_button {
             action-name: "win.undo";
             icon-name: "edit-undo-symbolic";
             tooltip-text: _("Undo");
           }
 
+          [start]
           Button redo_button {
             action-name: "win.redo";
             icon-name: "edit-redo-symbolic";
@@ -243,11 +246,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
           }
 
           [end]
-          MenuButton view_menu_button {
+          Button optimize_limits_button {
+            action-name: "win.optimize-limits";
             icon-name: "view-reveal-symbolic";
-            tooltip-text: _("View Menu");
-            always-show-arrow: true;
-            menu-model: view_menu;
+            tooltip-text: _("Optimize View Limits");
             visible: bind undo_button.visible;
           }
 
@@ -282,6 +284,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
             sensitive: bind undo_button.sensitive;
           }
 
+          [start]
           Button sidebar_redo_button {
             action-name: "win.redo";
             icon-name: "edit-redo-symbolic";
@@ -290,11 +293,10 @@ template $GraphsWindow: Adw.ApplicationWindow {
           }
 
           [end]
-          MenuButton sidebar_view_menu_button {
+          Button sidebar_optimize_limits_button {
+            action-name: "win.optimize-limits";
             icon-name: "view-reveal-symbolic";
-            tooltip-text: _("View Menu");
-            always-show-arrow: true;
-            menu-model: bind view_menu_button.menu-model;
+            tooltip-text: _("Optimize View Limits");
           }
 
           [end]
@@ -325,10 +327,4 @@ template $GraphsWindow: Adw.ApplicationWindow {
       };
     };
   };
-}
-
-menu view_menu {
-  section {
-    item (_("Optimize Limits"), "win.optimize-limits")
-  }
 }
