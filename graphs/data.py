@@ -93,13 +93,13 @@ class Data(Graphs.Data):
                         return
                     except (ValueError, SyntaxError, AttributeError):
                         error_msg = _(
-                            f"Could not parse {stylename}, loading "
+                            "Could not parse style {stylename}, loading "
                             "system preferred style",
                         ).format(stylename=stylename)
                     break
             error_msg = _(
-                f"Plot style {stylename} does not exist "
-                "loading system preferred",
+                "Style {stylename} does not exist, "
+                "loading system preferred style",
             ).format(stylename=stylename)
         if error_msg is not None:
             figure_settings.set_use_custom_style(False)
