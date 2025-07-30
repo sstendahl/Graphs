@@ -438,9 +438,9 @@ class EquationOperations():
             if not valid_equation:
                 raise misc.InvalidEquationError(
                     _(
-                        f"The operation on {item.props.name}"
-                        " did not result in a plottable equation",
-                    ),
+                        "The operation on {name} "
+                        "did not result in a plottable equation",
+                    ).format(name=item.props.name),
                 )
             equation = str(sympy.simplify(equation))
             item.props.equation = utilities.prettify_equation(equation)
