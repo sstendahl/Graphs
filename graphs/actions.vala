@@ -160,6 +160,7 @@ namespace Graphs {
 
             var select_all_action = new SimpleAction ("select-all", null);
             select_all_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 data.select_all ();
                 data.add_history_state ();
             });
@@ -167,6 +168,7 @@ namespace Graphs {
 
             var select_none_action = new SimpleAction ("select-none", null);
             select_none_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 data.unselect_all ();
                 data.add_history_state ();
             });
@@ -174,12 +176,14 @@ namespace Graphs {
 
             var undo_action = new SimpleAction ("undo", null);
             undo_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 data.undo ();
             });
             window.add_action (undo_action);
 
             var redo_action = new SimpleAction ("redo", null);
             redo_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 data.redo ();
             });
             window.add_action (redo_action);
@@ -200,6 +204,7 @@ namespace Graphs {
 
             var delete_selected_action = new SimpleAction ("delete-selected", null);
             delete_selected_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 Item[] items = {};
                 var name_builder = new StringBuilder ();
                 foreach (Item item in data) {
@@ -231,12 +236,14 @@ namespace Graphs {
 
             var open_project_action = new SimpleAction ("open-project", null);
             open_project_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 Project.open (window);
             });
             window.add_action (open_project_action);
 
             var close_project_action = new SimpleAction ("close-project", null);
             close_project_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 Project.close (window);
             });
             close_project_action.set_enabled (false);
@@ -262,6 +269,7 @@ namespace Graphs {
             );
             var add_data_action = new SimpleAction ("add-data", null);
             add_data_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 var dialog = new FileDialog ();
                 dialog.set_filters (add_data_action_filters);
                 dialog.open_multiple.begin (window, null, (d, response) => {
@@ -279,30 +287,35 @@ namespace Graphs {
 
             var export_data_action = new SimpleAction ("export-data", null);
             export_data_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 Export.export_items (window);
             });
             window.add_action (export_data_action);
 
             var figure_settings_action = new SimpleAction ("figure-settings", null);
             figure_settings_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 new FigureSettingsDialog (window, null);
             });
             window.add_action (figure_settings_action);
 
             var add_equation_action = new SimpleAction ("add-equation", null);
             add_equation_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 new AddEquationDialog (window);
             });
             window.add_action (add_equation_action);
 
             var generate_data_action = new SimpleAction ("generate-data", null);
             generate_data_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 new GenerateDataDialog (window);
             });
             window.add_action (generate_data_action);
 
             var export_figure_action = new SimpleAction ("export-figure", null);
             export_figure_action.activate.connect (() => {
+                if (!window.is_main_view) return;
                 new ExportFigureDialog (window);
             });
             window.add_action (export_figure_action);
