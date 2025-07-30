@@ -2,15 +2,15 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2024.
+# Yuri Chornoivan <yurchor@ukr.net>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-10 16:03+0000\n"
-"PO-Revision-Date: 2024-07-10 19:54+0300\n"
+"POT-Creation-Date: 2025-07-30 08:29+0000\n"
+"PO-Revision-Date: 2025-07-30 21:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,7 +19,7 @@ msgstr ""
 "%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 23.04.3\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Графіки"
@@ -105,12 +105,12 @@ msgstr "5 — проста робота із імпортованими дани
 
 #: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualis"
+"ation;Visualization;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;креслення;графік;креслення;наука;"
-"математика;рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualis"
+"ation;Visualization;Fitting;xrdml;креслення;графік;креслення;наука;математика"
+";рівняння;дані;креслити;рисунок;візуалізація;апроксимація;"
 
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
@@ -771,6 +771,91 @@ msgstr "Змінити параметри імпортування"
 #: data/ui/import.blp:27
 msgid "Import"
 msgstr "Імпортувати"
+
+#: data/ui/import-columns.blp:6
+msgid "Delimiter"
+msgstr "Роздільник"
+
+#: data/ui/import-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Послідовність символів для поділу значень"
+
+#: data/ui/import-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Пробіл"
+
+#: data/ui/import-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Табуляція"
+
+#: data/ui/import-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Двокрапка (:)"
+
+#: data/ui/import-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Крапка з комою (;)"
+
+#: data/ui/import-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Десяткова кома (,)"
+
+#: data/ui/import-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Десяткова крапка (.)"
+
+#: data/ui/import-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Нетипова"
+
+#: data/ui/import-columns.blp:24
+msgid "Custom Delimiter"
+msgstr "Нетиповий роздільник"
+
+#: data/ui/import-columns.blp:28
+msgid "Decimal Separator"
+msgstr "Десятковий роздільник"
+
+#: data/ui/import-columns.blp:31
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Десяткова кома (,)"
+
+#: data/ui/import-columns.blp:32
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Десяткова крапка (.)"
+
+#: data/ui/import-columns.blp:38
+msgid "Column X"
+msgstr "Стовпчик x"
+
+#: data/ui/import-columns.blp:39
+msgid "X-data column index"
+msgstr "Індекс стовпчика даних x"
+
+#: data/ui/import-columns.blp:48
+msgid "Column Y"
+msgstr "Стовпчик y"
+
+#: data/ui/import-columns.blp:50
+msgid "Y-data column index"
+msgstr "Індекс стовпчика даних y"
+
+#: data/ui/import-columns.blp:59
+msgid "Skip Rows"
+msgstr "Пропустити рядки"
+
+#: data/ui/import-columns.blp:60
+msgid "Ignored row indices"
+msgstr "Індекси ігнорованих рядків"
 
 #: data/ui/item-box.blp:26
 msgid "Pick Color"
@@ -1654,17 +1739,13 @@ msgstr "Мітка X"
 msgid "Y Label"
 msgstr "Мітка Y"
 
-#: graphs/styles.py:305
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
+#: graphs/styles.py:306
+msgid "system preferred style"
+msgstr "пріоритетний стиль системи"
 
-#: graphs/styles.py:313
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
+#: graphs/styles.py:314
+msgid "loading system preferred"
+msgstr "завантаження пріоритетного для системи"
 
 #: graphs/styles.py:726
 #, python-brace-format
@@ -1714,8 +1795,6 @@ msgid "Text Files"
 msgstr "текстові файли"
 
 #: graphs/utilities.py:122
-#| msgctxt "file-filter"
-#| msgid "Text Files"
 msgid "All Files"
 msgstr "усі файли"
 
@@ -1736,78 +1815,22 @@ msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обернена коренева"
 
+#, python-brace-format
+#~ msgid "Could not parse {stylename}, loading system preferred style"
+#~ msgstr ""
+#~ "Не вдалося обробити {stylename}, завантажуємо пріоритетний стиль системи"
+
+#, python-brace-format
+#~ msgid "Plot style {stylename} does not exist loading system preferred"
+#~ msgstr ""
+#~ "Стилю креслення {stylename} не існує. Завантажуємо пріоритетний системний"
+
 #~ msgid "Y = "
 #~ msgstr "Y = "
 
 #~ msgctxt "markerstyle"
 #~ msgid "Nothing"
 #~ msgstr "Нічого"
-
-#~ msgid "Delimiter"
-#~ msgstr "Роздільник"
-
-#~ msgid "Character sequence used to split values"
-#~ msgstr "Послідовність символів для поділу значень"
-
-#~ msgctxt "delimiter"
-#~ msgid "Whitespace"
-#~ msgstr "Пробіл"
-
-#~ msgctxt "delimiter"
-#~ msgid "Tab"
-#~ msgstr "Табуляція"
-
-#~ msgctxt "delimiter"
-#~ msgid "Colon (:)"
-#~ msgstr "Двокрапка (:)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Semicolon (;)"
-#~ msgstr "Крапка з комою (;)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Decimal comma (,)"
-#~ msgstr "Десяткова кома (,)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Decimal point (.)"
-#~ msgstr "Десяткова крапка (.)"
-
-#~ msgctxt "delimiter"
-#~ msgid "Custom"
-#~ msgstr "Нетипова"
-
-#~ msgid "Custom Delimiter"
-#~ msgstr "Нетиповий роздільник"
-
-#~ msgid "Decimal Separator"
-#~ msgstr "Десятковий роздільник"
-
-#~ msgctxt "separator"
-#~ msgid "Decimal comma (,)"
-#~ msgstr "Десяткова кома (,)"
-
-#~ msgctxt "separator"
-#~ msgid "Decimal point (.)"
-#~ msgstr "Десяткова крапка (.)"
-
-#~ msgid "Column X"
-#~ msgstr "Стовпчик x"
-
-#~ msgid "X-data column index"
-#~ msgstr "Індекс стовпчика даних x"
-
-#~ msgid "Column Y"
-#~ msgstr "Стовпчик y"
-
-#~ msgid "Y-data column index"
-#~ msgstr "Індекс стовпчика даних y"
-
-#~ msgid "Skip Rows"
-#~ msgstr "Пропустити рядки"
-
-#~ msgid "Ignored row indices"
-#~ msgstr "Індекси ігнорованих рядків"
 
 #~ msgid "Y Axis Label"
 #~ msgstr "Мітка вісі y"
