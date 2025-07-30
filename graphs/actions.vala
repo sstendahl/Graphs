@@ -99,39 +99,6 @@ namespace Graphs {
                 window.add_action (action);
             }
 
-            GLib.Settings figure_settings = application.get_settings_child ("figure");
-            foreach (string dir in DIRECTION_NAMES) {
-                string val = @"$dir-scale";
-                var action = new SimpleAction.stateful (
-                    @"change-$val",
-                    new VariantType ("s"),
-                    new Variant.string (figure_settings.get_enum (val).to_string ())
-                );
-                action.activate.connect ((a, target) => {
-                    string[] directions = {dir};
-                    bool[] visible_axes = data.get_used_positions ();
-                    // Also set opposite axis if opposite axis not in use
-                    if (dir in X_DIRECTIONS && visible_axes[0] ^ visible_axes[1]) {
-                        directions = X_DIRECTIONS;
-                    }
-                    if (dir in Y_DIRECTIONS && visible_axes[2] ^ visible_axes[3]) {
-                        directions = Y_DIRECTIONS;
-                    }
-                    foreach (string target_dir in directions) {
-                        data.figure_settings.set (
-                            val, int.parse (target.get_string ())
-                        );
-                    }
-                    data.add_history_state ();
-                });
-                data.figure_settings.notify[val].connect (() => {
-                    int scale;
-                    data.figure_settings.get (val, out scale);
-                    action.set_state (new Variant.string (scale.to_string ()));
-                });
-                window.add_action (action);
-            }
-
             string[] settings_actions = {"center", "smoothen"};
             GLib.Settings actions_settings = application.get_settings_child ("actions");
             foreach (string settings_action in settings_actions) {
@@ -295,7 +262,7 @@ namespace Graphs {
             var figure_settings_action = new SimpleAction ("figure-settings", null);
             figure_settings_action.activate.connect (() => {
                 if (!window.is_main_view) return;
-                new FigureSettingsDialog (window, null);
+                window.open_figure_settings ();
             });
             window.add_action (figure_settings_action);
 

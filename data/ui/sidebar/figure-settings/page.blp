@@ -1,0 +1,25 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsFigureSettingsPage: Adw.NavigationPage {
+  title: _("Figure Settings");
+
+  Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {}
+
+    content: ScrolledWindow {
+      hscrollbar-policy: never;
+      propagate-natural-height: true;
+
+      Adw.Clamp {
+        margin-bottom: 12;
+        margin-top: 12;
+        margin-start: 12;
+        margin-end: 12;
+
+        Adw.Bin settings_bin {}
+      }
+    };
+  }
+}

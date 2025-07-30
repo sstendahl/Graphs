@@ -1,32 +1,7 @@
 using Gtk 4.0;
 using Adw 1;
 
-template $GraphsFigureSettingsDialog: Adw.Dialog {
-  content-width: 640;
-  content-height: 576;
-  width-request: 360;
-  height-request: 100;
-  closed => $on_closed();
-
-  styles [
-    "preferences",
-  ]
-
-  Adw.Breakpoint {
-    condition ("max-width: 600sp")
-
-    setters {
-      style_grid.max-columns: 2;
-      style_grid.min-columns: 2;
-    }
-  }
-
-  child: Adw.ToastOverlay toast_overlay {
-    Adw.NavigationView navigation_view {}
-  };
-}
-
-Adw.NavigationPage style_overview {
+template $GraphsStylePage: Adw.NavigationPage {
   title: _("Style");
 
   Adw.ToolbarView {
@@ -57,8 +32,8 @@ Adw.NavigationPage style_overview {
           hexpand: true;
 
           GridView style_grid {
-            max-columns: 3;
-            min-columns: 3;
+            min-columns: 2;
+            max-columns: 2;
 
             styles [
               "style-grid",

@@ -97,8 +97,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         pyplot.rcParams.update(self._style_params)  # apply style_params
         Graphs.Canvas.__init__(
             self,
-            can_focus=True,
-            focusable=True,
             hexpand=True,
             vexpand=True,
             items=items,
@@ -156,11 +154,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         click.connect("update", self.handle_touch_update)
         click.connect("released", self.button_release_event)
         self.add_controller(click)
-
-        key = Gtk.EventControllerKey()
-        key.connect("key-pressed", self.key_press_event)
-        key.connect("key-released", self.key_release_event)
-        self.add_controller(key)
 
         motion = Gtk.EventControllerMotion()
         motion.connect("motion", self.motion_notify_event)

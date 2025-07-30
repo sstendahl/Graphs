@@ -1,5 +1,5 @@
 .style-grid {
-  background: @window_bg_color;
+  background: none;
 }
 
 .style-grid child {
@@ -7,11 +7,11 @@
 }
 
 .style-grid child:selected {
-  background: @window_bg_color;
+  background: none;
 }
 
 .style-grid child:hover {
-  background: @window_bg_color;
+  background: none;
 }
 
 .style-grid child picture {
