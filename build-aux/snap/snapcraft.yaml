@@ -19,12 +19,11 @@ parts:
     source: .
     plugin: python
     python-packages:
-      - matplotlib==3.9.1
-      - numexpr==2.10.1
-      - numpy==2.0.1
-      - scipy==1.14.0
-      - sympy==1.13.1
-      - gio-pyio==0.0.4
+      - matplotlib==3.10.3
+      - numexpr==2.11.0
+      - numpy==2.3.2
+      - scipy==1.16.1
+      - sympy==1.14.0
     prime:
       - -usr/bin/activate*
       - -usr/bin/Activate.ps1
@@ -45,7 +44,9 @@ parts:
   graphs:
     after: [ python-deps ]
     plugin: meson
-    source: .
+    source: https://gitlab.gnome.org/World/Graphs.git
+    source-tag: 'v1.8.5'
+    source-depth: 1
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
       - --buildtype=release
@@ -53,10 +54,17 @@ parts:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
     build-snaps:
       - blueprint-compiler/latest/edge 
+    override-build: |
+      craftctl default
+      sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
+      mkdir -p $CRAFT_PART_INSTALL/meta/gui
+      cp -r $CRAFT_PART_INSTALL/snap/graphs/current/usr/share/icons $CRAFT_PART_INSTALL/meta/gui/
+      for i in `find $CRAFT_PART_INSTALL/meta/gui/icons -name "*.svg" -o -name "*.png"`; do
+        mv $i "`dirname $i`/snap.$CRAFT_PROJECT_NAME.`basename $i`"
+      done
     organize:
-      snap/graphs/current: .
-    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
-    
+      snap/graphs/current/usr: usr
+    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]    
     
 apps:
   graphs:
@@ -66,5 +74,4 @@ apps:
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-      NUMEXPR_MAX_THREADS: 16
     extensions: [gnome]      
