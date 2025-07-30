@@ -43,7 +43,7 @@ namespace Graphs {
 
         public signal void style_changed (bool recolor_items);
         protected signal string load_request (File file);
-        protected signal void add_history_state_request (double[] old_limits);
+        protected signal bool add_history_state_request (double[] old_limits);
 
         // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
@@ -501,7 +501,7 @@ namespace Graphs {
         // Section history
 
         public void add_history_state (double[]? old_limits = null) {
-            add_history_state_request.emit (old_limits);
+            if (!add_history_state_request.emit (old_limits)) return;
             this.can_undo = true;
             this.can_redo = false;
             this.unsaved = true;
