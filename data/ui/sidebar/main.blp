@@ -21,6 +21,13 @@ template $GraphsMainSidebarPage: Adw.NavigationPage {
         tooltip-text: _("Open Application Menu");
         primary: true;
       }
+
+      [end]
+      Button figure_settings_button {
+        action-name: "win.figure-settings";
+        icon-name: "settings-symbolic";
+        tooltip-text: _("Figure Settings");
+      }
     }
 
     ScrolledWindow {
@@ -126,10 +133,6 @@ menu primary_menu {
   section {
     item (_("Export Data…"), "win.export-data")
     item (_("Export Figure…"), "win.export-figure")
-  }
-
-  section {
-    item (_("Figure Settings"), "win.figure-settings")
   }
 
   section {
