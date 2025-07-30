@@ -15,15 +15,16 @@ namespace Graphs {
 
         private Application application;
         private Window window;
+        private Builder builder;
 
-        public FigureSettingsPage (Window window, string? highlighted = null) {
+        public FigureSettingsPage (Window window) {
             this.window = window;
             this.application = window.application as Application;
 
             FigureSettings figure_settings = window.data.figure_settings;
             GLib.Settings settings = application.get_settings_child ("figure");
 
-            var builder = new Builder.from_resource (SETTINGS_RESOURCE);
+            this.builder = new Builder.from_resource (SETTINGS_RESOURCE);
             var settings_box = builder.get_object ("settings_box") as Box;
             settings_bin.set_child (settings_box);
 
@@ -119,11 +120,11 @@ namespace Graphs {
 
             var default_button = builder.get_object ("set_as_default") as Adw.ButtonRow;
             default_button.activated.connect (set_as_default);
+        }
 
-            if (highlighted != null) {
-                var widget = builder.get_object (highlighted) as Widget;
-                widget.grab_focus ();
-            }
+        public void focus_widget (string name) {
+            var widget = builder.get_object (name) as Widget;
+            widget.grab_focus ();
         }
 
         private void set_as_default () {

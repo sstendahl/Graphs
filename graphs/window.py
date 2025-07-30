@@ -74,6 +74,10 @@ class PythonWindow(Graphs.Window):
         canvas.connect("edit-request", on_edit_request)
         canvas.connect("view-changed", on_view_changed)
 
+        key_controller = self.props.key_controller
+        key_controller.connect("key-pressed", canvas.key_press_event)
+        key_controller.connect("key-released", canvas.key_release_event)
+
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),

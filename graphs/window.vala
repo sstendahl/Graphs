@@ -55,6 +55,7 @@ namespace Graphs {
 
         public Data data { get; construct set; }
         protected CssProvider css_provider { get; private set; }
+        protected EventControllerKey key_controller { get; private set; }
 
         public int mode {
             get { return main_page.mode; }
@@ -81,12 +82,16 @@ namespace Graphs {
 
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
+        private FigureSettingsPage figure_settings_page;
 
         construct {
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+
+            this.key_controller = new EventControllerKey ();
+            ((Widget) this).add_controller (key_controller);
 
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
@@ -352,9 +357,14 @@ namespace Graphs {
         }
 
         public void open_figure_settings (string? highlighted = null) {
-            var figure_settings_page = new FigureSettingsPage (this, highlighted);
+            if (is_main_view) {
+                figure_settings_page = new FigureSettingsPage (this);
+                push_sidebar_page (figure_settings_page);
+            }
 
-            push_sidebar_page (figure_settings_page);
+            if (highlighted != null && sidebar_navigation_view.get_visible_page () == figure_settings_page) {
+                figure_settings_page.focus_widget (highlighted);
+            }
         }
 
         /**
