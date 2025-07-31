@@ -59,6 +59,7 @@ def list_modes() -> list[str]:
     """List all registered parse modes."""
     return list(_IMPORT_MODES.keys())
 
+
 def get_import_function(mode: str):
     """Get the import function for a specific mode."""
     return _IMPORT_MODES[mode][0]
