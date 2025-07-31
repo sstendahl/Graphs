@@ -47,6 +47,7 @@ config_dep = valac.find_library('config',
 graphs_lib = shared_library('graphs',
   files(
     'sidebar/edit_item.vala',
+    'sidebar/figure_settings.vala',
     'sidebar/main.vala',
     'sidebar/operations.vala',
     'actions.vala',

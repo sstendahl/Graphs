@@ -93,13 +93,13 @@ class Data(Graphs.Data):
                         return
                     except (ValueError, SyntaxError, AttributeError):
                         error_msg = _(
-                            f"Could not parse {stylename}, loading "
+                            "Could not parse style {stylename}, loading "
                             "system preferred style",
                         ).format(stylename=stylename)
                     break
             error_msg = _(
-                f"Plot style {stylename} does not exist "
-                "loading system preferred",
+                "Style {stylename} does not exist, "
+                "loading system preferred style",
             ).format(stylename=stylename)
         if error_msg is not None:
             figure_settings.set_use_custom_style(False)
@@ -181,10 +181,10 @@ class Data(Graphs.Data):
         self,
         limits: misc.Limits,
         l: int,
-    ) -> None:
+    ) -> bool:
         """Add a state to the clipboard."""
         if not self._current_batch:
-            return
+            return False
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
         self._history_pos = -1
@@ -200,6 +200,7 @@ class Data(Graphs.Data):
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
         self._set_data_copy()
+        return True
 
     def _undo(self) -> None:
         """Undo the latest change that was added to the clipboard."""

@@ -23,7 +23,7 @@ namespace Graphs {
         private unowned Button view_forward_button { get; }
 
         [GtkChild]
-        private unowned MenuButton view_menu_button { get; }
+        private unowned Button optimize_limits_button { get; }
 
         [GtkChild]
         public unowned Adw.OverlaySplitView overlay_split_view { get; }
@@ -55,6 +55,7 @@ namespace Graphs {
 
         public Data data { get; construct set; }
         protected CssProvider css_provider { get; private set; }
+        protected EventControllerKey key_controller { get; private set; }
 
         public int mode {
             get { return main_page.mode; }
@@ -75,15 +76,22 @@ namespace Graphs {
             set { main_page.operations = value; }
         }
 
+        public bool is_main_view {
+            get { return sidebar_navigation_view.get_visible_page () == main_page; }
+        }
+
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
-        private Menu _scales_section = new Menu ();
+        private FigureSettingsPage figure_settings_page;
 
         construct {
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+
+            this.key_controller = new EventControllerKey ();
+            ((Widget) this).add_controller (key_controller);
 
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
@@ -129,11 +137,14 @@ namespace Graphs {
             var builder = new Builder.from_resource (path);
             set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
 
-            var view_menu = view_menu_button.get_menu_model () as Menu;
-            view_menu.append_section (null, _scales_section);
-
-            sidebar_navigation_view.popped.connect (() => {
-                data.add_history_state ();
+            sidebar_navigation_view.pushed.connect (() => {
+                notify_property ("is_main_view");
+                update_history_buttons ();
+            });
+            sidebar_navigation_view.popped.connect ((view, page) => {
+                if (is_main_view) data.add_history_state ();
+                notify_property ("is_main_view");
+                update_history_buttons ();
             });
 
 #if DEBUG
@@ -151,8 +162,10 @@ namespace Graphs {
 
             this.operations = new Operations (this);
 
-            data.bind_property ("can_undo", undo_button, "sensitive", 2);
-            data.bind_property ("can_redo", redo_button, "sensitive", 2);
+            data.notify["can-undo"].connect (update_history_buttons);
+            data.notify["can-redo"].connect (update_history_buttons);
+            update_history_buttons ();
+
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
 
@@ -162,6 +175,12 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
+        }
+
+        private void update_history_buttons () {
+            bool enable = is_main_view;
+            undo_button.set_sensitive (enable && data.can_undo);
+            redo_button.set_sensitive (enable && data.can_redo);
         }
 
         /**
@@ -189,7 +208,7 @@ namespace Graphs {
             var save_action = lookup_action ("save-project") as SimpleAction;
             var save_as_action = lookup_action ("save-project-as") as SimpleAction;
             if (data.unsaved) {
-                this._inhibit_cookie = application.inhibit (
+                if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                     this,
                     ApplicationInhibitFlags.LOGOUT,
                     title
@@ -198,7 +217,10 @@ namespace Graphs {
                 save_as_action.set_enabled (true);
                 content_title.set_title ("• " + title);
             } else {
-                if (_inhibit_cookie > 0) application.uninhibit (_inhibit_cookie);
+                if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                    _inhibit_cookie = 0;
+                }
                 save_action.set_enabled (false);
                 save_as_action.set_enabled (data.file != null);
                 content_title.set_title (title);
@@ -206,7 +228,6 @@ namespace Graphs {
         }
 
         private void on_items_changed () {
-            update_scales_section ();
             main_page.item_list.remove_all ();
             var export_data_action = lookup_action ("export-data") as SimpleAction;
             var optimize_limits_action = lookup_action ("optimize-limits") as SimpleAction;
@@ -321,6 +342,10 @@ namespace Graphs {
             main_page.item_list.append (row);
         }
 
+        public void push_sidebar_page (Adw.NavigationPage page) {
+            sidebar_navigation_view.push (page);
+        }
+
         public void edit_item (Item item) {
             edit_page.clear ();
             edit_page.append (new EditItemBaseBox (item));
@@ -328,7 +353,18 @@ namespace Graphs {
             var application = application as Application;
             application.python_helper.create_item_settings (edit_page, item);
 
-            sidebar_navigation_view.push (edit_page);
+            push_sidebar_page (edit_page);
+        }
+
+        public void open_figure_settings (string? highlighted = null) {
+            if (is_main_view) {
+                figure_settings_page = new FigureSettingsPage (this);
+                push_sidebar_page (figure_settings_page);
+            }
+
+            if (highlighted != null && sidebar_navigation_view.get_visible_page () == figure_settings_page) {
+                figure_settings_page.focus_widget (highlighted);
+            }
         }
 
         /**
@@ -374,54 +410,6 @@ namespace Graphs {
                 button_label = _("Undo"),
                 action_name = "win.undo"
             });
-        }
-
-        /**
-         * Repopulate the scales section
-         */
-        public void update_scales_section () {
-            string[] scale_names = {
-                C_("scale", "Linear"),
-                C_("scale", "Logarithmic (Base 10)"),
-                C_("scale", "Logarithmic (Base 2)"),
-                C_("scale", "Radians"),
-                C_("scale", "Square Root"),
-                C_("scale", "Inverse Root")
-            };
-
-            _scales_section.remove_all ();
-            bool[] visible_axes = data.get_used_positions ();
-            bool both_x = visible_axes[0] && visible_axes[1];
-            bool both_y = visible_axes[2] && visible_axes[3];
-            for (int i = 0; i < DIRECTION_NAMES.length; i++) {
-                if (!visible_axes[i]) continue;
-                string direction = DIRECTION_NAMES[i];
-                Menu scale_section = new Menu ();
-                for (int j = 0; j < scale_names.length; j++) {
-                    string scale = scale_names[j];
-                    MenuItem scale_item = new MenuItem (
-                        scale, @"win.change-$direction-scale"
-                    );
-                    scale_item.set_attribute_value (
-                        "target",
-                        new Variant.string (j.to_string ())
-                    );
-                    scale_section.append_item (scale_item);
-                }
-                string label;
-                if (i < 2) {
-                    if (both_x) {
-                        if (i == 0) label = _("Bottom X Axis Scale");
-                        else label = _("Top X Axis Scale");
-                    } else label = _("X Axis Scale");
-                } else {
-                    if (both_y) {
-                        if (i == 3) label = _("Right Y Axis Scale");
-                        else label = _("Left Y Axis Scale");
-                    } else label = _("Y Axis Scale");
-                }
-                _scales_section.append_submenu (label, scale_section);
-            }
         }
 
         public override bool close_request () {

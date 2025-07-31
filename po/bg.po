@@ -1,33 +1,53 @@
 # Bulgarian translation of Graphs po-file.
-# Copyright (C) 2024, 2025 twlvnn <kraft_werk@tutanota.com>
+# Copyright (C) 2024, 2025 twlvnn kraftwerk <kraft_werk@tutanota.com>
 # This file is distributed under the same license as the Graphs package.
-# twlvnn <kraft_werk@tutanota.com>, 2024, 2025.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-03-07 12:02+0000\n"
-"PO-Revision-Date: 2025-03-07 20:20+0100\n"
+"POT-Creation-Date: 2025-07-29 10:09+0000\n"
+"PO-Revision-Date: 2025-07-29 13:33+0200\n"
 "Last-Translator: twlvnn <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 47.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.6\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
-#: data/ui/window.blp:214 graphs/actions.vala:25
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Графики"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:7
+#: data/se.sjoerd.Graphs.metainfo.xml.in:44
+msgid "Plot and manipulate any data"
+msgstr "Чертане и обработка на данни"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:48
+msgid "Full support for light and dark mode"
+msgstr "Пълна поддръжка на светъл и тъмен режим"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:52
+msgid "Generate data from an equation"
+msgstr "Генериране на данни по формула"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:56
+msgid "Manage plot stylesheets"
+msgstr "Редактиране на стиловете на графиката"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:60
+msgid "Manipulate imported data"
+msgstr "Лесно манипулиране на внесени данни"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
 msgstr "Чертане на графики и обработка на данни"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:12
+#: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
 "Graphs is a simple, yet powerful tool that allows you to plot and manipulate "
 "your data with ease. New data can be imported from a wide variety of "
@@ -43,7 +63,7 @@ msgstr ""
 "преместване, умножаване, центриране и изглаждане на данни, както и прилагане "
 "на всякакви други преобразувания."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:16
+#: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
@@ -53,7 +73,7 @@ msgstr ""
 "много възможности за персонализиране на стила на графиките. Може да "
 "настройвате и персонализирате стилове по свой вкус."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:19
+#: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
 "Graphs is an excellent fit for both plotting and data manipulation. The "
 "plots created with Graphs can be saved in a variety of formats suitable for "
@@ -71,7 +91,7 @@ msgstr ""
 "Inkscape. „Графики“ първоначално е разработена за средата GNOME, но може да "
 "се ползва и във всяка друга среда."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:23
+#: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
@@ -79,35 +99,15 @@ msgstr ""
 "За обратна връзка, въпроси и др., докладвайте проблем чрез страницата ни в "
 "GitLab."
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:36
-msgid "Plot and manipulate any data"
-msgstr "Чертане и обработка на данни"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:40
-msgid "Full support for light and dark mode"
-msgstr "Пълна поддръжка на светъл и тъмен режим"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:44
-msgid "Generate data from an equation"
-msgstr "Генериране на данни по формула"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:48
-msgid "Manage plot stylesheets"
-msgstr "Редактиране на стиловете на графиката"
-
-#: data/se.sjoerd.Graphs.metainfo.xml.in:52
-msgid "Manipulate imported data"
-msgstr "Лесно манипулиране на внесени данни"
-
 #: data/se.sjoerd.Graphs.desktop.in:11
-msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
-msgstr "чертане;изчертаване;начертаване;графики;наука;математика;уравнения;формули;данни;визуализация;plotting;graph;graphing;science;mathematics;math;equations;data;plot;visualisation;visualization;fitting;xrdml;"
+msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualization;Fitting;xrdml;"
+msgstr "чертане;изчертаване;начертаване;графики;наука;математика;уравнения;формули;данни;визуализация;напасване;plotting;graph;graphing;science;mathematics;math;equations;data;plot;visualisation;visualization;fitting;xrdml;"
 
 #: data/se.sjoerd.Graphs.desktop.in:16
 msgid "New Window"
 msgstr "Нов прозорец"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:454
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:136
 msgid "Style Editor"
 msgstr "Редактор на стилове"
 
@@ -173,6 +173,379 @@ msgstr ""
 "Текущият стил съдържа незапазени промени.  Те ще бъдат окончателно загубени, "
 "ако не ги запазите."
 
+#: data/ui/edit-item/base.blp:6
+msgid "Name and Position"
+msgstr "Име и позиция"
+
+#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+msgid "Name"
+msgstr "Име"
+
+#: data/ui/edit-item/base.blp:14
+msgid "X-Axis Position"
+msgstr "Позиция по оста X"
+
+#: data/ui/edit-item/base.blp:18
+msgid "Bottom"
+msgstr "Долу"
+
+#: data/ui/edit-item/base.blp:19
+msgid "Top"
+msgstr "Горе"
+
+#: data/ui/edit-item/base.blp:25
+msgid "Y-Axis Position"
+msgstr "Позиция по оста Y"
+
+#: data/ui/edit-item/base.blp:29
+msgid "Left"
+msgstr "Ляво"
+
+#: data/ui/edit-item/base.blp:30
+msgid "Right"
+msgstr "Дясно"
+
+#: data/ui/edit-item/data.blp:8
+msgid "Line and Markers"
+msgstr "Черта и маркери"
+
+#: data/ui/edit-item/data.blp:11 data/ui/edit-item/equation.blp:25
+#: data/ui/style-editor-box.blp:62
+msgid "Linestyle"
+msgstr "Стил на линия"
+
+#: data/ui/edit-item/data.blp:16 data/ui/style-editor-box.blp:67
+msgctxt "linestyle"
+msgid "None"
+msgstr "Без"
+
+#: data/ui/edit-item/data.blp:17 data/ui/edit-item/equation.blp:29
+#: data/ui/style-editor-box.blp:68
+msgctxt "linestyle"
+msgid "Solid"
+msgstr "Плътно"
+
+#: data/ui/edit-item/data.blp:18 data/ui/edit-item/equation.blp:30
+#: data/ui/style-editor-box.blp:69
+msgctxt "linestyle"
+msgid "Dotted"
+msgstr "Пунктирана"
+
+#: data/ui/edit-item/data.blp:19 data/ui/edit-item/equation.blp:31
+#: data/ui/style-editor-box.blp:70
+msgctxt "linestyle"
+msgid "Dashed"
+msgstr "Тирета"
+
+#: data/ui/edit-item/data.blp:20 data/ui/edit-item/equation.blp:32
+#: data/ui/style-editor-box.blp:71
+msgctxt "linestyle"
+msgid "Dashdot"
+msgstr "Тирета и пунктирана"
+
+#: data/ui/edit-item/data.blp:26 data/ui/edit-item/equation.blp:38
+#: data/ui/style-editor-box.blp:77
+msgid "Linewidth"
+msgstr "Широчина на чертата"
+
+#: data/ui/edit-item/data.blp:41 data/ui/style-editor-box.blp:94
+msgid "Markers"
+msgstr "Маркери"
+
+#: data/ui/edit-item/data.blp:46 data/ui/style-editor-box.blp:99
+msgctxt "markerstyle"
+msgid "None"
+msgstr "Без"
+
+#: data/ui/edit-item/data.blp:47 data/ui/style-editor-box.blp:100
+msgctxt "markerstyle"
+msgid "Point"
+msgstr "Точка"
+
+#: data/ui/edit-item/data.blp:48 data/ui/style-editor-box.blp:101
+msgctxt "markerstyle"
+msgid "Pixel"
+msgstr "Пиксел"
+
+#: data/ui/edit-item/data.blp:49 data/ui/style-editor-box.blp:102
+msgctxt "markerstyle"
+msgid "Circle"
+msgstr "Кръг"
+
+#: data/ui/edit-item/data.blp:50 data/ui/style-editor-box.blp:103
+msgctxt "markerstyle"
+msgid "Triangle Down"
+msgstr "Триъгълник надолу"
+
+#: data/ui/edit-item/data.blp:51 data/ui/style-editor-box.blp:104
+msgctxt "markerstyle"
+msgid "Triangle Up"
+msgstr "Триъгълник нагоре"
+
+#: data/ui/edit-item/data.blp:52 data/ui/style-editor-box.blp:105
+msgctxt "markerstyle"
+msgid "Triangle Left"
+msgstr "Триъгълник наляво"
+
+#: data/ui/edit-item/data.blp:53 data/ui/style-editor-box.blp:106
+msgctxt "markerstyle"
+msgid "Triangle Right"
+msgstr "Триъгълник надясно"
+
+#: data/ui/edit-item/data.blp:54 data/ui/style-editor-box.blp:107
+msgctxt "markerstyle"
+msgid "Octagon"
+msgstr "Осмоъгълник"
+
+#: data/ui/edit-item/data.blp:55 data/ui/style-editor-box.blp:108
+msgctxt "markerstyle"
+msgid "Square"
+msgstr "Квадрат"
+
+#: data/ui/edit-item/data.blp:56 data/ui/style-editor-box.blp:109
+msgctxt "markerstyle"
+msgid "Pentagon"
+msgstr "Петоъгълник"
+
+#: data/ui/edit-item/data.blp:57 data/ui/style-editor-box.blp:110
+msgctxt "markerstyle"
+msgid "Star"
+msgstr "Звезда"
+
+#: data/ui/edit-item/data.blp:58 data/ui/style-editor-box.blp:111
+msgctxt "markerstyle"
+msgid "Hexagon 1"
+msgstr "Шестоъгълник 1"
+
+#: data/ui/edit-item/data.blp:59 data/ui/style-editor-box.blp:112
+msgctxt "markerstyle"
+msgid "Hexagon 2"
+msgstr "Шестоъгълник 2"
+
+#: data/ui/edit-item/data.blp:60 data/ui/style-editor-box.blp:113
+msgctxt "markerstyle"
+msgid "Plus"
+msgstr "Плюс"
+
+#: data/ui/edit-item/data.blp:61 data/ui/style-editor-box.blp:114
+msgctxt "markerstyle"
+msgid "X"
+msgstr "X"
+
+#. Translators: Diamond as in Cards Symbol
+#: data/ui/edit-item/data.blp:63 data/ui/style-editor-box.blp:116
+msgctxt "markerstyle"
+msgid "Diamond"
+msgstr "Диамант"
+
+#. Translators: Diamond as in Cards Symbol
+#: data/ui/edit-item/data.blp:65 data/ui/style-editor-box.blp:118
+msgctxt "markerstyle"
+msgid "Thin Diamond"
+msgstr "Тънък диамант"
+
+#: data/ui/edit-item/data.blp:66 data/ui/style-editor-box.blp:119
+msgctxt "markerstyle"
+msgid "Vertical Line"
+msgstr "Вертикална линия"
+
+#: data/ui/edit-item/data.blp:67 data/ui/style-editor-box.blp:120
+msgctxt "markerstyle"
+msgid "Horizontal Line"
+msgstr "Хоризонтална линия"
+
+#: data/ui/edit-item/data.blp:68 data/ui/style-editor-box.blp:121
+msgctxt "markerstyle"
+msgid "Filled Plus"
+msgstr "Запълнен Плюс"
+
+#: data/ui/edit-item/data.blp:69 data/ui/style-editor-box.blp:122
+msgctxt "markerstyle"
+msgid "Filled X"
+msgstr "Запълнен X"
+
+#: data/ui/edit-item/data.blp:75 data/ui/style-editor-box.blp:128
+msgid "Marker Size"
+msgstr "Размер на маркера"
+
+#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
+#: data/ui/curve-fitting.blp:65 graphs/item.py:176
+msgid "Equation"
+msgstr "Формула"
+
+#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+msgid "Y ="
+msgstr "Y ="
+
+#: data/ui/edit-item/equation.blp:17 data/ui/edit-item/generated-data.blp:17
+msgid "Simplify"
+msgstr "Опростяване"
+
+#: data/ui/edit-item/equation.blp:22
+msgid "Line"
+msgstr "Черта"
+
+#: data/ui/edit-item/generated-data.blp:29 data/ui/generate-data.blp:72
+msgid "X Start"
+msgstr "Начало по X"
+
+#: data/ui/edit-item/generated-data.blp:35 data/ui/generate-data.blp:79
+msgid "X Stop"
+msgstr "Край по X"
+
+#: data/ui/edit-item/generated-data.blp:43 data/ui/generate-data.blp:88
+msgid "Steps"
+msgstr "Стъпки"
+
+#: data/ui/edit-item/generated-data.blp:53 data/ui/generate-data.blp:98
+msgid "Scale"
+msgstr "Мащабиране"
+
+#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
+msgid "Determines the spacing between data points"
+msgstr "Определя отстоянието между точките за данните"
+
+#: data/ui/edit-item/generated-data.blp:58 data/ui/figure-settings-page.blp:147
+#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
+#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
+#: graphs/window.vala:384
+msgctxt "scale"
+msgid "Linear"
+msgstr "Линейна"
+
+#: data/ui/edit-item/generated-data.blp:59 data/ui/figure-settings-page.blp:148
+#: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
+#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
+#: graphs/window.vala:385
+msgctxt "scale"
+msgid "Logarithmic (Base 10)"
+msgstr "Логаритмична (основа 10)"
+
+#: data/ui/edit-item/generated-data.blp:60 data/ui/figure-settings-page.blp:149
+#: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
+#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
+#: graphs/window.vala:386
+msgctxt "scale"
+msgid "Logarithmic (Base 2)"
+msgstr "Логаритмична (основа 2)"
+
+#: data/ui/edit-item/generated-data.blp:61 data/ui/figure-settings-page.blp:150
+#: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
+#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
+#: graphs/window.vala:387
+msgctxt "scale"
+msgid "Radians"
+msgstr "Радиани"
+
+#: data/ui/edit-item/generated-data.blp:62 data/ui/figure-settings-page.blp:151
+#: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
+#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
+#: graphs/window.vala:388
+msgctxt "scale"
+msgid "Square Root"
+msgstr "Квадратен корен"
+
+#: data/ui/edit-item/generated-data.blp:63 data/ui/figure-settings-page.blp:152
+#: data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
+#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+msgctxt "scale"
+msgid "Inverse"
+msgstr "Обратна"
+
+#: data/ui/sidebar/edit-item.blp:5
+msgid "Edit Item"
+msgstr "Редактиране"
+
+#: data/ui/sidebar/main.blp:12
+msgid "Add New Data"
+msgstr "Добавяне на нови данни"
+
+#: data/ui/sidebar/main.blp:21 data/ui/style-editor-window.blp:65
+#: data/ui/style-editor-window.blp:175
+msgid "Open Application Menu"
+msgstr "Отваряне на менюто на програмата"
+
+#: data/ui/sidebar/main.blp:35
+msgid "No Data"
+msgstr "Няма данни"
+
+#: data/ui/sidebar/main.blp:36
+msgid "Add data from a file or manually as an equation"
+msgstr "Добавяне на данни от файл или формула"
+
+#: data/ui/sidebar/main.blp:85
+msgid "Pan Mode. Click and drag to pan"
+msgstr "Режим на панорамиране. Натиснете с влачене за панорамиране"
+
+#: data/ui/sidebar/main.blp:92
+msgid "Zoom Mode. Select an area on the figure to zoom in"
+msgstr "Режим на мащабиране. Изберете част от фигурата за мащабиране"
+
+#: data/ui/sidebar/main.blp:99
+msgid "Select Mode. Click and drag to make a selection of data"
+msgstr "Режим на избиране. натиснете с влачене за избиране на данни"
+
+#: data/ui/sidebar/main.blp:116
+msgid "New Project"
+msgstr "Нов проект"
+
+#: data/ui/sidebar/main.blp:120
+msgid "Save Project…"
+msgstr "Запазване на проекта…"
+
+#: data/ui/sidebar/main.blp:121
+msgid "Save Project as…"
+msgstr "Запазване на проекта като…"
+
+#: data/ui/sidebar/main.blp:122
+msgid "Open Project…"
+msgstr "Отваряне на проект…"
+
+#: data/ui/sidebar/main.blp:123
+msgid "Close Project"
+msgstr "Затваряне на проекта"
+
+#: data/ui/sidebar/main.blp:127
+msgid "Export Data…"
+msgstr "Изнасяне на данните…"
+
+#: data/ui/sidebar/main.blp:128
+msgid "Export Figure…"
+msgstr "Изнасяне на фигурата…"
+
+#: data/ui/sidebar/main.blp:132 data/ui/figure-settings-page.blp:5
+msgid "Figure Settings"
+msgstr "Настройки на фигурата"
+
+#: data/ui/sidebar/main.blp:140 data/ui/style-editor-window.blp:216
+#: data/ui/style-editor-window.blp:228
+msgid "Keyboard Shortcuts"
+msgstr "Клавишни комбинации"
+
+#: data/ui/sidebar/main.blp:141 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:229
+msgid "Help"
+msgstr "Помощ"
+
+#: data/ui/sidebar/main.blp:142 data/ui/style-editor-window.blp:218
+#: data/ui/style-editor-window.blp:230
+msgid "About Graphs"
+msgstr "Относно „Графики“"
+
+#: data/ui/sidebar/main.blp:148
+msgid "Add Data from File…"
+msgstr "Добавяне на данни от файл…"
+
+#: data/ui/sidebar/main.blp:149
+msgid "Add Equation…"
+msgstr "Добавяне на уравнение…"
+
+#: data/ui/sidebar/main.blp:150
+msgid "Generate Data…"
+msgstr "Генериране на данни…"
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "Добавяне на формула"
@@ -184,12 +557,6 @@ msgstr "Добавяне"
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Въведете математически израз"
-
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/edit-item-equation.blp:13 data/ui/edit-item-generated-data.blp:13
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
-msgid "Y ="
-msgstr "Y ="
 
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
@@ -203,10 +570,6 @@ msgstr "Добавяне на нов стил"
 msgid "Template"
 msgstr "Шаблон"
 
-#: data/ui/add-style.blp:44 data/ui/edit-item.blp:30
-msgid "Name"
-msgstr "Име"
-
 #: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "Напасване на криви"
@@ -214,11 +577,6 @@ msgstr "Напасване на криви"
 #: data/ui/curve-fitting.blp:43
 msgid "Open Curve Fitting Menu"
 msgstr "Отваряне на менюто за напасване на криви"
-
-#: data/ui/curve-fitting.blp:65 data/ui/edit-item-equation.blp:9
-#: data/ui/edit-item-generated-data.blp:9 graphs/item.py:176
-msgid "Equation"
-msgstr "Формула"
 
 #: data/ui/curve-fitting.blp:69
 msgctxt "regression-type"
@@ -268,8 +626,8 @@ msgstr "Добавяне на напасване към данните"
 msgid "Toggle Sidebar"
 msgstr "Превключване на страничната лента"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:193
-#: data/ui/window.blp:425
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200
+#: data/ui/window.blp:322
 msgid "Canvas Failed to Load"
 msgstr "Канавата не може да се зареди"
 
@@ -321,272 +679,6 @@ msgstr "2σ: 95% доверие"
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% доверие"
-
-#: data/ui/edit-item.blp:27
-msgid "Name and Position"
-msgstr "Име и позиция"
-
-#: data/ui/edit-item.blp:35
-msgid "X-Axis Position"
-msgstr "Позиция по оста X"
-
-#: data/ui/edit-item.blp:39
-msgid "Bottom"
-msgstr "Долу"
-
-#: data/ui/edit-item.blp:40
-msgid "Top"
-msgstr "Горе"
-
-#: data/ui/edit-item.blp:46
-msgid "Y-Axis Position"
-msgstr "Позиция по оста Y"
-
-#: data/ui/edit-item.blp:50
-msgid "Left"
-msgstr "Ляво"
-
-#: data/ui/edit-item.blp:51
-msgid "Right"
-msgstr "Дясно"
-
-#: data/ui/edit-item-data.blp:8
-msgid "Line and Markers"
-msgstr "Черта и маркери"
-
-#: data/ui/edit-item-data.blp:11 data/ui/edit-item-equation.blp:25
-#: data/ui/style-editor-box.blp:62
-msgid "Linestyle"
-msgstr "Стил на линия"
-
-#: data/ui/edit-item-data.blp:16 data/ui/style-editor-box.blp:67
-msgctxt "linestyle"
-msgid "None"
-msgstr "Без"
-
-#: data/ui/edit-item-data.blp:17 data/ui/edit-item-equation.blp:29
-#: data/ui/style-editor-box.blp:68
-msgctxt "linestyle"
-msgid "Solid"
-msgstr "Плътно"
-
-#: data/ui/edit-item-data.blp:18 data/ui/edit-item-equation.blp:30
-#: data/ui/style-editor-box.blp:69
-msgctxt "linestyle"
-msgid "Dotted"
-msgstr "Пунктирана"
-
-#: data/ui/edit-item-data.blp:19 data/ui/edit-item-equation.blp:31
-#: data/ui/style-editor-box.blp:70
-msgctxt "linestyle"
-msgid "Dashed"
-msgstr "Тирета"
-
-#: data/ui/edit-item-data.blp:20 data/ui/edit-item-equation.blp:32
-#: data/ui/style-editor-box.blp:71
-msgctxt "linestyle"
-msgid "Dashdot"
-msgstr "Тирета и пунктирана"
-
-#: data/ui/edit-item-data.blp:26 data/ui/edit-item-equation.blp:38
-#: data/ui/style-editor-box.blp:77
-msgid "Linewidth"
-msgstr "Широчина на чертата"
-
-#: data/ui/edit-item-data.blp:41 data/ui/style-editor-box.blp:94
-msgid "Markers"
-msgstr "Маркери"
-
-#: data/ui/edit-item-data.blp:46 data/ui/style-editor-box.blp:99
-msgctxt "markerstyle"
-msgid "None"
-msgstr "Без"
-
-#: data/ui/edit-item-data.blp:47 data/ui/style-editor-box.blp:100
-msgctxt "markerstyle"
-msgid "Point"
-msgstr "Точка"
-
-#: data/ui/edit-item-data.blp:48 data/ui/style-editor-box.blp:101
-msgctxt "markerstyle"
-msgid "Pixel"
-msgstr "Пиксел"
-
-#: data/ui/edit-item-data.blp:49 data/ui/style-editor-box.blp:102
-msgctxt "markerstyle"
-msgid "Circle"
-msgstr "Кръг"
-
-#: data/ui/edit-item-data.blp:50 data/ui/style-editor-box.blp:103
-msgctxt "markerstyle"
-msgid "Triangle Down"
-msgstr "Триъгълник надолу"
-
-#: data/ui/edit-item-data.blp:51 data/ui/style-editor-box.blp:104
-msgctxt "markerstyle"
-msgid "Triangle Up"
-msgstr "Триъгълник нагоре"
-
-#: data/ui/edit-item-data.blp:52 data/ui/style-editor-box.blp:105
-msgctxt "markerstyle"
-msgid "Triangle Left"
-msgstr "Триъгълник наляво"
-
-#: data/ui/edit-item-data.blp:53 data/ui/style-editor-box.blp:106
-msgctxt "markerstyle"
-msgid "Triangle Right"
-msgstr "Триъгълник надясно"
-
-#: data/ui/edit-item-data.blp:54 data/ui/style-editor-box.blp:107
-msgctxt "markerstyle"
-msgid "Octagon"
-msgstr "Осмоъгълник"
-
-#: data/ui/edit-item-data.blp:55 data/ui/style-editor-box.blp:108
-msgctxt "markerstyle"
-msgid "Square"
-msgstr "Квадрат"
-
-#: data/ui/edit-item-data.blp:56 data/ui/style-editor-box.blp:109
-msgctxt "markerstyle"
-msgid "Pentagon"
-msgstr "Петоъгълник"
-
-#: data/ui/edit-item-data.blp:57 data/ui/style-editor-box.blp:110
-msgctxt "markerstyle"
-msgid "Star"
-msgstr "Звезда"
-
-#: data/ui/edit-item-data.blp:58 data/ui/style-editor-box.blp:111
-msgctxt "markerstyle"
-msgid "Hexagon 1"
-msgstr "Шестоъгълник 1"
-
-#: data/ui/edit-item-data.blp:59 data/ui/style-editor-box.blp:112
-msgctxt "markerstyle"
-msgid "Hexagon 2"
-msgstr "Шестоъгълник 2"
-
-#: data/ui/edit-item-data.blp:60 data/ui/style-editor-box.blp:113
-msgctxt "markerstyle"
-msgid "Plus"
-msgstr "Плюс"
-
-#: data/ui/edit-item-data.blp:61 data/ui/style-editor-box.blp:114
-msgctxt "markerstyle"
-msgid "X"
-msgstr "X"
-
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:63 data/ui/style-editor-box.blp:116
-msgctxt "markerstyle"
-msgid "Diamond"
-msgstr "Диамант"
-
-#. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item-data.blp:65 data/ui/style-editor-box.blp:118
-msgctxt "markerstyle"
-msgid "Thin Diamond"
-msgstr "Тънък диамант"
-
-#: data/ui/edit-item-data.blp:66 data/ui/style-editor-box.blp:119
-msgctxt "markerstyle"
-msgid "Vertical Line"
-msgstr "Вертикална линия"
-
-#: data/ui/edit-item-data.blp:67 data/ui/style-editor-box.blp:120
-msgctxt "markerstyle"
-msgid "Horizontal Line"
-msgstr "Хоризонтална линия"
-
-#: data/ui/edit-item-data.blp:68 data/ui/style-editor-box.blp:121
-msgctxt "markerstyle"
-msgid "Filled Plus"
-msgstr "Запълнен Плюс"
-
-#: data/ui/edit-item-data.blp:69 data/ui/style-editor-box.blp:122
-msgctxt "markerstyle"
-msgid "Filled X"
-msgstr "Запълнен X"
-
-#: data/ui/edit-item-data.blp:75 data/ui/style-editor-box.blp:128
-msgid "Marker Size"
-msgstr "Размер на маркера"
-
-#: data/ui/edit-item-equation.blp:17 data/ui/edit-item-generated-data.blp:17
-msgid "Simplify"
-msgstr "Опростяване"
-
-#: data/ui/edit-item-equation.blp:22
-msgid "Line"
-msgstr "Черта"
-
-#: data/ui/edit-item-generated-data.blp:29 data/ui/generate-data.blp:72
-msgid "X Start"
-msgstr "Начало по X"
-
-#: data/ui/edit-item-generated-data.blp:35 data/ui/generate-data.blp:79
-msgid "X Stop"
-msgstr "Край по X"
-
-#: data/ui/edit-item-generated-data.blp:43 data/ui/generate-data.blp:88
-msgid "Steps"
-msgstr "Стъпки"
-
-#: data/ui/edit-item-generated-data.blp:53 data/ui/generate-data.blp:98
-msgid "Scale"
-msgstr "Мащабиране"
-
-#: data/ui/edit-item-generated-data.blp:54 data/ui/generate-data.blp:99
-msgid "Determines the spacing between data points"
-msgstr "Определя отстоянието между точките за данните"
-
-#: data/ui/edit-item-generated-data.blp:58 data/ui/figure-settings-page.blp:147
-#: data/ui/figure-settings-page.blp:163 data/ui/figure-settings-page.blp:179
-#: data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
-#: graphs/window.vala:385
-msgctxt "scale"
-msgid "Linear"
-msgstr "Линейна"
-
-#: data/ui/edit-item-generated-data.blp:59 data/ui/figure-settings-page.blp:148
-#: data/ui/figure-settings-page.blp:164 data/ui/figure-settings-page.blp:180
-#: data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
-#: graphs/window.vala:386
-msgctxt "scale"
-msgid "Logarithmic (Base 10)"
-msgstr "Логаритмична (основа 10)"
-
-#: data/ui/edit-item-generated-data.blp:60 data/ui/figure-settings-page.blp:149
-#: data/ui/figure-settings-page.blp:165 data/ui/figure-settings-page.blp:181
-#: data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
-#: graphs/window.vala:387
-msgctxt "scale"
-msgid "Logarithmic (Base 2)"
-msgstr "Логаритмична (основа 2)"
-
-#: data/ui/edit-item-generated-data.blp:61 data/ui/figure-settings-page.blp:150
-#: data/ui/figure-settings-page.blp:166 data/ui/figure-settings-page.blp:182
-#: data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
-#: graphs/window.vala:388
-msgctxt "scale"
-msgid "Radians"
-msgstr "Радиани"
-
-#: data/ui/edit-item-generated-data.blp:62 data/ui/figure-settings-page.blp:151
-#: data/ui/figure-settings-page.blp:167 data/ui/figure-settings-page.blp:183
-#: data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
-#: graphs/window.vala:389
-msgctxt "scale"
-msgid "Square Root"
-msgstr "Квадратен корен"
-
-#: data/ui/edit-item-generated-data.blp:63 data/ui/figure-settings-page.blp:152
-#: data/ui/figure-settings-page.blp:168 data/ui/figure-settings-page.blp:184
-#: data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
-msgctxt "scale"
-msgid "Inverse"
-msgstr "Обратна"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -656,15 +748,11 @@ msgstr "Внасяне на стил…"
 msgid "Create Style…"
 msgstr "Създаване на стил…"
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:450
-msgid "Figure Settings"
-msgstr "Настройки на фигурата"
-
 #: data/ui/figure-settings-page.blp:26
 msgid "Labels"
 msgstr "Етикети"
 
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:509
+#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:476
 msgid "Title"
 msgstr "Заглавие"
 
@@ -724,19 +812,19 @@ msgstr "Максимум по дясната вертикална ос"
 msgid "Scaling"
 msgstr "Мащабиране"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:415
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:414
 msgid "Bottom X Axis Scale"
 msgstr "Ска̀ла по долната хоризонтална ос"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:416
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:415
 msgid "Top X Axis Scale"
 msgstr "Ска̀ла по горната хоризонтална ос"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:421
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:420
 msgid "Left Y Axis Scale"
 msgstr "Ска̀ла по лявата вертикална ос"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:420
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:419
 msgid "Right Y Axis Scale"
 msgstr "Ска̀ла по дясната вертикална ос"
 
@@ -1101,11 +1189,11 @@ msgid "Amount of points to use when calculating a moving average"
 msgstr ""
 "Брой точки, които да се използват при изчисляване на пълзяща средна стойност"
 
-#: data/ui/style-color-box.blp:20
+#: data/ui/style-color-box.blp:18
 msgid "Edit"
 msgstr "Редактиране"
 
-#: data/ui/style-color-box.blp:35
+#: data/ui/style-color-box.blp:36
 msgid "Remove"
 msgstr "Премахване"
 
@@ -1344,63 +1432,43 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Отваряне на стил"
 
-#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:161
+#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:168
 msgid "Graphs Style Editor"
 msgstr "Редактор на стила на графиките"
-
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:168
-#: data/ui/window.blp:229
-msgid "Open Application Menu"
-msgstr "Отваряне на менюто на програмата"
 
 #: data/ui/style-editor-window.blp:71
 msgid "Open a Style"
 msgstr "Отваряне на стил"
 
-#: data/ui/style-editor-window.blp:73
+#: data/ui/style-editor-window.blp:74
 msgid "Open…"
 msgstr "Отваряне…"
 
-#: data/ui/style-editor-window.blp:134
+#: data/ui/style-editor-window.blp:141
 msgid "Open Preview"
 msgstr "Отваряне на предварителния преглед"
 
-#: data/ui/style-editor-window.blp:203 data/ui/style-editor-window.blp:217
+#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:224
 msgid "Open Style…"
 msgstr "Отваряне на стил…"
 
-#: data/ui/style-editor-window.blp:204
+#: data/ui/style-editor-window.blp:211
 msgid "Save Style…"
 msgstr "Запазване на стила…"
 
-#: data/ui/style-editor-window.blp:205
+#: data/ui/style-editor-window.blp:212
 msgid "Save Style as…"
 msgstr "Запазване на стила като…"
 
-#: data/ui/style-editor-window.blp:209 data/ui/style-editor-window.blp:221
-#: data/ui/window.blp:458
-msgid "Keyboard Shortcuts"
-msgstr "Клавишни комбинации"
-
-#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:222
-#: data/ui/window.blp:459
-msgid "Help"
-msgstr "Помощ"
-
-#: data/ui/style-editor-window.blp:211 data/ui/style-editor-window.blp:223
-#: data/ui/window.blp:460
-msgid "About Graphs"
-msgstr "Относно „Графики“"
-
-#: data/ui/style-preview.blp:51
+#: data/ui/style-preview.blp:52
 msgid "Open"
 msgstr "Отваряне"
 
-#: data/ui/style-preview.blp:56
+#: data/ui/style-preview.blp:57
 msgid "Open With…"
 msgstr "Отваряне с…"
 
-#: data/ui/style-preview.blp:61
+#: data/ui/style-preview.blp:62
 msgid "Delete…"
 msgstr "Изтриване…"
 
@@ -1442,91 +1510,31 @@ msgstr "Отхвърляне на неизбраните данни"
 msgid "Drop Here to Import"
 msgstr "За внасяне пуснете тук"
 
-#: data/ui/window.blp:220
-msgid "Add New Data"
-msgstr "Добавяне на нови данни"
-
-#: data/ui/window.blp:243
-msgid "No Data"
-msgstr "Няма данни"
-
-#: data/ui/window.blp:244
-msgid "Add data from a file or manually as an equation"
-msgstr "Добавяне на данни от файл или формула"
-
-#: data/ui/window.blp:293
-msgid "Pan Mode. Click and drag to pan"
-msgstr "Режим на панорамиране. Натиснете с влачене за панорамиране"
-
-#: data/ui/window.blp:300
-msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr "Режим на мащабиране. Изберете част от фигурата за мащабиране"
-
-#: data/ui/window.blp:307
-msgid "Select Mode. Click and drag to make a selection of data"
-msgstr "Режим на избиране. натиснете с влачене за избиране на данни"
-
-#: data/ui/window.blp:330
+#: data/ui/window.blp:227
 msgid "Show Sidebar"
 msgstr "Показване на страничната лента"
 
-#: data/ui/window.blp:338 data/ui/window.blp:384 graphs/window.vala:375
+#: data/ui/window.blp:235 data/ui/window.blp:281 graphs/window.vala:374
 msgid "Undo"
 msgstr "Отмяна"
 
-#: data/ui/window.blp:344 data/ui/window.blp:391
+#: data/ui/window.blp:241 data/ui/window.blp:288
 msgid "Redo"
 msgstr "Повтаряне"
 
-#: data/ui/window.blp:351 data/ui/window.blp:398
+#: data/ui/window.blp:248 data/ui/window.blp:295
 msgid "View Menu"
 msgstr "Меню изглед"
 
-#: data/ui/window.blp:361 data/ui/window.blp:407
+#: data/ui/window.blp:258 data/ui/window.blp:304
 msgid "Next View"
 msgstr "Следващ изглед"
 
-#: data/ui/window.blp:369 data/ui/window.blp:415
+#: data/ui/window.blp:266 data/ui/window.blp:312
 msgid "Previous View"
 msgstr "Предишен изглед"
 
-#: data/ui/window.blp:435
-msgid "New Project"
-msgstr "Нов проект"
-
-#: data/ui/window.blp:439
-msgid "Save Project…"
-msgstr "Запазване на проекта…"
-
-#: data/ui/window.blp:440
-msgid "Save Project as…"
-msgstr "Запазване на проекта като…"
-
-#: data/ui/window.blp:441
-msgid "Open Project…"
-msgstr "Отваряне на проект…"
-
-#: data/ui/window.blp:445
-msgid "Export Data…"
-msgstr "Изнасяне на данните…"
-
-#: data/ui/window.blp:446
-msgid "Export Figure…"
-msgstr "Изнасяне на фигурата…"
-
-#: data/ui/window.blp:466
-msgid "Add Data from File…"
-msgstr "Добавяне на данни от файл…"
-
-#: data/ui/window.blp:467
-msgid "Add Equation…"
-msgstr "Добавяне на уравнение…"
-
-#: data/ui/window.blp:468
-msgid "Generate Data…"
-msgstr "Генериране на данни…"
-
-#: data/ui/window.blp:474
+#: data/ui/window.blp:332
 msgid "Optimize Limits"
 msgstr "Оптимизиране на границите"
 
@@ -1675,6 +1683,10 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повтаряне на действието"
 
+#: graphs/actions.vala:28
+msgid "The Graphs Developers"
+msgstr "Разработчиците на „Графики“"
+
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr ""
@@ -1688,27 +1700,27 @@ msgstr ""
 "Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
 "newticket'>съответния раздел</a>."
 
-#: graphs/actions.vala:214 graphs/item_box.vala:59
+#: graphs/actions.vala:214 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "%s е изтрито"
 
-#: graphs/actions.vala:241
+#: graphs/actions.vala:248
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Поддържани файлове"
 
-#: graphs/actions.vala:245
+#: graphs/actions.vala:252
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII файлове"
 
-#: graphs/actions.vala:249
+#: graphs/actions.vala:256
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/actions.vala:252
+#: graphs/actions.vala:259
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1756,18 +1768,15 @@ msgstr "Сума на R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри на напасване за %s"
 
-#: graphs/data.py:104
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "{stylename} не може да се разчете, зареждане на системен стил"
+#: graphs/data.py:97
+msgid "system preferred style"
+msgstr "стил предпочитан от системата"
 
-#: graphs/data.py:109
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"Стилът на начертаване {stylename} не съществува, зареждане на системен стил"
+#: graphs/data.py:102
+msgid "loading system preferred"
+msgstr "зареждане на стила предпочитан от системата"
 
-#: graphs/data.py:498
+#: graphs/data.py:490
 msgid "Failed to load project"
 msgstr "Проектът не може да се зареди"
 
@@ -1801,7 +1810,7 @@ msgstr "Максимум по оста X"
 msgid "Y Axis Maximum"
 msgstr "Максимум по оста Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:417
+#: graphs/figure_settings.vala:176 graphs/window.vala:416
 msgid "X Axis Scale"
 msgstr "Ска̀ла по оста X"
 
@@ -1809,7 +1818,7 @@ msgstr "Ска̀ла по оста X"
 msgid "X Axis Label"
 msgstr "Надпис по оста X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:422
+#: graphs/figure_settings.vala:180 graphs/window.vala:421
 msgid "Y Axis Scale"
 msgstr "Ска̀ла по оста Y"
 
@@ -1857,13 +1866,9 @@ msgstr "Няма намерени данни в откроената част"
 msgid "Combined Data"
 msgstr "Комбинирани данни"
 
-#: graphs/operations.py:441
-#, python-brace-format
-msgid ""
-"The operation on {item.props.name} did not result in a plottable equation"
-msgstr ""
-"Операцията върху {item.props.name} не доведе до уравнение, което да може да "
-"бъде начертано."
+#: graphs/operations.py:442
+msgid " did not result in a plottable equation"
+msgstr " не доведе до уравнение, което да може да бъде начертано."
 
 #: graphs/operations.py:450
 msgid "Operation not supported for equations."
@@ -1943,28 +1948,28 @@ msgstr "Запазен проект"
 msgid "Project"
 msgstr "Проект"
 
-#: graphs/style_editor.py:411
-#, python-brace-format
-msgid "Color {number}"
-msgstr "Цвят {number}"
-
-#: graphs/style_editor.py:489
+#: graphs/style_editor.py:444
 msgid "Example Item"
 msgstr "Примерен елемент"
 
-#: graphs/style_editor.py:510 graphs/style_io.py:181
+#: graphs/style_editor.py:477 graphs/style_io.py:181
 msgid "X Label"
 msgstr "Етикет за X"
 
-#: graphs/style_editor.py:511 graphs/style_io.py:182
+#: graphs/style_editor.py:478 graphs/style_io.py:182
 msgid "Y Label"
 msgstr "Етикет за Y"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor.vala:36
+#: graphs/style_editor.vala:38
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор на стила на графиките — „%s“"
+
+#: graphs/style_editor.vala:199
+#, c-format
+msgid "Color %d"
+msgstr "Цвят %d"
 
 #: graphs/style_io.py:76
 #, python-brace-format
@@ -2001,41 +2006,41 @@ msgstr "{filename} не може да се разчете"
 msgid "File {file}, does not contain name tag"
 msgstr "Файлът {file} е без етикет за име"
 
-#: graphs/styles.vala:62
+#: graphs/styles.vala:70
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.py:400
-msgid "Document Portal"
-msgstr "Портал за документи"
-
-#: graphs/utilities.vala:209
+#: graphs/utilities.vala:198
 msgid "All Files"
 msgstr "Всички файлове"
 
-#: graphs/window.vala:179
+#: graphs/utilities.vala:236
+msgid "Document Portal"
+msgstr "Портал за документи"
+
+#: graphs/window.vala:141
 msgid "Graphs (Development)"
 msgstr "Графики (в разработка)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:177
 msgid "Untitled Project"
 msgstr "Ненаименуван проект"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:178
 msgid "Draft"
 msgstr "Чернова"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:186
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графики — %s"
 
-#: graphs/window.vala:365
+#: graphs/window.vala:364
 msgid "Open Location"
 msgstr "Отваряне на пътя"
 
-#: graphs/window.vala:390
+#: graphs/window.vala:389
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Обратен корен"

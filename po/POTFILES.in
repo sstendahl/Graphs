@@ -13,14 +13,14 @@ data/ui/edit-item/generated-data.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
 data/ui/import/mode-columns.blp
+data/ui/sidebar/figure-settings/settings-page.blp
+data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
 data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
 data/ui/export-figure.blp
-data/ui/figure-settings-dialog.blp
-data/ui/figure-settings-page.blp
 data/ui/fitting-parameters.blp
 data/ui/generate-data.blp
 data/ui/item-box.blp
@@ -36,6 +36,7 @@ data/ui/window.blp
 data/ui/window-shortcuts.blp
 graphs/sidebar/edit_item.py
 graphs/sidebar/edit_item.vala
+graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala
 graphs/sidebar/operations.vala
 graphs/actions.vala

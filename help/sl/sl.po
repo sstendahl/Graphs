@@ -6,17 +6,17 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2025-02-16 16:20+0000\n"
-"PO-Revision-Date: 2025-02-16 18:09+0100\n"
+"POT-Creation-Date: 2025-07-29 11:34+0000\n"
+"PO-Revision-Date: 2025-07-29 14:23+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <Slovenian>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
-"X-Generator: Poedit 3.4.2\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
@@ -31,13 +31,11 @@ msgstr "Prileganje krivulje"
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:10
-#, fuzzy
 msgid "Fitting data"
-msgstr "Podatki o prileganju"
+msgstr "Prileganje podatkov"
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:11
-#, fuzzy
 msgid ""
 "Curve fitting allows for a powerful analysis method for your imported data. "
 "To start curve fitting on a data set, press the three vertical dots on the "
@@ -59,13 +57,12 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/curve_fitting.page:19
-#, fuzzy
 msgctxt "_"
 msgid ""
 "external ref='media/curve_fitting_light.png' "
 "md5='d33b620c42f2c1cf82c94998adf4a670'"
 msgstr ""
-"zunanji ref='mediji/curve_fitting_light.png' "
+"external ref='media/curve_fitting_light.png' "
 "md5='d33b620c42f2c1cf82c94998adf4a670'"
 
 #. (itstool) path: section/title
@@ -75,7 +72,6 @@ msgstr "Meje"
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:24
-#, fuzzy
 msgid ""
 "Each detected parameter in the formula will be shown in the sidebar. Here an "
 "initial guess can be set for the fit, as well as the minimum and maximum "
@@ -99,7 +95,6 @@ msgstr "Rezultati"
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:37
-#, fuzzy
 msgid ""
 "Below the fitting parameters, a box is shown with the resulting parameters "
 "of the fit. Apart of the final results, a margin is shown as well for each "
@@ -108,12 +103,12 @@ msgid ""
 "multiple of the standard deviation, corresponding to an uncertainty margin "
 "of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
 msgstr ""
-"Pod parametri vgradnje je prikazano polje z nastalimi parametri prileganja. "
-"Poleg končnih rezultatov je prikazana tudi rezerva za vsak parameter in "
-"vsota R², ki kaže na dobro prileganje. Rob lahko nastavite s primarnim "
-"menijem v pogovornem oknu Prilagajanje krivulje kot večkratnik standardnega "
-"odklona, ki ustreza meji negotovosti 65, 95 ali 99,7% fali standardnemu "
-"odklonu 1σ, 2σ ali 3σ."
+"Pod parametri prileganja je prikazano polje z nastalimi parametri "
+"prileganja. Poleg končnih rezultatov je prikazana tudi rezerva za vsak "
+"parameter in vsota R², ki kaže na kakovost prileganja. Rob lahko nastavite s "
+"primarnim menijem v pogovornem oknu Prilagajanje krivulje kot večkratnik "
+"standardnega odklona, ki ustreza meji negotovosti 65, 95 ali 99,7 % za "
+"standardni odklon 1σ, 2σ ali 3σ."
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:45
@@ -137,19 +132,17 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:57
-#, fuzzy
 msgid "Fitting algorithms"
 msgstr "Algoritmi za prileganje"
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:58
-#, fuzzy
 msgid ""
 "When performing a fit, there are three different fitting algorithms to "
 "choose from, these can be set from the primary menu."
 msgstr ""
 "Pri izvedbi prileganja lahko izbirate med tremi različnimi algoritmi "
-"prileganja, ki jih lahko nastavite v primarnem meniju."
+"prileganja, ki jih lahko nastavite v osnovnem meniju."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:64
@@ -158,7 +151,6 @@ msgstr "Levenberg-Marquardt"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:65
-#, fuzzy
 msgid ""
 "The Levenberg-Marquardt algorithm is a traditionally relatively popular "
 "algorithm that performs very efficiently. However, it does not handle bounds "
@@ -166,13 +158,12 @@ msgid ""
 msgstr ""
 "Levenberg-Marquardtov algoritem je tradicionalno relativno priljubljen "
 "algoritem, ki deluje zelo učinkovito. Vendar pa ne obravnava meja za "
-"parametre vgradnje."
+"parametre prileganja."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:68
-#, fuzzy
 msgid "Trust Region"
-msgstr "Regija zaupanja"
+msgstr "Področje zaupanja"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:69
@@ -200,7 +191,7 @@ msgid ""
 "with small problems involving bounds."
 msgstr ""
 "Algoritem Dogbox uporablja pravokotna območja zaupanja in običajno dobro "
-"deluje z majhnimi težavami, ki vključujejo meje."
+"deluje z manjšimi problemi, ki vključujejo meje."
 
 #. (itstool) path: page/title
 #: C/import.page:8
@@ -209,13 +200,12 @@ msgstr "Uvažanje podatkov"
 
 #. (itstool) path: page/p
 #: C/import.page:9
-#, fuzzy
 msgid ""
 "There are two primary ways to import new data in Graphs, importing data "
 "directly by file or generating new data using an equation."
 msgstr ""
-"Obstajata dva glavna načina za uvoz novih podatkov v grafih, uvoz podatkov "
-"neposredno po datoteki ali ustvarjanje novih podatkov z enačbo."
+"Obstajata dva glavna načina za uvoz novih podatkov v Grafih, uvoz podatkov "
+"neposredno iz datoteke ali ustvarjanje novih podatkov z enačbo."
 
 #. (itstool) path: page/media
 #. This is a reference to an external file such as an image or video. When
@@ -223,13 +213,12 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/import.page:14
-#, fuzzy
 msgctxt "_"
 msgid ""
 "external ref='media/add_data_light.png' "
 "md5='5246da95eb47c74c7488f9b9016dde3d'"
 msgstr ""
-"zunanji ref='mediji/add_data_light.png' "
+"external ref='media/add_data_light.png' "
 "md5='5246da95eb47c74c7488f9b9016dde3d'"
 
 #. (itstool) path: page/p
@@ -279,13 +268,12 @@ msgstr ""
 #. update your localized copy. The msgstr is not used at all. Set it to
 #. whatever you like once you have updated your copy of the file.
 #: C/import.page:36
-#, fuzzy
 msgctxt "_"
 msgid ""
 "external ref='media/add_equation_light.png' "
 "md5='009108d0a1fc2d95d54d8aa88f6016d5'"
 msgstr ""
-"zunanji ref='mediji/add_equation_light.png' "
+"external ref='media/add_equation_light.png' "
 "md5='009108d0a1fc2d95d54d8aa88f6016d5'"
 
 #. (itstool) path: page/p
@@ -321,36 +309,32 @@ msgstr "<_:media-1/> Grafi"
 
 #. (itstool) path: section/title
 #: C/index.page:16
-#, fuzzy
 msgid "How to"
-msgstr "Kako vzpostaviti povezavo"
+msgstr "Kako delati"
 
 #. (itstool) path: section/p
 #: C/index.page:17
-#, fuzzy
 msgid ""
 "There's multiple how-to guides available for Graphs. These can be found here."
-msgstr "Za grafe je na voljo več navodil. Te lahko najdete tukaj."
+msgstr "Za Grafe je na voljo več navodil. Te lahko najdete tukaj."
 
 #. (itstool) path: page/title
 #: C/manipulate.page:8
-#, fuzzy
 msgid "Manipulating Data"
-msgstr "Manipulacija podatkov"
+msgstr "Delo s podatki"
 
 #. (itstool) path: page/p
 #: C/manipulate.page:10
-#, fuzzy
 msgid ""
 "There are many different ways to manipulate data using Graphs. All data is "
 "treated the same using Graphs, independent what file it is imported from, or "
 "if it's a generated equation. When selecting a part of the canvas using the "
 "Highlight tool, only the highlight area will be manipulated."
 msgstr ""
-"Obstaja veliko različnih načinov za manipulacijo podatkov z grafi. Vsi "
-"podatki so obravnavani enako z grafi, ne glede na to, iz katere datoteke so "
-"uvoženi ali če gre za ustvarjeno enačbo. Ko izberete del platna z orodjem za "
-"označevanje, se bo manipuliralo samo z območjem označevanja."
+"Obstaja veliko različnih načinov za delo s podatki v Grafih. Vse podatke "
+"Grafi obravnavajo enako, ne glede na to, iz katere datoteke so uvoženi ali "
+"če gre za ustvarjeno enačbo. Ko izberete del platna z orodjem za "
+"poudarjanje, bo delovalo samo v poudarjenem področju."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:18
@@ -385,13 +369,11 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/manipulate.page:34
-#, fuzzy
 msgid "Custom Transformations"
 msgstr "Preoblikovanja po meri"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:35
-#, fuzzy
 msgid ""
 "Another way to manipulate the data is by using custom transformations. This "
 "field transforms both X and Y coordinate piece by piece according to an "
@@ -399,10 +381,10 @@ msgid ""
 "simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
 "on the x-data field. Note that the input coordinates are not case-sensitive."
 msgstr ""
-"Drug način za manipulacijo podatkov je uporaba transformacij po meri. To "
-"polje preoblikuje koordinato X in Y kos za kosom v skladu z izbrano enačbo. "
-"Na primer, če želite vzeti kvadrat vseh Y-koordinat, preprosto nastavite "
-"<code>Y = Y²</code> na y-podatkovno polje in <code>X = X</code> na x-"
+"Drug način za delo s podatki je uporaba preoblikovanj po meri. To polje "
+"preoblikuje koordinato X in Y kos za kosom v skladu z izbrano enačbo. "
+"Primer: če želite vzeti kvadrat vseh Y-koordinat, preprosto nastavite "
+"<code>Y = Y²</code> v y-podatkovno polje in <code>X = X</code> v x-"
 "podatkovno polje. Upoštevajte, da vhodne koordinate ne razlikujejo med "
 "velikimi in malimi črkami."
 
@@ -417,7 +399,7 @@ msgid ""
 "external ref='media/custom_transform_light.png' "
 "md5='311f5286f3372e5fea1431dd6a63d666'"
 msgstr ""
-"zunanji ref='media/custom_transform_light.png' "
+"external ref='media/custom_transform_light.png' "
 "md5='311f5286f3372e5fea1431dd6a63d666'"
 
 #. (itstool) path: p/link

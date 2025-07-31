@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-07-26 08:52+0000\n"
-"PO-Revision-Date: 2025-07-26 17:06+0200\n"
+"POT-Creation-Date: 2025-07-30 09:45+0000\n"
+"PO-Revision-Date: 2025-07-30 17:03+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n%100<=4 ? 2 : 3);\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/window.blp:212 graphs/actions.vala:25
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:25
 msgid "Graphs"
 msgstr "Grafi"
 
@@ -93,7 +93,7 @@ msgstr "risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafiko
 msgid "New Window"
 msgstr "Novo okno"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/window.blp:480
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:136
 msgid "Style Editor"
 msgstr "Urejevalnik slogov"
 
@@ -371,35 +371,35 @@ msgstr "Določa razmik med podatkovnimi točkami"
 
 #: data/ui/edit-item/generated-data.blp:58 data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
 #: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
-#: graphs/window.vala:417
+#: graphs/window.vala:403
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
 #: data/ui/edit-item/generated-data.blp:59 data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
 #: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
-#: graphs/window.vala:418
+#: graphs/window.vala:404
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "logaritemska (osnova 10)"
 
 #: data/ui/edit-item/generated-data.blp:60 data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
 #: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
-#: graphs/window.vala:419
+#: graphs/window.vala:405
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "logaritemska (osnova 2)"
 
 #: data/ui/edit-item/generated-data.blp:61 data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
 #: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
-#: graphs/window.vala:420
+#: graphs/window.vala:406
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
 #: data/ui/edit-item/generated-data.blp:62 data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
 #: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
-#: graphs/window.vala:421
+#: graphs/window.vala:407
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
@@ -409,6 +409,94 @@ msgstr "kvadratni koren"
 msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
+
+#: data/ui/sidebar/edit-item.blp:5
+msgid "Edit Item"
+msgstr "Uredi element"
+
+#: data/ui/sidebar/main.blp:12
+msgid "Add New Data"
+msgstr "Dodaj nove podatke"
+
+#: data/ui/sidebar/main.blp:21 data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175
+msgid "Open Application Menu"
+msgstr "Odpri meni programa"
+
+#: data/ui/sidebar/main.blp:35
+msgid "No Data"
+msgstr "Ni podatkov"
+
+#: data/ui/sidebar/main.blp:36
+msgid "Add data from a file or manually as an equation"
+msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
+
+#: data/ui/sidebar/main.blp:85
+msgid "Pan Mode. Click and drag to pan"
+msgstr "Način zasuka. Kliknite in povlecite za zasuk"
+
+#: data/ui/sidebar/main.blp:92
+msgid "Zoom Mode. Select an area on the figure to zoom in"
+msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
+
+#: data/ui/sidebar/main.blp:99
+msgid "Select Mode. Click and drag to make a selection of data"
+msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
+
+#: data/ui/sidebar/main.blp:116
+msgid "New Project"
+msgstr "Nov projekt"
+
+#: data/ui/sidebar/main.blp:120
+msgid "Save Project…"
+msgstr "Shrani projekt …"
+
+#: data/ui/sidebar/main.blp:121
+msgid "Save Project as…"
+msgstr "Shrani projekt kot …"
+
+#: data/ui/sidebar/main.blp:122
+msgid "Open Project…"
+msgstr "Odpri projekt …"
+
+#: data/ui/sidebar/main.blp:123
+msgid "Close Project"
+msgstr "Zapri projekt"
+
+#: data/ui/sidebar/main.blp:127
+msgid "Export Data…"
+msgstr "Izvozi podatke …"
+
+#: data/ui/sidebar/main.blp:128
+msgid "Export Figure…"
+msgstr "Izvozi sliko ..."
+
+#: data/ui/sidebar/main.blp:132 data/ui/figure-settings-page.blp:5
+msgid "Figure Settings"
+msgstr "Nastavitve slike"
+
+#: data/ui/sidebar/main.blp:140 data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228
+msgid "Keyboard Shortcuts"
+msgstr "Tipkovne bližnjice"
+
+#: data/ui/sidebar/main.blp:141 data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229
+msgid "Help"
+msgstr "Pomoč"
+
+#: data/ui/sidebar/main.blp:142 data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230
+msgid "About Graphs"
+msgstr "O programu Grafikoni"
+
+#: data/ui/sidebar/main.blp:148
+msgid "Add Data from File…"
+msgstr "Dodaj podatke iz datoteke ..."
+
+#: data/ui/sidebar/main.blp:149
+msgid "Add Equation…"
+msgstr "Dodaj enačbo ..."
+
+#: data/ui/sidebar/main.blp:150
+msgid "Generate Data…"
+msgstr "Tvori podatke …"
 
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
@@ -490,7 +578,7 @@ msgstr "Dodaj Prilagodi podatkom"
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:450
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:322
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -610,10 +698,6 @@ msgstr "Uvozi slog ..."
 msgid "Create Style…"
 msgstr "Ustvari slog ..."
 
-#: data/ui/figure-settings-page.blp:5 data/ui/window.blp:476
-msgid "Figure Settings"
-msgstr "Nastavitve slike"
-
 #: data/ui/figure-settings-page.blp:26
 msgid "Labels"
 msgstr "Oznake"
@@ -678,19 +762,19 @@ msgstr "Največje desne osi Y"
 msgid "Scaling"
 msgstr "Spreminjanje merila"
 
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:447
+#: data/ui/figure-settings-page.blp:143 graphs/window.vala:433
 msgid "Bottom X Axis Scale"
 msgstr "Merilo spodnje osi X"
 
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:448
+#: data/ui/figure-settings-page.blp:159 graphs/window.vala:434
 msgid "Top X Axis Scale"
 msgstr "Merilo vrhnje osi X"
 
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:453
+#: data/ui/figure-settings-page.blp:175 graphs/window.vala:439
 msgid "Left Y Axis Scale"
 msgstr "Merilo leve osi Y"
 
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:452
+#: data/ui/figure-settings-page.blp:191 graphs/window.vala:438
 msgid "Right Y Axis Scale"
 msgstr "Merilo desne osi Y"
 
@@ -1299,10 +1383,6 @@ msgstr "Odpri slog"
 msgid "Graphs Style Editor"
 msgstr "Urejevalnik sloga grafov"
 
-#: data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175 data/ui/window.blp:228
-msgid "Open Application Menu"
-msgstr "Odpri meni programa"
-
 #: data/ui/style-editor-window.blp:71
 msgid "Open a Style"
 msgstr "Odprite slog"
@@ -1326,18 +1406,6 @@ msgstr "Shrani slog ..."
 #: data/ui/style-editor-window.blp:212
 msgid "Save Style as…"
 msgstr "Shrani slog kot..."
-
-#: data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228 data/ui/window.blp:484
-msgid "Keyboard Shortcuts"
-msgstr "Tipkovne bližnjice"
-
-#: data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229 data/ui/window.blp:485
-msgid "Help"
-msgstr "Pomoč"
-
-#: data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230 data/ui/window.blp:486
-msgid "About Graphs"
-msgstr "O programu Grafikoni"
 
 #: data/ui/style-preview.blp:52
 msgid "Open"
@@ -1389,99 +1457,31 @@ msgstr "Zavrzi neizbrane podatke"
 msgid "Drop Here to Import"
 msgstr "Spustite tukaj za uvoz"
 
-#: data/ui/window.blp:219
-msgid "Add New Data"
-msgstr "Dodaj nove podatke"
-
-#: data/ui/window.blp:242
-msgid "No Data"
-msgstr "Ni podatkov"
-
-#: data/ui/window.blp:243
-msgid "Add data from a file or manually as an equation"
-msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
-
-#: data/ui/window.blp:292
-msgid "Pan Mode. Click and drag to pan"
-msgstr "Način zasuka. Kliknite in povlecite za zasuk"
-
-#: data/ui/window.blp:299
-msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
-
-#: data/ui/window.blp:306
-msgid "Select Mode. Click and drag to make a selection of data"
-msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
-
-#: data/ui/window.blp:322
-msgid "Edit Item"
-msgstr "Uredi element"
-
-#: data/ui/window.blp:355
+#: data/ui/window.blp:227
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:363 data/ui/window.blp:409 graphs/window.vala:407
+#: data/ui/window.blp:235 data/ui/window.blp:281 graphs/window.vala:393
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: data/ui/window.blp:369 data/ui/window.blp:416
+#: data/ui/window.blp:241 data/ui/window.blp:288
 msgid "Redo"
 msgstr "Ponovno uveljavi"
 
-#: data/ui/window.blp:376 data/ui/window.blp:423
+#: data/ui/window.blp:248 data/ui/window.blp:295
 msgid "View Menu"
 msgstr "Meni Pogled"
 
-#: data/ui/window.blp:386 data/ui/window.blp:432
+#: data/ui/window.blp:258 data/ui/window.blp:304
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window.blp:394 data/ui/window.blp:440
+#: data/ui/window.blp:266 data/ui/window.blp:312
 msgid "Previous View"
 msgstr "Prejšnji pogled"
 
-#: data/ui/window.blp:460
-msgid "New Project"
-msgstr "Nov projekt"
-
-#: data/ui/window.blp:464
-msgid "Save Project…"
-msgstr "Shrani projekt …"
-
-#: data/ui/window.blp:465
-msgid "Save Project as…"
-msgstr "Shrani projekt kot …"
-
-#: data/ui/window.blp:466
-msgid "Open Project…"
-msgstr "Odpri projekt …"
-
-#: data/ui/window.blp:467
-msgid "Close Project"
-msgstr "Zapri projekt"
-
-#: data/ui/window.blp:471
-msgid "Export Data…"
-msgstr "Izvozi podatke …"
-
-#: data/ui/window.blp:472
-msgid "Export Figure…"
-msgstr "Izvozi sliko ..."
-
-#: data/ui/window.blp:492
-msgid "Add Data from File…"
-msgstr "Dodaj podatke iz datoteke ..."
-
-#: data/ui/window.blp:493
-msgid "Add Equation…"
-msgstr "Dodaj enačbo ..."
-
-#: data/ui/window.blp:494
-msgid "Generate Data…"
-msgstr "Tvori podatke …"
-
-#: data/ui/window.blp:500
+#: data/ui/window.blp:332
 msgid "Optimize Limits"
 msgstr "Optimiziraj omejitve"
 
@@ -1638,27 +1638,27 @@ msgstr "Razvijalci Grafov"
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
-#: graphs/actions.vala:214 graphs/item_box.vala:56
+#: graphs/actions.vala:219 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
 
-#: graphs/actions.vala:248
+#: graphs/actions.vala:255
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
-#: graphs/actions.vala:252
+#: graphs/actions.vala:259
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
-#: graphs/actions.vala:256
+#: graphs/actions.vala:263
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/actions.vala:259
+#: graphs/actions.vala:266
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1706,15 +1706,17 @@ msgstr "Vsota R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:97
-msgid "system preferred style"
-msgstr "prednostni sistemski slog"
+#: graphs/data.py:96
+#, python-brace-format
+msgid "Could not parse style {stylename}, loading system preferred style"
+msgstr "Ni bilo mogoče razčleniti sloga {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:102
-msgid "loading system preferred"
-msgstr "nalaga se prednostni sistemski slog"
+#: graphs/data.py:101
+#, python-brace-format
+msgid "Style {stylename} does not exist, loading system preferred style"
+msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 
-#: graphs/data.py:490
+#: graphs/data.py:491
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -1748,7 +1750,7 @@ msgstr "Največja vrednost na osi X"
 msgid "Y Axis Maximum"
 msgstr "Največja vrednost na osi Y"
 
-#: graphs/figure_settings.vala:176 graphs/window.vala:449
+#: graphs/figure_settings.vala:176 graphs/window.vala:435
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
@@ -1756,7 +1758,7 @@ msgstr "Merilo osi X"
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
-#: graphs/figure_settings.vala:180 graphs/window.vala:454
+#: graphs/figure_settings.vala:180 graphs/window.vala:440
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
@@ -1802,9 +1804,10 @@ msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:442
-msgid " did not result in a plottable equation"
-msgstr "ni privedlo do enačbe, ki bi jo bilo možno izrisati"
+#: graphs/operations.py:441
+#, python-brace-format
+msgid "The operation on {name} did not result in a plottable equation"
+msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
 #: graphs/operations.py:450
 msgid "Operation not supported for equations."
@@ -1902,7 +1905,7 @@ msgstr "Oznaka Y"
 msgid "Graphs Style Editor — %s"
 msgstr "Urejevalnik sloga grafov — %s"
 
-#: graphs/style_editor.vala:198
+#: graphs/style_editor.vala:202
 #, c-format
 msgid "Color %d"
 msgstr "Barve %d"
@@ -1954,29 +1957,29 @@ msgstr "Vse datoteke"
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
-#: graphs/window.vala:169
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:205
+#: graphs/window.vala:193
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.vala:206
+#: graphs/window.vala:194
 msgid "Draft"
 msgstr "Osnutek"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:214
+#: graphs/window.vala:202
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
-#: graphs/window.vala:397
+#: graphs/window.vala:383
 msgid "Open Location"
 msgstr "Odpri mesto"
 
-#: graphs/window.vala:422
+#: graphs/window.vala:408
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Inverzni koren"
