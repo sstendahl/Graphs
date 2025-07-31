@@ -99,7 +99,7 @@ namespace Graphs {
             figure_settings.bind_property ("right_label", right_label, "text", SYNC);
 
             figure_settings.bind_property ("legend", legend, "active", SYNC);
-            figure_settings.bind_property ("legend_position", legend_position, "selected",SYNC);
+            figure_settings.bind_property ("legend_position", legend_position, "selected", SYNC);
             figure_settings.bind_property ("hide_unselected", hide_unselected, "active", SYNC);
 
             window.data.bind_property ("selected_stylename", style_name, "label", BindingFlags.SYNC_CREATE);
