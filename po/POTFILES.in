@@ -10,8 +10,7 @@ data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
 data/ui/edit-item/generated-data.blp
-data/ui/sidebar/figure-settings/page.blp
-data/ui/sidebar/figure-settings/settings.blp
+data/ui/sidebar/figure-settings/settings-page.blp
 data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
