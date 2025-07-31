@@ -10,9 +10,6 @@ from graphs.file_import import parsers
 from graphs.misc import ParseError
 
 
-parsers.register_parsers()
-
-
 _REQUESTS = (
     "guess_import_mode",
     "init_import_settings",
@@ -34,11 +31,14 @@ class DataImporter(Graphs.DataImporter):
                 getattr(self, "_on_" + request.replace("-", "_")),
             )
 
+        parsers.register_parsers()
+        self.setup(parsers.list_parsers())
+
     @staticmethod
     def _on_guess_import_mode_request(
         self,
         settings: Graphs.ImportSettings,
-    ) -> str:
+    ) -> int:
         """
         Guess the import mode of a file.
 
@@ -49,14 +49,14 @@ class DataImporter(Graphs.DataImporter):
             file_suffix = Path(filename).suffixes[-1]
         except IndexError:
             file_suffix = None
-        for mode in parsers.list_modes():
-            suffixes = parsers.get_suffixes(mode)
+        for index, mode in enumerate(parsers.list_parsers()):
+            suffixes = mode.get_file_suffixes()
             if suffixes is None:
                 continue
             for suffix in suffixes:
                 if file_suffix == suffix:
-                    return mode
-        return "columns"
+                    return index
+        return 0  # columns
 
     @staticmethod
     def _on_init_import_settings_request(
@@ -69,7 +69,8 @@ class DataImporter(Graphs.DataImporter):
         This is intended for filetypes, where the settings are dependent on
         the file itself or other runtime variables.
         """
-        callback = parsers.get_init_settings_function(settings.get_mode())
+        parser = parsers.get_parser(settings.get_mode())
+        callback = parser.get_init_settings_function()
         if callback is not None:
             callback(settings)
 
@@ -80,7 +81,8 @@ class DataImporter(Graphs.DataImporter):
         settings: Graphs.ImportSettings,
         data: Graphs.Data,
     ) -> str:
-        callback = parsers.get_import_function(settings.get_mode())
+        parser = parsers.get_parser(settings.get_mode())
+        callback = parser.get_import_function()
         style = data.get_selected_style_params()
         try:
             items = callback(settings, style)

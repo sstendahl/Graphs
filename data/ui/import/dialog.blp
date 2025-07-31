@@ -83,14 +83,6 @@ template $GraphsImportDialog: Adw.Dialog {
                 Adw.PreferencesGroup {
                   Adw.ComboRow mode {
                     title: _("Import Mode");
-                    model: StringList {
-                      strings [
-                        C_("import-mode", "Project"),
-                        C_("import-mode", "Columns"),
-                        C_("import-mode", "xrdml"),
-                        C_("import-mode", "xry"),
-                      ]
-                    };
                     notify::selected => $on_mode();
                   }
                 }

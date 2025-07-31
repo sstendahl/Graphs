@@ -9,36 +9,29 @@ namespace Graphs {
         list.add (item);
     }
 
-    public enum ImportMode {
-        PROJECT,
-        COLUMNS,
-        XRDML,
-        XRY;
-
-        public string friendly_string () {
-            return this.to_string ()[19:].down ();
-        }
-
-        public static ImportMode parse (string mode) {
-            switch (mode) {
-                case "project": return ImportMode.PROJECT;
-                case "columns": return ImportMode.COLUMNS;
-                case "xrdm": return ImportMode.XRDML;
-                case "xry": return ImportMode.XRY;
-                default: assert_not_reached ();
-            }
-        }
+    public class Parser : Object {
+        public string name { get; construct set; }
+        public string ui_name { get; construct set; }
     }
 
     public class DataImporter : Object {
         public Application application { get; construct set; }
 
-        protected signal string guess_import_mode_request (ImportSettings settings);
+        protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal void init_import_settings_request (ImportSettings settings);
         protected signal string import_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
         private GLib.Settings mode_settings;
         private string[] mode_settings_list;
+        private Parser[] parsers;
+        private StringList parser_names = new StringList (null);
+
+        protected void setup (Parser[] parsers) {
+            this.parsers = parsers;
+            foreach (Parser parser in parsers) {
+                parser_names.append (parser.ui_name);
+            }
+        }
 
         public void import_from_files (Window window, File[] files) {
             mode_settings = application.get_settings_child ("import-params");
@@ -56,7 +49,7 @@ namespace Graphs {
                 });
             }
 
-            var dialog = new ImportDialog (settings_list);
+            var dialog = new ImportDialog (parser_names, settings_list);
             dialog.accept.connect (() => {
                 Gee.List<Item> itemlist = new LinkedList<Item> ();
                 foreach (var settings in settings_list) {
@@ -71,8 +64,10 @@ namespace Graphs {
         }
 
         private void init_import_settings (ImportSettings settings) {
-            if (settings.mode in mode_settings_list) {
-                settings.load_from_settings (mode_settings.get_child (settings.mode));
+            settings.mode_name = parser_names.get_string (settings.mode);
+            string name = parsers[settings.mode].name;
+            if (name in mode_settings_list) {
+                settings.load_from_settings (mode_settings.get_child (name));
             }
             init_import_settings_request.emit (settings);
         }
@@ -80,7 +75,8 @@ namespace Graphs {
 
     public class ImportSettings : Object {
         public File file { get; construct set; }
-        public string mode { get; set; }
+        public uint mode { get; set; }
+        public string mode_name { get; set; }
 
         public signal void value_changed (string key, Variant val);
 
@@ -148,7 +144,8 @@ namespace Graphs {
 
         private ImportSettings current_settings;
 
-        public ImportDialog (ImportSettings[] settings_list) {
+        public ImportDialog (StringList modes, ImportSettings[] settings_list) {
+            mode.set_model (modes);
             foreach (var settings in settings_list) {
                 string filename = Tools.get_filename (settings.file);
                 var row = new ImportFileRow (settings, filename);
@@ -163,7 +160,7 @@ namespace Graphs {
 
         private void load_settings (ImportSettings settings) {
             current_settings = null;
-            mode.set_selected (ImportMode.parse (settings.mode));
+            mode.set_selected (settings.mode);
             current_settings = settings;
             load_mode_settings ();
         }
@@ -175,7 +172,7 @@ namespace Graphs {
             }
 
             switch (current_settings.mode) {
-                case "columns":
+                case 0: // columns
                     file_settings_box.append (new ColumnsGroup (current_settings));
                     break;
                 default: break;
@@ -185,7 +182,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_mode () {
             if (current_settings == null) return;
-            current_settings.mode = ((ImportMode) mode.get_selected ()).friendly_string ();
+            current_settings.mode = mode.get_selected ();
             load_mode_settings ();
         }
 
@@ -203,7 +200,7 @@ namespace Graphs {
 
         public ImportFileRow (ImportSettings settings, string filename) {
             set_title (filename);
-            settings.bind_property ("mode", mode, "label", BindingFlags.SYNC_CREATE);
+            settings.bind_property ("mode_name", mode, "label", BindingFlags.SYNC_CREATE);
         }
     }
 
@@ -275,7 +272,7 @@ namespace Graphs {
         public ColumnsGroup (ImportSettings settings) {
             delimiter.set_selected (ColumnsDelimiter.parse (settings.get_string ("delimiter")));
             delimiter.notify["selected"].connect (() => {
-                ColumnsDelimiter selected = delimiter.get_selected ();
+                ColumnsDelimiter selected = (ColumnsDelimiter) delimiter.get_selected ();
                 settings.set_string ("delimiter", selected.friendly_string ());
                 custom_delimiter.set_sensitive (selected == ColumnsDelimiter.CUSTOM);
             });
