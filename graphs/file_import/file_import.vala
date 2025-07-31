@@ -19,6 +19,7 @@ namespace Graphs {
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal void init_import_settings_request (ImportSettings settings);
+        protected signal Widget load_mode_settings_request (ImportSettings settings);
         protected signal string import_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
         private GLib.Settings mode_settings;
@@ -31,6 +32,10 @@ namespace Graphs {
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
+        }
+
+        public Widget load_mode_settings (ImportSettings settings) {
+            return load_mode_settings_request.emit (settings);
         }
 
         public void import_from_files (Window window, File[] files) {
@@ -49,7 +54,7 @@ namespace Graphs {
                 });
             }
 
-            var dialog = new ImportDialog (parser_names, settings_list);
+            var dialog = new ImportDialog (this, settings_list);
             dialog.accept.connect (() => {
                 Gee.List<Item> itemlist = new LinkedList<Item> ();
                 foreach (var settings in settings_list) {
@@ -61,6 +66,10 @@ namespace Graphs {
                 window.data.add_items_from_list (itemlist);
             });
             dialog.present (window);
+        }
+
+        public StringList get_parser_names () {
+            return parser_names;
         }
 
         private void init_import_settings (ImportSettings settings) {
@@ -142,10 +151,12 @@ namespace Graphs {
 
         public signal void accept ();
 
+        private DataImporter importer;
         private ImportSettings current_settings;
 
-        public ImportDialog (StringList modes, ImportSettings[] settings_list) {
-            mode.set_model (modes);
+        public ImportDialog (DataImporter importer, ImportSettings[] settings_list) {
+            this.importer = importer;
+            mode.set_model (importer.get_parser_names ());
             foreach (var settings in settings_list) {
                 string filename = Tools.get_filename (settings.file);
                 var row = new ImportFileRow (settings, filename);
@@ -171,12 +182,9 @@ namespace Graphs {
                 file_settings_box.remove (widget);
             }
 
-            switch (current_settings.mode) {
-                case 0: // columns
-                    file_settings_box.append (new ColumnsGroup (current_settings));
-                    break;
-                default: break;
-            }
+            Widget mode_settings = importer.load_mode_settings (current_settings);
+            if (mode_settings == null) return;
+            file_settings_box.append (mode_settings);
         }
 
         [GtkCallback]
@@ -201,106 +209,6 @@ namespace Graphs {
         public ImportFileRow (ImportSettings settings, string filename) {
             set_title (filename);
             settings.bind_property ("mode_name", mode, "label", BindingFlags.SYNC_CREATE);
-        }
-    }
-
-    enum ColumnsDelimiter {
-        WHITESPACE,
-        TAB,
-        COLON,
-        SEMICOLON,
-        COMMA,
-        PERIOD,
-        CUSTOM;
-
-        public string friendly_string () {
-            return this.to_string ()[25:].down ();
-        }
-
-        public static ColumnsDelimiter parse (string delimiter) {
-            switch (delimiter) {
-                case "whitespace": return ColumnsDelimiter.WHITESPACE;
-                case "tab": return ColumnsDelimiter.TAB;
-                case "colon": return ColumnsDelimiter.COLON;
-                case "semicolon": return ColumnsDelimiter.SEMICOLON;
-                case "comma": return ColumnsDelimiter.COMMA;
-                case "period": return ColumnsDelimiter.PERIOD;
-                case "custom": return ColumnsDelimiter.CUSTOM;
-                default: assert_not_reached ();
-            }
-        }
-    }
-
-    enum ColumnsSeparator {
-        COMMA,
-        PERIOD;
-
-        public string friendly_string () {
-            return this.to_string ()[25:].down ();
-        }
-
-        public static ColumnsSeparator parse (string separator) {
-            switch (separator) {
-                case "comma": return ColumnsSeparator.COMMA;
-                case "period": return ColumnsSeparator.PERIOD;
-                default: assert_not_reached ();
-            }
-        }
-    }
-
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/mode-columns.ui")]
-    public class ColumnsGroup : Adw.PreferencesGroup {
-
-        [GtkChild]
-        public unowned Adw.ComboRow delimiter { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow custom_delimiter { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow separator { get; }
-
-        [GtkChild]
-        public unowned Adw.SpinRow column_x { get; }
-
-        [GtkChild]
-        public unowned Adw.SpinRow column_y { get; }
-
-        [GtkChild]
-        public unowned Adw.SpinRow skip_rows { get; }
-
-        public ColumnsGroup (ImportSettings settings) {
-            delimiter.set_selected (ColumnsDelimiter.parse (settings.get_string ("delimiter")));
-            delimiter.notify["selected"].connect (() => {
-                ColumnsDelimiter selected = (ColumnsDelimiter) delimiter.get_selected ();
-                settings.set_string ("delimiter", selected.friendly_string ());
-                custom_delimiter.set_sensitive (selected == ColumnsDelimiter.CUSTOM);
-            });
-
-            custom_delimiter.set_text (settings.get_string ("custom-delimiter"));
-            custom_delimiter.notify["text"].connect (() => {
-                settings.set_string ("custom-delimiter", custom_delimiter.get_text ());
-            });
-
-            separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
-            separator.notify["selected"].connect (() => {
-                settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
-            });
-
-            column_x.set_value (settings.get_int ("column-x"));
-            column_x.notify["value"].connect (() => {
-                settings.set_int ("column-x", (int) column_x.get_value ());
-            });
-
-            column_y.set_value (settings.get_int ("column-y"));
-            column_y.notify["value"].connect (() => {
-                settings.set_int ("column-y", (int) column_y.get_value ());
-            });
-
-            skip_rows.set_value (settings.get_int ("skip-rows"));
-            skip_rows.notify["value"].connect (() => {
-                settings.set_int ("skip-rows", (int) skip_rows.get_value ());
-            });
         }
     }
 }

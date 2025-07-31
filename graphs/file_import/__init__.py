@@ -4,7 +4,7 @@ import logging
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Gee, Graphs
+from gi.repository import Gee, Graphs, Gtk
 
 from graphs.file_import import parsers
 from graphs.misc import ParseError
@@ -13,6 +13,7 @@ from graphs.misc import ParseError
 _REQUESTS = (
     "guess_import_mode",
     "init_import_settings",
+    "load_mode_settings",
     "import",
 )
 
@@ -73,6 +74,18 @@ class DataImporter(Graphs.DataImporter):
         callback = parser.get_init_settings_function()
         if callback is not None:
             callback(settings)
+
+    @staticmethod
+    def _on_load_mode_settings_request(
+        self,
+        settings: Graphs.ImportSettings,
+    ) -> Gtk.Widget:
+        """Load the UI settings."""
+        parser = parsers.get_parser(settings.get_mode())
+        cls = parser.get_settings_widget_class()
+        if cls is None:
+            return None
+        return cls.new(settings)
 
     @staticmethod
     def _on_import_request(

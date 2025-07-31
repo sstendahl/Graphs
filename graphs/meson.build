@@ -50,6 +50,7 @@ config_dep = valac.find_library('config',
 )
 graphs_lib = shared_library('graphs',
   files(
+    'file_import/parsers/columns.vala',
     'file_import/file_import.vala',
     'sidebar/edit_item.vala',
     'sidebar/figure_settings.vala',

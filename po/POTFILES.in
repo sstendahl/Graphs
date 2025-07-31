@@ -35,6 +35,7 @@ data/ui/transform.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
 graphs/file_import/parsers/__init__.py
+graphs/file_import/parsers/columns.vala
 graphs/file_import/parsers/columns.py
 graphs/file_import/parsers/project.py
 graphs/file_import/parsers/xrdml.py
