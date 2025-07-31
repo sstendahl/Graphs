@@ -1,26 +1,17 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""
-Module for importing data from files.
-
-    Functions:
-        import_from_files
-"""
+"""Module for importing data from files."""
 import logging
 from gettext import gettext as _
 from pathlib import Path
 
 from gi.repository import Gee, Graphs
 
-from graphs import parse_file
+from graphs.file_import import parsers
 from graphs.misc import ParseError
 
-_IMPORT_MODES = {
-    # name: suffix
-    "project": ".graphs",
-    "xrdml": ".xrdml",
-    "xry": ".xry",
-    "columns": None,
-}
+
+parsers.register_parsers()
+
 
 _REQUESTS = (
     "guess_import_mode",
@@ -58,15 +49,19 @@ class DataImporter(Graphs.DataImporter):
             file_suffix = Path(filename).suffixes[-1]
         except IndexError:
             file_suffix = None
-        for mode, suffix in _IMPORT_MODES.items():
-            if suffix is not None and file_suffix == suffix:
-                return mode
+        for mode in parsers.list_modes():
+            suffixes = parsers.get_suffixes(mode)
+            if suffixes is None:
+                continue
+            for suffix in suffixes:
+                if file_suffix == suffix:
+                    return mode
         return "columns"
 
     @staticmethod
     def _on_init_import_settings_request(
         self,
-        _settings: Graphs.ImportSettings,
+        settings: Graphs.ImportSettings,
     ) -> None:
         """
         Init import settings.
@@ -74,6 +69,9 @@ class DataImporter(Graphs.DataImporter):
         This is intended for filetypes, where the settings are dependent on
         the file itself or other runtime variables.
         """
+        callback = parsers.get_init_settings_function(settings.get_mode())
+        if callback is not None:
+            callback(settings)
 
     @staticmethod
     def _on_import_request(
@@ -82,7 +80,7 @@ class DataImporter(Graphs.DataImporter):
         settings: Graphs.ImportSettings,
         data: Graphs.Data,
     ) -> str:
-        callback = getattr(parse_file, "import_from_" + settings.get_mode())
+        callback = parsers.get_import_function(settings.get_mode())
         style = data.get_selected_style_params()
         try:
             items = callback(settings, style)

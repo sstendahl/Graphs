@@ -49,7 +49,7 @@ LEGEND_POSITIONS = [
 ]
 DELIMITERS = {
     "whitespace": "\\s+",
-    "tabs": "\\t+",
+    "tab": "\\t+",
     "colon": ":",
     "semicolon": ";",
     "comma": ",",
