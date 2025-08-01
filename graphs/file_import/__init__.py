@@ -15,7 +15,7 @@ _REQUESTS = (
     "guess_import_mode",
     "init_import_settings",
     "append_settings_widgets",
-    "import",
+    "parse",
 )
 
 
@@ -38,6 +38,7 @@ class DataImporter(Graphs.DataImporter):
         parsers.register_parser(project.ProjectParser())
         parsers.register_parser(xrdml.XrdmlParser())
         parsers.register_parser(xry.XryParser())
+
         self.setup(parsers.list_parsers())
 
     @staticmethod
@@ -93,17 +94,16 @@ class DataImporter(Graphs.DataImporter):
             callback(settings, settings_box)
 
     @staticmethod
-    def _on_import_request(
+    def _on_parse_request(
         self,
         itemlist: Gee.List,
         settings: Graphs.ImportSettings,
         data: Graphs.Data,
     ) -> str:
         parser = parsers.get_parser(settings.get_mode())
-        callback = parser.get_parse_function()
         style = data.get_selected_style_params()
         try:
-            items = callback(settings, style)
+            items = parser.get_parse_function()(settings, style)
             for item in items:
                 Graphs.add_item_to_list(item, itemlist)
             return ""

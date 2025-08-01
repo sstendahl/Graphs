@@ -5,9 +5,7 @@ from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-import gio_pyio
-
-from graphs import item, misc
+from graphs import file_io, item, misc
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
@@ -28,25 +26,25 @@ class XryParser(Parser):
     @staticmethod
     def parse(params, style) -> misc.ItemList:
         """Import data from .xry files used by Leybold X-ray apparatus."""
-        with gio_pyio.open(
+        with file_io.open(
             params.get_file(),
             "rt",
             encoding="ISO-8859-1",
-        ) as wrapper:
+        ) as file_like:
 
             def skip(lines: int):
                 for _count in range(lines):
-                    next(wrapper)
+                    next(file_like)
 
-            if wrapper.readline().strip() != "XR01":
+            if file_like.readline().strip() != "XR01":
                 raise ParseError(_("Invalid .xry format"))
             skip(3)
-            b_params = wrapper.readline().strip().split()
+            b_params = file_like.readline().strip().split()
             x_step = float(b_params[3])
             x_value = float(b_params[0])
 
             skip(12)
-            info = wrapper.readline().strip().split()
+            info = file_like.readline().strip().split()
             item_count = int(info[0])
 
             name = Graphs.tools_get_filename(params.get_file())
@@ -59,15 +57,15 @@ class XryParser(Parser):
                 ) for i in range(item_count)
             ]
             for _count in range(int(info[1])):
-                values = wrapper.readline().strip().split()
+                values = file_like.readline().strip().split()
                 for value, item_ in zip(values, items):
                     if value != "NaN":
                         item_.xdata.append(x_value)
                         item_.ydata.append(float(value))
                 x_value += x_step
             skip(9 + item_count)
-            for _count in range(int(wrapper.readline().strip())):
-                values = wrapper.readline().strip().split()
+            for _count in range(int(file_like.readline().strip())):
+                values = file_like.readline().strip().split()
                 text = " ".join(values[7:])
                 items.append(
                     item.TextItem.new(

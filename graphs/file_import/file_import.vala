@@ -20,7 +20,7 @@ namespace Graphs {
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal void init_import_settings_request (ImportSettings settings);
         protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
-        protected signal string import_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
+        protected signal string parse_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
         private GLib.Settings mode_settings;
         private string[] mode_settings_list;
@@ -58,7 +58,7 @@ namespace Graphs {
             dialog.accept.connect (() => {
                 Gee.List<Item> itemlist = new LinkedList<Item> ();
                 foreach (var settings in settings_list) {
-                    string message = import_request.emit (itemlist, settings, window.data);
+                    string message = parse_request.emit (itemlist, settings, window.data);
                     if (message.length != 0) {
                         window.add_toast_string (message);
                     }

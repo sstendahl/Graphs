@@ -14,9 +14,7 @@ import math
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
-import gio_pyio
-
-from graphs import artist, misc, scales, utilities
+from graphs import artist, file_io, misc, scales, utilities
 
 from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
@@ -578,7 +576,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         dpi: int,
         transparent: bool,
     ) -> None:
-        with gio_pyio.open(file, "wb") as file_like:
+        with file_io.open(file, "wb") as file_like:
             self.figure.savefig(
                 file_like,
                 format=fmt,
