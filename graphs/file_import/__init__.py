@@ -7,6 +7,7 @@ from pathlib import Path
 from gi.repository import Gee, Graphs, Gtk
 
 from graphs.file_import import parsers
+from graphs.file_import.parsers import columns, project, xrdml, xry
 from graphs.misc import ParseError
 
 
@@ -32,7 +33,11 @@ class DataImporter(Graphs.DataImporter):
                 getattr(self, "_on_" + request.replace("-", "_")),
             )
 
-        # parsers.register_parsers()
+        # Order determines UI order
+        parsers.register_parser(columns.ColumnsParser())
+        parsers.register_parser(project.ProjectParser())
+        parsers.register_parser(xrdml.XrdmlParser())
+        parsers.register_parser(xry.XryParser())
         self.setup(parsers.list_parsers())
 
     @staticmethod
@@ -95,7 +100,7 @@ class DataImporter(Graphs.DataImporter):
         data: Graphs.Data,
     ) -> str:
         parser = parsers.get_parser(settings.get_mode())
-        callback = parser.get_import_function()
+        callback = parser.get_parse_function()
         style = data.get_selected_style_params()
         try:
             items = callback(settings, style)
