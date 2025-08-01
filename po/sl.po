@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-07-30 09:45+0000\n"
-"PO-Revision-Date: 2025-07-30 17:03+0200\n"
+"POT-Creation-Date: 2025-07-31 17:44+0000\n"
+"PO-Revision-Date: 2025-08-01 12:32+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -93,7 +93,7 @@ msgstr "risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafiko
 msgid "New Window"
 msgstr "Novo okno"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:136
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:139
 msgid "Style Editor"
 msgstr "Urejevalnik slogov"
 
@@ -369,46 +369,218 @@ msgstr "Prilagodi velikost"
 msgid "Determines the spacing between data points"
 msgstr "Določa razmik med podatkovnimi točkami"
 
-#: data/ui/edit-item/generated-data.blp:58 data/ui/figure-settings-page.blp:147 data/ui/figure-settings-page.blp:163
-#: data/ui/figure-settings-page.blp:179 data/ui/figure-settings-page.blp:195 data/ui/generate-data.blp:103
-#: graphs/window.vala:403
+#: data/ui/edit-item/generated-data.blp:58 data/ui/sidebar/figure-settings/settings-page.blp:163
+#: data/ui/sidebar/figure-settings/settings-page.blp:179 data/ui/sidebar/figure-settings/settings-page.blp:195
+#: data/ui/sidebar/figure-settings/settings-page.blp:211 data/ui/generate-data.blp:103
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/edit-item/generated-data.blp:59 data/ui/figure-settings-page.blp:148 data/ui/figure-settings-page.blp:164
-#: data/ui/figure-settings-page.blp:180 data/ui/figure-settings-page.blp:196 data/ui/generate-data.blp:104
-#: graphs/window.vala:404
+#: data/ui/edit-item/generated-data.blp:59 data/ui/sidebar/figure-settings/settings-page.blp:164
+#: data/ui/sidebar/figure-settings/settings-page.blp:180 data/ui/sidebar/figure-settings/settings-page.blp:196
+#: data/ui/sidebar/figure-settings/settings-page.blp:212 data/ui/generate-data.blp:104
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "logaritemska (osnova 10)"
 
-#: data/ui/edit-item/generated-data.blp:60 data/ui/figure-settings-page.blp:149 data/ui/figure-settings-page.blp:165
-#: data/ui/figure-settings-page.blp:181 data/ui/figure-settings-page.blp:197 data/ui/generate-data.blp:105
-#: graphs/window.vala:405
+#: data/ui/edit-item/generated-data.blp:60 data/ui/sidebar/figure-settings/settings-page.blp:165
+#: data/ui/sidebar/figure-settings/settings-page.blp:181 data/ui/sidebar/figure-settings/settings-page.blp:197
+#: data/ui/sidebar/figure-settings/settings-page.blp:213 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "logaritemska (osnova 2)"
 
-#: data/ui/edit-item/generated-data.blp:61 data/ui/figure-settings-page.blp:150 data/ui/figure-settings-page.blp:166
-#: data/ui/figure-settings-page.blp:182 data/ui/figure-settings-page.blp:198 data/ui/generate-data.blp:106
-#: graphs/window.vala:406
+#: data/ui/edit-item/generated-data.blp:61 data/ui/sidebar/figure-settings/settings-page.blp:166
+#: data/ui/sidebar/figure-settings/settings-page.blp:182 data/ui/sidebar/figure-settings/settings-page.blp:198
+#: data/ui/sidebar/figure-settings/settings-page.blp:214 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
-#: data/ui/edit-item/generated-data.blp:62 data/ui/figure-settings-page.blp:151 data/ui/figure-settings-page.blp:167
-#: data/ui/figure-settings-page.blp:183 data/ui/figure-settings-page.blp:199 data/ui/generate-data.blp:107
-#: graphs/window.vala:407
+#: data/ui/edit-item/generated-data.blp:62 data/ui/sidebar/figure-settings/settings-page.blp:167
+#: data/ui/sidebar/figure-settings/settings-page.blp:183 data/ui/sidebar/figure-settings/settings-page.blp:199
+#: data/ui/sidebar/figure-settings/settings-page.blp:215 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
 
-#: data/ui/edit-item/generated-data.blp:63 data/ui/figure-settings-page.blp:152 data/ui/figure-settings-page.blp:168
-#: data/ui/figure-settings-page.blp:184 data/ui/figure-settings-page.blp:200 data/ui/generate-data.blp:108
+#: data/ui/edit-item/generated-data.blp:63 data/ui/sidebar/figure-settings/settings-page.blp:168
+#: data/ui/sidebar/figure-settings/settings-page.blp:184 data/ui/sidebar/figure-settings/settings-page.blp:200
+#: data/ui/sidebar/figure-settings/settings-page.blp:216 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:5 data/ui/sidebar/main.blp:29
+msgid "Figure Settings"
+msgstr "Nastavitve slike"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:26
+msgid "Labels"
+msgstr "Oznake"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor.py:476
+msgid "Title"
+msgstr "Naziv"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:34
+msgid "Bottom X Axis Label"
+msgstr "Oznaka spodnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:39
+msgid "Top X Axis Label"
+msgstr "Oznaka vrhnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:44
+msgid "Left Y Axis Label"
+msgstr "Oznaka osi Y na desni"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:49
+msgid "Right Y Axis Label"
+msgstr "Oznaka osi Y na desni"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:54
+msgid "Axis Limits"
+msgstr "Omejitve osi"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
+msgid "Bottom X Axis Minimum"
+msgstr "Najmanjše spodnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:76
+msgid "Bottom X Axis Maximum"
+msgstr "Največje spodnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:91
+msgid "Top X Axis Minimum"
+msgstr "Najmanjše vrhnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:99
+msgid "Top X Axis Maximum"
+msgstr "Največje vrhnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:114
+msgid "Left Y Axis Minimum"
+msgstr "Najmanjše leve osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:122
+msgid "Left Y Axis Maximum"
+msgstr "Največja leve osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:137
+msgid "Right Y Axis Minimum"
+msgstr "Najmanjše desne osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:145
+msgid "Right Y Axis Maximum"
+msgstr "Največje desne osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:155
+msgid "Scaling"
+msgstr "Spreminjanje merila"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:159
+msgid "Bottom X Axis Scale"
+msgstr "Merilo spodnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:175
+msgid "Top X Axis Scale"
+msgstr "Merilo vrhnje osi X"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:191
+msgid "Left Y Axis Scale"
+msgstr "Merilo leve osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:207
+msgid "Right Y Axis Scale"
+msgstr "Merilo desne osi Y"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:223
+msgid "Appearance"
+msgstr "Videz"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:226
+msgid "Show Legend"
+msgstr "Pokaži legendo"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:230
+msgid "Legend Position"
+msgstr "Položaj legende"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:235
+msgctxt "legend-position"
+msgid "Auto"
+msgstr "Samodejno"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:236
+msgctxt "legend-position"
+msgid "Upper Right"
+msgstr "desno zgoraj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:237
+msgctxt "legend-position"
+msgid "Upper Left"
+msgstr "levo zgoraj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:238
+msgctxt "legend-position"
+msgid "Lower Left"
+msgstr "levo spodaj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:239
+msgctxt "legend-position"
+msgid "Lower Right"
+msgstr "desno spodaj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:240
+msgctxt "legend-position"
+msgid "Center Left"
+msgstr "Levo na sredini"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:241
+msgctxt "legend-position"
+msgid "Center Right"
+msgstr "Desno na sredini"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:242
+msgctxt "legend-position"
+msgid "Lower Center"
+msgstr "na sredini spodaj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:243
+msgctxt "legend-position"
+msgid "Upper Center"
+msgstr "na sredini zgoraj"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:244
+msgctxt "legend-position"
+msgid "Center"
+msgstr "Sredina"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:250
+msgid "Hide Unselected Items"
+msgstr "Skrij neizbrane elemente"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:254 data/ui/sidebar/figure-settings/style-page.blp:5
+#: graphs/style_editor.vala:80
+msgid "Style"
+msgstr "Slog"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:273
+msgid "Set as Default"
+msgstr "Nastavi kot privzeto"
+
+#: data/ui/sidebar/figure-settings/style-page.blp:13 data/ui/add-style.blp:6
+msgid "Add New Style"
+msgstr "Dodaj nov slog"
+
+#: data/ui/sidebar/figure-settings/style-page.blp:51
+msgid "Import Style…"
+msgstr "Uvozi slog ..."
+
+#: data/ui/sidebar/figure-settings/style-page.blp:56
+msgid "Create Style…"
+msgstr "Ustvari slog ..."
 
 #: data/ui/sidebar/edit-item.blp:5
 msgid "Edit Item"
@@ -422,79 +594,75 @@ msgstr "Dodaj nove podatke"
 msgid "Open Application Menu"
 msgstr "Odpri meni programa"
 
-#: data/ui/sidebar/main.blp:35
+#: data/ui/sidebar/main.blp:42
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: data/ui/sidebar/main.blp:36
+#: data/ui/sidebar/main.blp:43
 msgid "Add data from a file or manually as an equation"
 msgstr "Dodajanje podatkov iz datoteke ali ročno kot enačbo"
 
-#: data/ui/sidebar/main.blp:85
+#: data/ui/sidebar/main.blp:92
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Način zasuka. Kliknite in povlecite za zasuk"
 
-#: data/ui/sidebar/main.blp:92
+#: data/ui/sidebar/main.blp:99
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Način povečave. Izberite območje na sliki, ki ga želite približati"
 
-#: data/ui/sidebar/main.blp:99
+#: data/ui/sidebar/main.blp:106
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Izbirni način. Kliknite in povlecite, da opravite izbor podatkov"
 
-#: data/ui/sidebar/main.blp:116
+#: data/ui/sidebar/main.blp:123
 msgid "New Project"
 msgstr "Nov projekt"
 
-#: data/ui/sidebar/main.blp:120
+#: data/ui/sidebar/main.blp:127
 msgid "Save Project…"
 msgstr "Shrani projekt …"
 
-#: data/ui/sidebar/main.blp:121
+#: data/ui/sidebar/main.blp:128
 msgid "Save Project as…"
 msgstr "Shrani projekt kot …"
 
-#: data/ui/sidebar/main.blp:122
+#: data/ui/sidebar/main.blp:129
 msgid "Open Project…"
 msgstr "Odpri projekt …"
 
-#: data/ui/sidebar/main.blp:123
+#: data/ui/sidebar/main.blp:130
 msgid "Close Project"
 msgstr "Zapri projekt"
 
-#: data/ui/sidebar/main.blp:127
+#: data/ui/sidebar/main.blp:134
 msgid "Export Data…"
 msgstr "Izvozi podatke …"
 
-#: data/ui/sidebar/main.blp:128
+#: data/ui/sidebar/main.blp:135
 msgid "Export Figure…"
 msgstr "Izvozi sliko ..."
 
-#: data/ui/sidebar/main.blp:132 data/ui/figure-settings-page.blp:5
-msgid "Figure Settings"
-msgstr "Nastavitve slike"
-
-#: data/ui/sidebar/main.blp:140 data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228
+#: data/ui/sidebar/main.blp:143 data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228
 msgid "Keyboard Shortcuts"
 msgstr "Tipkovne bližnjice"
 
-#: data/ui/sidebar/main.blp:141 data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229
 msgid "Help"
 msgstr "Pomoč"
 
-#: data/ui/sidebar/main.blp:142 data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230
 msgid "About Graphs"
 msgstr "O programu Grafikoni"
 
-#: data/ui/sidebar/main.blp:148
+#: data/ui/sidebar/main.blp:151
 msgid "Add Data from File…"
 msgstr "Dodaj podatke iz datoteke ..."
 
-#: data/ui/sidebar/main.blp:149
+#: data/ui/sidebar/main.blp:152
 msgid "Add Equation…"
 msgstr "Dodaj enačbo ..."
 
-#: data/ui/sidebar/main.blp:150
+#: data/ui/sidebar/main.blp:153
 msgid "Generate Data…"
 msgstr "Tvori podatke …"
 
@@ -513,10 +681,6 @@ msgstr "Vnesite matematični izraz"
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
-
-#: data/ui/add-style.blp:6 data/ui/figure-settings-dialog.blp:38
-msgid "Add New Style"
-msgstr "Dodaj nov slog"
 
 #: data/ui/add-style.blp:39
 msgid "Template"
@@ -578,7 +742,7 @@ msgstr "Dodaj Prilagodi podatkom"
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:322
+#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:324
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -685,168 +849,6 @@ msgstr "Ločljivost (dpi)"
 #: data/ui/export-figure.blp:67
 msgid "Transparent Background"
 msgstr "Prosojno ozadje"
-
-#: data/ui/figure-settings-dialog.blp:30 data/ui/figure-settings-page.blp:238 graphs/style_editor.vala:80
-msgid "Style"
-msgstr "Slog"
-
-#: data/ui/figure-settings-dialog.blp:76
-msgid "Import Style…"
-msgstr "Uvozi slog ..."
-
-#: data/ui/figure-settings-dialog.blp:81
-msgid "Create Style…"
-msgstr "Ustvari slog ..."
-
-#: data/ui/figure-settings-page.blp:26
-msgid "Labels"
-msgstr "Oznake"
-
-#: data/ui/figure-settings-page.blp:29 graphs/style_editor.py:476
-msgid "Title"
-msgstr "Naziv"
-
-#: data/ui/figure-settings-page.blp:34
-msgid "Bottom X Axis Label"
-msgstr "Oznaka spodnje osi X"
-
-#: data/ui/figure-settings-page.blp:39
-msgid "Top X Axis Label"
-msgstr "Oznaka vrhnje osi X"
-
-#: data/ui/figure-settings-page.blp:44
-msgid "Left Y Axis Label"
-msgstr "Oznaka osi Y na desni"
-
-#: data/ui/figure-settings-page.blp:49
-msgid "Right Y Axis Label"
-msgstr "Oznaka osi Y na desni"
-
-#: data/ui/figure-settings-page.blp:54
-msgid "Axis Limits"
-msgstr "Omejitve osi"
-
-#: data/ui/figure-settings-page.blp:68
-msgid "Bottom X Axis Minimum"
-msgstr "Najmanjše spodnje osi X"
-
-#: data/ui/figure-settings-page.blp:74
-msgid "Bottom X Axis Maximum"
-msgstr "Največje spodnje osi X"
-
-#: data/ui/figure-settings-page.blp:87
-msgid "Top X Axis Minimum"
-msgstr "Najmanjše vrhnje osi X"
-
-#: data/ui/figure-settings-page.blp:93
-msgid "Top X Axis Maximum"
-msgstr "Največje vrhnje osi X"
-
-#: data/ui/figure-settings-page.blp:106
-msgid "Left Y Axis Minimum"
-msgstr "Najmanjše leve osi Y"
-
-#: data/ui/figure-settings-page.blp:112
-msgid "Left Y Axis Maximum"
-msgstr "Največja leve osi Y"
-
-#: data/ui/figure-settings-page.blp:125
-msgid "Right Y Axis Minimum"
-msgstr "Najmanjše desne osi Y"
-
-#: data/ui/figure-settings-page.blp:131
-msgid "Right Y Axis Maximum"
-msgstr "Največje desne osi Y"
-
-#: data/ui/figure-settings-page.blp:139
-msgid "Scaling"
-msgstr "Spreminjanje merila"
-
-#: data/ui/figure-settings-page.blp:143 graphs/window.vala:433
-msgid "Bottom X Axis Scale"
-msgstr "Merilo spodnje osi X"
-
-#: data/ui/figure-settings-page.blp:159 graphs/window.vala:434
-msgid "Top X Axis Scale"
-msgstr "Merilo vrhnje osi X"
-
-#: data/ui/figure-settings-page.blp:175 graphs/window.vala:439
-msgid "Left Y Axis Scale"
-msgstr "Merilo leve osi Y"
-
-#: data/ui/figure-settings-page.blp:191 graphs/window.vala:438
-msgid "Right Y Axis Scale"
-msgstr "Merilo desne osi Y"
-
-#: data/ui/figure-settings-page.blp:207
-msgid "Appearance"
-msgstr "Videz"
-
-#: data/ui/figure-settings-page.blp:210
-msgid "Show Legend"
-msgstr "Pokaži legendo"
-
-#: data/ui/figure-settings-page.blp:214
-msgid "Legend Position"
-msgstr "Položaj legende"
-
-#: data/ui/figure-settings-page.blp:219
-msgctxt "legend-position"
-msgid "Auto"
-msgstr "Samodejno"
-
-#: data/ui/figure-settings-page.blp:220
-msgctxt "legend-position"
-msgid "Upper Right"
-msgstr "desno zgoraj"
-
-#: data/ui/figure-settings-page.blp:221
-msgctxt "legend-position"
-msgid "Upper Left"
-msgstr "levo zgoraj"
-
-#: data/ui/figure-settings-page.blp:222
-msgctxt "legend-position"
-msgid "Lower Left"
-msgstr "levo spodaj"
-
-#: data/ui/figure-settings-page.blp:223
-msgctxt "legend-position"
-msgid "Lower Right"
-msgstr "desno spodaj"
-
-#: data/ui/figure-settings-page.blp:224
-msgctxt "legend-position"
-msgid "Center Left"
-msgstr "Levo na sredini"
-
-#: data/ui/figure-settings-page.blp:225
-msgctxt "legend-position"
-msgid "Center Right"
-msgstr "Desno na sredini"
-
-#: data/ui/figure-settings-page.blp:226
-msgctxt "legend-position"
-msgid "Lower Center"
-msgstr "na sredini spodaj"
-
-#: data/ui/figure-settings-page.blp:227
-msgctxt "legend-position"
-msgid "Upper Center"
-msgstr "na sredini zgoraj"
-
-#: data/ui/figure-settings-page.blp:228
-msgctxt "legend-position"
-msgid "Center"
-msgstr "Sredina"
-
-#: data/ui/figure-settings-page.blp:234
-msgid "Hide Unselected Items"
-msgstr "Skrij neizbrane elemente"
-
-#: data/ui/figure-settings-page.blp:256
-msgid "Set as Default"
-msgstr "Nastavi kot privzeto"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1457,33 +1459,29 @@ msgstr "Zavrzi neizbrane podatke"
 msgid "Drop Here to Import"
 msgstr "Spustite tukaj za uvoz"
 
-#: data/ui/window.blp:227
+#: data/ui/window.blp:228
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:235 data/ui/window.blp:281 graphs/window.vala:393
+#: data/ui/window.blp:237 data/ui/window.blp:283 graphs/window.vala:412
 msgid "Undo"
 msgstr "Razveljavi"
 
-#: data/ui/window.blp:241 data/ui/window.blp:288
+#: data/ui/window.blp:244 data/ui/window.blp:291
 msgid "Redo"
 msgstr "Ponovno uveljavi"
 
-#: data/ui/window.blp:248 data/ui/window.blp:295
-msgid "View Menu"
-msgstr "Meni Pogled"
+#: data/ui/window.blp:252 data/ui/window.blp:299
+msgid "Optimize View Limits"
+msgstr "Optimiziraj omejitve pogleda"
 
-#: data/ui/window.blp:258 data/ui/window.blp:304
+#: data/ui/window.blp:260 data/ui/window.blp:306
 msgid "Next View"
 msgstr "Naslednji pogled"
 
-#: data/ui/window.blp:266 data/ui/window.blp:312
+#: data/ui/window.blp:268 data/ui/window.blp:314
 msgid "Previous View"
 msgstr "Prejšnji pogled"
-
-#: data/ui/window.blp:332
-msgid "Optimize Limits"
-msgstr "Optimiziraj omejitve"
 
 #: data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
@@ -1630,6 +1628,45 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Ponovi dejanje"
 
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:140
+msgid "X Axis Minimum"
+msgstr "Najmanjša vrednost na osi X"
+
+#: graphs/sidebar/figure_settings.vala:141
+msgid "Y Axis Minimum"
+msgstr "Najmanjša vrednost na osi Y"
+
+#: graphs/sidebar/figure_settings.vala:143
+msgid "X Axis Maximum"
+msgstr "Največja vrednost na osi X"
+
+#: graphs/sidebar/figure_settings.vala:144
+msgid "Y Axis Maximum"
+msgstr "Največja vrednost na osi Y"
+
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:164
+msgid "X Axis Scale"
+msgstr "Merilo osi X"
+
+#: graphs/sidebar/figure_settings.vala:165 graphs/sidebar/figure_settings.vala:169
+msgid "X Axis Label"
+msgstr "Oznaka osi X"
+
+#: graphs/sidebar/figure_settings.vala:168
+msgid "Y Axis Scale"
+msgstr "Merilo osi Y"
+
+#: graphs/sidebar/figure_settings.vala:228
+msgid "Defaults Updated"
+msgstr "Privzete nastavitve so posodobljene"
+
+#: graphs/sidebar/figure_settings.vala:322
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "Ali ste prepričani, da želite izbrisati %s?"
+
 #: graphs/actions.vala:28
 msgid "The Graphs Developers"
 msgstr "Razvijalci Grafov"
@@ -1638,27 +1675,27 @@ msgstr "Razvijalci Grafov"
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
-#: graphs/actions.vala:219 graphs/item_box.vala:56
+#: graphs/actions.vala:183 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
 
-#: graphs/actions.vala:255
+#: graphs/actions.vala:218
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
-#: graphs/actions.vala:259
+#: graphs/actions.vala:222
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
-#: graphs/actions.vala:263
+#: graphs/actions.vala:226
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/actions.vala:266
+#: graphs/actions.vala:229
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
@@ -1733,43 +1770,6 @@ msgstr "Ni podatkov za izvoz"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
-
-#: graphs/figure_settings.vala:162
-msgid "X Axis Minimum"
-msgstr "Najmanjša vrednost na osi X"
-
-#: graphs/figure_settings.vala:163
-msgid "Y Axis Minimum"
-msgstr "Najmanjša vrednost na osi Y"
-
-#: graphs/figure_settings.vala:165
-msgid "X Axis Maximum"
-msgstr "Največja vrednost na osi X"
-
-#: graphs/figure_settings.vala:166
-msgid "Y Axis Maximum"
-msgstr "Največja vrednost na osi Y"
-
-#: graphs/figure_settings.vala:176 graphs/window.vala:435
-msgid "X Axis Scale"
-msgstr "Merilo osi X"
-
-#: graphs/figure_settings.vala:177 graphs/figure_settings.vala:181
-msgid "X Axis Label"
-msgstr "Oznaka osi X"
-
-#: graphs/figure_settings.vala:180 graphs/window.vala:440
-msgid "Y Axis Scale"
-msgstr "Merilo osi Y"
-
-#: graphs/figure_settings.vala:281
-msgid "Defaults Updated"
-msgstr "Privzete nastavitve so posodobljene"
-
-#: graphs/figure_settings.vala:315
-#, c-format
-msgid "Are you sure you want to delete %s?"
-msgstr "Ali ste prepričani, da želite izbrisati %s?"
 
 #: graphs/item.py:69
 msgid "Dataset"
@@ -1957,29 +1957,24 @@ msgstr "Vse datoteke"
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
-#: graphs/window.vala:149
+#: graphs/window.vala:148
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:200
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:201
 msgid "Draft"
 msgstr "Osnutek"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:202
+#: graphs/window.vala:207
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
-#: graphs/window.vala:383
+#: graphs/window.vala:402
 msgid "Open Location"
 msgstr "Odpri mesto"
-
-#: graphs/window.vala:408
-msgctxt "scale"
-msgid "Inverse Root"
-msgstr "Inverzni koren"
