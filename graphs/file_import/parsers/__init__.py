@@ -25,13 +25,13 @@ class Parser(Graphs.Parser):
         ui_name: str,
         import_function,
         file_suffixes: list[str],
-        settings_widget_class=None,
+        settings_widgets_function=None,
         init_settings_function=None,
     ):
         super().__init__(name=name, ui_name=ui_name)
         self._import_function = import_function
         self._file_suffixes = file_suffixes
-        self._settings_widget_class = settings_widget_class
+        self._settings_widgets_function = settings_widgets_function
         self._init_settings_function = init_settings_function
 
     def get_import_function(self):
@@ -42,9 +42,9 @@ class Parser(Graphs.Parser):
         """Get file suffixes."""
         return self._file_suffixes
 
-    def get_settings_widget_class(self):
-        """Get settings widget class."""
-        return self._settings_widget_class
+    def get_settings_widgets_function(self):
+        """Get settings widget function."""
+        return self._settings_widgets_function
 
     def get_init_settings_function(self):
         """Get init settings function."""
@@ -56,7 +56,7 @@ def _register_parser(
     ui_name: str,
     import_function,
     file_suffixes: list[str],
-    settings_widget_class=None,
+    settings_widgets_function=None,
     init_settings_function=None,
 ) -> None:
     """Register an import mode."""
@@ -65,7 +65,7 @@ def _register_parser(
         ui_name,
         import_function,
         file_suffixes,
-        settings_widget_class,
+        settings_widgets_function,
         init_settings_function,
     ))
     logging.debug("registered mode " + name)
@@ -78,7 +78,7 @@ def register_parsers():
         C_("import-mode", "Columns"),
         columns.import_from_columns,
         None,
-        settings_widget_class=Graphs.ColumnsGroup,
+        settings_widgets_function=columns.append_settings,
     )
 
     _register_parser(

@@ -73,3 +73,8 @@ def import_from_columns(params, style) -> misc.ItemList:
     if not item_.xdata:
         raise ParseError(_("Unable to import from file"))
     return [item_]
+
+
+def append_settings(settings, box) -> None:
+    """Append columns specific settings."""
+    box.append(Graphs.ColumnsGroup.new(settings))

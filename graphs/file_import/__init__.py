@@ -13,7 +13,7 @@ from graphs.misc import ParseError
 _REQUESTS = (
     "guess_import_mode",
     "init_import_settings",
-    "load_mode_settings",
+    "append_settings_widgets",
     "import",
 )
 
@@ -32,7 +32,7 @@ class DataImporter(Graphs.DataImporter):
                 getattr(self, "_on_" + request.replace("-", "_")),
             )
 
-        parsers.register_parsers()
+        # parsers.register_parsers()
         self.setup(parsers.list_parsers())
 
     @staticmethod
@@ -76,16 +76,16 @@ class DataImporter(Graphs.DataImporter):
             callback(settings)
 
     @staticmethod
-    def _on_load_mode_settings_request(
+    def _on_append_settings_widgets_request(
         self,
         settings: Graphs.ImportSettings,
+        settings_box: Gtk.Box,
     ) -> Gtk.Widget:
         """Load the UI settings."""
         parser = parsers.get_parser(settings.get_mode())
-        cls = parser.get_settings_widget_class()
-        if cls is None:
-            return None
-        return cls.new(settings)
+        callback = parser.get_settings_widgets_function()
+        if callback is not None:
+            callback(settings, settings_box)
 
     @staticmethod
     def _on_import_request(

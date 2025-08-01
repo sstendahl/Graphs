@@ -19,7 +19,7 @@ namespace Graphs {
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal void init_import_settings_request (ImportSettings settings);
-        protected signal Widget load_mode_settings_request (ImportSettings settings);
+        protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
         protected signal string import_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
         private GLib.Settings mode_settings;
@@ -34,8 +34,8 @@ namespace Graphs {
             }
         }
 
-        public Widget load_mode_settings (ImportSettings settings) {
-            return load_mode_settings_request.emit (settings);
+        public Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
+            return append_settings_widgets_request.emit (settings, settings_box);
         }
 
         public void import_from_files (Window window, File[] files) {
@@ -182,9 +182,7 @@ namespace Graphs {
                 file_settings_box.remove (widget);
             }
 
-            Widget mode_settings = importer.load_mode_settings (current_settings);
-            if (mode_settings == null) return;
-            file_settings_box.append (mode_settings);
+            importer.append_settings_widgets (current_settings, file_settings_box);
         }
 
         [GtkCallback]
