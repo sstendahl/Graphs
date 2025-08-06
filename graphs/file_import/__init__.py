@@ -10,7 +10,6 @@ from graphs.file_import import parsers
 from graphs.file_import.parsers import columns, project, xrdml, xry
 from graphs.misc import ParseError
 
-
 _REQUESTS = (
     "guess_import_mode",
     "init_import_settings",

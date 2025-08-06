@@ -10,7 +10,6 @@ from graphs import item, misc, utilities
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
-
 _PH = "dVldZaXqENhuPLPw"
 
 

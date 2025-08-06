@@ -4,7 +4,6 @@ import logging
 
 from gi.repository import Graphs
 
-
 _PARSERS = []
 
 
