@@ -30,7 +30,15 @@ contribute_url = 'https://welcome.gnome.org/app/Graphs/'
 
 i18n = import('i18n')
 gnome = import('gnome')
-python = import('python').find_installation('python3')
+python = import('python').find_installation('python3',
+  modules: [
+    'numpy',
+    'scipy',
+    'matplotlib',
+    'sympy',
+    'gio_pyio'
+  ],
+)
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
