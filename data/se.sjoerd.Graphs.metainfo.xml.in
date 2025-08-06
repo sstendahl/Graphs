@@ -117,6 +117,17 @@
         </ul>
       </description>
     </release>
+    <release version="1.8.5" date="2025-07-29">
+      <description>
+        <p>Minor update</p>
+        <ul>
+          <li>Update to the GNOME 48 runtime</li>
+          <li>Update runtime dependencies to the latest versions</li>
+          <li>Slightly tweak the system styles to match GNOME 48</li>
+          <li>Updated translations</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.8.4" date="2025-01-28">
       <description>
         <p>Minor update with the new GNOME 47 runtime.</p>
