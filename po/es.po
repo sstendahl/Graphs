@@ -2,24 +2,24 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the graphs package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Julián Villodre <jvillodrede@gmail.com>, 2024.
+# Julián Villodre <jvillodrede@gmail.com>, 2024-2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-09-14 08:42+0000\n"
-"PO-Revision-Date: 2024-09-15 18:51+0200\n"
+"POT-Creation-Date: 2025-08-10 20:40+0000\n"
+"PO-Revision-Date: 2025-08-11 17:40+0200\n"
 "Last-Translator: Julián Villodre <jvillodrede@gmail.com>\n"
-"Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
-"Language: es\n"
+"Language-Team: es_ES\n"
+"Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 46.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Gtranslator 48.0\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Gráficos"
@@ -1528,7 +1528,7 @@ msgstr "Configuración avanzada"
 #: graphs/about.vala:40
 msgid "translator-credits"
 msgstr ""
-"Julián Villodre <jvillodrede@gmail.com> 2024\n"
+"Julián Villodre <jvillodrede@gmail.com>, 2024 - 2025\n"
 "Óscar Fernández Díaz <oscfdezdz@tuta.io>"
 
 #: graphs/actions.py:80
@@ -1736,19 +1736,13 @@ msgstr "Etiqueta X"
 msgid "Y Label"
 msgstr "Etiqueta Y"
 
-#: graphs/styles.py:305
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"No se ha podido procesar {stylename}, cargando el estilo preferido por el "
-"sistema."
+#: graphs/styles.py:306
+msgid "system preferred style"
+msgstr "estilo preferido por el sistema"
 
-#: graphs/styles.py:313
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"El estilo de trazado {stylename} no existe, cargando el estilo preferido por "
-"el sistema"
+#: graphs/styles.py:314
+msgid "loading system preferred"
+msgstr "cargando preferido por el sistema"
 
 #: graphs/styles.py:726
 #, python-brace-format
@@ -1817,6 +1811,18 @@ msgstr "Optimizar límites"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Raíz inversa"
+
+#, python-brace-format
+#~ msgid "Could not parse {stylename}, loading system preferred style"
+#~ msgstr ""
+#~ "No se ha podido procesar {stylename}, cargando el estilo preferido por el "
+#~ "sistema."
+
+#, python-brace-format
+#~ msgid "Plot style {stylename} does not exist loading system preferred"
+#~ msgstr ""
+#~ "El estilo de trazado {stylename} no existe, cargando el estilo preferido "
+#~ "por el sistema"
 
 #~ msgid "Y = "
 #~ msgstr "Y = "
