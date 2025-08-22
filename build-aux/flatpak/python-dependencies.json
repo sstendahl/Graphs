@@ -179,8 +179,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/41/9c/85f50a5476832c3efc67b6d7997808388236ae4754bf53e1749b3bc27577/pybind11-3.0.0-py3-none-any.whl",
-                            "sha256": "7c5cac504da5a701b5163f0e6a7ba736c713a096a5378383c5b4b064b753f607",
+                            "url": "https://files.pythonhosted.org/packages/cd/8a/37362fc2b949d5f733a8b0f2ff51ba423914cabefe69f1d1b6aab710f5fe/pybind11-3.0.1-py3-none-any.whl",
+                            "sha256": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pybind11",
