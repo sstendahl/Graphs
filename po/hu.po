@@ -1,14 +1,14 @@
 # Hungarian translation for Graphs.
-# Copyright (C) 2024 Free Software Foundation, Inc.
+# Copyright (C) 2024, 2025 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Graphs package.
 #
-# Balázs Úr <ur.balazs at fsf dot hu>, 2024.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-08-09 11:00+0000\n"
-"PO-Revision-Date: 2024-08-09 16:44+0200\n"
+"POT-Creation-Date: 2025-08-12 10:23+0000\n"
+"PO-Revision-Date: 2025-08-27 23:43+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 24.12.3\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Grafikonok"
@@ -104,11 +104,11 @@ msgstr "5 – Importált adatok egyszerű manipulálása"
 
 #: data/se.sjoerd.Graphs.desktop.in:10
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisa"
+"tion;Visualization;Fitting;xrdml;"
 msgstr ""
-"Ábrázolás;Grafikon;Grafikonrajzolás;Tudomány;Matematika;Matek;Egyenletek;"
-"Adat;Adatok;Ábra;Vizualizáció;Vizualizálás;Illesztés;xrdml;"
+"Ábrázolás;Grafikon;Grafikonrajzolás;Tudomány;Matematika;Matek;Egyenletek;Adat;"
+"Adatok;Ábra;Vizualizáció;Vizualizálás;Illesztés;xrdml;"
 
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
@@ -809,8 +809,6 @@ msgid "Decimal point (.)"
 msgstr "Tizedespont (.)"
 
 #: data/ui/import-columns.blp:17
-#| msgctxt "regression-type"
-#| msgid "Custom"
 msgctxt "delimiter"
 msgid "Custom"
 msgstr "Egyéni"
@@ -1736,19 +1734,13 @@ msgstr "X-címke"
 msgid "Y Label"
 msgstr "Y-címke"
 
-#: graphs/styles.py:305
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr ""
-"Nem sikerült feldolgozni a(z) {stylename} stílust, a rendszer által előnyben "
-"részesített stílus betöltése"
+#: graphs/styles.py:306
+msgid "system preferred style"
+msgstr "rendszer által előnyben részesített stílus"
 
-#: graphs/styles.py:313
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr ""
-"A(z) {stylename} ábrázolási stílus nem létezik, a rendszer által előnyben "
-"részesített stílus betöltése"
+#: graphs/styles.py:314
+msgid "loading system preferred"
+msgstr "rendszer által előnyben részesített betöltése"
 
 #: graphs/styles.py:726
 #, python-brace-format
@@ -1798,8 +1790,6 @@ msgid "Text Files"
 msgstr "Szövegfájlok"
 
 #: graphs/utilities.py:122
-#| msgctxt "file-filter"
-#| msgid "Text Files"
 msgid "All Files"
 msgstr "Összes fájl"
 
