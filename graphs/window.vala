@@ -11,12 +11,6 @@ namespace Graphs {
     public class Window : Adw.ApplicationWindow {
 
         [GtkChild]
-        private unowned Button undo_button { get; }
-
-        [GtkChild]
-        private unowned Button redo_button { get; }
-
-        [GtkChild]
         private unowned Button view_back_button { get; }
 
         [GtkChild]
@@ -139,12 +133,14 @@ namespace Graphs {
 
             sidebar_navigation_view.pushed.connect (() => {
                 notify_property ("is_main_view");
-                update_history_buttons ();
+                update_history_actions ();
+                update_close_project_action ();
             });
             sidebar_navigation_view.popped.connect ((view, page) => {
                 if (is_main_view) data.add_history_state ();
                 notify_property ("is_main_view");
-                update_history_buttons ();
+                update_history_actions ();
+                update_close_project_action ();
             });
 
 #if DEBUG
@@ -162,9 +158,10 @@ namespace Graphs {
 
             this.operations = new Operations (this);
 
-            data.notify["can-undo"].connect (update_history_buttons);
-            data.notify["can-redo"].connect (update_history_buttons);
-            update_history_buttons ();
+            data.notify["can-undo"].connect (update_history_actions);
+            data.notify["can-redo"].connect (update_history_actions);
+            update_history_actions ();
+            update_close_project_action ();
 
             data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
             data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
@@ -177,10 +174,17 @@ namespace Graphs {
             on_unsaved_change ();
         }
 
-        private void update_history_buttons () {
+        private void update_history_actions () {
             bool enable = is_main_view;
-            undo_button.set_sensitive (enable && data.can_undo);
-            redo_button.set_sensitive (enable && data.can_redo);
+            var undo_action = lookup_action ("undo") as SimpleAction;
+            var redo_action = lookup_action ("redo") as SimpleAction;
+            undo_action.set_enabled (enable && data.can_undo);
+            redo_action.set_enabled (enable && data.can_redo);
+        }
+
+        private void update_close_project_action () {
+            var close_action = lookup_action ("close-project") as SimpleAction;
+            close_action.set_enabled (data.file != null && is_main_view);
         }
 
         /**
@@ -189,17 +193,15 @@ namespace Graphs {
          * Update window title.
          */
         private void on_unsaved_change () {
+            update_close_project_action ();
             string title;
             string path;
-            var close_action = lookup_action ("close-project") as SimpleAction;
             if (data.file == null) {
                 title = _("Untitled Project");
                 path = _("Draft");
-                close_action.set_enabled (false);
             } else {
                 title = Tools.get_filename (data.file);
                 path = Tools.get_friendly_path (data.file);
-                close_action.set_enabled (true);
             }
             // Translators: Window title that will be formatted with the project name.
             set_title (_("Graphs — %s").printf (title));

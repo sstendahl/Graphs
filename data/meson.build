@@ -107,7 +107,7 @@ blueprint_files = [
 
 blueprints_ui = []
 foreach b : blueprint_files
-	blueprints_ui += b.replace('.blp', '.ui')
+  blueprints_ui += b.replace('.blp', '.ui')
 endforeach
 
 blueprints = custom_target('blueprints',
