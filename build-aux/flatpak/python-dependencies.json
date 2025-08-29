@@ -2,25 +2,32 @@
     "name": "python-dependencies",
     "buildsystem": "simple",
     "build-commands": [],
-    "modules" : [
+    "modules": [
         {
             "name": "openblas",
             "buildsystem": "cmake-ninja",
             "builddir": true,
             "config-opts": [
                 "-DBUILD_TESTING:BOOL=OFF",
-                "-DDYNAMIC_ARCH:BOOL=ON"
+                "-DBUILD_SHARED_LIBS:BOOL=ON",
+                "-DBUILD_STATIC_LIBS:BOOL=OFF",
+                "-DDYNAMIC_ARCH:BOOL=ON",
+                "-DCMAKE_BUILD_TYPE:STRING=Release"
             ],
             "sources": [
                 {
-                    "type": "archive",
-                    "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.30.tar.gz",
-                    "sha256": "27342cff518646afb4c2b976d809102e368957974c250a25ccc965e53063c95d",
+                    "type": "git",
+                    "url": "https://github.com/OpenMathLib/OpenBLAS",
+                    "commit": "993fad6aebbce34a97d3f8c34d6d79d35b64cc48",
+                    "tag": "v0.3.30",
                     "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 2540,
-                        "url-template": "https://github.com/xianyi/OpenBLAS/archive/v$version.tar.gz"
+                        "type": "git",
+                        "tag-pattern": "^v([\\d.]+)$"
                     }
+                },
+                {
+                    "type": "patch",
+                    "path": "fix-aarch64-build.patch"
                 }
             ]
         },
@@ -63,8 +70,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/ab/ac/8f96ba9b4cfe3e4ea201f23f4f97165862395e9331a424ed325ae37024a8/setuptools_scm-8.3.1-py3-none-any.whl",
-                    "sha256": "332ca0d43791b818b841213e76b1971b7711a960761c5bea5fc5cdb5196fbce3",
+                    "url": "https://files.pythonhosted.org/packages/f7/14/dd3a6053325e882fe191fb4b42289bbdfabf5f44307c302903a8a3236a0a/setuptools_scm-9.2.0-py3-none-any.whl",
+                    "sha256": "c551ef54e2270727ee17067881c9687ca2aedf179fa5b8f3fab9e8d73bdc421f",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "setuptools-scm",
@@ -172,8 +179,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/41/9c/85f50a5476832c3efc67b6d7997808388236ae4754bf53e1749b3bc27577/pybind11-3.0.0-py3-none-any.whl",
-                            "sha256": "7c5cac504da5a701b5163f0e6a7ba736c713a096a5378383c5b4b064b753f607",
+                            "url": "https://files.pythonhosted.org/packages/cd/8a/37362fc2b949d5f733a8b0f2ff51ba423914cabefe69f1d1b6aab710f5fe/pybind11-3.0.1-py3-none-any.whl",
+                            "sha256": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pybind11",
@@ -214,6 +221,12 @@
                     "name": "qhull",
                     "buildsystem": "cmake-ninja",
                     "builddir": true,
+                    "config-opts": [
+                        "-DBUILD_APPLICATIONS:BOOL=OFF",
+                        "-DBUILD_STATIC_LIBS:BOOL=OFF",
+                        "-DQHULL_ENABLE_TESTING:BOOL=OFF",
+                        "-DCMAKE_BUILD_TYPE:STRING=Release"
+                    ],
                     "sources": [
                         {
                             "type": "git",
@@ -230,12 +243,15 @@
                 {
                     "name": "Raqm",
                     "buildsystem": "meson",
+                    "config-opts": [
+                        "--buildtype=release"
+                    ],
                     "sources": [
                         {
                             "type": "git",
                             "url": "https://github.com/HOST-Oman/libraqm",
-                            "commit": "8876579006425f14f7686063c6cff889c1c01940",
-                            "tag": "v0.10.2",
+                            "commit": "3efba870c8d2775cb3287122f58530c6fbb20f72",
+                            "tag": "v0.10.3",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^v([\\d.]+)$"
@@ -288,8 +304,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/8a/27/ec3c723bfdf86f34c5c82bf6305df3e0f0d8ea798d2d3a7cb0c0a866d286/fonttools-4.59.0.tar.gz",
-                            "sha256": "be392ec3529e2f57faa28709d60723a763904f71a2b63aabe14fee6648fe3b14",
+                            "url": "https://files.pythonhosted.org/packages/0d/a5/fba25f9fbdab96e26dedcaeeba125e5f05a09043bf888e0305326e55685b/fonttools-4.59.2.tar.gz",
+                            "sha256": "e72c0749b06113f50bcb80332364c6be83a9582d6e3db3fe0b280f996dc2ef22",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "fonttools"
@@ -325,8 +341,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/82/59/7c91426a8ac292e1cdd53a63b6d9439abd573c875c3f92c146767dd33faf/kiwisolver-1.4.8.tar.gz",
-                            "sha256": "23d5f023bdc8c7e54eb65f03ca5d5bb25b601eac4d7f1a042888a1f45237987e",
+                            "url": "https://files.pythonhosted.org/packages/5c/3c/85844f1b0feb11ee581ac23fe5fce65cd049a200c1446708cc1b7f922875/kiwisolver-1.4.9.tar.gz",
+                            "sha256": "c3b22c26c6fd6811b0ae8363b95ca8ce4ea3c202d3d0975b2914310ceb1bcc4d",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "kiwisolver"
@@ -400,8 +416,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/26/91/d49359a21893183ed2a5b6c76bec40e0b1dcbf8ca148f864d134897cfc75/matplotlib-3.10.3.tar.gz",
-                            "sha256": "2f82d2c5bb7ae93aaaa4cd42aca65d76ce6376f83304fa3a630b569aca274df0",
+                            "url": "https://files.pythonhosted.org/packages/43/91/f2939bb60b7ebf12478b030e0d7f340247390f402b3b189616aad790c366/matplotlib-3.10.5.tar.gz",
+                            "sha256": "352ed6ccfb7998a00881692f38b4ca083c691d3e275b4145423704c34c909076",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "matplotlib"
@@ -481,17 +497,16 @@
                     "name": "gio-pyio",
                     "buildsystem": "simple",
                     "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} \"gio-pyio\""
+                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"gio-pyio\""
                     ],
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/46/88/96afb5571b9aefa314b3f63ff01f1180f6f0f7bfac1585be5740f78c41db/gio_pyio-0.0.6-py3-none-any.whl",
-                            "sha256": "300b73f4904fb933c751f19b08667e0b91fc73e35aca863cd72c1595aa480134",
+                            "url": "https://files.pythonhosted.org/packages/5b/51/3c95292f35445e525922c2488d466b4e885595779449bd1becac66546a8e/gio_pyio-0.0.6.tar.gz",
+                            "sha256": "bab1231c5a456eee014a27e169ba48735cf532e34b36688b86b74ca3e5ab5915",
                             "x-checker-data": {
                                 "type": "pypi",
-                                "name": "gio-pyio",
-                                "packagetype": "bdist_wheel"
+                                "name": "gio-pyio"
                             }
                         }
                     ]
