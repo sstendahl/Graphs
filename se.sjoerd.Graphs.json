@@ -15,9 +15,6 @@
         "*.la",
         "*.a"
     ],
-    "build-options": {
-        "ldflags": "-Wl,--strip-all"
-    },
     "modules": [
         "build-aux/flatpak/blueprint-compiler.json",
         "build-aux/flatpak/python-dependencies.json",
