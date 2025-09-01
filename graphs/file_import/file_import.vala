@@ -32,6 +32,9 @@ namespace Graphs {
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
+
+            mode_settings = application.get_settings_child ("import-params");
+            mode_settings_list = mode_settings.settings_schema.list_children ();
         }
 
         public Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
@@ -39,9 +42,6 @@ namespace Graphs {
         }
 
         public void import_from_files (Window window, File[] files) {
-            mode_settings = application.get_settings_child ("import-params");
-            mode_settings_list = mode_settings.settings_schema.list_children ();
-
             ImportSettings[] settings_list = new ImportSettings[files.length];
             for (uint i = 0; i < files.length; i++) {
                 var settings = new ImportSettings (files[i]);
@@ -70,6 +70,12 @@ namespace Graphs {
 
         public StringList get_parser_names () {
             return parser_names;
+        }
+
+        public void set_as_default (ImportSettings settings) {
+            string name = parsers[settings.mode].name;
+            if (!(name in mode_settings_list)) return;
+            settings.set_as_default (mode_settings.get_child (name));
         }
 
         private void init_import_settings (ImportSettings settings) {
@@ -103,9 +109,19 @@ namespace Graphs {
             }
         }
 
+        public void set_as_default (GLib.Settings settings) {
+            foreach (string key in settings.settings_schema.list_keys ()) {
+                settings.set_value (key, get_value (key));
+            }
+        }
+
         public void set_value (string key, Variant val) {
             settings.@set (key, val);
             value_changed.emit (key, val);
+        }
+
+        public Variant get_value (string key) {
+            return settings.@get (key);
         }
 
         public void set_string (string key, string val) {
@@ -113,7 +129,7 @@ namespace Graphs {
         }
 
         public string get_string (string key) {
-            return settings.@get (key).get_string ();
+            return get_value (key).get_string ();
         }
 
         public void set_int (string key, int val) {
@@ -121,7 +137,7 @@ namespace Graphs {
         }
 
         public int get_int (string key) {
-            return settings.@get (key).get_int32 ();
+            return get_value (key).get_int32 ();
         }
     }
 
@@ -148,6 +164,9 @@ namespace Graphs {
 
         [GtkChild]
         private unowned Box file_settings_box { get; }
+
+        [GtkChild]
+        private unowned Adw.PreferencesGroup button_group { get; }
 
         public signal void accept ();
 
@@ -183,6 +202,7 @@ namespace Graphs {
             }
 
             importer.append_settings_widgets (current_settings, file_settings_box);
+            button_group.set_visible (file_settings_box.get_last_child () != null);
         }
 
         [GtkCallback]
@@ -190,6 +210,11 @@ namespace Graphs {
             if (current_settings == null) return;
             current_settings.mode = mode.get_selected ();
             load_mode_settings ();
+        }
+
+        [GtkCallback]
+        private void set_as_default () {
+            importer.set_as_default (current_settings);
         }
 
         [GtkCallback]

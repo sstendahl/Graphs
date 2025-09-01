@@ -91,6 +91,13 @@ template $GraphsImportDialog: Adw.Dialog {
                   orientation: vertical;
                   spacing: 10;
                 }
+
+                Adw.PreferencesGroup button_group {
+                  Adw.ButtonRow {
+                    title: _("Set as Default");
+                    activated => $set_as_default();
+                  }
+                }
               }
             };
           };
