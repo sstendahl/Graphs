@@ -24,9 +24,9 @@ class XrdmlParser(Parser):
         )
 
     @staticmethod
-    def parse(params, style) -> misc.ItemList:
+    def parse(settings, style) -> misc.ItemList:
         """Import data from xrdml file."""
-        content = file_io.parse_xml(params.get_file())
+        content = file_io.parse_xml(settings.get_file())
         intensities = content.getElementsByTagName("intensities")
         counting_time = content.getElementsByTagName("commonCountingTime")
         counting_time = float(counting_time[0].firstChild.data)
@@ -56,7 +56,7 @@ class XrdmlParser(Parser):
                 style,
                 xdata,
                 ydata,
-                name=Graphs.tools_get_filename(params.get_file()),
+                name=Graphs.tools_get_filename(settings.get_file()),
                 xlabel=f"{scan_axis} ({unit})",
                 ylabel=_("Intensity (cps)"),
             ),

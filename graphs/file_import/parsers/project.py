@@ -21,10 +21,10 @@ class ProjectParser(Parser):
         )
 
     @staticmethod
-    def parse(params, _style) -> misc.ItemList:
+    def parse(settings, _style) -> misc.ItemList:
         """Import data from project file."""
         try:
-            project_dict = project.read_project_file(params.get_file())
+            project_dict = project.read_project_file(settings.get_file())
             return list(map(item.new_from_dict, project_dict["data"]))
         except ProjectParseError as e:
             raise ParseError(e.message) from e

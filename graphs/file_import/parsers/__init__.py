@@ -22,7 +22,7 @@ class Parser(Graphs.Parser):
         self._file_suffixes = file_suffixes
 
     @staticmethod
-    def parse(_params, _style) -> None:
+    def parse(_settings, _style) -> None:
         """
         Parse a file given params.
 
@@ -31,7 +31,7 @@ class Parser(Graphs.Parser):
         raise NotImplementedError
 
     @staticmethod
-    def init_settings(_params) -> None:
+    def init_settings(_settings) -> None:
         """Init settings."""
 
     @staticmethod

@@ -23,10 +23,10 @@ class XryParser(Parser):
         )
 
     @staticmethod
-    def parse(params, style) -> misc.ItemList:
+    def parse(settings, style) -> misc.ItemList:
         """Import data from .xry files used by Leybold X-ray apparatus."""
         with file_io.open(
-            params.get_file(),
+            settings.get_file(),
             "rt",
             encoding="ISO-8859-1",
         ) as file_like:
@@ -46,7 +46,7 @@ class XryParser(Parser):
             info = file_like.readline().strip().split()
             item_count = int(info[0])
 
-            name = Graphs.tools_get_filename(params.get_file())
+            name = Graphs.tools_get_filename(settings.get_file())
             items = [
                 item.DataItem.new(
                     style,

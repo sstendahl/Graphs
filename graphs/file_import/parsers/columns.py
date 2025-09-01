@@ -26,17 +26,17 @@ class ColumnsParser(Parser):
         )
 
     @staticmethod
-    def parse(params, style) -> misc.ItemList:
+    def parse(settings, style) -> misc.ItemList:
         """Import data from columns file."""
-        file = params.get_file()
+        file = settings.get_file()
         item_ = item.DataItem.new(style, name=Graphs.tools_get_filename(file))
-        column_x = params.get_int("column-x")
-        column_y = params.get_int("column-y")
-        separator = misc.SEPARATORS[params.get_string("separator")]
-        skip_rows = params.get_int("skip-rows")
-        delimiter = misc.DELIMITERS[params.get_string("delimiter")]
+        column_x = settings.get_int("column-x")
+        column_y = settings.get_int("column-y")
+        separator = misc.SEPARATORS[settings.get_string("separator")]
+        skip_rows = settings.get_int("skip-rows")
+        delimiter = misc.DELIMITERS[settings.get_string("delimiter")]
         if delimiter == "custom":
-            delimiter = params.get_string("custom-delimiter")
+            delimiter = settings.get_string("custom-delimiter")
         stream = Gio.DataInputStream.new(file.read(None))
         start_values = False
         for index, line in enumerate(stream, -skip_rows):
