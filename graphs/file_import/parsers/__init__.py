@@ -16,32 +16,31 @@ class Parser(Graphs.Parser):
         self,
         name: str,
         ui_name: str,
-        parse_function,
         file_suffixes: list[str],
-        settings_widgets_function=None,
-        init_settings_function=None,
     ):
         super().__init__(name=name, ui_name=ui_name)
-        self._parse_function = parse_function
         self._file_suffixes = file_suffixes
-        self._settings_widgets_function = settings_widgets_function
-        self._init_settings_function = init_settings_function
 
-    def get_parse_function(self):
-        """Get import function."""
-        return self._parse_function
+    @staticmethod
+    def parse(_params, _style) -> None:
+        """
+        Parse a file given params.
+
+        Must be implemented by parsers.
+        """
+        raise NotImplementedError
+
+    @staticmethod
+    def init_settings(_params) -> None:
+        """Init settings."""
+
+    @staticmethod
+    def init_settings_widgets(_settings, _box) -> None:
+        """Create settings widgets and append them to box."""
 
     def get_file_suffixes(self):
         """Get file suffixes."""
         return self._file_suffixes
-
-    def get_settings_widgets_function(self):
-        """Get settings widget function."""
-        return self._settings_widgets_function
-
-    def get_init_settings_function(self):
-        """Get init settings function."""
-        return self._init_settings_function
 
 
 def register_parser(parser: Parser) -> None:

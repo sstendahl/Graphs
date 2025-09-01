@@ -76,9 +76,7 @@ class DataImporter(Graphs.DataImporter):
         the file itself or other runtime variables.
         """
         parser = parsers.get_parser(settings.get_mode())
-        callback = parser.get_init_settings_function()
-        if callback is not None:
-            callback(settings)
+        parser.init_settings(settings)
 
     @staticmethod
     def _on_append_settings_widgets_request(
@@ -88,9 +86,7 @@ class DataImporter(Graphs.DataImporter):
     ) -> Gtk.Widget:
         """Load the UI settings."""
         parser = parsers.get_parser(settings.get_mode())
-        callback = parser.get_settings_widgets_function()
-        if callback is not None:
-            callback(settings, settings_box)
+        parser.init_settings_widgets(settings, settings_box)
 
     @staticmethod
     def _on_parse_request(
@@ -102,7 +98,7 @@ class DataImporter(Graphs.DataImporter):
         parser = parsers.get_parser(settings.get_mode())
         style = data.get_selected_style_params()
         try:
-            items = parser.get_parse_function()(settings, style)
+            items = parser.parse(settings, style)
             for item in items:
                 Graphs.add_item_to_list(item, itemlist)
             return ""

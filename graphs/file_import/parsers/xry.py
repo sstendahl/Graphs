@@ -19,7 +19,6 @@ class XryParser(Parser):
         super().__init__(
             "xry",
             C_("import-mode", "xry"),
-            self.parse,
             [".xry"],
         )
 

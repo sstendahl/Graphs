@@ -20,7 +20,6 @@ class XrdmlParser(Parser):
         super().__init__(
             "xrdml",
             C_("import-mode", "xrdml"),
-            self.parse,
             [".xrdml"],
         )
 

@@ -17,7 +17,6 @@ class ProjectParser(Parser):
         super().__init__(
             "project",
             C_("import-mode", "Project"),
-            self.parse,
             [".graphs"],
         )
 

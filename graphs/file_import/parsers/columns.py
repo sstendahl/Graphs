@@ -22,9 +22,7 @@ class ColumnsParser(Parser):
         super().__init__(
             "columns",
             C_("import-mode", "Columns"),
-            self.parse,
             None,
-            settings_widgets_function=self.append_settings,
         )
 
     @staticmethod
@@ -91,6 +89,6 @@ class ColumnsParser(Parser):
         return [item_]
 
     @staticmethod
-    def append_settings(settings, box) -> None:
+    def init_settings_widgets(settings, box) -> None:
         """Append columns specific settings."""
         box.append(Graphs.ColumnsGroup.new(settings))
