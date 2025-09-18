@@ -127,10 +127,6 @@ namespace Graphs {
             });
             drag_overlay.add_controller (file_drop_target);
 
-            string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
-            var builder = new Builder.from_resource (path);
-            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
-
             sidebar_navigation_view.pushed.connect (() => {
                 notify_property ("is_main_view");
                 update_history_actions ();

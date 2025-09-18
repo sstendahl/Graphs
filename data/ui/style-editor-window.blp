@@ -16,7 +16,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
 
     Shortcut {
       trigger: "<control>question";
-      action: "action(win.show-help-overlay)";
+      action: "action(win.show-shortcuts)";
     }
 
     Shortcut {
@@ -213,7 +213,7 @@ menu primary_menu {
   }
 
   section {
-    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
+    item (_("Keyboard Shortcuts"), "win.show-shortcuts")
     item (_("Help"), "app.help")
     item (_("About Graphs"), "app.about")
   }
@@ -225,7 +225,7 @@ menu empty_menu {
   }
 
   section {
-    item (_("Keyboard Shortcuts"), "win.show-help-overlay")
+    item (_("Keyboard Shortcuts"), "win.show-shortcuts")
     item (_("Help"), "app.help")
     item (_("About Graphs"), "app.about")
   }

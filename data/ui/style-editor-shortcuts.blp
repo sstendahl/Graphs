@@ -1,53 +1,47 @@
 using Gtk 4.0;
+using Adw 1;
 
-ShortcutsWindow help_overlay {
-  modal: true;
+Adw.ShortcutsDialog shortcuts {
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "General");
 
-  ShortcutsSection {
-    section-name: "shortcuts";
-    max-height: 10;
-
-    ShortcutsGroup {
-      title: C_("shortcut window", "General");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Show Shortcuts");
-        action-name: "win.show-help-overlay";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Open Help");
-        action-name: "app.help";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Close Application");
-        action-name: "app.quit";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Close Application Window");
-        accelerator: "<control>w";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Show Shortcuts");
+      action-name: "win.show-shortcuts";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "Save");
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Open Help");
+      action-name: "app.help";
+    }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Save Style");
-        accelerator: "<control>S";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Close Application");
+      action-name: "app.quit";
+    }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Save Style As");
-        accelerator: "<control><shift>S";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Close Application Window");
+      accelerator: "<control>w";
+    }
+  }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Open Style");
-        accelerator: "<control>O";
-      }
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "Save");
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Save Style");
+      accelerator: "<control>S";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Save Style As");
+      accelerator: "<control><shift>S";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Open Style");
+      accelerator: "<control>O";
     }
   }
 }
