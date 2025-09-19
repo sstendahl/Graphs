@@ -97,8 +97,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/37/7d/3fec4199c5ffb892bed55cff901e4f39a58c81df9c44c280499e92cad264/numpy-2.3.2.tar.gz",
-                            "sha256": "e0486a11ec30cdecb53f184d496d1c6a20786c81e55e41640270130056f8ee48",
+                            "url": "https://files.pythonhosted.org/packages/d0/19/95b3d357407220ed24c139018d2518fab0a61a948e68286a25f1a4d049ff/numpy-2.3.3.tar.gz",
+                            "sha256": "ddc7c39727ba62b80dfdbedf400d1c10ddfa8eefbd7ec8dcb118be8b56d31029",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "numpy"
@@ -201,8 +201,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/f5/4a/b927028464795439faec8eaf0b03b011005c487bb2d07409f28bf30879c4/scipy-1.16.1.tar.gz",
-                            "sha256": "44c76f9e8b6e8e488a586190ab38016e4ed2f8a038af7cd3defa903c0a2238b3",
+                            "url": "https://files.pythonhosted.org/packages/4c/3b/546a6f0bfe791bbb7f8d591613454d15097e53f906308ec6f7c1ce588e8e/scipy-1.16.2.tar.gz",
+                            "sha256": "af029b153d243a80afb6eabe40b0a07f8e35c9adc269c019f364ad747f826a6b",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "scipy"
@@ -225,7 +225,8 @@
                         "-DBUILD_APPLICATIONS:BOOL=OFF",
                         "-DBUILD_STATIC_LIBS:BOOL=OFF",
                         "-DQHULL_ENABLE_TESTING:BOOL=OFF",
-                        "-DCMAKE_BUILD_TYPE:STRING=Release"
+                        "-DCMAKE_BUILD_TYPE:STRING=Release",
+                        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
                     ],
                     "sources": [
                         {
@@ -304,8 +305,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/0d/a5/fba25f9fbdab96e26dedcaeeba125e5f05a09043bf888e0305326e55685b/fonttools-4.59.2.tar.gz",
-                            "sha256": "e72c0749b06113f50bcb80332364c6be83a9582d6e3db3fe0b280f996dc2ef22",
+                            "url": "https://files.pythonhosted.org/packages/27/d9/4eabd956fe123651a1f0efe29d9758b3837b5ae9a98934bdb571117033bb/fonttools-4.60.0.tar.gz",
+                            "sha256": "8f5927f049091a0ca74d35cce7f78e8f7775c83a6901a8fbe899babcc297146a",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "fonttools"
@@ -378,6 +379,16 @@
                     "sources": [
                         {
                             "type": "file",
+                            "url": "https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl",
+                            "sha256": "4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274",
+                            "x-checker-data": {
+                                "type": "pypi",
+                                "name": "six",
+                                "packagetype": "bdist_wheel"
+                            }
+                        },
+                        {
+                            "type": "file",
                             "url": "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl",
                             "sha256": "a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427",
                             "x-checker-data": {
@@ -397,8 +408,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/05/e7/df2285f3d08fee213f2d041540fa4fc9ca6c2d44cf36d3a035bf2a8d2bcc/pyparsing-3.2.3-py3-none-any.whl",
-                            "sha256": "a749938e02d6fd0b59b356ca504a24982314bb090c383e3cf201c95ef7e2bfcf",
+                            "url": "https://files.pythonhosted.org/packages/53/b8/fbab973592e23ae313042d450fc26fa24282ebffba21ba373786e1ce63b4/pyparsing-3.2.4-py3-none-any.whl",
+                            "sha256": "91d0fcde680d42cd031daf3a6ba20da3107e08a75de50da58360e7d94ab24d36",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pyparsing",
@@ -416,8 +427,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/43/91/f2939bb60b7ebf12478b030e0d7f340247390f402b3b189616aad790c366/matplotlib-3.10.5.tar.gz",
-                            "sha256": "352ed6ccfb7998a00881692f38b4ca083c691d3e275b4145423704c34c909076",
+                            "url": "https://files.pythonhosted.org/packages/a0/59/c3e6453a9676ffba145309a73c462bb407f4400de7de3f2b41af70720a3c/matplotlib-3.10.6.tar.gz",
+                            "sha256": "ec01b645840dd1996df21ee37f208cd8ba57644779fa20464010638013d3203c",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "matplotlib"
@@ -441,8 +452,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/d2/8f/2cc977e91adbfbcdb6b49fdb9147e1d1c7566eb2c0c1e737e9a47020b5ca/numexpr-2.11.0.tar.gz",
-                            "sha256": "75b2c01a4eda2e7c357bc67a3f5c3dd76506c15b5fd4dc42845ef2e182181bad",
+                            "url": "https://files.pythonhosted.org/packages/7c/08/211c9ae8a230f20976f3b0b9a3308264c62bd05caf92aba7c59beebf6049/numexpr-2.12.1.tar.gz",
+                            "sha256": "e239faed0af001d1f1ea02934f7b3bb2bb6711ddb98e7a7bef61be5f45ff54ab",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "numexpr"

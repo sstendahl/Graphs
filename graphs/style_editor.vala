@@ -106,9 +106,14 @@ namespace Graphs {
             });
             add_action (open_action);
 
-            string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
-            var builder = new Builder.from_resource (path);
-            set_help_overlay (builder.get_object ("help_overlay") as ShortcutsWindow);
+            var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
+            show_shortcuts_action.activate.connect (() => {
+                string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
+                var builder = new Builder.from_resource (path);
+                var shortcuts_dialog = builder.get_object ("shortcuts") as Adw.ShortcutsDialog;
+                shortcuts_dialog.present (this);
+            });
+            add_action (show_shortcuts_action);
 
              // Inhibit session end when there is unsaved data present
             notify["unsaved"].connect (() => {

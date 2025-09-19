@@ -1,179 +1,173 @@
 using Gtk 4.0;
+using Adw 1;
 
-ShortcutsWindow help_overlay {
-  modal: true;
+Adw.ShortcutsDialog shortcuts {
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "General");
 
-  ShortcutsSection {
-    section-name: "shortcuts";
-    max-height: 10;
-
-    ShortcutsGroup {
-      title: C_("shortcut window", "General");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Show Shortcuts");
-        accelerator: "<control>question";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Open Help");
-        action-name: "app.help";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Open Figure Settings");
-        accelerator: "<control>comma";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Close Application");
-        action-name: "app.quit";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Close Application Window");
-        accelerator: "<control>w";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Show Shortcuts");
+      accelerator: "<control>question";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "Mode Switching");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Pan Mode");
-        accelerator: "<control>1";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Zoom Mode");
-        accelerator: "<control>2";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Select Mode");
-        accelerator: "<control>3";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Open Help");
+      action-name: "app.help";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "New Data");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Add Data from File");
-        accelerator: "<control>N";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Add Data from Equation");
-        accelerator: "<control><alt>N";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Generate Data");
-        accelerator: "<control><shift>N";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "New Project");
-        accelerator: "<control><shift>N";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Open Project");
-        accelerator: "<control>O";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Delete Selected Data");
-        accelerator: "Delete";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Open Figure Settings");
+      accelerator: "<control>comma";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "Save and Export");
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Export Data");
-        accelerator: "<control><shift>E";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Export Figure");
-        accelerator: "<control>E";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Save Project");
-        accelerator: "<control>S";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Save Project As");
-        accelerator: "<control><shift>S";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Close Application");
+      action-name: "app.quit";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "View");
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Close Application Window");
+      accelerator: "<control>w";
+    }
+  }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Previous View");
-        accelerator: "<alt>Z";
-      }
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "Mode Switching");
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Next View");
-        accelerator: "<alt><shift>Z";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Optimize limits");
-        accelerator: "<control>0";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Zoom in");
-        accelerator: "<control>plus";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Zoom out");
-        accelerator: "<control>minus";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Select None");
-        accelerator: "<control><shift>A";
-      }
-
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Toggle Sidebar");
-        accelerator: "F9";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Pan Mode");
+      accelerator: "<control>1";
     }
 
-    ShortcutsGroup {
-      title: C_("shortcut window", "Actions");
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Zoom Mode");
+      accelerator: "<control>2";
+    }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Select All");
-        accelerator: "<control>A";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Select Mode");
+      accelerator: "<control>3";
+    }
+  }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Select None");
-        accelerator: "<control><shift>A";
-      }
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "New Data");
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Undo Action");
-        accelerator: "<control>Z";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Add Data from File");
+      accelerator: "<control>N";
+    }
 
-      ShortcutsShortcut {
-        title: C_("shortcut window", "Redo Action");
-        accelerator: "<control><shift>Z";
-      }
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Add Data from Equation");
+      accelerator: "<control><alt>N";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Generate Data");
+      accelerator: "<control><shift>N";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "New Project");
+      accelerator: "<control><shift>N";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Open Project");
+      accelerator: "<control>O";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Delete Selected Data");
+      accelerator: "Delete";
+    }
+  }
+
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "Save and Export");
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Export Data");
+      accelerator: "<control><shift>E";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Export Figure");
+      accelerator: "<control>E";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Save Project");
+      accelerator: "<control>S";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Save Project As");
+      accelerator: "<control><shift>S";
+    }
+  }
+
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "View");
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Previous View");
+      accelerator: "<alt>Z";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Next View");
+      accelerator: "<alt><shift>Z";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Optimize limits");
+      accelerator: "<control>0";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Zoom in");
+      accelerator: "<control>plus";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Zoom out");
+      accelerator: "<control>minus";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Select None");
+      accelerator: "<control><shift>A";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Toggle Sidebar");
+      accelerator: "F9";
+    }
+  }
+
+  Adw.ShortcutsSection {
+    title: C_("shortcut window", "Actions");
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Select All");
+      accelerator: "<control>A";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Select None");
+      accelerator: "<control><shift>A";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Undo Action");
+      accelerator: "<control>Z";
+    }
+
+    Adw.ShortcutsItem {
+      title: C_("shortcut window", "Redo Action");
+      accelerator: "<control><shift>Z";
     }
   }
 }

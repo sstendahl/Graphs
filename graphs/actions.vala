@@ -294,6 +294,15 @@ namespace Graphs {
                 window.canvas.zoom (1 / 1.15);
             });
             window.add_action (zoom_out_action);
+
+            var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
+            show_shortcuts_action.activate.connect (() => {
+                string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
+                var builder = new Builder.from_resource (path);
+                var shortcuts_dialog = builder.get_object ("shortcuts") as Adw.ShortcutsDialog;
+                shortcuts_dialog.present (window);
+            });
+            window.add_action (show_shortcuts_action);
         }
     }
 }
