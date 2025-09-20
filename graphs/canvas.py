@@ -246,8 +246,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         Updates only axes with independent coordinate systems to prevent uneven
         scaling:
-        - X-limits: _axis and _top_left_axis (independent x-axes)
-        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y-axes)
+        - X-limits: _axis and _top_left_axis (independent x ax.)
+        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y ax.)
         """
         if self._ctrl_held:
             self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
@@ -345,8 +345,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         Update all axes' limits in respect to the current mouse position,
         updates only axes with independent coordinate systems to prevent uneven
         scaling:
-        - X-limits: _axis and _top_left_axis (independent x-axes)
-        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y-axes)
+        - X-limits: _axis and _top_left_axis (independent x-ax.)
+        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y-ax.)
         """
         if not respect_mouse:
             self._xfrac, self._yfrac = 0.5, 0.5
@@ -361,7 +361,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                         scales.Scale.from_string(ax.get_xscale()),
                         ax.get_xlim(),
                         scaling,
-                    )
+                    ),
                 )
             if ax in [self._axis, self._right_axis, self._top_right_axis]:
                 ax.set_ylim(
@@ -370,7 +370,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                         scales.Scale.from_string(ax.get_yscale()),
                         ax.get_ylim(),
                         scaling,
-                    )
+                    ),
                 )
 
         self.queue_draw()
@@ -977,4 +977,3 @@ class _Highlight(SpanSelector):
                     canvas.props.top_scale,
                 ),
             )
-
