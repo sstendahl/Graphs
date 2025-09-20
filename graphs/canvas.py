@@ -241,7 +241,14 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         dx: float,
         dy: float,
     ) -> None:
-        """Handle scroll event."""
+        """
+        Handle scroll event.
+
+        Updates only axes with independent coordinate systems to prevent uneven
+        scaling:
+        - X-limits: _axis and _top_left_axis (independent x-axes)
+        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y-axes)
+        """
         if self._ctrl_held:
             self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
         else:
@@ -250,11 +257,16 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             if controller.get_unit() == Gdk.ScrollUnit.WHEEL:
                 dx *= 10
                 dy *= 10
-            for ax in self.axes:
-                xmin, xmax, ymin, ymax = \
-                    self._calculate_pan_values(ax, dx, dy)
+
+        for ax in self.axes:
+            if ax in [self._axis, self._top_left_axis]:
+                xmin, xmax, _, _ = self._calculate_pan_values(ax, dx, dy)
                 ax.set_xlim(xmin, xmax)
+
+            if ax in [self._axis, self._right_axis, self._top_right_axis]:
+                _, _, ymin, ymax = self._calculate_pan_values(ax, dx, dy)
                 ax.set_ylim(ymin, ymax)
+
         self.toolbar.push_current()
         super().scroll_event(controller, dx, dy)
 
@@ -330,29 +342,37 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """
         Zoom with given scaling.
 
-        Update all axes' limits in respect to the current mouse position.
+        Update all axes' limits in respect to the current mouse position,
+        updates only axes with independent coordinate systems to prevent uneven
+        scaling:
+        - X-limits: _axis and _top_left_axis (independent x-axes)
+        - Y-limits: _axis, _right_axis, and _top_right_axis (independent y-axes)
         """
         if not respect_mouse:
             self._xfrac, self._yfrac = 0.5, 0.5
         if self._xfrac is None or self._yfrac is None:
             return
+
         for ax in self.axes:
-            ax.set_xlim(
-                self._calculate_zoomed_values(
-                    self._xfrac,
-                    scales.Scale.from_string(ax.get_xscale()),
-                    ax.get_xlim(),
-                    scaling,
-                ),
-            )
-            ax.set_ylim(
-                self._calculate_zoomed_values(
-                    self._yfrac,
-                    scales.Scale.from_string(ax.get_yscale()),
-                    ax.get_ylim(),
-                    scaling,
-                ),
-            )
+            if ax in [self._axis, self._top_left_axis]:
+                ax.set_xlim(
+                    self._calculate_zoomed_values(
+                        self._xfrac,
+                        scales.Scale.from_string(ax.get_xscale()),
+                        ax.get_xlim(),
+                        scaling,
+                    )
+                )
+            if ax in [self._axis, self._right_axis, self._top_right_axis]:
+                ax.set_ylim(
+                    self._calculate_zoomed_values(
+                        self._yfrac,
+                        scales.Scale.from_string(ax.get_yscale()),
+                        ax.get_ylim(),
+                        scaling,
+                    )
+                )
+
         self.queue_draw()
 
     @staticmethod
@@ -957,3 +977,4 @@ class _Highlight(SpanSelector):
                     canvas.props.top_scale,
                 ),
             )
+
