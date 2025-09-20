@@ -374,7 +374,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def _calculate_x_pan_values(
         self,
-        ax: matplotlib.axes.Axes,
+        ax: axes.Axes,
         panspeed: float,
     ) -> tuple[float, float]:
         """Calculate x-axis values required for panning."""
@@ -384,7 +384,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def _calculate_y_pan_values(
         self,
-        ax: matplotlib.axes.Axes,
+        ax: axes.Axes,
         panspeed: float,
     ) -> tuple[float, float]:
         """Calculate y-axis values required for panning."""
