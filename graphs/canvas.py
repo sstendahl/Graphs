@@ -18,7 +18,7 @@ import gio_pyio
 
 from graphs import artist, misc, scales, utilities
 
-from matplotlib import backend_tools as tools, pyplot
+from matplotlib import axes, backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
     FigureCanvasBase,
     MouseEvent,
@@ -27,7 +27,7 @@ from matplotlib.backend_bases import (
 from matplotlib.backends.backend_gtk4cairo import FigureCanvas
 from matplotlib.widgets import SpanSelector
 
-_SCROLL_SCALE = 1.06
+_SCROLL_SCALE = 1.08
 
 
 class Canvas(Graphs.Canvas, FigureCanvas):
@@ -259,11 +259,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dy *= 10
 
         for ax in [self._axis, self._top_left_axis]:
-            xmin, xmax, _, _ = self._calculate_pan_values(ax, dx, dy)
+            xmin, xmax = self._calculate_x_pan_values(ax, dx)
             ax.set_xlim(xmin, xmax)
 
         for ax in [self._axis, self._right_axis, self._top_right_axis]:
-            _, _, ymin, ymax = self._calculate_pan_values(ax, dx, dy)
+            ymin, ymax = self._calculate_y_pan_values(ax, -dy)
             ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
@@ -283,8 +283,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             *self._mpl_coords((x, y)),
         )
         self._set_mouse_fraction(event)
-
-        scale = 1 + 0.01 * (scale - 1)
+        scale = 1 + 0.015 * (scale - 1)
         if scale > 5 or scale < 0.2:
             # Don't scale if ridiculous values are registered
             return
@@ -337,7 +336,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         else:
             self._xfrac, self._yfrac = None, None
 
-    def zoom(self, scaling: float = 1.15, respect_mouse: bool = True) -> None:
+    def zoom(self, scaling: float = 1.25, respect_mouse: bool = True) -> None:
         """
         Zoom with given scaling.
 
@@ -373,52 +372,53 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         self.queue_draw()
 
+    def _calculate_x_pan_values(
+        self,
+        ax: matplotlib.axes.Axes,
+        panspeed: float,
+    ) -> tuple[float, float]:
+        """Calculate x-axis values required for panning."""
+        xmin, xmax = ax.get_xlim()
+        scale = scales.Scale.from_string(ax.get_xscale())
+        return self._calculate_pan_values(xmin, xmax, scale, panspeed)
+
+    def _calculate_y_pan_values(
+        self,
+        ax: matplotlib.axes.Axes,
+        panspeed: float,
+    ) -> tuple[float, float]:
+        """Calculate y-axis values required for panning."""
+        ymin, ymax = ax.get_ylim()
+        scale = scales.Scale.from_string(ax.get_yscale())
+        return self._calculate_pan_values(ymin, ymax, scale, panspeed)
+
     @staticmethod
     def _calculate_pan_values(
-        ax: pyplot.axis,
-        x_panspeed: float,
-        y_panspeed: float,
-    ) -> None:
-        """
-        Calculate values required for panning.
+        current_min: float,
+        current_max: float,
+        scale: scales.Scale,
+        panspeed: float,
+    ) -> tuple[float, float]:
+        """Calculate axis values required for panning."""
+        pan_scale = 0.003
 
-        Calculates the coordinates of the canvas after a panning gesture has
-        been emitted.
-        """
-        xmin, xmax = ax.get_xlim()
-        ymin, ymax = ax.get_ylim()
-        x_scale = scales.Scale.from_string(ax.get_xscale())
-        y_scale = scales.Scale.from_string(ax.get_yscale())
-        pan_scale = 0.002
-        xvalue1 = utilities.get_value_at_fraction(
-            x_panspeed * pan_scale,
-            xmin,
-            xmax,
-            x_scale.value,
+        value1 = utilities.get_value_at_fraction(
+            panspeed * pan_scale,
+            current_min,
+            current_max,
+            scale.value,
         )
-        xvalue2 = utilities.get_value_at_fraction(
-            1 + x_panspeed * pan_scale,
-            xmin,
-            xmax,
-            x_scale.value,
+        value2 = utilities.get_value_at_fraction(
+            1 + panspeed * pan_scale,
+            current_min,
+            current_max,
+            scale.value,
         )
-        yvalue1 = utilities.get_value_at_fraction(
-            -y_panspeed * pan_scale,
-            ymin,
-            ymax,
-            y_scale.value,
-        )
-        yvalue2 = utilities.get_value_at_fraction(
-            1 - y_panspeed * pan_scale,
-            ymin,
-            ymax,
-            y_scale.value,
-        )
-        if x_scale == scales.Scale.INVERSE:
-            xvalue1, xvalue2 = xvalue2, xvalue1
-        if y_scale == scales.Scale.INVERSE:
-            yvalue1, yvalue2 = yvalue2, yvalue1
-        return xvalue1, xvalue2, yvalue1, yvalue2
+
+        if scale == scales.Scale.INVERSE:
+            value1, value2 = value2, value1
+
+        return value1, value2
 
     @staticmethod
     def _calculate_zoomed_values(
