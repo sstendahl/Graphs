@@ -258,14 +258,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dx *= 10
                 dy *= 10
 
-        for ax in self.axes:
-            if ax in [self._axis, self._top_left_axis]:
-                xmin, xmax, _, _ = self._calculate_pan_values(ax, dx, dy)
-                ax.set_xlim(xmin, xmax)
+        for ax in [self._axis, self._top_left_axis]:
+            xmin, xmax, _, _ = self._calculate_pan_values(ax, dx, dy)
+            ax.set_xlim(xmin, xmax)
 
-            if ax in [self._axis, self._right_axis, self._top_right_axis]:
-                _, _, ymin, ymax = self._calculate_pan_values(ax, dx, dy)
-                ax.set_ylim(ymin, ymax)
+        for ax in [self._axis, self._right_axis, self._top_right_axis]:
+            _, _, ymin, ymax = self._calculate_pan_values(ax, dx, dy)
+            ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
         super().scroll_event(controller, dx, dy)
@@ -353,25 +352,24 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if self._xfrac is None or self._yfrac is None:
             return
 
-        for ax in self.axes:
-            if ax in [self._axis, self._top_left_axis]:
-                ax.set_xlim(
-                    self._calculate_zoomed_values(
-                        self._xfrac,
-                        scales.Scale.from_string(ax.get_xscale()),
-                        ax.get_xlim(),
-                        scaling,
-                    ),
-                )
-            if ax in [self._axis, self._right_axis, self._top_right_axis]:
-                ax.set_ylim(
-                    self._calculate_zoomed_values(
-                        self._yfrac,
-                        scales.Scale.from_string(ax.get_yscale()),
-                        ax.get_ylim(),
-                        scaling,
-                    ),
-                )
+        for ax in [self._axis, self._top_left_axis]:
+            ax.set_xlim(
+                self._calculate_zoomed_values(
+                    self._xfrac,
+                    scales.Scale.from_string(ax.get_xscale()),
+                    ax.get_xlim(),
+                    scaling,
+                ),
+            )
+        for ax in [self._axis, self._right_axis, self._top_right_axis]:
+            ax.set_ylim(
+                self._calculate_zoomed_values(
+                    self._yfrac,
+                    scales.Scale.from_string(ax.get_yscale()),
+                    ax.get_ylim(),
+                    scaling,
+                ),
+            )
 
         self.queue_draw()
 
