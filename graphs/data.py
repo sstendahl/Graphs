@@ -3,6 +3,7 @@
 import copy
 import logging
 import math
+from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
@@ -176,6 +177,66 @@ class Data(Graphs.Data):
             for prop in dir(self.props.figure_settings.props)
         })
 
+    def _collapse_current_batch(self) -> None:
+        """
+        Collapse transitive changes within the current history batch.
+
+        This method reduces redundant "change" entries in the current history
+        batch:
+        - Multiple consecutive item and figure settings changes to the same
+          property are collapsed into a single change.
+        - If a collapsed change would be meaningless (the original old value
+          is equal to the most recent new value), that change is dropped.
+        - If the batch contains structural changes like items added or removed,
+          the method aborts and leaves the batch unchanged.
+        """
+        if not self._current_batch:
+            # Nothing to collapse
+            return
+
+        collapsed = OrderedDict()
+
+        for change_type, data in self._current_batch:
+            match ChangeType(change_type):
+                case ChangeType.ITEM_PROPERTY_CHANGED:
+                    index, prop, old_value, new_value = data
+                    key = (change_type, index, prop)
+
+                    if key not in collapsed:
+                        collapsed[key] = (change_type, data)
+                    else:
+                        first_old = collapsed[key][1][2]
+                        if first_old == new_value:
+                            collapsed.pop(key)
+                        else:
+                            collapsed[key] = (
+                                ChangeType.ITEM_PROPERTY_CHANGED.value,
+                                (index, prop, first_old, new_value),
+                            )
+
+                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    prop, old_value, new_value = data
+                    key = (change_type, prop)
+
+                    if key not in collapsed:
+                        collapsed[key] = (change_type, data)
+                    else:
+                        first_old = collapsed[key][1][1]
+                        if first_old == new_value:
+                            collapsed.pop(key)
+                        else:
+                            collapsed[key] = (
+                                ChangeType.FIGURE_SETTINGS_CHANGED.value,
+                                (prop, first_old, new_value),
+                            )
+
+                case _:
+                    # On any other change such as items added or removed we
+                    # abort collapsing
+                    return
+
+        self._current_batch = list(collapsed.values())
+
     @staticmethod
     def _on_add_history_state_request(
         self,
@@ -183,7 +244,9 @@ class Data(Graphs.Data):
         l: int,
     ) -> bool:
         """Add a state to the clipboard."""
+        self._collapse_current_batch()
         if not self._current_batch:
+            # Nothing to add
             return False
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
