@@ -548,10 +548,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         # Y-axis
         elif isinstance(artist_position[1], int):
             label_value, position = artist_position
-            if position == 0:
-                side = "bottom"
-            elif position == 1:
-                side = "top"
+            side = "bottom" if position == 0 else "top"
 
         min_val = getattr(self, f"min_{side}", None)
         max_val = getattr(self, f"max_{side}", None)
