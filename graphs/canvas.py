@@ -258,13 +258,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dx *= 10
                 dy *= 10
 
-        for ax in [self._axis, self._top_left_axis]:
-            xmin, xmax = self._calculate_x_pan_values(ax, dx)
-            ax.set_xlim(xmin, xmax)
+            for ax in [self._axis, self._top_left_axis]:
+                xmin, xmax = self._calculate_x_pan_values(ax, dx)
+                ax.set_xlim(xmin, xmax)
 
-        for ax in [self._axis, self._right_axis, self._top_right_axis]:
-            ymin, ymax = self._calculate_y_pan_values(ax, -dy)
-            ax.set_ylim(ymin, ymax)
+            for ax in [self._axis, self._right_axis, self._top_right_axis]:
+                ymin, ymax = self._calculate_y_pan_values(ax, -dy)
+                ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
         super().scroll_event(controller, dx, dy)
