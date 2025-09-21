@@ -540,10 +540,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         # X axis
         if isinstance(artist_position[0], int):
             position, label_value = artist_position
-            if position == 0:
-                side = "left"
-            elif position == 1:
-                side = "right"
+            side = "left" if position == 0 else "right"
 
         # Y-axis
         elif isinstance(artist_position[1], int):
