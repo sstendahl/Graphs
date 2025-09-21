@@ -540,18 +540,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         # X axis
         if isinstance(artist_position[0], int):
             position, label_value = artist_position
-            if position == 0:
-                side = "left"
-            elif position == 1:
-                side = "right"
+            side = "left" if position == 0 else "right"
 
         # Y-axis
         elif isinstance(artist_position[1], int):
             label_value, position = artist_position
-            if position == 0:
-                side = "bottom"
-            elif position == 1:
-                side = "top"
+            side = "bottom" if position == 0 else "top"
 
         min_val = self.get_property(f"min_{side}")
         max_val = self.get_property(f"max_{side}")
