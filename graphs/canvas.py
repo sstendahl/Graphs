@@ -517,13 +517,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         artist = event.artist
 
         if not hasattr(artist, "id"):
-            artist.id = self._determine_artist_id(artist)
+            artist.id = self._determine_figure_setting(artist)
 
         self.emit("edit_request", artist.id)
 
-    def _determine_artist_id(self, artist) -> str:
+    def _determine_figure_setting(self, artist) -> str:
         """
-        Determine the tick artist id based on its position.
+        Determine the figure settings to be used on the tick after pick event.
 
         Determines the artist's position to generate an artist id that matches
         with the appropriate limits-widget figure_settings.
@@ -553,8 +553,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             elif position == 1:
                 side = "top"
 
-        min_val = getattr(self, f"min_{side}", None)
-        max_val = getattr(self, f"max_{side}", None)
+        min_val = self.get_property(f"min_{side}")
+        max_val = self.get_property(f"max_{side}")
         midpoint = (min_val + max_val) / 2
         position_type = "max" if label_value > midpoint else "min"
 
