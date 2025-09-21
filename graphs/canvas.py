@@ -144,6 +144,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self._xfrac, self._yfrac = None, None
         self.mpl_connect("pick_event", self._on_pick)
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
+        self._make_ticklabels_pickable()
 
         # Reference is created by the toolbar itself
         _DummyToolbar(self)
@@ -191,6 +192,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 lambda _a,
                 _b: self.highlight.load(self),
             )
+
+    def _make_ticklabels_pickable(self) -> None:
+        """Make all tick labels pickable."""
+        for ax in self.axes:
+            for label in (ax.get_xticklabels() + ax.get_yticklabels()):
+                label.set_picker(True)
 
     def handle_touch_update(self, controller: Gtk.GestureClick, _data) -> None:
         """
@@ -508,8 +515,46 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.update_legend()
 
     def _on_pick(self, event) -> None:
-        """Emit edit-request signal for picked label/title."""
-        self.emit("edit_request", event.artist.id)
+        """Emit edit-request signal for picked label, tick or title."""
+        artist = event.artist
+
+        if not hasattr(artist, "id"):
+            artist.id = self._determine_figure_setting(artist)
+
+        self.emit("edit_request", artist.id)
+
+    def _determine_figure_setting(self, artist) -> str:
+        """
+        Determine the figure settings to be used on the tick after pick event.
+
+        Determines the artist's position to generate an artist id that matches
+        with the appropriate limits-widget figure_settings.
+
+        The artist position is a tuple where one element is an integer (0 or 1)
+        indicating the axis side, and the other is a numpy float indicating the
+        value of the clicked tick.
+        The position of the integer determines the axis:
+        - Integer at index 0: X-axis (0=left, 1=right)
+        - Integer at index 1: Y-axis (0=bottom, 1=top)
+        """
+        artist_position = artist.get_position()
+
+        # X axis
+        if isinstance(artist_position[0], int):
+            position, label_value = artist_position
+            side = "left" if position == 0 else "right"
+
+        # Y-axis
+        elif isinstance(artist_position[1], int):
+            label_value, position = artist_position
+            side = "bottom" if position == 0 else "top"
+
+        min_val = self.get_property(f"min_{side}")
+        max_val = self.get_property(f"max_{side}")
+        midpoint = (min_val + max_val) / 2
+        position_type = "max" if label_value > midpoint else "min"
+
+        return f"{position_type}_{side}"
 
     # Overwritten function - do not change name
     def _post_draw(self, _widget, context) -> None:
