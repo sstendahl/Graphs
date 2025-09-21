@@ -18,7 +18,7 @@ import gio_pyio
 
 from graphs import artist, misc, scales, utilities
 
-from matplotlib import axes, backend_tools as tools, pyplot
+from matplotlib import backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
     FigureCanvasBase,
     MouseEvent,
@@ -259,11 +259,15 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dy *= 10
 
             for ax in [self._axis, self._top_left_axis]:
-                xmin, xmax = self._calculate_x_pan_values(ax, dx)
+                xmin, xmax = ax.get_xlim()
+                scale = scales.Scale.from_string(ax.get_xscale())
+                xmin, xmax = self._calculate_pan_values(xmin, xmax, scale, dx)
                 ax.set_xlim(xmin, xmax)
 
             for ax in [self._axis, self._right_axis, self._top_right_axis]:
-                ymin, ymax = self._calculate_y_pan_values(ax, -dy)
+                ymin, ymax = ax.get_ylim()
+                scale = scales.Scale.from_string(ax.get_yscale())
+                xmin, xmax = self._calculate_pan_values(ymin, ymax, scale, -dy)
                 ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
@@ -371,26 +375,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             )
 
         self.queue_draw()
-
-    def _calculate_x_pan_values(
-        self,
-        ax: axes.Axes,
-        panspeed: float,
-    ) -> tuple[float, float]:
-        """Calculate x-axis values required for panning."""
-        xmin, xmax = ax.get_xlim()
-        scale = scales.Scale.from_string(ax.get_xscale())
-        return self._calculate_pan_values(xmin, xmax, scale, panspeed)
-
-    def _calculate_y_pan_values(
-        self,
-        ax: axes.Axes,
-        panspeed: float,
-    ) -> tuple[float, float]:
-        """Calculate y-axis values required for panning."""
-        ymin, ymax = ax.get_ylim()
-        scale = scales.Scale.from_string(ax.get_yscale())
-        return self._calculate_pan_values(ymin, ymax, scale, panspeed)
 
     @staticmethod
     def _calculate_pan_values(
