@@ -9,8 +9,17 @@ from gi.repository import Gio
 
 import gio_pyio
 
-from graphs import misc
 
+LIMITS = [
+    "min_bottom",
+    "max_bottom",
+    "min_top",
+    "max_top",
+    "min_left",
+    "max_left",
+    "min_right",
+    "max_right",
+]
 
 ITEM_MIGRATION_TABLE = {
     "plot_x_position": "xposition",
@@ -133,7 +142,7 @@ def migrate_project(file: Gio.File) -> dict:
         project = pickle.load(wrapper)
 
     figure_settings = project["plot_settings"].migrate()
-    current_limits = [figure_settings[key] for key in misc.LIMITS]
+    current_limits = [figure_settings[key] for key in LIMITS]
     history_pos = int(project["clipboard_pos"])
     history_states = _migrate_clipboard(
         project["datadict_clipboard"],

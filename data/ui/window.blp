@@ -181,6 +181,29 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
   }
 
+  // If width is very limited (below 380 pixels)
+  Adw.Breakpoint {
+    condition ("max-width: 380sp and min-height: 410sp")
+    setters {
+      sidebar_navigation_view.width-request: 340;
+      overlay_split_view.collapsed: true;
+      undo_button.visible: false;
+      content_footerbar.visible: true;
+    }
+  }
+
+  // If width is very limited (below 380 pixels), and height is limited
+  Adw.Breakpoint {
+    condition ("max-width: 380sp and max-height: 410sp")
+    setters {
+      sidebar_navigation_view.width-request: 340;
+      overlay_split_view.collapsed: true;
+      undo_button.visible: false;
+      content_footerbar.visible: true;
+      main_page.height_limited: true;
+    }
+  }
+
   content: Overlay drag_overlay {
     styles [
       "drag-overlay",
@@ -255,7 +278,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
           [end]
           Button view_forward_button {
-            action-name: "win.view_forward";
+            action-name: "win.view-forward";
             icon-name: "go-next-symbolic";
             tooltip-text: _("Next View");
             visible: bind undo_button.visible;
@@ -263,7 +286,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
 
           [end]
           Button view_back_button {
-            action-name: "win.view_back";
+            action-name: "win.view-back";
             icon-name: "go-previous-symbolic";
             tooltip-text: _("Previous View");
             visible: bind undo_button.visible;
