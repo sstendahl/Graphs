@@ -18,8 +18,8 @@ from matplotlib import RcParams
 import numpy
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
-    "min_selected",
-    "max_selected",
+    "min-selected",
+    "max-selected",
 ]
 
 
