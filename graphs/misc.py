@@ -81,18 +81,13 @@ MARKERSTYLES = [
     "P",
     "X",
 ]
-LIMITS = [
-    "min_bottom",
-    "max_bottom",
-    "min_top",
-    "max_top",
-    "min_left",
-    "max_left",
-    "min_right",
-    "max_right",
-]
 
 DIRECTIONS = ["bottom", "top", "left", "right"]
+
+LIMITS = [
+    f"{prefix}-{direction}" for direction in DIRECTIONS
+    for prefix in ("min", "max")
+]
 
 FUNCTIONS = {
     "sin",
