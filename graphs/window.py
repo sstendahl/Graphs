@@ -59,6 +59,13 @@ class PythonWindow(Graphs.Window):
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
+
+        key_controller = self.props.key_controller
+        canvas = self.get_canvas()
+        if canvas:
+            key_controller.disconnect_by_func(canvas.key_press_event)
+            key_controller.disconnect_by_func(canvas.key_release_event)
+
         canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
         for prop in dir(figure_settings.props):
@@ -74,7 +81,6 @@ class PythonWindow(Graphs.Window):
         canvas.connect("edit-request", on_edit_request)
         canvas.connect("view-changed", on_view_changed)
 
-        key_controller = self.props.key_controller
         key_controller.connect("key-pressed", canvas.key_press_event)
         key_controller.connect("key-released", canvas.key_release_event)
 
