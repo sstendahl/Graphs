@@ -148,7 +148,7 @@ namespace Graphs {
     public class ImportDialog : Adw.Dialog {
 
         [GtkChild]
-        private unowned Adw.NavigationView navigation_view { get; }
+        private unowned Adw.NavigationSplitView navigation_view { get; }
 
         [GtkChild]
         private unowned Adw.NavigationPage file_list_page { get; }
@@ -177,15 +177,21 @@ namespace Graphs {
             this.importer = importer;
             mode.set_model (importer.get_parser_names ());
             foreach (var settings in settings_list) {
-                string filename = Tools.get_filename (settings.file);
-                var row = new ImportFileRow (settings, filename);
+                var row = new ImportFileRow (settings);
                 row.activated.connect (() => {
-                    file_settings_page.set_title (filename);
-                    navigation_view.push (file_settings_page);
-                    load_settings (settings);
+                    if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
                 });
                 file_list.append (row);
             }
+
+            file_list.row_selected.connect ((row) => {
+                var file_row = (ImportFileRow) row;
+                file_settings_page.set_title (file_row.get_title ());
+                load_settings (file_row.settings);
+            });
+
+            file_list.select_row (file_list.get_row_at_index (0));
+            navigation_view.set_show_content (false);
         }
 
         private void load_settings (ImportSettings settings) {
@@ -229,8 +235,11 @@ namespace Graphs {
         [GtkChild]
         private unowned Label mode { get; }
 
-        public ImportFileRow (ImportSettings settings, string filename) {
-            set_title (filename);
+        public ImportSettings settings;
+
+        public ImportFileRow (ImportSettings settings) {
+            this.settings = settings;
+            set_title (Tools.get_filename (settings.file));
             settings.bind_property ("mode_name", mode, "label", BindingFlags.SYNC_CREATE);
         }
     }

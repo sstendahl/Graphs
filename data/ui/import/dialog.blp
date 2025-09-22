@@ -4,34 +4,27 @@ using Adw 1;
 template $GraphsImportDialog: Adw.Dialog {
   content-width: 640;
   content-height: 576;
+  width-request: 360;
+  height-request: 200;
   focus-widget: confirm_button;
 
-  child: Adw.NavigationView navigation_view {
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
 
-    Adw.NavigationPage file_list_page {
+    setters {
+      navigation_view.collapsed: true;
+    }
+  }
+
+  child: Adw.NavigationSplitView navigation_view {
+
+    sidebar: Adw.NavigationPage file_list_page {
       title: _("Import Parameters");
+      width-request: 260;
 
       child: Adw.ToolbarView {
         [top]
-        Adw.HeaderBar {
-          show-end-title-buttons: false;
-
-          [start]
-          Button {
-            label: _("Cancel");
-            action-name: "window.close";
-          }
-
-          [end]
-          Button confirm_button {
-            label: _("Import");
-            clicked => $on_accept();
-
-            styles [
-              "suggested-action",
-            ]
-          }
-        }
+        Adw.HeaderBar {}
 
         content: ScrolledWindow {
           propagate-natural-height: true;
@@ -43,28 +36,41 @@ template $GraphsImportDialog: Adw.Dialog {
               margin-top: 12;
               margin-bottom: 12;
 
-              ListBox file_list {
-                selection-mode: none;
-                vexpand: false;
-                valign: start;
+              Box {
+                orientation: vertical;
+                spacing: 12;
 
-                styles [
-                  "boxed-list",
-                ]
+                ListBox file_list {
+                  selection-mode: single;
+                  vexpand: true;
+                  valign: start;
+
+                  styles [
+                    "boxed-list",
+                  ]
+                }
+
+                Button confirm_button {
+                  label: _("Import");
+                  clicked => $on_accept();
+
+                  styles [
+                    "suggested-action",
+                    "pill",
+                  ]
+                }
               }
             };
           };
         };
       };
-    }
+    };
 
-    Adw.NavigationPage file_settings_page {
-      title: "";
+    content: Adw.NavigationPage file_settings_page {
+      title: "tmp";
       child: Adw.ToolbarView {
         [top]
-        Adw.HeaderBar {
-          show-end-title-buttons: false;
-        }
+        Adw.HeaderBar {}
 
         content: ScrolledWindow {
           propagate-natural-height: true;
@@ -103,6 +109,6 @@ template $GraphsImportDialog: Adw.Dialog {
           };
         };
       };
-    }
+    };
   };
 }
