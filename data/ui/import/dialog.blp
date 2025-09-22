@@ -70,7 +70,14 @@ template $GraphsImportDialog: Adw.Dialog {
       title: "tmp";
       child: Adw.ToolbarView {
         [top]
-        Adw.HeaderBar {}
+        Adw.HeaderBar {
+          [end]
+          Button {
+            icon-name: "history-undo-symbolic";
+            tooltip-text: _("Reset to guessed values");
+            clicked => $on_reset();
+          }
+        }
 
         content: ScrolledWindow {
           propagate-natural-height: true;

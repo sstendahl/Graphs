@@ -78,6 +78,15 @@ namespace Graphs {
             settings.set_as_default (mode_settings.get_child (name));
         }
 
+        public void reset (ImportSettings settings) {
+            uint guessed_mode = guess_import_mode_request.emit (settings);
+            if (guessed_mode == settings.mode) {
+                init_import_settings (settings);
+            } else {
+                settings.mode = guessed_mode; // init happens automatically
+            }
+        }
+
         private void init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             string name = parsers[settings.mode].name;
@@ -216,6 +225,12 @@ namespace Graphs {
             if (current_settings == null) return;
             current_settings.mode = mode.get_selected ();
             load_mode_settings ();
+        }
+
+        [GtkCallback]
+        private void on_reset () {
+            importer.reset (current_settings);
+            load_settings (current_settings);
         }
 
         [GtkCallback]
