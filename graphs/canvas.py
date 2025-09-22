@@ -274,7 +274,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             for ax in [self._axis, self._right_axis, self._top_right_axis]:
                 ymin, ymax = ax.get_ylim()
                 scale = scales.Scale.from_string(ax.get_yscale())
-                xmin, xmax = self._calculate_pan_values(ymin, ymax, scale, -dy)
+                ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
                 ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
