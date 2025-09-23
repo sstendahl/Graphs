@@ -627,8 +627,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         transparent: bool,
     ) -> None:
         with gio_pyio.open(file, "wb") as file_like:
-            figure = copy.copy(self.figure)
-            figure.savefig(
+            copy.copy(self.figure).savefig(
                 file_like,
                 format=fmt,
                 dpi=dpi,
