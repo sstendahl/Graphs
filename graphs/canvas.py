@@ -9,6 +9,7 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import copy
 import logging
 import math
 
@@ -626,7 +627,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         transparent: bool,
     ) -> None:
         with gio_pyio.open(file, "wb") as file_like:
-            self.figure.savefig(
+            copy.copy(self.figure).savefig(
                 file_like,
                 format=fmt,
                 dpi=dpi,
