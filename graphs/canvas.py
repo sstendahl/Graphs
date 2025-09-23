@@ -1006,4 +1006,3 @@ class _Highlight(SpanSelector):
                     canvas.props.top_scale,
                 ),
             )
-
