@@ -33,17 +33,17 @@ namespace Graphs {
         private DataImporter importer;
         private ImportSettings current_settings;
 
-        public ImportDialog (DataImporter importer, ImportSettings[] settings_list) {
+        public ImportDialog (DataImporter importer, ListModel settings_list) {
             this.importer = importer;
             mode.set_model (importer.get_parser_names ());
-            foreach (var settings in settings_list) {
-                var row = new ImportFileRow (settings);
-                row.activated.connect (() => {
-                    if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
-                });
-                file_list.append (row);
-            }
 
+            file_list.bind_model (settings_list, (item) => {
+                return new ImportFileRow ((ImportSettings) item);
+            });
+
+            file_list.row_activated.connect (() => {
+                if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
+            });
             file_list.row_selected.connect ((row) => {
                 var file_row = (ImportFileRow) row;
                 file_settings_page.set_title (file_row.get_title ());

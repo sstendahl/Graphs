@@ -42,10 +42,10 @@ namespace Graphs {
         }
 
         public void import_from_files (Window window, File[] files) {
-            ImportSettings[] settings_list = new ImportSettings[files.length];
+            GLib.ListStore settings_list = new GLib.ListStore (typeof (ImportSettings));
             for (uint i = 0; i < files.length; i++) {
                 var settings = new ImportSettings (files[i]);
-                settings_list[i] = settings;
+                settings_list.append (settings);
 
                 settings.mode = guess_import_mode_request.emit (settings);
                 init_import_settings (settings);
@@ -57,7 +57,8 @@ namespace Graphs {
             var dialog = new ImportDialog (this, settings_list);
             dialog.accept.connect (() => {
                 Gee.List<Item> itemlist = new LinkedList<Item> ();
-                foreach (var settings in settings_list) {
+                for (uint i = 0; i < settings_list.get_n_items (); i++) {
+                    var settings = (ImportSettings) settings_list.get_item (i);
                     string message = parse_request.emit (itemlist, settings, window.data);
                     if (message.length != 0) {
                         window.add_toast_string (message);
