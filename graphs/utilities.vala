@@ -121,16 +121,16 @@ namespace Graphs {
             // Check if ratio is integer by checking if it is close enough to nearest integer
             double ratio = val / Math.PI;
             int rounded = (int) Math.round (ratio);
-            if (Math.fabs(ratio - rounded) < tolerance && rounded != 0) {
+            if (Math.fabs (ratio - rounded) < tolerance && rounded != 0) {
                 if (rounded == 1) {
                     return "π";
                 } else if (rounded == -1) {
                     return "-π";
                 } else {
-                    return "%dπ".printf(rounded);
+                    return "%dπ".printf (rounded);
                 }
             }
-            return "%.12g".printf(val);
+            return "%.12g".printf (val);
         }
 
         public string get_duplicate_string (string original, string[] used) {
