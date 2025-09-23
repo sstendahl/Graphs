@@ -634,7 +634,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dpi=dpi,
                 transparent=transparent,
             )
-            pyplot.close(figure)
 
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2
