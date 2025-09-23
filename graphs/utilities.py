@@ -255,7 +255,7 @@ def preprocess(string: str) -> str:
     )
     string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
     string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
-    string = string.replace("pi", f"({float(numpy.pi)})")
+    string = string.replace("π", "pi").replace("pi", f"({float(numpy.pi)})")
     string = string.replace("^", "**")
     string = string.replace(")(", ")*(")
     string = re.sub(r"arccot\((.*?)\)", convert_arccot, string)
