@@ -9,6 +9,7 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import copy
 import logging
 import math
 
@@ -626,12 +627,14 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         transparent: bool,
     ) -> None:
         with gio_pyio.open(file, "wb") as file_like:
-            self.figure.savefig(
+            figure = copy.copy(self.figure)
+            figure.savefig(
                 file_like,
                 format=fmt,
                 dpi=dpi,
                 transparent=transparent,
             )
+            pyplot.close(figure)
 
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2
@@ -1004,3 +1007,4 @@ class _Highlight(SpanSelector):
                     canvas.props.top_scale,
                 ),
             )
+
