@@ -11,9 +11,6 @@ namespace Graphs {
         private unowned Adw.NavigationSplitView navigation_view { get; }
 
         [GtkChild]
-        private unowned Adw.NavigationPage file_list_page { get; }
-
-        [GtkChild]
         private unowned Adw.NavigationPage file_settings_page { get; }
 
         [GtkChild]
