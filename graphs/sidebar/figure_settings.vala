@@ -119,7 +119,14 @@ namespace Graphs {
                     string key = s + "_" + direction;
                     Adw.EntryRow entry;
                     this.get (key, out entry);
-                    figure_settings.bind_property (key, entry, "text", BindingFlags.SYNC_CREATE);
+                    figure_settings.bind_property (key, entry, "text", BindingFlags.SYNC_CREATE,
+                        (binding, source_value, ref target_value) => {
+                            double val = source_value.get_double ();
+                            target_value.set_string (Tools.evaluate_double (val));
+                            return true;
+                        }
+                    );
+
                     entry.apply.connect (() => {
                         double? new_val = application.python_helper.evaluate_string (
                             entry.get_text ()

@@ -9,6 +9,7 @@ interactive navigation in conjunction with graphs-specific structures.
     Classes:
         Canvas
 """
+import copy
 import logging
 import math
 
@@ -272,7 +273,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             for ax in [self._axis, self._right_axis, self._top_right_axis]:
                 ymin, ymax = ax.get_ylim()
                 scale = scales.Scale.from_string(ax.get_yscale())
-                xmin, xmax = self._calculate_pan_values(ymin, ymax, scale, -dy)
+                ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
                 ax.set_ylim(ymin, ymax)
 
         self.toolbar.push_current()
@@ -624,7 +625,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         transparent: bool,
     ) -> None:
         with file_io.open(file, "wb") as file_like:
-            self.figure.savefig(
+            copy.copy(self.figure).savefig(
                 file_like,
                 format=fmt,
                 dpi=dpi,
