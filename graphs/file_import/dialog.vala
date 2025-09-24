@@ -28,13 +28,16 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.PreferencesGroup button_group { get; }
 
-        public signal void accept ();
-
+        private Window window;
         private DataImporter importer;
+        private ListModel settings_list;
         private ImportSettings current_settings;
 
-        public ImportDialog (DataImporter importer, ListModel settings_list) {
-            this.importer = importer;
+        public ImportDialog (Window window, ListModel settings_list) {
+            assert (settings_list.get_item_type () == typeof (ImportSettings));
+            this.window = window;
+            this.importer = ((Application) window.application).data_importer;
+            this.settings_list = settings_list;
             mode.set_model (importer.get_parser_names ());
 
             file_list.bind_model (settings_list, (item) => {
@@ -52,6 +55,8 @@ namespace Graphs {
 
             file_list.select_row (file_list.get_row_at_index (0));
             navigation_view.set_show_content (false);
+
+            present (window);
         }
 
         private void load_settings (ImportSettings settings) {
@@ -91,7 +96,15 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            accept.emit ();
+            Gee.List<Item> itemlist = new LinkedList<Item> ();
+            for (uint i = 0; i < settings_list.get_n_items (); i++) {
+                var settings = (ImportSettings) settings_list.get_item (i);
+                string message = importer.parse (itemlist, settings, window.data);
+                if (message.length != 0) {
+                    window.add_toast_string (message);
+                }
+            }
+            window.data.add_items_from_list (itemlist);
             close ();
         }
     }

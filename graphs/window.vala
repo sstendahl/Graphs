@@ -115,14 +115,13 @@ namespace Graphs {
                 }
             });
             file_drop_target.drop.connect ((drop, val, x, y) => {
+                var importer = ((Application) application).data_importer;
                 var file_list = ((Gdk.FileList) val).get_files ();
-                File[] files = new File[file_list.length ()];
-                uint i = 0;
+                var settings_list = new GLib.ListStore (typeof (ImportSettings));
                 foreach (File file in file_list) {
-                    files[i] = file;
-                    i++;
+                    settings_list.append (importer.get_settings_for_file (file));
                 }
-                ((Application) application).data_importer.import_from_files (this, files);
+                new ImportDialog (this, settings_list);
                 return true;
             });
             drag_overlay.add_controller (file_drop_target);

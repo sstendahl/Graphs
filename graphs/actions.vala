@@ -237,11 +237,13 @@ namespace Graphs {
                 dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
                         var files_list_model = dialog.open_multiple.end (response);
-                        File[] files = {};
+                        var settings_list = new GLib.ListStore (typeof (ImportSettings));
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
-                            files += files_list_model.get_item (i) as File;
+                            var file = (File) files_list_model.get_item (i);
+                            var settings = application.data_importer.get_settings_for_file (file);
+                            settings_list.append (settings);
                         }
-                        application.data_importer.import_from_files (window, files);
+                        new ImportDialog (window, settings_list);
                     } catch {}
                 });
             });

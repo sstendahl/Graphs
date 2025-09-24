@@ -41,36 +41,18 @@ namespace Graphs {
             return append_settings_widgets_request.emit (settings, settings_box);
         }
 
-        public void import_from_files (Window window, File[] files) {
-            GLib.ListStore settings_list = new GLib.ListStore (typeof (ImportSettings));
-            for (uint i = 0; i < files.length; i++) {
-                var settings = new ImportSettings (files[i]);
-                settings_list.append (settings);
-
-                settings.mode = guess_import_mode_request.emit (settings);
-                init_import_settings (settings);
-                settings.notify["mode"].connect (() => {
-                    init_import_settings (settings);
-                });
-            }
-
-            var dialog = new ImportDialog (this, settings_list);
-            dialog.accept.connect (() => {
-                Gee.List<Item> itemlist = new LinkedList<Item> ();
-                for (uint i = 0; i < settings_list.get_n_items (); i++) {
-                    var settings = (ImportSettings) settings_list.get_item (i);
-                    string message = parse_request.emit (itemlist, settings, window.data);
-                    if (message.length != 0) {
-                        window.add_toast_string (message);
-                    }
-                }
-                window.data.add_items_from_list (itemlist);
-            });
-            dialog.present (window);
-        }
-
         public StringList get_parser_names () {
             return parser_names;
+        }
+
+        public ImportSettings get_settings_for_file (File file) {
+            var settings = new ImportSettings (file);
+            settings.mode = guess_import_mode_request.emit (settings);
+            init_import_settings (settings);
+            settings.notify["mode"].connect (() => {
+                init_import_settings (settings);
+            });
+            return settings;
         }
 
         public void set_as_default (ImportSettings settings) {
@@ -86,6 +68,10 @@ namespace Graphs {
             } else {
                 settings.mode = guessed_mode; // init happens automatically
             }
+        }
+
+        public string parse (Gee.List<Item> itemlist, ImportSettings settings, Data data) {
+            return parse_request.emit (itemlist, settings, data);
         }
 
         private void init_import_settings (ImportSettings settings) {

@@ -102,7 +102,12 @@ namespace Graphs {
                 window = create_main_window ();
             }
             window.present ();
-            data_importer.import_from_files (window, files);
+
+            var settings_list = new GLib.ListStore (typeof (ImportSettings));
+            for (uint i = 0; i < files.length; i++) {
+                settings_list.append (data_importer.get_settings_for_file (files[i]));
+            }
+            new ImportDialog (window, settings_list);
         }
 
         /*
