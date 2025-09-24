@@ -184,6 +184,15 @@ namespace Graphs {
         }
 
         /**
+         * Create a catchall filter
+         */
+        public FileFilter create_all_filter () {
+            var all_filter = new FileFilter () { name = _("All Files")};
+            all_filter.add_pattern ("*");
+            return all_filter;
+        }
+
+        /**
          * Create a ListStore with given FileFilters.
          */
         public GLib.ListStore create_file_filters (bool add_all, ...) {
@@ -194,11 +203,7 @@ namespace Graphs {
                 if (filter == null) break;
                 list_store.append (filter);
             }
-            if (add_all) {
-                var all_filter = new FileFilter () { name = _("All Files")};
-                all_filter.add_pattern ("*");
-                list_store.append (all_filter);
-            }
+            if (add_all) list_store.append (create_all_filter ());
             return list_store;
         }
 

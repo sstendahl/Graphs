@@ -23,6 +23,7 @@ class ColumnsParser(Parser):
             "columns",
             C_("import-mode", "Columns"),
             None,
+            None,
         )
 
     @staticmethod

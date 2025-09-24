@@ -52,7 +52,7 @@ class DataImporter(Graphs.DataImporter):
         """
         try:
             filename = Graphs.tools_get_filename(settings.get_file())
-            file_suffix = Path(filename).suffixes[-1]
+            file_suffix = Path(filename).suffixes[-1][1:]
         except IndexError:
             file_suffix = None
         for index, mode in enumerate(parsers.list_parsers()):

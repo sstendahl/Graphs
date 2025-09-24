@@ -19,7 +19,8 @@ class XryParser(Parser):
         super().__init__(
             "xry",
             C_("import-mode", "xry"),
-            [".xry"],
+            C_("file-filter", "Leybold xry"),
+            ["xry"],
         )
 
     @staticmethod

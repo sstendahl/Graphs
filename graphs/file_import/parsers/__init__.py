@@ -16,10 +16,15 @@ class Parser(Graphs.Parser):
         self,
         name: str,
         ui_name: str,
+        filetype_name: str,
         file_suffixes: list[str],
     ):
-        super().__init__(name=name, ui_name=ui_name)
-        self._file_suffixes = file_suffixes
+        super().__init__(
+            name=name,
+            ui_name=ui_name,
+            filetype_name=filetype_name,
+            file_suffixes=file_suffixes,
+        )
 
     @staticmethod
     def parse(_settings, _style) -> None:
@@ -37,10 +42,6 @@ class Parser(Graphs.Parser):
     @staticmethod
     def init_settings_widgets(_settings, _box) -> None:
         """Create settings widgets and append them to box."""
-
-    def get_file_suffixes(self):
-        """Get file suffixes."""
-        return self._file_suffixes
 
 
 def register_parser(parser: Parser) -> None:

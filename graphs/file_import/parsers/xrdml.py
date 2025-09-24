@@ -20,7 +20,8 @@ class XrdmlParser(Parser):
         super().__init__(
             "xrdml",
             C_("import-mode", "xrdml"),
-            [".xrdml"],
+            C_("file-filter", "PANalytical XRDML"),
+            ["xrdml"],
         )
 
     @staticmethod

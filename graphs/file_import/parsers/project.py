@@ -17,7 +17,8 @@ class ProjectParser(Parser):
         super().__init__(
             "project",
             C_("import-mode", "Project"),
-            [".graphs"],
+            C_("file-filter", "Graphs Project File"),
+            ["graphs"],
         )
 
     @staticmethod

@@ -12,10 +12,13 @@ namespace Graphs {
     public class Parser : Object {
         public string name { get; construct set; }
         public string ui_name { get; construct set; }
+        public string filetype_name { get; construct set; }
+        public string[] file_suffixes { get; construct set; }
     }
 
     public class DataImporter : Object {
         public Application application { get; construct set; }
+        public GLib.ListStore file_filters { get; private set; }
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal void init_import_settings_request (ImportSettings settings);
@@ -35,6 +38,37 @@ namespace Graphs {
 
             mode_settings = application.get_settings_child ("import-params");
             mode_settings_list = mode_settings.settings_schema.list_children ();
+
+            init_file_filters ();
+        }
+
+        private void init_file_filters () {
+            file_filters = new GLib.ListStore (typeof (FileFilter));
+
+            var supported_filter = new FileFilter () { name = C_("file-filter", "Supported files") };
+            file_filters.append (supported_filter);
+
+            // columns
+            var ascii_filter = new FileFilter () { name = C_("file-filter", "ASCII files") };
+            string[] ascii_suffixes = {"xy", "dat", "txt", "csv"};
+            foreach (string suffix in ascii_suffixes) {
+                ascii_filter.add_suffix (suffix);
+                supported_filter.add_suffix (suffix);
+            }
+            file_filters.append (ascii_filter);
+
+            foreach (Parser parser in parsers) {
+                if (parser.name == "columns") continue;
+
+                var filter = new FileFilter () { name = parser.filetype_name };
+                foreach (string suffix in parser.file_suffixes) {
+                    filter.add_suffix (suffix);
+                    supported_filter.add_suffix (suffix);
+                }
+                file_filters.append (filter);
+            }
+
+            file_filters.append (Tools.create_all_filter ());
         }
 
         public Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
