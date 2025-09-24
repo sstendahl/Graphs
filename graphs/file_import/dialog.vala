@@ -30,10 +30,10 @@ namespace Graphs {
 
         private Window window;
         private DataImporter importer;
-        private ListModel settings_list;
+        private GLib.ListStore settings_list;
         private ImportSettings current_settings;
 
-        public ImportDialog (Window window, ListModel settings_list) {
+        public ImportDialog (Window window, GLib.ListStore settings_list) {
             assert (settings_list.get_item_type () == typeof (ImportSettings));
             this.window = window;
             this.importer = ((Application) window.application).data_importer;
@@ -74,6 +74,22 @@ namespace Graphs {
 
             importer.append_settings_widgets (current_settings, file_settings_box);
             button_group.set_visible (file_settings_box.get_last_child () != null);
+        }
+
+        [GtkCallback]
+        private void on_add () {
+            var dialog = new FileDialog ();
+            dialog.set_filters (importer.file_filters);
+            dialog.open_multiple.begin (window, null, (d, response) => {
+                try {
+                    var files_list_model = dialog.open_multiple.end (response);
+                    for (uint i = 0; i < files_list_model.get_n_items (); i++) {
+                        var file = (File) files_list_model.get_item (i);
+                        var settings = importer.get_settings_for_file (file);
+                        settings_list.append (settings);
+                    }
+                } catch {}
+            });
         }
 
         [GtkCallback]

@@ -24,7 +24,14 @@ template $GraphsImportDialog: Adw.Dialog {
 
       child: Adw.ToolbarView {
         [top]
-        Adw.HeaderBar {}
+        Adw.HeaderBar {
+          [start]
+          Button {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add File");
+            clicked => $on_add();
+          }
+        }
 
         content: ScrolledWindow {
           propagate-natural-height: true;
