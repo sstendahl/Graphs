@@ -112,10 +112,21 @@ template $GraphsImportDialog: Adw.Dialog {
                   spacing: 10;
                 }
 
-                Adw.PreferencesGroup button_group {
+                Adw.PreferencesGroup default_group {
                   Adw.ButtonRow {
                     title: _("Set as Default");
                     activated => $set_as_default();
+                  }
+                }
+
+                Adw.PreferencesGroup remove_group {
+                  Adw.ButtonRow {
+                    title: _("Remove");
+                    activated => $remove();
+
+                    styles [
+                      "destructive-action",
+                    ]
                   }
                 }
               }

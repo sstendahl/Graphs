@@ -23,7 +23,10 @@ namespace Graphs {
         private unowned Box file_settings_box { get; }
 
         [GtkChild]
-        private unowned Adw.PreferencesGroup button_group { get; }
+        private unowned Adw.PreferencesGroup default_group { get; }
+
+        [GtkChild]
+        private unowned Adw.PreferencesGroup remove_group { get; }
 
         private Window window;
         private DataImporter importer;
@@ -45,6 +48,7 @@ namespace Graphs {
                 if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
             });
             file_list.row_selected.connect ((row) => {
+                if (row == null) return;
                 var file_row = (ImportFileRow) row;
                 file_settings_page.set_title (file_row.get_title ());
                 load_settings (file_row.settings);
@@ -70,7 +74,8 @@ namespace Graphs {
             }
 
             importer.append_settings_widgets (current_settings, file_settings_box);
-            button_group.set_visible (file_settings_box.get_last_child () != null);
+            default_group.set_visible (file_settings_box.get_last_child () != null);
+            remove_group.set_visible (settings_list.get_n_items () > 1);
         }
 
         [GtkCallback]
@@ -84,6 +89,7 @@ namespace Graphs {
                         var file = (File) files_list_model.get_item (i);
                         var settings = importer.get_settings_for_file (file);
                         settings_list.append (settings);
+                        remove_group.set_visible (settings_list.get_n_items () > 1);
                     }
                 } catch {}
             });
@@ -105,6 +111,17 @@ namespace Graphs {
         [GtkCallback]
         private void set_as_default () {
             importer.set_as_default (current_settings);
+        }
+
+        [GtkCallback]
+        private void remove () {
+            uint index;
+            settings_list.find (current_settings, out index);
+            settings_list.remove (index);
+            int new_index = index == 0 ? 0 : (int) index - 1;
+            file_list.select_row (file_list.get_row_at_index (new_index));
+
+            if (navigation_view.get_collapsed ()) navigation_view.set_show_content (false);
         }
 
         [GtkCallback]
