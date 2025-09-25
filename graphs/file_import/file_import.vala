@@ -120,6 +120,7 @@ namespace Graphs {
 
     public class ImportSettings : Object {
         public File file { get; construct set; }
+        public string filename { get; construct set; }
         public uint mode { get; set; }
         public string mode_name { get; set; }
 
@@ -129,7 +130,8 @@ namespace Graphs {
 
         public ImportSettings (File file) {
             Object (
-                file: file
+                file: file,
+                filename: Tools.get_filename (file)
             );
         }
 

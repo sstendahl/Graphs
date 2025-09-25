@@ -50,7 +50,7 @@ namespace Graphs {
             file_list.row_selected.connect ((row) => {
                 if (row == null) return;
                 var file_row = (ImportFileRow) row;
-                file_settings_page.set_title (file_row.get_title ());
+                file_settings_page.set_title (file_row.settings.filename);
                 load_settings (file_row.settings);
             });
 
@@ -140,7 +140,10 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/file-row.ui")]
-    public class ImportFileRow : Adw.ActionRow {
+    public class ImportFileRow : ListBoxRow {
+        [GtkChild]
+        private unowned Label filename { get; }
+
         [GtkChild]
         private unowned Label mode { get; }
 
@@ -148,7 +151,7 @@ namespace Graphs {
 
         public ImportFileRow (ImportSettings settings) {
             this.settings = settings;
-            set_title (Tools.get_filename (settings.file));
+            filename.set_label (settings.filename);
             settings.bind_property ("mode_name", mode, "label", BindingFlags.SYNC_CREATE);
         }
     }
