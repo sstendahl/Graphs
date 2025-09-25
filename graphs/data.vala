@@ -296,6 +296,10 @@ namespace Graphs {
             if (_used_colors.length == _color_cycle.length) _used_colors = {};
         }
 
+        public void add_items (Item[] items) {
+            add_items_from_list (new Gee.ArrayList<Item>.wrap (items));
+        }
+
         /**
          * Add items to be managed.
          *
@@ -304,7 +308,7 @@ namespace Graphs {
          * they are still the default. If they are already modified and do not
          * match the items label, they get moved to another axis.
          */
-        public void add_items (Item[] items) {
+        public void add_items_from_list (Gee.List<Item> items) {
             _used_colors = {};
             foreach (Item item in _items) {
                 if (item.color in _color_cycle) append_used_color (item.color);
@@ -361,7 +365,7 @@ namespace Graphs {
                 _add_item (item, -1, false);
                 item_added.emit (item);
             }
-            items_changed.emit (prev_size, 0, items.length);
+            items_changed.emit (prev_size, 0, items.size);
             optimize_limits ();
             add_history_state ();
         }

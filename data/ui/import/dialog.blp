@@ -1,0 +1,137 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsImportDialog: Adw.Dialog {
+  content-width: 900;
+  content-height: 576;
+  width-request: 360;
+  height-request: 200;
+  focus-widget: confirm_button;
+
+  Adw.Breakpoint {
+    condition ("max-width: 500sp")
+
+    setters {
+      navigation_view.collapsed: true;
+    }
+  }
+
+  child: Adw.NavigationSplitView navigation_view {
+
+    sidebar: Adw.NavigationPage file_list_page {
+      title: _("Import Parameters");
+      width-request: 260;
+
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          [start]
+          Button {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add File");
+            clicked => $on_add();
+          }
+        }
+
+        content: ScrolledWindow {
+          propagate-natural-height: true;
+
+          child: Viewport {
+            child: Adw.Clamp {
+              child: Box {
+                orientation: vertical;
+
+                ListBox file_list {
+                  selection-mode: single;
+                  vexpand: true;
+                  valign: start;
+
+                  styles [
+                    "navigation-sidebar",
+                  ]
+                }
+
+                Button confirm_button {
+                  label: _("Import");
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom: 12;
+                  clicked => $on_accept();
+
+                  styles [
+                    "suggested-action",
+                    "pill",
+                  ]
+                }
+              };
+            };
+          };
+        };
+      };
+    };
+
+    content: Adw.NavigationPage file_settings_page {
+      title: "tmp";
+      child: Adw.ToolbarView {
+        [top]
+        Adw.HeaderBar {
+          [end]
+          Button {
+            icon-name: "history-undo-symbolic";
+            tooltip-text: _("Reset to guessed values");
+            clicked => $on_reset();
+          }
+        }
+
+        content: ScrolledWindow {
+          propagate-natural-height: true;
+
+          child: Viewport {
+            child: Adw.Clamp {
+              margin-start: 12;
+              margin-end: 12;
+              margin-top: 12;
+              margin-bottom: 12;
+
+              Box {
+                orientation: vertical;
+                spacing: 10;
+
+                Adw.PreferencesGroup {
+                  Adw.ComboRow mode {
+                    title: _("Import Mode");
+                    notify::selected => $on_mode();
+                  }
+                }
+
+                Box file_settings_box {
+                  orientation: vertical;
+                  spacing: 10;
+                }
+
+                Adw.PreferencesGroup default_group {
+                  Adw.ButtonRow {
+                    title: _("Set as Default");
+                    activated => $set_as_default();
+                  }
+                }
+
+                Adw.PreferencesGroup remove_group {
+                  Adw.ButtonRow {
+                    title: _("Remove");
+                    activated => $remove();
+
+                    styles [
+                      "destructive-action",
+                    ]
+                  }
+                }
+              }
+            };
+          };
+        };
+      };
+    };
+  };
+}

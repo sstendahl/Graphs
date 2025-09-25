@@ -16,8 +16,9 @@ class PythonApplication(Graphs.Application):
 
         from gettext import gettext as _
 
-        from graphs.styles import StyleManager
+        from graphs.file_import import DataImporter
         from graphs.python_helper import PythonHelper
+        from graphs.styles import StyleManager
 
         from matplotlib import font_manager
 
@@ -34,5 +35,7 @@ class PythonApplication(Graphs.Application):
         self.props.python_helper = self._python_helper
         self._figure_style_manager = StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
+        self._data_importer = DataImporter(self)
+        self.props.data_importer = self._data_importer
 
         Graphs.Application.do_startup(self)
