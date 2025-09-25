@@ -38,14 +38,8 @@ template $GraphsImportDialog: Adw.Dialog {
 
           child: Viewport {
             child: Adw.Clamp {
-              margin-start: 12;
-              margin-end: 12;
-              margin-top: 12;
-              margin-bottom: 12;
-
-              Box {
+              child: Box {
                 orientation: vertical;
-                spacing: 12;
 
                 ListBox file_list {
                   selection-mode: single;
@@ -53,12 +47,16 @@ template $GraphsImportDialog: Adw.Dialog {
                   valign: start;
 
                   styles [
-                    "boxed-list",
+                    "navigation-sidebar",
                   ]
                 }
 
                 Button confirm_button {
                   label: _("Import");
+                  margin-start: 12;
+                  margin-end: 12;
+                  margin-top: 12;
+                  margin-bottom: 12;
                   clicked => $on_accept();
 
                   styles [
@@ -66,7 +64,7 @@ template $GraphsImportDialog: Adw.Dialog {
                     "pill",
                   ]
                 }
-              }
+              };
             };
           };
         };
