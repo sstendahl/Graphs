@@ -30,7 +30,7 @@ class ColumnsParser(Parser):
     def parse(settings, style) -> misc.ItemList:
         """Import data from columns file."""
         file = settings.get_file()
-        item_ = item.DataItem.new(style, name=Graphs.tools_get_filename(file))
+        item_ = item.DataItem.new(style, name=settings.get_filename())
         column_x = settings.get_int("column-x")
         column_y = settings.get_int("column-y")
         separator = misc.SEPARATORS[settings.get_string("separator")]

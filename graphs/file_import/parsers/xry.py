@@ -3,8 +3,6 @@
 from gettext import gettext as _
 from gettext import pgettext as C_
 
-from gi.repository import Graphs
-
 from graphs import file_io, item, misc
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
@@ -47,7 +45,7 @@ class XryParser(Parser):
             info = file_like.readline().strip().split()
             item_count = int(info[0])
 
-            name = Graphs.tools_get_filename(settings.get_file())
+            name = settings.get_filename()
             items = [
                 item.DataItem.new(
                     style,

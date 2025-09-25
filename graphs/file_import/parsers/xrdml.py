@@ -3,8 +3,6 @@
 from gettext import gettext as _
 from gettext import pgettext as C_
 
-from gi.repository import Graphs
-
 from graphs import file_io, item, misc
 from graphs.file_import.parsers import Parser
 
@@ -57,7 +55,7 @@ class XrdmlParser(Parser):
                 style,
                 xdata,
                 ydata,
-                name=Graphs.tools_get_filename(settings.get_file()),
+                name=settings.get_filename(),
                 xlabel=f"{scan_axis} ({unit})",
                 ylabel=_("Intensity (cps)"),
             ),
