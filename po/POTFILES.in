@@ -10,6 +10,9 @@ data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
 data/ui/edit-item/generated-data.blp
+data/ui/import/dialog.blp
+data/ui/import/file-row.blp
+data/ui/import/mode-columns.blp
 data/ui/sidebar/figure-settings/settings-page.blp
 data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
@@ -20,8 +23,6 @@ data/ui/curve-fitting.blp
 data/ui/export-figure.blp
 data/ui/fitting-parameters.blp
 data/ui/generate-data.blp
-data/ui/import.blp
-data/ui/import-columns.blp
 data/ui/item-box.blp
 data/ui/operations.blp
 data/ui/smoothen-settings.blp
@@ -33,6 +34,14 @@ data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
+graphs/file_import/parsers/__init__.py
+graphs/file_import/parsers/columns.vala
+graphs/file_import/parsers/columns.py
+graphs/file_import/parsers/project.py
+graphs/file_import/parsers/xrdml.py
+graphs/file_import/parsers/xry.py
+graphs/file_import/__init__.py
+graphs/file_import/file_import.vala
 graphs/sidebar/edit_item.py
 graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
@@ -53,8 +62,6 @@ graphs/export_figure.vala
 graphs/export_items.py
 graphs/export_items.vala
 graphs/figure_settings.vala
-graphs/file_import.py
-graphs/file_import.vala
 graphs/file_io.py
 graphs/generate_data.vala
 graphs/item.py
@@ -64,7 +71,6 @@ graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala
 graphs/operations.py
-graphs/parse_file.py
 graphs/project.py
 graphs/project.vala
 graphs/python_helper.py
