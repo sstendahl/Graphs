@@ -23,7 +23,6 @@ namespace Graphs {
             this.filename = file.get_basename ();
             string file_path = file.get_path ();
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
-                warning("Failed to open database");
                 return;
             }
 
@@ -32,26 +31,26 @@ namespace Graphs {
             table_row.set_model (table_model);
             table_row.notify["selected"].connect (update_columns);
 
-            update_columns();
+            update_columns ();
         }
 
-        private string[] get_table_names() {
-            var names = new Array<string>();
+        private string[] get_table_names () {
+            var names = new Array<string> ();
             Sqlite.Statement stmt;
 
             if (db.prepare_v2 ("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'",
                              -1, out stmt) != Sqlite.OK) {
-                return {};
+                return;
             }
 
             while (stmt.step () == Sqlite.ROW) {
-                names.append_val(stmt.column_text (0));
+                names.append_val (stmt.column_text (0));
             }
 
             return names.data;
         }
 
-        private void update_columns() {
+        private void update_columns () {
             var selected_item = table_row.get_selected_item () as StringObject;
             if (selected_item == null) return;
 
@@ -63,17 +62,17 @@ namespace Graphs {
             column_y.set_model (column_model);
         }
 
-        private string[] get_column_names(string table_name) {
-            var columns = new Array<string>();
+        private string[] get_column_names (string table_name) {
+            var columns = new Array<string> ();
             Sqlite.Statement stmt;
 
             string sql = "PRAGMA table_info(`%s`)".printf (table_name);
             if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
-                return {};
+                return;
             }
 
-            while (stmt.step() == Sqlite.ROW) {
-                columns.append_val (stmt.column_text(1));
+            while (stmt.step () == Sqlite.ROW) {
+                columns.append_val (stmt.column_text (1));
             }
 
             return columns.data;
@@ -96,18 +95,17 @@ namespace Graphs {
         }
 
         private DataSet? load_data (string table, string x_col, string y_col) {
-            var x_data = new Array<double>();
-            var y_data = new Array<double>();
+            var x_data = new Array<double> ();
+            var y_data = new Array<double> ();
 
             Sqlite.Statement stmt;
             string sql = "SELECT `%s`, `%s` FROM `%s`".printf (x_col, y_col, table);
 
-            if (db.prepare_v2(sql, -1, out stmt) != Sqlite.OK) {
-                warning("Failed to prepare data query: %s", db.errmsg ());
+            if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
                 return null;
             }
 
-            while (stmt.step() == Sqlite.ROW) {
+            while (stmt.step () == Sqlite.ROW) {
                 double x_val = stmt.column_double (0);
                 double y_val = stmt.column_double (1);
 
@@ -115,7 +113,7 @@ namespace Graphs {
                 y_data.append_val (y_val);
             }
 
-            return DataSet() {
+            return DataSet () {
                 name = this.filename,
                 table_name = table,
                 x_column_name = x_col,
