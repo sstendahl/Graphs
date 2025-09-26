@@ -9,7 +9,7 @@ from graphs import misc, utilities
 from matplotlib import rcParams
 
 
-def new_from_dict(dictionary: dict):
+def new_from_dict(dictionary: dict) -> Graphs.Item:
     """Instanciate item from dict."""
     match dictionary["type"]:
         case "GraphsDataItem":
@@ -35,7 +35,7 @@ class _PythonItem(Graphs.Item):
     def __init__(self, **kwargs):
         super().__init__(typename=self._typename, **kwargs)
 
-    def reset(self, old_style, new_style):
+    def reset(self, old_style: rcParams, new_style: rcParams) -> None:
         """Reset all properties."""
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
@@ -46,13 +46,13 @@ class _PythonItem(Graphs.Item):
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(self, style):
+    def _extract_params(self, style: rcParams) -> dict:
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()
         }
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Convert item to dict."""
         dictionary = {
             key: self.get_property(key)
@@ -83,7 +83,13 @@ class DataItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style, xdata=None, ydata=None, **kwargs):
+    def new(
+        cls,
+        style: rcParams,
+        xdata: list[float] = None,
+        ydata: list[float] = None,
+        **kwargs,
+    ):
         """Create new DataItem."""
         return cls(
             xdata=xdata,
@@ -187,7 +193,7 @@ class EquationItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style, equation, **kwargs):
+    def new(cls, style: rcParams, equation: str, **kwargs):
         """Create new EquationItem."""
         return cls(
             equation=equation,
@@ -235,7 +241,14 @@ class TextItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style, xanchor=0, yanchor=0, text="", **kwargs):
+    def new(
+        cls,
+        style: rcParams,
+        xanchor: float = 0,
+        yanchor: float = 0,
+        text: str = "",
+        **kwargs,
+    ):
         """Create new textItem."""
         return cls(
             xanchor=xanchor,
@@ -255,7 +268,12 @@ class FillItem(_PythonItem):
     data = GObject.Property(type=object)
 
     @classmethod
-    def new(cls, _params, data, **kwargs):
+    def new(
+        cls,
+        _params: rcParams,
+        data: tuple[list[float], list[float], list[float]],
+        **kwargs,
+    ):
         """Create new FillItem."""
         return cls(data=data, **kwargs)
 

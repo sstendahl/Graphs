@@ -200,7 +200,7 @@ gresource_bundle = gnome.compile_resources(application_id, gresource,
         source_dir: meson.current_build_dir(),
            install: true,
        install_dir: pkgdatadir,
-            c_name: meson.project_name(),
+            c_name: 'graphs',
 )
 
 devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())

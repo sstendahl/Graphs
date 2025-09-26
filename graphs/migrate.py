@@ -9,7 +9,6 @@ from gi.repository import Gio
 
 import gio_pyio
 
-
 LIMITS = [
     "min_bottom",
     "max_bottom",
@@ -197,9 +196,10 @@ def _migrate_clipboard(clipboard, clipboard_pos, current_limits):
                         for key_2, value in item.items():
                             previous_value = previous_state[key][key_2]
                             if value != previous_value:
-                                batch.append(
-                                    [0, [key, key_2, previous_value, value]],
-                                )
+                                batch.append([
+                                    0,
+                                    [key, key_2, previous_value, value],
+                                ])
                 else:
                     batch.append([1, item])
             if clipboard_pos == count - len(states) + 1:

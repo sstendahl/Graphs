@@ -184,6 +184,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   // If width is very limited (below 380 pixels)
   Adw.Breakpoint {
     condition ("max-width: 380sp and min-height: 410sp")
+
     setters {
       sidebar_navigation_view.width-request: 340;
       overlay_split_view.collapsed: true;
@@ -195,6 +196,7 @@ template $GraphsWindow: Adw.ApplicationWindow {
   // If width is very limited (below 380 pixels), and height is limited
   Adw.Breakpoint {
     condition ("max-width: 380sp and max-height: 410sp")
+
     setters {
       sidebar_navigation_view.width-request: 340;
       overlay_split_view.collapsed: true;

@@ -8,7 +8,6 @@ from graphs.data import Data
 
 from matplotlib import rcParams, rcParamsDefault
 
-
 CSS_TEMPLATE = """
 .canvas-view#{name} {{
     background-color: {background_color};
