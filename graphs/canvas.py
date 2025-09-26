@@ -488,7 +488,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
 
                     tick_params[direction] = tick_shown
-                    tick_params[f"label{direction}"] = tick_shown
+                    if params["ticks.labels"]:
+                        tick_params[f"label{direction}"] = tick_shown
 
                 axis.tick_params(which=ticks, **tick_params)
 

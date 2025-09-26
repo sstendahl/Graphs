@@ -37,6 +37,7 @@ STYLE_DICT = {
     "tick_left": ["ytick.left"],
     "tick_top": ["xtick.top"],
     "tick_right": ["ytick.right"],
+    "ticks_labels": ["ticks.labels"],
     "show_grid": ["axes.grid"],
     "grid_linewidth": ["grid.linewidth"],
     "value_padding": [
@@ -111,6 +112,7 @@ class StyleEditorBox(Gtk.Box):
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
     tick_right = Gtk.Template.Child()
+    ticks_labels = Gtk.Template.Child()
     show_grid = Gtk.Template.Child()
     grid_linewidth = Gtk.Template.Child()
     grid_opacity = Gtk.Template.Child()

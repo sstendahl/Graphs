@@ -39,6 +39,27 @@ FONT_SIZE_KEYS = [
     "axes.titlesize",
 ]
 
+STYLE_CUSTOM_PARAMS = [
+    "ticks.labels",
+]
+
+class Style(RcParams):
+    """Style class that extends RcParams with custom parameter handling."""
+
+    def __init__(self):
+        self._custom_params = {}
+        super().__init__(self)
+
+    def __getitem__(self, key):
+        if key in STYLE_CUSTOM_PARAMS:
+            return self._custom_params.get(key, None)
+        return super().__getitem__(key)
+
+    def __setitem__(self, key, value):
+        if key in STYLE_CUSTOM_PARAMS:
+            self._custom_params[key] = value
+        else:
+            super().__setitem__(key, value)
 
 class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
@@ -52,7 +73,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     It is also modified to work with GFile instead of the python builtin
     functions.
     """
-    style = RcParams()
+    style = Style()
     graphs_params = {"name": None}
     filename = file.get_basename()
     try:
@@ -86,6 +107,12 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
             elif key in STYLE_IGNORELIST:
                 msg = _("Ignoring parameter {param} in file {file}")
                 logging.warning(msg.format(param=key, file=filename))
+            if key in STYLE_CUSTOM_PARAMS:
+                if value.lower() == "false":
+                    value = False
+                elif value.lower() == "true":
+                    value = True
+                style[key] = value
             elif key != "name" and \
                     key in (graphs_params if graphs_param else style):
                 msg = _("Duplicate key in file {file}, on line {line}")
