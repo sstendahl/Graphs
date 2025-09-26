@@ -88,7 +88,6 @@ class Data(Graphs.Data):
                         if style.get_mutable():
                             validate = style_manager.get_system_style_params()
                         self._old_style_params = self._selected_style_params
-                        self._old_graphs_params = self._selected_graphs_params
 
                         style_params, graphs_params = style_io.parse(
                             style.get_file(),
@@ -117,7 +116,6 @@ class Data(Graphs.Data):
             logging.warning(error_msg)
 
         self._old_style_params = self._selected_style_params
-        self._old_graphs_params = self._selected_graphs_params
         self._selected_style_params = style_manager.get_system_style_params()
         self._selected_graphs_params = style_manager.get_system_graphs_params()
 
