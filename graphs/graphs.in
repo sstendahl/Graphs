@@ -32,7 +32,6 @@ import os
 import signal
 import sys
 
-
 if __name__ == "__main__":
     import gi
 
@@ -55,14 +54,15 @@ if __name__ == "__main__":
 
     from gi.repository import Gio
     gresource_location = os.path.join(
-        "@PKGDATADIR@", "@APPLICATION_ID@.gresource",
+        "@PKGDATADIR@",
+        "@APPLICATION_ID@.gresource",
     )
     if os.environ.get("GRAPHS_OVERRIDE_RESOURCES"):
         gresource_location = os.environ.get("GRAPHS_OVERRIDE_RESOURCES")
     resource = Gio.Resource.load(gresource_location)
     resource._register()
 
-    loglevel = logging.DEBUG if @DEBUG@ else logging.INFO
+    loglevel = logging.DEBUG if "@DEBUG@" == "True" else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logging.getLogger("matplotlib.font_manager").disabled = True
 
@@ -72,6 +72,7 @@ if __name__ == "__main__":
     from graphs.application import PythonApplication
     application = PythonApplication(
         application_id="@APPLICATION_ID@",
-        flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE | Gio.ApplicationFlags.HANDLES_OPEN,
+        flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
+        | Gio.ApplicationFlags.HANDLES_OPEN,
     )
     sys.exit(application.run(sys.argv))
