@@ -17,7 +17,6 @@ template $GraphsImportDialog: Adw.Dialog {
   }
 
   child: Adw.NavigationSplitView navigation_view {
-
     sidebar: Adw.NavigationPage file_list_page {
       title: _("Import Parameters");
       width-request: 260;
@@ -73,6 +72,7 @@ template $GraphsImportDialog: Adw.Dialog {
 
     content: Adw.NavigationPage file_settings_page {
       title: "tmp";
+
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {

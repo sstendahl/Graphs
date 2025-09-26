@@ -3,10 +3,12 @@ using Adw 1;
 
 Adw.AlertDialog delete_style_dialog {
   heading: _("Delete Style?");
+
   responses [
     cancel: _("Cancel"),
     delete: _("Delete") destructive,
   ]
+
   close-response: "cancel";
   default-response: "delete";
 }
