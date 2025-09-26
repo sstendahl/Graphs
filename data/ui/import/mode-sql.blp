@@ -1,0 +1,15 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSqlGroup: Adw.PreferencesGroup {
+  Adw.ComboRow table_row {
+      title: _("Database Table");
+    }
+    Adw.ComboRow column_x {
+      title: _("Column X");
+
+    }
+    Adw.ComboRow column_y {
+      title: _("Column Y");
+    }
+}

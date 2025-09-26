@@ -82,6 +82,7 @@ blueprint_files = [
   'ui/import/dialog.blp',
   'ui/import/file-row.blp',
   'ui/import/mode-columns.blp',
+  'ui/import/mode-sql.blp',
   'ui/sidebar/figure-settings/settings-page.blp',
   'ui/sidebar/figure-settings/style-page.blp',
   'ui/sidebar/edit-item.blp',
