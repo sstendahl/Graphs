@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Graphs
-Exec=@PROJECT_NAME@ %U
+Exec=graphs %U
 Icon=@APPLICATION_ID@
 Terminal=false
 Type=Application
@@ -14,8 +14,8 @@ Actions=new-window;style-editor;
 
 [Desktop Action new-window]
 Name=New Window
-Exec=@PROJECT_NAME@ --new-window %U
+Exec=graphs --new-window %U
 
 [Desktop Action style-editor]
 Name=Style Editor
-Exec=@PROJECT_NAME@ --style-editor %U
+Exec=graphs --style-editor %U

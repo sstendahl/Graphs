@@ -4,11 +4,13 @@ using Adw 1;
 Adw.AlertDialog save_project_changes_dialog {
   heading: _("Save Changes?");
   body: _("Current project contains unsaved changes, changes that are not saved will be permanently lost.");
+
   responses [
     cancel: _("Cancel"),
     discard: _("Discard") destructive,
     save: _("Save") suggested,
   ]
+
   close-response: "cancel";
   default-response: "discard";
 }
