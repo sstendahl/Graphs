@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
           input: 'graphs.in',
-         output: meson.project_name(),
+         output: 'graphs',
   configuration: conf,
         install: true,
    install_mode: 'rwxr-xr-x',
@@ -38,7 +38,7 @@ python.install_sources(
     'window.py',
   ),
   preserve_path: true,
-         subdir: meson.project_name(),
+         subdir: 'graphs',
 )
 
 configure_file(

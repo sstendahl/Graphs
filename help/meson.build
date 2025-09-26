@@ -15,7 +15,7 @@ media = [
   'media/se.sjoerd.Graphs.svg',
 ]
 
-gnome.yelp(meson.project_name(),
+gnome.yelp('graphs',
   sources: pages,
     media: media,
 )

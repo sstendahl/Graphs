@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-project('graphs', 'c', 'vala',
+project('Graphs', 'c', 'vala',
           version: '1.9.0',
     meson_version: '>= 1.2.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
+          license: 'GPL-3.0-or-later',
 )
 
 dependencies = [
@@ -45,9 +46,10 @@ datadir = get_option('datadir')
 bindir = join_paths(prefix, get_option('bindir'))
 libdir = get_option('libdir')
 version = meson.project_version()
-pkgdatadir = join_paths(prefix, datadir, meson.project_name())
+pkgdatadir = join_paths(prefix, datadir, 'graphs')
 localedir = join_paths(prefix, get_option('localedir'))
 debug = get_option('buildtype') == 'debug'
+gettext_package = 'graphs'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
@@ -56,12 +58,11 @@ endif
 
 conf = configuration_data()
 conf.set('APPLICATION_ID', application_id)
-conf.set('GETTEXT_PACKAGE', meson.project_name())
+conf.set('GETTEXT_PACKAGE', gettext_package)
 conf.set('COPYRIGHT', copyright)
 conf.set('BINDIR', bindir)
 conf.set('LOCALEDIR', localedir)
 conf.set('PKGDATADIR', pkgdatadir)
-conf.set('PROJECT_NAME', meson.project_name())
 conf.set('HOMEPAGE_URL', homepage_url)
 conf.set('VCS_URL', vcs_url)
 conf.set('ISSUE_URL', issue_url)
@@ -71,7 +72,7 @@ conf.set('CONTRIBUTE_URL', contribute_url)
 conf.set('DEBUG', debug)
 
 vala_conf = configuration_data()
-vala_conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
+vala_conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 vala_conf.set_quoted('LOCALEDIR', localedir)
 vala_conf.set_quoted('VERSION', version)
 vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
@@ -79,7 +80,7 @@ vala_conf.set_quoted('ISSUE_URL', issue_url)
 vala_conf.set_quoted('COPYRIGHT', copyright)
 
 add_project_arguments (
-  '-DGETTEXT_PACKAGE="' + meson.project_name() + '"',
+  '-DGETTEXT_PACKAGE="' + gettext_package + '"',
   '-w',
   language: 'c'
 )
