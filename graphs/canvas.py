@@ -98,7 +98,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self._style_params = style_params
         if not custom_params:
             custom_params = {}
-        self._custom_params = custom_params
+        self._graphs_params = custom_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
         Graphs.Canvas.__init__(
             self,
@@ -492,7 +492,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
 
                     tick_params[direction] = tick_shown
-                    if self._custom_params.get("ticklabels", False):
+                    if self._graphs_params.get("ticklabels", False):
                         tick_params[f"label{direction}"] = tick_shown
 
                 axis.tick_params(which=ticks, **tick_params)

@@ -14,9 +14,9 @@ def _is_style_bright(params: RcParams):
     return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
 
 
-def _generate_preview(style: RcParams) -> Gdk.Texture:
+def _generate_preview(style: RcParams, graphs_params: dict) -> Gdk.Texture:
     buffer = io.BytesIO()
-    style_io.create_preview(buffer, style, "png", 31)
+    style_io.create_preview(buffer, style, graphs_params, "png", 31)
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
@@ -52,7 +52,7 @@ class StyleManager(Graphs.StyleManager):
                 self._system_style_params,
             )
             name = graphs_params["name"]
-            preview = _generate_preview(style_params)
+            preview = _generate_preview(style_params, graphs_params)
             light = _is_style_bright(style_params)
         except style_io.StyleParseError:
             name = ""

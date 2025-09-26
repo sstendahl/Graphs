@@ -173,6 +173,7 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 def create_preview(
     file: typing.IO,
     params: RcParams,
+    graphs_params: dict,
     file_format: str = "svg",
     dpi: int = 100,
 ) -> None:
@@ -185,6 +186,10 @@ def create_preview(
         axis.spines.left.set_visible(True)
         if not params["axes.spines.top"]:
             axis.tick_params(which="both", top=False, right=False)
+        else:
+            if graphs_params.get("ticklabels", False):
+                tick_params = {"labelright": True}
+                axis.tick_params(which="both", **tick_params)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
