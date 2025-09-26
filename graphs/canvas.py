@@ -480,18 +480,18 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 params[f"xtick.{directions[0]}"]
                 or params[f"ytick.{directions[1]}"]
             ):
-                axis.tick_params(
-                    which=ticks,
-                    **{
-                        direction: (
-                            draw_frame and not visible_axes[i]
-                            or direction in directions
-                        )
-                        and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
-                        for i,
-                        direction in enumerate(misc.DIRECTIONS)
-                    },
-                )
+                tick_params = {}
+                for i, direction in enumerate(misc.DIRECTIONS):
+                    tick_shown = (
+                        (draw_frame and not visible_axes[i])
+                        or direction in directions
+                    ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
+
+                    tick_params[direction] = tick_shown
+                    tick_params[f"label{direction}"] = tick_shown
+
+                axis.tick_params(which=ticks, **tick_params)
+
             for handle in axis.lines + axis.texts:
                 handle.remove()
             axis_legend = axis.get_legend()
