@@ -183,9 +183,9 @@ def create_preview(
         axis = figure.add_subplot()
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
-        draw_drame = params["axes.spines.top"]
+        draw_frame = params["axes.spines.top"]
         ticklabels = graphs_params.get("ticklabels", False)
-        if draw_drame and ticklabels:
+        if draw_frame and ticklabels:
             axis.tick_params(which="both", labelright=True)
         else:
             axis.tick_params(which="both", top=False, right=False)
