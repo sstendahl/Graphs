@@ -84,7 +84,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def __init__(
         self,
         style_params: dict,
-        custom_params: dict,
+        graphs_params: dict,
         items: Gio.ListModel,
         interactive: bool = True,
     ):
@@ -96,9 +96,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         attributes to their respective values.
         """
         self._style_params = style_params
-        if not custom_params:
-            custom_params = {}
-        self._graphs_params = custom_params
+        self._graphs_params = graphs_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
         Graphs.Canvas.__init__(
             self,

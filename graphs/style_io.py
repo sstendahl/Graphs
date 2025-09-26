@@ -43,6 +43,7 @@ STYLE_CUSTOM_PARAMS = [
     "ticklabels",
 ]
 
+
 class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
 
@@ -150,10 +151,8 @@ def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
-    print("WRIIIIITING")
     for key, value in graphs_params.items():
         stream.put_string(f"#~graphs {key}: {value}\n")
-        print(graphs_params)
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")

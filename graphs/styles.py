@@ -70,16 +70,16 @@ class StyleManager(Graphs.StyleManager):
         """Get the system style properties."""
         return self._system_style_params
 
-    def get_system_custom_style_params(self) -> RcParams:
+    def get_system_graphs_params(self) -> RcParams:
         """Get the system style properties."""
-        return self._system_style_custom_params
+        return self._system_graphs_params
 
     def _update_system_style(self) -> None:
         system_style = self._system_style_name
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"
         filename = Graphs.filename_from_stylename(system_style)
-        self._system_style_params, self._system_style_custom_params = style_io.parse(
+        self._system_style_params, self._system_graphs_params = style_io.parse(
             Gio.File.new_for_uri(
                 "resource:///se/sjoerd/Graphs/styles/" + filename,
             ),

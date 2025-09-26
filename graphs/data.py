@@ -30,7 +30,7 @@ class Data(Graphs.Data):
 
     def __init__(self, application: Graphs.Application):
         self._selected_style_params = None
-        self._selected_custom_params = None
+        self._selected_graphs_params = {}
         super().__init__(application=application)
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
@@ -71,9 +71,9 @@ class Data(Graphs.Data):
         """Get the selected style properties."""
         return self._selected_style_params
 
-    def get_selected_custom_params(self) -> dict:
+    def get_selected_graphs_params(self) -> dict:
         """Get the selected custom parameters."""
-        return self._selected_custom_params
+        return self._selected_graphs_params
 
     def _update_selected_style(self) -> None:
         figure_settings = self.props.figure_settings
@@ -88,14 +88,14 @@ class Data(Graphs.Data):
                         if style.get_mutable():
                             validate = style_manager.get_system_style_params()
                         self._old_style_params = self._selected_style_params
-                        self._old_custom_params = getattr(self, '_selected_custom_params', {})
+                        self._old_graphs_params = self._selected_graphs_params
 
-                        style_params, custom_params = style_io.parse(
+                        style_params, graphs_params = style_io.parse(
                             style.get_file(),
                             validate,
                         )
                         self._selected_style_params = style_params
-                        self._selected_custom_params = custom_params
+                        self._selected_graphs_params = graphs_params
 
                         self.set_color_cycle(
                             style_params["axes.prop_cycle"].by_key()["color"],
@@ -117,10 +117,9 @@ class Data(Graphs.Data):
             logging.warning(error_msg)
 
         self._old_style_params = self._selected_style_params
-        self._old_custom_params = getattr(self, '_selected_custom_params', {})
+        self._old_graphs_params = self._selected_graphs_params
         self._selected_style_params = style_manager.get_system_style_params()
-        self._selected_custom_params = style_manager.get_system_custom_style_params()
-        self._selected_custom_params = {}
+        self._selected_graphs_params = style_manager.get_system_graphs_params()
 
         self.set_color_cycle(
             self._selected_style_params["axes.prop_cycle"].by_key()["color"],

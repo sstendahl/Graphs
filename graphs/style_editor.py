@@ -37,7 +37,7 @@ STYLE_DICT = {
     "tick_left": ["ytick.left"],
     "tick_top": ["xtick.top"],
     "tick_right": ["ytick.right"],
-    "ticks_labels": ["ticklabels"],
+    "tick_labels": ["ticklabels"],
     "show_grid": ["axes.grid"],
     "grid_linewidth": ["grid.linewidth"],
     "value_padding": [
@@ -112,7 +112,7 @@ class StyleEditorBox(Gtk.Box):
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
     tick_right = Gtk.Template.Child()
-    ticks_labels = Gtk.Template.Child()
+    tick_labels = Gtk.Template.Child()
     show_grid = Gtk.Template.Child()
     grid_linewidth = Gtk.Template.Child()
     grid_opacity = Gtk.Template.Child()
@@ -196,8 +196,6 @@ class StyleEditorBox(Gtk.Box):
             if value[0] in style_io.STYLE_CUSTOM_PARAMS:
                 value = graphs_params.get(value[0], False)
             else:
-                print(style_io.STYLE_CUSTOM_PARAMS)
-                print(key)
                 value = style_params[value[0]]
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
@@ -325,10 +323,11 @@ class StyleEditorBox(Gtk.Box):
         with contextlib.suppress(KeyError):
             value = VALUE_DICT[key][value]
         for item in STYLE_DICT[key]:
-            if key in self.params:
-                self.params[item] = value
-            else:
+            if item in style_io.STYLE_CUSTOM_PARAMS:
                 self.graphs_params[item] = value
+            else:
+                self.params[item] = value
+
         self.emit("params-changed")
 
     def _on_color_change(self, button: Gtk.Button, key: str) -> None:
@@ -472,7 +471,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
             params = style_manager.get_system_style_params()
-            graphs_params = style_manager.get_system_custom_style_params()
+            graphs_params = style_manager.get_system_graphs_params()
         else:
             params = style_editor.params
             graphs_params = style_editor.graphs_params
