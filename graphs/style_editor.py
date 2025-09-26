@@ -37,7 +37,7 @@ STYLE_DICT = {
     "tick_left": ["ytick.left"],
     "tick_top": ["xtick.top"],
     "tick_right": ["ytick.right"],
-    "ticks_labels": ["ticks.labels"],
+    "ticks_labels": ["ticklabels"],
     "show_grid": ["axes.grid"],
     "grid_linewidth": ["grid.linewidth"],
     "value_padding": [
@@ -193,7 +193,12 @@ class StyleEditorBox(Gtk.Box):
         stylename = graphs_params["name"]
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
-            value = style_params[value[0]]
+            if value[0] in style_io.STYLE_CUSTOM_PARAMS:
+                value = graphs_params.get(value[0], False)
+            else:
+                print(style_io.STYLE_CUSTOM_PARAMS)
+                print(key)
+                value = style_params[value[0]]
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
             widget = getattr(self, key.replace("-", "_"))
@@ -320,7 +325,10 @@ class StyleEditorBox(Gtk.Box):
         with contextlib.suppress(KeyError):
             value = VALUE_DICT[key][value]
         for item in STYLE_DICT[key]:
-            self.params[item] = value
+            if key in self.params:
+                self.params[item] = value
+            else:
+                self.graphs_params[item] = value
         self.emit("params-changed")
 
     def _on_color_change(self, button: Gtk.Button, key: str) -> None:
@@ -464,8 +472,10 @@ class PythonStyleEditor(Graphs.StyleEditor):
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
             params = style_manager.get_system_style_params()
+            graphs_params = style_manager.get_system_custom_style_params()
         else:
             params = style_editor.params
+            graphs_params = style_editor.graphs_params
             color_cycle = params["axes.prop_cycle"].by_key()["color"]
             for index, item in enumerate(self._test_items):
                 # Wrap around the color_cycle using the % operator
@@ -474,7 +484,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
                     item.set_property(prop, value)
             self.set_stylename(style_editor.graphs_params["name"])
 
-        canvas = Canvas(params, self._test_items, False)
+        canvas = Canvas(params, graphs_params, self._test_items, False)
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")

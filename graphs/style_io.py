@@ -40,30 +40,8 @@ FONT_SIZE_KEYS = [
 ]
 
 STYLE_CUSTOM_PARAMS = [
-    "ticks.labels",
+    "ticklabels",
 ]
-
-
-class Style(RcParams):
-    """Style class that extends RcParams with custom parameter handling."""
-
-    def __init__(self):
-        self._custom_params = {}
-        super().__init__(self)
-
-    def __getitem__(self, key):
-        """Override RcParams getitem to skip validation for custom params."""
-        if key in STYLE_CUSTOM_PARAMS:
-            return self._custom_params.get(key)
-        return super().__getitem__(key)
-
-    def __setitem__(self, key, value):
-        """Override RcParams setitem to skip validation for custom params."""
-        if key in STYLE_CUSTOM_PARAMS:
-            self._custom_params[key] = value
-        else:
-            super().__setitem__(key, value)
-
 
 class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
@@ -77,7 +55,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     It is also modified to work with GFile instead of the python builtin
     functions.
     """
-    style = Style()
+    style = RcParams()
     graphs_params = {"name": None}
     filename = file.get_basename()
     try:
@@ -111,12 +89,6 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
             elif key in STYLE_IGNORELIST:
                 msg = _("Ignoring parameter {param} in file {file}")
                 logging.warning(msg.format(param=key, file=filename))
-            if key in STYLE_CUSTOM_PARAMS:
-                if value.lower() == "false":
-                    value = False
-                elif value.lower() == "true":
-                    value = True
-                style[key] = value
             elif key != "name" and \
                     key in (graphs_params if graphs_param else style):
                 msg = _("Duplicate key in file {file}, on line {line}")
@@ -134,7 +106,11 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                     except KeyError:
                         continue
                 try:
-                    if graphs_param:
+                    if graphs_param or key in STYLE_CUSTOM_PARAMS:
+                        if value.lower() == "false":
+                            value = False
+                        elif value.lower() == "true":
+                            value = True
                         graphs_params[key] = value
                     else:
                         style[key] = value
@@ -174,8 +150,10 @@ def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     """Write a style to a file."""
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
+    print("WRIIIIITING")
     for key, value in graphs_params.items():
         stream.put_string(f"#~graphs {key}: {value}\n")
+        print(graphs_params)
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")

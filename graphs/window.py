@@ -59,6 +59,7 @@ class PythonWindow(Graphs.Window):
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
+        custom_params = self.props.data.get_selected_custom_params()
 
         key_controller = self.props.key_controller
         canvas = self.get_canvas()
@@ -66,7 +67,7 @@ class PythonWindow(Graphs.Window):
             key_controller.disconnect_by_func(canvas.key_press_event)
             key_controller.disconnect_by_func(canvas.key_release_event)
 
-        canvas = Canvas(params, self.props.data)
+        canvas = Canvas(params, custom_params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):

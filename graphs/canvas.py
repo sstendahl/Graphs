@@ -84,6 +84,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def __init__(
         self,
         style_params: dict,
+        custom_params: dict,
         items: Gio.ListModel,
         interactive: bool = True,
     ):
@@ -95,6 +96,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         attributes to their respective values.
         """
         self._style_params = style_params
+        if not custom_params:
+            custom_params = {}
+        self._custom_params = custom_params
         pyplot.rcParams.update(self._style_params)  # apply style_params
         Graphs.Canvas.__init__(
             self,
@@ -488,7 +492,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
 
                     tick_params[direction] = tick_shown
-                    if params["ticks.labels"]:
+                    if self._custom_params.get("ticklabels", False):
                         tick_params[f"label{direction}"] = tick_shown
 
                 axis.tick_params(which=ticks, **tick_params)
