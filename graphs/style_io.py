@@ -183,12 +183,12 @@ def create_preview(
         axis = figure.add_subplot()
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
-        if not params["axes.spines.top"]:
-            axis.tick_params(which="both", top=False, right=False)
+        draw_drame = params["axes.spines.top"]
+        ticklabels = graphs_params.get("ticklabels", False)
+        if draw_drame and ticklabels:
+            axis.tick_params(which="both", labelright=True)
         else:
-            if graphs_params.get("ticklabels", False):
-                tick_params = {"labelright": True}
-                axis.tick_params(which="both", **tick_params)
+            axis.tick_params(which="both", top=False, right=False)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
