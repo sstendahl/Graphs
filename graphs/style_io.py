@@ -43,6 +43,7 @@ STYLE_CUSTOM_PARAMS = [
     "ticks.labels",
 ]
 
+
 class Style(RcParams):
     """Style class that extends RcParams with custom parameter handling."""
 
@@ -51,15 +52,18 @@ class Style(RcParams):
         super().__init__(self)
 
     def __getitem__(self, key):
+        """Override RcParams getitem to skip validation for custom params."""
         if key in STYLE_CUSTOM_PARAMS:
-            return self._custom_params.get(key, None)
+            return self._custom_params.get(key)
         return super().__getitem__(key)
 
     def __setitem__(self, key, value):
+        """Override RcParams setitem to skip validation for custom params."""
         if key in STYLE_CUSTOM_PARAMS:
             self._custom_params[key] = value
         else:
             super().__setitem__(key, value)
+
 
 class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""

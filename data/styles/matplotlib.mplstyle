@@ -60,6 +60,8 @@ ytick.left: True
 xtick.top: False
 ytick.right: False
 
+ticks.labels: False
+
 # grid
 axes.grid: False
 axes.grid.which: major
