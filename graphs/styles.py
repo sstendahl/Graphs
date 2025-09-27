@@ -49,7 +49,7 @@ class StyleManager(Graphs.StyleManager):
         try:
             style_params, graphs_params = style_io.parse(
                 file,
-                self._system_style_params,
+                self.get_system_style_params(),
             )
             name = graphs_params["name"]
             preview = _generate_preview(style_params, graphs_params)
@@ -70,16 +70,12 @@ class StyleManager(Graphs.StyleManager):
         """Get the system style properties."""
         return self._system_style_params
 
-    def get_system_graphs_params(self) -> RcParams:
-        """Get the system style properties."""
-        return self._system_graphs_params
-
     def _update_system_style(self) -> None:
         system_style = self._system_style_name
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"
         filename = Graphs.filename_from_stylename(system_style)
-        self._system_style_params, self._system_graphs_params = style_io.parse(
+        self._system_style_params = style_io.parse(
             Gio.File.new_for_uri(
                 "resource:///se/sjoerd/Graphs/styles/" + filename,
             ),

@@ -58,15 +58,14 @@ class PythonWindow(Graphs.Window):
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
-        params, graphs_params = self.props.data.get_selected_style_params()
-
+        params = self.props.data.get_selected_style_params()
         key_controller = self.props.key_controller
         canvas = self.get_canvas()
         if canvas:
             key_controller.disconnect_by_func(canvas.key_press_event)
             key_controller.disconnect_by_func(canvas.key_release_event)
 
-        canvas = Canvas(params, graphs_params, self.props.data)
+        canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
         for prop in dir(figure_settings.props):
             if prop not in ("use_custom_style", "custom_style"):
@@ -87,8 +86,8 @@ class PythonWindow(Graphs.Window):
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
-            background_color=params["figure.facecolor"],
-            color=params["text.color"],
+            background_color=params[0]["figure.facecolor"],
+            color=params[0]["text.color"],
         )
         self.props.css_provider.load_from_string(css)
 

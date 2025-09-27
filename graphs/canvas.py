@@ -84,7 +84,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def __init__(
         self,
         style_params: dict,
-        graphs_params: dict,
         items: Gio.ListModel,
         interactive: bool = True,
     ):
@@ -96,8 +95,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         attributes to their respective values.
         """
         self._style_params = style_params
-        self._graphs_params = graphs_params
-        pyplot.rcParams.update(self._style_params)  # apply style_params
+        pyplot.rcParams.update(self._style_params[0])  # apply style_params
         Graphs.Canvas.__init__(
             self,
             hexpand=True,
@@ -469,7 +467,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self._axis
 
-        params = self._style_params
+        params, graphs_params = self._style_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \
@@ -490,7 +488,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
 
                     tick_params[direction] = tick_shown
-                    if self._graphs_params.get("ticklabels", False):
+                    if graphs_params["ticklabels"]:
                         tick_params[f"label{direction}"] = tick_shown
 
                 axis.tick_params(which=ticks, **tick_params)

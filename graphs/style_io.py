@@ -126,9 +126,12 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     finally:
         stream.close()
     if validate is not None:
-        for key, value in validate.items():
-            if key not in style:
-                style[key] = value
+        style_defaults, graph_defaults = validate
+        for key, value in style_defaults.items():
+            style.setdefault(key, value)
+        for key, value in graph_defaults.items():
+            graphs_params.setdefault(key, value)
+
     if graphs_params["name"] is None:
         msg = _("File {file}, does not contain name tag")
         logging.warning(msg.format(file=filename))
@@ -183,9 +186,7 @@ def create_preview(
         axis = figure.add_subplot()
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
-        draw_frame = params["axes.spines.top"]
-        ticklabels = graphs_params.get("ticklabels", False)
-        if draw_frame and ticklabels:
+        if params["axes.spines.top"] and graphs_params["ticklabels"]:
             tick_params = {
                 "labelleft": params["ytick.left"],
                 "labelright": params["ytick.right"],

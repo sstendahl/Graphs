@@ -133,7 +133,7 @@ class StyleEditorBox(Gtk.Box):
     def __init__(self, window):
         super().__init__()
         self.window = window
-        self.params, self.graphs_params = None, None
+        self.params = None
 
         self._style_color_manager = Graphs.StyleColorManager.new(
             self.line_colors_box,
@@ -185,7 +185,6 @@ class StyleEditorBox(Gtk.Box):
     def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
         self.params = None
-        self.graphs_params = None
         application = self.window.get_application()
         style_params, graphs_params = style_io.parse(
             file,
@@ -484,7 +483,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
                     item.set_property(prop, value)
             self.set_stylename(style_editor.graphs_params["name"])
 
-        canvas = Canvas(params, graphs_params, self._test_items, False)
+        all_params = params, graphs_params
+        canvas = Canvas(all_params, self._test_items, False)
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")

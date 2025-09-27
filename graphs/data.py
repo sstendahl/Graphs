@@ -111,10 +111,7 @@ class Data(Graphs.Data):
             logging.warning(error_msg)
 
         self._old_style_params = self._selected_style_params
-        self._selected_style_params = (
-            style_manager.get_system_style_params(),
-            style_manager.get_system_graphs_params(),
-        )
+        self._selected_style_params = style_manager.get_system_style_params()
         color_cycle = self._selected_style_params[0]["axes.prop_cycle"]
         self.set_color_cycle(color_cycle.by_key()["color"])
 
