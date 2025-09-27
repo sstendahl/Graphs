@@ -25,7 +25,7 @@ namespace Graphs {
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
                 this.table_row.add_css_class ("error");
                 throw new IOError.FAILED (
-                    "Failed to to open SQL Database: %s".printf(db.errmsg())
+                    "Failed to to open SQL Database: %s".printf (db.errmsg ())
                 );
             }
             this.table_names = get_table_names ();
@@ -41,7 +41,7 @@ namespace Graphs {
             string sql = "SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'";
             if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
                 throw new IOError.FAILED (
-                    "Failed to get SQL Table names: %s".printf(db.errmsg())
+                    "Failed to get SQL Table names: %s".printf (db.errmsg ())
                 );
             }
             while (stmt.step () == Sqlite.ROW) {
@@ -69,7 +69,7 @@ namespace Graphs {
             string sql = "PRAGMA table_info(`%s`)".printf (table_name);
             if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
                 throw new IOError.FAILED (
-                    "Failed to retrieve SQL Column names names: %s".printf(db.errmsg())
+                    "Failed to retrieve SQL Column names names: %s".printf (db.errmsg ())
                 );
             }
             while (stmt.step () == Sqlite.ROW) {
@@ -99,7 +99,7 @@ namespace Graphs {
 
             if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
                 throw new IOError.FAILED (
-                    "Failed to prepare SQL statement: %s".printf(db.errmsg())
+                    "Failed to prepare SQL statement: %s".printf (db.errmsg ())
                 );
             }
 
@@ -134,4 +134,3 @@ namespace Graphs {
         public double[] ydata;
     }
 }
-
