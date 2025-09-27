@@ -124,12 +124,12 @@ for style_path in args.styles:
     )
     style_element.text = str(style_file.relative_to(current_dir))
     g_file = Gio.File.new_for_path(str(style_file))
-    params, graphs_params = style_io.parse(g_file)
-    stylename = graphs_params["name"]
+    params = style_io.parse(g_file)
+    stylename = params[1]["name"]
     out_path = Path(current_dir, style_file.name.replace(".mplstyle", ".png"))
     style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
-        style_io.create_preview(out_file, params, graphs_params, "png", 31)
+        style_io.create_preview(out_file, params, "png", 31)
     preview_element = ElementTree.SubElement(
         main_gresource,
         "file",

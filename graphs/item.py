@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
 from gettext import gettext as _
+from typing import Tuple
 
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
-from matplotlib import rcParams
+from matplotlib import RcParams
 
 
 def new_from_dict(dictionary: dict):
@@ -46,7 +47,7 @@ class _PythonItem(Graphs.Item):
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(self, style):
+    def _extract_params(self, style: Tuple[RcParams, dict]) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
@@ -114,7 +115,7 @@ class GeneratedDataItem(DataItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         equation: str,
         xstart: str,
         xstop: str,
@@ -188,7 +189,7 @@ class EquationItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style, equation, **kwargs):
+    def new(cls, style: Tuple[RcParams, dict], equation: str, **kwargs):
         """Create new EquationItem."""
         return cls(
             equation=equation,

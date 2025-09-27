@@ -2,6 +2,7 @@
 """Module for style utilities."""
 import io
 import os
+from typing import Tuple
 
 from gi.repository import Adw, GLib, Gdk, Gio, Graphs, Gtk
 
@@ -14,9 +15,9 @@ def _is_style_bright(params: RcParams):
     return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
 
 
-def _generate_preview(style: RcParams, graphs_params: dict) -> Gdk.Texture:
+def _generate_preview(params: Tuple[RcParams, dict]) -> Gdk.Texture:
     buffer = io.BytesIO()
-    style_io.create_preview(buffer, style, graphs_params, "png", 31)
+    style_io.create_preview(buffer, params, "png", 31)
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
@@ -47,12 +48,13 @@ class StyleManager(Graphs.StyleManager):
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
         try:
-            style_params, graphs_params = style_io.parse(
+            params = style_io.parse(
                 file,
                 self.get_system_style_params(),
             )
+            style_params, graphs_params = params
             name = graphs_params["name"]
-            preview = _generate_preview(style_params, graphs_params)
+            preview = _generate_preview(params)
             light = _is_style_bright(style_params)
         except style_io.StyleParseError:
             name = ""
@@ -66,7 +68,7 @@ class StyleManager(Graphs.StyleManager):
             light=light,
         )
 
-    def get_system_style_params(self) -> RcParams:
+    def get_system_style_params(self) -> Tuple[RcParams, dict]:
         """Get the system style properties."""
         return self._system_style_params
 

@@ -12,6 +12,7 @@ interactive navigation in conjunction with graphs-specific structures.
 import copy
 import logging
 import math
+from typing import Tuple
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
@@ -19,7 +20,7 @@ import gio_pyio
 
 from graphs import artist, misc, scales, utilities
 
-from matplotlib import backend_tools as tools, pyplot
+from matplotlib import RcParams, backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
     FigureCanvasBase,
     MouseEvent,
@@ -83,7 +84,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def __init__(
         self,
-        style_params: dict,
+        style_params: Tuple[RcParams, dict],
         items: Gio.ListModel,
         interactive: bool = True,
     ):

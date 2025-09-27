@@ -7,6 +7,7 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
+from typing import Tuple
 
 from gi.repository import Gio, Graphs, Gtk
 
@@ -62,11 +63,11 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def get_old_selected_style_params(self) -> RcParams:
+    def get_old_selected_style_params(self) -> Tuple[RcParams, dict]:
         """Get the old selected style properties."""
         return self._old_style_params
 
-    def get_selected_style_params(self) -> RcParams:
+    def get_selected_style_params(self) -> Tuple[RcParams, dict]:
         """Get the selected style properties."""
         return self._selected_style_params
 

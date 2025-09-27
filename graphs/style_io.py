@@ -8,6 +8,7 @@ other graphs modules.
 import logging
 import typing
 from gettext import gettext as _
+from typing import Tuple
 
 from gi.repository import Gio
 
@@ -48,7 +49,9 @@ class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
 
 
-def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
+def parse(file: Gio.File,
+          validate: Tuple[RcParams, dict] = None,
+          ) -> (RcParams, dict):
     """
     Parse a style to RcParams.
 
@@ -174,24 +177,24 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 def create_preview(
     file: typing.IO,
-    params: RcParams,
-    graphs_params: dict,
+    params: Tuple[RcParams, dict],
     file_format: str = "svg",
     dpi: int = 100,
 ) -> None:
     """Create preview of params and write it to file."""
-    with rc_context(params):
+    style_params, graphs_params = params
+    with rc_context(style_params):
         # set render size in inch
         figure = Figure(figsize=(5, 3))
         axis = figure.add_subplot()
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
-        if params["axes.spines.top"] and graphs_params["ticklabels"]:
+        if style_params["axes.spines.top"] and graphs_params["ticklabels"]:
             tick_params = {
-                "labelleft": params["ytick.left"],
-                "labelright": params["ytick.right"],
-                "labeltop": params["xtick.top"],
-                "labelbottom": params["xtick.bottom"],
+                "labelleft": style_params["ytick.left"],
+                "labelright": style_params["ytick.right"],
+                "labeltop": style_params["xtick.top"],
+                "labelbottom": style_params["xtick.bottom"],
             }
             axis.tick_params(which="both", **tick_params)
         else:
