@@ -36,7 +36,7 @@ class _PythonItem(Graphs.Item):
     def __init__(self, **kwargs):
         super().__init__(typename=self._typename, **kwargs)
 
-    def reset(self, old_style: rcParams, new_style: rcParams) -> None:
+    def reset(self, old_style: dict, new_style: dict) -> None:
         """Reset all properties."""
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
@@ -87,7 +87,7 @@ class DataItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         xdata: list[float] = None,
         ydata: list[float] = None,
         **kwargs,
@@ -245,7 +245,7 @@ class TextItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         xanchor: float = 0,
         yanchor: float = 0,
         text: str = "",
@@ -272,7 +272,7 @@ class FillItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        _params: rcParams,
+        _params: Tuple[RcParams, dict],
         data: tuple[list[float], list[float], list[float]],
         **kwargs,
     ):
