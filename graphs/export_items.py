@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for Exporting data."""
 import sys
-
+from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs import utilities
@@ -13,10 +13,15 @@ def export_items(
     file: Gio.File,
     items: list[Graphs.Item],
     figure_settings: Graphs.FigureSettings,
+    window,
 ) -> None:
     """Export items in specified format."""
     callback = getattr(sys.modules[__name__], "_export_" + mode)
     callback(file, items, figure_settings)
+    window.add_toast_string_with_file(
+        _("Exported Data"),
+        file,
+    )
 
 
 def _export_columns(
@@ -50,7 +55,7 @@ def _save_item(
         file.replace(None, False, Gio.FileCreateFlags.NONE, None),
     )
     if xlabel != "" and ylabel != "":
-        stream.stream(xlabel + delimiter + ylabel + "\n")
+        stream(xlabel + delimiter + ylabel + "\n")
     if isinstance(item, DataItem):
         xdata, ydata = item.xdata, item.ydata
     elif isinstance(item, EquationItem):
