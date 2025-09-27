@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for Exporting data."""
 import sys
-from gettext import gettext as _
+
 from gi.repository import Gio, Graphs
 
 from graphs import utilities
