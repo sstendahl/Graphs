@@ -107,7 +107,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                     except KeyError:
                         continue
                 try:
-                    if key in STYLE_CUSTOM_PARAMS:
+                    if graphs_param:
                         if value.lower() == "false":
                             value = False
                         elif value.lower() == "true":
