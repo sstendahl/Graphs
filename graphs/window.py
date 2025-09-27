@@ -38,8 +38,8 @@ class PythonWindow(Graphs.Window):
     ) -> None:
         """Handle style change."""
         if recolor_items:
-            old_style = data.get_old_selected_style_params()
-            new_style = data.get_selected_style_params()
+            old_style = data.get_old_selected_style_params()[0]
+            new_style = data.get_selected_style_params()[0]
             old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
             new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
             for item_ in data:
@@ -58,8 +58,7 @@ class PythonWindow(Graphs.Window):
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
-        params = self.props.data.get_selected_style_params()
-        graphs_params = self.props.data.get_selected_graphs_params()
+        params, graphs_params = self.props.data.get_selected_style_params()
 
         key_controller = self.props.key_controller
         canvas = self.get_canvas()

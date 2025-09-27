@@ -184,7 +184,8 @@ class StyleEditorBox(Gtk.Box):
 
     def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
-        self.params, self.graphs_params = None, None
+        self.params = None
+        self.graphs_params = None
         application = self.window.get_application()
         style_params, graphs_params = style_io.parse(
             file,
@@ -443,11 +444,11 @@ class PythonStyleEditor(Graphs.StyleEditor):
         """Initialize example test items with predefined preview data."""
         preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
                         (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
-
+        test_style = pyplot.rcParams, {}
         for xdata, ydata in preview_data:
             self._test_items.append(
                 DataItem.new(
-                    pyplot.rcParams,
+                    test_style,
                     xdata=xdata,
                     ydata=ydata,
                     name=_("Example Item"),
@@ -470,8 +471,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         await asyncio.sleep(timeout)
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
-            params = style_manager.get_system_style_params()
-            graphs_params = style_manager.get_system_graphs_params()
+            params, graphs_params = style_manager.get_system_style_params()
         else:
             params = style_editor.params
             graphs_params = style_editor.graphs_params
@@ -479,7 +479,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
             for index, item in enumerate(self._test_items):
                 # Wrap around the color_cycle using the % operator
                 item.set_color(color_cycle[index % len(color_cycle)])
-                for prop, value in item._extract_params(params).items():
+                item_params = params, graphs_params
+                for prop, value in item._extract_params(item_params).items():
                     item.set_property(prop, value)
             self.set_stylename(style_editor.graphs_params["name"])
 

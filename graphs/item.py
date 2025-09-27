@@ -47,6 +47,7 @@ class _PythonItem(Graphs.Item):
                 self.set_property(prop, new_value)
 
     def _extract_params(self, style):
+        style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()

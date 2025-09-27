@@ -107,7 +107,7 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                     except KeyError:
                         continue
                 try:
-                    if graphs_param or key in STYLE_CUSTOM_PARAMS:
+                    if key in STYLE_CUSTOM_PARAMS:
                         if value.lower() == "false":
                             value = False
                         elif value.lower() == "true":
@@ -186,7 +186,13 @@ def create_preview(
         draw_frame = params["axes.spines.top"]
         ticklabels = graphs_params.get("ticklabels", False)
         if draw_frame and ticklabels:
-            axis.tick_params(which="both", labelright=True)
+            tick_params = {
+                "labelleft": params["ytick.left"],
+                "labelright": params["ytick.right"],
+                "labeltop": params["xtick.top"],
+                "labelbottom": params["xtick.bottom"],
+            }
+            axis.tick_params(which="both", **tick_params)
         else:
             axis.tick_params(which="both", top=False, right=False)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
