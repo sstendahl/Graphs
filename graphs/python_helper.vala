@@ -44,6 +44,9 @@ namespace Graphs {
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public void export_items (Window window, string mode, File file, Item[] items) {
             export_items_request.emit (window, mode, file, items);
+            window.add_toast_string_with_file (
+                _("Exported Data"), file
+            );
         }
 
         protected signal Item generate_data_request (Window window, string name);

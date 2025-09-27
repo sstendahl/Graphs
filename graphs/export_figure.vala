@@ -62,6 +62,9 @@ namespace Graphs {
                         file, suffix, settings.get_int ("dpi"),
                         settings.get_boolean ("transparent")
                     );
+                    window.add_toast_string_with_file (
+                        _("Exported Figure"), file
+                    );
                     close ();
                 } catch {}
             });
