@@ -44,16 +44,14 @@ namespace Graphs {
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public void export_items (Window window, string mode, File file, Item[] items) {
             export_items_request.emit (window, mode, file, items);
+            window.add_toast_string_with_file (
+                _("Exported Data"), file
+            );
         }
 
         protected signal Item generate_data_request (Window window, string name);
         public Item generate_data (Window window, string name) {
             return generate_data_request.emit (window, name);
-        }
-
-        protected signal void import_from_files_request (Window window, File[] files);
-        public void import_from_files (Window window, File[] files) {
-            import_from_files_request.emit (window, files);
         }
 
         protected signal void perform_operation_request (Window window, string name);

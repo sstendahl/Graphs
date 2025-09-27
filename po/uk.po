@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-07-30 15:16+0000\n"
-"PO-Revision-Date: 2025-07-30 21:36+0300\n"
+"POT-Creation-Date: 2025-09-27 16:37+0000\n"
+"PO-Revision-Date: 2025-09-27 20:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -116,7 +116,7 @@ msgstr ""
 msgid "New Window"
 msgstr "Нове вікно"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:139
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
 msgid "Style Editor"
 msgstr "Редактор стилю"
 
@@ -124,16 +124,16 @@ msgstr "Редактор стилю"
 msgid "Delete Style?"
 msgstr "Вилучити стиль?"
 
-#: data/ui/dialogs/delete-style.blp:7
-#: data/ui/dialogs/reset-import-settings.blp:8
-#: data/ui/dialogs/save-project-changes.blp:8
-#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:17
+#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
 #: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/import.blp:16 data/ui/transform.blp:17
+#: data/ui/generate-data.blp:17 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Скасувати"
 
-#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "Вилучити"
 
@@ -145,7 +145,7 @@ msgstr "Повернути типові значення?"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Ви справді хочете скинути параметри імпортування?"
 
-#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/reset-import-settings.blp:10
 msgid "Reset"
 msgstr "Скинути"
 
@@ -162,13 +162,13 @@ msgstr ""
 "До поточного проєкту внесено незбережені зміни. Зміни, які не було "
 "збережено, буде назавжди втрачено."
 
-#: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
 msgid "Discard"
 msgstr "Відкинути"
 
-#: data/ui/dialogs/save-project-changes.blp:10
-#: data/ui/dialogs/save-style-changes.blp:10
+#: data/ui/dialogs/save-project-changes.blp:11
+#: data/ui/dialogs/save-style-changes.blp:11
 msgid "Save"
 msgstr "Зберегти"
 
@@ -376,7 +376,7 @@ msgid "Marker Size"
 msgstr "Розмір позначки"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:176
+#: data/ui/curve-fitting.blp:65 graphs/item.py:182
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -406,232 +406,344 @@ msgstr "Кінець за x"
 msgid "Steps"
 msgstr "Кроки"
 
-#: data/ui/edit-item/generated-data.blp:53 data/ui/generate-data.blp:98
+#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
 msgid "Scale"
 msgstr "Масштаб"
 
-#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
+#: data/ui/edit-item/generated-data.blp:55 data/ui/generate-data.blp:100
 msgid "Determines the spacing between data points"
 msgstr "Визначає інтервали між точками даних"
 
-#: data/ui/edit-item/generated-data.blp:58
-#: data/ui/sidebar/figure-settings/settings.blp:138
-#: data/ui/sidebar/figure-settings/settings.blp:154
-#: data/ui/sidebar/figure-settings/settings.blp:170
-#: data/ui/sidebar/figure-settings/settings.blp:186
-#: data/ui/generate-data.blp:103
+#: data/ui/edit-item/generated-data.blp:59
+#: data/ui/sidebar/figure-settings/settings-page.blp:163
+#: data/ui/sidebar/figure-settings/settings-page.blp:179
+#: data/ui/sidebar/figure-settings/settings-page.blp:195
+#: data/ui/sidebar/figure-settings/settings-page.blp:211
+#: data/ui/generate-data.blp:104
 msgctxt "scale"
 msgid "Linear"
 msgstr "Лінійна"
 
-#: data/ui/edit-item/generated-data.blp:59
-#: data/ui/sidebar/figure-settings/settings.blp:139
-#: data/ui/sidebar/figure-settings/settings.blp:155
-#: data/ui/sidebar/figure-settings/settings.blp:171
-#: data/ui/sidebar/figure-settings/settings.blp:187
-#: data/ui/generate-data.blp:104
+#: data/ui/edit-item/generated-data.blp:60
+#: data/ui/sidebar/figure-settings/settings-page.blp:164
+#: data/ui/sidebar/figure-settings/settings-page.blp:180
+#: data/ui/sidebar/figure-settings/settings-page.blp:196
+#: data/ui/sidebar/figure-settings/settings-page.blp:212
+#: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Логарифмічна (з основою 10)"
 
-#: data/ui/edit-item/generated-data.blp:60
-#: data/ui/sidebar/figure-settings/settings.blp:140
-#: data/ui/sidebar/figure-settings/settings.blp:156
-#: data/ui/sidebar/figure-settings/settings.blp:172
-#: data/ui/sidebar/figure-settings/settings.blp:188
-#: data/ui/generate-data.blp:105
+#: data/ui/edit-item/generated-data.blp:61
+#: data/ui/sidebar/figure-settings/settings-page.blp:165
+#: data/ui/sidebar/figure-settings/settings-page.blp:181
+#: data/ui/sidebar/figure-settings/settings-page.blp:197
+#: data/ui/sidebar/figure-settings/settings-page.blp:213
+#: data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Логарифмічна (з основою 2)"
 
-#: data/ui/edit-item/generated-data.blp:61
-#: data/ui/sidebar/figure-settings/settings.blp:141
-#: data/ui/sidebar/figure-settings/settings.blp:157
-#: data/ui/sidebar/figure-settings/settings.blp:173
-#: data/ui/sidebar/figure-settings/settings.blp:189
-#: data/ui/generate-data.blp:106
+#: data/ui/edit-item/generated-data.blp:62
+#: data/ui/sidebar/figure-settings/settings-page.blp:166
+#: data/ui/sidebar/figure-settings/settings-page.blp:182
+#: data/ui/sidebar/figure-settings/settings-page.blp:198
+#: data/ui/sidebar/figure-settings/settings-page.blp:214
+#: data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радіани"
 
-#: data/ui/edit-item/generated-data.blp:62
-#: data/ui/sidebar/figure-settings/settings.blp:142
-#: data/ui/sidebar/figure-settings/settings.blp:158
-#: data/ui/sidebar/figure-settings/settings.blp:174
-#: data/ui/sidebar/figure-settings/settings.blp:190
-#: data/ui/generate-data.blp:107
+#: data/ui/edit-item/generated-data.blp:63
+#: data/ui/sidebar/figure-settings/settings-page.blp:167
+#: data/ui/sidebar/figure-settings/settings-page.blp:183
+#: data/ui/sidebar/figure-settings/settings-page.blp:199
+#: data/ui/sidebar/figure-settings/settings-page.blp:215
+#: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Квадратний корінь"
 
-#: data/ui/edit-item/generated-data.blp:63
-#: data/ui/sidebar/figure-settings/settings.blp:143
-#: data/ui/sidebar/figure-settings/settings.blp:159
-#: data/ui/sidebar/figure-settings/settings.blp:175
-#: data/ui/sidebar/figure-settings/settings.blp:191
-#: data/ui/generate-data.blp:108
+#: data/ui/edit-item/generated-data.blp:64
+#: data/ui/sidebar/figure-settings/settings-page.blp:168
+#: data/ui/sidebar/figure-settings/settings-page.blp:184
+#: data/ui/sidebar/figure-settings/settings-page.blp:200
+#: data/ui/sidebar/figure-settings/settings-page.blp:216
+#: data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Обернена"
 
-#: data/ui/sidebar/figure-settings/page.blp:5 data/ui/sidebar/main.blp:29
+#: data/ui/import/dialog.blp:21
+msgid "Import Parameters"
+msgstr "Параметри імпортування"
+
+#: data/ui/import/dialog.blp:30
+msgid "Add File"
+msgstr "Додати файл"
+
+#: data/ui/import/dialog.blp:54
+msgid "Import"
+msgstr "Імпортувати"
+
+#: data/ui/import/dialog.blp:82
+msgid "Reset to guessed values"
+msgstr "Повернути вгадані значення"
+
+#: data/ui/import/dialog.blp:103
+msgid "Import Mode"
+msgstr "Режим імпортування"
+
+#: data/ui/import/dialog.blp:115
+#: data/ui/sidebar/figure-settings/settings-page.blp:273
+msgid "Set as Default"
+msgstr "Зробити типовим"
+
+#: data/ui/import/dialog.blp:122 data/ui/style-color-box.blp:36
+msgid "Remove"
+msgstr "Вилучити"
+
+#: data/ui/import/mode-columns.blp:6
+msgid "Delimiter"
+msgstr "Роздільник"
+
+#: data/ui/import/mode-columns.blp:7
+msgid "Character sequence used to split values"
+msgstr "Послідовність символів для поділу значень"
+
+#: data/ui/import/mode-columns.blp:11
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Пробіл"
+
+#: data/ui/import/mode-columns.blp:12
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Табуляція"
+
+#: data/ui/import/mode-columns.blp:13
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Двокрапка (:)"
+
+#: data/ui/import/mode-columns.blp:14
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Крапка з комою (;)"
+
+#: data/ui/import/mode-columns.blp:15
+msgctxt "delimiter"
+msgid "Decimal comma (,)"
+msgstr "Десяткова кома (,)"
+
+#: data/ui/import/mode-columns.blp:16
+msgctxt "delimiter"
+msgid "Decimal point (.)"
+msgstr "Десяткова крапка (.)"
+
+#: data/ui/import/mode-columns.blp:17
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Нетипова"
+
+#: data/ui/import/mode-columns.blp:25
+msgid "Custom Delimiter"
+msgstr "Нетиповий роздільник"
+
+#: data/ui/import/mode-columns.blp:29
+msgid "Decimal Separator"
+msgstr "Десятковий роздільник"
+
+#: data/ui/import/mode-columns.blp:33
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Десяткова кома (,)"
+
+#: data/ui/import/mode-columns.blp:34
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Десяткова крапка (.)"
+
+#: data/ui/import/mode-columns.blp:40
+msgid "Column X"
+msgstr "Стовпчик x"
+
+#: data/ui/import/mode-columns.blp:41
+msgid "X-data column index"
+msgstr "Індекс стовпчика даних x"
+
+#: data/ui/import/mode-columns.blp:51
+msgid "Column Y"
+msgstr "Стовпчик y"
+
+#: data/ui/import/mode-columns.blp:53
+msgid "Y-data column index"
+msgstr "Індекс стовпчика даних y"
+
+#: data/ui/import/mode-columns.blp:62
+msgid "Skip Rows"
+msgstr "Пропустити рядки"
+
+#: data/ui/import/mode-columns.blp:63
+msgid "Ignored row indices"
+msgstr "Індекси ігнорованих рядків"
+
+#: data/ui/sidebar/figure-settings/settings-page.blp:5
+#: data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
 msgstr "Параметри рисунка"
 
-#: data/ui/sidebar/figure-settings/settings.blp:9
+#: data/ui/sidebar/figure-settings/settings-page.blp:26
 msgid "Labels"
 msgstr "Мітки"
 
-#: data/ui/sidebar/figure-settings/settings.blp:12 graphs/style_editor.py:476
+#: data/ui/sidebar/figure-settings/settings-page.blp:29
+#: graphs/style_editor.py:476
 msgid "Title"
 msgstr "Заголовок"
 
-#: data/ui/sidebar/figure-settings/settings.blp:17
+#: data/ui/sidebar/figure-settings/settings-page.blp:34
 msgid "Bottom X Axis Label"
 msgstr "Мітка нижньої вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:22
+#: data/ui/sidebar/figure-settings/settings-page.blp:39
 msgid "Top X Axis Label"
 msgstr "Мітка верхньої вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:27
+#: data/ui/sidebar/figure-settings/settings-page.blp:44
 msgid "Left Y Axis Label"
 msgstr "Мітка лівої вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:32
+#: data/ui/sidebar/figure-settings/settings-page.blp:49
 msgid "Right Y Axis Label"
 msgstr "Мітка правої вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:37
+#: data/ui/sidebar/figure-settings/settings-page.blp:54
 msgid "Axis Limits"
 msgstr "Межі вісі"
 
-#: data/ui/sidebar/figure-settings/settings.blp:51
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgid "Bottom X Axis Minimum"
 msgstr "Мінімум на нижній вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:58
+#: data/ui/sidebar/figure-settings/settings-page.blp:76
 msgid "Bottom X Axis Maximum"
 msgstr "Максимум на нижній вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:72
+#: data/ui/sidebar/figure-settings/settings-page.blp:91
 msgid "Top X Axis Minimum"
 msgstr "Мінімум на верхній вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:79
+#: data/ui/sidebar/figure-settings/settings-page.blp:99
 msgid "Top X Axis Maximum"
 msgstr "Максимум на верхній вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:93
+#: data/ui/sidebar/figure-settings/settings-page.blp:114
 msgid "Left Y Axis Minimum"
 msgstr "Мінімум на лівій вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:100
+#: data/ui/sidebar/figure-settings/settings-page.blp:122
 msgid "Left Y Axis Maximum"
 msgstr "Максимум на лівій вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:114
+#: data/ui/sidebar/figure-settings/settings-page.blp:137
 msgid "Right Y Axis Minimum"
 msgstr "Мінімум на правій вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:121
+#: data/ui/sidebar/figure-settings/settings-page.blp:145
 msgid "Right Y Axis Maximum"
 msgstr "Максимум на правій вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:130
+#: data/ui/sidebar/figure-settings/settings-page.blp:155
 msgid "Scaling"
 msgstr "Масштабування"
 
-#: data/ui/sidebar/figure-settings/settings.blp:134
+#: data/ui/sidebar/figure-settings/settings-page.blp:159
 msgid "Bottom X Axis Scale"
 msgstr "Шкала нижньої вісі X"
 
-#: data/ui/sidebar/figure-settings/settings.blp:150
+#: data/ui/sidebar/figure-settings/settings-page.blp:175
 msgid "Top X Axis Scale"
 msgstr "Шкала верхньої вісі x"
 
-#: data/ui/sidebar/figure-settings/settings.blp:166
+#: data/ui/sidebar/figure-settings/settings-page.blp:191
 msgid "Left Y Axis Scale"
 msgstr "Шкала лівої вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:182
+#: data/ui/sidebar/figure-settings/settings-page.blp:207
 msgid "Right Y Axis Scale"
 msgstr "Шкала правої вісі y"
 
-#: data/ui/sidebar/figure-settings/settings.blp:198
+#: data/ui/sidebar/figure-settings/settings-page.blp:223
 msgid "Appearance"
 msgstr "Вигляд"
 
-#: data/ui/sidebar/figure-settings/settings.blp:201
+#: data/ui/sidebar/figure-settings/settings-page.blp:226
 msgid "Show Legend"
 msgstr "Показ умовних позначень"
 
-#: data/ui/sidebar/figure-settings/settings.blp:205
+#: data/ui/sidebar/figure-settings/settings-page.blp:230
 msgid "Legend Position"
 msgstr "Розташування панелі умовних позначень"
 
-#: data/ui/sidebar/figure-settings/settings.blp:210
+#: data/ui/sidebar/figure-settings/settings-page.blp:235
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Авто"
 
-#: data/ui/sidebar/figure-settings/settings.blp:211
+#: data/ui/sidebar/figure-settings/settings-page.blp:236
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Вгорі праворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:212
+#: data/ui/sidebar/figure-settings/settings-page.blp:237
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Вгорі ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:213
+#: data/ui/sidebar/figure-settings/settings-page.blp:238
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Знизу ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:214
+#: data/ui/sidebar/figure-settings/settings-page.blp:239
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Знизу праворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:215
+#: data/ui/sidebar/figure-settings/settings-page.blp:240
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "За центром ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:216
+#: data/ui/sidebar/figure-settings/settings-page.blp:241
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "За центром праворуч"
 
-#: data/ui/sidebar/figure-settings/settings.blp:217
+#: data/ui/sidebar/figure-settings/settings-page.blp:242
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "За центром внизу"
 
-#: data/ui/sidebar/figure-settings/settings.blp:218
+#: data/ui/sidebar/figure-settings/settings-page.blp:243
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "За центром вгорі"
 
-#: data/ui/sidebar/figure-settings/settings.blp:219
+#: data/ui/sidebar/figure-settings/settings-page.blp:244
 msgctxt "legend-position"
 msgid "Center"
 msgstr "За центром"
 
-#: data/ui/sidebar/figure-settings/settings.blp:225
+#: data/ui/sidebar/figure-settings/settings-page.blp:250
 msgid "Hide Unselected Items"
 msgstr "Приховати непозначені елементи"
 
-#: data/ui/sidebar/figure-settings/settings.blp:229
+#: data/ui/sidebar/figure-settings/settings-page.blp:254
 #: data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor.vala:80
 msgid "Style"
 msgstr "Стиль"
-
-#: data/ui/sidebar/figure-settings/settings.blp:247
-msgid "Set as Default"
-msgstr "Зробити типовим"
 
 #: data/ui/sidebar/figure-settings/style-page.blp:13 data/ui/add-style.blp:6
 msgid "Add New Style"
@@ -649,91 +761,91 @@ msgstr "Створити стиль…"
 msgid "Edit Item"
 msgstr "Змінити запис"
 
-#: data/ui/sidebar/main.blp:12
+#: data/ui/sidebar/main.blp:13
 msgid "Add New Data"
 msgstr "Додати нові дані"
 
-#: data/ui/sidebar/main.blp:21 data/ui/style-editor-window.blp:65
+#: data/ui/sidebar/main.blp:22 data/ui/style-editor-window.blp:65
 #: data/ui/style-editor-window.blp:175
 msgid "Open Application Menu"
 msgstr "Відкрити меню програми"
 
-#: data/ui/sidebar/main.blp:42
+#: data/ui/sidebar/main.blp:43
 msgid "No Data"
 msgstr "Немає даних"
 
-#: data/ui/sidebar/main.blp:43
+#: data/ui/sidebar/main.blp:44
 msgid "Add data from a file or manually as an equation"
 msgstr "Додати дані з файла або вручну як рівняння"
 
-#: data/ui/sidebar/main.blp:92
+#: data/ui/sidebar/main.blp:93
 msgid "Pan Mode. Click and drag to pan"
 msgstr ""
 "Режим панорамування. Натисніть кнопку миші і перетягніть вказівник для "
 "панорамування"
 
-#: data/ui/sidebar/main.blp:99
+#: data/ui/sidebar/main.blp:100
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Режим масштабування. Позначте область на рисунку для збільшення"
 
-#: data/ui/sidebar/main.blp:106
+#: data/ui/sidebar/main.blp:107
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr ""
 "Режим вибору. Натисніть кнопку миші і перетягніть вказівник для позначення "
 "даних"
 
-#: data/ui/sidebar/main.blp:123
+#: data/ui/sidebar/main.blp:124
 msgid "New Project"
 msgstr "Новий проєкт"
 
-#: data/ui/sidebar/main.blp:127
+#: data/ui/sidebar/main.blp:128
 msgid "Save Project…"
 msgstr "Зберегти проєкт…"
 
-#: data/ui/sidebar/main.blp:128
+#: data/ui/sidebar/main.blp:129
 msgid "Save Project as…"
 msgstr "Зберегти проєкт як…"
 
-#: data/ui/sidebar/main.blp:129
+#: data/ui/sidebar/main.blp:130
 msgid "Open Project…"
 msgstr "Відкрити проєкт…"
 
-#: data/ui/sidebar/main.blp:130
+#: data/ui/sidebar/main.blp:131
 msgid "Close Project"
 msgstr "Закрити проєкт"
 
-#: data/ui/sidebar/main.blp:134
+#: data/ui/sidebar/main.blp:135
 msgid "Export Data…"
 msgstr "Експортувати дані…"
 
-#: data/ui/sidebar/main.blp:135
+#: data/ui/sidebar/main.blp:136
 msgid "Export Figure…"
 msgstr "Експортувати рисунок…"
 
-#: data/ui/sidebar/main.blp:143 data/ui/style-editor-window.blp:216
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:216
 #: data/ui/style-editor-window.blp:228
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:217
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:217
 #: data/ui/style-editor-window.blp:229
 msgid "Help"
 msgstr "Довідка"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:218
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor-window.blp:218
 #: data/ui/style-editor-window.blp:230
 msgid "About Graphs"
 msgstr "Про «Графіки»"
 
-#: data/ui/sidebar/main.blp:151
+#: data/ui/sidebar/main.blp:152
 msgid "Add Data from File…"
 msgstr "Додати дані з файла…"
 
-#: data/ui/sidebar/main.blp:152
+#: data/ui/sidebar/main.blp:153
 msgid "Add Equation…"
 msgstr "Додати рівняння…"
 
-#: data/ui/sidebar/main.blp:153
+#: data/ui/sidebar/main.blp:154
 msgid "Generate Data…"
 msgstr "Створення даних…"
 
@@ -814,7 +926,7 @@ msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
 #: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200
-#: data/ui/window.blp:324
+#: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
 
@@ -941,103 +1053,6 @@ msgstr "Створення даних"
 #: data/ui/generate-data.blp:23
 msgid "Generate"
 msgstr "Створити"
-
-#: data/ui/import.blp:6
-msgid "Import Parameters"
-msgstr "Параметри імпортування"
-
-#: data/ui/import.blp:27
-msgid "Reset to Defaults…"
-msgstr "Повернути типові значення…"
-
-#: data/ui/import.blp:32
-msgid "Import"
-msgstr "Імпортувати"
-
-#: data/ui/import-columns.blp:6
-msgid "Delimiter"
-msgstr "Роздільник"
-
-#: data/ui/import-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Послідовність символів для поділу значень"
-
-#: data/ui/import-columns.blp:12
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Пробіл"
-
-#: data/ui/import-columns.blp:13
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Табуляція"
-
-#: data/ui/import-columns.blp:14
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Двокрапка (:)"
-
-#: data/ui/import-columns.blp:15
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Крапка з комою (;)"
-
-#: data/ui/import-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Десяткова кома (,)"
-
-#: data/ui/import-columns.blp:17
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Десяткова крапка (.)"
-
-#: data/ui/import-columns.blp:18
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Нетипова"
-
-#: data/ui/import-columns.blp:26
-msgid "Custom Delimiter"
-msgstr "Нетиповий роздільник"
-
-#: data/ui/import-columns.blp:30
-msgid "Decimal Separator"
-msgstr "Десятковий роздільник"
-
-#: data/ui/import-columns.blp:34
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Десяткова кома (,)"
-
-#: data/ui/import-columns.blp:35
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Десяткова крапка (.)"
-
-#: data/ui/import-columns.blp:41
-msgid "Column X"
-msgstr "Стовпчик x"
-
-#: data/ui/import-columns.blp:42
-msgid "X-data column index"
-msgstr "Індекс стовпчика даних x"
-
-#: data/ui/import-columns.blp:52
-msgid "Column Y"
-msgstr "Стовпчик y"
-
-#: data/ui/import-columns.blp:54
-msgid "Y-data column index"
-msgstr "Індекс стовпчика даних y"
-
-#: data/ui/import-columns.blp:63
-msgid "Skip Rows"
-msgstr "Пропустити рядки"
-
-#: data/ui/import-columns.blp:64
-msgid "Ignored row indices"
-msgstr "Індекси ігнорованих рядків"
 
 #: data/ui/item-box.blp:20
 msgid "Pick Color"
@@ -1215,10 +1230,6 @@ msgstr ""
 #: data/ui/style-color-box.blp:18
 msgid "Edit"
 msgstr "Змінити"
-
-#: data/ui/style-color-box.blp:36
-msgid "Remove"
-msgstr "Вилучити"
 
 #: data/ui/style-editor-box.blp:10
 msgid "Style Name"
@@ -1410,47 +1421,47 @@ msgstr "Кольори ліній"
 msgid "Add Color"
 msgstr "Додати колір"
 
-#: data/ui/style-editor-shortcuts.blp:11 data/ui/window-shortcuts.blp:11
+#: data/ui/style-editor-shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
 msgid "General"
 msgstr "Загальне"
 
-#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+#: data/ui/style-editor-shortcuts.blp:9 data/ui/window-shortcuts.blp:9
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
 msgstr "Показати клавіатурні скорочення"
 
-#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:19
+#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
 msgctxt "shortcut window"
 msgid "Open Help"
 msgstr "Відкрити довідку"
 
-#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
 msgid "Close Application"
 msgstr "Закрити вікно програми"
 
-#: data/ui/style-editor-shortcuts.blp:29 data/ui/window-shortcuts.blp:34
+#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
 msgctxt "shortcut window"
 msgid "Close Application Window"
 msgstr "Закрити вікно програми"
 
-#: data/ui/style-editor-shortcuts.blp:35
+#: data/ui/style-editor-shortcuts.blp:30
 msgctxt "shortcut window"
 msgid "Save"
 msgstr "Зберегти"
 
-#: data/ui/style-editor-shortcuts.blp:38
+#: data/ui/style-editor-shortcuts.blp:33
 msgctxt "shortcut window"
 msgid "Save Style"
 msgstr "Зберегти стиль"
 
-#: data/ui/style-editor-shortcuts.blp:43
+#: data/ui/style-editor-shortcuts.blp:38
 msgctxt "shortcut window"
 msgid "Save Style As"
 msgstr "Зберегти стиль як"
 
-#: data/ui/style-editor-shortcuts.blp:48
+#: data/ui/style-editor-shortcuts.blp:43
 msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "Відкрити стиль"
@@ -1529,214 +1540,289 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Відкинути непозначені дані"
 
-#: data/ui/window.blp:195
+#: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "Скиньте сюди для імпортування"
 
-#: data/ui/window.blp:228
+#: data/ui/window.blp:253
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:237 data/ui/window.blp:283 graphs/window.vala:410
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:407
 msgid "Undo"
 msgstr "Скасувати"
 
-#: data/ui/window.blp:244 data/ui/window.blp:291
+#: data/ui/window.blp:269 data/ui/window.blp:316
 msgid "Redo"
 msgstr "Повторити"
 
-#: data/ui/window.blp:252 data/ui/window.blp:299
-#| msgid "Optimize Limits"
+#: data/ui/window.blp:277 data/ui/window.blp:324
 msgid "Optimize View Limits"
 msgstr "Оптимізувати межі перегляду"
 
-#: data/ui/window.blp:260 data/ui/window.blp:306
+#: data/ui/window.blp:285 data/ui/window.blp:331
 msgid "Next View"
 msgstr "Наступний перегляд"
 
-#: data/ui/window.blp:268 data/ui/window.blp:314
+#: data/ui/window.blp:293 data/ui/window.blp:339
 msgid "Previous View"
 msgstr "Попередній перегляд"
 
-#: data/ui/window-shortcuts.blp:24
+#: data/ui/window-shortcuts.blp:19
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
 msgstr "Відкрити параметри рисунка"
 
-#: data/ui/window-shortcuts.blp:40
+#: data/ui/window-shortcuts.blp:35
 msgctxt "shortcut window"
 msgid "Mode Switching"
 msgstr "Перемикання режимів"
 
-#: data/ui/window-shortcuts.blp:43
+#: data/ui/window-shortcuts.blp:38
 msgctxt "shortcut window"
 msgid "Pan Mode"
 msgstr "Режим панорамування"
 
-#: data/ui/window-shortcuts.blp:48
+#: data/ui/window-shortcuts.blp:43
 msgctxt "shortcut window"
 msgid "Zoom Mode"
 msgstr "Режим масштабування"
 
-#: data/ui/window-shortcuts.blp:53
+#: data/ui/window-shortcuts.blp:48
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr "Режим виділення"
 
-#: data/ui/window-shortcuts.blp:59
+#: data/ui/window-shortcuts.blp:54
 msgctxt "shortcut window"
 msgid "New Data"
 msgstr "Нові дані"
 
-#: data/ui/window-shortcuts.blp:62
+#: data/ui/window-shortcuts.blp:57
 msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr "Додати дані з файла"
 
-#: data/ui/window-shortcuts.blp:67
+#: data/ui/window-shortcuts.blp:62
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
 msgstr "Додати дані з рівняння"
 
-#: data/ui/window-shortcuts.blp:72
+#: data/ui/window-shortcuts.blp:67
 msgctxt "shortcut window"
 msgid "Generate Data"
 msgstr "Створення даних"
 
-#: data/ui/window-shortcuts.blp:77
+#: data/ui/window-shortcuts.blp:72
 msgctxt "shortcut window"
 msgid "New Project"
 msgstr "Новий проєкт"
 
-#: data/ui/window-shortcuts.blp:82
+#: data/ui/window-shortcuts.blp:77
 msgctxt "shortcut window"
 msgid "Open Project"
 msgstr "Відкрити проєкт"
 
-#: data/ui/window-shortcuts.blp:87
+#: data/ui/window-shortcuts.blp:82
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
 msgstr "Вилучити позначені дані"
 
-#: data/ui/window-shortcuts.blp:93
+#: data/ui/window-shortcuts.blp:88
 msgctxt "shortcut window"
 msgid "Save and Export"
 msgstr "Збереження та експортування"
 
-#: data/ui/window-shortcuts.blp:96
+#: data/ui/window-shortcuts.blp:91
 msgctxt "shortcut window"
 msgid "Export Data"
 msgstr "Експортувати дані"
 
-#: data/ui/window-shortcuts.blp:101
+#: data/ui/window-shortcuts.blp:96
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
 
-#: data/ui/window-shortcuts.blp:106
+#: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
 msgid "Save Project"
 msgstr "Зберегти проєкт"
 
-#: data/ui/window-shortcuts.blp:111
+#: data/ui/window-shortcuts.blp:106
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr "Збереження проєкту із новою назвою"
 
-#: data/ui/window-shortcuts.blp:117
+#: data/ui/window-shortcuts.blp:112
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Перегляд"
 
-#: data/ui/window-shortcuts.blp:120
+#: data/ui/window-shortcuts.blp:115
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "Попередній перегляд"
 
-#: data/ui/window-shortcuts.blp:125
+#: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "Наступний перегляд"
 
-#: data/ui/window-shortcuts.blp:130
+#: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Оптимізувати межі"
 
-#: data/ui/window-shortcuts.blp:135
+#: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Збільшити"
 
-#: data/ui/window-shortcuts.blp:140
+#: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Зменшити"
 
-#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
+#: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:159
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr "Зняти позначення"
 
-#: data/ui/window-shortcuts.blp:150
+#: data/ui/window-shortcuts.blp:145
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
-#: data/ui/window-shortcuts.blp:156
+#: data/ui/window-shortcuts.blp:151
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Дії"
 
-#: data/ui/window-shortcuts.blp:159
+#: data/ui/window-shortcuts.blp:154
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr "Позначити все"
 
-#: data/ui/window-shortcuts.blp:169
+#: data/ui/window-shortcuts.blp:164
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr "Скасувати дію"
 
-#: data/ui/window-shortcuts.blp:174
+#: data/ui/window-shortcuts.blp:169
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повторити дію"
 
-#: graphs/sidebar/figure_settings.vala:87
+#: graphs/file_import/parsers/columns.py:24
+msgctxt "import-mode"
+msgid "Columns"
+msgstr "Стовпчики"
+
+#: graphs/file_import/parsers/columns.py:70
+msgid "Import failed, column index out of range"
+msgstr "Не вдалося імпортувати, індекс стовпчика поза припустимим діапазоном"
+
+#: graphs/file_import/parsers/columns.py:89
+msgid "Unable to import from file"
+msgstr "Не вдалося імпортувати дані з файла"
+
+#: graphs/file_import/parsers/project.py:19
+msgctxt "import-mode"
+msgid "Project"
+msgstr "Проєкт"
+
+#: graphs/file_import/parsers/project.py:20 graphs/project.vala:15
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "файл проєкту «Графіків»"
+
+#: graphs/file_import/parsers/xrdml.py:20
+msgctxt "import-mode"
+msgid "xrdml"
+msgstr "xrdml"
+
+#: graphs/file_import/parsers/xrdml.py:21
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "XRDML PANalytical"
+
+#: graphs/file_import/parsers/xrdml.py:60
+msgid "Intensity (cps)"
+msgstr "Інтенсивність (cps)"
+
+#: graphs/file_import/parsers/xry.py:19
+msgctxt "import-mode"
+msgid "xry"
+msgstr "xry"
+
+#: graphs/file_import/parsers/xry.py:20
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "xry Leybold"
+
+#: graphs/file_import/parsers/xry.py:38
+msgid "Invalid .xry format"
+msgstr "Некоректний формат .xry"
+
+#: graphs/file_import/parsers/xry.py:53
+msgid "β (°)"
+msgstr "β (°)"
+
+#: graphs/file_import/parsers/xry.py:54
+msgid "R (1/s)"
+msgstr "R (1/s)"
+
+#: graphs/file_import/__init__.py:108
+msgid "Import failed"
+msgstr "Імпортування зазнало невдачі"
+
+#: graphs/file_import/file_import.vala:48
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "підтримувані файли"
+
+#. columns
+#: graphs/file_import/file_import.vala:52
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "файли ASCII"
+
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:147
 msgid "X Axis Minimum"
 msgstr "Мінімум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:88
+#: graphs/sidebar/figure_settings.vala:148
 msgid "Y Axis Minimum"
 msgstr "Мінімум на вісі y"
 
-#: graphs/sidebar/figure_settings.vala:90
+#: graphs/sidebar/figure_settings.vala:150
 msgid "X Axis Maximum"
 msgstr "Максимум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:91
+#: graphs/sidebar/figure_settings.vala:151
 msgid "Y Axis Maximum"
 msgstr "Максимум на вісі y"
 
-#: graphs/sidebar/figure_settings.vala:101
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:171
 msgid "X Axis Scale"
 msgstr "Шкала вісі X"
 
-#: graphs/sidebar/figure_settings.vala:102
-#: graphs/sidebar/figure_settings.vala:106
+#: graphs/sidebar/figure_settings.vala:172
+#: graphs/sidebar/figure_settings.vala:176
 msgid "X Axis Label"
 msgstr "Мітка вісі x"
 
-#: graphs/sidebar/figure_settings.vala:105
+#: graphs/sidebar/figure_settings.vala:175
 msgid "Y Axis Scale"
 msgstr "Шкала вісі y"
 
-#: graphs/sidebar/figure_settings.vala:156
+#: graphs/sidebar/figure_settings.vala:235
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/sidebar/figure_settings.vala:250
+#: graphs/sidebar/figure_settings.vala:329
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
@@ -1749,32 +1835,12 @@ msgstr "Розробники «Графіків»"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:56
+#: graphs/actions.vala:183 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
 
-#: graphs/actions.vala:222
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "підтримувані файли"
-
-#: graphs/actions.vala:226
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "файли ASCII"
-
-#: graphs/actions.vala:230
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "XRDML PANalytical"
-
-#: graphs/actions.vala:233
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "xry Leybold"
-
-#: graphs/application.py:29
+#: graphs/application.py:30
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
@@ -1817,26 +1883,28 @@ msgstr "Сума R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:96
+#: graphs/data.py:97
 #, python-brace-format
-#| msgid "Could not parse {stylename}, loading system preferred style"
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
-"Не вдалося обробити стиль {stylename}, завантажуємо пріоритетний стиль"
-" системи"
+"Не вдалося обробити стиль {stylename}, завантажуємо пріоритетний стиль "
+"системи"
 
-#: graphs/data.py:101
+#: graphs/data.py:102
 #, python-brace-format
-#| msgid "Plot style {stylename} does not exist loading system preferred"
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стилю {stylename} не існує. Завантажуємо пріоритетний системний стиль"
 
-#: graphs/data.py:491
+#: graphs/data.py:554
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
 #: graphs/export_figure.vala:44
 msgctxt "filename"
+msgid "Exported Figure"
+msgstr "Експортований рисунок"
+
+#: graphs/export_figure.vala:66
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
@@ -1853,15 +1921,15 @@ msgstr "текстові файли"
 msgid "Dataset"
 msgstr "Набір даних"
 
-#: graphs/item.py:106
+#: graphs/item.py:112
 msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
-#: graphs/item.py:224
+#: graphs/item.py:230
 msgid "Label"
 msgstr "Мітка"
 
-#: graphs/item.py:253
+#: graphs/item.py:266
 msgid "Fill"
 msgstr "Заповнення"
 
@@ -1886,7 +1954,6 @@ msgstr "Поєднані дані"
 
 #: graphs/operations.py:441
 #, python-brace-format
-#| msgid " did not result in a plottable equation"
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
@@ -1907,30 +1974,6 @@ msgstr "{name}: помилка під час виконання дії"
 #: graphs/operations.py:619
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
-
-#: graphs/parse_file.py:56
-msgid "Intensity (cps)"
-msgstr "Інтенсивність (cps)"
-
-#: graphs/parse_file.py:70
-msgid "Invalid .xry format"
-msgstr "Некоректний формат .xry"
-
-#: graphs/parse_file.py:85
-msgid "β (°)"
-msgstr "β (°)"
-
-#: graphs/parse_file.py:86
-msgid "R (1/s)"
-msgstr "R (1/s)"
-
-#: graphs/parse_file.py:153
-msgid "Import failed, column index out of range"
-msgstr "Не вдалося імпортувати, індекс стовпчика поза припустимим діапазоном"
-
-#: graphs/parse_file.py:172
-msgid "Unable to import from file"
-msgstr "Не вдалося імпортувати дані з файла"
 
 #: graphs/project.py:50
 msgid "Project file is missing data"
@@ -1956,11 +1999,6 @@ msgstr "Не вдалося перенести проєкт"
 msgid "Failed to validate project"
 msgstr "Не вдалося перевірити проєкт"
 
-#: graphs/project.vala:15
-msgctxt "file-filter"
-msgid "Graphs Project File"
-msgstr "файл проєкту «Графіків»"
-
 #: graphs/project.vala:22
 msgid "Saved Project"
 msgstr "Збережений проєкт"
@@ -1968,6 +2006,12 @@ msgstr "Збережений проєкт"
 #: graphs/project.vala:37
 msgid "Project"
 msgstr "Проєкт"
+
+#: graphs/python_helper.vala:48
+#| msgctxt "shortcut window"
+#| msgid "Export Data"
+msgid "Exported Data"
+msgstr "Експортовані дані"
 
 #: graphs/style_editor.py:444
 msgid "Example Item"
@@ -1987,7 +2031,7 @@ msgstr "Мітка Y"
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
-#: graphs/style_editor.vala:202
+#: graphs/style_editor.vala:207
 #, c-format
 msgid "Color %d"
 msgstr "Колір %d"
@@ -2031,35 +2075,38 @@ msgstr "У файлі {file} не міститься теґу name"
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:198
+#: graphs/utilities.vala:212
 msgid "All Files"
 msgstr "усі файли"
 
-#: graphs/utilities.vala:236
+#: graphs/utilities.vala:263
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:152
+#: graphs/window.vala:143
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:196
+#: graphs/window.vala:195
 msgid "Untitled Project"
 msgstr "Проєкт без назви"
 
-#: graphs/window.vala:197
+#: graphs/window.vala:196
 msgid "Draft"
 msgstr "Чернетка"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:205
+#: graphs/window.vala:202
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
-#: graphs/window.vala:400
+#: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "Reset to Defaults…"
+#~ msgstr "Повернути типові значення…"
 
 #~ msgid "View Menu"
 #~ msgstr "Меню «Перегляд»"
@@ -2106,9 +2153,6 @@ msgstr "Відкрити адресу"
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
 #~ msgstr "{error} — не вдалося додати дані з рівняння"
-
-#~ msgid "Exported Figure"
-#~ msgstr "Експортований рисунок"
 
 #~ msgid "1 - Plot and manipulate any data of choice"
 #~ msgstr "1 — креслення і робота з будь-якими вибраними даними"

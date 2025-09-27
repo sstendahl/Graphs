@@ -59,3 +59,13 @@
 .drag-overlay {
   box-shadow: none;
 }
+
+.import-mode {
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  border-radius: 99px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+}

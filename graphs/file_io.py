@@ -8,6 +8,15 @@ from gi.repository import Gio
 import gio_pyio
 
 
+def open(*args, **kwargs):
+    """
+    Python open wrapper.
+
+    Currently based on gio_pyio, but may change in the future.
+    """
+    return gio_pyio.open(*args, **kwargs)
+
+
 def parse_json(file: Gio.File) -> dict:
     """Parse a json file to a python dict."""
     with gio_pyio.open(file, "rb") as wrapper:

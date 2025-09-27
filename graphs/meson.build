@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 configure_file(
           input: 'graphs.in',
-         output: meson.project_name(),
+         output: 'graphs',
   configuration: conf,
         install: true,
    install_mode: 'rwxr-xr-x',
@@ -10,6 +10,12 @@ configure_file(
 
 python.install_sources(
   files(
+    'file_import/parsers/__init__.py',
+    'file_import/parsers/columns.py',
+    'file_import/parsers/project.py',
+    'file_import/parsers/xrdml.py',
+    'file_import/parsers/xry.py',
+    'file_import/__init__.py',
     'sidebar/edit_item.py',
     'application.py',
     'artist.py',
@@ -17,13 +23,11 @@ python.install_sources(
     'curve_fitting.py',
     'data.py',
     'export_items.py',
-    'file_import.py',
     'file_io.py',
     'item.py',
     'migrate.py',
     'misc.py',
     'operations.py',
-    'parse_file.py',
     'project.py',
     'python_helper.py',
     'scales.py',
@@ -34,7 +38,7 @@ python.install_sources(
     'window.py',
   ),
   preserve_path: true,
-         subdir: meson.project_name(),
+         subdir: 'graphs',
 )
 
 configure_file(
@@ -46,6 +50,9 @@ config_dep = valac.find_library('config',
 )
 graphs_lib = shared_library('graphs',
   files(
+    'file_import/parsers/columns.vala',
+    'file_import/dialog.vala',
+    'file_import/file_import.vala',
     'sidebar/edit_item.vala',
     'sidebar/figure_settings.vala',
     'sidebar/main.vala',
@@ -59,7 +66,6 @@ graphs_lib = shared_library('graphs',
     'export_figure.vala',
     'export_items.vala',
     'figure_settings.vala',
-    'file_import.vala',
     'generate_data.vala',
     'item.vala',
     'item_box.vala',

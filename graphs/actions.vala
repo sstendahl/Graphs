@@ -212,36 +212,20 @@ namespace Graphs {
             });
             window.add_action (close_project_action);
 
-            var add_data_action_filters = Tools.create_file_filters (
-                true,
-                Tools.create_file_filter (
-                    C_("file-filter", "Supported files"),
-                    "xy", "dat", "txt", "csv", "xrdml", "xry", "graphs"
-                ),
-                Tools.create_file_filter (
-                    C_("file-filter", "ASCII files"),
-                    "xy", "dat", "txt", "csv"
-                ),
-                Tools.create_file_filter (
-                    C_("file-filter", "PANalytical XRDML"), "xrdml"
-                ),
-                Tools.create_file_filter (
-                    C_("file-filter", "Leybold xry"), "xry"
-                ),
-                Project.get_project_file_filter ()
-            );
             var add_data_action = new SimpleAction ("add-data", null);
             add_data_action.activate.connect (() => {
                 var dialog = new FileDialog ();
-                dialog.set_filters (add_data_action_filters);
+                dialog.set_filters (application.data_importer.file_filters);
                 dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
                         var files_list_model = dialog.open_multiple.end (response);
-                        File[] files = {};
+                        var settings_list = new GLib.ListStore (typeof (ImportSettings));
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
-                            files += files_list_model.get_item (i) as File;
+                            var file = (File) files_list_model.get_item (i);
+                            var settings = application.data_importer.get_settings_for_file (file);
+                            settings_list.append (settings);
                         }
-                        application.python_helper.import_from_files (window, files);
+                        new ImportDialog (window, settings_list);
                     } catch {}
                 });
             });

@@ -79,6 +79,9 @@ blueprint_files = [
   'ui/edit-item/data.blp',
   'ui/edit-item/equation.blp',
   'ui/edit-item/generated-data.blp',
+  'ui/import/dialog.blp',
+  'ui/import/file-row.blp',
+  'ui/import/mode-columns.blp',
   'ui/sidebar/figure-settings/settings-page.blp',
   'ui/sidebar/figure-settings/style-page.blp',
   'ui/sidebar/edit-item.blp',
@@ -89,8 +92,6 @@ blueprint_files = [
   'ui/export-figure.blp',
   'ui/fitting-parameters.blp',
   'ui/generate-data.blp',
-  'ui/import.blp',
-  'ui/import-columns.blp',
   'ui/item-box.blp',
   'ui/operations.blp',
   'ui/smoothen-settings.blp',
@@ -199,7 +200,7 @@ gresource_bundle = gnome.compile_resources(application_id, gresource,
         source_dir: meson.current_build_dir(),
            install: true,
        install_dir: pkgdatadir,
-            c_name: meson.project_name(),
+            c_name: 'graphs',
 )
 
 devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())

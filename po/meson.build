@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-i18n.gettext(meson.project_name(),
+i18n.gettext(gettext_package,
   preset: 'glib',
 )
 

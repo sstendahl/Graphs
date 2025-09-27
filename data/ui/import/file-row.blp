@@ -1,0 +1,24 @@
+using Gtk 4.0;
+
+template $GraphsImportFileRow: ListBoxRow {
+  activatable: true;
+
+  child: Box {
+    margin-start: 3;
+    margin-top: 9;
+    margin-bottom: 9;
+    spacing: 3;
+
+    Label filename {
+      hexpand: true;
+      halign: start;
+      ellipsize: end;
+    }
+
+    Label mode {
+      styles [
+        "import-mode",
+      ]
+    }
+  };
+}

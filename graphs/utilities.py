@@ -210,6 +210,16 @@ def preprocess(string: str) -> str:
         expression = match.group(1)  # Get the content inside the brackets
         return f"(arcsin(1/({expression})))"
 
+    def convert_factorial(expr: str) -> str:
+        """Replace factorials of integers with their numerical values."""
+        factorial_pattern = re.compile(r"(?<![.,])(\d+)!")
+
+        def _replace_factorial(match):
+            number = int(match.group(1))
+            return str(math.factorial(number))
+
+        return re.sub(factorial_pattern, _replace_factorial, expr)
+
     def convert_superscript(match):
         """Convert superscript expressions to Python's power operator."""
         superscript_mapping = {
@@ -253,6 +263,7 @@ def preprocess(string: str) -> str:
         convert_superscript,
         string,
     )
+    string = convert_factorial(string)
     string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
     string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
     string = string.replace("π", "pi").replace("pi", f"({float(numpy.pi)})")

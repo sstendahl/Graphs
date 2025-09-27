@@ -49,12 +49,16 @@ LEGEND_POSITIONS = [
 ]
 DELIMITERS = {
     "whitespace": "\\s+",
-    "tabs": "\\t+",
+    "tab": "\\t+",
     "colon": ":",
     "semicolon": ";",
     "comma": ",",
     "period": ".",
     "custom": "custom",
+}
+SEPARATORS = {
+    "comma": ",",
+    "period": ".",
 }
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [

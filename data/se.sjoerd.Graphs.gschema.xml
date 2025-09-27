@@ -67,13 +67,13 @@
   </enum>
 
   <enum id="se.sjoerd.Graphs.import-params.colums.separators">
-    <value nick=", " value="0"/>
-    <value nick=". " value="1"/>
+    <value nick="comma" value="0"/>
+    <value nick="period" value="1"/>
   </enum>
 
   <enum id="se.sjoerd.Graphs.import-params.colums.delimiters">
     <value nick="whitespace" value="0"/>
-    <value nick="tabs" value="1"/>
+    <value nick="tab" value="1"/>
     <value nick="colon" value="2"/>
     <value nick="semicolon" value="3"/>
     <value nick="comma" value="4"/>
@@ -230,7 +230,7 @@
     </key>
 
     <key name="separator" enum="se.sjoerd.Graphs.import-params.colums.separators">
-      <default>". "</default>
+      <default>"period"</default>
     </key>
 
     <key name="skip-rows" type="i">
