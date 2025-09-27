@@ -99,7 +99,7 @@ class PythonHelper(Graphs.PythonHelper):
         _n_items: int,
     ) -> None:
         figure_settings = window.get_data().get_figure_settings()
-        return export_items.export_items(mode, file, items, figure_settings, window)
+        return export_items.export_items(mode, file, items, figure_settings)
 
     @staticmethod
     def _on_generate_data_request(

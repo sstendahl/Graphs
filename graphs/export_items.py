@@ -13,15 +13,10 @@ def export_items(
     file: Gio.File,
     items: list[Graphs.Item],
     figure_settings: Graphs.FigureSettings,
-    window,
 ) -> None:
     """Export items in specified format."""
     callback = getattr(sys.modules[__name__], "_export_" + mode)
     callback(file, items, figure_settings)
-    window.add_toast_string_with_file(
-        _("Exported Data"),
-        file,
-    )
 
 
 def _export_columns(
