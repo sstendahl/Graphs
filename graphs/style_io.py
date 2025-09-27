@@ -41,6 +41,7 @@ FONT_SIZE_KEYS = [
 ]
 
 STYLE_CUSTOM_PARAMS = [
+    "name",
     "ticklabels",
 ]
 
@@ -59,6 +60,24 @@ def parse(file: Gio.File,
     It is also modified to work with GFile instead of the python builtin
     functions.
     """
+
+    def _apply_defaults(target_dict, defaults, filename) -> None:
+        for key, value in defaults.items():
+            if key not in target_dict:
+                msg = _("Parameter {key} not found in {filename}, using"
+                        " default value: {value}")
+                logging.warning(msg.format(key=key, filename=filename,
+                                value=value))
+                target_dict[key] = value
+
+    def _string_to_bool(bool_string: str) -> (bool | str):
+        """Convert string boolean values to actual booleans."""
+        if bool_string.lower() == "false":
+            return False
+        elif bool_string.lower() == "true":
+            return True
+        return bool_string
+
     style = RcParams()
     graphs_params = {"name": None}
     filename = file.get_basename()
@@ -111,10 +130,15 @@ def parse(file: Gio.File,
                         continue
                 try:
                     if graphs_param:
-                        if value.lower() == "false":
-                            value = False
-                        elif value.lower() == "true":
-                            value = True
+                        if key not in STYLE_CUSTOM_PARAMS:
+                            msg = _("Bad value in file {file} on line {line},"
+                                    " custom parameter {key} is not supported")
+                            logging.warning(
+                                msg.format(file=filename, line=line_number,
+                                           key=key),
+                            )
+                            continue
+                        value = _string_to_bool(value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
@@ -130,10 +154,8 @@ def parse(file: Gio.File,
         stream.close()
     if validate is not None:
         style_defaults, graph_defaults = validate
-        for key, value in style_defaults.items():
-            style.setdefault(key, value)
-        for key, value in graph_defaults.items():
-            graphs_params.setdefault(key, value)
+        _apply_defaults(style, style_defaults, filename)
+        _apply_defaults(graphs_params, graph_defaults, filename)
 
     if graphs_params["name"] is None:
         msg = _("File {file}, does not contain name tag")
