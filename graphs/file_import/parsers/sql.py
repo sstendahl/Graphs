@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for "parsing" project files."""
+import logging
 from gettext import gettext as _
 from gettext import pgettext as C_
 
-from gi.repository import Graphs
+from gi.repository import GLib, Graphs
 
 from graphs import item, misc
 from graphs.file_import.parsers import Parser
@@ -47,6 +48,9 @@ class SqlParser(Parser):
     def init_settings_widgets(self, settings, box) -> None:
         """Append SQL-specific settings widgets."""
         file = settings.get_file()
-        sql_group = Graphs.SqlGroup.new(file)
-        self.sql_group = sql_group
-        box.append(sql_group)
+        try:
+            self.sql_group = Graphs.SqlGroup.new(file)
+        except GLib.Error as error:
+            logging.error(error)
+            return
+        box.append(self.sql_group)
