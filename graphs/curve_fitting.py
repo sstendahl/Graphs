@@ -122,21 +122,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         Update the parameters of the curve and perform a new subsequent fit.
         """
         error = False
-
-        def _is_float(value):
-            """
-            Check if a value can be converted to a float.
-
-            If value cannot be parsed as a float, the CSS class "error" to
-            is added to the entry.
-            """
-            try:
-                float(value)
-                return True
-            except ValueError:
-                entry.add_css_class("error")
-                return False
-
         entries = entry.get_ancestor(Graphs.FittingParameterBox)
         # Set the parameters for the row corresponding to the entry that
         # was edited
@@ -151,7 +136,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 entries.get_upper_bound().remove_css_class("error")
 
                 for bound in [initial, lower_bound, upper_bound]:
-                    if not _is_float(bound):
+                    if not utilities._is_float(bound):
                         self.set_results(error="value")
                         return
 

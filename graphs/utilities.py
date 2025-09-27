@@ -13,6 +13,8 @@ import numexpr
 
 import numpy
 
+from scipy.special import gamma
+
 import sympy
 
 
@@ -147,6 +149,35 @@ def _eval(node):
     raise ValueError
 
 
+def factorial_function(x):
+    """
+    Factorial function using scipy's gamma function.
+
+    For non-negative integers n, factorial(n) = gamma(n+1).
+    This extends factorial to real numbers and handles arrays.
+    """
+    return gamma(numpy.array(x) + 1)
+
+
+def extract_expression(remainder):
+    """Isolate the expression within the first pair of parentheses."""
+    stack = []
+    stop_index = None
+    for i, char in enumerate(remainder.lower()):
+        if char == "(":
+            stack.append(char)
+        elif char == ")":
+            stack.pop()
+            if not stack:  # Matching parenthesis found
+                stop_index = i + 1
+                break
+    if not stop_index:
+        return remainder, ""
+    expression = remainder[:stop_index]
+    rest = remainder[stop_index:]
+    return expression, rest
+
+
 def preprocess(string: str) -> str:
     """Preprocess an equation to be compatible with numexpr syntax."""
 
@@ -155,23 +186,8 @@ def preprocess(string: str) -> str:
         function, remainder = match.group(1), match.group(2)
         if function not in FUNCTIONS:
             return f"{function}{remainder}"
-        expression, rest = _extract_expression(remainder)
+        expression, rest = extract_expression(remainder)
         return f"{function}({expression}*{numpy.pi}/180){rest}"
-
-    def _extract_expression(remainder):
-        """Isolate the expression within the first pair of parentheses."""
-        stack = []
-        for i, char in enumerate(remainder.lower()):
-            if char == "(":
-                stack.append(char)
-            elif char == ")":
-                stack.pop()
-                if not stack:  # Matching parenthesis found
-                    stop_index = i + 1
-                    break
-        expression = remainder[:stop_index]
-        rest = remainder[stop_index:]
-        return expression, rest
 
     def convert_degrees_recursive(old_string):
         """Recursively convert degrees to match all parenthesis properly."""
@@ -209,6 +225,45 @@ def preprocess(string: str) -> str:
         """Convert arccosecant to reciprocal arcsine expressions."""
         expression = match.group(1)  # Get the content inside the brackets
         return f"(arcsin(1/({expression})))"
+
+    # --- Factorial handling ---
+    def convert_factorial(match_start_end):
+        start, end, expr_part = match_start_end
+        func_match = re.match(r"\w*$", expr_part[:start])
+        function = func_match.group(0) if func_match else ""
+        if function not in FUNCTIONS:
+            return f"factorial({expr_part})"
+        return f"factorial({function}{expr_part})"
+
+    def find_factorials(equation: str):
+        """Greedy factorial finder handling nested parentheses/functions."""
+        results = []
+        i = 0
+        while i < len(equation):
+            if equation[i] == "!":
+                rev_part = equation[:i][::-1]
+                m = re.match(r".+", rev_part)
+                if m:
+                    expr_part = m.group(0)[::-1]
+                    results.append((i - len(expr_part), i + 1, expr_part))
+                i += 1
+            else:
+                i += 1
+        return results
+
+    def convert_factorial_recursive(expr: str) -> str:
+        """Recursively replace factorials."""
+        factorial_pattern = \
+            re.compile(r"(\w+\(.*?\)|\([^()]*\)|\d+(?:\.\d+)?|\w)!")
+
+        def convert_factorial(match):
+            expr_part = match.group(1)
+            return f"factorial({expr_part})"
+
+        new_expr = re.sub(factorial_pattern, convert_factorial, expr)
+        if new_expr != expr:
+            return convert_factorial_recursive(new_expr)
+        return new_expr
 
     def convert_superscript(match):
         """Convert superscript expressions to Python's power operator."""
@@ -253,6 +308,8 @@ def preprocess(string: str) -> str:
         convert_superscript,
         string,
     )
+
+    string = convert_factorial_recursive(string)
     string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
     string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
     string = string.replace("π", "pi").replace("pi", f"({float(numpy.pi)})")
@@ -285,6 +342,7 @@ def prettify_equation(equation: str) -> str:
     equation = equation.replace(" ", "")
     equation = re.sub(r"(\d+\.\d+)", reformat_pi, equation)
     equation = equation.replace("**", "^")
+    equation = re.sub(r"factorial\(([^)]+)\)", r"\1!", equation)
     return equation.replace(")*(", ")(")
 
 
@@ -343,13 +401,115 @@ def equation_to_data(
         limits = (0, 10)
     equation = preprocess(equation)
     xdata = create_equidistant_xdata(limits, scale, steps)
+
     try:
+        equation = _precompute_factorials(equation, xdata)
         ydata = numpy.ndarray.tolist(
-            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
+            _evaluate_equation(equation, local_dict={"x": xdata}),
         )
     except (KeyError, SyntaxError, ValueError, TypeError):
         return None, None
     return xdata, ydata
+
+
+def _is_float(expr: str) -> bool:
+    """Check if expression is a simple numeric constant."""
+    try:
+        float(expr)
+        return True
+    except ValueError:
+        return False
+
+
+class FactorialProcessor:
+    """Handles factorial expression processing and variable management."""
+
+    def __init__(self):
+        self.computed_vars = {}
+        self.var_counter = 0
+
+    def get_next_var_name(self) -> str:
+        """Generate next variable name for substitution."""
+        name = f"gamma_var_{self.var_counter}"
+        self.var_counter += 1
+        return name
+
+    def store_computed_values(self, var_name: str, values: numpy.ndarray):
+        """Store computed factorial values for later substitution."""
+        self.computed_vars[var_name] = values
+
+    def clear_vars(self):
+        """Clear stored variables after use."""
+        self.computed_vars.clear()
+        self.var_counter = 0
+
+
+def _find_factorial_calls(equation: str):
+    """Handle nested parentheses for factorials using extract_expression."""
+    results = []
+    i = 0
+    while i < len(equation):
+        if equation.startswith("factorial", i):
+            start = i
+            inner_expr, rest = \
+                extract_expression(equation[i + len("factorial"):])
+            end = i + len("factorial") + len(inner_expr)
+            results.append((start, end, inner_expr[1:-1]))
+            i = end
+        else:
+            i += 1
+    return results
+
+
+def _precompute_factorials(equation: str, xdata: list) -> str:
+    """Pre-compute factorial expressions and substitute them in equation."""
+    processor = FactorialProcessor()
+    x_array = numpy.array(xdata)
+
+    def process(expr: str) -> str:
+        expr = expr.strip()
+        # Resolve inner factorials first
+        expr = _replace_factorials(expr)
+
+        if _is_float(expr):
+            return str(float(gamma(float(expr) + 1)))
+        elif expr == "x":
+            var_name = processor.get_next_var_name()
+            processor.store_computed_values(var_name, gamma(x_array + 1))
+            return var_name
+        else:
+            values = numexpr.evaluate(expr, local_dict={"x": x_array})
+            factorial_values = gamma(values + 1)
+            var_name = processor.get_next_var_name()
+            processor.store_computed_values(var_name, factorial_values)
+            return var_name
+
+    def _replace_factorials(eq: str) -> str:
+        while True:
+            calls = _find_factorial_calls(eq)
+            if not calls:
+                break
+            # Replace from right to left to avoid shifting indices
+            for start, end, inner in reversed(calls):
+                replacement = process(inner)
+                eq = eq[:start] + replacement + eq[end:]
+        return eq
+
+    final_equation = _replace_factorials(equation)
+    _precompute_factorials.processor = processor
+    return final_equation
+
+
+def _evaluate_equation(expr: str, local_dict: dict = None) -> numpy.ndarray:
+    """Evaluate expression, including pre-computed factorial variables."""
+    if local_dict is None:
+        local_dict = {}
+
+    if hasattr(_precompute_factorials, "processor"):
+        local_dict.update(_precompute_factorials.processor.computed_vars)
+        _precompute_factorials.processor.clear_vars()
+
+    return numexpr.evaluate(expr, local_dict=local_dict)
 
 
 def validate_equation(equation: str, limits: tuple = None) -> bool:
@@ -364,9 +524,11 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
     variables = ["x"] + get_free_variables(equation_name)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
+        local_dict = dict(zip(variables, sym_vars))
+        local_dict["factorial"] = sympy.factorial
         symbolic = sympy.sympify(
             equation_name,
-            locals=dict(zip(variables, sym_vars)),
+            locals=local_dict,
         )
         return sympy.lambdify(sym_vars, symbolic)
 
@@ -381,6 +543,7 @@ def get_free_variables(equation_name: str) -> list:
         r"|sinh\b|cosh\b|tanh\b"  # Exclude hyperbolicus argtrig func.
         r"|arcsinh\b|arccosh\b|arctanh\b"  # Exclude hyperb. arctrig func.
         r"|exp\b|sqrt\b|abs\b|log10\b)"  # Exclude 'exp', 'sqrt', 'abs'
+        r"|factorial\b)"  # Exclude 'factorial' function
         r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
     )
     return list(set(re.findall(pattern, equation_name)))

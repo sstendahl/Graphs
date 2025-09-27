@@ -117,4 +117,5 @@ FUNCTIONS = {
     "abs",
     "log",
     "log10",
+    "factorial",
 }
