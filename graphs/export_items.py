@@ -50,7 +50,7 @@ def _save_item(
         file.replace(None, False, Gio.FileCreateFlags.NONE, None),
     )
     if xlabel != "" and ylabel != "":
-        stream.stream(xlabel + delimiter + ylabel + "\n")
+        stream.put_string(xlabel + delimiter + ylabel + "\n")
     if isinstance(item, DataItem):
         xdata, ydata = item.xdata, item.ydata
     elif isinstance(item, EquationItem):

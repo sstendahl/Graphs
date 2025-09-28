@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-25 19:41+0000\n"
-"PO-Revision-Date: 2025-09-26 07:46+0800\n"
+"POT-Creation-Date: 2025-09-27 17:23+0000\n"
+"PO-Revision-Date: 2025-09-28 07:52+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -100,7 +100,7 @@ msgstr ""
 msgid "New Window"
 msgstr "新建窗口"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:139
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
 msgid "Style Editor"
 msgstr "样式编辑器"
 
@@ -108,16 +108,16 @@ msgstr "样式编辑器"
 msgid "Delete Style?"
 msgstr "删除样式吗？"
 
-#: data/ui/dialogs/delete-style.blp:7
-#: data/ui/dialogs/reset-import-settings.blp:8
-#: data/ui/dialogs/save-project-changes.blp:8
-#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:17
+#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
 #: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
 #: data/ui/generate-data.blp:17 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "取消"
 
-#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "删除"
 
@@ -129,7 +129,7 @@ msgstr "重置为默认值吗？"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "您确定要重置导入设置吗？"
 
-#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/reset-import-settings.blp:10
 msgid "Reset"
 msgstr "重置"
 
@@ -144,13 +144,13 @@ msgid ""
 "permanently lost."
 msgstr "当前工程包含未保存更改，未保存的更改将会永久丢失。"
 
-#: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
 msgid "Discard"
 msgstr "丢弃"
 
-#: data/ui/dialogs/save-project-changes.blp:10
-#: data/ui/dialogs/save-style-changes.blp:10
+#: data/ui/dialogs/save-project-changes.blp:11
+#: data/ui/dialogs/save-style-changes.blp:11
 msgid "Save"
 msgstr "保存"
 
@@ -356,7 +356,7 @@ msgid "Marker Size"
 msgstr "标记大小"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:176
+#: data/ui/curve-fitting.blp:65 graphs/item.py:182
 msgid "Equation"
 msgstr "方程式"
 
@@ -386,83 +386,83 @@ msgstr "X 终止"
 msgid "Steps"
 msgstr "步数"
 
-#: data/ui/edit-item/generated-data.blp:53 data/ui/generate-data.blp:98
+#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
 msgid "Scale"
 msgstr "缩放"
 
-#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
+#: data/ui/edit-item/generated-data.blp:55 data/ui/generate-data.blp:100
 msgid "Determines the spacing between data points"
 msgstr "决定数据点之间的距离"
 
-#: data/ui/edit-item/generated-data.blp:58
+#: data/ui/edit-item/generated-data.blp:59
 #: data/ui/sidebar/figure-settings/settings-page.blp:163
 #: data/ui/sidebar/figure-settings/settings-page.blp:179
 #: data/ui/sidebar/figure-settings/settings-page.blp:195
 #: data/ui/sidebar/figure-settings/settings-page.blp:211
-#: data/ui/generate-data.blp:103
+#: data/ui/generate-data.blp:104
 msgctxt "scale"
 msgid "Linear"
 msgstr "线性"
 
-#: data/ui/edit-item/generated-data.blp:59
+#: data/ui/edit-item/generated-data.blp:60
 #: data/ui/sidebar/figure-settings/settings-page.blp:164
 #: data/ui/sidebar/figure-settings/settings-page.blp:180
 #: data/ui/sidebar/figure-settings/settings-page.blp:196
 #: data/ui/sidebar/figure-settings/settings-page.blp:212
-#: data/ui/generate-data.blp:104
+#: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "对数（底数 10）"
 
-#: data/ui/edit-item/generated-data.blp:60
+#: data/ui/edit-item/generated-data.blp:61
 #: data/ui/sidebar/figure-settings/settings-page.blp:165
 #: data/ui/sidebar/figure-settings/settings-page.blp:181
 #: data/ui/sidebar/figure-settings/settings-page.blp:197
 #: data/ui/sidebar/figure-settings/settings-page.blp:213
-#: data/ui/generate-data.blp:105
+#: data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "对数（底数 2）"
 
-#: data/ui/edit-item/generated-data.blp:61
+#: data/ui/edit-item/generated-data.blp:62
 #: data/ui/sidebar/figure-settings/settings-page.blp:166
 #: data/ui/sidebar/figure-settings/settings-page.blp:182
 #: data/ui/sidebar/figure-settings/settings-page.blp:198
 #: data/ui/sidebar/figure-settings/settings-page.blp:214
-#: data/ui/generate-data.blp:106
+#: data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Radians"
 msgstr "弧度"
 
-#: data/ui/edit-item/generated-data.blp:62
+#: data/ui/edit-item/generated-data.blp:63
 #: data/ui/sidebar/figure-settings/settings-page.blp:167
 #: data/ui/sidebar/figure-settings/settings-page.blp:183
 #: data/ui/sidebar/figure-settings/settings-page.blp:199
 #: data/ui/sidebar/figure-settings/settings-page.blp:215
-#: data/ui/generate-data.blp:107
+#: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Square Root"
 msgstr "平方根"
 
-#: data/ui/edit-item/generated-data.blp:63
+#: data/ui/edit-item/generated-data.blp:64
 #: data/ui/sidebar/figure-settings/settings-page.blp:168
 #: data/ui/sidebar/figure-settings/settings-page.blp:184
 #: data/ui/sidebar/figure-settings/settings-page.blp:200
 #: data/ui/sidebar/figure-settings/settings-page.blp:216
-#: data/ui/generate-data.blp:108
+#: data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Inverse"
 msgstr "逆缩放"
 
-#: data/ui/import/dialog.blp:22
+#: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "导入参数"
 
-#: data/ui/import/dialog.blp:31
+#: data/ui/import/dialog.blp:30
 msgid "Add File"
 msgstr "添加文件"
 
-#: data/ui/import/dialog.blp:55
+#: data/ui/import/dialog.blp:54
 msgid "Import"
 msgstr "导入"
 
@@ -569,7 +569,7 @@ msgid "Ignored row indices"
 msgstr "忽略行索引"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
-#: data/ui/sidebar/main.blp:29
+#: data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
 msgstr "图表设置"
 
@@ -741,87 +741,87 @@ msgstr "创建样式…"
 msgid "Edit Item"
 msgstr "编辑项目"
 
-#: data/ui/sidebar/main.blp:12
+#: data/ui/sidebar/main.blp:13
 msgid "Add New Data"
 msgstr "添加新数据"
 
-#: data/ui/sidebar/main.blp:21 data/ui/style-editor-window.blp:65
+#: data/ui/sidebar/main.blp:22 data/ui/style-editor-window.blp:65
 #: data/ui/style-editor-window.blp:175
 msgid "Open Application Menu"
 msgstr "打开应用程序菜单"
 
-#: data/ui/sidebar/main.blp:42
+#: data/ui/sidebar/main.blp:43
 msgid "No Data"
 msgstr "无数据"
 
-#: data/ui/sidebar/main.blp:43
+#: data/ui/sidebar/main.blp:44
 msgid "Add data from a file or manually as an equation"
 msgstr "从文件或手动输入方程式来添加数据"
 
-#: data/ui/sidebar/main.blp:92
+#: data/ui/sidebar/main.blp:93
 msgid "Pan Mode. Click and drag to pan"
 msgstr "平移模式。点击并拖拽来平移"
 
-#: data/ui/sidebar/main.blp:99
+#: data/ui/sidebar/main.blp:100
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "缩放模式。选择图表的一个区域来放大"
 
-#: data/ui/sidebar/main.blp:106
+#: data/ui/sidebar/main.blp:107
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "选择模式。点击并拖拽来选择数据"
 
-#: data/ui/sidebar/main.blp:123
+#: data/ui/sidebar/main.blp:124
 msgid "New Project"
 msgstr "新建工程"
 
-#: data/ui/sidebar/main.blp:127
+#: data/ui/sidebar/main.blp:128
 msgid "Save Project…"
 msgstr "保存工程…"
 
-#: data/ui/sidebar/main.blp:128
+#: data/ui/sidebar/main.blp:129
 msgid "Save Project as…"
 msgstr "另存工程为…"
 
-#: data/ui/sidebar/main.blp:129
+#: data/ui/sidebar/main.blp:130
 msgid "Open Project…"
 msgstr "打开工程…"
 
-#: data/ui/sidebar/main.blp:130
+#: data/ui/sidebar/main.blp:131
 msgid "Close Project"
 msgstr "关闭工程"
 
-#: data/ui/sidebar/main.blp:134
+#: data/ui/sidebar/main.blp:135
 msgid "Export Data…"
 msgstr "导出数据…"
 
-#: data/ui/sidebar/main.blp:135
+#: data/ui/sidebar/main.blp:136
 msgid "Export Figure…"
 msgstr "导出图表…"
 
-#: data/ui/sidebar/main.blp:143 data/ui/style-editor-window.blp:216
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:216
 #: data/ui/style-editor-window.blp:228
 msgid "Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:217
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:217
 #: data/ui/style-editor-window.blp:229
 msgid "Help"
 msgstr "帮助"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:218
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor-window.blp:218
 #: data/ui/style-editor-window.blp:230
 msgid "About Graphs"
 msgstr "关于 Graphs"
 
-#: data/ui/sidebar/main.blp:151
+#: data/ui/sidebar/main.blp:152
 msgid "Add Data from File…"
 msgstr "从文件添加数据…"
 
-#: data/ui/sidebar/main.blp:152
+#: data/ui/sidebar/main.blp:153
 msgid "Add Equation…"
 msgstr "添加方程式…"
 
-#: data/ui/sidebar/main.blp:153
+#: data/ui/sidebar/main.blp:154
 msgid "Generate Data…"
 msgstr "生成数据…"
 
@@ -902,7 +902,7 @@ msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
 #: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200
-#: data/ui/window.blp:347
+#: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
 
@@ -1515,31 +1515,31 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "丢弃未选中数据"
 
-#: data/ui/window.blp:218
+#: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "拖放到这里来导入"
 
-#: data/ui/window.blp:251
+#: data/ui/window.blp:253
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:260 data/ui/window.blp:306 graphs/window.vala:407
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:407
 msgid "Undo"
 msgstr "撤消"
 
-#: data/ui/window.blp:267 data/ui/window.blp:314
+#: data/ui/window.blp:269 data/ui/window.blp:316
 msgid "Redo"
 msgstr "重做"
 
-#: data/ui/window.blp:275 data/ui/window.blp:322
+#: data/ui/window.blp:277 data/ui/window.blp:324
 msgid "Optimize View Limits"
 msgstr "优化视图限制"
 
-#: data/ui/window.blp:283 data/ui/window.blp:329
+#: data/ui/window.blp:285 data/ui/window.blp:331
 msgid "Next View"
 msgstr "下一视图"
 
-#: data/ui/window.blp:291 data/ui/window.blp:337
+#: data/ui/window.blp:293 data/ui/window.blp:339
 msgid "Previous View"
 msgstr "上一视图"
 
@@ -1879,6 +1879,10 @@ msgctxt "filename"
 msgid "Exported Figure"
 msgstr "导出的图表"
 
+#: graphs/export_figure.vala:66
+msgid "Exported Figure"
+msgstr "导出的图表"
+
 #: graphs/export_items.vala:10
 msgid "No data to export"
 msgstr "无数据可导出"
@@ -1892,15 +1896,15 @@ msgstr "文本文件"
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.py:106
+#: graphs/item.py:112
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.py:224
+#: graphs/item.py:230
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.py:253
+#: graphs/item.py:266
 msgid "Fill"
 msgstr "填充"
 
@@ -1974,6 +1978,10 @@ msgstr "保存的工程"
 #: graphs/project.vala:37
 msgid "Project"
 msgstr "工程"
+
+#: graphs/python_helper.vala:48
+msgid "Exported Data"
+msgstr "已导出数据"
 
 #: graphs/style_editor.py:444
 msgid "Example Item"
@@ -2111,6 +2119,3 @@ msgstr "打开位置"
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
 #~ msgstr "{error} - 无法从方程式添加数据"
-
-#~ msgid "Exported Figure"
-#~ msgstr "导出的图表"

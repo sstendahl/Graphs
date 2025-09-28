@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-26 14:02+0000\n"
-"PO-Revision-Date: 2025-09-26 20:22+0300\n"
+"POT-Creation-Date: 2025-09-27 16:37+0000\n"
+"PO-Revision-Date: 2025-09-27 20:23+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -479,7 +479,6 @@ msgid "Import Parameters"
 msgstr "Параметри імпортування"
 
 #: data/ui/import/dialog.blp:30
-#| msgid "All Files"
 msgid "Add File"
 msgstr "Додати файл"
 
@@ -488,12 +487,10 @@ msgid "Import"
 msgstr "Імпортувати"
 
 #: data/ui/import/dialog.blp:82
-#| msgid "Reset to Defaults?"
 msgid "Reset to guessed values"
 msgstr "Повернути вгадані значення"
 
 #: data/ui/import/dialog.blp:103
-#| msgid "Import"
 msgid "Import Mode"
 msgstr "Режим імпортування"
 
@@ -1717,7 +1714,6 @@ msgid "Redo Action"
 msgstr "Повторити дію"
 
 #: graphs/file_import/parsers/columns.py:24
-#| msgid "Column X"
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Стовпчики"
@@ -1731,7 +1727,6 @@ msgid "Unable to import from file"
 msgstr "Не вдалося імпортувати дані з файла"
 
 #: graphs/file_import/parsers/project.py:19
-#| msgid "Project"
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Проєкт"
@@ -1778,7 +1773,6 @@ msgid "R (1/s)"
 msgstr "R (1/s)"
 
 #: graphs/file_import/__init__.py:108
-#| msgid "Import Style…"
 msgid "Import failed"
 msgstr "Імпортування зазнало невдачі"
 
@@ -1910,6 +1904,10 @@ msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
+#: graphs/export_figure.vala:66
+msgid "Exported Figure"
+msgstr "Експортований рисунок"
+
 #: graphs/export_items.vala:10
 msgid "No data to export"
 msgstr "Немає даних для експортування"
@@ -2008,6 +2006,12 @@ msgstr "Збережений проєкт"
 #: graphs/project.vala:37
 msgid "Project"
 msgstr "Проєкт"
+
+#: graphs/python_helper.vala:48
+#| msgctxt "shortcut window"
+#| msgid "Export Data"
+msgid "Exported Data"
+msgstr "Експортовані дані"
 
 #: graphs/style_editor.py:444
 msgid "Example Item"
@@ -2149,9 +2153,6 @@ msgstr "Відкрити адресу"
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
 #~ msgstr "{error} — не вдалося додати дані з рівняння"
-
-#~ msgid "Exported Figure"
-#~ msgstr "Експортований рисунок"
 
 #~ msgid "1 - Plot and manipulate any data of choice"
 #~ msgstr "1 — креслення і робота з будь-якими вибраними даними"
