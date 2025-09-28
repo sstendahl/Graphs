@@ -50,9 +50,10 @@ class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
 
 
-def parse(file: Gio.File,
-          validate: Tuple[RcParams, dict] = None,
-          ) -> (RcParams, dict):
+def parse(
+    file: Gio.File,
+    validate: Tuple[RcParams, dict] = None,
+) -> (RcParams, dict):
     """
     Parse a style to RcParams.
 
@@ -61,14 +62,19 @@ def parse(file: Gio.File,
     functions.
     """
 
-    def _apply_defaults(target_dict: dict | RcParams,
-                        defaults: dict, filename) -> None:
+    def _apply_defaults(
+        target_dict: dict | RcParams,
+        defaults: dict,
+        filename,
+    ) -> None:
         for key, value in defaults.items():
             if key not in target_dict:
-                msg = ("Parameter {key} not found in {filename}, using"
-                       " default value: {value}")
-                logging.debug(msg.format(key=key, filename=filename,
-                              value=value))
+                msg = (
+                    "Parameter {key} not found in {filename}, using"
+                    " default value: {value}"
+                )
+                msg = msg.format(key=key, filename=filename, value=value)
+                logging.debug(msg)
                 target_dict[key] = value
 
     style = RcParams()
@@ -124,11 +130,16 @@ def parse(file: Gio.File,
                 try:
                     if graphs_param:
                         if key not in STYLE_CUSTOM_PARAMS:
-                            msg = _("Bad value in file {file} on line {line},"
-                                    " custom parameter {key} is not supported")
+                            msg = _(
+                                "Bad value in file {file} on line {line},"
+                                " custom parameter {key} is not supported",
+                            )
                             logging.warning(
-                                msg.format(file=filename, line=line_number,
-                                           key=key),
+                                msg.format(
+                                    file=filename,
+                                    line=line_number,
+                                    key=key,
+                                ),
                             )
                             continue
                         # Convert boolean-strings to boolean:

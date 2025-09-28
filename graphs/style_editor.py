@@ -194,7 +194,9 @@ class StyleEditorBox(Gtk.Box):
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
             value = style_io.STYLE_CUSTOM_PARAMS.get(
-                value[0], style_params[value[0]])
+                value[0],
+                style_params[value[0]],
+            )
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
             widget = getattr(self, key.replace("-", "_"))

@@ -36,9 +36,11 @@ class _PythonItem(Graphs.Item):
     def __init__(self, **kwargs):
         super().__init__(typename=self._typename, **kwargs)
 
-    def reset(self,
-              old_style: Tuple[RcParams, dict],
-              new_style: Tuple[RcParams, dict]) -> None:
+    def reset(
+        self,
+        old_style: Tuple[RcParams, dict],
+        new_style: Tuple[RcParams, dict],
+    ) -> None:
         """Reset all properties."""
         # Combine rcparams and graphs_params into single dict:
         old_style = old_style[0] | old_style[1]
