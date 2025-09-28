@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
 from gettext import gettext as _
+from typing import Tuple
 
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
-from matplotlib import rcParams
+from matplotlib import RcParams
 
 
 def new_from_dict(dictionary: dict) -> Graphs.Item:
@@ -35,8 +36,15 @@ class _PythonItem(Graphs.Item):
     def __init__(self, **kwargs):
         super().__init__(typename=self._typename, **kwargs)
 
-    def reset(self, old_style: rcParams, new_style: rcParams) -> None:
+    def reset(
+        self,
+        old_style: Tuple[RcParams, dict],
+        new_style: Tuple[RcParams, dict],
+    ) -> None:
         """Reset all properties."""
+        # Combine rcparams and graphs_params into single dict:
+        old_style = old_style[0] | old_style[1]
+        new_style = new_style[0] | new_style[1]
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
             new_value = new_style[key]
@@ -46,7 +54,8 @@ class _PythonItem(Graphs.Item):
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(self, style: rcParams) -> dict:
+    def _extract_params(self, style: Tuple[RcParams, dict]) -> dict:
+        style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()
@@ -85,7 +94,7 @@ class DataItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         xdata: list[float] = None,
         ydata: list[float] = None,
         **kwargs,
@@ -119,7 +128,7 @@ class GeneratedDataItem(DataItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         equation: str,
         xstart: str,
         xstop: str,
@@ -193,7 +202,7 @@ class EquationItem(_PythonItem):
     }
 
     @classmethod
-    def new(cls, style: rcParams, equation: str, **kwargs):
+    def new(cls, style: Tuple[RcParams, dict], equation: str, **kwargs):
         """Create new EquationItem."""
         return cls(
             equation=equation,
@@ -243,7 +252,7 @@ class TextItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        style: rcParams,
+        style: Tuple[RcParams, dict],
         xanchor: float = 0,
         yanchor: float = 0,
         text: str = "",
@@ -270,7 +279,7 @@ class FillItem(_PythonItem):
     @classmethod
     def new(
         cls,
-        _params: rcParams,
+        _params: Tuple[RcParams, dict],
         data: tuple[list[float], list[float], list[float]],
         **kwargs,
     ):
