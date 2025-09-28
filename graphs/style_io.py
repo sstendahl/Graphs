@@ -8,6 +8,7 @@ other graphs modules.
 import logging
 import typing
 from gettext import gettext as _
+from typing import Tuple
 
 from gi.repository import Gio
 
@@ -39,12 +40,20 @@ FONT_SIZE_KEYS = [
     "axes.titlesize",
 ]
 
+STYLE_CUSTOM_PARAMS = [
+    "name",
+    "ticklabels",
+]
+
 
 class StyleParseError(Exception):
     """Custom Error for when a style cannot be parsed."""
 
 
-def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
+def parse(
+    file: Gio.File,
+    validate: Tuple[RcParams, dict] = None,
+) -> (RcParams, dict):
     """
     Parse a style to RcParams.
 
@@ -52,6 +61,22 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     It is also modified to work with GFile instead of the python builtin
     functions.
     """
+
+    def _apply_defaults(
+        target_dict: dict | RcParams,
+        defaults: dict,
+        filename,
+    ) -> None:
+        for key, value in defaults.items():
+            if key not in target_dict:
+                msg = (
+                    "Parameter {key} not found in {filename}, using"
+                    " default value: {value}"
+                )
+                msg = msg.format(key=key, filename=filename, value=value)
+                logging.debug(msg)
+                target_dict[key] = value
+
     style = RcParams()
     graphs_params = {"name": None}
     filename = file.get_basename()
@@ -104,6 +129,22 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
                         continue
                 try:
                     if graphs_param:
+                        if key not in STYLE_CUSTOM_PARAMS:
+                            msg = _(
+                                "Bad value in file {file} on line {line},"
+                                " custom parameter {key} is not supported",
+                            )
+                            logging.warning(
+                                msg.format(
+                                    file=filename,
+                                    line=line_number,
+                                    key=key,
+                                ),
+                            )
+                            continue
+                        # Convert boolean-strings to boolean:
+                        bool_mapping = {"false": False, "true": True}
+                        value = bool_mapping.get(value.lower(), value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
@@ -118,9 +159,10 @@ def parse(file: Gio.File, validate: RcParams = None) -> (RcParams, str):
     finally:
         stream.close()
     if validate is not None:
-        for key, value in validate.items():
-            if key not in style:
-                style[key] = value
+        style_defaults, graph_defaults = validate
+        _apply_defaults(style, style_defaults, filename)
+        _apply_defaults(graphs_params, graph_defaults, filename)
+
     if graphs_params["name"] is None:
         msg = _("File {file}, does not contain name tag")
         logging.warning(msg.format(file=filename))
@@ -163,18 +205,27 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 def create_preview(
     file: typing.IO,
-    params: RcParams,
+    params: Tuple[RcParams, dict],
     file_format: str = "svg",
     dpi: int = 100,
 ) -> None:
     """Create preview of params and write it to file."""
-    with rc_context(params):
+    style_params, graphs_params = params
+    with rc_context(style_params):
         # set render size in inch
         figure = Figure(figsize=(5, 3))
         axis = figure.add_subplot()
         axis.spines.bottom.set_visible(True)
         axis.spines.left.set_visible(True)
-        if not params["axes.spines.top"]:
+        if style_params["axes.spines.top"] and graphs_params["ticklabels"]:
+            tick_params = {
+                "labelleft": style_params["ytick.left"],
+                "labelright": style_params["ytick.right"],
+                "labeltop": style_params["xtick.top"],
+                "labelbottom": style_params["xtick.bottom"],
+            }
+            axis.tick_params(which="both", **tick_params)
+        else:
             axis.tick_params(which="both", top=False, right=False)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)

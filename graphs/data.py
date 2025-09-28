@@ -7,6 +7,7 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
+from typing import Tuple
 
 from gi.repository import Gio, Graphs, Gtk
 
@@ -29,7 +30,7 @@ class Data(Graphs.Data):
     __gtype_name__ = "GraphsPythonData"
 
     def __init__(self, application: Graphs.Application):
-        self._selected_style_params = None
+        self._selected_style_params = None, {}
         super().__init__(application=application)
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
@@ -62,11 +63,11 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def get_old_selected_style_params(self) -> RcParams:
+    def get_old_selected_style_params(self) -> Tuple[RcParams, dict]:
         """Get the old selected style properties."""
         return self._old_style_params
 
-    def get_selected_style_params(self) -> RcParams:
+    def get_selected_style_params(self) -> Tuple[RcParams, dict]:
         """Get the selected style properties."""
         return self._selected_style_params
 
@@ -83,11 +84,14 @@ class Data(Graphs.Data):
                         if style.get_mutable():
                             validate = style_manager.get_system_style_params()
                         self._old_style_params = self._selected_style_params
-                        style_params = style_io.parse(
+
+                        style_params, graphs_params = style_io.parse(
                             style.get_file(),
                             validate,
-                        )[0]
-                        self._selected_style_params = style_params
+                        )
+                        self._selected_style_params = \
+                            style_params, graphs_params
+
                         self.set_color_cycle(
                             style_params["axes.prop_cycle"].by_key()["color"],
                         )
@@ -102,14 +106,15 @@ class Data(Graphs.Data):
                 "Style {stylename} does not exist, "
                 "loading system preferred style",
             ).format(stylename=stylename)
+
         if error_msg is not None:
             figure_settings.set_use_custom_style(False)
             logging.warning(error_msg)
+
         self._old_style_params = self._selected_style_params
         self._selected_style_params = style_manager.get_system_style_params()
-        self.set_color_cycle(
-            self._selected_style_params["axes.prop_cycle"].by_key()["color"],
-        )
+        color_cycle = self._selected_style_params[0]["axes.prop_cycle"]
+        self.set_color_cycle(color_cycle.by_key()["color"])
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits()

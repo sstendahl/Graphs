@@ -39,8 +39,9 @@ class PythonWindow(Graphs.Window):
         if recolor_items:
             old_style = data.get_old_selected_style_params()
             new_style = data.get_selected_style_params()
-            old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
-            new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
+
+            old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
+            new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
             for item_ in data:
                 item_.reset(old_style, new_style)
             count = 0
@@ -58,7 +59,6 @@ class PythonWindow(Graphs.Window):
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
-
         key_controller = self.props.key_controller
         canvas = self.get_canvas()
         if canvas:
@@ -86,8 +86,8 @@ class PythonWindow(Graphs.Window):
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
-            background_color=params["figure.facecolor"],
-            color=params["text.color"],
+            background_color=params[0]["figure.facecolor"],
+            color=params[0]["text.color"],
         )
         self.props.css_provider.load_from_string(css)
 

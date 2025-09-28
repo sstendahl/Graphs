@@ -37,6 +37,7 @@ STYLE_DICT = {
     "tick_left": ["ytick.left"],
     "tick_top": ["xtick.top"],
     "tick_right": ["ytick.right"],
+    "tick_labels": ["ticklabels"],
     "show_grid": ["axes.grid"],
     "grid_linewidth": ["grid.linewidth"],
     "value_padding": [
@@ -111,6 +112,7 @@ class StyleEditorBox(Gtk.Box):
     tick_left = Gtk.Template.Child()
     tick_top = Gtk.Template.Child()
     tick_right = Gtk.Template.Child()
+    tick_labels = Gtk.Template.Child()
     show_grid = Gtk.Template.Child()
     grid_linewidth = Gtk.Template.Child()
     grid_opacity = Gtk.Template.Child()
@@ -131,7 +133,7 @@ class StyleEditorBox(Gtk.Box):
     def __init__(self, window):
         super().__init__()
         self.window = window
-        self.params, self.graphs_params = None, None
+        self.params = None
 
         self._style_color_manager = Graphs.StyleColorManager.new(
             self.line_colors_box,
@@ -182,7 +184,7 @@ class StyleEditorBox(Gtk.Box):
 
     def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
-        self.params, self.graphs_params = None, None
+        self.params = None
         application = self.window.get_application()
         style_params, graphs_params = style_io.parse(
             file,
@@ -191,7 +193,10 @@ class StyleEditorBox(Gtk.Box):
         stylename = graphs_params["name"]
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
-            value = style_params[value[0]]
+            value = style_io.STYLE_CUSTOM_PARAMS.get(
+                value[0],
+                style_params[value[0]],
+            )
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
             widget = getattr(self, key.replace("-", "_"))
@@ -318,7 +323,11 @@ class StyleEditorBox(Gtk.Box):
         with contextlib.suppress(KeyError):
             value = VALUE_DICT[key][value]
         for item in STYLE_DICT[key]:
-            self.params[item] = value
+            if item in style_io.STYLE_CUSTOM_PARAMS:
+                self.graphs_params[item] = value
+            else:
+                self.params[item] = value
+
         self.emit("params-changed")
 
     def _on_color_change(self, button: Gtk.Button, key: str) -> None:
@@ -434,11 +443,11 @@ class PythonStyleEditor(Graphs.StyleEditor):
         """Initialize example test items with predefined preview data."""
         preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
                         (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
-
+        test_style = pyplot.rcParams, {}
         for xdata, ydata in preview_data:
             self._test_items.append(
                 DataItem.new(
-                    pyplot.rcParams,
+                    test_style,
                     xdata=xdata,
                     ydata=ydata,
                     name=_("Example Item"),
@@ -461,18 +470,21 @@ class PythonStyleEditor(Graphs.StyleEditor):
         await asyncio.sleep(timeout)
         if style_editor.params is None:
             style_manager = self.props.application.get_figure_style_manager()
-            params = style_manager.get_system_style_params()
+            params, graphs_params = style_manager.get_system_style_params()
         else:
             params = style_editor.params
+            graphs_params = style_editor.graphs_params
             color_cycle = params["axes.prop_cycle"].by_key()["color"]
             for index, item in enumerate(self._test_items):
                 # Wrap around the color_cycle using the % operator
                 item.set_color(color_cycle[index % len(color_cycle)])
-                for prop, value in item._extract_params(params).items():
+                item_params = params, graphs_params
+                for prop, value in item._extract_params(item_params).items():
                     item.set_property(prop, value)
             self.set_stylename(style_editor.graphs_params["name"])
 
-        canvas = Canvas(params, self._test_items, False)
+        all_params = params, graphs_params
+        canvas = Canvas(all_params, self._test_items, False)
         canvas.props.title = _("Title")
         canvas.props.bottom_label = _("X Label")
         canvas.props.left_label = _("Y Label")
