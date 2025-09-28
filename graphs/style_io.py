@@ -61,7 +61,8 @@ def parse(file: Gio.File,
     functions.
     """
 
-    def _apply_defaults(target_dict, defaults, filename) -> None:
+    def _apply_defaults(target_dict: dict | RcParams,
+                        defaults: dict, filename) -> None:
         for key, value in defaults.items():
             if key not in target_dict:
                 msg = _("Parameter {key} not found in {filename}, using"
@@ -69,14 +70,6 @@ def parse(file: Gio.File,
                 logging.warning(msg.format(key=key, filename=filename,
                                 value=value))
                 target_dict[key] = value
-
-    def _string_to_bool(bool_string: str) -> (bool | str):
-        """Convert string boolean values to actual booleans."""
-        if bool_string.lower() == "false":
-            return False
-        elif bool_string.lower() == "true":
-            return True
-        return bool_string
 
     style = RcParams()
     graphs_params = {"name": None}
@@ -138,7 +131,9 @@ def parse(file: Gio.File,
                                            key=key),
                             )
                             continue
-                        value = _string_to_bool(value)
+                        # Convert boolean-strings to boolean:
+                        bool_mapping = {"false": False, "true": True}
+                        value = bool_mapping.get(value.lower(), value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
