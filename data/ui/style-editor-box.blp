@@ -162,10 +162,6 @@ template $GraphsStyleEditorBox: Box {
     Adw.SwitchRow draw_frame {
       title: _("Draw Frame");
     }
-
-    Adw.SwitchRow tick_labels {
-      title: _("Show Tick Labels on all Axes");
-    }
   }
 
   Adw.PreferencesGroup {
@@ -246,6 +242,10 @@ template $GraphsStyleEditorBox: Box {
           upper: 20;
         };
       }
+    }
+
+    Adw.SwitchRow tick_labels {
+      title: _("Show Tick Labels on all Axes");
     }
 
     Adw.SwitchRow tick_bottom {
