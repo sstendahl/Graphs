@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-27 16:37+0000\n"
-"PO-Revision-Date: 2025-09-27 20:23+0300\n"
+"POT-Creation-Date: 2025-09-28 14:32+0000\n"
+"PO-Revision-Date: 2025-09-28 18:03+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -376,7 +376,7 @@ msgid "Marker Size"
 msgstr "Розмір позначки"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:182
+#: data/ui/curve-fitting.blp:65 graphs/item.py:191
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -598,7 +598,7 @@ msgid "Labels"
 msgstr "Мітки"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor.py:476
+#: graphs/style_editor.py:488
 msgid "Title"
 msgstr "Заголовок"
 
@@ -1308,116 +1308,120 @@ msgid "Minor Tick Length"
 msgstr "Довжина додаткових поділок"
 
 #: data/ui/style-editor-box.blp:248
+msgid "Show Tick Labels on all Axes"
+msgstr "Показувати мітки поділок на усіх вісях"
+
+#: data/ui/style-editor-box.blp:252
 msgid "Ticks on Bottom Axis"
 msgstr "Поділки на нижній вісі"
 
-#: data/ui/style-editor-box.blp:252
+#: data/ui/style-editor-box.blp:256
 msgid "Ticks on Left Axis"
 msgstr "Поділки на лівій вісі"
 
-#: data/ui/style-editor-box.blp:256
+#: data/ui/style-editor-box.blp:260
 msgid "Ticks on Right Axis"
 msgstr "Поділки на правій вісі"
 
-#: data/ui/style-editor-box.blp:260
+#: data/ui/style-editor-box.blp:264
 msgid "Ticks on Top Axis"
 msgstr "Поділки на верхній вісі"
 
-#: data/ui/style-editor-box.blp:265
+#: data/ui/style-editor-box.blp:269
 msgid "Grid"
 msgstr "Ґратка"
 
-#: data/ui/style-editor-box.blp:268
+#: data/ui/style-editor-box.blp:272
 msgid "Show Grid"
 msgstr "Показати ґратку"
 
-#: data/ui/style-editor-box.blp:272
+#: data/ui/style-editor-box.blp:276
 msgid "Grid Width"
 msgstr "Товщина ґратки"
 
-#: data/ui/style-editor-box.blp:288
+#: data/ui/style-editor-box.blp:292
 msgid "Grid Opacity"
 msgstr "Непрозорість ґратки"
 
-#: data/ui/style-editor-box.blp:305
+#: data/ui/style-editor-box.blp:309
 msgid "Padding"
 msgstr "Фаска"
 
-#: data/ui/style-editor-box.blp:306
+#: data/ui/style-editor-box.blp:310
 msgid "Padding for different parts of the figure"
 msgstr "Інтервал між різними частинами рисунка"
 
-#: data/ui/style-editor-box.blp:309
+#: data/ui/style-editor-box.blp:313
 msgid "Value Padding"
 msgstr "Інтервал значень"
 
-#: data/ui/style-editor-box.blp:310
+#: data/ui/style-editor-box.blp:314
 msgid "Padding between axes and values"
 msgstr "Інтервал між осями і значеннями"
 
-#: data/ui/style-editor-box.blp:325
+#: data/ui/style-editor-box.blp:329
 msgid "Label Padding"
 msgstr "Інтервал міток"
 
-#: data/ui/style-editor-box.blp:326
+#: data/ui/style-editor-box.blp:330
 msgid "Padding between axes and labels"
 msgstr "Інтервал між осями і мітками"
 
-#: data/ui/style-editor-box.blp:341
+#: data/ui/style-editor-box.blp:345
 msgid "Title Padding"
 msgstr "Інтервал заголовка"
 
-#: data/ui/style-editor-box.blp:342
+#: data/ui/style-editor-box.blp:346
 msgid "Padding between axes and the title"
 msgstr "Інтервал між осями та заголовком"
 
-#: data/ui/style-editor-box.blp:358
+#: data/ui/style-editor-box.blp:362
 msgid "Colors"
 msgstr "Кольори"
 
-#: data/ui/style-editor-box.blp:362
+#: data/ui/style-editor-box.blp:366
 msgid "Label text might be hard to read"
 msgstr "Текст мітки може бути складним для читання"
 
-#: data/ui/style-editor-box.blp:374
+#: data/ui/style-editor-box.blp:378
 msgid "Poor Contrast"
 msgstr "Погана контрастність"
 
-#: data/ui/style-editor-box.blp:389
+#: data/ui/style-editor-box.blp:393
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: data/ui/style-editor-box.blp:394 data/ui/style-editor-box.blp:421
-#: data/ui/style-editor-box.blp:448 data/ui/style-editor-box.blp:475
-#: data/ui/style-editor-box.blp:502 data/ui/style-editor-box.blp:529
+#: data/ui/style-editor-box.blp:398 data/ui/style-editor-box.blp:425
+#: data/ui/style-editor-box.blp:452 data/ui/style-editor-box.blp:479
+#: data/ui/style-editor-box.blp:506 data/ui/style-editor-box.blp:533
 msgid "Change Color"
 msgstr "Змінити колір"
 
-#: data/ui/style-editor-box.blp:416
+#: data/ui/style-editor-box.blp:420
 msgid "Tick Color"
 msgstr "Колір поділок"
 
-#: data/ui/style-editor-box.blp:443
+#: data/ui/style-editor-box.blp:447
 msgid "Axis Color"
 msgstr "Колір осей"
 
-#: data/ui/style-editor-box.blp:470
+#: data/ui/style-editor-box.blp:474
 msgid "Grid Color"
 msgstr "Колір сітки"
 
-#: data/ui/style-editor-box.blp:497
+#: data/ui/style-editor-box.blp:501
 msgid "Background Color"
 msgstr "Колір тла"
 
-#: data/ui/style-editor-box.blp:524
+#: data/ui/style-editor-box.blp:528
 msgid "Outline Color"
 msgstr "Колір контуру"
 
-#: data/ui/style-editor-box.blp:547
+#: data/ui/style-editor-box.blp:551
 msgid "Line Colors"
 msgstr "Кольори ліній"
 
-#: data/ui/style-editor-box.blp:559
+#: data/ui/style-editor-box.blp:563
 msgid "Add Color"
 msgstr "Додати колір"
 
@@ -1883,19 +1887,19 @@ msgstr "Сума R²: {R2}"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "Не вдалося обробити стиль {stylename}, завантажуємо пріоритетний стиль "
 "системи"
 
-#: graphs/data.py:102
+#: graphs/data.py:106
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стилю {stylename} не існує. Завантажуємо пріоритетний системний стиль"
 
-#: graphs/data.py:554
+#: graphs/data.py:559
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -1917,19 +1921,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
 
-#: graphs/item.py:69
+#: graphs/item.py:78
 msgid "Dataset"
 msgstr "Набір даних"
 
-#: graphs/item.py:112
+#: graphs/item.py:121
 msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
-#: graphs/item.py:230
+#: graphs/item.py:239
 msgid "Label"
 msgstr "Мітка"
 
-#: graphs/item.py:266
+#: graphs/item.py:275
 msgid "Fill"
 msgstr "Заповнення"
 
@@ -2008,20 +2012,18 @@ msgid "Project"
 msgstr "Проєкт"
 
 #: graphs/python_helper.vala:48
-#| msgctxt "shortcut window"
-#| msgid "Export Data"
 msgid "Exported Data"
 msgstr "Експортовані дані"
 
-#: graphs/style_editor.py:444
+#: graphs/style_editor.py:453
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor.py:477 graphs/style_io.py:181
+#: graphs/style_editor.py:489 graphs/style_io.py:232
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor.py:478 graphs/style_io.py:182
+#: graphs/style_editor.py:490 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Мітка Y"
 
@@ -2036,37 +2038,47 @@ msgstr "Редактор стилю графіка – %s"
 msgid "Color %d"
 msgstr "Колір %d"
 
-#: graphs/style_io.py:76
+#: graphs/style_io.py:101
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Пропущено двокрапку у файлі {file}, рядок {line}"
 
-#: graphs/style_io.py:84
+#: graphs/style_io.py:109
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Непов'язаний із стилем параметр {param} у файлі {file}"
 
-#: graphs/style_io.py:87
+#: graphs/style_io.py:112
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Ігноруємо параметр {param} у файлі {file}"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Дублювання ключа у файлі {file}, рядок {line}"
 
-#: graphs/style_io.py:111
+#: graphs/style_io.py:134
+#, python-brace-format
+#| msgid "Bad value in file {file} on line {line}"
+msgid ""
+"Bad value in file {file} on line {line}, custom parameter {key} is not "
+"supported"
+msgstr ""
+"Помилкове значення у файлі {file}, рядок {line}, підтримки нетипового"
+" параметра {key} не передбачено"
+
+#: graphs/style_io.py:152
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Помилкове значення у файлі {file}, рядок {line}"
 
-#: graphs/style_io.py:116
+#: graphs/style_io.py:157
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Не вдалося обробити {filename}"
 
-#: graphs/style_io.py:125
+#: graphs/style_io.py:167
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "У файлі {file} не міститься теґу name"
