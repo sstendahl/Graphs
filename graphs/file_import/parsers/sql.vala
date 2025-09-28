@@ -5,34 +5,91 @@ using GLib;
 using Sqlite;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/mode-sql.ui")]
-    public class SqlGroup : Adw.PreferencesGroup {
-        [GtkChild]
-        public unowned Adw.ComboRow table_row { get; }
-        [GtkChild]
-        public unowned Adw.ComboRow column_x { get; }
-        [GtkChild]
-        public unowned Adw.ComboRow column_y { get; }
+    /**
+     * Settings object to store selected table and columns
+     */
+    public class SqlSelection : GLib.Object {
+        public string table_name { get; set; }
+        public string x_column { get; set; }
+        public string y_column { get; set; }
 
+        public SqlSelection (string table, string x_col, string y_col) {
+            this.table_name = table;
+            this.x_column = x_col;
+            this.y_column = y_col;
+        }
+    }
 
+    /**
+     * Database reader class that handles all database operations
+     */
+    public class DatabaseReader : GLib.Object {
         private Sqlite.Database db;
         private string filename;
         private string[] table_names;
 
-        public SqlGroup (GLib.File file) throws IOError {
+        public DatabaseReader (GLib.File file) throws IOError {
             this.filename = file.get_basename ();
             string file_path = file.get_path ();
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
-                this.table_row.add_css_class ("error");
                 throw new IOError.FAILED (
-                    "Failed to to open SQL Database: %s".printf (db.errmsg ())
+                    "Failed to open SQL Database: %s".printf (db.errmsg ())
                 );
             }
             this.table_names = get_table_names ();
-            var table_model = new StringList (table_names);
-            table_row.set_model (table_model);
-            table_row.notify["selected"].connect (update_columns);
-            update_columns ();
+        }
+
+        public string[] get_tables () {
+            return this.table_names;
+        }
+
+        public string[] get_columns (string table_name) throws IOError {
+            var columns = new Array<string> ();
+            Sqlite.Statement stmt;
+
+            string sql = "PRAGMA table_info(`%s`)".printf (table_name);
+            if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
+                throw new IOError.FAILED (
+                    "Failed to retrieve SQL Column names: %s".printf (db.errmsg ())
+                );
+            }
+            while (stmt.step () == Sqlite.ROW) {
+                columns.append_val (stmt.column_text (1));
+            }
+            return columns.data;
+        }
+
+        public SqlSelection get_default_selection () throws IOError {
+            if (table_names.length == 0) {
+                throw new IOError.FAILED ("No tables found in database");
+            }
+
+            string first_table = table_names[0];
+            string[] columns = get_columns (first_table);
+
+            if (columns.length == 0) {
+                throw new IOError.FAILED ("Table has no columns");
+            }
+            return new SqlSelection (first_table, columns[0], columns[0]);
+        }
+
+        public double[] get_column_data (string table_name, string column_name) throws IOError {
+            var data = new Array<double> ();
+            Sqlite.Statement stmt;
+            string sql = "SELECT `%s` FROM `%s`".printf (column_name, table_name);
+
+            if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
+                throw new IOError.FAILED (
+                    "Failed to prepare SQL statement: %s".printf (db.errmsg ())
+                );
+            }
+
+            while (stmt.step () == Sqlite.ROW) {
+                double val = stmt.column_double (0);
+                data.append_val (val);
+            }
+
+            return data.data;
         }
 
         private string[] get_table_names () throws IOError {
@@ -49,88 +106,78 @@ namespace Graphs {
             }
             return names.data;
         }
-
-        private void update_columns () {
-            var selected_item = table_row.get_selected_item () as StringObject;
-            if (selected_item == null) return;
-
-            string table_name = selected_item.get_string ();
-            string[] columns = get_column_names (table_name);
-
-            var column_model = new StringList (columns);
-            column_x.set_model (column_model);
-            column_y.set_model (column_model);
-        }
-
-        private string[] get_column_names (string table_name) throws IOError {
-            var columns = new Array<string> ();
-            Sqlite.Statement stmt;
-
-            string sql = "PRAGMA table_info(`%s`)".printf (table_name);
-            if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
-                throw new IOError.FAILED (
-                    "Failed to retrieve SQL Column names names: %s".printf (db.errmsg ())
-                );
-            }
-            while (stmt.step () == Sqlite.ROW) {
-                columns.append_val (stmt.column_text (1));
-            }
-            return columns.data;
-        }
-
-        public DataSet get_selected_data () {
-            var table_item = table_row.get_selected_item () as StringObject;
-            var x_item = column_x.get_selected_item () as StringObject;
-            var y_item = column_y.get_selected_item () as StringObject;
-
-            string table_name = table_item.get_string ();
-            string x_column = x_item.get_string ();
-            string y_column = y_item.get_string ();
-
-            return load_data (table_name, x_column, y_column);
-        }
-
-        private DataSet load_data (string table, string x_col, string y_col) throws IOError {
-            var x_data = new Array<double> ();
-            var y_data = new Array<double> ();
-
-            Sqlite.Statement stmt;
-            string sql = "SELECT `%s`, `%s` FROM `%s`".printf (x_col, y_col, table);
-
-            if (db.prepare_v2 (sql, -1, out stmt) != Sqlite.OK) {
-                throw new IOError.FAILED (
-                    "Failed to prepare SQL statement: %s".printf (db.errmsg ())
-                );
-            }
-
-            while (stmt.step () == Sqlite.ROW) {
-                double x_val = stmt.column_double (0);
-                double y_val = stmt.column_double (1);
-
-                x_data.append_val (x_val);
-                y_data.append_val (y_val);
-            }
-
-            return DataSet () {
-                name = this.filename,
-                table_name = table,
-                x_column_name = x_col,
-                y_column_name = y_col,
-                xdata = x_data.data,
-                ydata = y_data.data
-            };
-        }
     }
 
     /**
-     * Data container for the selected table and columns.
+     * UI Widget for SQL file import
      */
-    public struct DataSet {
-        public string name;
-        public string table_name;
-        public string x_column_name;
-        public string y_column_name;
-        public double[] xdata;
-        public double[] ydata;
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/mode-sql.ui")]
+    public class SqlGroup : Adw.PreferencesGroup {
+        [GtkChild]
+        public unowned Adw.ComboRow table_row { get; }
+        [GtkChild]
+        public unowned Adw.ComboRow column_x { get; }
+        [GtkChild]
+        public unowned Adw.ComboRow column_y { get; }
+
+        private DatabaseReader db_reader;
+        private SqlSelection selection;
+
+        public SqlGroup (DatabaseReader reader, SqlSelection initial_selection) throws IOError {
+            this.db_reader = reader;
+            this.selection = initial_selection;
+            setup_ui ();
+        }
+
+        private void setup_ui () throws IOError {
+            string[] tables = db_reader.get_tables ();
+            var table_model = new StringList (tables);
+            table_row.set_model (table_model);
+
+            for (int i = 0; i < tables.length; i++) {
+                if (tables[i] == selection.table_name) {
+                    table_row.set_selected (i);
+                    break;
+                }
+            }
+
+            table_row.notify["selected"].connect (on_table_changed);
+            column_x.notify["selected"].connect (on_column_changed);
+            column_y.notify["selected"].connect (on_column_changed);
+
+            update_columns ();
+        }
+
+        private void on_table_changed () {
+            var selected_item = table_row.get_selected_item () as StringObject;
+            if (selected_item == null) return;
+
+            selection.table_name = selected_item.get_string ();
+            update_columns ();
+        }
+
+        private void on_column_changed () {
+            var x_item = column_x.get_selected_item () as StringObject;
+            var y_item = column_y.get_selected_item () as StringObject;
+
+            if (x_item != null) selection.x_column = x_item.get_string ();
+            if (y_item != null) selection.y_column = y_item.get_string ();
+        }
+
+        private void update_columns () {
+            string[] columns = db_reader.get_columns (selection.table_name);
+            var column_model = new StringList (columns);
+            column_x.set_model (column_model);
+            column_y.set_model (column_model);
+
+            for (int i = 0; i < columns.length; i++) {
+                if (columns[i] == selection.x_column) {
+                    column_x.set_selected (i);
+                }
+                if (columns[i] == selection.y_column) {
+                    column_y.set_selected (i);
+                }
+            }
+        }
     }
 }
