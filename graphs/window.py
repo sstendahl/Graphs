@@ -40,11 +40,8 @@ class PythonWindow(Graphs.Window):
             old_style = data.get_old_selected_style_params()
             new_style = data.get_selected_style_params()
 
-            # Combine rcparams and graphs_params into single dict:
-            old_style = old_style[0] | old_style[1]
-            new_style = new_style[0] | new_style[1]
-            old_cycle = old_style["axes.prop_cycle"].by_key()["color"]
-            new_cycle = new_style["axes.prop_cycle"].by_key()["color"]
+            old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
+            new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
             for item_ in data:
                 item_.reset(old_style, new_style)
             count = 0

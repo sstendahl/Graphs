@@ -65,10 +65,10 @@ def parse(file: Gio.File,
                         defaults: dict, filename) -> None:
         for key, value in defaults.items():
             if key not in target_dict:
-                msg = _("Parameter {key} not found in {filename}, using"
-                        " default value: {value}")
-                logging.warning(msg.format(key=key, filename=filename,
-                                value=value))
+                msg = ("Parameter {key} not found in {filename}, using"
+                       " default value: {value}")
+                logging.debug(msg.format(key=key, filename=filename,
+                              value=value))
                 target_dict[key] = value
 
     style = RcParams()
