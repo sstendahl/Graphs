@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-27 17:23+0000\n"
-"PO-Revision-Date: 2025-09-28 07:52+0800\n"
+"POT-Creation-Date: 2025-09-28 16:39+0000\n"
+"PO-Revision-Date: 2025-09-29 07:42+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -356,7 +356,7 @@ msgid "Marker Size"
 msgstr "标记大小"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:182
+#: data/ui/curve-fitting.blp:65 graphs/item.py:191
 msgid "Equation"
 msgstr "方程式"
 
@@ -578,7 +578,7 @@ msgid "Labels"
 msgstr "标签"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor.py:476
+#: graphs/style_editor.py:488
 msgid "Title"
 msgstr "标题"
 
@@ -1283,116 +1283,120 @@ msgid "Minor Tick Length"
 msgstr "次级刻度长度"
 
 #: data/ui/style-editor-box.blp:248
+msgid "Show Tick Labels on all Axes"
+msgstr "在所有坐标轴上显示刻度标签"
+
+#: data/ui/style-editor-box.blp:252
 msgid "Ticks on Bottom Axis"
 msgstr "底部坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:252
+#: data/ui/style-editor-box.blp:256
 msgid "Ticks on Left Axis"
 msgstr "左侧坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:256
+#: data/ui/style-editor-box.blp:260
 msgid "Ticks on Right Axis"
 msgstr "右侧坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:260
+#: data/ui/style-editor-box.blp:264
 msgid "Ticks on Top Axis"
 msgstr "顶部坐标轴刻度"
 
-#: data/ui/style-editor-box.blp:265
+#: data/ui/style-editor-box.blp:269
 msgid "Grid"
 msgstr "网格"
 
-#: data/ui/style-editor-box.blp:268
+#: data/ui/style-editor-box.blp:272
 msgid "Show Grid"
 msgstr "显示网格"
 
-#: data/ui/style-editor-box.blp:272
+#: data/ui/style-editor-box.blp:276
 msgid "Grid Width"
 msgstr "网格宽度"
 
-#: data/ui/style-editor-box.blp:288
+#: data/ui/style-editor-box.blp:292
 msgid "Grid Opacity"
 msgstr "网格不透明度"
 
-#: data/ui/style-editor-box.blp:305
+#: data/ui/style-editor-box.blp:309
 msgid "Padding"
 msgstr "衬垫"
 
-#: data/ui/style-editor-box.blp:306
+#: data/ui/style-editor-box.blp:310
 msgid "Padding for different parts of the figure"
 msgstr "用于图表不同部分的衬垫"
 
-#: data/ui/style-editor-box.blp:309
+#: data/ui/style-editor-box.blp:313
 msgid "Value Padding"
 msgstr "数值衬垫"
 
-#: data/ui/style-editor-box.blp:310
+#: data/ui/style-editor-box.blp:314
 msgid "Padding between axes and values"
 msgstr "坐标轴和数值之间的衬垫"
 
-#: data/ui/style-editor-box.blp:325
+#: data/ui/style-editor-box.blp:329
 msgid "Label Padding"
 msgstr "标签衬垫"
 
-#: data/ui/style-editor-box.blp:326
+#: data/ui/style-editor-box.blp:330
 msgid "Padding between axes and labels"
 msgstr "坐标轴和标签之间的衬垫"
 
-#: data/ui/style-editor-box.blp:341
+#: data/ui/style-editor-box.blp:345
 msgid "Title Padding"
 msgstr "标题衬垫"
 
-#: data/ui/style-editor-box.blp:342
+#: data/ui/style-editor-box.blp:346
 msgid "Padding between axes and the title"
 msgstr "坐标轴和标题之间的衬垫"
 
-#: data/ui/style-editor-box.blp:358
+#: data/ui/style-editor-box.blp:362
 msgid "Colors"
 msgstr "颜色"
 
-#: data/ui/style-editor-box.blp:362
+#: data/ui/style-editor-box.blp:366
 msgid "Label text might be hard to read"
 msgstr "标签文本可能较难阅读"
 
-#: data/ui/style-editor-box.blp:374
+#: data/ui/style-editor-box.blp:378
 msgid "Poor Contrast"
 msgstr "对比度过低"
 
-#: data/ui/style-editor-box.blp:389
+#: data/ui/style-editor-box.blp:393
 msgid "Text Color"
 msgstr "文本颜色"
 
-#: data/ui/style-editor-box.blp:394 data/ui/style-editor-box.blp:421
-#: data/ui/style-editor-box.blp:448 data/ui/style-editor-box.blp:475
-#: data/ui/style-editor-box.blp:502 data/ui/style-editor-box.blp:529
+#: data/ui/style-editor-box.blp:398 data/ui/style-editor-box.blp:425
+#: data/ui/style-editor-box.blp:452 data/ui/style-editor-box.blp:479
+#: data/ui/style-editor-box.blp:506 data/ui/style-editor-box.blp:533
 msgid "Change Color"
 msgstr "更改颜色"
 
-#: data/ui/style-editor-box.blp:416
+#: data/ui/style-editor-box.blp:420
 msgid "Tick Color"
 msgstr "刻度颜色"
 
-#: data/ui/style-editor-box.blp:443
+#: data/ui/style-editor-box.blp:447
 msgid "Axis Color"
 msgstr "坐标轴颜色"
 
-#: data/ui/style-editor-box.blp:470
+#: data/ui/style-editor-box.blp:474
 msgid "Grid Color"
 msgstr "网格颜色"
 
-#: data/ui/style-editor-box.blp:497
+#: data/ui/style-editor-box.blp:501
 msgid "Background Color"
 msgstr "背景颜色"
 
-#: data/ui/style-editor-box.blp:524
+#: data/ui/style-editor-box.blp:528
 msgid "Outline Color"
 msgstr "轮廓颜色"
 
-#: data/ui/style-editor-box.blp:547
+#: data/ui/style-editor-box.blp:551
 msgid "Line Colors"
 msgstr "线条颜色"
 
-#: data/ui/style-editor-box.blp:559
+#: data/ui/style-editor-box.blp:563
 msgid "Add Color"
 msgstr "添加颜色"
 
@@ -1860,17 +1864,17 @@ msgstr "R² 的总和：{R2}"
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:97
+#: graphs/data.py:101
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "无法解析样式 {stylename}，加载系统首选样式"
 
-#: graphs/data.py:102
+#: graphs/data.py:106
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:554
+#: graphs/data.py:559
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -1892,19 +1896,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "文本文件"
 
-#: graphs/item.py:69
+#: graphs/item.py:78
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.py:112
+#: graphs/item.py:121
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.py:230
+#: graphs/item.py:239
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.py:266
+#: graphs/item.py:275
 msgid "Fill"
 msgstr "填充"
 
@@ -1983,15 +1987,15 @@ msgstr "工程"
 msgid "Exported Data"
 msgstr "已导出数据"
 
-#: graphs/style_editor.py:444
+#: graphs/style_editor.py:453
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor.py:477 graphs/style_io.py:181
+#: graphs/style_editor.py:489 graphs/style_io.py:232
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor.py:478 graphs/style_io.py:182
+#: graphs/style_editor.py:490 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -2006,37 +2010,44 @@ msgstr "Graphs 样式编辑器 — %s"
 msgid "Color %d"
 msgstr "颜色 %d"
 
-#: graphs/style_io.py:76
+#: graphs/style_io.py:101
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "文件 {file} 第 {line} 行缺少冒号"
 
-#: graphs/style_io.py:84
+#: graphs/style_io.py:109
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "文件 {file} 中与样式无关的参数 {param}"
 
-#: graphs/style_io.py:87
+#: graphs/style_io.py:112
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "忽略文件 {file} 中的参数 {param}"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "文件 {file} 中第 {line} 行的键重复"
 
-#: graphs/style_io.py:111
+#: graphs/style_io.py:134
+#, python-brace-format
+msgid ""
+"Bad value in file {file} on line {line}, custom parameter {key} is not "
+"supported"
+msgstr "文件 {file} 第 {line} 行的错误值，不支持自定义参数 {key}"
+
+#: graphs/style_io.py:152
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "文件 {file} 第 {line} 行的错误值"
 
-#: graphs/style_io.py:116
+#: graphs/style_io.py:157
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "无法解析 {filename}"
 
-#: graphs/style_io.py:125
+#: graphs/style_io.py:167
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
