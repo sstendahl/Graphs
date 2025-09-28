@@ -153,7 +153,11 @@ namespace Graphs {
             if (selected_item == null) return;
 
             selection.table_name = selected_item.get_string ();
-            update_columns ();
+            try {
+                update_columns ();
+            } catch (IOError e) {
+                warning ("Could not update columns: %s", e.message);
+            }
         }
 
         private void on_column_changed () {
@@ -164,7 +168,7 @@ namespace Graphs {
             if (y_item != null) selection.y_column = y_item.get_string ();
         }
 
-        private void update_columns () {
+        private void update_columns () throws IOError {
             string[] columns = db_reader.get_columns (selection.table_name);
             var column_model = new StringList (columns);
             column_x.set_model (column_model);

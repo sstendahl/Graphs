@@ -34,8 +34,8 @@ class DataImporter(Graphs.DataImporter):
 
         # Order determines UI order
         parsers.register_parser(columns.ColumnsParser())
-        parsers.register_parser(sql.SqlParser())
         parsers.register_parser(project.ProjectParser())
+        parsers.register_parser(sql.SqlParser())
         parsers.register_parser(xrdml.XrdmlParser())
         parsers.register_parser(xry.XryParser())
 

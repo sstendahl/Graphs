@@ -74,12 +74,13 @@ namespace Graphs {
             }
 
             importer.append_settings_widgets (current_settings, file_settings_box);
-            default_group.set_visible (file_settings_box.get_last_child () != null);
-            remove_group.set_visible (settings_list.get_n_items () > 1);
-
-            if (current_settings.mode == 1) {
+            if (current_settings.has_schema () == true) {
+                default_group.set_visible (file_settings_box.get_last_child () != null);
+            }
+            else {
                 default_group.set_visible (false);
             }
+            remove_group.set_visible (settings_list.get_n_items () > 1);
         }
 
         [GtkCallback]
