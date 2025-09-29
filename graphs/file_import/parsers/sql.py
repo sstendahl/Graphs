@@ -71,5 +71,7 @@ class SqlParser(Parser):
                               ) -> None:
         """Append SQL-specific settings widgets."""
         db_reader = settings.get_item("db-reader")
+        if not db_reader:
+            return
         sql_group = Graphs.SqlGroup.new(db_reader)
         box.append(sql_group)
