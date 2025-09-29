@@ -38,6 +38,8 @@ graphs/file_import/parsers/__init__.py
 graphs/file_import/parsers/columns.vala
 graphs/file_import/parsers/columns.py
 graphs/file_import/parsers/project.py
+graphs/file_import/parsers/sql.py
+graphs/file_import/parsers/vala.py
 graphs/file_import/parsers/xrdml.py
 graphs/file_import/parsers/xry.py
 graphs/file_import/__init__.py

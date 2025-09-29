@@ -123,7 +123,7 @@ namespace Graphs {
         public string filename { get; construct set; }
         public uint mode { get; set; }
         public string mode_name { get; set; }
-        private bool schema_exists = false;
+        public bool has_schema { get; private set; default = false; }
 
         public signal void value_changed (string key, Variant val);
 
@@ -145,12 +145,8 @@ namespace Graphs {
             return items.@get (key);
         }
 
-        public bool has_schema () {
-            return schema_exists;
-        }
-
         public void load_from_settings (GLib.Settings default_settings) {
-            schema_exists = default_settings.settings_schema.list_keys ().length > 0;
+            has_schema = default_settings.settings_schema.list_keys ().length > 0;
             foreach (string key in default_settings.settings_schema.list_keys ()) {
                 set_value (key, default_settings.get_value (key));
             }

@@ -31,11 +31,11 @@ class SqlParser(Parser):
               style: Tuple[RcParams, dict],
               ) -> misc.ItemList:
         """Import data from sqlite database file."""
-        db_reader = settings.get_item("db_reader")
-        table_name = settings.get_string("table_name")
+        db_reader = settings.get_item("db-reader")
+        table_name = settings.get_string("table-name")
         if db_reader.get_numeric_columns(table_name):
-            x_column = settings.get_string("x_column")
-            y_column = settings.get_string("y_column")
+            x_column = settings.get_string("x-column")
+            y_column = settings.get_string("y-column")
         else:
             msg = _('Could not import data from table "{table_name}", no'
                     " numeric columns were found")
@@ -63,13 +63,13 @@ class SqlParser(Parser):
         """Init settings with default table and column selection."""
         db_reader = Graphs.DatabaseReader.new(settings)
         db_reader.set_default_selection()
-        settings.set_item("db_reader", db_reader)
+        settings.set_item("db-reader", db_reader)
 
     @staticmethod
     def init_settings_widgets(settings: Graphs.ImportSettings,
                               box: Gtk.Box,
                               ) -> None:
         """Append SQL-specific settings widgets."""
-        db_reader = settings.get_item("db_reader")
+        db_reader = settings.get_item("db-reader")
         sql_group = Graphs.SqlGroup.new(db_reader)
         box.append(sql_group)
