@@ -152,7 +152,7 @@ namespace Graphs {
 
         private void setup_ui () throws IOError {
             string[] tables = db_reader.table_names;
-            string table_name = settings.get_string("table-name");
+            string table_name = settings.get_string ("table-name");
             var table_model = new StringList (tables);
             table_row.set_model (table_model);
             for (int i = 0; i < tables.length; i++) {
@@ -171,7 +171,7 @@ namespace Graphs {
             var selected_item = table_row.get_selected_item () as StringObject;
             if (selected_item == null) return;
 
-            settings.set_string("table-name", selected_item.get_string ());
+            settings.set_string ("table-name", selected_item.get_string ());
             try {
                 update_columns ();
             } catch (IOError e) {
@@ -186,14 +186,14 @@ namespace Graphs {
             var selected_y = column_y.get_selected_item () as StringObject;
 
             if (selected_x == null || selected_y == null) return;
-            settings.set_string("x-column", selected_x.get_string ());
-            settings.set_string("y-column", selected_y.get_string ());
+            settings.set_string ("x-column", selected_x.get_string ());
+            settings.set_string ("y-column", selected_y.get_string ());
         }
 
         private void update_columns () throws IOError {
-            string x_column = settings.get_string("x-column");
-            string y_column = settings.get_string("y-column");
-            string table_name = settings.get_string("table-name");
+            string x_column = settings.get_string ("x-column");
+            string y_column = settings.get_string ("y-column");
+            string table_name = settings.get_string ("table-name");
             string[] columns = db_reader.get_numeric_columns (table_name);
 
             if (columns.length == 0) {
