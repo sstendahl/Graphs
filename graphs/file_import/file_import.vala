@@ -128,6 +128,7 @@ namespace Graphs {
         public signal void value_changed (string key, Variant val);
 
         private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
+        private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
 
         public ImportSettings (File file) {
             Object (
@@ -136,9 +137,14 @@ namespace Graphs {
             );
         }
 
-        /**
-         * Check whether the ImportSettings has an associated settings schema
-         */
+        public void set_item (string key, GLib.Object item) {
+            items.@set (key, item);
+        }
+
+        public GLib.Object get_item (string key) {
+            return items.@get (key);
+        }
+
         public bool has_schema () {
             return schema_exists;
         }

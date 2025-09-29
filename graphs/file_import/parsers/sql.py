@@ -32,7 +32,7 @@ class SqlParser(Parser):
               style: Tuple[RcParams, dict],
               ) -> misc.ItemList:
         """Import data from sqlite database file."""
-        db_reader = Graphs.DatabaseReader.new(settings)
+        db_reader = settings.get_item("db_reader")
         table_name = settings.get_string("table_name")
         if db_reader.get_numeric_columns(table_name):
             x_column = settings.get_string("x_column")
@@ -48,6 +48,8 @@ class SqlParser(Parser):
         filename = Path(settings.get_file().get_basename()).stem
         item_name = f"{filename} - {table_name}"
         item_ = item.DataItem.new(style, name=item_name)
+        item_.set_xlabel(x_column)
+        item_.set_ylabel(y_column)
 
         for x_val, y_val in zip(xdata, ydata):
             item_.xdata.append(x_val)
@@ -63,12 +65,13 @@ class SqlParser(Parser):
         """Init settings with default table and column selection."""
         db_reader = Graphs.DatabaseReader.new(settings)
         db_reader.set_default_selection()
+        settings.set_item("db_reader", db_reader)
 
     @staticmethod
     def init_settings_widgets(settings: Graphs.ImportSettings,
                               box: Gtk.Box,
                               ) -> None:
         """Append SQL-specific settings widgets."""
-        db_reader = Graphs.DatabaseReader.new(settings)
+        db_reader = settings.get_item("db_reader")
         sql_group = Graphs.SqlGroup.new(db_reader)
         box.append(sql_group)
