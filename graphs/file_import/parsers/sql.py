@@ -39,7 +39,7 @@ class SqlParser(Parser):
             y_column = settings.get_string("y_column")
         else:
             msg = _('Could not import data from table "{table_name}", no'
-                    " numeric columns were found.")
+                    " numeric columns were found")
             msg = msg.format(table_name=table_name)
             raise ParseError(msg)
 

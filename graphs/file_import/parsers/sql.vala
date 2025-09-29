@@ -11,8 +11,8 @@ namespace Graphs {
     public class DatabaseReader : GLib.Object {
         private Sqlite.Database db;
         private string filename;
-        private string[] table_names;
-        private ImportSettings settings;
+        public string[] table_names;
+        public ImportSettings settings { get; set; }
 
         public DatabaseReader (ImportSettings settings) throws IOError {
             this.settings = settings;
@@ -25,14 +25,6 @@ namespace Graphs {
                 );
             }
             this.table_names = get_table_names ();
-        }
-
-        public ImportSettings get_settings () {
-            return settings;
-        }
-
-        public string[] get_tables () {
-            return table_names;
         }
 
         public string[] get_columns (string table_name) throws IOError {
@@ -152,7 +144,7 @@ namespace Graphs {
 
         public SqlGroup (DatabaseReader reader) throws IOError {
             this.db_reader = reader;
-            this.settings = db_reader.get_settings ();
+            this.settings = db_reader.settings;
             setup_ui ();
         }
 
@@ -170,7 +162,7 @@ namespace Graphs {
         }
 
         private void setup_ui () throws IOError {
-            string[] tables = db_reader.get_tables ();
+            string[] tables = db_reader.table_names;
             var table_model = new StringList (tables);
             table_row.set_model (table_model);
             for (int i = 0; i < tables.length; i++) {
