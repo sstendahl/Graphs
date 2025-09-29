@@ -16,9 +16,8 @@ namespace Graphs {
 
         public DatabaseReader (ImportSettings settings) throws IOError {
             this.settings = settings;
-            GLib.File file = settings.file;
             this.filename = settings.file.get_basename ();
-            string file_path = file.get_path ();
+            string file_path = settings.file.get_path ();
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
                 throw new IOError.FAILED (
                     "Failed to open SQL Database: %s".printf (db.errmsg ())
@@ -232,25 +231,24 @@ namespace Graphs {
                 no_numeric_warning.visible = false;
                 column_x.sensitive = true;
                 column_y.sensitive = true;
+            }
+            var column_model = new StringList (columns);
+            column_x.set_model (column_model);
+            column_y.set_model (column_model);
+            bool found_x = false;
+            bool found_y = false;
 
-                var column_model = new StringList (columns);
-                column_x.set_model (column_model);
-                column_y.set_model (column_model);
-                bool found_x = false;
-                bool found_y = false;
-
-                for (int i = 0; i < columns.length; i++) {
-                    if (columns[i] == x_column) {
-                        column_x.set_selected (i);
-                        found_x = true;
-                    }
-                    if (columns[i] == y_column) {
-                        column_y.set_selected (i);
-                        found_y = true;
-                    }
-                    if (found_x && found_y) {
-                        break;
-                    }
+            for (int i = 0; i < columns.length; i++) {
+                if (columns[i] == x_column) {
+                    column_x.set_selected (i);
+                    found_x = true;
+                }
+                if (columns[i] == y_column) {
+                    column_y.set_selected (i);
+                    found_y = true;
+                }
+                if (found_x && found_y) {
+                    break;
                 }
             }
         }
