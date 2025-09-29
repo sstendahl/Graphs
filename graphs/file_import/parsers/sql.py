@@ -70,8 +70,7 @@ class SqlParser(Parser):
                               box: Gtk.Box,
                               ) -> None:
         """Append SQL-specific settings widgets."""
-        db_reader = settings.get_item("db-reader")
-        if not db_reader:
+        if not settings.get_item("db-reader"):
             return
-        sql_group = Graphs.SqlGroup.new(db_reader)
+        sql_group = Graphs.SqlGroup.new(settings)
         box.append(sql_group)

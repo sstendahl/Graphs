@@ -143,8 +143,8 @@ namespace Graphs {
         private ImportSettings settings;
         private bool is_initial_setup = true;
 
-        public SqlGroup (DatabaseReader reader) throws IOError {
-            this.db_reader = reader;
+        public SqlGroup (ImportSettings settings) throws IOError {
+            this.db_reader = settings.get_item ("db-reader") as Graphs.DatabaseReader;
             this.settings = db_reader.settings;
 
             setup_ui ();
