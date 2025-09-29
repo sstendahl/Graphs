@@ -4,12 +4,20 @@ using Adw 1;
 template $GraphsSqlGroup: Adw.PreferencesGroup {
   Adw.ComboRow table_row {
       title: _("Database Table");
+      notify::selected => $on_table_changed();
     }
     Adw.ComboRow column_x {
       title: _("Column X");
+      notify::selected => $on_columns_changed();
 
     }
     Adw.ComboRow column_y {
       title: _("Column Y");
+      notify::selected => $on_columns_changed();
+    }
+    Label no_numeric_warning {
+      margin-top: 6;
+      label: _("This table contains no numeric columns");
+      visible: false;
     }
 }
