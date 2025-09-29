@@ -12,7 +12,7 @@ namespace Graphs {
         private Sqlite.Database db;
         private string filename;
         public string[] table_names;
-        public ImportSettings settings { get; set; }
+        private ImportSettings settings { get; set; }
 
         public DatabaseReader (ImportSettings settings) throws IOError {
             this.settings = settings;
@@ -145,7 +145,7 @@ namespace Graphs {
 
         public SqlGroup (ImportSettings settings) throws IOError {
             this.db_reader = settings.get_item ("db-reader") as Graphs.DatabaseReader;
-            this.settings = db_reader.settings;
+            this.settings = settings;
 
             setup_ui ();
         }
