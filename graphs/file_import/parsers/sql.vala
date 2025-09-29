@@ -78,16 +78,18 @@ namespace Graphs {
             if (table_names.length == 0) {
                 throw new IOError.FAILED ("No tables found in database");
             }
-
             string first_table = table_names[0];
             string[] columns = get_numeric_columns (first_table);
 
             settings.set_string ("table_name", first_table);
             if (columns.length == 0) {
-                return;
+                settings.set_string ("x_column", "");
+                settings.set_string ("y_column", "");
             }
-            settings.set_string ("x_column", columns[0]);
-            settings.set_string ("y_column", columns[0]);
+            else {
+                settings.set_string ("x_column", columns[0]);
+                settings.set_string ("y_column", columns[0]);
+            }
         }
 
         public double[] get_column_data (string table_name, string column_name) throws IOError {
@@ -142,23 +144,43 @@ namespace Graphs {
         private ImportSettings settings;
         private bool is_initial_setup = true;
 
+        private string _table_name = "";
+        private string _x_column = "";
+        private string _y_column = "";
+
         public SqlGroup (DatabaseReader reader) throws IOError {
             this.db_reader = reader;
             this.settings = db_reader.settings;
+
+            _table_name = settings.get_string ("table_name");
+            _x_column = settings.get_string ("x_column");
+            _y_column = settings.get_string ("y_column");
+
             setup_ui ();
         }
 
         public string table_name {
-            owned get { return settings.get_string ("table_name"); }
-            set { settings.set_string ("table_name", value); }
+            get { return _table_name; }
+            set {
+                _table_name = value;
+                settings.set_string ("table_name", value);
+            }
         }
+
         public string x_column {
-            owned get { return settings.get_string ("x_column"); }
-            set { settings.set_string ("x_column", value); }
+            get { return _x_column; }
+            set {
+                _x_column = value;
+                settings.set_string ("x_column", value);
+            }
         }
+
         public string y_column {
-            owned get { return settings.get_string ("y_column"); }
-            set { settings.set_string ("y_column", value); }
+            get { return _y_column; }
+            set {
+                _y_column = value;
+                settings.set_string ("y_column", value);
+            }
         }
 
         private void setup_ui () throws IOError {

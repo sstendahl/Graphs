@@ -2,7 +2,6 @@
 """Module for parsing sql files."""
 from gettext import gettext as _
 from gettext import pgettext as C_
-from pathlib import Path
 from typing import Tuple
 
 from gi.repository import Graphs, Gtk
@@ -45,8 +44,7 @@ class SqlParser(Parser):
 
         xdata = db_reader.get_column_data(table_name, x_column)
         ydata = db_reader.get_column_data(table_name, y_column)
-        filename = Path(settings.get_file().get_basename()).stem
-        item_name = f"{filename} - {table_name}"
+        item_name = f"{x_column} vs {y_column}"
         item_ = item.DataItem.new(style, name=item_name)
         item_.set_xlabel(x_column)
         item_.set_ylabel(y_column)
