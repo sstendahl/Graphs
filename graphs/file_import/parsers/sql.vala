@@ -148,6 +148,7 @@ namespace Graphs {
 
         private DatabaseReader db_reader;
         private ImportSettings settings;
+        private bool is_initial_setup = true;
 
         public SqlGroup (DatabaseReader reader) throws IOError {
             this.db_reader = reader;
@@ -171,9 +172,7 @@ namespace Graphs {
         private void setup_ui () throws IOError {
             string[] tables = db_reader.get_tables ();
             var table_model = new StringList (tables);
-            string old = table_name;
             table_row.set_model (table_model);
-            table_name = old;
             for (int i = 0; i < tables.length; i++) {
                 if (tables[i] == table_name) {
                     table_row.set_selected (i);
@@ -181,10 +180,12 @@ namespace Graphs {
                 }
             }
             update_columns ();
+            is_initial_setup = false;
         }
 
         [GtkCallback]
         private void on_table_changed () {
+            if (is_initial_setup) return;
             var selected_item = table_row.get_selected_item () as StringObject;
             if (selected_item == null) return;
             table_name = selected_item.get_string ();
@@ -197,6 +198,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_columns_changed () {
+            if (is_initial_setup) return;
             var selected_x = column_x.get_selected_item () as StringObject;
             var selected_y = column_y.get_selected_item () as StringObject;
 
@@ -218,12 +220,8 @@ namespace Graphs {
                 column_y.sensitive = true;
 
                 var column_model = new StringList (columns);
-                string old_x = x_column;
-                string old_y = y_column;
                 column_x.set_model (column_model);
                 column_y.set_model (column_model);
-                x_column = old_x;
-                y_column = old_y;
                 bool found_x = false;
                 bool found_y = false;
 
