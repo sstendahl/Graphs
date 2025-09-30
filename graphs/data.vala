@@ -143,7 +143,7 @@ namespace Graphs {
             var range = _items[(int) position : (int) (position + n_items)];
             uint index = position;
             foreach (Item item in range) {
-                if (item.selected) bitset.add (position);
+                if (item.selected) bitset.add (index);
                 index++;
             }
             return bitset;
