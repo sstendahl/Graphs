@@ -111,9 +111,7 @@ namespace Graphs {
         private void init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             string name = parsers[settings.mode].name;
-            if (name in mode_settings_list) {
-                settings.load_from_settings (mode_settings.get_child (name));
-            }
+            settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
             init_import_settings_request.emit (settings);
         }
     }
@@ -145,9 +143,15 @@ namespace Graphs {
             return items.@get (key);
         }
 
-        public void load_from_settings (GLib.Settings default_settings) {
-            has_schema = default_settings.settings_schema.list_keys ().length > 0;
-            foreach (string key in default_settings.settings_schema.list_keys ()) {
+        public void load_from_settings (GLib.Settings? default_settings) {
+            if (default_settings == null) {
+                has_schema = false;
+                return;
+            }
+
+            var keys = default_settings.settings_schema.list_keys ();
+            has_schema = keys.length > 0;
+            foreach (string key in keys) {
                 set_value (key, default_settings.get_value (key));
             }
         }
