@@ -10,13 +10,12 @@ namespace Graphs {
      */
     public class DatabaseReader : GLib.Object {
         private Sqlite.Database db;
-        private string filename;
         public string[] table_names;
         private ImportSettings settings { get; set; }
 
         public DatabaseReader (ImportSettings settings) throws IOError {
             this.settings = settings;
-            this.filename = settings.file.get_basename ();
+            settings.filename = settings.file.get_basename ();
             string file_path = settings.file.get_path ();
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
                 throw new IOError.FAILED (
