@@ -12,6 +12,7 @@ python.install_sources(
   files(
     'file_import/parsers/__init__.py',
     'file_import/parsers/columns.py',
+    'file_import/parsers/sql.py',
     'file_import/parsers/project.py',
     'file_import/parsers/xrdml.py',
     'file_import/parsers/xry.py',
@@ -51,6 +52,7 @@ config_dep = valac.find_library('config',
 graphs_lib = shared_library('graphs',
   files(
     'file_import/parsers/columns.vala',
+    'file_import/parsers/sql.vala',
     'file_import/dialog.vala',
     'file_import/file_import.vala',
     'sidebar/edit_item.vala',

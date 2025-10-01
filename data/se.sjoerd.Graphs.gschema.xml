@@ -66,12 +66,12 @@
     <value nick="Inverse" value="5"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.import-params.colums.separators">
+  <enum id="se.sjoerd.Graphs.import-params.columns.separators">
     <value nick="comma" value="0"/>
     <value nick="period" value="1"/>
   </enum>
 
-  <enum id="se.sjoerd.Graphs.import-params.colums.delimiters">
+  <enum id="se.sjoerd.Graphs.import-params.columns.delimiters">
     <value nick="whitespace" value="0"/>
     <value nick="tab" value="1"/>
     <value nick="colon" value="2"/>
@@ -221,7 +221,7 @@
       <default>1</default>
     </key>
 
-    <key name="delimiter" enum="se.sjoerd.Graphs.import-params.colums.delimiters">
+    <key name="delimiter" enum="se.sjoerd.Graphs.import-params.columns.delimiters">
       <default>"whitespace"</default>
     </key>
 
@@ -229,7 +229,7 @@
       <default>""</default>
     </key>
 
-    <key name="separator" enum="se.sjoerd.Graphs.import-params.colums.separators">
+    <key name="separator" enum="se.sjoerd.Graphs.import-params.columns.separators">
       <default>"period"</default>
     </key>
 
