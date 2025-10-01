@@ -1,0 +1,15 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.AlertDialog beta_disallowed_dialog {
+  heading: _("Beta Project");
+  body: _("The Project you are trying to import is from a Beta Version of Graphs. It may contain invalid data.");
+
+  responses [
+    continue: _("Continue"),
+    close: _("Abort"),
+  ]
+
+  close-response: "close";
+  default-response: "close";
+}

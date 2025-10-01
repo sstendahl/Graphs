@@ -561,6 +561,8 @@ namespace Graphs {
                 switch (error) {
                     case "LEGACY_MIGRATION_DISALLOWED":
                         throw new ProjectParseError.LEGACY_MIGRATION_DISALLOWED ("");
+                    case "BETA_DISALLOWED":
+                        throw new ProjectParseError.BETA_DISALLOWED ("");
                     default:
                         throw new ProjectParseError.INVALID_PROJECT (error);
                 }

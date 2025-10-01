@@ -6,13 +6,15 @@ namespace Graphs {
 
     public errordomain ProjectParseError {
         INVALID_PROJECT,
-        LEGACY_MIGRATION_DISALLOWED
+        LEGACY_MIGRATION_DISALLOWED,
+        BETA_DISALLOWED
     }
 
     [Flags]
     public enum ProjectParseFlags {
         NONE = 0,
-        ALLOW_LEGACY_MIGRATION = 1 << 0
+        ALLOW_LEGACY_MIGRATION = 1 << 0,
+        ALLOW_BETA = 1 << 1
     }
 
     namespace Project {
@@ -61,6 +63,12 @@ namespace Graphs {
                     var response = yield dialog.choose (window, null);
                     if (response != "continue") return;
                     yield load (window, file, flags | ProjectParseFlags.ALLOW_LEGACY_MIGRATION);
+                } else if (e is ProjectParseError.BETA_DISALLOWED) {
+                    var dialog = Tools.build_dialog ("beta_disallowed") as Adw.AlertDialog;
+                    dialog.present (window);
+                    var response = yield dialog.choose (window, null);
+                    if (response != "continue") return;
+                    yield load (window, file, flags | ProjectParseFlags.ALLOW_BETA);
                 } else {
                     throw e;
                 }
