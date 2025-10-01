@@ -155,6 +155,8 @@ namespace Graphs {
         private void setup_ui () throws IOError {
             string[] tables = db_reader.table_names;
             string table_name = settings.get_string ("table-name");
+
+            // TODO: Use StringList.find () instead of manual loop at GNOME 50 runtime
             var table_model = new StringList (tables);
             table_row.set_model (table_model);
             for (int i = 0; i < tables.length; i++) {
@@ -213,6 +215,7 @@ namespace Graphs {
             bool found_x = false;
             bool found_y = false;
 
+            // TODO: Use StringList.find () instead of manual loop at GNOME 50 runtime
             for (int i = 0; i < columns.length; i++) {
                 if (columns[i] == x_column) {
                     column_x.set_selected (i);
