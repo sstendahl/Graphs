@@ -72,6 +72,7 @@ endif
 blueprint_files = [
   'ui/dialogs/delete-style.blp',
   'ui/dialogs/invalid-project.blp',
+  'ui/dialogs/legacy-migration-disallowed.blp',
   'ui/dialogs/reset-import-settings.blp',
   'ui/dialogs/save-project-changes.blp',
   'ui/dialogs/save-style-changes.blp',

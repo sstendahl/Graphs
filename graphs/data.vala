@@ -42,7 +42,7 @@ namespace Graphs {
         private bool _notify_selection_changed = true;
 
         public signal void style_changed (bool recolor_items);
-        protected signal string load_request (File file);
+        protected signal string load_request (File file, ProjectParseFlags parse_flags);
         protected signal bool add_history_state_request (double[] old_limits);
 
         // Clipboard signals
@@ -551,14 +551,19 @@ namespace Graphs {
             notify_property ("unsaved");
         }
 
-        public void load (File file) throws ProjectParseError {
-            string error = load_request.emit (file);
+        public void load (File file, ProjectParseFlags flags = ProjectParseFlags.NONE) throws ProjectParseError {
+            string error = load_request.emit (file, flags);
             if (error == "") {
                 this.file = file;
                 this.unsaved = false;
                 notify_property ("unsaved");
             } else {
-                throw new ProjectParseError.INVALID_PROJECT (error);
+                switch (error) {
+                    case "LEGACY_MIGRATION_DISALLOWED":
+                        throw new ProjectParseError.LEGACY_MIGRATION_DISALLOWED ("");
+                    default:
+                        throw new ProjectParseError.INVALID_PROJECT (error);
+                }
             }
         }
 

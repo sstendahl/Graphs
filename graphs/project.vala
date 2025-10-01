@@ -5,7 +5,14 @@ using Gtk;
 namespace Graphs {
 
     public errordomain ProjectParseError {
-        INVALID_PROJECT
+        INVALID_PROJECT,
+        LEGACY_MIGRATION_DISALLOWED
+    }
+
+    [Flags]
+    public enum ProjectParseFlags {
+        NONE = 0,
+        ALLOW_LEGACY_MIGRATION = 1 << 0
     }
 
     namespace Project {
@@ -44,6 +51,22 @@ namespace Graphs {
             }
         }
 
+        public async void load (Window window, File file, ProjectParseFlags flags = ProjectParseFlags.NONE) throws ProjectParseError{
+            try {
+                window.data.load (file, flags);
+            } catch (ProjectParseError e) {
+                if (e is ProjectParseError.LEGACY_MIGRATION_DISALLOWED) {
+                    var dialog = Tools.build_dialog ("legacy_migration_disallowed") as Adw.AlertDialog;
+                    dialog.present (window);
+                    var response = yield dialog.choose (window, null);
+                    if (response != "continue") return;
+                    yield load (window, file, flags | ProjectParseFlags.ALLOW_LEGACY_MIGRATION);
+                } else {
+                    throw e;
+                }
+            }
+        }
+
         public void open (Window window) {
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
@@ -53,12 +76,12 @@ namespace Graphs {
                 try {
                     var file = dialog.open.end (response);
                     if (!window.data.unsaved && window.data.file == null) {
-                        window.data.load (file);
+                        load.begin (window, file);
                         return;
                     }
                     new_window = application.create_main_window ();
-                    new_window.data.load (file);
                     new_window.present ();
+                    load.begin (new_window, file);
                 } catch (ProjectParseError e) {
                     var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
                     error_dialog.set_body (e.message);

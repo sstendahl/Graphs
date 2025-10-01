@@ -16,9 +16,10 @@ CURRENT_PROJECT_VERSION = 2
 class ProjectParseError(Exception):
     """Custom error for parsing projects."""
 
-    def __init__(self, message: str):
+    def __init__(self, message: str, log: bool = True):
         super().__init__()
         self.message = message
+        self.log = log
 
 
 PROJECT_KEYS = [
@@ -226,11 +227,16 @@ class ProjectValidator:
                         self.figure_settings.set_property(change[0], change[1])
 
 
-def read_project_file(file: Gio.File) -> dict:
+def read_project_file(
+    file: Gio.File,
+    parse_flags: Graphs.ProjectParseFlags,
+) -> dict:
     """Read a project dict from file and account for migration."""
     try:
         project_dict = file_io.parse_json(file)
     except UnicodeDecodeError:
+        if not parse_flags & Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION:
+            raise ProjectParseError("LEGACY_MIGRATION_DISALLOWED", False)
         try:
             project_dict = migrate.migrate_project(file)
         except Exception as e:
