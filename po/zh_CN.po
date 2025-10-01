@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-28 16:39+0000\n"
-"PO-Revision-Date: 2025-09-29 07:42+0800\n"
+"POT-Creation-Date: 2025-10-01 17:00+0000\n"
+"PO-Revision-Date: 2025-10-02 07:23+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1715,6 +1715,27 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
 
+#: graphs/file_import/parsers/sql.py:24
+msgctxt "import-mode"
+msgid "Database"
+msgstr "数据库"
+
+#: graphs/file_import/parsers/sql.py:25
+msgctxt "file-filter"
+msgid "SQLite Database"
+msgstr "SQLite 数据库"
+
+#: graphs/file_import/parsers/sql.py:42
+#, python-brace-format
+msgid ""
+"Could not import data from table \"{table_name}\", no numeric columns were "
+"found"
+msgstr "无法从表格“{table_name}”导入数据，未发现数字栏"
+
+#: graphs/file_import/parsers/sql.py:52
+msgid "No data found in table column"
+msgstr "表格栏内未发现数据"
+
 #: graphs/file_import/parsers/xrdml.py:20
 msgctxt "import-mode"
 msgid "xrdml"
@@ -1751,7 +1772,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:108
+#: graphs/file_import/__init__.py:109
 msgid "Import failed"
 msgstr "导入失败"
 
