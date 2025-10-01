@@ -27,9 +27,10 @@ class SqlParser(Parser):
         )
 
     @staticmethod
-    def parse(settings: Graphs.ImportSettings,
-              style: Tuple[RcParams, dict],
-              ) -> misc.ItemList:
+    def parse(
+        settings: Graphs.ImportSettings,
+        style: Tuple[RcParams, dict],
+    ) -> misc.ItemList:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
         table_name = settings.get_string("table-name")
@@ -37,8 +38,10 @@ class SqlParser(Parser):
             x_column = settings.get_string("x-column")
             y_column = settings.get_string("y-column")
         else:
-            msg = _('Could not import data from table "{table_name}", no'
-                    " numeric columns were found")
+            msg = _(
+                'Could not import data from table "{table_name}", no'
+                " numeric columns were found",
+            )
             msg = msg.format(table_name=table_name)
             raise ParseError(msg)
 
@@ -48,12 +51,16 @@ class SqlParser(Parser):
         if len(xdata) == 0:
             raise ParseError(_("No data found in table column"))
 
-        item_name = f"{x_column} vs {y_column}"
-        item_ = item.DataItem.new(style, xdata=xdata, ydata=ydata,
-                                  xlabel=x_column, ylabel=y_column,
-                                  name=item_name)
-
-        return [item_]
+        return [
+            item.DataItem.new(
+                style,
+                xdata=xdata,
+                ydata=ydata,
+                xlabel=x_column,
+                ylabel=y_column,
+                name=f"{x_column} vs {y_column}",
+            ),
+        ]
 
     @staticmethod
     def init_settings(settings: Graphs.ImportSettings) -> None:
@@ -63,9 +70,10 @@ class SqlParser(Parser):
         settings.set_item("db-reader", db_reader)
 
     @staticmethod
-    def init_settings_widgets(settings: Graphs.ImportSettings,
-                              box: Gtk.Box,
-                              ) -> None:
+    def init_settings_widgets(
+        settings: Graphs.ImportSettings,
+        box: Gtk.Box,
+    ) -> None:
         """Append SQL-specific settings widgets."""
         if not settings.get_item("db-reader"):
             return
