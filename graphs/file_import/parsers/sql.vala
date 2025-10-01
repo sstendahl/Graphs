@@ -90,7 +90,7 @@ namespace Graphs {
         }
 
         public double[] get_column_data (string table_name, string column_name) throws IOError {
-            var data = new Array<double> ();
+            var data = new Gee.LinkedList<double> ();
             Sqlite.Statement stmt;
             string sql = "SELECT `%s` FROM `%s`".printf (column_name, table_name);
 
@@ -101,10 +101,15 @@ namespace Graphs {
             }
             while (stmt.step () == Sqlite.ROW) {
                 double val = stmt.column_double (0);
-                data.append_val (val);
+                data.add (val);
             }
 
-            return data.data;
+            double[] result = new double[data.size];
+            int i = 0;
+            foreach (double? val in data) {
+                result[i++] = val;
+            }
+            return result;
         }
 
         private string[] get_table_names () throws IOError {
