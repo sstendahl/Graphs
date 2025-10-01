@@ -74,7 +74,7 @@ namespace Graphs {
             }
 
             importer.append_settings_widgets (current_settings, file_settings_box);
-            default_group.set_visible (file_settings_box.get_last_child () != null);
+            default_group.set_visible (current_settings.has_schema);
             remove_group.set_visible (settings_list.get_n_items () > 1);
         }
 

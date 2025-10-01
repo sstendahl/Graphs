@@ -111,9 +111,7 @@ namespace Graphs {
         private void init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             string name = parsers[settings.mode].name;
-            if (name in mode_settings_list) {
-                settings.load_from_settings (mode_settings.get_child (name));
-            }
+            settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
             init_import_settings_request.emit (settings);
         }
     }
@@ -123,10 +121,12 @@ namespace Graphs {
         public string filename { get; construct set; }
         public uint mode { get; set; }
         public string mode_name { get; set; }
+        public bool has_schema { get; private set; default = false; }
 
         public signal void value_changed (string key, Variant val);
 
         private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
+        private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
 
         public ImportSettings (File file) {
             Object (
@@ -135,8 +135,15 @@ namespace Graphs {
             );
         }
 
-        public void load_from_settings (GLib.Settings default_settings) {
-            foreach (string key in default_settings.settings_schema.list_keys ()) {
+        public void load_from_settings (GLib.Settings? default_settings) {
+            if (default_settings == null) {
+                has_schema = false;
+                return;
+            }
+
+            var keys = default_settings.settings_schema.list_keys ();
+            has_schema = keys.length > 0;
+            foreach (string key in keys) {
                 set_value (key, default_settings.get_value (key));
             }
         }
@@ -145,6 +152,14 @@ namespace Graphs {
             foreach (string key in settings.settings_schema.list_keys ()) {
                 settings.set_value (key, get_value (key));
             }
+        }
+
+        public void set_item (string key, GLib.Object item) {
+            items.@set (key, item);
+        }
+
+        public GLib.Object get_item (string key) {
+            return items.@get (key);
         }
 
         public void set_value (string key, Variant val) {
