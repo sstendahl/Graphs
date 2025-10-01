@@ -128,14 +128,6 @@ namespace Graphs {
         private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
         private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
 
-        public void set_item (string key, GLib.Object item) {
-            items.@set (key, item);
-        }
-
-        public GLib.Object get_item (string key) {
-            return items.@get (key);
-        }
-
         public ImportSettings (File file) {
             Object (
                 file: file,
@@ -160,6 +152,14 @@ namespace Graphs {
             foreach (string key in settings.settings_schema.list_keys ()) {
                 settings.set_value (key, get_value (key));
             }
+        }
+
+        public void set_item (string key, GLib.Object item) {
+            items.@set (key, item);
+        }
+
+        public GLib.Object get_item (string key) {
+            return items.@get (key);
         }
 
         public void set_value (string key, Variant val) {
