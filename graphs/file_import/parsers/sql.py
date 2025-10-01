@@ -45,13 +45,9 @@ class SqlParser(Parser):
         xdata = db_reader.get_column_data(table_name, x_column)
         ydata = db_reader.get_column_data(table_name, y_column)
         item_name = f"{x_column} vs {y_column}"
-        item_ = item.DataItem.new(style, name=item_name)
-        item_.set_xlabel(x_column)
-        item_.set_ylabel(y_column)
-
-        for x_val, y_val in zip(xdata, ydata):
-            item_.xdata.append(x_val)
-            item_.ydata.append(y_val)
+        item_ = item.DataItem.new(style, xdata=xdata, ydata=ydata,
+                                  xlabel=x_column, ylabel=y_column,
+                                  name=item_name)
 
         if len(item_.xdata) == 0:
             raise ParseError(_("No data found in table column"))

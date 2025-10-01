@@ -11,11 +11,10 @@ namespace Graphs {
     public class DatabaseReader : GLib.Object {
         private Sqlite.Database db;
         public string[] table_names;
-        private ImportSettings settings { get; set; }
+        private ImportSettings settings;
 
         public DatabaseReader (ImportSettings settings) throws IOError {
             this.settings = settings;
-            settings.filename = settings.file.get_basename ();
             string file_path = settings.file.get_path ();
             if (Sqlite.Database.open (file_path, out db) != Sqlite.OK) {
                 throw new IOError.FAILED (
@@ -90,7 +89,7 @@ namespace Graphs {
         }
 
         public double[] get_column_data (string table_name, string column_name) throws IOError {
-            var data = new Gee.LinkedList<double> ();
+            var data = new Gee.LinkedList<double?> ();
             Sqlite.Statement stmt;
             string sql = "SELECT `%s` FROM `%s`".printf (column_name, table_name);
 

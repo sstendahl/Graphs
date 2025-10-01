@@ -128,19 +128,19 @@ namespace Graphs {
         private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
         private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
 
-        public ImportSettings (File file) {
-            Object (
-                file: file,
-                filename: Tools.get_filename (file)
-            );
-        }
-
         public void set_item (string key, GLib.Object item) {
             items.@set (key, item);
         }
 
         public GLib.Object get_item (string key) {
             return items.@get (key);
+        }
+
+        public ImportSettings (File file) {
+            Object (
+                file: file,
+                filename: Tools.get_filename (file)
+            );
         }
 
         public void load_from_settings (GLib.Settings? default_settings) {
