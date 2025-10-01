@@ -53,7 +53,9 @@ namespace Graphs {
             }
         }
 
-        public async void load (Window window, File file, ProjectParseFlags flags = ProjectParseFlags.NONE) throws ProjectParseError{
+        public async void load (
+            Window window, File file, ProjectParseFlags flags = ProjectParseFlags.NONE
+        ) throws ProjectParseError {
             try {
                 window.data.load (file, flags);
             } catch (ProjectParseError e) {
