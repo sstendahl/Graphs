@@ -97,10 +97,10 @@ namespace Graphs {
 
                 Application application = window.application as Application;
                 Window new_window = application.create_main_window ();
-                bool success = yield load (window, new_window.data, file);
-                if (success) return;
-                new_window.present ();
-                new_window.close ();
+                if (yield load (window, new_window.data, file)) {
+                    new_window.present ();
+                    return;
+                };
                 application.on_main_window_closed (new_window);
             } catch {}
         }
