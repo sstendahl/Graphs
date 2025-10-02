@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-28 14:32+0000\n"
-"PO-Revision-Date: 2025-09-28 18:03+0300\n"
+"POT-Creation-Date: 2025-10-01 23:25+0000\n"
+"PO-Revision-Date: 2025-10-02 10:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1740,6 +1740,31 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
 
+#: graphs/file_import/parsers/sql.py:24
+#| msgid "Dataset"
+msgctxt "import-mode"
+msgid "Database"
+msgstr "База даних"
+
+#: graphs/file_import/parsers/sql.py:25
+msgctxt "file-filter"
+msgid "SQLite Database"
+msgstr "База даних SQLite"
+
+#: graphs/file_import/parsers/sql.py:42
+#, python-brace-format
+msgid ""
+"Could not import data from table \"{table_name}\", no numeric columns were "
+"found"
+msgstr ""
+"Не вдалося імпортувати дані з таблиці «{table_name}», не знайдено стовпчиків"
+" із числовими даними"
+
+#: graphs/file_import/parsers/sql.py:52
+#| msgid "No data found within the highlighted area"
+msgid "No data found in table column"
+msgstr "Не знайдено даних у стовпчику таблиці"
+
 #: graphs/file_import/parsers/xrdml.py:20
 msgctxt "import-mode"
 msgid "xrdml"
@@ -1776,7 +1801,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:108
+#: graphs/file_import/__init__.py:109
 msgid "Import failed"
 msgstr "Імпортування зазнало невдачі"
 
@@ -2060,13 +2085,12 @@ msgstr "Дублювання ключа у файлі {file}, рядок {line}"
 
 #: graphs/style_io.py:134
 #, python-brace-format
-#| msgid "Bad value in file {file} on line {line}"
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
 "supported"
 msgstr ""
-"Помилкове значення у файлі {file}, рядок {line}, підтримки нетипового"
-" параметра {key} не передбачено"
+"Помилкове значення у файлі {file}, рядок {line}, підтримки нетипового "
+"параметра {key} не передбачено"
 
 #: graphs/style_io.py:152
 #, python-brace-format
