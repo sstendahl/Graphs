@@ -73,13 +73,8 @@ namespace Graphs {
 
                 if (uri.has_suffix (".graphs")) {
                     var window = create_main_window ();
-                    try {
-                        window.data.load (file);
-                        window.present ();
-                    } catch (ProjectParseError e) {
-                        window.present ();
-                        window.add_toast_string (e.message);
-                    }
+                    window.present ();
+                    Project.load.begin (window, window.data, file);
                     return;
                 } else if (uri.has_suffix (".mplstyle")) {
                     var style_editor = create_style_editor ();

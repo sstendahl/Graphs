@@ -201,7 +201,7 @@ namespace Graphs {
 
             var open_project_action = new SimpleAction ("open-project", null);
             open_project_action.activate.connect (() => {
-                Project.open (window);
+                Project.open.begin (window);
             });
             window.bind_property ("is_main_view", open_project_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (open_project_action);

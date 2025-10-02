@@ -43,7 +43,7 @@ class ProjectMigrator:
     to v3.
     """
 
-    beta_pattern = re.compile(r"^\d+\.\d+\.\d+-[0-9a-f]+$")
+    beta_pattern = re.compile(r"^\d+\.\d+\.\d+-[0-9a-f]{8}$")
 
     def __init__(
         self,
@@ -248,7 +248,7 @@ class ProjectValidator:
 
 def read_project_file(
     file: Gio.File,
-    parse_flags: Graphs.ProjectParseFlags,
+    parse_flags: Graphs.ProjectParseFlags = Graphs.ProjectParseFlags.NONE,
 ) -> dict:
     """Read a project dict from file and account for migration."""
     try:
@@ -264,14 +264,14 @@ def read_project_file(
         raise ProjectParseError(_("Failed to parse project file")) from e
     try:
         project_dict = ProjectMigrator(project_dict, parse_flags).migrate()
-    except ProjectParseError as e:
-        raise e
+    except ProjectParseError:
+        raise
     except Exception as e:
         raise ProjectParseError(_("Failed to migrate project")) from e
     try:
         ProjectValidator(project_dict, parse_flags).validate()
-    except ProjectParseError as e:
-        raise e
+    except ProjectParseError:
+        raise
     except Exception as e:
         raise ProjectParseError(_("Failed to validate project")) from e
     return project_dict

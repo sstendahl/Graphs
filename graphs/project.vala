@@ -53,55 +53,57 @@ namespace Graphs {
             }
         }
 
-        public async void load (
-            Window window, File file, ProjectParseFlags flags = ProjectParseFlags.NONE
-        ) throws ProjectParseError {
+        public async bool load (
+            Window window, Data data, File file, ProjectParseFlags flags = ProjectParseFlags.NONE
+        ) {
             try {
-                window.data.load (file, flags);
+                data.load (file, flags);
+                return true;
             } catch (ProjectParseError e) {
-                if (e is ProjectParseError.LEGACY_MIGRATION_DISALLOWED) {
-                    var dialog = Tools.build_dialog ("legacy_migration_disallowed") as Adw.AlertDialog;
-                    dialog.present (window);
-                    var response = yield dialog.choose (window, null);
-                    if (response != "continue") return;
-                    yield load (window, file, flags | ProjectParseFlags.ALLOW_LEGACY_MIGRATION);
-                } else if (e is ProjectParseError.BETA_DISALLOWED) {
-                    var dialog = Tools.build_dialog ("beta_disallowed") as Adw.AlertDialog;
-                    dialog.present (window);
-                    var response = yield dialog.choose (window, null);
-                    if (response != "continue") return;
-                    yield load (window, file, flags | ProjectParseFlags.ALLOW_BETA);
-                } else {
-                    throw e;
-                }
+                // Handle warnings & general error
+                string dialog_name;
+                ProjectParseFlags new_flags;
+                switch (e.code) {
+                    case ProjectParseError.LEGACY_MIGRATION_DISALLOWED:
+                        dialog_name = "legacy_migration_disallowed";
+                        new_flags = flags | ProjectParseFlags.ALLOW_LEGACY_MIGRATION;
+                        break;
+                    case ProjectParseError.BETA_DISALLOWED:
+                        dialog_name = "beta_disallowed";
+                        new_flags = flags | ProjectParseFlags.ALLOW_BETA;
+                        break;
+                    default:
+                        var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
+                        error_dialog.set_body (e.message);
+                        error_dialog.present (window);
+                        return false;
+                    }
+                var dialog = Tools.build_dialog (dialog_name) as Adw.AlertDialog;
+                dialog.present (window);
+                var response = yield dialog.choose (window, null);
+                if (response != "continue") return false;
+                return yield load (window, data, file, new_flags);
             }
         }
 
-        public void open (Window window) {
+        public async void open (Window window) {
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
-            dialog.open.begin (window, null, (d, response) => {
-                Window? new_window = null;
+            try {
+                var file = yield dialog.open (window, null);
+                if (!window.data.unsaved && window.data.file == null) {
+                    yield load (window, window.data, file);
+                    return;
+                }
+
                 Application application = window.application as Application;
-                try {
-                    var file = dialog.open.end (response);
-                    if (!window.data.unsaved && window.data.file == null) {
-                        load.begin (window, file);
-                        return;
-                    }
-                    new_window = application.create_main_window ();
-                    new_window.present ();
-                    load.begin (new_window, file);
-                } catch (ProjectParseError e) {
-                    var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
-                    error_dialog.set_body (e.message);
-                    error_dialog.present (window);
-                    if (new_window != null) {
-                        new_window.close ();
-                        application.on_main_window_closed (new_window);
-                    }
-                } catch {}
-            });
+                Window new_window = application.create_main_window ();
+                bool success = yield load (window, new_window.data, file);
+                if (success) return;
+                new_window.present ();
+                new_window.close ();
+                application.on_main_window_closed (new_window);
+            } catch {}
         }
 
         public void close (Window window) {
