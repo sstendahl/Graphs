@@ -545,11 +545,16 @@ class Data(Graphs.Data):
         project.save_project_dict(self.props.file, self.get_project_dict())
 
     @staticmethod
-    def _on_load_request(self, file: Gio.File) -> str:
+    def _on_load_request(
+        self,
+        file: Gio.File,
+        parse_flags: Graphs.ProjectParseFlags,
+    ) -> str:
         try:
-            project_dict = project.read_project_file(file)
+            project_dict = project.read_project_file(file, parse_flags)
         except project.ProjectParseError as error:
-            logging.exception(error)
+            if error.log:
+                logging.exception(error)
             return error.message
         current_data = self.get_project_dict()
         try:

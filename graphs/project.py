@@ -2,6 +2,7 @@
 """Module for saving and loading projects."""
 import copy
 import logging
+import re
 from gettext import gettext as _
 from operator import itemgetter
 
@@ -16,9 +17,10 @@ CURRENT_PROJECT_VERSION = 2
 class ProjectParseError(Exception):
     """Custom error for parsing projects."""
 
-    def __init__(self, message: str):
+    def __init__(self, message: str, log: bool = True):
         super().__init__()
         self.message = message
+        self.log = log
 
 
 PROJECT_KEYS = [
@@ -41,7 +43,13 @@ class ProjectMigrator:
     to v3.
     """
 
-    def __init__(self, project_dict: dict):
+    beta_pattern = re.compile(r"^\d+\.\d+\.\d+-[0-9a-f]{8}$")
+
+    def __init__(
+        self,
+        project_dict: dict,
+        parse_flags: Graphs.ProjectParseFlags,
+    ):
         # Verify all keys are present
         try:
             for key in PROJECT_KEYS:
@@ -50,6 +58,13 @@ class ProjectMigrator:
             raise ProjectParseError(_("Project file is missing data")) from e
 
         self._project_dict = project_dict
+        self.parse_flags = parse_flags
+
+        # check beta version
+        beta_version = bool(self.beta_pattern.match(project_dict["version"]))
+        check_beta = not parse_flags & Graphs.ProjectParseFlags.ALLOW_BETA
+        if beta_version and check_beta:
+            raise ProjectParseError("BETA_DISALLOWED", False)
 
     def migrate(self) -> dict:
         """Perform needed migrations."""
@@ -161,8 +176,13 @@ class ProjectMigrator:
 class ProjectValidator:
     """Validate the project."""
 
-    def __init__(self, project_dict: dict):
+    def __init__(
+        self,
+        project_dict: dict,
+        parse_flags: Graphs.ProjectParseFlags,
+    ):
         self.project_dict = copy.deepcopy(project_dict)
+        self.parse_flags = parse_flags
 
     def validate(self):
         """Run through the history states."""
@@ -226,11 +246,16 @@ class ProjectValidator:
                         self.figure_settings.set_property(change[0], change[1])
 
 
-def read_project_file(file: Gio.File) -> dict:
+def read_project_file(
+    file: Gio.File,
+    parse_flags: Graphs.ProjectParseFlags = Graphs.ProjectParseFlags.NONE,
+) -> dict:
     """Read a project dict from file and account for migration."""
     try:
         project_dict = file_io.parse_json(file)
     except UnicodeDecodeError:
+        if not parse_flags & Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION:
+            raise ProjectParseError("LEGACY_MIGRATION_DISALLOWED", False)
         try:
             project_dict = migrate.migrate_project(file)
         except Exception as e:
@@ -238,11 +263,15 @@ def read_project_file(file: Gio.File) -> dict:
     except Exception as e:
         raise ProjectParseError(_("Failed to parse project file")) from e
     try:
-        project_dict = ProjectMigrator(project_dict).migrate()
+        project_dict = ProjectMigrator(project_dict, parse_flags).migrate()
+    except ProjectParseError:
+        raise
     except Exception as e:
         raise ProjectParseError(_("Failed to migrate project")) from e
     try:
-        ProjectValidator(project_dict).validate()
+        ProjectValidator(project_dict, parse_flags).validate()
+    except ProjectParseError:
+        raise
     except Exception as e:
         raise ProjectParseError(_("Failed to validate project")) from e
     return project_dict

@@ -1,0 +1,15 @@
+using Gtk 4.0;
+using Adw 1;
+
+Adw.AlertDialog legacy_migration_disallowed_dialog {
+  heading: _("Legacy Project");
+  body: _("You are trying to open a legacy project.\n\nThe legacy project format may contain dangerous code and may cause harm to your system.\n\nOnly proceed if you trust the author of this file.");
+
+  responses [
+    continue: _("Continue") destructive,
+    close: _("Abort"),
+  ]
+
+  close-response: "close";
+  default-response: "close";
+}
