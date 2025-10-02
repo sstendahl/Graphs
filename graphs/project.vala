@@ -5,7 +5,16 @@ using Gtk;
 namespace Graphs {
 
     public errordomain ProjectParseError {
-        INVALID_PROJECT
+        INVALID_PROJECT,
+        LEGACY_MIGRATION_DISALLOWED,
+        BETA_DISALLOWED
+    }
+
+    [Flags]
+    public enum ProjectParseFlags {
+        NONE = 0,
+        ALLOW_LEGACY_MIGRATION = 1 << 0,
+        ALLOW_BETA = 1 << 1
     }
 
     namespace Project {
@@ -44,31 +53,56 @@ namespace Graphs {
             }
         }
 
-        public void open (Window window) {
+        public async bool load (
+            Window window, Data data, File file, ProjectParseFlags flags = ProjectParseFlags.NONE
+        ) {
+            try {
+                data.load (file, flags);
+                return true;
+            } catch (ProjectParseError e) {
+                // Handle warnings & general error
+                string dialog_name;
+                ProjectParseFlags new_flags;
+                switch (e.code) {
+                    case ProjectParseError.LEGACY_MIGRATION_DISALLOWED:
+                        dialog_name = "legacy_migration_disallowed";
+                        new_flags = flags | ProjectParseFlags.ALLOW_LEGACY_MIGRATION;
+                        break;
+                    case ProjectParseError.BETA_DISALLOWED:
+                        dialog_name = "beta_disallowed";
+                        new_flags = flags | ProjectParseFlags.ALLOW_BETA;
+                        break;
+                    default:
+                        var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
+                        error_dialog.set_body (e.message);
+                        error_dialog.present (window);
+                        return false;
+                    }
+                var dialog = Tools.build_dialog (dialog_name) as Adw.AlertDialog;
+                var response = yield dialog.choose (window, null);
+                if (response != "continue") return false;
+                return yield load (window, data, file, new_flags);
+            }
+        }
+
+        public async void open (Window window) {
             var dialog = new FileDialog ();
             dialog.set_filters (get_project_file_filters ());
-            dialog.open.begin (window, null, (d, response) => {
-                Window? new_window = null;
+            try {
+                var file = yield dialog.open (window, null);
+                if (!window.data.unsaved && window.data.file == null) {
+                    yield load (window, window.data, file);
+                    return;
+                }
+
                 Application application = window.application as Application;
-                try {
-                    var file = dialog.open.end (response);
-                    if (!window.data.unsaved && window.data.file == null) {
-                        window.data.load (file);
-                        return;
-                    }
-                    new_window = application.create_main_window ();
-                    new_window.data.load (file);
+                Window new_window = application.create_main_window ();
+                if (yield load (window, new_window.data, file)) {
                     new_window.present ();
-                } catch (ProjectParseError e) {
-                    var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
-                    error_dialog.set_body (e.message);
-                    error_dialog.present (window);
-                    if (new_window != null) {
-                        new_window.close ();
-                        application.on_main_window_closed (new_window);
-                    }
-                } catch {}
-            });
+                    return;
+                };
+                application.on_main_window_closed (new_window);
+            } catch {}
         }
 
         public void close (Window window) {
