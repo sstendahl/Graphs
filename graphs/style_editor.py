@@ -83,7 +83,7 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".", maxsplit=1)[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-box.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")
 class StyleEditorBox(Gtk.Box):
     """Style editor widget."""
 

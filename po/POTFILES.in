@@ -17,6 +17,10 @@ data/ui/sidebar/figure-settings/settings-page.blp
 data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
+data/ui/style-editor/color-box.blp
+data/ui/style-editor/editor-box.blp
+data/ui/style-editor/shortcuts.blp
+data/ui/style-editor/window.blp
 data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
@@ -26,10 +30,6 @@ data/ui/generate-data.blp
 data/ui/item-box.blp
 data/ui/operations.blp
 data/ui/smoothen-settings.blp
-data/ui/style-color-box.blp
-data/ui/style-editor-box.blp
-data/ui/style-editor-shortcuts.blp
-data/ui/style-editor-window.blp
 data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp

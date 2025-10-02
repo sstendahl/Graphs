@@ -8,7 +8,7 @@ namespace Graphs {
     /**
      * Style Editor Window window
      */
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor-window.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/window.ui")]
     public class StyleEditor : Adw.ApplicationWindow {
 
         [GtkChild]
@@ -108,7 +108,7 @@ namespace Graphs {
 
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
-                string path = "/se/sjoerd/Graphs/ui/style-editor-shortcuts.ui";
+                string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
                 var builder = new Builder.from_resource (path);
                 var shortcuts_dialog = builder.get_object ("shortcuts") as Adw.ShortcutsDialog;
                 shortcuts_dialog.present (this);
@@ -182,7 +182,7 @@ namespace Graphs {
     /**
      * Style Color Box
      */
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-color-box.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-box.ui")]
     public class StyleColorBox : Adw.ActionRow {
         public int index { get; construct set; }
 
