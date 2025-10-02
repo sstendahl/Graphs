@@ -79,7 +79,6 @@ namespace Graphs {
                         return false;
                     }
                 var dialog = Tools.build_dialog (dialog_name) as Adw.AlertDialog;
-                dialog.present (window);
                 var response = yield dialog.choose (window, null);
                 if (response != "continue") return false;
                 return yield load (window, data, file, new_flags);
