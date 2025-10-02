@@ -31,14 +31,14 @@ template $GraphsStylePage: Adw.NavigationPage {
           halign: center;
           hexpand: true;
 
-          GridView style_grid {
+          child: GridView style_grid {
             min-columns: 2;
             max-columns: 2;
 
             styles [
               "style-grid",
             ]
-          }
+          };
         };
       };
     };

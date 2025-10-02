@@ -258,38 +258,21 @@ namespace Graphs {
             var action_group = new SimpleActionGroup ();
             var import_action = new SimpleAction ("import_style", null);
             import_action.activate.connect (() => {
-                var dialog = new FileDialog ();
-                dialog.set_filters (get_mplstyle_file_filters ());
-                dialog.open.begin (window, null, (d, response) => {
-                try {
-                    var file = dialog.open.end (response);
-                    var style_dir = application.figure_style_manager.style_dir;
-                    string filename = Tools.get_filename (file);
-                    if (!filename.has_suffix (".mplstyle")) return;
-                    var destination = style_dir.get_child_for_display_name (filename);
-                    uint i = 1;
-                    while (destination.query_exists ()) {
-                        var new_filename = new StringBuilder ();
-                        new_filename
-                            .append (filename[:-9])
-                            .append ("-")
-                            .append (i.to_string ())
-                            .append (".mplstyle");
-                        destination = style_dir.get_child_for_display_name (new_filename.free_and_steal ());
-                        i++;
-                    }
-                    file.copy_async.begin (destination, FileCopyFlags.NONE);
-                } catch {}
-            });
+                import_style.begin (window, application.figure_style_manager);
             });
             action_group.add_action (import_action);
             var create_action = new SimpleAction ("create_style", null);
             create_action.activate.connect (() => {
-                new AddStyleDialog (
+                var dialog = new AddStyleDialog (
                     application.figure_style_manager,
                     window,
                     window.data.figure_settings
                 );
+                dialog.accept.connect ((file) => {
+                    var style_editor = application.create_style_editor ();
+                    style_editor.load (file);
+                    style_editor.present ();
+                });
             });
             action_group.add_action (create_action);
             insert_action_group ("figure_settings", action_group);

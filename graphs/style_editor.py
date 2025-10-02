@@ -193,10 +193,10 @@ class StyleEditorBox(Gtk.Box):
         stylename = graphs_params["name"]
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
-            value = style_io.STYLE_CUSTOM_PARAMS.get(
-                value[0],
-                style_params[value[0]],
-            )
+            value = value[0]
+            value = graphs_params[
+                value
+            ] if value in style_io.STYLE_CUSTOM_PARAMS else style_params[value]
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
             widget = getattr(self, key.replace("-", "_"))
@@ -423,6 +423,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
+        self.setup()
         self.props.content_view.set_name(
             "view" + str(application.get_next_css_counter()),
         )

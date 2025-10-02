@@ -41,6 +41,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     setters {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
+      style_grid.max-columns: 2;
     }
   }
 
@@ -50,6 +51,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     setters {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
+      style_grid.max-columns: 2;
       sheet_box.height-request: 200;
     }
   }
@@ -65,13 +67,27 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
             tooltip-text: _("Open Application Menu");
             primary: true;
           }
+
+          [end]
+          MenuButton {
+            icon-name: "list-add-symbolic";
+            tooltip-text: _("Add New Style");
+            always-show-arrow: true;
+
+            popover: PopoverMenu {
+              menu-model: add_style_menu;
+            };
+          }
         }
 
-        content: Adw.StatusPage {
-          title: _("Open a Style");
+        [bottom]
+        Box {
+          margin-top: 12;
+          margin-bottom: 12;
+          orientation: vertical;
 
           Button {
-            label: _("Open…");
+            label: _("Open File…");
             halign: center;
             action-name: "win.open-style";
 
@@ -80,6 +96,21 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
               "suggested-action",
             ]
           }
+        }
+
+        content: Adw.Clamp {
+          child: ScrolledWindow {
+            child: Viewport {
+              child: GridView style_grid {
+                min-columns: bind style_grid.max-columns;
+                max-columns: 3;
+
+                styles [
+                  "style-grid",
+                ]
+              };
+            };
+          };
         };
       };
     }
@@ -228,5 +259,19 @@ menu empty_menu {
     item (_("Keyboard Shortcuts"), "win.show-shortcuts")
     item (_("Help"), "app.help")
     item (_("About Graphs"), "app.about")
+  }
+}
+
+menu add_style_menu {
+  section {
+    item {
+      label: _("Import Style…");
+      action: "win.import_style";
+    }
+
+    item {
+      label: _("Create Style…");
+      action: "win.create_style";
+    }
   }
 }

@@ -265,14 +265,16 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow style_templates { get; }
 
+        public signal void accept (File file);
+
         private StyleManager style_manager;
         private string[] stylenames;
 
-        public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings figure_settings) {
+        public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings? figure_settings = null) {
             this.style_manager = style_manager;
             this.stylenames = style_manager.list_stylenames ();
             style_templates.set_model (new StringList (stylenames));
-            if (figure_settings.use_custom_style) {
+            if (figure_settings != null && figure_settings.use_custom_style) {
                 string template = figure_settings.custom_style;
                 for (uint i = 0; i < stylenames.length; i++) {
                     if (stylenames[i] == template) {
@@ -301,10 +303,31 @@ namespace Graphs {
             uint template = style_templates.get_selected () + 1;
             var file = style_manager.create_style (template, new_style_name.get_text ());
             close ();
-
-            var style_editor = style_manager.application.create_style_editor ();
-            style_editor.load (file);
-            style_editor.present ();
+            accept.emit (file);
         }
+    }
+
+    public async void import_style (Gtk.Window window, StyleManager style_manager) {
+        var dialog = new FileDialog ();
+        dialog.set_filters (get_mplstyle_file_filters ());
+        try {
+            var file = yield dialog.open (window, null);
+            string filename = Tools.get_filename (file);
+            if (!filename.has_suffix (".mplstyle")) return;
+            var style_dir = style_manager.style_dir;
+            var destination = style_dir.get_child_for_display_name (filename);
+            uint i = 1;
+            while (destination.query_exists ()) {
+                var new_filename = new StringBuilder ();
+                new_filename
+                    .append (filename[:-9])
+                    .append ("-")
+                    .append (i.to_string ())
+                    .append (".mplstyle");
+                destination = style_dir.get_child_for_display_name (new_filename.free_and_steal ());
+                i++;
+            }
+            file.copy_async.begin (destination, FileCopyFlags.NONE);
+        } catch {}
     }
 }
