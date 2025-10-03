@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-28 16:04+0000\n"
-"PO-Revision-Date: 2025-09-28 13:37-0300\n"
+"POT-Creation-Date: 2025-10-03 10:34+0000\n"
+"PO-Revision-Date: 2025-10-03 12:06+0000\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -116,6 +116,28 @@ msgstr "Nova janela"
 msgid "Style Editor"
 msgstr "Editor de estilo"
 
+#: data/ui/dialogs/beta-disallowed.blp:5
+msgid "Beta Project"
+msgstr "Projeto beta"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid ""
+"The project you are trying to import is from a beta version of Graphs. It "
+"may contain invalid data."
+msgstr ""
+"O projeto que você está tentando importar é duma versão beta do Graphs. Pode "
+"conter dados inválidos."
+
+#: data/ui/dialogs/beta-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "Continue"
+
+#: data/ui/dialogs/beta-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "Abortar"
+
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "Excluir estilo?"
@@ -132,6 +154,26 @@ msgstr "Cancelar"
 #: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "Excluir"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+msgid "Legacy Project"
+msgstr "Projeto legado"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to "
+"your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"Você está tentando abrir um projeto legado.\n"
+"\n"
+"O formato do projeto legado pode conter código perigoso e causar problemas "
+"ao seu sistema.\n"
+"\n"
+"Somente proceda se você confia no autor deste arquivo."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -1726,10 +1768,33 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:15
+#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Arquivo de projeto do Gráficos"
+
+#: graphs/file_import/parsers/sql.py:24
+msgctxt "import-mode"
+msgid "Database"
+msgstr "Base de dados"
+
+#: graphs/file_import/parsers/sql.py:25
+msgctxt "file-filter"
+msgid "SQLite Database"
+msgstr "Base de dados SQLite"
+
+#: graphs/file_import/parsers/sql.py:42
+#, python-brace-format
+msgid ""
+"Could not import data from table \"{table_name}\", no numeric columns were "
+"found"
+msgstr ""
+"Não foi possível importar data da tabela \"{table_name}\", nenhuma coluna "
+"numérica foi encontrada"
+
+#: graphs/file_import/parsers/sql.py:52
+msgid "No data found in table column"
+msgstr "Nenhum dado encontrado na coluna da tabela"
 
 #: graphs/file_import/parsers/xrdml.py:20
 msgctxt "import-mode"
@@ -1767,7 +1832,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:108
+#: graphs/file_import/__init__.py:109
 msgid "Import failed"
 msgstr "A importação falhou"
 
@@ -1895,7 +1960,7 @@ msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
 "O estilo {stylename} não existe, carregando o estilo predefinido do sistema"
 
-#: graphs/data.py:559
+#: graphs/data.py:564
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
@@ -1974,35 +2039,35 @@ msgstr "{name}: Erro ao executar a operação"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Os dados que estavam fora da área destacada foram descartados"
 
-#: graphs/project.py:50
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "Está faltando dados no arquivo do projeto"
 
-#: graphs/project.py:64
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "O projeto é de uma versão mais nova incompatível do Gráficos."
 
-#: graphs/project.py:237
+#: graphs/project.py:262
 msgid "Failed to do legacy migration"
 msgstr "Falha ao fazer migração legada"
 
-#: graphs/project.py:239
+#: graphs/project.py:264
 msgid "Failed to parse project file"
 msgstr "Falha ao analisar o arquivo do projeto"
 
-#: graphs/project.py:243
+#: graphs/project.py:270
 msgid "Failed to migrate project"
 msgstr "Falha ao migrar o projeto"
 
-#: graphs/project.py:247
+#: graphs/project.py:276
 msgid "Failed to validate project"
 msgstr "Falha ao validar o projeto"
 
-#: graphs/project.vala:22
+#: graphs/project.vala:31
 msgid "Saved Project"
 msgstr "Projeto salvo"
 
-#: graphs/project.vala:37
+#: graphs/project.vala:46
 msgid "Project"
 msgstr "Projeto"
 
