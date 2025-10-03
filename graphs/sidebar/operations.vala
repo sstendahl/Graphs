@@ -4,7 +4,7 @@ using Gtk;
 
 namespace Graphs {
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/operations.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/operations.ui")]
     public class Operations : Box {
 
         [GtkChild]
