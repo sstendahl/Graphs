@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-01 23:25+0000\n"
-"PO-Revision-Date: 2025-10-02 10:46+0300\n"
+"POT-Creation-Date: 2025-10-03 12:23+0000\n"
+"PO-Revision-Date: 2025-10-03 15:49+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -120,6 +120,29 @@ msgstr "Нове вікно"
 msgid "Style Editor"
 msgstr "Редактор стилю"
 
+#: data/ui/dialogs/beta-disallowed.blp:5
+#| msgid "New Project"
+msgid "Beta Project"
+msgstr "Тестовий проєкт"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid ""
+"The project you are trying to import is from a beta version of Graphs. It "
+"may contain invalid data."
+msgstr ""
+"Проєкт, який ви намагаєтеся імпортувати, походить з тестової версії Graphs."
+" У ньому можуть міститися некоректні дані."
+
+#: data/ui/dialogs/beta-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "Продовжити"
+
+#: data/ui/dialogs/beta-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "Перервати"
+
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "Вилучити стиль?"
@@ -136,6 +159,27 @@ msgstr "Скасувати"
 #: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "Вилучити"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+#| msgid "New Project"
+msgid "Legacy Project"
+msgstr "Застарілий проєкт"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to "
+"your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"Ви намагаєтеся відкрити застарілий проєкт.\n"
+"\n"
+"Застарілий формат проєкту може містити небезпечний код і може зашкодити"
+" вашій системі.\n"
+"\n"
+"Продовжуйте обробку, лише якщо ви довіряєте автору цього файла."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -1735,13 +1779,12 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:15
+#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
 
 #: graphs/file_import/parsers/sql.py:24
-#| msgid "Dataset"
 msgctxt "import-mode"
 msgid "Database"
 msgstr "База даних"
@@ -1757,11 +1800,10 @@ msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
 "found"
 msgstr ""
-"Не вдалося імпортувати дані з таблиці «{table_name}», не знайдено стовпчиків"
-" із числовими даними"
+"Не вдалося імпортувати дані з таблиці «{table_name}», не знайдено стовпчиків "
+"із числовими даними"
 
 #: graphs/file_import/parsers/sql.py:52
-#| msgid "No data found within the highlighted area"
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
@@ -1924,7 +1966,7 @@ msgstr ""
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стилю {stylename} не існує. Завантажуємо пріоритетний системний стиль"
 
-#: graphs/data.py:559
+#: graphs/data.py:564
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -2004,35 +2046,35 @@ msgstr "{name}: помилка під час виконання дії"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
-#: graphs/project.py:50
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "У файлі проєкту не вистачає даних"
 
-#: graphs/project.py:64
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проєкт походить з нової несумісної версії «Графіків»"
 
-#: graphs/project.py:237
+#: graphs/project.py:262
 msgid "Failed to do legacy migration"
 msgstr "Не вдалося перенести дані зі старої версії"
 
-#: graphs/project.py:239
+#: graphs/project.py:264
 msgid "Failed to parse project file"
 msgstr "Не вдалося обробити файл проєкту"
 
-#: graphs/project.py:243
+#: graphs/project.py:270
 msgid "Failed to migrate project"
 msgstr "Не вдалося перенести проєкт"
 
-#: graphs/project.py:247
+#: graphs/project.py:276
 msgid "Failed to validate project"
 msgstr "Не вдалося перевірити проєкт"
 
-#: graphs/project.vala:22
+#: graphs/project.vala:31
 msgid "Saved Project"
 msgstr "Збережений проєкт"
 
-#: graphs/project.vala:37
+#: graphs/project.vala:46
 msgid "Project"
 msgstr "Проєкт"
 
