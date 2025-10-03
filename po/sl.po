@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-02 15:47+0000\n"
-"PO-Revision-Date: 2025-10-02 23:22+0200\n"
+"POT-Creation-Date: 2025-10-03 12:08+0000\n"
+"PO-Revision-Date: 2025-10-03 14:22+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -97,6 +97,22 @@ msgstr "Novo okno"
 msgid "Style Editor"
 msgstr "Urejevalnik slogov"
 
+#: data/ui/dialogs/beta-disallowed.blp:5
+msgid "Beta Project"
+msgstr "Projekt beta različice"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid "The project you are trying to import is from a beta version of Graphs. It may contain invalid data."
+msgstr "Projekt, ki ga poskušate uvoziti, je iz beta različice programa Grafi. Vsebuje lahko neveljavne podatke."
+
+#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "Nadaljuj"
+
+#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "Prekini"
+
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "Ali želite izbrisati slog?"
@@ -110,6 +126,24 @@ msgstr "Prekliči"
 #: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "Izbriši"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+msgid "Legacy Project"
+msgstr "Projekt opuščene različice"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"Poskušate odpreti projekt v opuščenem zapisu.\n"
+"\n"
+"Opuščena vrsta zapisa projekta lahko vsebuje nevarno kodo in lahko škoduje vašemu sistemu.\n"
+"\n"
+"Nadaljujte le, če zaupate avtorju te datoteke."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
