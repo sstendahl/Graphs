@@ -214,25 +214,24 @@
   </schema>
 
   <schema id="se.sjoerd.Graphs.import-params.columns">
+    <key name="single-column" type="b">
+      <default>false</default>
+    </key>
     <key name="column-x" type="i">
       <default>0</default>
     </key>
     <key name="column-y" type="i">
       <default>1</default>
     </key>
-
     <key name="delimiter" enum="se.sjoerd.Graphs.import-params.columns.delimiters">
       <default>"whitespace"</default>
     </key>
-
     <key name="custom-delimiter" type="s">
       <default>""</default>
     </key>
-
     <key name="separator" enum="se.sjoerd.Graphs.import-params.columns.separators">
       <default>"period"</default>
     </key>
-
     <key name="skip-rows" type="i">
       <default>0</default>
     </key>

@@ -2,69 +2,90 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsColumnsGroup: Adw.PreferencesGroup {
-  Adw.ComboRow delimiter {
-    title: _("Delimiter");
-    subtitle: _("Character sequence used to split values");
 
-    model: StringList {
-      strings [
-        C_("delimiter", "Whitespace"),
-        C_("delimiter", "Tab"),
-        C_("delimiter", "Colon (:)"),
-        C_("delimiter", "Semicolon (;)"),
-        C_("delimiter", "Decimal comma (,)"),
-        C_("delimiter", "Decimal point (.)"),
-        C_("delimiter", "Custom"),
-      ]
-    };
+  Adw.PreferencesGroup {
+    title: _("Format");
+
+    Adw.ComboRow delimiter {
+      title: _("Delimiter");
+      subtitle: _("Character used to separate columns");
+      model: StringList {
+        strings [
+          C_("delimiter", "Whitespace"),
+          C_("delimiter", "Tab"),
+          C_("delimiter", "Colon (:)"),
+          C_("delimiter", "Semicolon (;)"),
+          C_("delimiter", "Comma (,)"),
+          C_("delimiter", "Period (.)"),
+          C_("delimiter", "Custom"),
+        ]
+      };
+    }
+
+    Adw.EntryRow custom_delimiter {
+      sensitive: false;
+      title: _("Custom Delimiter");
+    }
+
+    Adw.ComboRow separator {
+      title: _("Decimal Separator");
+      model: StringList {
+        strings [
+          C_("separator", "Comma (,)"),
+          C_("separator", "Period (.)"),
+        ]
+      };
+    }
   }
 
-  Adw.EntryRow custom_delimiter {
-    sensitive: false;
-    max-width-chars: 10;
-    title: _("Custom Delimiter");
-  }
+  Adw.PreferencesGroup {
+    title: _("Columns");
 
-  Adw.ComboRow separator {
-    title: _("Decimal Separator");
+    Adw.SwitchRow single_column {
+      title: _("Single Column");
+      subtitle: _("Import only Y values, X values will be generated");
+    }
 
-    model: StringList {
-      strings [
-        C_("separator", "Decimal comma (,)"),
-        C_("separator", "Decimal point (.)"),
-      ]
-    };
-  }
+    Adw.PreferencesRow {
+      activatable: false;
 
-  Adw.SpinRow column_x {
-    title: _("Column X");
-    subtitle: _("X-data column index");
+      Box {
+        orientation: horizontal;
+        homogeneous: true;
 
-    adjustment: Adjustment {
-      step-increment: 1;
-      upper: 100;
-      value: 0;
-    };
-  }
+        Adw.SpinRow column_x {
+          title: _("X Column");
+          sensitive: bind single_column.active inverted;
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
+            value: 0;
+          };
+        }
 
-  Adw.SpinRow column_y {
-    title: _("Column Y");
-    selectable: false;
-    subtitle: _("Y-data column index");
+        Adw.SpinRow column_y {
+          title: _("Y Column");
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 100;
+            step-increment: 1;
+            value: 1;
+          };
+        }
+      }
+    }
 
-    adjustment: Adjustment {
-      step-increment: 1;
-      upper: 100;
-    };
-  }
 
-  Adw.SpinRow skip_rows {
-    title: _("Skip Rows");
-    subtitle: _("Ignored row indices");
-
-    adjustment: Adjustment {
-      step-increment: 1;
-      upper: 9999;
-    };
+    Adw.SpinRow skip_rows {
+      title: _("Skip Rows");
+      subtitle: _("Number of rows to skip at the beginning");
+      adjustment: Adjustment {
+        lower: 0;
+        upper: 9999;
+        step-increment: 1;
+        value: 0;
+      };
+    }
   }
 }

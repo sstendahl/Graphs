@@ -87,9 +87,11 @@ namespace Graphs {
         private ColumnsSeparator separator;
         private Regex delimiter_regex;
         private int skip_rows;
+        private string filename;
 
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
+            this.filename = settings.file.get_basename ();
             this.column_x = settings.get_int ("column-x");
             this.column_y = settings.get_int ("column-y");
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
@@ -108,22 +110,21 @@ namespace Graphs {
         public void parse (out double[] xdata, out double[] ydata,
                           out string? xlabel, out string? ylabel) throws Error {
             var stream = new DataInputStream (settings.file.read ());
-
             var xdata_list = new ArrayList<double?> ();
             var ydata_list = new ArrayList<double?> ();
             xlabel = null;
             ylabel = null;
-
-            string? line;
-            int index = 0;
-            int data_index = 0;
             bool parsed = false;
-            bool parsing_mode = false;
+            string? line;
+            int line_number = 0;
+            int data_index = 0;
+            string[]? previous_line_values = null;
+            bool found_first_data = false;
 
             while ((line = stream.read_line ()) != null) {
-                index++;
+                line_number++;
 
-                if (index <= skip_rows) {
+                if (line_number <= skip_rows) {
                     continue;
                 }
 
@@ -133,26 +134,23 @@ namespace Graphs {
                 }
 
                 string[] values = split_line (line);
-
-                if (values.length > 1) {
-                    validate_column_indices (values.length);
-                }
-
-
-                if (values.length == 1) {
-                    parsed = parse_single_column (values[0], data_index,
-                                                  xdata_list, ydata_list);
+                bool single_column = settings.get_boolean ("single-column");
+                if (single_column) {
+                    parsed = parse_single_column (values[column_y], data_index, xdata_list, ydata_list);
                 } else {
-                    parsed = parse_multi_column (values[column_x], values[column_y],
-                                                xdata_list, ydata_list);
+                    validate_column_indices (values.length, line_number);
+                    parsed = parse_multi_column (values[column_x], values[column_y], xdata_list, ydata_list);
                 }
 
                 if (parsed) {
-                    parsing_mode = true;
+                    if (!found_first_data && previous_line_values != null) {
+                        extract_headers (previous_line_values, ref xlabel, ref ylabel);
+                        found_first_data = true;
+                    }
                     data_index++;
-                }
-                if (!parsing_mode) {
-                    extract_headers (values, ref xlabel, ref ylabel);
+                    previous_line_values = null;
+                } else {
+                    previous_line_values = values;
                 }
             }
 
@@ -160,7 +158,7 @@ namespace Graphs {
 
             if (xdata_list.size == 0) {
                 throw new ParseError.IMPORT_ERROR (
-                    _("Unable to import from file")
+                    _("Unable to import from file: no valid data found")
                 );
             }
 
@@ -182,12 +180,12 @@ namespace Graphs {
             return values;
         }
 
-        private void validate_column_indices (int num_columns) throws ParseError {
+        private void validate_column_indices (int num_columns, int index) throws ParseError {
             if (column_x >= num_columns || column_y >= num_columns) {
                 int bad_column = int.max (column_x, column_y);
                 throw new ParseError.INDEX_ERROR (
-                    _("Index Error: Cannot access column %d, only %d columns were found")
-                    .printf (bad_column, num_columns)
+                    _("Index error for %s, cannot access index %d on line %d, only %d columns were found")
+                    .printf (filename, bad_column, index, num_columns)
                 );
             }
         }
@@ -264,6 +262,8 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.ComboRow separator { get; }
         [GtkChild]
+        public unowned Adw.SwitchRow single_column { get; }
+        [GtkChild]
         public unowned Adw.SpinRow column_x { get; }
         [GtkChild]
         public unowned Adw.SpinRow column_y { get; }
@@ -282,6 +282,7 @@ namespace Graphs {
                 custom_delimiter.set_sensitive (selected == ColumnsDelimiter.CUSTOM);
             });
 
+            custom_delimiter.set_sensitive (delimiter.get_selected () == ColumnsDelimiter.CUSTOM);
             custom_delimiter.set_text (settings.get_string ("custom-delimiter"));
             custom_delimiter.notify["text"].connect (() => {
                 settings.set_string ("custom-delimiter", custom_delimiter.get_text ());
@@ -290,6 +291,11 @@ namespace Graphs {
             separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
             separator.notify["selected"].connect (() => {
                 settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
+            });
+
+            single_column.set_active (settings.get_boolean ("single-column"));
+            single_column.notify["activated"].connect (() => {
+                settings.set_boolean ("single-column", (single_column.get_active ()));
             });
 
             column_x.set_value (settings.get_int ("column-x"));
