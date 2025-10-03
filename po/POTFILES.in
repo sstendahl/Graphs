@@ -49,6 +49,11 @@ graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala
 graphs/sidebar/operations.vala
+graphs/style_editor/color_box.vala
+graphs/style_editor/color_manager.vala
+graphs/style_editor/editor.vala
+graphs/style_editor/editor_box.py
+graphs/style_editor/__init__.py
 graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.py
