@@ -254,76 +254,17 @@ namespace Graphs {
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
             style_grid.set_model (window.data.style_selection_model);
-
-            var action_group = new SimpleActionGroup ();
-            var import_action = new SimpleAction ("import_style", null);
-            import_action.activate.connect (() => {
-                import_style.begin (window, application.figure_style_manager);
-            });
-            action_group.add_action (import_action);
-            var create_action = new SimpleAction ("create_style", null);
-            create_action.activate.connect (() => {
-                var dialog = new AddStyleDialog (
-                    application.figure_style_manager,
-                    window,
-                    window.data.figure_settings
-                );
-                dialog.accept.connect ((file) => {
-                    var style_editor = application.create_style_editor ();
-                    style_editor.load (file);
-                    style_editor.present ();
-                });
-            });
-            action_group.add_action (create_action);
-            insert_action_group ("figure_settings", action_group);
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = object as ListItem;
+            ListItem item = (ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = object as ListItem;
-            StylePreview preview = item.get_child () as StylePreview;
-            Style style = item.get_item () as Style;
-            preview.style = style;
-            if (style.mutable && !preview.menu_button.get_visible ()) {
-                preview.menu_button.set_visible (true);
-
-                var action_group = new SimpleActionGroup ();
-                var open_action = new SimpleAction ("open", null);
-                open_action.activate.connect (() => {
-                    var style_editor = application.create_style_editor ();
-                    style_editor.load (style.file);
-                    style_editor.present ();
-                });
-                action_group.add_action (open_action);
-                var open_with_action = new SimpleAction ("open_with", null);
-                open_with_action.activate.connect (() => {
-                    var launcher = new FileLauncher (style.file);
-                    launcher.set_always_ask (true);
-                    launcher.launch.begin (window, null);
-                });
-                action_group.add_action (open_with_action);
-                var delete_action = new SimpleAction ("delete", null);
-                delete_action.activate.connect (() => {
-                    var dialog = Tools.build_dialog ("delete_style") as Adw.AlertDialog;
-                    string msg = _("Are you sure you want to delete %s?");
-                    dialog.set_body (msg.printf (style.name));
-                    dialog.response.connect ((d, response) => {
-                        if (response != "delete") return;
-                        try {
-                            style.file.trash ();
-                        } catch {
-                            assert_not_reached ();
-                        }
-                    });
-                    dialog.present (this);
-                });
-                action_group.add_action (delete_action);
-                preview.menu_button.insert_action_group ("style", action_group);
-            }
+            ListItem item = (ListItem) object;
+            StylePreview preview = (StylePreview) item.get_child ();
+            preview.style = (Style) item.get_item ();
         }
     }
 }

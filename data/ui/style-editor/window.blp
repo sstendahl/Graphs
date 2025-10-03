@@ -62,14 +62,6 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
         [top]
         Adw.HeaderBar {
           MenuButton {
-            icon-name: "open-menu-symbolic";
-            menu-model: empty_menu;
-            tooltip-text: _("Open Application Menu");
-            primary: true;
-          }
-
-          [end]
-          MenuButton {
             icon-name: "list-add-symbolic";
             tooltip-text: _("Add New Style");
             always-show-arrow: true;
@@ -77,6 +69,14 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
             popover: PopoverMenu {
               menu-model: add_style_menu;
             };
+          }
+
+          [end]
+          MenuButton {
+            icon-name: "open-menu-symbolic";
+            menu-model: empty_menu;
+            tooltip-text: _("Open Application Menu");
+            primary: true;
           }
         }
 
@@ -251,10 +251,6 @@ menu primary_menu {
 }
 
 menu empty_menu {
-  section {
-    item (_("Open Style…"), "win.open-style")
-  }
-
   section {
     item (_("Keyboard Shortcuts"), "win.show-shortcuts")
     item (_("Help"), "app.help")
