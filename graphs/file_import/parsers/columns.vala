@@ -129,10 +129,10 @@ namespace Graphs {
 
                 string[] values = split_line (line);
                 bool single_column = settings.get_boolean ("single-column");
+                validate_column_indices (values.length, line_number);
                 if (single_column) {
                     parsed = parse_single_column (values[column_y], data_index, xdata_list, ydata_list);
                 } else {
-                    validate_column_indices (values.length, line_number);
                     parsed = parse_multi_column (values[column_x], values[column_y], xdata_list, ydata_list);
                 }
 
@@ -275,7 +275,7 @@ namespace Graphs {
             });
 
             single_column.set_active (settings.get_boolean ("single-column"));
-            single_column.notify["activated"].connect (() => {
+            single_column.notify["active"].connect (() => {
                 settings.set_boolean ("single-column", (single_column.get_active ()));
             });
 
