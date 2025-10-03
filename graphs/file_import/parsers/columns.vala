@@ -71,10 +71,6 @@ namespace Graphs {
                 default: assert_not_reached ();
             }
         }
-
-        public string get_decimal_char () {
-            return this == COMMA ? "," : ".";
-        }
     }
 
     /**
@@ -86,16 +82,14 @@ namespace Graphs {
         private int column_y;
         private ColumnsSeparator separator;
         private Regex delimiter_regex;
-        private int skip_rows;
         private string filename;
 
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
             this.filename = settings.file.get_basename ();
+            this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
             this.column_x = settings.get_int ("column-x");
             this.column_y = settings.get_int ("column-y");
-            this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
-            this.skip_rows = settings.get_int ("skip-rows");
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
             string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
@@ -108,18 +102,18 @@ namespace Graphs {
         }
 
         public void parse (out double[] xdata, out double[] ydata,
-                          out string? xlabel, out string? ylabel) throws Error {
+                          out string xlabel, out string ylabel) throws Error {
             var stream = new DataInputStream (settings.file.read ());
             var xdata_list = new ArrayList<double?> ();
             var ydata_list = new ArrayList<double?> ();
-            xlabel = null;
-            ylabel = null;
+            xlabel = "";
+            ylabel = "";
             bool parsed = false;
             string? line;
+            string[]? previous_line_values = null;
             int line_number = 0;
             int data_index = 0;
-            string[]? previous_line_values = null;
-            bool found_first_data = false;
+            int skip_rows = settings.get_int ("skip-rows");
 
             while ((line = stream.read_line ()) != null) {
                 line_number++;
@@ -143,9 +137,8 @@ namespace Graphs {
                 }
 
                 if (parsed) {
-                    if (!found_first_data && previous_line_values != null) {
+                    if (previous_line_values != null) {
                         extract_headers (previous_line_values, ref xlabel, ref ylabel);
-                        found_first_data = true;
                     }
                     data_index++;
                     previous_line_values = null;
@@ -184,7 +177,7 @@ namespace Graphs {
             if (column_x >= num_columns || column_y >= num_columns) {
                 int bad_column = int.max (column_x, column_y);
                 throw new ParseError.INDEX_ERROR (
-                    _("Index error for %s, cannot access index %d on line %d, only %d columns were found")
+                    _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
                     .printf (filename, bad_column, index, num_columns)
                 );
             }
@@ -193,7 +186,7 @@ namespace Graphs {
         private bool parse_multi_column (string x_value, string y_value,
                                          ArrayList<double?> xdata,
                                          ArrayList<double?> ydata) {
-            // Placeholder assignment to prevent `The name `y' does not exist in the context of` errors
+            // Placeholder assignment to prevent `Use of possibly unassigned local variable `y'` errors
             double x = 0.0;
             double y = 0.0;
 
@@ -211,7 +204,7 @@ namespace Graphs {
         private bool parse_single_column (string y_value, int index,
                                           ArrayList<double?> xdata,
                                           ArrayList<double?> ydata) {
-            // Placeholder assignment to prevent `The name `y' does not exist in the context of` errors
+            // Placeholder assignment to prevent `Use of possibly unassigned local variable `y'` errors
             double y = 0.0;
             string normalized = normalize_decimal_separator (y_value);
 
@@ -223,30 +216,18 @@ namespace Graphs {
             return false;
         }
 
-        private void extract_headers (string[] values,
-                                     ref string? xlabel,
-                                     ref string? ylabel) {
-            if (values.length == 1) {
-                if (values[0].length > 0) {
-                    ylabel = values[0];
-                }
-            } else {
-                if (values[column_x].length > 0) {
-                    xlabel = values[column_x];
-                }
-                if (values[column_y].length > 0) {
-                    ylabel = values[column_y];
-                }
-            }
+        private void extract_headers (string[] values, ref string xlabel, ref string ylabel) {
+            if (!settings.get_boolean ("single-column")) xlabel = values[column_x];
+            ylabel = values[column_y];
         }
 
         private string normalize_decimal_separator (string str) {
-            string decimal_char = separator.get_decimal_char ();
+            string decimal_char = (separator == ColumnsSeparator.COMMA ? "," : ".");
             string thousands_char = decimal_char == "," ? "." : ",";
             string cleaned = str.replace (thousands_char, "");
 
-            if (decimal_char != ".") {
-                cleaned = cleaned.replace (decimal_char, ".");
+            if (decimal_char == ",") {
+                cleaned = cleaned.replace (",", ".");
             }
 
             return cleaned;

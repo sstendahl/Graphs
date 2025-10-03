@@ -1,7 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing columns files."""
 from gettext import pgettext as C_
+
 from gi.repository import GLib, Graphs
+
 from graphs import item, misc
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
@@ -27,7 +29,7 @@ class ColumnsParser(Parser):
         except GLib.Error as e:
             raise ParseError(e.message) from e
         item_ = item.DataItem.new(style, xdata, ydata, xlabel=xlabel,
-            ylabel=ylabel, name=settings.get_filename())
+                                  ylabel=ylabel, name=settings.get_filename())
         return [item_]
 
     @staticmethod
