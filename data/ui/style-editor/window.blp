@@ -42,6 +42,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
       style_grid.max-columns: 2;
+      style_menu_button.visible: true;
     }
   }
 
@@ -52,6 +53,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
       style_grid.max-columns: 2;
+      style_menu_button.visible: true;
       sheet_box.height-request: 200;
     }
   }
@@ -61,16 +63,6 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
-          MenuButton {
-            icon-name: "list-add-symbolic";
-            tooltip-text: _("Add New Style");
-            always-show-arrow: true;
-
-            popover: PopoverMenu {
-              menu-model: add_style_menu;
-            };
-          }
-
           [end]
           MenuButton {
             icon-name: "open-menu-symbolic";
@@ -81,21 +73,64 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
         }
 
         [bottom]
-        Box {
-          margin-top: 12;
-          margin-bottom: 12;
-          orientation: vertical;
+        Adw.Clamp {
+          child: Box {
+            margin-start: 12;
+            margin-end: 12;
+            margin-top: 12;
+            margin-bottom: 12;
+            spacing: 24;
+            homogeneous: true;
 
-          Button {
-            label: _("Open File…");
-            halign: center;
-            action-name: "win.open-style";
+            MenuButton style_menu_button {
+              icon-name: "list-add-symbolic";
+              tooltip-text: _("Add New Style");
+              always-show-arrow: true;
+              visible: false;
 
-            styles [
-              "pill",
-              "suggested-action",
-            ]
-          }
+              popover: PopoverMenu {
+                menu-model: style_menu;
+              };
+
+              styles [
+                "pill",
+              ]
+            }
+
+            Button {
+              label: _("Import File…");
+              halign: center;
+              action-name: "win.import-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+              ]
+            }
+
+            Button {
+              label: _("Open File…");
+              halign: center;
+              action-name: "win.open-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+                "suggested-action",
+              ]
+            }
+
+            Button {
+              label: _("Create Style…");
+              halign: center;
+              action-name: "win.create-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+              ]
+            }
+          };
         }
 
         content: Adw.Clamp {
@@ -258,16 +293,10 @@ menu empty_menu {
   }
 }
 
-menu add_style_menu {
+menu style_menu {
   section {
-    item {
-      label: _("Import Style…");
-      action: "win.import_style";
-    }
-
-    item {
-      label: _("Create Style…");
-      action: "win.create_style";
-    }
+    item (_("Import File…"), "win.import-style")
+    item (_("Open File…"), "win.open-style")
+    item (_("Create Style…"), "win.create-style")
   }
 }

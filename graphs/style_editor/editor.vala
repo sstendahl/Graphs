@@ -117,14 +117,14 @@ namespace Graphs {
             });
             add_action (show_shortcuts_action);
 
-            var import_action = new SimpleAction ("import_style", null);
+            var import_action = new SimpleAction ("import-style", null);
             import_action.activate.connect (() => {
                 var application = (Application) application;
                 import_style.begin (this, application.figure_style_manager);
             });
             add_action (import_action);
 
-            var create_action = new SimpleAction ("create_style", null);
+            var create_action = new SimpleAction ("create-style", null);
             create_action.activate.connect (() => {
                 var application = (Application) application;
                 var dialog = new AddStyleDialog (application.figure_style_manager, this);
