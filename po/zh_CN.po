@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-01 17:00+0000\n"
-"PO-Revision-Date: 2025-10-02 07:23+0800\n"
+"POT-Creation-Date: 2025-10-03 15:21+0000\n"
+"PO-Revision-Date: 2025-10-04 07:42+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -104,6 +104,26 @@ msgstr "新建窗口"
 msgid "Style Editor"
 msgstr "样式编辑器"
 
+#: data/ui/dialogs/beta-disallowed.blp:5
+msgid "Beta Project"
+msgstr "Beta 工程"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid ""
+"The project you are trying to import is from a beta version of Graphs. It "
+"may contain invalid data."
+msgstr "您正尝试导入的工程来自 beta 版本的 Graphs。其可能包含无效数据。"
+
+#: data/ui/dialogs/beta-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "继续"
+
+#: data/ui/dialogs/beta-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "中止"
+
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "删除样式吗？"
@@ -120,6 +140,25 @@ msgstr "取消"
 #: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "删除"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+msgid "Legacy Project"
+msgstr "过时工程"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to "
+"your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"您正尝试打开过时版本的工程。\n"
+"\n"
+"过时版本工程的格式可能包含危险代码且可能损害您的系统。\n"
+"\n"
+"请仅在您信任此文件作者的情况下执行。"
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -825,6 +864,142 @@ msgstr "添加方程式…"
 msgid "Generate Data…"
 msgstr "生成数据…"
 
+#: data/ui/sidebar/operations.blp:20
+msgid "Adjust"
+msgstr "调整"
+
+#: data/ui/sidebar/operations.blp:30
+msgid "Combine all selected data"
+msgstr "组合所有选择的数据"
+
+#: data/ui/sidebar/operations.blp:41
+msgid "Combine"
+msgstr "组合"
+
+#: data/ui/sidebar/operations.blp:46
+msgid "Cut selected data"
+msgstr "剪切选择的数据"
+
+#: data/ui/sidebar/operations.blp:57
+msgid "Cut"
+msgstr "剪切"
+
+#: data/ui/sidebar/operations.blp:62
+msgid "Shift all data vertically with respect to each other"
+msgstr "将所有数据保持现有状态下竖直偏移"
+
+#: data/ui/sidebar/operations.blp:73
+msgid "Shift"
+msgstr "偏移"
+
+#: data/ui/sidebar/operations.blp:79
+msgid "Normalize data"
+msgstr "标准化数据"
+
+#: data/ui/sidebar/operations.blp:90
+msgid "Normalize"
+msgstr "标准化"
+
+#: data/ui/sidebar/operations.blp:96
+msgid "Smoothen data"
+msgstr "平滑数据"
+
+#: data/ui/sidebar/operations.blp:110
+msgid "Smoothen"
+msgstr "平滑"
+
+#: data/ui/sidebar/operations.blp:116
+msgid "Center data"
+msgstr "居中数据"
+
+#: data/ui/sidebar/operations.blp:129
+msgid "Center"
+msgstr "居中"
+
+#: data/ui/sidebar/operations.blp:137 data/ui/transform.blp:23
+msgid "Transform"
+msgstr "变换"
+
+#: data/ui/sidebar/operations.blp:147
+msgid "Get the derivative of the data"
+msgstr "获取数据的导数"
+
+#: data/ui/sidebar/operations.blp:158
+msgid "Derivative"
+msgstr "导数"
+
+#: data/ui/sidebar/operations.blp:164
+msgid "Get the indefinite integral of the data"
+msgstr "获取数据的不定积分"
+
+#: data/ui/sidebar/operations.blp:175
+msgid "Integral"
+msgstr "积分"
+
+#: data/ui/sidebar/operations.blp:181
+msgid "Get the Fast Fourier Transform of the data"
+msgstr "获取数据的快速傅里叶变换"
+
+#: data/ui/sidebar/operations.blp:193
+msgid "FFT"
+msgstr "FFT"
+
+#: data/ui/sidebar/operations.blp:199
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr "获取数据的快速傅里叶逆变换"
+
+#: data/ui/sidebar/operations.blp:211
+msgid "Inverse FFT"
+msgstr "逆向 FFT"
+
+#: data/ui/sidebar/operations.blp:217
+msgid "Perform custom transformations on the data"
+msgstr "对数据执行自定义转换"
+
+#: data/ui/sidebar/operations.blp:229
+msgid "Custom Transformation"
+msgstr "自定义变换"
+
+#: data/ui/sidebar/operations.blp:237
+msgid "Modify"
+msgstr "修改"
+
+#: data/ui/sidebar/operations.blp:267
+msgid "Translate X"
+msgstr "平移 X"
+
+#: data/ui/sidebar/operations.blp:294
+msgid "Translate Y"
+msgstr "平移 Y"
+
+#: data/ui/sidebar/operations.blp:321
+msgid "Multiply X"
+msgstr "乘以 X"
+
+#: data/ui/sidebar/operations.blp:348
+msgid "Multiply Y"
+msgstr "乘以 Y"
+
+#: data/ui/sidebar/operations.blp:359
+msgid "At Maximum Y Value"
+msgstr "以 Y 最大值"
+
+#: data/ui/sidebar/operations.blp:365
+msgid "At Middle X Value"
+msgstr "以 X 中间值"
+
+#: data/ui/sidebar/operations.blp:374 data/ui/smoothen-settings.blp:35
+msgid "Savitzky–Golay Filter"
+msgstr "SG 滤波器"
+
+#: data/ui/sidebar/operations.blp:380 data/ui/smoothen-settings.blp:58
+msgid "Moving Average"
+msgstr "移动平均"
+
+#: data/ui/sidebar/operations.blp:388
+msgid "Advanced Settings"
+msgstr "高级设置"
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "添加方程式"
@@ -1041,142 +1216,6 @@ msgstr "移动项目"
 #: data/ui/item-box.blp:75
 msgid "Remove Item"
 msgstr "移除项目"
-
-#: data/ui/operations.blp:20
-msgid "Adjust"
-msgstr "调整"
-
-#: data/ui/operations.blp:30
-msgid "Combine all selected data"
-msgstr "组合所有选择的数据"
-
-#: data/ui/operations.blp:41
-msgid "Combine"
-msgstr "组合"
-
-#: data/ui/operations.blp:46
-msgid "Cut selected data"
-msgstr "剪切选择的数据"
-
-#: data/ui/operations.blp:57
-msgid "Cut"
-msgstr "剪切"
-
-#: data/ui/operations.blp:62
-msgid "Shift all data vertically with respect to each other"
-msgstr "将所有数据保持现有状态下竖直偏移"
-
-#: data/ui/operations.blp:73
-msgid "Shift"
-msgstr "偏移"
-
-#: data/ui/operations.blp:79
-msgid "Normalize data"
-msgstr "标准化数据"
-
-#: data/ui/operations.blp:90
-msgid "Normalize"
-msgstr "标准化"
-
-#: data/ui/operations.blp:96
-msgid "Smoothen data"
-msgstr "平滑数据"
-
-#: data/ui/operations.blp:110
-msgid "Smoothen"
-msgstr "平滑"
-
-#: data/ui/operations.blp:116
-msgid "Center data"
-msgstr "居中数据"
-
-#: data/ui/operations.blp:129
-msgid "Center"
-msgstr "居中"
-
-#: data/ui/operations.blp:137 data/ui/transform.blp:23
-msgid "Transform"
-msgstr "变换"
-
-#: data/ui/operations.blp:147
-msgid "Get the derivative of the data"
-msgstr "获取数据的导数"
-
-#: data/ui/operations.blp:158
-msgid "Derivative"
-msgstr "导数"
-
-#: data/ui/operations.blp:164
-msgid "Get the indefinite integral of the data"
-msgstr "获取数据的不定积分"
-
-#: data/ui/operations.blp:175
-msgid "Integral"
-msgstr "积分"
-
-#: data/ui/operations.blp:181
-msgid "Get the Fast Fourier Transform of the data"
-msgstr "获取数据的快速傅里叶变换"
-
-#: data/ui/operations.blp:193
-msgid "FFT"
-msgstr "FFT"
-
-#: data/ui/operations.blp:199
-msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "获取数据的快速傅里叶逆变换"
-
-#: data/ui/operations.blp:211
-msgid "Inverse FFT"
-msgstr "逆向 FFT"
-
-#: data/ui/operations.blp:217
-msgid "Perform custom transformations on the data"
-msgstr "对数据执行自定义转换"
-
-#: data/ui/operations.blp:229
-msgid "Custom Transformation"
-msgstr "自定义变换"
-
-#: data/ui/operations.blp:237
-msgid "Modify"
-msgstr "修改"
-
-#: data/ui/operations.blp:267
-msgid "Translate X"
-msgstr "平移 X"
-
-#: data/ui/operations.blp:294
-msgid "Translate Y"
-msgstr "平移 Y"
-
-#: data/ui/operations.blp:321
-msgid "Multiply X"
-msgstr "乘以 X"
-
-#: data/ui/operations.blp:348
-msgid "Multiply Y"
-msgstr "乘以 Y"
-
-#: data/ui/operations.blp:359
-msgid "At Maximum Y Value"
-msgstr "以 Y 最大值"
-
-#: data/ui/operations.blp:365
-msgid "At Middle X Value"
-msgstr "以 X 中间值"
-
-#: data/ui/operations.blp:374 data/ui/smoothen-settings.blp:35
-msgid "Savitzky–Golay Filter"
-msgstr "SG 滤波器"
-
-#: data/ui/operations.blp:380 data/ui/smoothen-settings.blp:58
-msgid "Moving Average"
-msgstr "移动平均"
-
-#: data/ui/operations.blp:388
-msgid "Advanced Settings"
-msgstr "高级设置"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
@@ -1710,7 +1749,7 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:15
+#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
@@ -1895,7 +1934,7 @@ msgstr "无法解析样式 {stylename}，加载系统首选样式"
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:559
+#: graphs/data.py:564
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -1972,35 +2011,35 @@ msgstr "{name}：执行该操作时出错"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
-#: graphs/project.py:50
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "工程文件缺失数据"
 
-#: graphs/project.py:64
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
 
-#: graphs/project.py:237
+#: graphs/project.py:262
 msgid "Failed to do legacy migration"
 msgstr "旧版本文件迁移失败"
 
-#: graphs/project.py:239
+#: graphs/project.py:264
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/project.py:243
+#: graphs/project.py:270
 msgid "Failed to migrate project"
 msgstr "迁移工程失败"
 
-#: graphs/project.py:247
+#: graphs/project.py:276
 msgid "Failed to validate project"
 msgstr "校验工程失败"
 
-#: graphs/project.vala:22
+#: graphs/project.vala:31
 msgid "Saved Project"
 msgstr "保存的工程"
 
-#: graphs/project.vala:37
+#: graphs/project.vala:46
 msgid "Project"
 msgstr "工程"
 
