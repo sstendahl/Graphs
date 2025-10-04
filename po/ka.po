@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-09-28 23:44+0000\n"
-"PO-Revision-Date: 2025-09-29 16:36+0200\n"
+"POT-Creation-Date: 2025-10-03 23:44+0000\n"
+"PO-Revision-Date: 2025-10-04 07:12+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -85,6 +85,22 @@ msgstr "ახალი ფანჯარა"
 msgid "Style Editor"
 msgstr "სტილის რედაქტორი"
 
+#: data/ui/dialogs/beta-disallowed.blp:5
+msgid "Beta Project"
+msgstr "ბეტა პროექტი"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid "The project you are trying to import is from a beta version of Graphs. It may contain invalid data."
+msgstr "პროექტი, რომლის შემოტანასაც ცდილობთ, Graphs-ის ბეტა ვერსიაშია შექმნილი. ის, შეიძლება, არასწორ მონაცემებს შეიცავდეს."
+
+#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "გაგრძელება"
+
+#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "შეწყვეტა"
+
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "წავშალო სტილი?"
@@ -97,6 +113,24 @@ msgstr "შეწყვეტა"
 #: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "წაშლა"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+msgid "Legacy Project"
+msgstr "მოძველებული პროექტი"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"ცდილობთ, გახსნათ მოძველებული პროექტი.\n"
+"\n"
+"მოძველებული პროექტის ფორმატი, შეიძლება, საშიშ კოდს შეიცავდეს და თქვენს სისტემას რამე დაუშავოს.\n"
+"\n"
+"გააგრძელეთ, მხოლოდ, მაშინ, თუ ამ ფაილის ავტორს ენდობით."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -754,6 +788,142 @@ msgstr "განტოლების დამატება…"
 msgid "Generate Data…"
 msgstr "მონაცემების გენერაცია…"
 
+#: data/ui/sidebar/operations.blp:20
+msgid "Adjust"
+msgstr "მორგება"
+
+#: data/ui/sidebar/operations.blp:30
+msgid "Combine all selected data"
+msgstr "მონიშნული მონაცემების გაერთიანება"
+
+#: data/ui/sidebar/operations.blp:41
+msgid "Combine"
+msgstr "კომბინირება"
+
+#: data/ui/sidebar/operations.blp:46
+msgid "Cut selected data"
+msgstr "მონიშნული მონაცემების ამოჭრა"
+
+#: data/ui/sidebar/operations.blp:57
+msgid "Cut"
+msgstr "ამოჭრა"
+
+#: data/ui/sidebar/operations.blp:62
+msgid "Shift all data vertically with respect to each other"
+msgstr "მონაცემების წანაცვლება ვერტიკალურად ერთმანეთის გათვალისწინებით"
+
+#: data/ui/sidebar/operations.blp:73
+msgid "Shift"
+msgstr "Shift"
+
+#: data/ui/sidebar/operations.blp:79
+msgid "Normalize data"
+msgstr "მონაცემების ნორმალიზაცია"
+
+#: data/ui/sidebar/operations.blp:90
+msgid "Normalize"
+msgstr "ნორმალიზაცია"
+
+#: data/ui/sidebar/operations.blp:96
+msgid "Smoothen data"
+msgstr "მონაცემების მოგლუვება"
+
+#: data/ui/sidebar/operations.blp:110
+msgid "Smoothen"
+msgstr "მოგლუვება"
+
+#: data/ui/sidebar/operations.blp:116
+msgid "Center data"
+msgstr "მონაცემების დაცენტრება"
+
+#: data/ui/sidebar/operations.blp:129
+msgid "Center"
+msgstr "ცენტრი"
+
+#: data/ui/sidebar/operations.blp:137 data/ui/transform.blp:23
+msgid "Transform"
+msgstr "გარდაქმნა"
+
+#: data/ui/sidebar/operations.blp:147
+msgid "Get the derivative of the data"
+msgstr "მონაცემის წარმოებულის მიღება"
+
+#: data/ui/sidebar/operations.blp:158
+msgid "Derivative"
+msgstr "წარმოებული"
+
+#: data/ui/sidebar/operations.blp:164
+msgid "Get the indefinite integral of the data"
+msgstr "მონაცემის უსასრულო ინტეგრალის მიღება"
+
+#: data/ui/sidebar/operations.blp:175
+msgid "Integral"
+msgstr "ინტეგრალი"
+
+#: data/ui/sidebar/operations.blp:181
+msgid "Get the Fast Fourier Transform of the data"
+msgstr "მონაცემების სწრაფი ფურიეს გარდაქმნის მიღება"
+
+#: data/ui/sidebar/operations.blp:193
+msgid "FFT"
+msgstr "FFT"
+
+#: data/ui/sidebar/operations.blp:199
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr "მონაცემების ინვერსიული სწრაფი ფურიეს გარდაქმნის მიღება"
+
+#: data/ui/sidebar/operations.blp:211
+msgid "Inverse FFT"
+msgstr "ინვერსიული FFT"
+
+#: data/ui/sidebar/operations.blp:217
+msgid "Perform custom transformations on the data"
+msgstr "მონაცემებზე თქვენი ტრანსფორმაციების გადატარება"
+
+#: data/ui/sidebar/operations.blp:229
+msgid "Custom Transformation"
+msgstr "მომხმარებლის გარდაქმნა"
+
+#: data/ui/sidebar/operations.blp:237
+msgid "Modify"
+msgstr "შეცვლა"
+
+#: data/ui/sidebar/operations.blp:267
+msgid "Translate X"
+msgstr "გადატანა X-ით"
+
+#: data/ui/sidebar/operations.blp:294
+msgid "Translate Y"
+msgstr "გადატანა Y-ით"
+
+#: data/ui/sidebar/operations.blp:321
+msgid "Multiply X"
+msgstr "X-ის გამრავლება"
+
+#: data/ui/sidebar/operations.blp:348
+msgid "Multiply Y"
+msgstr "Y-ის გამრავლება"
+
+#: data/ui/sidebar/operations.blp:359
+msgid "At Maximum Y Value"
+msgstr "Y-ის მაქსიმალურ მნიშვნელობასთან"
+
+#: data/ui/sidebar/operations.blp:365
+msgid "At Middle X Value"
+msgstr "X-ის საშუალო მნიშვნელობისას"
+
+#: data/ui/sidebar/operations.blp:374 data/ui/smoothen-settings.blp:35
+msgid "Savitzky–Golay Filter"
+msgstr "სავიცკი-გოლეის ფილტრი"
+
+#: data/ui/sidebar/operations.blp:380 data/ui/smoothen-settings.blp:58
+msgid "Moving Average"
+msgstr "მცოცავი საშუალო"
+
+#: data/ui/sidebar/operations.blp:388
+msgid "Advanced Settings"
+msgstr "დამატებითი პარამეტრები"
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "განტოლების დამატება"
@@ -969,142 +1139,6 @@ msgstr "ელემენტის გადაადგილება"
 #: data/ui/item-box.blp:75
 msgid "Remove Item"
 msgstr "ჩანაწერისწაშლა"
-
-#: data/ui/operations.blp:20
-msgid "Adjust"
-msgstr "მორგება"
-
-#: data/ui/operations.blp:30
-msgid "Combine all selected data"
-msgstr "მონიშნული მონაცემების გაერთიანება"
-
-#: data/ui/operations.blp:41
-msgid "Combine"
-msgstr "კომბინირება"
-
-#: data/ui/operations.blp:46
-msgid "Cut selected data"
-msgstr "მონიშნული მონაცემების ამოჭრა"
-
-#: data/ui/operations.blp:57
-msgid "Cut"
-msgstr "ამოჭრა"
-
-#: data/ui/operations.blp:62
-msgid "Shift all data vertically with respect to each other"
-msgstr "მონაცემების წანაცვლება ვერტიკალურად ერთმანეთის გათვალისწინებით"
-
-#: data/ui/operations.blp:73
-msgid "Shift"
-msgstr "Shift"
-
-#: data/ui/operations.blp:79
-msgid "Normalize data"
-msgstr "მონაცემების ნორმალიზაცია"
-
-#: data/ui/operations.blp:90
-msgid "Normalize"
-msgstr "ნორმალიზაცია"
-
-#: data/ui/operations.blp:96
-msgid "Smoothen data"
-msgstr "მონაცემების მოგლუვება"
-
-#: data/ui/operations.blp:110
-msgid "Smoothen"
-msgstr "მოგლუვება"
-
-#: data/ui/operations.blp:116
-msgid "Center data"
-msgstr "მონაცემების დაცენტრება"
-
-#: data/ui/operations.blp:129
-msgid "Center"
-msgstr "ცენტრი"
-
-#: data/ui/operations.blp:137 data/ui/transform.blp:23
-msgid "Transform"
-msgstr "გარდაქმნა"
-
-#: data/ui/operations.blp:147
-msgid "Get the derivative of the data"
-msgstr "მონაცემის წარმოებულის მიღება"
-
-#: data/ui/operations.blp:158
-msgid "Derivative"
-msgstr "წარმოებული"
-
-#: data/ui/operations.blp:164
-msgid "Get the indefinite integral of the data"
-msgstr "მონაცემის უსასრულო ინტეგრალის მიღება"
-
-#: data/ui/operations.blp:175
-msgid "Integral"
-msgstr "ინტეგრალი"
-
-#: data/ui/operations.blp:181
-msgid "Get the Fast Fourier Transform of the data"
-msgstr "მონაცემების სწრაფი ფურიეს გარდაქმნის მიღება"
-
-#: data/ui/operations.blp:193
-msgid "FFT"
-msgstr "FFT"
-
-#: data/ui/operations.blp:199
-msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "მონაცემების ინვერსიული სწრაფი ფურიეს გარდაქმნის მიღება"
-
-#: data/ui/operations.blp:211
-msgid "Inverse FFT"
-msgstr "ინვერსიული FFT"
-
-#: data/ui/operations.blp:217
-msgid "Perform custom transformations on the data"
-msgstr "მონაცემებზე თქვენი ტრანსფორმაციების გადატარება"
-
-#: data/ui/operations.blp:229
-msgid "Custom Transformation"
-msgstr "მომხმარებლის გარდაქმნა"
-
-#: data/ui/operations.blp:237
-msgid "Modify"
-msgstr "შეცვლა"
-
-#: data/ui/operations.blp:267
-msgid "Translate X"
-msgstr "გადატანა X-ით"
-
-#: data/ui/operations.blp:294
-msgid "Translate Y"
-msgstr "გადატანა Y-ით"
-
-#: data/ui/operations.blp:321
-msgid "Multiply X"
-msgstr "X-ის გამრავლება"
-
-#: data/ui/operations.blp:348
-msgid "Multiply Y"
-msgstr "Y-ის გამრავლება"
-
-#: data/ui/operations.blp:359
-msgid "At Maximum Y Value"
-msgstr "Y-ის მაქსიმალურ მნიშვნელობასთან"
-
-#: data/ui/operations.blp:365
-msgid "At Middle X Value"
-msgstr "X-ის საშუალო მნიშვნელობისას"
-
-#: data/ui/operations.blp:374 data/ui/smoothen-settings.blp:35
-msgid "Savitzky–Golay Filter"
-msgstr "სავიცკი-გოლეის ფილტრი"
-
-#: data/ui/operations.blp:380 data/ui/smoothen-settings.blp:58
-msgid "Moving Average"
-msgstr "მცოცავი საშუალო"
-
-#: data/ui/operations.blp:388
-msgid "Advanced Settings"
-msgstr "დამატებითი პარამეტრები"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
@@ -1636,10 +1670,29 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:15
+#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-ის პროექტის ფაილი"
+
+#: graphs/file_import/parsers/sql.py:24
+msgctxt "import-mode"
+msgid "Database"
+msgstr "მონაცემთა ბაზა"
+
+#: graphs/file_import/parsers/sql.py:25
+msgctxt "file-filter"
+msgid "SQLite Database"
+msgstr "SQLite მონაცემთა ბაზა"
+
+#: graphs/file_import/parsers/sql.py:42
+#, python-brace-format
+msgid "Could not import data from table \"{table_name}\", no numeric columns were found"
+msgstr "მონაცემების შემოტანა ცხრილიდან \"{table_name}\" შეუძლებელია, რადგან რიცხვითი სვეტები აღმოჩენილი არაა"
+
+#: graphs/file_import/parsers/sql.py:52
+msgid "No data found in table column"
+msgstr "ცხრილის სვეტში მონაცემები აღმოჩენილი არაა"
 
 #: graphs/file_import/parsers/xrdml.py:20
 msgctxt "import-mode"
@@ -1677,7 +1730,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/წმ)"
 
-#: graphs/file_import/__init__.py:108
+#: graphs/file_import/__init__.py:109
 msgid "Import failed"
 msgstr "შემოტანა ჩავარდა"
 
@@ -1797,7 +1850,7 @@ msgstr "სტილის {stylename} დამუშავება შეუ�
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/data.py:559
+#: graphs/data.py:564
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
@@ -1874,35 +1927,35 @@ msgstr "{name}: ოპერაციის ჩატარების შე�
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
-#: graphs/project.py:50
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "პროექტის ფაილს მონაცემები აკლია"
 
-#: graphs/project.py:64
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "პროექტი უფრო Graphs-ის უფრო ახალი, არათავსებადი ვერსიისაა"
 
-#: graphs/project.py:237
+#: graphs/project.py:262
 msgid "Failed to do legacy migration"
 msgstr "მოძველებული მიგრაცია ჩავარდა"
 
-#: graphs/project.py:239
+#: graphs/project.py:264
 msgid "Failed to parse project file"
 msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
 
-#: graphs/project.py:243
+#: graphs/project.py:270
 msgid "Failed to migrate project"
 msgstr "პროექტის მიგრაცია ჩავარდა"
 
-#: graphs/project.py:247
+#: graphs/project.py:276
 msgid "Failed to validate project"
 msgstr "პროექტის გადამოწმება ჩავარდა"
 
-#: graphs/project.vala:22
+#: graphs/project.vala:31
 msgid "Saved Project"
 msgstr "შენახული პროექტი"
 
-#: graphs/project.vala:37
+#: graphs/project.vala:46
 msgid "Project"
 msgstr "პროექტი"
 
