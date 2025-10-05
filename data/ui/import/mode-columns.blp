@@ -33,7 +33,7 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
           Popover help_popover {
             position: bottom;
             Label {
-              label: _("Supports regex. Escape special characters with \\ (e.g., \\* for asterisk)");
+              label: _("Supports regex patterns.\nSome punctuation has special meaning, add \\ before these to use them literally: . * + ? [ ] ( ) { } | \\ ^ $\nFor example: \\. matches a period, \\* matches an asterisk.");
             }
           }
         }
