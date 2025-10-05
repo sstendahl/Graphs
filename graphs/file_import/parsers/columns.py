@@ -31,6 +31,7 @@ class ColumnsParser(Parser):
             raise ParseError(e.message) from e
 
         single_column = settings.get_boolean("single-column")
+        skip_rows = settings.get_int("skip-rows")
 
         xlabel = ""
         ylabel = ""
@@ -38,9 +39,8 @@ class ColumnsParser(Parser):
         ydata = []
 
         for index, (xval, yval) in enumerate(zip(xvalues, yvalues)):
-            x = utilities.string_to_float(xval)
             y = utilities.string_to_float(yval)
-
+            x = None if single_column else utilities.string_to_float(xval)
             # If values are None, we're likely looking at headers
             if y is None or (x is None and not single_column):
                 if not xdata:
@@ -48,11 +48,13 @@ class ColumnsParser(Parser):
                     ylabel = yval
                     continue
                 else:
-                    msg = _("Can't import from file, bad value on line "
-                            f"{index}")
+                    actual_line = skip_rows + index + 1
+                    msg = _("Can't import from file, bad value on"
+                            " line {line}").format(line=actual_line)
                     raise ParseError(msg)
+
             if single_column:
-                xdata.append(index + 1)
+                xdata.append(len(xdata) + 1)
                 ydata.append(y)
             else:
                 xdata.append(x)

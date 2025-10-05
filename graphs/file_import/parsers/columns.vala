@@ -113,13 +113,21 @@ namespace Graphs {
 
             while ((line = stream.read_line ()) != null) {
                 line_number++;
-                if (line_number <= skip_rows || line.strip ().length == 0) continue;
+                if (line_number <= skip_rows) continue;
 
-                string[] values = split_line (line);
-                validate_column_indices (values.length, line_number, single_column);
+                string xval;
+                string yval;
+                if (line.strip ().length == 0) {
+                    xval = "";
+                    yval = "";
+                }
+                else {
+                    string[] values = split_line (line);
+                    validate_column_indices (values.length, line_number, single_column);
 
-                string xval = single_column ? "" : normalize_decimal_separator (values[column_x]);
-                string yval = normalize_decimal_separator (values[column_y]);
+                    xval = single_column ? "" : normalize_decimal_separator (values[column_x]);
+                    yval = normalize_decimal_separator (values[column_y]);
+                }
 
                 xvals.add (xval);
                 yvals.add (yval);
