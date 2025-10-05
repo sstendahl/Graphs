@@ -2,10 +2,8 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsColumnsGroup: Adw.PreferencesGroup {
-
   Adw.PreferencesGroup {
     title: _("Format");
-
     Adw.ComboRow delimiter {
       title: _("Delimiter");
       subtitle: _("Character used to separate columns");
@@ -21,12 +19,26 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         ]
       };
     }
-
     Adw.EntryRow custom_delimiter {
       sensitive: false;
       title: _("Custom Delimiter");
-    }
 
+      [suffix]
+      Button help_button {
+        valign: center;
+        tooltip-text: _("More info");
+        styles ["flat"]
+        Adw.ButtonContent {
+          icon-name: "info-symbolic";
+          Popover help_popover {
+            position: bottom;
+            Label {
+              label: _("Supports regex. Escape special characters with \\ (e.g., \\* for asterisk)");
+            }
+          }
+        }
+      }
+    }
     Adw.ComboRow separator {
       title: _("Decimal Separator");
       model: StringList {
@@ -37,22 +49,14 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
       };
     }
   }
-
   Adw.PreferencesGroup {
     title: _("Columns");
-
-    Adw.SwitchRow single_column {
-      title: _("Single Column");
-      subtitle: _("Import only Y values, X values will be generated");
-    }
-
+    margin-top: 10;
     Adw.PreferencesRow {
       activatable: false;
-
       Box {
         orientation: horizontal;
         homogeneous: true;
-
         Adw.SpinRow column_x {
           title: _("X Column");
           sensitive: bind single_column.active inverted;
@@ -63,7 +67,6 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
             value: 0;
           };
         }
-
         Adw.SpinRow column_y {
           title: _("Y Column");
           adjustment: Adjustment {
@@ -75,8 +78,6 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         }
       }
     }
-
-
     Adw.SpinRow skip_rows {
       title: _("Skip Rows");
       subtitle: _("Number of rows to skip at the beginning");
@@ -86,6 +87,18 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         step-increment: 1;
         value: 0;
       };
+    }
+    Adw.SwitchRow single_column {
+      title: _("Single Column");
+      subtitle: _("Import only Y values, X values will be generated");
+    }
+    Adw.EntryRow single_stepsize {
+      sensitive: bind single_column.active;
+      title: _("Step Size");
+    }
+    Adw.EntryRow single_equation {
+      sensitive: bind single_column.active;
+      title: _("Equation");
     }
   }
 }

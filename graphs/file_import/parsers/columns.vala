@@ -101,66 +101,38 @@ namespace Graphs {
             }
         }
 
-        public void parse (out double[] xdata, out double[] ydata,
-                          out string xlabel, out string ylabel) throws Error {
+        public void parse (out string[] xvalues, out string[] yvalues) throws Error {
             var stream = new DataInputStream (settings.file.read ());
-            var xdata_list = new ArrayList<double?> ();
-            var ydata_list = new ArrayList<double?> ();
-            xlabel = "";
-            ylabel = "";
-            bool parsed = false;
+            var xvals = new ArrayList<string> ();
+            var yvals = new ArrayList<string> ();
+
             string? line;
-            string[]? previous_line_values = null;
             int line_number = 0;
-            int data_index = 0;
             int skip_rows = settings.get_int ("skip-rows");
+            bool single_column = settings.get_boolean ("single-column");
 
             while ((line = stream.read_line ()) != null) {
                 line_number++;
-
-                if (line_number <= skip_rows) {
-                    continue;
-                }
-
-                line = line.strip ();
-                if (line.length == 0) {
-                    continue;
-                }
+                if (line_number <= skip_rows || line.strip ().length == 0) continue;
 
                 string[] values = split_line (line);
-                bool single_column = settings.get_boolean ("single-column");
-                validate_column_indices (values.length, line_number);
-                if (single_column) {
-                    parsed = parse_single_column (values[column_y], data_index, xdata_list, ydata_list);
-                } else {
-                    parsed = parse_multi_column (values[column_x], values[column_y], xdata_list, ydata_list);
-                }
+                validate_column_indices (values.length, line_number, single_column);
 
-                if (parsed) {
-                    if (previous_line_values != null) {
-                        extract_headers (previous_line_values, ref xlabel, ref ylabel);
-                    }
-                    data_index++;
-                    previous_line_values = null;
-                } else {
-                    previous_line_values = values;
-                }
+                string xval = single_column ? "" : normalize_decimal_separator (values[column_x]);
+                string yval = normalize_decimal_separator (values[column_y]);
+
+                xvals.add (xval);
+                yvals.add (yval);
             }
 
             stream.close ();
 
-            if (xdata_list.size == 0) {
-                throw new ParseError.IMPORT_ERROR (
-                    _("Unable to import from file: no valid data found")
-                );
+            if (xvals.size == 0) {
+                throw new ParseError.IMPORT_ERROR (_("Unable to import from file: no lines found"));
             }
 
-            xdata = new double[xdata_list.size];
-            ydata = new double[ydata_list.size];
-            for (int i = 0; i < xdata_list.size; i++) {
-                xdata[i] = xdata_list[i];
-                ydata[i] = ydata_list[i];
-            }
+            xvalues = xvals.to_array ();
+            yvalues = yvals.to_array ();
         }
 
         private string[] split_line (string line) {
@@ -173,58 +145,24 @@ namespace Graphs {
             return values;
         }
 
-        private void validate_column_indices (int num_columns, int index) throws ParseError {
-            if (column_x >= num_columns || column_y >= num_columns) {
-                int bad_column = int.max (column_x, column_y);
+        private void validate_column_indices (int num_columns, int line_number, bool single_column) throws ParseError {
+            int required_column = single_column ? column_y : int.max (column_x, column_y);
+
+            if (num_columns < required_column + 1) {
                 throw new ParseError.INDEX_ERROR (
                     _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
-                    .printf (filename, bad_column, index, num_columns)
+                    .printf (filename, required_column, line_number, num_columns)
                 );
             }
         }
 
-        private bool parse_multi_column (string x_value, string y_value,
-                                         ArrayList<double?> xdata,
-                                         ArrayList<double?> ydata) {
-            // Placeholder assignment to prevent `Use of possibly unassigned local variable `y'` errors
-            double x = 0.0;
-            double y = 0.0;
-
-            string x_normalized = normalize_decimal_separator (x_value);
-            string y_normalized = normalize_decimal_separator (y_value);
-
-            if (double.try_parse (x_normalized, out x) && double.try_parse (y_normalized, out y)) {
-                xdata.add (x);
-                ydata.add (y);
-                return true;
-            }
-            return false;
-        }
-
-        private bool parse_single_column (string y_value, int index,
-                                          ArrayList<double?> xdata,
-                                          ArrayList<double?> ydata) {
-            // Placeholder assignment to prevent `Use of possibly unassigned local variable `y'` errors
-            double y = 0.0;
-            string normalized = normalize_decimal_separator (y_value);
-
-            if (double.try_parse (normalized, out y)) {
-                ydata.add (y);
-                xdata.add ((double) index);
-                return true;
-            }
-            return false;
-        }
-
-        private void extract_headers (string[] values, ref string xlabel, ref string ylabel) {
-            if (!settings.get_boolean ("single-column")) xlabel = values[column_x];
-            ylabel = values[column_y];
-        }
-
         private string normalize_decimal_separator (string str) {
+            // First remove spaces (used as thousands separators in some locales)
+            string cleaned = str.replace (" ", "");
             string decimal_char = (separator == ColumnsSeparator.COMMA ? "," : ".");
             string thousands_char = decimal_char == "," ? "." : ",";
-            string cleaned = str.replace (thousands_char, "");
+
+            cleaned = cleaned.replace (thousands_char, "");
 
             if (decimal_char == ",") {
                 cleaned = cleaned.replace (",", ".");
@@ -250,6 +188,10 @@ namespace Graphs {
         public unowned Adw.SpinRow column_y { get; }
         [GtkChild]
         public unowned Adw.SpinRow skip_rows { get; }
+        [GtkChild]
+        private unowned Button help_button { get; }
+        [GtkChild]
+        private unowned Popover help_popover { get; }
 
         public ColumnsGroup (ImportSettings settings) {
             setup_ui (settings);
@@ -267,6 +209,10 @@ namespace Graphs {
             custom_delimiter.set_text (settings.get_string ("custom-delimiter"));
             custom_delimiter.notify["text"].connect (() => {
                 settings.set_string ("custom-delimiter", custom_delimiter.get_text ());
+            });
+
+            help_button.clicked.connect (() => {
+                help_popover.popup ();
             });
 
             separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
