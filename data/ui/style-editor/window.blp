@@ -41,6 +41,8 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     setters {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
+      style_grid.max-columns: 2;
+      style_menu_button.visible: true;
     }
   }
 
@@ -50,6 +52,8 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
     setters {
       multi_layout_view.layout: bottom_sheet_layout;
       editor_headerbar.show-end-title-buttons: true;
+      style_grid.max-columns: 2;
+      style_menu_button.visible: true;
       sheet_box.height-request: 200;
     }
   }
@@ -59,6 +63,11 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
+          title-widget: Adw.WindowTitle {
+            title: _("Graphs Style Editor");
+          };
+
+          [end]
           MenuButton {
             icon-name: "open-menu-symbolic";
             menu-model: empty_menu;
@@ -67,19 +76,80 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
           }
         }
 
-        content: Adw.StatusPage {
-          title: _("Open a Style");
+        [bottom]
+        Adw.Clamp {
+          child: Box {
+            margin-start: 12;
+            margin-end: 12;
+            margin-top: 12;
+            margin-bottom: 12;
+            spacing: 24;
+            homogeneous: true;
 
-          Button {
-            label: _("Open…");
-            halign: center;
-            action-name: "win.open-style";
+            MenuButton style_menu_button {
+              icon-name: "list-add-symbolic";
+              tooltip-text: _("Add New Style");
+              always-show-arrow: true;
+              visible: false;
 
-            styles [
-              "pill",
-              "suggested-action",
-            ]
-          }
+              popover: PopoverMenu {
+                menu-model: style_menu;
+              };
+
+              styles [
+                "pill",
+              ]
+            }
+
+            Button {
+              label: _("Import File…");
+              halign: center;
+              action-name: "win.import-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+              ]
+            }
+
+            Button {
+              label: _("Create Style…");
+              halign: center;
+              action-name: "win.create-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+                "suggested-action",
+              ]
+            }
+
+            Button {
+              label: _("Open File…");
+              halign: center;
+              action-name: "win.open-style";
+              visible: bind style_menu_button.visible inverted;
+
+              styles [
+                "pill",
+              ]
+            }
+          };
+        }
+
+        content: Adw.Clamp {
+          child: ScrolledWindow {
+            child: Viewport {
+              child: GridView style_grid {
+                min-columns: bind style_grid.max-columns;
+                max-columns: 3;
+
+                styles [
+                  "style-grid",
+                ]
+              };
+            };
+          };
         };
       };
     }
@@ -210,6 +280,11 @@ menu primary_menu {
     item (_("Open Style…"), "win.open-style")
     item (_("Save Style…"), "win.save-style")
     item (_("Save Style as…"), "win.save-style-as")
+    item (_("Close Style…"), "win.close-style")
+  }
+
+  section {
+    item (_("New Window"), "app.style-editor")
   }
 
   section {
@@ -221,12 +296,20 @@ menu primary_menu {
 
 menu empty_menu {
   section {
-    item (_("Open Style…"), "win.open-style")
+    item (_("New Winodw"), "app.style-editor")
   }
 
   section {
     item (_("Keyboard Shortcuts"), "win.show-shortcuts")
     item (_("Help"), "app.help")
     item (_("About Graphs"), "app.about")
+  }
+}
+
+menu style_menu {
+  section {
+    item (_("Create Style…"), "win.create-style")
+    item (_("Import File…"), "win.import-style")
+    item (_("Open File…"), "win.open-style")
   }
 }
