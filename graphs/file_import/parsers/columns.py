@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing columns files."""
-from gettext import gettext as _
+import re
 from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs
 
-from graphs import item, misc, utilities
+from graphs import item, utilities
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
+
+import numexpr
 
 
 class ColumnsParser(Parser):
@@ -22,53 +24,51 @@ class ColumnsParser(Parser):
         )
 
     @staticmethod
-    def parse(settings, style) -> misc.ItemList:
+    def parse(settings, style) -> list:
         """Import data from columns file."""
         parser = Graphs.ColumnsParser.new(settings)
+        parser.connect(
+            "parse-float-request",
+            ColumnsParser._on_parse_float_request,
+        )
+        parser.connect(
+            "evaluate-equation-request",
+            ColumnsParser._on_evaluate_equation_request,
+        )
+
         try:
-            xvalues, yvalues = parser.parse()
+            xdata, ydata, xlabel, ylabel = parser.parse()
         except GLib.Error as e:
             raise ParseError(e.message) from e
-
-        single_column = settings.get_boolean("single-column")
-        skip_rows = settings.get_int("skip-rows")
-
-        xlabel = ""
-        ylabel = ""
-        xdata = []
-        ydata = []
-
-        for index, (xval, yval) in enumerate(zip(xvalues, yvalues)):
-            y = utilities.string_to_float(yval)
-            x = None if single_column else utilities.string_to_float(xval)
-            # If values are None, we're likely looking at headers
-            if y is None or (x is None and not single_column):
-                if not xdata:
-                    xlabel = "" if single_column else xval
-                    ylabel = yval
-                    continue
-                else:
-                    actual_line = skip_rows + index + 1
-                    msg = _("Can't import from file, bad value on"
-                            " line {line}").format(line=actual_line)
-                    raise ParseError(msg)
-
-            if single_column:
-                xdata.append(len(xdata) + 1)
-                ydata.append(y)
-            else:
-                xdata.append(x)
-                ydata.append(y)
-
-        if not xdata:
-            msg = _("Unable to import from file: no valid data found")
-            raise ParseError(msg)
 
         return [item.DataItem.new(
             style, xdata, ydata,
             xlabel=xlabel, ylabel=ylabel,
             name=settings.get_filename(),
         )]
+
+    @staticmethod
+    def _on_parse_float_request(parser, string: str) -> bool:
+        """Handle parse float request from Vala."""
+        value = utilities.string_to_float(string)
+        if value is None:
+            return False
+        parser.set_parse_float_helper(value)
+        return True
+
+    @staticmethod
+    def _on_evaluate_equation_request(
+            parser, equation: str, index: int) -> bool:
+        """Handle equation evaluation request from Vala."""
+        equation = utilities.preprocess(equation)
+        # Use word boundaries to avoid replacing `n` in function names
+        string_value = re.sub(r"\bn\b", f"{index}", equation)
+        value = numexpr.evaluate(string_value)
+        if value is None:
+            return False
+
+        parser.set_evaluate_equation_helper(value)
+        return True
 
     @staticmethod
     def init_settings_widgets(settings, box) -> None:

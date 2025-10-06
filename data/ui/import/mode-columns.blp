@@ -33,18 +33,24 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
           Popover help_popover {
             position: bottom;
             Label {
-              label: _("Supports regex patterns.\nSome punctuation has special meaning, add \\ before these to use them literally: . * + ? [ ] ( ) { } | \\ ^ $\nFor example: \\. matches a period, \\* matches an asterisk.");
+              label: "<b>Uses regex pattern matching</b>\n\nThese characters have special meanings in regex syntax:\n<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n\nTo match these characters literally, escape them with <b>\\</b>\n\n<b>Examples:</b>\n• <b>\\.</b> matches a period\n• <b>\\*</b> matches an asterisk\n• <b>\\|</b> matches a pipe character\n\n<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax...</a>";
+              use-markup: true;
+              margin-top: 12;
+              margin-bottom: 12;
+              margin-start: 12;
+              margin-end: 12;
             }
           }
         }
       }
     }
+
     Adw.ComboRow separator {
       title: _("Decimal Separator");
       model: StringList {
         strings [
-          C_("separator", "Comma (,)"),
-          C_("separator", "Period (.)"),
+          C_("separator", "Decimal comma (,)"),
+          C_("separator", "Decimal point (.)"),
         ]
       };
     }
@@ -92,13 +98,33 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
       title: _("Single Column");
       subtitle: _("Import only Y values, X values will be generated");
     }
-    Adw.EntryRow single_stepsize {
-      sensitive: bind single_column.active;
-      title: _("Step Size");
-    }
+
     Adw.EntryRow single_equation {
       sensitive: bind single_column.active;
-      title: _("Equation");
+      title: _("X Value Equation");
+      text: "n";
+
+      [suffix]
+      Button equation_help_button {
+        valign: center;
+        tooltip-text: _("More info");
+        styles ["flat"]
+
+        Adw.ButtonContent {
+          icon-name: "info-symbolic";
+
+          Popover equation_help_popover {
+            Label {
+              label: _("<b>X Value Calculation</b>\n\nEnter an equation to calculate X values.\nUse 'n' for the row index (starting from 0).\n\n<b>Examples:</b>\n• <b>n</b> → 0, 1, 2, 3, 4...\n• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n• <b>n^2</b> → 0, 1, 4, 9, 16...\n• <b>2^n</b> → 1, 2, 4, 8, 16...\n• <b>n*10+100</b> → 100, 110, 120, 130...");
+              use-markup: true;
+              margin-top: 12;
+              margin-bottom: 12;
+              margin-start: 12;
+              margin-end: 12;
+            }
+          }
+        }
+      }
     }
   }
 }

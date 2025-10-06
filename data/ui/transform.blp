@@ -41,7 +41,12 @@ template $GraphsTransformDialog: Adw.Dialog {
             position: bottom;
 
             Label help_info {
-              label: _("Additional variables:\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
+              label: _("<b>Additional variables:</b>\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
+              use-markup: true;
+              margin-top: 12;
+              margin-bottom: 12;
+              margin-start: 12;
+              margin-end: 12;
             }
           }
         }

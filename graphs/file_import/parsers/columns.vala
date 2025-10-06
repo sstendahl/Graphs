@@ -84,6 +84,12 @@ namespace Graphs {
         private Regex delimiter_regex;
         private string filename;
 
+        protected double parse_float_helper { get; set; }
+        protected signal bool parse_float_request (string input);
+
+        protected double evaluate_equation_helper { get; set; }
+        protected signal bool evaluate_equation_request (string equation, int index);
+
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
             this.filename = settings.file.get_basename ();
@@ -101,55 +107,107 @@ namespace Graphs {
             }
         }
 
-        public void parse (out string[] xvalues, out string[] yvalues) throws Error {
+        public void parse (out double[] xvalues, out double[] yvalues, out string xlabel, out string ylabel) throws Error {
             var stream = new DataInputStream (settings.file.read ());
-            var xvals = new ArrayList<string> ();
-            var yvals = new ArrayList<string> ();
+            var xvals = new ArrayList<double?> ();
+            var yvals = new ArrayList<double?> ();
 
             string? line;
             int line_number = 0;
             int skip_rows = settings.get_int ("skip-rows");
             bool single_column = settings.get_boolean ("single-column");
 
+            xlabel = "";
+            ylabel = "";
+
             while ((line = stream.read_line ()) != null) {
                 line_number++;
-                if (line_number <= skip_rows) continue;
+                if (line_number <= skip_rows || line.strip ().length == 0) continue;
 
-                string xval;
-                string yval;
-                if (line.strip ().length == 0) {
-                    xval = "";
-                    yval = "";
+                string[] values = split_line (line);
+                validate_column_indices (values.length, line_number, single_column);
+
+                string xval_str = single_column ? "" : values[column_x];
+                string yval_str = values[column_y];
+
+                double? xval = single_column ? null : parse_value (xval_str);
+                double? yval = parse_value (yval_str);
+
+                // If we can't parse values and we haven't found data yet, treat as headers
+                if ((yval == null || (!single_column && xval == null)) && xvals.size == 0) {
+                    if (!single_column) {
+                        xlabel = xval_str;
+                    }
+                    ylabel = yval_str;
+                    continue;
                 }
-                else {
-                    string[] values = split_line (line);
-                    validate_column_indices (values.length, line_number, single_column);
 
-                    xval = single_column ? "" : normalize_decimal_separator (values[column_x]);
-                    yval = normalize_decimal_separator (values[column_y]);
+                // If we can't parse values but we already have data, it's an error
+                if (yval == null || (!single_column && xval == null)) {
+                    int actual_line = line_number;
+                    throw new ParseError.IMPORT_ERROR (
+                        _("Can't import from file, bad value on line %d").printf (actual_line)
+                    );
                 }
 
-                xvals.add (xval);
+                if (single_column) {
+                    xvals.add (generate_x_value (xvals.size));
+                } else {
+                    xvals.add (xval);
+                }
                 yvals.add (yval);
             }
 
             stream.close ();
 
             if (xvals.size == 0) {
-                throw new ParseError.IMPORT_ERROR (_("Unable to import from file: no lines found"));
+                throw new ParseError.IMPORT_ERROR (_("Unable to import from file: no valid data found"));
             }
 
-            xvalues = xvals.to_array ();
-            yvalues = yvals.to_array ();
+            xvalues = new double[xvals.size];
+            yvalues = new double[yvals.size];
+
+            for (int i = 0; i < xvals.size; i++) {
+                xvalues[i] = xvals[i];
+                yvalues[i] = yvals[i];
+            }
+        }
+
+        private double generate_x_value (int index) throws ParseError {
+            string equation = settings.get_string ("single-equation");
+
+            if (evaluate_equation_request.emit (equation, index)) {
+                return this.evaluate_equation_helper;
+            }
+
+            throw new ParseError.IMPORT_ERROR (
+                _("Failed to evaluate equation %s").printf (equation)
+            );
+        }
+
+        private double? parse_value (string str) {
+            if (str.strip ().length == 0) {
+                return null;
+            }
+
+            string normalized = normalize_decimal_separator (str);
+            double result;
+            if (double.try_parse (normalized, out result)) {
+                return result;
+            }
+
+            // If Vala can't parse, request Python signal
+            if (parse_float_request.emit (normalized)) {
+                return this.parse_float_helper;
+            }
+            return null;
         }
 
         private string[] split_line (string line) {
             string[] values = delimiter_regex.split (line);
-
             for (int i = 0; i < values.length; i++) {
                 values[i] = values[i].strip ();
             }
-
             return values;
         }
 
@@ -197,9 +255,15 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.SpinRow skip_rows { get; }
         [GtkChild]
+        public unowned Adw.EntryRow single_equation { get; }
+        [GtkChild]
         private unowned Button help_button { get; }
         [GtkChild]
         private unowned Popover help_popover { get; }
+        [GtkChild]
+        private unowned Button equation_help_button { get; }
+        [GtkChild]
+        private unowned Popover equation_help_popover { get; }
 
         public ColumnsGroup (ImportSettings settings) {
             setup_ui (settings);
@@ -223,6 +287,10 @@ namespace Graphs {
                 help_popover.popup ();
             });
 
+            equation_help_button.clicked.connect (() => {
+                equation_help_popover.popup ();
+            });
+
             separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
             separator.notify["selected"].connect (() => {
                 settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
@@ -230,7 +298,7 @@ namespace Graphs {
 
             single_column.set_active (settings.get_boolean ("single-column"));
             single_column.notify["active"].connect (() => {
-                settings.set_boolean ("single-column", (single_column.get_active ()));
+                settings.set_boolean ("single-column", single_column.get_active ());
             });
 
             column_x.set_value (settings.get_int ("column-x"));
@@ -246,6 +314,11 @@ namespace Graphs {
             skip_rows.set_value (settings.get_int ("skip-rows"));
             skip_rows.notify["value"].connect (() => {
                 settings.set_int ("skip-rows", (int) skip_rows.get_value ());
+            });
+
+            single_equation.set_text (settings.get_string ("single-equation"));
+            single_equation.notify["text"].connect (() => {
+                settings.set_string ("single-equation", single_equation.get_text ());
             });
         }
     }
