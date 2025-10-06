@@ -1,20 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Style editor."""
-import asyncio
+"""Style editor Box."""
 import contextlib
-from gettext import gettext as _
 
 from cycler import cycler
 
 from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
 
 from graphs import misc, style_io
-from graphs.canvas import Canvas
-from graphs.item import DataItem
-
-from matplotlib import pyplot
-
-import numpy
 
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
@@ -83,7 +75,7 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".", maxsplit=1)[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor-box.ui")
+@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")
 class StyleEditorBox(Gtk.Box):
     """Style editor widget."""
 
@@ -193,10 +185,10 @@ class StyleEditorBox(Gtk.Box):
         stylename = graphs_params["name"]
         self.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
-            value = style_io.STYLE_CUSTOM_PARAMS.get(
-                value[0],
-                style_params[value[0]],
-            )
+            value = value[0]
+            value = graphs_params[
+                value
+            ] if value in style_io.STYLE_CUSTOM_PARAMS else style_params[value]
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
             widget = getattr(self, key.replace("-", "_"))
@@ -402,116 +394,3 @@ class StyleEditorBox(Gtk.Box):
         dialog = Gtk.ColorDialog.new()
         dialog.set_with_alpha(False)
         dialog.choose_rgba(self.window, None, None, on_accept)
-
-
-_PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
-_PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
-_PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
-_PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
-CSS_TEMPLATE = """
-.canvas-view#{name} {{
-    background-color: {background_color};
-    color: {color};
-}}
-"""
-
-
-class PythonStyleEditor(Graphs.StyleEditor):
-    """Graphs Style Editor Window."""
-
-    __gtype_name__ = "GraphsPythonStyleEditor"
-
-    def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
-        self.props.content_view.set_name(
-            "view" + str(application.get_next_css_counter()),
-        )
-
-        style_editor = StyleEditorBox(self)
-        style_editor.connect("params-changed", self._on_params_changed)
-        self.set_editor_box(style_editor)
-        self._test_items = Gio.ListStore()
-        self._initialize_test_items()
-        self.connect("load_request", self._on_load_request)
-        self.connect("save_request", self._on_save_request)
-
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor),
-        )
-
-    def _initialize_test_items(self):
-        """Initialize example test items with predefined preview data."""
-        preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
-                        (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
-        test_style = pyplot.rcParams, {}
-        for xdata, ydata in preview_data:
-            self._test_items.append(
-                DataItem.new(
-                    test_style,
-                    xdata=xdata,
-                    ydata=ydata,
-                    name=_("Example Item"),
-                    color="#000000",
-                ),
-            )
-
-    def _on_params_changed(self, style_editor, changes_unsaved=True):
-        self._background_task.cancel()
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, changes_unsaved, 0.5),
-        )
-
-    async def _reload_canvas(
-        self,
-        style_editor: StyleEditorBox,
-        changes_unsaved: bool = False,
-        timeout: bool = 0,
-    ) -> None:
-        await asyncio.sleep(timeout)
-        if style_editor.params is None:
-            style_manager = self.props.application.get_figure_style_manager()
-            params, graphs_params = style_manager.get_system_style_params()
-        else:
-            params = style_editor.params
-            graphs_params = style_editor.graphs_params
-            color_cycle = params["axes.prop_cycle"].by_key()["color"]
-            for index, item in enumerate(self._test_items):
-                # Wrap around the color_cycle using the % operator
-                item.set_color(color_cycle[index % len(color_cycle)])
-                item_params = params, graphs_params
-                for prop, value in item._extract_params(item_params).items():
-                    item.set_property(prop, value)
-            self.set_stylename(style_editor.graphs_params["name"])
-
-        all_params = params, graphs_params
-        canvas = Canvas(all_params, self._test_items, False)
-        canvas.props.title = _("Title")
-        canvas.props.bottom_label = _("X Label")
-        canvas.props.left_label = _("Y Label")
-        self.set_canvas(canvas)
-
-        # Set headerbar color
-        css = CSS_TEMPLATE.format(
-            name=self.props.content_view.get_name(),
-            background_color=params["figure.facecolor"],
-            color=params["text.color"],
-        )
-        self.props.css_provider.load_from_string(css)
-
-        if changes_unsaved:
-            self.set_unsaved(True)
-
-    @staticmethod
-    def _on_load_request(self, file: Gio.File) -> None:
-        """Load a style."""
-        style_editor = self.get_editor_box()
-        name = style_editor.load_style(file)
-        self.set_title(name)
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, False, 0),
-        )
-
-    @staticmethod
-    def _on_save_request(self, file: Gio.File) -> None:
-        """Save current style."""
-        self.get_editor_box().save_style(file)
