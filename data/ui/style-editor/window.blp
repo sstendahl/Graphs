@@ -109,9 +109,9 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
             }
 
             Button {
-              label: _("Open File…");
+              label: _("Create Style…");
               halign: center;
-              action-name: "win.open-style";
+              action-name: "win.create-style";
               visible: bind style_menu_button.visible inverted;
 
               styles [
@@ -121,9 +121,9 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
             }
 
             Button {
-              label: _("Create Style…");
+              label: _("Open File…");
               halign: center;
-              action-name: "win.create-style";
+              action-name: "win.open-style";
               visible: bind style_menu_button.visible inverted;
 
               styles [
@@ -303,8 +303,8 @@ menu empty_menu {
 
 menu style_menu {
   section {
+    item (_("Create Style…"), "win.create-style")
     item (_("Import File…"), "win.import-style")
     item (_("Open File…"), "win.open-style")
-    item (_("Create Style…"), "win.create-style")
   }
 }
