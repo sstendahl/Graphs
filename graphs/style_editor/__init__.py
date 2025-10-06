@@ -75,7 +75,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self,
         style_editor: StyleEditorBox,
         changes_unsaved: bool = False,
-        timeout: bool = 0,
+        timeout: int = 0,
     ) -> None:
         await asyncio.sleep(timeout)
         if style_editor.params is None:
