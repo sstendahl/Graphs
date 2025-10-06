@@ -108,6 +108,30 @@ namespace Graphs {
             });
             add_action (open_action);
 
+            var close_action = new SimpleAction ("close-style", null);
+            close_action.activate.connect (() => {
+                if (!unsaved) {
+                    close_style ();
+                    return;
+                }
+                var dialog = Tools.build_dialog ("save_style_changes") as Adw.AlertDialog;
+                dialog.response.connect ((d, response) => {
+                    switch (response) {
+                        case "discard": {
+                            close_style ();
+                            break;
+                        }
+                        case "save": {
+                            save ();
+                            close_style ();
+                            break;
+                        }
+                    }
+                });
+                dialog.present (this);
+            });
+            add_action (close_action);
+
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
                 string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
@@ -174,6 +198,12 @@ namespace Graphs {
         public void save () {
             save_request.emit (_file);
             this.unsaved = false;
+        }
+
+        public void close_style () {
+            this.unsaved = false;
+            set_title (_("Graphs Style Editor"));
+            stack.get_pages ().select_item (0, true);
         }
 
         private void on_factory_setup (Object object) {

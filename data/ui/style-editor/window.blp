@@ -63,6 +63,10 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
       child: Adw.ToolbarView {
         [top]
         Adw.HeaderBar {
+          title-widget: Adw.WindowTitle {
+            title: _("Graphs Style Editor");
+          };
+
           [end]
           MenuButton {
             icon-name: "open-menu-symbolic";
@@ -276,6 +280,7 @@ menu primary_menu {
     item (_("Open Style…"), "win.open-style")
     item (_("Save Style…"), "win.save-style")
     item (_("Save Style as…"), "win.save-style-as")
+    item (_("Close Style…"), "win.close-style")
   }
 
   section {
