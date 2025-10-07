@@ -623,16 +623,20 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self,
         file: Gio.File,
         fmt: str,
-        dpi: int,
         transparent: bool,
+        width_px: int,
+        height_px: int,
     ) -> None:
         with file_io.open(file, "wb") as file_like:
-            copy.copy(self.figure).savefig(
-                file_like,
-                format=fmt,
-                dpi=dpi,
-                transparent=transparent,
-            )
+            fig_copy = copy.deepcopy(self.figure)
+            vector_formats = ["pdf", "eps", "ps", "svg"]
+            canvas_dpi = self.figure.get_dpi()
+            dpi = 72 if fmt.lower() in vector_formats else canvas_dpi
+            width_inches = width_px / dpi
+            height_inches = height_px / dpi
+            fig_copy.set_size_inches(width_inches, height_inches)
+            fig_copy.savefig(file_like, format=fmt, dpi=dpi,
+                             transparent=transparent, bbox_inches=None)
 
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2
