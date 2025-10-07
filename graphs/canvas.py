@@ -631,7 +631,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             fig_copy = copy.deepcopy(self.figure)
             vector_formats = ["pdf", "eps", "ps", "svg"]
             canvas_dpi = self.figure.get_dpi()
-            dpi = 72 if fmt.lower() in vector_formats else canvas_dpi
+            dpi = 100 if fmt.lower() in vector_formats else canvas_dpi
             width_inches = width_px / dpi
             height_inches = height_px / dpi
             fig_copy.set_size_inches(width_inches, height_inches)
