@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-03 23:44+0000\n"
-"PO-Revision-Date: 2025-10-04 07:12+0200\n"
+"POT-Creation-Date: 2025-10-08 13:48+0000\n"
+"PO-Revision-Date: 2025-10-09 00:35+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -77,7 +77,7 @@ msgstr "ნებისმიერი უკუკავშირისთვ�
 msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualization;Fitting;xrdml;"
 msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;ხაზვა;გრაფიკა;გრაფიკები;მათემატიკა;განტოლება;მონაცემები;ვიზუალიზაცია;Fitting;xrdml;"
 
-#: data/se.sjoerd.Graphs.desktop.in:16
+#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287 data/ui/style-editor/window.blp:299
 msgid "New Window"
 msgstr "ახალი ფანჯარა"
 
@@ -200,156 +200,156 @@ msgstr "მარჯვენა"
 msgid "Line and Markers"
 msgstr "ხაზი და სანიშნები"
 
-#: data/ui/edit-item/data.blp:11 data/ui/edit-item/equation.blp:25 data/ui/style-editor-box.blp:62
+#: data/ui/edit-item/data.blp:11 data/ui/edit-item/equation.blp:25 data/ui/style-editor/editor-box.blp:62
 msgid "Linestyle"
 msgstr "ხაზის სტილი"
 
-#: data/ui/edit-item/data.blp:16 data/ui/style-editor-box.blp:67
+#: data/ui/edit-item/data.blp:16 data/ui/style-editor/editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "არაფერი"
 
-#: data/ui/edit-item/data.blp:17 data/ui/edit-item/equation.blp:29 data/ui/style-editor-box.blp:68
+#: data/ui/edit-item/data.blp:17 data/ui/edit-item/equation.blp:29 data/ui/style-editor/editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "მყარი"
 
-#: data/ui/edit-item/data.blp:18 data/ui/edit-item/equation.blp:30 data/ui/style-editor-box.blp:69
+#: data/ui/edit-item/data.blp:18 data/ui/edit-item/equation.blp:30 data/ui/style-editor/editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "წერტილოვანი"
 
-#: data/ui/edit-item/data.blp:19 data/ui/edit-item/equation.blp:31 data/ui/style-editor-box.blp:70
+#: data/ui/edit-item/data.blp:19 data/ui/edit-item/equation.blp:31 data/ui/style-editor/editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "ტირეებით"
 
-#: data/ui/edit-item/data.blp:20 data/ui/edit-item/equation.blp:32 data/ui/style-editor-box.blp:71
+#: data/ui/edit-item/data.blp:20 data/ui/edit-item/equation.blp:32 data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "ტირეწერტილი"
 
-#: data/ui/edit-item/data.blp:26 data/ui/edit-item/equation.blp:38 data/ui/style-editor-box.blp:77
+#: data/ui/edit-item/data.blp:26 data/ui/edit-item/equation.blp:38 data/ui/style-editor/editor-box.blp:77
 msgid "Linewidth"
 msgstr "ხაზისსიგანე"
 
-#: data/ui/edit-item/data.blp:41 data/ui/style-editor-box.blp:94
+#: data/ui/edit-item/data.blp:41 data/ui/style-editor/editor-box.blp:94
 msgid "Markers"
 msgstr "სანიშნები"
 
-#: data/ui/edit-item/data.blp:46 data/ui/style-editor-box.blp:99
+#: data/ui/edit-item/data.blp:46 data/ui/style-editor/editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "არაფერი"
 
-#: data/ui/edit-item/data.blp:47 data/ui/style-editor-box.blp:100
+#: data/ui/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "წერტილი"
 
-#: data/ui/edit-item/data.blp:48 data/ui/style-editor-box.blp:101
+#: data/ui/edit-item/data.blp:48 data/ui/style-editor/editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "პიქსელი"
 
-#: data/ui/edit-item/data.blp:49 data/ui/style-editor-box.blp:102
+#: data/ui/edit-item/data.blp:49 data/ui/style-editor/editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "წრე"
 
-#: data/ui/edit-item/data.blp:50 data/ui/style-editor-box.blp:103
+#: data/ui/edit-item/data.blp:50 data/ui/style-editor/editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "სამკუთხედი დაბლა"
 
-#: data/ui/edit-item/data.blp:51 data/ui/style-editor-box.blp:104
+#: data/ui/edit-item/data.blp:51 data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "სამკუთხედი მაღლა"
 
-#: data/ui/edit-item/data.blp:52 data/ui/style-editor-box.blp:105
+#: data/ui/edit-item/data.blp:52 data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "სამკუთხედი მარცხნივ"
 
-#: data/ui/edit-item/data.blp:53 data/ui/style-editor-box.blp:106
+#: data/ui/edit-item/data.blp:53 data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "სამკუთხედი მარჯვნივ"
 
-#: data/ui/edit-item/data.blp:54 data/ui/style-editor-box.blp:107
+#: data/ui/edit-item/data.blp:54 data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "რვაკუთხედი"
 
-#: data/ui/edit-item/data.blp:55 data/ui/style-editor-box.blp:108
+#: data/ui/edit-item/data.blp:55 data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "კვადრატი"
 
-#: data/ui/edit-item/data.blp:56 data/ui/style-editor-box.blp:109
+#: data/ui/edit-item/data.blp:56 data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "ხუთკუთხედი"
 
-#: data/ui/edit-item/data.blp:57 data/ui/style-editor-box.blp:110
+#: data/ui/edit-item/data.blp:57 data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "ვარსკვლავი"
 
-#: data/ui/edit-item/data.blp:58 data/ui/style-editor-box.blp:111
+#: data/ui/edit-item/data.blp:58 data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "ექვსკუთხედი 1"
 
-#: data/ui/edit-item/data.blp:59 data/ui/style-editor-box.blp:112
+#: data/ui/edit-item/data.blp:59 data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "ექვსკუთხედი 2"
 
-#: data/ui/edit-item/data.blp:60 data/ui/style-editor-box.blp:113
+#: data/ui/edit-item/data.blp:60 data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "პლუსი"
 
-#: data/ui/edit-item/data.blp:61 data/ui/style-editor-box.blp:114
+#: data/ui/edit-item/data.blp:61 data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item/data.blp:63 data/ui/style-editor-box.blp:116
+#: data/ui/edit-item/data.blp:63 data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "პრიზმა"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item/data.blp:65 data/ui/style-editor-box.blp:118
+#: data/ui/edit-item/data.blp:65 data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "თხელი პრიზმა"
 
-#: data/ui/edit-item/data.blp:66 data/ui/style-editor-box.blp:119
+#: data/ui/edit-item/data.blp:66 data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "ვერტიკალური ხაზი"
 
-#: data/ui/edit-item/data.blp:67 data/ui/style-editor-box.blp:120
+#: data/ui/edit-item/data.blp:67 data/ui/style-editor/editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "ჰორიზონტალური ხაზი"
 
-#: data/ui/edit-item/data.blp:68 data/ui/style-editor-box.blp:121
+#: data/ui/edit-item/data.blp:68 data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "შევსებული პლუს"
 
-#: data/ui/edit-item/data.blp:69 data/ui/style-editor-box.blp:122
+#: data/ui/edit-item/data.blp:69 data/ui/style-editor/editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "შევსებული X"
 
-#: data/ui/edit-item/data.blp:75 data/ui/style-editor-box.blp:128
+#: data/ui/edit-item/data.blp:75 data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "მარკერის ზომა"
 
@@ -449,7 +449,7 @@ msgstr "შემოტანის რეჟიმი"
 msgid "Set as Default"
 msgstr "ნაგულისხმევად დაყენება"
 
-#: data/ui/import/dialog.blp:122 data/ui/style-color-box.blp:36
+#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
 msgid "Remove"
 msgstr "წაშლა"
 
@@ -546,7 +546,7 @@ msgstr "ფიგურის პარამეტრები"
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor.py:488
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:98
 msgid "Title"
 msgstr "სათაური"
 
@@ -688,21 +688,13 @@ msgstr "ცენტრი"
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:254 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor.vala:80
+#: data/ui/sidebar/figure-settings/settings-page.blp:254 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:82
 msgid "Style"
 msgstr "სტილი"
 
-#: data/ui/sidebar/figure-settings/style-page.blp:13 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "ახალი სტილის დამატება"
-
-#: data/ui/sidebar/figure-settings/style-page.blp:51
-msgid "Import Style…"
-msgstr "სტილის შემოტანა…"
-
-#: data/ui/sidebar/figure-settings/style-page.blp:56
-msgid "Create Style…"
-msgstr "სტილის შექმნა…"
+#: data/ui/sidebar/figure-settings/style-page.blp:12
+msgid "Manage"
+msgstr "მართვა"
 
 #: data/ui/sidebar/edit-item.blp:5
 msgid "Edit Item"
@@ -712,7 +704,7 @@ msgstr "ჩანაწერის ჩასწორება"
 msgid "Add New Data"
 msgstr "ახალი მონაცემების დამატება"
 
-#: data/ui/sidebar/main.blp:22 data/ui/style-editor-window.blp:65 data/ui/style-editor-window.blp:175
+#: data/ui/sidebar/main.blp:22 data/ui/style-editor/window.blp:74 data/ui/style-editor/window.blp:245
 msgid "Open Application Menu"
 msgstr "აპლიკაციის მენიუს გახსნა"
 
@@ -764,15 +756,15 @@ msgstr "მონაცემების გატანა…"
 msgid "Export Figure…"
 msgstr "ფიგურის გატანა…"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:216 data/ui/style-editor-window.blp:228
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:291 data/ui/style-editor/window.blp:303
 msgid "Keyboard Shortcuts"
 msgstr "კლავიატურის მალსახმობები"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:217 data/ui/style-editor-window.blp:229
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:292 data/ui/style-editor/window.blp:304
 msgid "Help"
 msgstr "დახმარება"
 
-#: data/ui/sidebar/main.blp:146 data/ui/style-editor-window.blp:218 data/ui/style-editor-window.blp:230
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:293 data/ui/style-editor/window.blp:305
 msgid "About Graphs"
 msgstr "გრაფიკების შესახებ"
 
@@ -924,6 +916,292 @@ msgstr "მცოცავი საშუალო"
 msgid "Advanced Settings"
 msgstr "დამატებითი პარამეტრები"
 
+#: data/ui/style-editor/color-box.blp:18
+msgid "Edit"
+msgstr "ჩასწორება"
+
+#: data/ui/style-editor/editor-box.blp:10
+msgid "Style Name"
+msgstr "სტილის სახელი"
+
+#: data/ui/style-editor/editor-box.blp:14
+msgid "Font"
+msgstr "შრიფტი"
+
+#: data/ui/style-editor/editor-box.blp:26
+msgid "Title Size"
+msgstr "სათაურის ზომა"
+
+#: data/ui/style-editor/editor-box.blp:27
+msgid "Title size in relation to text size"
+msgstr "სათაურის ზომა ტექსტის ზომასთან შედარებით"
+
+#: data/ui/style-editor/editor-box.blp:42
+msgid "Label Size"
+msgstr "ჭდის ზომა"
+
+#: data/ui/style-editor/editor-box.blp:43
+msgid "Label size in relation to text size"
+msgstr "ჭდის ზომა ტექსტის ზომასთან შედარებით"
+
+#: data/ui/style-editor/editor-box.blp:59
+msgid "Lines"
+msgstr "ხაზები"
+
+#: data/ui/style-editor/editor-box.blp:146
+msgid "Axes"
+msgstr "ღერძები"
+
+#: data/ui/style-editor/editor-box.blp:149
+msgid "Axis Width"
+msgstr "ღერძის სიგანე"
+
+#: data/ui/style-editor/editor-box.blp:163
+msgid "Draw Frame"
+msgstr "ჩარჩოს დახატვა"
+
+#: data/ui/style-editor/editor-box.blp:168
+msgid "Ticks"
+msgstr "ტიკები"
+
+#: data/ui/style-editor/editor-box.blp:171
+msgid "Tick Directions"
+msgstr "თოლიის მიმართულებები"
+
+#: data/ui/style-editor/editor-box.blp:175
+msgid "Inwards"
+msgstr "შიგნითკენ"
+
+#: data/ui/style-editor/editor-box.blp:176
+msgid "Outwards"
+msgstr "გარეთკენ"
+
+#: data/ui/style-editor/editor-box.blp:182
+msgid "Minor Ticks"
+msgstr "დამხმარე ტიკები"
+
+#: data/ui/style-editor/editor-box.blp:186
+msgid "Major Tick Width"
+msgstr "ძირითადი თოლიის სიგანე"
+
+#: data/ui/style-editor/editor-box.blp:201
+msgid "Minor Tick Width"
+msgstr "დამხმარე თოლიის სიგანე"
+
+#: data/ui/style-editor/editor-box.blp:217
+msgid "Major Tick Length"
+msgstr "ძირითადი თოლიის სიგრძე"
+
+#: data/ui/style-editor/editor-box.blp:232
+msgid "Minor Tick Length"
+msgstr "დამხმარე თოლიის სიგრძე"
+
+#: data/ui/style-editor/editor-box.blp:248
+msgid "Show Tick Labels on all Axes"
+msgstr "თოლიის ჭდეების ჩვენება ყველა ღერძზე"
+
+#: data/ui/style-editor/editor-box.blp:252
+msgid "Ticks on Bottom Axis"
+msgstr "თოლიები ქვედა ღერძე"
+
+#: data/ui/style-editor/editor-box.blp:256
+msgid "Ticks on Left Axis"
+msgstr "თოლიები მარცხენა ღერძზე"
+
+#: data/ui/style-editor/editor-box.blp:260
+msgid "Ticks on Right Axis"
+msgstr "თოლიები მრჯვენა ღერძზე"
+
+#: data/ui/style-editor/editor-box.blp:264
+msgid "Ticks on Top Axis"
+msgstr "თოლიები ზედა ღერძზე"
+
+#: data/ui/style-editor/editor-box.blp:269
+msgid "Grid"
+msgstr "ბადე"
+
+#: data/ui/style-editor/editor-box.blp:272
+msgid "Show Grid"
+msgstr "ბადის ჩვენება"
+
+#: data/ui/style-editor/editor-box.blp:276
+msgid "Grid Width"
+msgstr "ბადის სიგანე"
+
+#: data/ui/style-editor/editor-box.blp:292
+msgid "Grid Opacity"
+msgstr "ბადის გაუმჭვირვალობა"
+
+#: data/ui/style-editor/editor-box.blp:309
+msgid "Padding"
+msgstr "შევსება"
+
+#: data/ui/style-editor/editor-box.blp:310
+msgid "Padding for different parts of the figure"
+msgstr "ინტერვალი სურათის სხვადასხვა ნაწილებს შორის"
+
+#: data/ui/style-editor/editor-box.blp:313
+msgid "Value Padding"
+msgstr "მნიშვნელობის შევსება"
+
+#: data/ui/style-editor/editor-box.blp:314
+msgid "Padding between axes and values"
+msgstr "ინტერვალი ღერძებსა და მნიშვნელობებს შორის"
+
+#: data/ui/style-editor/editor-box.blp:329
+msgid "Label Padding"
+msgstr "ჭდის შევსება"
+
+#: data/ui/style-editor/editor-box.blp:330
+msgid "Padding between axes and labels"
+msgstr "ინტერვალი ღერძებსა და ჭდეებს შორის"
+
+#: data/ui/style-editor/editor-box.blp:345
+msgid "Title Padding"
+msgstr "სათაურის შევსება"
+
+#: data/ui/style-editor/editor-box.blp:346
+msgid "Padding between axes and the title"
+msgstr "ინტერვალი ღერძებსა და სათაურს შორის"
+
+#: data/ui/style-editor/editor-box.blp:362
+msgid "Colors"
+msgstr "ფერები"
+
+#: data/ui/style-editor/editor-box.blp:366
+msgid "Label text might be hard to read"
+msgstr "ჭდის ტექსტი შეიძლება ძნელი წასაკითხი იყოს"
+
+#: data/ui/style-editor/editor-box.blp:378
+msgid "Poor Contrast"
+msgstr "ცუდი კონტრასტი"
+
+#: data/ui/style-editor/editor-box.blp:393
+msgid "Text Color"
+msgstr "ტექსტის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:398 data/ui/style-editor/editor-box.blp:425 data/ui/style-editor/editor-box.blp:452 data/ui/style-editor/editor-box.blp:479 data/ui/style-editor/editor-box.blp:506
+#: data/ui/style-editor/editor-box.blp:533
+msgid "Change Color"
+msgstr "ფერის შეცვლა"
+
+#: data/ui/style-editor/editor-box.blp:420
+msgid "Tick Color"
+msgstr "თოლიის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:447
+msgid "Axis Color"
+msgstr "ღერძის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:474
+msgid "Grid Color"
+msgstr "ბადის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:501
+msgid "Background Color"
+msgstr "ფონის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:528
+msgid "Outline Color"
+msgstr "კიდის ფერი"
+
+#: data/ui/style-editor/editor-box.blp:551
+msgid "Line Colors"
+msgstr "ხაზის ფერები"
+
+#: data/ui/style-editor/editor-box.blp:563
+msgid "Add Color"
+msgstr "ფერის დამატება"
+
+#: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
+msgctxt "shortcut window"
+msgid "General"
+msgstr "საერთო"
+
+#: data/ui/style-editor/shortcuts.blp:9 data/ui/window-shortcuts.blp:9
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "მალსახმობების ჩვენება"
+
+#: data/ui/style-editor/shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "დახმარების მენიუ"
+
+#: data/ui/style-editor/shortcuts.blp:19 data/ui/window-shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "აპლიკაციის დახურვა"
+
+#: data/ui/style-editor/shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "აპლიკაციის ფანჯრის დახურვა"
+
+#: data/ui/style-editor/shortcuts.blp:30
+msgctxt "shortcut window"
+msgid "Save"
+msgstr "შენახვა"
+
+#: data/ui/style-editor/shortcuts.blp:33
+msgctxt "shortcut window"
+msgid "Save Style"
+msgstr "სტილის შენახვა"
+
+#: data/ui/style-editor/shortcuts.blp:38
+msgctxt "shortcut window"
+msgid "Save Style As"
+msgstr "სტილის შენახვა, როგორც"
+
+#: data/ui/style-editor/shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Open Style"
+msgstr "სტილის გახსნა"
+
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:205
+msgid "Graphs Style Editor"
+msgstr "გრაფიკების სტილის რედაქტორი"
+
+#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
+msgid "Add New Style"
+msgstr "ახალი სტილის დამატება"
+
+#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
+msgid "Import File…"
+msgstr "ფაილის შემოტანა…"
+
+#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:311
+msgid "Create Style…"
+msgstr "სტილის შექმნა…"
+
+#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
+msgid "Open File…"
+msgstr "ფაილის გახსნა…"
+
+#: data/ui/style-editor/window.blp:211
+msgid "Open Preview"
+msgstr "მინიატურის გახსნა"
+
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:146 data/ui/window.blp:349
+msgid "Canvas Failed to Load"
+msgstr "ტილოს ჩატვირთვა ჩავარდა"
+
+#: data/ui/style-editor/window.blp:280
+msgid "Open Style…"
+msgstr "სტილის გახსნა…"
+
+#: data/ui/style-editor/window.blp:281
+msgid "Save Style…"
+msgstr "სტილის შენახვა…"
+
+#: data/ui/style-editor/window.blp:282
+msgid "Save Style as…"
+msgstr "სტილის შენახვა, როგორც…"
+
+#: data/ui/style-editor/window.blp:283
+msgid "Close Style…"
+msgstr "სტილის დახურვა…"
+
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "განტოლების დამატება"
@@ -999,10 +1277,6 @@ msgstr "მონაცემებისთვის აპროქსიმ�
 #: data/ui/curve-fitting.blp:134
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელის ჩვენების ჩართ/გამორთ"
-
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200 data/ui/window.blp:349
-msgid "Canvas Failed to Load"
-msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
 #: data/ui/curve-fitting.blp:156
 msgid "Optimization Method"
@@ -1163,275 +1437,6 @@ msgstr "ჩარჩოს წერტილები"
 #: data/ui/smoothen-settings.blp:62
 msgid "Amount of points to use when calculating a moving average"
 msgstr "წერტილების რაოდენობა, რომელიც გადაადგილების საშუალოს გამოთვლისას გამოიყენება"
-
-#: data/ui/style-color-box.blp:18
-msgid "Edit"
-msgstr "ჩასწორება"
-
-#: data/ui/style-editor-box.blp:10
-msgid "Style Name"
-msgstr "სტილის სახელი"
-
-#: data/ui/style-editor-box.blp:14
-msgid "Font"
-msgstr "შრიფტი"
-
-#: data/ui/style-editor-box.blp:26
-msgid "Title Size"
-msgstr "სათაურის ზომა"
-
-#: data/ui/style-editor-box.blp:27
-msgid "Title size in relation to text size"
-msgstr "სათაურის ზომა ტექსტის ზომასთან შედარებით"
-
-#: data/ui/style-editor-box.blp:42
-msgid "Label Size"
-msgstr "ჭდის ზომა"
-
-#: data/ui/style-editor-box.blp:43
-msgid "Label size in relation to text size"
-msgstr "ჭდის ზომა ტექსტის ზომასთან შედარებით"
-
-#: data/ui/style-editor-box.blp:59
-msgid "Lines"
-msgstr "ხაზები"
-
-#: data/ui/style-editor-box.blp:146
-msgid "Axes"
-msgstr "ღერძები"
-
-#: data/ui/style-editor-box.blp:149
-msgid "Axis Width"
-msgstr "ღერძის სიგანე"
-
-#: data/ui/style-editor-box.blp:163
-msgid "Draw Frame"
-msgstr "ჩარჩოს დახატვა"
-
-#: data/ui/style-editor-box.blp:168
-msgid "Ticks"
-msgstr "ტიკები"
-
-#: data/ui/style-editor-box.blp:171
-msgid "Tick Directions"
-msgstr "თოლიის მიმართულებები"
-
-#: data/ui/style-editor-box.blp:175
-msgid "Inwards"
-msgstr "შიგნითკენ"
-
-#: data/ui/style-editor-box.blp:176
-msgid "Outwards"
-msgstr "გარეთკენ"
-
-#: data/ui/style-editor-box.blp:182
-msgid "Minor Ticks"
-msgstr "დამხმარე ტიკები"
-
-#: data/ui/style-editor-box.blp:186
-msgid "Major Tick Width"
-msgstr "ძირითადი თოლიის სიგანე"
-
-#: data/ui/style-editor-box.blp:201
-msgid "Minor Tick Width"
-msgstr "დამხმარე თოლიის სიგანე"
-
-#: data/ui/style-editor-box.blp:217
-msgid "Major Tick Length"
-msgstr "ძირითადი თოლიის სიგრძე"
-
-#: data/ui/style-editor-box.blp:232
-msgid "Minor Tick Length"
-msgstr "დამხმარე თოლიის სიგრძე"
-
-#: data/ui/style-editor-box.blp:248
-msgid "Show Tick Labels on all Axes"
-msgstr "თოლიის ჭდეების ჩვენება ყველა ღერძზე"
-
-#: data/ui/style-editor-box.blp:252
-msgid "Ticks on Bottom Axis"
-msgstr "თოლიები ქვედა ღერძე"
-
-#: data/ui/style-editor-box.blp:256
-msgid "Ticks on Left Axis"
-msgstr "თოლიები მარცხენა ღერძზე"
-
-#: data/ui/style-editor-box.blp:260
-msgid "Ticks on Right Axis"
-msgstr "თოლიები მრჯვენა ღერძზე"
-
-#: data/ui/style-editor-box.blp:264
-msgid "Ticks on Top Axis"
-msgstr "თოლიები ზედა ღერძზე"
-
-#: data/ui/style-editor-box.blp:269
-msgid "Grid"
-msgstr "ბადე"
-
-#: data/ui/style-editor-box.blp:272
-msgid "Show Grid"
-msgstr "ბადის ჩვენება"
-
-#: data/ui/style-editor-box.blp:276
-msgid "Grid Width"
-msgstr "ბადის სიგანე"
-
-#: data/ui/style-editor-box.blp:292
-msgid "Grid Opacity"
-msgstr "ბადის გაუმჭვირვალობა"
-
-#: data/ui/style-editor-box.blp:309
-msgid "Padding"
-msgstr "შევსება"
-
-#: data/ui/style-editor-box.blp:310
-msgid "Padding for different parts of the figure"
-msgstr "ინტერვალი სურათის სხვადასხვა ნაწილებს შორის"
-
-#: data/ui/style-editor-box.blp:313
-msgid "Value Padding"
-msgstr "მნიშვნელობის შევსება"
-
-#: data/ui/style-editor-box.blp:314
-msgid "Padding between axes and values"
-msgstr "ინტერვალი ღერძებსა და მნიშვნელობებს შორის"
-
-#: data/ui/style-editor-box.blp:329
-msgid "Label Padding"
-msgstr "ჭდის შევსება"
-
-#: data/ui/style-editor-box.blp:330
-msgid "Padding between axes and labels"
-msgstr "ინტერვალი ღერძებსა და ჭდეებს შორის"
-
-#: data/ui/style-editor-box.blp:345
-msgid "Title Padding"
-msgstr "სათაურის შევსება"
-
-#: data/ui/style-editor-box.blp:346
-msgid "Padding between axes and the title"
-msgstr "ინტერვალი ღერძებსა და სათაურს შორის"
-
-#: data/ui/style-editor-box.blp:362
-msgid "Colors"
-msgstr "ფერები"
-
-#: data/ui/style-editor-box.blp:366
-msgid "Label text might be hard to read"
-msgstr "ჭდის ტექსტი შეიძლება ძნელი წასაკითხი იყოს"
-
-#: data/ui/style-editor-box.blp:378
-msgid "Poor Contrast"
-msgstr "ცუდი კონტრასტი"
-
-#: data/ui/style-editor-box.blp:393
-msgid "Text Color"
-msgstr "ტექსტის ფერი"
-
-#: data/ui/style-editor-box.blp:398 data/ui/style-editor-box.blp:425 data/ui/style-editor-box.blp:452 data/ui/style-editor-box.blp:479 data/ui/style-editor-box.blp:506 data/ui/style-editor-box.blp:533
-msgid "Change Color"
-msgstr "ფერის შეცვლა"
-
-#: data/ui/style-editor-box.blp:420
-msgid "Tick Color"
-msgstr "თოლიის ფერი"
-
-#: data/ui/style-editor-box.blp:447
-msgid "Axis Color"
-msgstr "ღერძის ფერი"
-
-#: data/ui/style-editor-box.blp:474
-msgid "Grid Color"
-msgstr "ბადის ფერი"
-
-#: data/ui/style-editor-box.blp:501
-msgid "Background Color"
-msgstr "ფონის ფერი"
-
-#: data/ui/style-editor-box.blp:528
-msgid "Outline Color"
-msgstr "კიდის ფერი"
-
-#: data/ui/style-editor-box.blp:551
-msgid "Line Colors"
-msgstr "ხაზის ფერები"
-
-#: data/ui/style-editor-box.blp:563
-msgid "Add Color"
-msgstr "ფერის დამატება"
-
-#: data/ui/style-editor-shortcuts.blp:6 data/ui/window-shortcuts.blp:6
-msgctxt "shortcut window"
-msgid "General"
-msgstr "საერთო"
-
-#: data/ui/style-editor-shortcuts.blp:9 data/ui/window-shortcuts.blp:9
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "მალსახმობების ჩვენება"
-
-#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "დახმარების მენიუ"
-
-#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:24
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "აპლიკაციის დახურვა"
-
-#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "აპლიკაციის ფანჯრის დახურვა"
-
-#: data/ui/style-editor-shortcuts.blp:30
-msgctxt "shortcut window"
-msgid "Save"
-msgstr "შენახვა"
-
-#: data/ui/style-editor-shortcuts.blp:33
-msgctxt "shortcut window"
-msgid "Save Style"
-msgstr "სტილის შენახვა"
-
-#: data/ui/style-editor-shortcuts.blp:38
-msgctxt "shortcut window"
-msgid "Save Style As"
-msgstr "სტილის შენახვა, როგორც"
-
-#: data/ui/style-editor-shortcuts.blp:43
-msgctxt "shortcut window"
-msgid "Open Style"
-msgstr "სტილის გახსნა"
-
-#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:168
-msgid "Graphs Style Editor"
-msgstr "გრაფიკების სტილის რედაქტორი"
-
-#: data/ui/style-editor-window.blp:71
-msgid "Open a Style"
-msgstr "სტილის გახსნა"
-
-#: data/ui/style-editor-window.blp:74
-msgid "Open…"
-msgstr "გახსნა…"
-
-#: data/ui/style-editor-window.blp:141
-msgid "Open Preview"
-msgstr "მინიატურის გახსნა"
-
-#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:224
-msgid "Open Style…"
-msgstr "სტილის გახსნა…"
-
-#: data/ui/style-editor-window.blp:211
-msgid "Save Style…"
-msgstr "სტილის შენახვა…"
-
-#: data/ui/style-editor-window.blp:212
-msgid "Save Style as…"
-msgstr "სტილის შენახვა, როგორც…"
 
 #: data/ui/style-preview.blp:52
 msgid "Open"
@@ -1779,7 +1784,30 @@ msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/sidebar/figure_settings.vala:329
+#: graphs/style_editor/color_box.vala:30
+#, c-format
+msgid "Color %d"
+msgstr "ფერი %d"
+
+#: graphs/style_editor/__init__.py:63
+msgid "Example Item"
+msgstr "მაგალითი ელემენტი"
+
+#: graphs/style_editor/__init__.py:99 graphs/style_io.py:232
+msgid "X Label"
+msgstr "X ჭდე"
+
+#: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
+msgid "Y Label"
+msgstr "Y ჭდე"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor/window.vala:40
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "გრაფიკების სტილის რედაქტორი — %s"
+
+#: graphs/style_editor/window.vala:238
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "მართლა გნებავთ, წაშალოთ %s?"
@@ -1963,29 +1991,6 @@ msgstr "პროექტი"
 msgid "Exported Data"
 msgstr "გატანილი მონაცემები"
 
-#: graphs/style_editor.py:453
-msgid "Example Item"
-msgstr "მაგალითი ელემენტი"
-
-#: graphs/style_editor.py:489 graphs/style_io.py:232
-msgid "X Label"
-msgstr "X ჭდე"
-
-#: graphs/style_editor.py:490 graphs/style_io.py:233
-msgid "Y Label"
-msgstr "Y ჭდე"
-
-#. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor.vala:38
-#, c-format
-msgid "Graphs Style Editor — %s"
-msgstr "გრაფიკების სტილის რედაქტორი — %s"
-
-#: graphs/style_editor.vala:207
-#, c-format
-msgid "Color %d"
-msgstr "ფერი %d"
-
 #: graphs/style_io.py:101
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
@@ -2059,6 +2064,12 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgid "Open a Style"
+#~ msgstr "სტილის გახსნა"
+
+#~ msgid "Open…"
+#~ msgstr "გახსნა…"
 
 #~ msgid "Reset to Defaults…"
 #~ msgstr "ნაგულისხმევებზე ჩამოყრა…"
