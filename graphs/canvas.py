@@ -635,8 +635,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             width_inches = width_px / dpi
             height_inches = height_px / dpi
             fig_copy.set_size_inches(width_inches, height_inches)
-            fig_copy.savefig(file_like, format=fmt, dpi=dpi,
-                             transparent=transparent, bbox_inches=None)
+            fig_copy.savefig(
+                file_like,
+                format=fmt,
+                dpi=dpi,
+                transparent=transparent,
+                bbox_inches=None,
+            )
 
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2

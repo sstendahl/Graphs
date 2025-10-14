@@ -21,13 +21,14 @@ template $GraphsExportFigureDialog: Adw.Dialog {
       Button confirm_button {
         label: _("Export");
         clicked => $on_accept();
+
         styles [
           "suggested-action",
         ]
       }
     }
 
-  content: Adw.Clamp {
+    content: Adw.Clamp {
       maximum-size: 800;
       margin-bottom: 12;
       margin-top: 12;
@@ -43,6 +44,7 @@ template $GraphsExportFigureDialog: Adw.Dialog {
 
           Adw.ComboRow file_format {
             title: _("File Format");
+
             model: StringList {
               strings [
                 C_("file-format", "Encapsulated PostScript"),
@@ -71,6 +73,7 @@ template $GraphsExportFigureDialog: Adw.Dialog {
 
           Adw.SpinRow width {
             title: _("Width (pixels)");
+
             adjustment: Adjustment {
               step-increment: 10;
               lower: 100;
@@ -80,6 +83,7 @@ template $GraphsExportFigureDialog: Adw.Dialog {
 
           Adw.SpinRow height {
             title: _("Height (pixels)");
+
             adjustment: Adjustment {
               step-increment: 10;
               lower: 100;
