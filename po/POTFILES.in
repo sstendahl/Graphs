@@ -10,6 +10,8 @@ data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
 data/ui/edit-item/generated-data.blp
+data/ui/import/columns/box.blp
+data/ui/import/columns/item-group.blp
 data/ui/import/columns/main-group.blp
 data/ui/import/sql/main-group.blp
 data/ui/import/dialog.blp

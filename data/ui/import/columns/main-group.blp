@@ -2,146 +2,74 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsColumnsGroup: Adw.PreferencesGroup {
-  Adw.PreferencesGroup {
-    title: _("Format");
+  title: _("Format");
 
-    Adw.ComboRow delimiter {
-      title: _("Delimiter");
-      subtitle: _("Character used to separate columns");
+  Adw.ComboRow delimiter {
+    title: _("Delimiter");
+    subtitle: _("Character used to separate columns");
 
-      model: StringList {
-        strings [
-          C_("delimiter", "Whitespace"),
-          C_("delimiter", "Tab"),
-          C_("delimiter", "Colon (:)"),
-          C_("delimiter", "Semicolon (;)"),
-          C_("delimiter", "Comma (,)"),
-          C_("delimiter", "Period (.)"),
-          C_("delimiter", "Custom"),
-        ]
-      };
-    }
+    model: StringList {
+      strings [
+        C_("delimiter", "Whitespace"),
+        C_("delimiter", "Tab"),
+        C_("delimiter", "Colon (:)"),
+        C_("delimiter", "Semicolon (;)"),
+        C_("delimiter", "Comma (,)"),
+        C_("delimiter", "Period (.)"),
+        C_("delimiter", "Custom"),
+      ]
+    };
+  }
 
-    Adw.EntryRow custom_delimiter {
-      sensitive: false;
-      title: _("Custom Delimiter");
+  Adw.EntryRow custom_delimiter {
+    sensitive: false;
+    title: _("Custom Delimiter");
 
-      [suffix]
-      MenuButton {
-        valign: center;
-        icon-name: "info-symbolic";
-        tooltip-text: _("More info");
+    [suffix]
+    MenuButton {
+      valign: center;
+      icon-name: "info-symbolic";
+      tooltip-text: _("More info");
 
-        styles [
-          "flat",
-        ]
+      styles [
+        "flat",
+      ]
 
-        popover: Popover {
-          position: bottom;
+      popover: Popover {
+        position: bottom;
 
-          Label {
-            label: "<b>Uses regex pattern matching</b>\n\nThese characters have special meanings in regex syntax:\n<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n\nTo match these characters literally, escape them with <b>\\</b>\n\n<b>Examples:</b>\n• <b>\\.</b> matches a period\n• <b>\\*</b> matches an asterisk\n• <b>\\|</b> matches a pipe character\n\n<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax...</a>";
-            use-markup: true;
-            margin-top: 12;
-            margin-bottom: 12;
-            margin-start: 12;
-            margin-end: 12;
-          }
-        };
-      }
-    }
-
-    Adw.ComboRow separator {
-      title: _("Decimal Separator");
-
-      model: StringList {
-        strings [
-          C_("separator", "Decimal comma (,)"),
-          C_("separator", "Decimal point (.)"),
-        ]
-      };
-    }
-
-    Adw.SpinRow skip_rows {
-      title: _("Skip Rows");
-      subtitle: _("Number of rows to skip at the beginning");
-
-      adjustment: Adjustment {
-        lower: 0;
-        upper: 9999;
-        step-increment: 1;
-        value: 0;
+        Label {
+          label: "<b>Uses regex pattern matching</b>\n\nThese characters have special meanings in regex syntax:\n<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n\nTo match these characters literally, escape them with <b>\\</b>\n\n<b>Examples:</b>\n• <b>\\.</b> matches a period\n• <b>\\*</b> matches an asterisk\n• <b>\\|</b> matches a pipe character\n\n<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax...</a>";
+          use-markup: true;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 12;
+          margin-end: 12;
+        }
       };
     }
   }
 
-  Adw.PreferencesGroup {
-    title: _("Columns");
-    margin-top: 10;
+  Adw.ComboRow separator {
+    title: _("Decimal Separator");
 
-    Adw.PreferencesRow {
-      activatable: false;
+    model: StringList {
+      strings [
+        C_("separator", "Decimal comma (,)"),
+        C_("separator", "Decimal point (.)"),
+      ]
+    };
+  }
 
-      Box {
-        orientation: horizontal;
-        homogeneous: true;
+  Adw.SpinRow skip_rows {
+    title: _("Skip Rows");
+    subtitle: _("Number of rows to skip at the beginning");
 
-        Adw.SpinRow column_x {
-          title: _("X Column");
-          sensitive: bind single_column.active inverted;
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 100;
-            step-increment: 1;
-            value: 0;
-          };
-        }
-
-        Adw.SpinRow column_y {
-          title: _("Y Column");
-
-          adjustment: Adjustment {
-            lower: 0;
-            upper: 100;
-            step-increment: 1;
-            value: 1;
-          };
-        }
-      }
-    }
-
-    Adw.SwitchRow single_column {
-      title: _("Single Column");
-      subtitle: _("Import only Y values, X values will be generated");
-    }
-
-    Adw.EntryRow single_equation {
-      sensitive: bind single_column.active;
-      title: _("X Value Equation");
-      text: "n";
-
-      [suffix]
-      MenuButton {
-        valign: center;
-        icon-name: "info-symbolic";
-        tooltip-text: _("More info");
-
-        styles [
-          "flat",
-        ]
-
-        popover: Popover {
-          Label {
-            label: _("<b>X Value Calculation</b>\n\nEnter an equation to calculate X values.\nUse 'n' for the row index (starting from 0).\n\n<b>Examples:</b>\n• <b>n</b> → 0, 1, 2, 3, 4...\n• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n• <b>n^2</b> → 0, 1, 4, 9, 16...\n• <b>2^n</b> → 1, 2, 4, 8, 16...\n• <b>n*10+100</b> → 100, 110, 120, 130...");
-            use-markup: true;
-            margin-top: 12;
-            margin-bottom: 12;
-            margin-start: 12;
-            margin-end: 12;
-          }
-        };
-      }
-    }
+    adjustment: Adjustment {
+      lower: 0;
+      upper: 9999;
+      step-increment: 1;
+      value: 0;
+    };
   }
 }

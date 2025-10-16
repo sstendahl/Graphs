@@ -85,4 +85,4 @@ class ColumnsParser(Parser):
     @staticmethod
     def init_settings_widgets(settings, box) -> None:
         """Append columns specific settings."""
-        box.append(Graphs.ColumnsGroup.new(settings))
+        box.append(Graphs.ColumnsBox.new(settings))

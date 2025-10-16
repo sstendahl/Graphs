@@ -81,6 +81,8 @@ blueprint_files = [
   'ui/edit-item/data.blp',
   'ui/edit-item/equation.blp',
   'ui/edit-item/generated-data.blp',
+  'ui/import/columns/box.blp',
+  'ui/import/columns/item-group.blp',
   'ui/import/columns/main-group.blp',
   'ui/import/sql/main-group.blp',
   'ui/import/dialog.blp',
