@@ -22,6 +22,7 @@ namespace Graphs {
         private Regex delimiter_regex;
 
         private Bitset used_indices = new Bitset.empty ();
+        private uint64 n_used_indices;
         private uint max_index;
         private Node? head = null;
         private uint n_nodes = 0;
@@ -44,6 +45,7 @@ namespace Graphs {
                 }
                 used_indices.add (item_settings.column_y);
             }
+            this.n_used_indices = used_indices.get_size ();
             this.max_index = used_indices.get_maximum ();
 
             this.headers = new string[max_index + 1];
@@ -67,6 +69,7 @@ namespace Graphs {
             int line_number = 0;
             var bitset_iter = BitsetIter ();
             uint column_index;
+            uint array_index;
             weak Node? tail = null;
 
             while ((line = stream.read_line ()) != null) {
@@ -76,14 +79,16 @@ namespace Graphs {
                 string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
                 validate_column_indices (str_values.length, line_number);
 
-                var array = new double[max_index + 1];
+                var array = new double[n_used_indices + 1];
 
                 // We assume, that we have at least one valid index
                 bitset_iter.init_first (used_indices, out column_index);
-                parse_value (str_values, array, column_index, line_number);
+                array_index = 0;
+                parse_value (str_values, array, column_index, array_index, line_number);
 
                 while (bitset_iter.next (out column_index)) {
-                    parse_value (str_values, array, column_index, line_number);
+                    array_index++;
+                    parse_value (str_values, array, column_index, array_index, line_number);
                 }
 
                 var node = new Node (array);
@@ -100,9 +105,13 @@ namespace Graphs {
             stream.close ();
         }
 
-        private void parse_value (string[] str_values, double[] results, uint column_index, int line_number) throws Error {
+        private void parse_value (
+            string[] str_values, double[] results,
+            uint column_index, uint array_index,
+            int line_number
+        ) throws Error {
             string expression = str_values[column_index].strip ();
-            if (evaluate_string (expression, out results[column_index])) return;
+            if (evaluate_string (expression, out results[array_index])) return;
 
             // If the data cannot be parsed, treat as header.
             // But only if there is not already data present
@@ -120,11 +129,24 @@ namespace Graphs {
             return headers[index];
         }
 
+        private uint get_rank (uint val) {
+            uint current;
+            uint rank = 0;
+            var bitset_iter = BitsetIter ();
+            bitset_iter.init_first (used_indices, out current);
+            do {
+                if (current == val) return rank;
+                rank++;
+            } while (bitset_iter.next (out current));
+            assert_not_reached ();
+        }
+
         public void get_column (uint index, out double[] values) {
             values = new double[n_nodes];
             uint i = 0;
+            uint array_index = get_rank (index);
             for (weak Node? current = head; current != null; current = current.next) {
-                values[i] = current.data[index];
+                values[i] = current.data[array_index];
                 i++;
             }
         }
@@ -133,9 +155,11 @@ namespace Graphs {
             values1 = new double[n_nodes];
             values2 = new double[n_nodes];
             uint i = 0;
+            uint array_index1 = get_rank (index1);
+            uint array_index2 = get_rank (index2);
             for (weak Node? current = head; current != null; current = current.next) {
-                values1[i] = current.data[index1];
-                values2[i] = current.data[index2];
+                values1[i] = current.data[array_index1];
+                values2[i] = current.data[array_index2];
                 i++;
             }
         }
