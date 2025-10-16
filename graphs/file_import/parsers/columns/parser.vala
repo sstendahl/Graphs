@@ -32,7 +32,7 @@ namespace Graphs {
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
 
             string[] item_strings = settings.get_string ("items").split (";;");
-            ColumnsItemSettings item_settings = ColumnsItemSettings();
+            ColumnsItemSettings item_settings = ColumnsItemSettings ();
             foreach (string item_string in item_strings) {
                 item_settings.load_from_item_string (item_string);
 

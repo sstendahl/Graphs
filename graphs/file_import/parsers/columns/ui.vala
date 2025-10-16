@@ -18,7 +18,7 @@ namespace Graphs {
             prepend (new ColumnsGroup (settings));
 
             string[] item_string_array = settings.get_string ("items").split (";;");
-            item_strings = new Gee.ArrayList<string>.wrap(item_string_array);
+            item_strings = new Gee.ArrayList<string>.wrap (item_string_array);
 
             reload_item_groups ();
         }
