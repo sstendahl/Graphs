@@ -23,7 +23,6 @@ namespace Graphs {
 
         private Bitset used_indices = new Bitset.empty ();
         private uint64 n_used_indices;
-        private uint max_index;
         private Node? head = null;
         private uint n_nodes = 0;
         private string[] headers;
@@ -46,9 +45,6 @@ namespace Graphs {
                 used_indices.add (item_settings.column_y);
             }
             this.n_used_indices = used_indices.get_size ();
-            this.max_index = used_indices.get_maximum ();
-
-            this.headers = new string[max_index + 1];
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
             string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
@@ -62,6 +58,8 @@ namespace Graphs {
 
         public void parse () throws Error {
             int skip_rows = settings.get_int ("skip-rows");
+            int max_index = (int) used_indices.get_maximum ();
+            this.headers = new string[max_index + 1];
 
             var stream = new DataInputStream (settings.file.read ());
 
@@ -73,23 +71,35 @@ namespace Graphs {
             weak Node? tail = null;
 
             while ((line = stream.read_line ()) != null) {
-                line_number++;
-                if (line_number <= skip_rows || line.strip ().length == 0) continue;
+                if (++line_number <= skip_rows || line.strip ().length == 0) continue;
 
                 string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
-                validate_column_indices (str_values.length, line_number);
+                if (str_values.length < max_index + 1) {
+                    throw new ColumnsParseError.INDEX_ERROR (
+                        _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
+                        .printf (settings.filename, max_index, line_number, str_values.length)
+                    );
+                }
 
-                var array = new double[n_used_indices + 1];
+                var array = new double[n_used_indices];
 
                 // We assume, that we have at least one valid index
                 bitset_iter.init_first (used_indices, out column_index);
                 array_index = 0;
-                parse_value (str_values, array, column_index, array_index, line_number);
+                do {
+                    string expression = str_values[column_index].strip ();
+                    if (evaluate_string (expression, out array[array_index++])) continue;
 
-                while (bitset_iter.next (out column_index)) {
-                    array_index++;
-                    parse_value (str_values, array, column_index, array_index, line_number);
-                }
+                    // If the data cannot be parsed, treat as header.
+                    // But only if there is not already data present
+                    if (head != null) {
+                        throw new ColumnsParseError.IMPORT_ERROR (
+                            _("Cannot import from file, bad value on line %d").printf (line_number)
+                        );
+                    }
+
+                    headers[column_index] = expression;
+                } while (bitset_iter.next (out column_index));
 
                 var node = new Node (array);
                 if (head == null) {
@@ -103,26 +113,6 @@ namespace Graphs {
             }
 
             stream.close ();
-        }
-
-        private void parse_value (
-            string[] str_values, double[] results,
-            uint column_index, uint array_index,
-            int line_number
-        ) throws Error {
-            string expression = str_values[column_index].strip ();
-            if (evaluate_string (expression, out results[array_index])) return;
-
-            // If the data cannot be parsed, treat as header.
-            // But only if there is not already data present
-            if (head == null) {
-                headers[column_index] = expression;
-                return;
-            }
-
-            throw new ColumnsParseError.IMPORT_ERROR (
-                _("Cannot import from file, bad value on line %d").printf (line_number)
-            );
         }
 
         public string get_header (uint index) {
@@ -146,8 +136,7 @@ namespace Graphs {
             uint i = 0;
             uint array_index = get_rank (index);
             for (weak Node? current = head; current != null; current = current.next) {
-                values[i] = current.data[array_index];
-                i++;
+                values[i++] = current.data[array_index];
             }
         }
 
@@ -159,8 +148,7 @@ namespace Graphs {
             uint array_index2 = get_rank (index2);
             for (weak Node? current = head; current != null; current = current.next) {
                 values1[i] = current.data[array_index1];
-                values2[i] = current.data[array_index2];
-                i++;
+                values2[i++] = current.data[array_index2];
             }
         }
 
@@ -182,15 +170,6 @@ namespace Graphs {
             }
 
             return false;
-        }
-
-        private void validate_column_indices (int num_columns, int line_number) throws ColumnsParseError {
-            if (num_columns < max_index + 1) {
-                throw new ColumnsParseError.INDEX_ERROR (
-                    _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
-                    .printf (settings.filename, (int) max_index, line_number, num_columns)
-                );
-            }
         }
 
         private string normalize_decimal_separator (string str) {
