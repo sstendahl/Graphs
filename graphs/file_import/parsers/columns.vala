@@ -145,7 +145,6 @@ namespace Graphs {
                 // We assume, that we have at least one valid index
                 bitset_iter.init_first (used_indices, out column_index);
 
-                // TODO: header logic
                 parse_value (str_values, array, column_index, line_number);
 
                 while (bitset_iter.next (out column_index)) {
@@ -158,11 +157,17 @@ namespace Graphs {
 
         private void parse_value (string[] str_values, double[] results, uint column_index, int line_number) throws Error {
             string expression = str_values[column_index].strip();
-            if (!evaluate_string (expression, out results[column_index])) {
+            if (evaluate_string (expression, out results[column_index])) return;
+
+            // If the data cannot be parsed, treat as header.
+            // But only if there is not already data present
+            if (!data.is_empty) {
                 throw new ColumnsParseError.IMPORT_ERROR (
-                    _("Can't import from file, bad value on line %d").printf (line_number)
+                    _("Cannot import from file, bad value on line %d").printf (line_number)
                 );
             }
+
+            headers[column_index] = expression;
         }
 
         public void parse_alt (out double[] xvalues, out double[] yvalues, out string xlabel, out string ylabel) throws Error {
@@ -235,6 +240,10 @@ namespace Graphs {
                 xvalues[i] = xvals[i];
                 yvalues[i] = yvals[i];
             }
+        }
+
+        public string get_header (uint index) {
+            return headers[index];
         }
 
         public void get_column (uint index, out double[] values) {
