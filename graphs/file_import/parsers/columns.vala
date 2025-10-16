@@ -4,7 +4,7 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
-    public errordomain ParseError {
+    public errordomain ColumnsParseError {
         INDEX_ERROR,
         IMPORT_ERROR,
         INVALID_CONFIGURATION
@@ -36,7 +36,7 @@ namespace Graphs {
             }
         }
 
-        public string to_regex_pattern (string custom_delimiter) throws ParseError {
+        public string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
             switch (this) {
                 case WHITESPACE: return "\\s+";
                 case TAB: return "\\t";
@@ -46,7 +46,7 @@ namespace Graphs {
                 case PERIOD: return "\\.";
                 case CUSTOM:
                     if (custom_delimiter.length == 0) {
-                        throw new ParseError.INVALID_CONFIGURATION (
+                        throw new ColumnsParseError.INVALID_CONFIGURATION (
                             _("Custom delimiter cannot be empty")
                         );
                     }
@@ -78,11 +78,9 @@ namespace Graphs {
      */
     public class ColumnsParser : Object {
         private ImportSettings settings;
-        private int column_x;
-        private int column_y;
+        private int max_index;
         private ColumnsSeparator separator;
         private Regex delimiter_regex;
-        private string filename;
 
         protected double parse_float_helper { get; set; }
         protected signal bool parse_float_request (string input);
@@ -92,10 +90,14 @@ namespace Graphs {
 
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
-            this.filename = settings.file.get_basename ();
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
-            this.column_x = settings.get_int ("column-x");
-            this.column_y = settings.get_int ("column-y");
+
+            // TODO: replace for multi-item logic
+            if (settings.get_boolean ("single-column")) {
+                this.max_index = settings.get_int ("column-y");
+            } else {
+                this.max_index = int.max (settings.get_int ("column-x"), settings.get_int ("column-y"));
+            }
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
             string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
@@ -103,7 +105,7 @@ namespace Graphs {
             try {
                 this.delimiter_regex = new Regex (pattern);
             } catch (RegexError e) {
-                throw new ParseError.INVALID_CONFIGURATION (e.message);
+                throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
             }
         }
 
@@ -111,6 +113,9 @@ namespace Graphs {
             var stream = new DataInputStream (settings.file.read ());
             var xvals = new ArrayList<double?> ();
             var yvals = new ArrayList<double?> ();
+
+            int column_x = settings.get_int ("column-x");
+            int column_y = settings.get_int ("column-y");
 
             string? line;
             int line_number = 0;
@@ -145,7 +150,7 @@ namespace Graphs {
                 // If we can't parse values but we already have data, it's an error
                 if (yval == null || (!single_column && xval == null)) {
                     int actual_line = line_number;
-                    throw new ParseError.IMPORT_ERROR (
+                    throw new ColumnsParseError.IMPORT_ERROR (
                         _("Can't import from file, bad value on line %d").printf (actual_line)
                     );
                 }
@@ -161,7 +166,7 @@ namespace Graphs {
             stream.close ();
 
             if (xvals.size == 0) {
-                throw new ParseError.IMPORT_ERROR (_("Unable to import from file: no valid data found"));
+                throw new ColumnsParseError.IMPORT_ERROR (_("Unable to import from file: no valid data found"));
             }
 
             xvalues = new double[xvals.size];
@@ -173,14 +178,14 @@ namespace Graphs {
             }
         }
 
-        private double generate_x_value (int index) throws ParseError {
+        private double generate_x_value (int index) throws ColumnsParseError {
             string equation = settings.get_string ("single-equation");
 
             if (evaluate_equation_request.emit (equation, index)) {
                 return this.evaluate_equation_helper;
             }
 
-            throw new ParseError.IMPORT_ERROR (
+            throw new ColumnsParseError.IMPORT_ERROR (
                 _("Failed to evaluate equation %s").printf (equation)
             );
         }
@@ -211,13 +216,11 @@ namespace Graphs {
             return values;
         }
 
-        private void validate_column_indices (int num_columns, int line_number, bool single_column) throws ParseError {
-            int required_column = single_column ? column_y : int.max (column_x, column_y);
-
-            if (num_columns < required_column + 1) {
-                throw new ParseError.INDEX_ERROR (
+        private void validate_column_indices (int num_columns, int line_number, bool single_column) throws ColumnsParseError {
+            if (num_columns < max_index + 1) {
+                throw new ColumnsParseError.INDEX_ERROR (
                     _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
-                    .printf (filename, required_column, line_number, num_columns)
+                    .printf (settings.filename, max_index, line_number, num_columns)
                 );
             }
         }

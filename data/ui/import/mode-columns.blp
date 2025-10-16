@@ -4,9 +4,11 @@ using Adw 1;
 template $GraphsColumnsGroup: Adw.PreferencesGroup {
   Adw.PreferencesGroup {
     title: _("Format");
+
     Adw.ComboRow delimiter {
       title: _("Delimiter");
       subtitle: _("Character used to separate columns");
+
       model: StringList {
         strings [
           C_("delimiter", "Whitespace"),
@@ -19,6 +21,7 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         ]
       };
     }
+
     Adw.EntryRow custom_delimiter {
       sensitive: false;
       title: _("Custom Delimiter");
@@ -27,11 +30,17 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
       Button help_button {
         valign: center;
         tooltip-text: _("More info");
-        styles ["flat"]
+
+        styles [
+          "flat",
+        ]
+
         Adw.ButtonContent {
           icon-name: "info-symbolic";
+
           Popover help_popover {
             position: bottom;
+
             Label {
               label: "<b>Uses regex pattern matching</b>\n\nThese characters have special meanings in regex syntax:\n<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n\nTo match these characters literally, escape them with <b>\\</b>\n\n<b>Examples:</b>\n• <b>\\.</b> matches a period\n• <b>\\*</b> matches an asterisk\n• <b>\\|</b> matches a pipe character\n\n<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax...</a>";
               use-markup: true;
@@ -47,6 +56,7 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
 
     Adw.ComboRow separator {
       title: _("Decimal Separator");
+
       model: StringList {
         strings [
           C_("separator", "Decimal comma (,)"),
@@ -55,17 +65,22 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
       };
     }
   }
+
   Adw.PreferencesGroup {
     title: _("Columns");
     margin-top: 10;
+
     Adw.PreferencesRow {
       activatable: false;
+
       Box {
         orientation: horizontal;
         homogeneous: true;
+
         Adw.SpinRow column_x {
           title: _("X Column");
           sensitive: bind single_column.active inverted;
+
           adjustment: Adjustment {
             lower: 0;
             upper: 100;
@@ -73,8 +88,10 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
             value: 0;
           };
         }
+
         Adw.SpinRow column_y {
           title: _("Y Column");
+
           adjustment: Adjustment {
             lower: 0;
             upper: 100;
@@ -84,9 +101,11 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         }
       }
     }
+
     Adw.SpinRow skip_rows {
       title: _("Skip Rows");
       subtitle: _("Number of rows to skip at the beginning");
+
       adjustment: Adjustment {
         lower: 0;
         upper: 9999;
@@ -94,6 +113,7 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         value: 0;
       };
     }
+
     Adw.SwitchRow single_column {
       title: _("Single Column");
       subtitle: _("Import only Y values, X values will be generated");
@@ -108,7 +128,10 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
       Button equation_help_button {
         valign: center;
         tooltip-text: _("More info");
-        styles ["flat"]
+
+        styles [
+          "flat",
+        ]
 
         Adw.ButtonContent {
           icon-name: "info-symbolic";

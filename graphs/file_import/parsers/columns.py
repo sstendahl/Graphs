@@ -41,11 +41,16 @@ class ColumnsParser(Parser):
         except GLib.Error as e:
             raise ParseError(e.message) from e
 
-        return [item.DataItem.new(
-            style, xdata, ydata,
-            xlabel=xlabel, ylabel=ylabel,
-            name=settings.get_filename(),
-        )]
+        return [
+            item.DataItem.new(
+                style,
+                xdata,
+                ydata,
+                xlabel=xlabel,
+                ylabel=ylabel,
+                name=settings.get_filename(),
+            ),
+        ]
 
     @staticmethod
     def _on_parse_float_request(parser, string: str) -> bool:
@@ -58,7 +63,10 @@ class ColumnsParser(Parser):
 
     @staticmethod
     def _on_evaluate_equation_request(
-            parser, equation: str, index: int) -> bool:
+        parser,
+        equation: str,
+        index: int,
+    ) -> bool:
         """Handle equation evaluation request from Vala."""
         equation = utilities.preprocess(equation)
         # Use word boundaries to avoid replacing `n` in function names
