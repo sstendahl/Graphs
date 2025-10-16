@@ -97,9 +97,6 @@ namespace Graphs {
         protected double parse_float_helper { get; set; }
         protected signal bool parse_float_request (string input);
 
-        protected double evaluate_equation_helper { get; set; }
-        protected signal bool evaluate_equation_request (string equation, int index);
-
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
@@ -144,7 +141,6 @@ namespace Graphs {
 
                 // We assume, that we have at least one valid index
                 bitset_iter.init_first (used_indices, out column_index);
-
                 parse_value (str_values, array, column_index, line_number);
 
                 while (bitset_iter.next (out column_index)) {
@@ -153,6 +149,8 @@ namespace Graphs {
 
                 data.add (DoubleArray (array));
             }
+
+            stream.close ();
         }
 
         private void parse_value (string[] str_values, double[] results, uint column_index, int line_number) throws Error {
@@ -161,85 +159,14 @@ namespace Graphs {
 
             // If the data cannot be parsed, treat as header.
             // But only if there is not already data present
-            if (!data.is_empty) {
-                throw new ColumnsParseError.IMPORT_ERROR (
-                    _("Cannot import from file, bad value on line %d").printf (line_number)
-                );
+            if (data.is_empty) {
+                headers[column_index] = expression;
+                return;
             }
 
-            headers[column_index] = expression;
-        }
-
-        public void parse_alt (out double[] xvalues, out double[] yvalues, out string xlabel, out string ylabel) throws Error {
-            var stream = new DataInputStream (settings.file.read ());
-            var xvals = new ArrayList<double?> ();
-            var yvals = new ArrayList<double?> ();
-
-            int column_x = settings.get_int ("column-x");
-            int column_y = settings.get_int ("column-y");
-
-            string? line;
-            int line_number = 0;
-            int skip_rows = settings.get_int ("skip-rows");
-            bool single_column = settings.get_boolean ("single-column");
-
-            xlabel = "";
-            ylabel = "";
-
-            while ((line = stream.read_line ()) != null) {
-                line_number++;
-                if (line_number <= skip_rows || line.strip ().length == 0) continue;
-
-                string[] values = delimiter_regex.split (line);
-                validate_column_indices (values.length, line_number);
-
-                string xval_str = single_column ? "" : values[column_x].strip();
-                string yval_str = values[column_y].strip();
-
-                double? xval;
-                double? yval;
-
-                evaluate_string (xval_str, out xval);
-                evaluate_string (yval_str, out yval);
-
-                // If we can't parse values and we haven't found data yet, treat as headers
-                if ((yval == null || (!single_column && xval == null)) && xvals.size == 0) {
-                    if (!single_column) {
-                        xlabel = xval_str;
-                    }
-                    ylabel = yval_str;
-                    continue;
-                }
-
-                // If we can't parse values but we already have data, it's an error
-                if (yval == null || (!single_column && xval == null)) {
-                    int actual_line = line_number;
-                    throw new ColumnsParseError.IMPORT_ERROR (
-                        _("Can't import from file, bad value on line %d").printf (actual_line)
-                    );
-                }
-
-                if (single_column) {
-                    xvals.add (generate_x_value (xvals.size));
-                } else {
-                    xvals.add (xval);
-                }
-                yvals.add (yval);
-            }
-
-            stream.close ();
-
-            if (xvals.size == 0) {
-                throw new ColumnsParseError.IMPORT_ERROR (_("Unable to import from file: no valid data found"));
-            }
-
-            xvalues = new double[xvals.size];
-            yvalues = new double[yvals.size];
-
-            for (int i = 0; i < xvals.size; i++) {
-                xvalues[i] = xvals[i];
-                yvalues[i] = yvals[i];
-            }
+            throw new ColumnsParseError.IMPORT_ERROR (
+                _("Cannot import from file, bad value on line %d").printf (line_number)
+            );
         }
 
         public string get_header (uint index) {
@@ -266,20 +193,9 @@ namespace Graphs {
             }
         }
 
-        private double generate_x_value (int index) throws ColumnsParseError {
-            string equation = settings.get_string ("single-equation");
-
-            if (evaluate_equation_request.emit (equation, index)) {
-                return this.evaluate_equation_helper;
-            }
-
-            throw new ColumnsParseError.IMPORT_ERROR (
-                _("Failed to evaluate equation %s").printf (equation)
-            );
-        }
-
         private bool evaluate_string (string expression, out double result) {
             if (expression.strip ().length == 0) {
+                result = 0;
                 return false;
             }
 

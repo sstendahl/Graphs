@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing columns files."""
-import re
 from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs
@@ -10,6 +9,8 @@ from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
 import numexpr
+
+import numpy
 
 
 class ColumnsParser(Parser):
@@ -31,19 +32,25 @@ class ColumnsParser(Parser):
             "parse-float-request",
             ColumnsParser._on_parse_float_request,
         )
-        parser.connect(
-            "evaluate-equation-request",
-            ColumnsParser._on_evaluate_equation_request,
-        )
 
         try:
             parser.parse()
-            # TODO: single-column-support
-            x_index = settings.get_int("column-x")
-            y_index = settings.get_int("column-y")
-            xdata, ydata = parser.get_column_pair(x_index, y_index)
-            xlabel = parser.get_header(x_index)
-            ylabel = parser.get_header(y_index)
+            yindex = settings.get_int("column-y")
+            ylabel = parser.get_header(yindex)
+
+            if settings.get_boolean("single-column"):
+                xlabel = ""
+                ydata = parser.get_column(yindex)
+                equation = settings.get_string("single-equation")
+                xdata = numexpr.evaluate(
+                    utilities.preprocess(equation) + " + n*0",
+                    local_dict={"n": numpy.arange(len(ydata))},
+                )
+                xdata = numpy.ndarray.tolist(xdata)
+            else:
+                xindex = settings.get_int("column-x")
+                xdata, ydata = parser.get_column_pair(xindex, yindex)
+                xlabel = parser.get_header(xindex)
         except GLib.Error as e:
             raise ParseError(e.message) from e
 
@@ -65,23 +72,6 @@ class ColumnsParser(Parser):
         if value is None:
             return False
         parser.set_parse_float_helper(value)
-        return True
-
-    @staticmethod
-    def _on_evaluate_equation_request(
-        parser,
-        equation: str,
-        index: int,
-    ) -> bool:
-        """Handle equation evaluation request from Vala."""
-        equation = utilities.preprocess(equation)
-        # Use word boundaries to avoid replacing `n` in function names
-        string_value = re.sub(r"\bn\b", f"{index}", equation)
-        value = numexpr.evaluate(string_value)
-        if value is None:
-            return False
-
-        parser.set_evaluate_equation_helper(value)
         return True
 
     @staticmethod
