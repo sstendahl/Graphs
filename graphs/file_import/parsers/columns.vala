@@ -73,14 +73,26 @@ namespace Graphs {
         }
     }
 
+    private struct DoubleArray {
+        public double[] data;
+
+        public DoubleArray (double[] array) {
+            this.data = array;
+        }
+    }
+
     /**
      * Reader class for parsing column-based text files
      */
     public class ColumnsParser : Object {
         private ImportSettings settings;
-        private int max_index;
         private ColumnsSeparator separator;
         private Regex delimiter_regex;
+
+        private Bitset used_indices = new Bitset.empty ();
+        private uint max_index;
+        private Gee.List<DoubleArray?> data = new LinkedList<DoubleArray?> ();
+        private string[] headers;
 
         protected double parse_float_helper { get; set; }
         protected signal bool parse_float_request (string input);
@@ -93,11 +105,13 @@ namespace Graphs {
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
 
             // TODO: replace for multi-item logic
-            if (settings.get_boolean ("single-column")) {
-                this.max_index = settings.get_int ("column-y");
-            } else {
-                this.max_index = int.max (settings.get_int ("column-x"), settings.get_int ("column-y"));
+            used_indices.add (settings.get_int ("column-y"));
+            if (!settings.get_boolean ("single-column")) {
+                used_indices.add (settings.get_int ("column-x"));
             }
+            this.max_index = used_indices.get_maximum ();
+
+            this.headers = new string[max_index + 1];
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
             string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
@@ -109,7 +123,49 @@ namespace Graphs {
             }
         }
 
-        public void parse (out double[] xvalues, out double[] yvalues, out string xlabel, out string ylabel) throws Error {
+        public void parse () throws Error {
+            int skip_rows = settings.get_int ("skip-rows");
+
+            var stream = new DataInputStream (settings.file.read ());
+
+            string? line;
+            int line_number = 0;
+            var bitset_iter = BitsetIter ();
+            uint column_index;
+
+            while ((line = stream.read_line ()) != null) {
+                line_number++;
+                if (line_number <= skip_rows || line.strip ().length == 0) continue;
+
+                string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
+                validate_column_indices (str_values.length, line_number);
+
+                var array = new double[max_index + 1];
+
+                // We assume, that we have at least one valid index
+                bitset_iter.init_first (used_indices, out column_index);
+
+                // TODO: header logic
+                parse_value (str_values, array, column_index, line_number);
+
+                while (bitset_iter.next (out column_index)) {
+                    parse_value (str_values, array, column_index, line_number);
+                }
+
+                data.add (DoubleArray (array));
+            }
+        }
+
+        private void parse_value (string[] str_values, double[] results, uint column_index, int line_number) throws Error {
+            string expression = str_values[column_index].strip();
+            if (!evaluate_string (expression, out results[column_index])) {
+                throw new ColumnsParseError.IMPORT_ERROR (
+                    _("Can't import from file, bad value on line %d").printf (line_number)
+                );
+            }
+        }
+
+        public void parse_alt (out double[] xvalues, out double[] yvalues, out string xlabel, out string ylabel) throws Error {
             var stream = new DataInputStream (settings.file.read ());
             var xvals = new ArrayList<double?> ();
             var yvals = new ArrayList<double?> ();
@@ -129,14 +185,17 @@ namespace Graphs {
                 line_number++;
                 if (line_number <= skip_rows || line.strip ().length == 0) continue;
 
-                string[] values = split_line (line);
-                validate_column_indices (values.length, line_number, single_column);
+                string[] values = delimiter_regex.split (line);
+                validate_column_indices (values.length, line_number);
 
-                string xval_str = single_column ? "" : values[column_x];
-                string yval_str = values[column_y];
+                string xval_str = single_column ? "" : values[column_x].strip();
+                string yval_str = values[column_y].strip();
 
-                double? xval = single_column ? null : parse_value (xval_str);
-                double? yval = parse_value (yval_str);
+                double? xval;
+                double? yval;
+
+                evaluate_string (xval_str, out xval);
+                evaluate_string (yval_str, out yval);
 
                 // If we can't parse values and we haven't found data yet, treat as headers
                 if ((yval == null || (!single_column && xval == null)) && xvals.size == 0) {
@@ -178,6 +237,26 @@ namespace Graphs {
             }
         }
 
+        public void get_column (uint index, out double[] values) {
+            values = new double[data.size];
+            uint i = 0;
+            foreach (var array in data) {
+                values[i] = array.data[index];
+                i++;
+            }
+        }
+
+        public void get_column_pair (uint index1, uint index2, out double[] values1, out double[] values2) {
+            values1 = new double[data.size];
+            values2 = new double[data.size];
+            uint i = 0;
+            foreach (var array in data) {
+                values1[i] = array.data[index1];
+                values2[i] = array.data[index2];
+                i++;
+            }
+        }
+
         private double generate_x_value (int index) throws ColumnsParseError {
             string equation = settings.get_string ("single-equation");
 
@@ -190,37 +269,30 @@ namespace Graphs {
             );
         }
 
-        private double? parse_value (string str) {
-            if (str.strip ().length == 0) {
-                return null;
+        private bool evaluate_string (string expression, out double result) {
+            if (expression.strip ().length == 0) {
+                return false;
             }
 
-            string normalized = normalize_decimal_separator (str);
-            double result;
+            string normalized = normalize_decimal_separator (expression);
             if (double.try_parse (normalized, out result)) {
-                return result;
+                return true;
             }
 
             // If Vala can't parse, request Python signal
             if (parse_float_request.emit (normalized)) {
-                return this.parse_float_helper;
+                result = this.parse_float_helper;
+                return true;
             }
-            return null;
+
+            return false;
         }
 
-        private string[] split_line (string line) {
-            string[] values = delimiter_regex.split (line);
-            for (int i = 0; i < values.length; i++) {
-                values[i] = values[i].strip ();
-            }
-            return values;
-        }
-
-        private void validate_column_indices (int num_columns, int line_number, bool single_column) throws ColumnsParseError {
+        private void validate_column_indices (int num_columns, int line_number) throws ColumnsParseError {
             if (num_columns < max_index + 1) {
                 throw new ColumnsParseError.INDEX_ERROR (
                     _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
-                    .printf (settings.filename, max_index, line_number, num_columns)
+                    .printf (settings.filename, (int) max_index, line_number, num_columns)
                 );
             }
         }

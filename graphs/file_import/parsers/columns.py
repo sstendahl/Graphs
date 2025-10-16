@@ -37,7 +37,12 @@ class ColumnsParser(Parser):
         )
 
         try:
-            xdata, ydata, xlabel, ylabel = parser.parse()
+            parser.parse()
+            # TODO: single-column-support
+            xdata, ydata = parser.get_column_pair (
+                settings.get_int("column-x"),
+                settings.get_int("column-y"),
+            )
         except GLib.Error as e:
             raise ParseError(e.message) from e
 
@@ -46,8 +51,8 @@ class ColumnsParser(Parser):
                 style,
                 xdata,
                 ydata,
-                xlabel=xlabel,
-                ylabel=ylabel,
+                xlabel="",
+                ylabel="",
                 name=settings.get_filename(),
             ),
         ]
