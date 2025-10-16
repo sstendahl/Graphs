@@ -29,27 +29,23 @@ template $GraphsTransformDialog: Adw.Dialog {
       }
 
       [end]
-      Button help_button {
+      MenuButton {
         halign: end;
+        icon-name: "info-symbolic";
         tooltip-text: _("More info");
 
-        Adw.ButtonContent {
-          halign: center;
-          icon-name: "info-symbolic";
+        popover: Popover {
+          position: bottom;
 
-          Popover help_popover {
-            position: bottom;
-
-            Label help_info {
-              label: _("<b>Additional variables:</b>\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
-              use-markup: true;
-              margin-top: 12;
-              margin-bottom: 12;
-              margin-start: 12;
-              margin-end: 12;
-            }
+          Label {
+            label: _("<b>Additional variables:</b>\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
+            use-markup: true;
+            margin-top: 12;
+            margin-bottom: 12;
+            margin-start: 12;
+            margin-end: 12;
           }
-        }
+        };
       }
     }
 

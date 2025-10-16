@@ -281,14 +281,6 @@ namespace Graphs {
         public unowned Adw.SpinRow skip_rows { get; }
         [GtkChild]
         public unowned Adw.EntryRow single_equation { get; }
-        [GtkChild]
-        private unowned Button help_button { get; }
-        [GtkChild]
-        private unowned Popover help_popover { get; }
-        [GtkChild]
-        private unowned Button equation_help_button { get; }
-        [GtkChild]
-        private unowned Popover equation_help_popover { get; }
 
         private ImportSettings settings;
 
@@ -331,14 +323,6 @@ namespace Graphs {
             custom_delimiter.set_text (settings.get_string ("custom-delimiter"));
             custom_delimiter.notify["text"].connect (() => {
                 settings.set_string ("custom-delimiter", custom_delimiter.get_text ());
-            });
-
-            help_button.clicked.connect (() => {
-                help_popover.popup ();
-            });
-
-            equation_help_button.clicked.connect (() => {
-                equation_help_popover.popup ();
             });
 
             separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
