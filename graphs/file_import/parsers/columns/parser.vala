@@ -3,10 +3,12 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
-    private struct DoubleArray {
+    [Compact]
+    private class Node {
         public double[] data;
+        public Node? next = null;
 
-        public DoubleArray (double[] array) {
+        public Node (owned double[] array) {
             this.data = array;
         }
     }
@@ -21,7 +23,8 @@ namespace Graphs {
 
         private Bitset used_indices = new Bitset.empty ();
         private uint max_index;
-        private Gee.List<DoubleArray?> data = new LinkedList<DoubleArray?> ();
+        private Node? head = null;
+        private uint n_nodes = 0;
         private string[] headers;
 
         protected double parse_float_helper { get; set; }
@@ -64,6 +67,7 @@ namespace Graphs {
             int line_number = 0;
             var bitset_iter = BitsetIter ();
             uint column_index;
+            weak Node? tail = null;
 
             while ((line = stream.read_line ()) != null) {
                 line_number++;
@@ -82,7 +86,15 @@ namespace Graphs {
                     parse_value (str_values, array, column_index, line_number);
                 }
 
-                data.add (DoubleArray (array));
+                var node = new Node (array);
+                if (head == null) {
+                    tail = node;
+                    head = (owned) node;
+                } else {
+                    tail.next = (owned) node;
+                    tail = tail.next;
+                }
+                n_nodes++;
             }
 
             stream.close ();
@@ -94,7 +106,7 @@ namespace Graphs {
 
             // If the data cannot be parsed, treat as header.
             // But only if there is not already data present
-            if (data.is_empty) {
+            if (head == null) {
                 headers[column_index] = expression;
                 return;
             }
@@ -109,21 +121,21 @@ namespace Graphs {
         }
 
         public void get_column (uint index, out double[] values) {
-            values = new double[data.size];
+            values = new double[n_nodes];
             uint i = 0;
-            foreach (var array in data) {
-                values[i] = array.data[index];
+            for (weak Node? current = head; current != null; current = current.next) {
+                values[i] = current.data[index];
                 i++;
             }
         }
 
         public void get_column_pair (uint index1, uint index2, out double[] values1, out double[] values2) {
-            values1 = new double[data.size];
-            values2 = new double[data.size];
+            values1 = new double[n_nodes];
+            values2 = new double[n_nodes];
             uint i = 0;
-            foreach (var array in data) {
-                values1[i] = array.data[index1];
-                values2[i] = array.data[index2];
+            for (weak Node? current = head; current != null; current = current.next) {
+                values1[i] = current.data[index1];
+                values2[i] = current.data[index2];
                 i++;
             }
         }
