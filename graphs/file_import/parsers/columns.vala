@@ -81,6 +81,26 @@ namespace Graphs {
         }
     }
 
+    public struct ColumnsItemSettings {
+        public int column_x;
+        public int column_y;
+        public bool single_column;
+        public string equation;
+
+        public void load_from_item_string (string item_string) {
+            string[] parts = item_string.split (";", 4);
+
+            column_x = int.parse (parts[0]);
+            column_y = int.parse (parts[1]);
+            single_column = bool.parse (parts[2]);
+            equation = parts[3];
+        }
+
+        public string to_item_string () {
+            return "%d;%d;%b;%s".printf (column_x, column_y, single_column, equation);
+        }
+    }
+
     /**
      * Reader class for parsing column-based text files
      */
@@ -101,10 +121,15 @@ namespace Graphs {
             this.settings = settings;
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
 
-            // TODO: replace for multi-item logic
-            used_indices.add (settings.get_int ("column-y"));
-            if (!settings.get_boolean ("single-column")) {
-                used_indices.add (settings.get_int ("column-x"));
+            string[] item_strings = settings.get_string ("items").split (";;");
+            ColumnsItemSettings item_settings = ColumnsItemSettings();
+            foreach (string item_string in item_strings) {
+                item_settings.load_from_item_string (item_string);
+
+                if (!item_settings.single_column) {
+                    used_indices.add (item_settings.column_x);
+                }
+                used_indices.add (item_settings.column_y);
             }
             this.max_index = used_indices.get_maximum ();
 
@@ -265,11 +290,36 @@ namespace Graphs {
         [GtkChild]
         private unowned Popover equation_help_popover { get; }
 
+        private ImportSettings settings;
+
         public ColumnsGroup (ImportSettings settings) {
-            setup_ui (settings);
+            this.settings = settings;
+            setup_ui ();
         }
 
-        private void setup_ui (ImportSettings settings) {
+        private void load_item_settings (ColumnsItemSettings item_settings) {
+            column_x.set_value (item_settings.column_x);
+            column_y.set_value (item_settings.column_y);
+            single_column.set_active (item_settings.single_column);
+            single_equation.set_text (item_settings.equation);
+        }
+
+        private ColumnsItemSettings get_item_settings () {
+            ColumnsItemSettings item_settings = ColumnsItemSettings ();
+
+            item_settings.column_x = (int) column_x.get_value ();
+            item_settings.column_y = (int) column_y.get_value ();
+            item_settings.single_column = single_column.get_active ();
+            item_settings.equation = single_equation.get_text ().replace (";", "");
+
+            return item_settings;
+        }
+
+        private void update_items () {
+            settings.set_string ("items", get_item_settings ().to_item_string ());
+        }
+
+        private void setup_ui () {
             delimiter.set_selected (ColumnsDelimiter.parse (settings.get_string ("delimiter")));
             delimiter.notify["selected"].connect (() => {
                 ColumnsDelimiter selected = (ColumnsDelimiter) delimiter.get_selected ();
@@ -296,30 +346,20 @@ namespace Graphs {
                 settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
             });
 
-            single_column.set_active (settings.get_boolean ("single-column"));
-            single_column.notify["active"].connect (() => {
-                settings.set_boolean ("single-column", single_column.get_active ());
-            });
-
-            column_x.set_value (settings.get_int ("column-x"));
-            column_x.notify["value"].connect (() => {
-                settings.set_int ("column-x", (int) column_x.get_value ());
-            });
-
-            column_y.set_value (settings.get_int ("column-y"));
-            column_y.notify["value"].connect (() => {
-                settings.set_int ("column-y", (int) column_y.get_value ());
-            });
-
             skip_rows.set_value (settings.get_int ("skip-rows"));
             skip_rows.notify["value"].connect (() => {
                 settings.set_int ("skip-rows", (int) skip_rows.get_value ());
             });
 
-            single_equation.set_text (settings.get_string ("single-equation"));
-            single_equation.notify["text"].connect (() => {
-                settings.set_string ("single-equation", single_equation.get_text ());
-            });
+            string item_string = settings.get_string ("items");
+            ColumnsItemSettings item_settings = ColumnsItemSettings ();
+            item_settings.load_from_item_string (item_string);
+            load_item_settings (item_settings);
+
+            single_column.notify["active"].connect (update_items);
+            column_x.notify["value"].connect (update_items);
+            column_y.notify["value"].connect (update_items);
+            single_equation.notify["text"].connect (update_items);
         }
     }
 }

@@ -35,35 +35,43 @@ class ColumnsParser(Parser):
 
         try:
             parser.parse()
-            yindex = settings.get_int("column-y")
+        except GLib.Error as e:
+            raise ParseError(e.message) from e
+
+        items = []
+        for item_string in settings.get_string("items").split(";;"):
+            item_settings = Graphs.ColumnsItemSettings()
+            item_settings.load_from_item_string(item_string)
+
+            yindex = item_settings.column_y
             ylabel = parser.get_header(yindex)
 
-            if settings.get_boolean("single-column"):
+            if item_settings.single_column:
                 xlabel = ""
                 ydata = parser.get_column(yindex)
-                equation = settings.get_string("single-equation")
+                equation = item_settings.equation
                 xdata = numexpr.evaluate(
                     utilities.preprocess(equation) + " + n*0",
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 xdata = numpy.ndarray.tolist(xdata)
             else:
-                xindex = settings.get_int("column-x")
+                xindex = item_settings.column_x
                 xdata, ydata = parser.get_column_pair(xindex, yindex)
                 xlabel = parser.get_header(xindex)
-        except GLib.Error as e:
-            raise ParseError(e.message) from e
 
-        return [
-            item.DataItem.new(
-                style,
-                xdata,
-                ydata,
-                xlabel=xlabel,
-                ylabel=ylabel,
-                name=settings.get_filename(),
-            ),
-        ]
+            items.append(
+                item.DataItem.new(
+                    style,
+                    xdata,
+                    ydata,
+                    xlabel=xlabel,
+                    ylabel=ylabel,
+                    name=settings.get_filename(),
+                ),
+            )
+
+        return items
 
     @staticmethod
     def _on_parse_float_request(parser, string: str) -> bool:

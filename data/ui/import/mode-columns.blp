@@ -64,6 +64,18 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
         ]
       };
     }
+
+    Adw.SpinRow skip_rows {
+      title: _("Skip Rows");
+      subtitle: _("Number of rows to skip at the beginning");
+
+      adjustment: Adjustment {
+        lower: 0;
+        upper: 9999;
+        step-increment: 1;
+        value: 0;
+      };
+    }
   }
 
   Adw.PreferencesGroup {
@@ -100,18 +112,6 @@ template $GraphsColumnsGroup: Adw.PreferencesGroup {
           };
         }
       }
-    }
-
-    Adw.SpinRow skip_rows {
-      title: _("Skip Rows");
-      subtitle: _("Number of rows to skip at the beginning");
-
-      adjustment: Adjustment {
-        lower: 0;
-        upper: 9999;
-        step-increment: 1;
-        value: 0;
-      };
     }
 
     Adw.SwitchRow single_column {
