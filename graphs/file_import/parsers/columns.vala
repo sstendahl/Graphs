@@ -154,7 +154,7 @@ namespace Graphs {
         }
 
         private void parse_value (string[] str_values, double[] results, uint column_index, int line_number) throws Error {
-            string expression = str_values[column_index].strip();
+            string expression = str_values[column_index].strip ();
             if (evaluate_string (expression, out results[column_index])) return;
 
             // If the data cannot be parsed, treat as header.
