@@ -51,7 +51,7 @@ namespace Graphs {
 
             this.columns = new Column[n_used_indices];
             for (uint i = 0; i < n_used_indices; i++) {
-                columns[i] = new Column();
+                columns[i] = new Column ();
             }
             foreach (string item_string in item_strings) {
                 item_settings.load_from_item_string (item_string);
