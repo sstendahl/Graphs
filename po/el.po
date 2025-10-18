@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-10 23:33+0000\n"
+"POT-Creation-Date: 2025-10-18 22:14+0000\n"
 "PO-Revision-Date: 2025-10-10 23:33+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Greek <Greek>\n"
@@ -34,14 +34,26 @@ msgid ""
 "variety of operations such as the ability to select, cut, translate, "
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
-msgstr "Το Γραφήματα είναι ένα απλό, αλλά ισχυρό εργαλείο που σας επιτρέπει να σχεδιάζετε και να επεξεργάζεστε τα δεδομένα σας με ευκολία. Νέα δεδομένα μπορούν να εισαχθούν από μια μεγάλη ποικιλία τύπων αρχείων, ή να δημιουργηθούν από εξίσωση. Όλα τα δεδομένα μπορούν να υποστούν επεξεργασία χρησιμοποιώντας μια ποικιλία λειτουργιών όπως η δυνατότητα επιλογής, αποκοπής, μετατόπισης, πολλαπλασιασμού, κεντραρίσματος και εξομάλυνσης δεδομένων, καθώς και εφαρμογής οποιωνδήποτε προσαρμοσμένων μετασχηματισμών στα δεδομένα."
+msgstr ""
+"Το Γραφήματα είναι ένα απλό, αλλά ισχυρό εργαλείο που σας επιτρέπει να "
+"σχεδιάζετε και να επεξεργάζεστε τα δεδομένα σας με ευκολία. Νέα δεδομένα "
+"μπορούν να εισαχθούν από μια μεγάλη ποικιλία τύπων αρχείων, ή να "
+"δημιουργηθούν από εξίσωση. Όλα τα δεδομένα μπορούν να υποστούν επεξεργασία "
+"χρησιμοποιώντας μια ποικιλία λειτουργιών όπως η δυνατότητα επιλογής, "
+"αποκοπής, μετατόπισης, πολλαπλασιασμού, κεντραρίσματος και εξομάλυνσης "
+"δεδομένων, καθώς και εφαρμογής οποιωνδήποτε προσαρμοσμένων μετασχηματισμών "
+"στα δεδομένα."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:16
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
-msgstr "Επιπλέον, το Γραφήματα υποστηρίζει την προσαρμογή καμπύλης σε εισαγόμενα δεδομένα και προσφέρει εκτενείς επιλογές προσαρμογής για το στυλ των γραφημάτων. Μπορείτε να ρυθμίσετε και να εξατομικεύσετε τα φύλλα στυλ σύμφωνα με τις προτιμήσεις σας."
+msgstr ""
+"Επιπλέον, το Γραφήματα υποστηρίζει την προσαρμογή καμπύλης σε εισαγόμενα "
+"δεδομένα και προσφέρει εκτενείς επιλογές προσαρμογής για το στυλ των "
+"γραφημάτων. Μπορείτε να ρυθμίσετε και να εξατομικεύσετε τα φύλλα στυλ "
+"σύμφωνα με τις προτιμήσεις σας."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:19
 msgid ""
@@ -52,13 +64,24 @@ msgid ""
 "vector images allows for easy editing in software like Inkscape for further "
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
-msgstr "Το Γραφήματα είναι ιδανικό τόσο για τη σχεδίαση όσο και για την επεξεργασία δεδομένων. Τα γραφήματα που δημιουργούνται με το Γραφήματα μπορούν να αποθηκευτούν σε διάφορους μορφότυπους κατάλληλους για κοινοποίηση και παρουσίαση σε ευρύ κοινό, όπως σε επιστημονικές δημοσιεύσεις ή παρουσιάσεις. Επιπλέον, η επιλογή αποθήκευσης γραφημάτων ως διανυσματικών εικόνων επιτρέπει την εύκολη επεξεργασία σε λογισμικό όπως το Inkscape για περαιτέρω βελτίωση. Το Γραφήματα έχει γραφτεί με γνώμονα το περιβάλλον GNOME, αλλά θα πρέπει να είναι κατάλληλο και για οποιοδήποτε άλλο περιβάλλον επιφάνειας εργασίας."
+msgstr ""
+"Το Γραφήματα είναι ιδανικό τόσο για τη σχεδίαση όσο και για την επεξεργασία "
+"δεδομένων. Τα γραφήματα που δημιουργούνται με το Γραφήματα μπορούν να "
+"αποθηκευτούν σε διάφορους μορφότυπους κατάλληλους για κοινοποίηση και "
+"παρουσίαση σε ευρύ κοινό, όπως σε επιστημονικές δημοσιεύσεις ή παρουσιάσεις. "
+"Επιπλέον, η επιλογή αποθήκευσης γραφημάτων ως διανυσματικών εικόνων "
+"επιτρέπει την εύκολη επεξεργασία σε λογισμικό όπως το Inkscape για περαιτέρω "
+"βελτίωση. Το Γραφήματα έχει γραφτεί με γνώμονα το περιβάλλον GNOME, αλλά θα "
+"πρέπει να είναι κατάλληλο και για οποιοδήποτε άλλο περιβάλλον επιφάνειας "
+"εργασίας."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:23
 msgid ""
 "For any feedback, questions or general issues, please file an issue on the "
 "GitLab page."
-msgstr "Για οποιαδήποτε σχόλια, ερωτήσεις ή γενικά ζητήματα, παρακαλούμε ανοίξτε ένα θέμα στη σελίδα του GitLab."
+msgstr ""
+"Για οποιαδήποτε σχόλια, ερωτήσεις ή γενικά ζητήματα, παρακαλούμε ανοίξτε ένα "
+"θέμα στη σελίδα του GitLab."
 
 #: data/se.sjoerd.Graphs.appdata.xml.in:36
 msgid "1 - Plot and manipulate any data of choice"
@@ -256,7 +279,9 @@ msgstr "Αποθήκευση Αλλαγών;"
 msgid ""
 "Current project contains unsaved changes, changes that are not saved will be "
 "permanently lost."
-msgstr "Το τρέχον έργο περιέχει μη αποθηκευμένες αλλαγές, οι αλλαγές που δεν αποθηκεύονται θα χαθούν οριστικά."
+msgstr ""
+"Το τρέχον έργο περιέχει μη αποθηκευμένες αλλαγές, οι αλλαγές που δεν "
+"αποθηκεύονται θα χαθούν οριστικά."
 
 #: data/ui/dialogs.blp:9
 msgid "Discard"
@@ -1022,7 +1047,8 @@ msgstr "Ποσοστό εύρους"
 
 #: data/ui/smoothen-settings.blp:33
 msgid "What percentage of the data span to use for the filter window"
-msgstr "Τι ποσοστό του εύρους δεδομένων θα χρησιμοποιηθεί για το παράθυρο του φίλτρου"
+msgstr ""
+"Τι ποσοστό του εύρους δεδομένων θα χρησιμοποιηθεί για το παράθυρο του φίλτρου"
 
 #: data/ui/smoothen-settings.blp:40
 msgid "Polynomial degree"
@@ -1038,7 +1064,9 @@ msgstr "Σημεία πλαισίου"
 
 #: data/ui/smoothen-settings.blp:51
 msgid "Amount of points to use when calculating a moving average"
-msgstr "Αριθμός σημείων που θα χρησιμοποιηθούν κατά τον υπολογισμό του κινητού μέσου όρου"
+msgstr ""
+"Αριθμός σημείων που θα χρησιμοποιηθούν κατά τον υπολογισμό του κινητού μέσου "
+"όρου"
 
 #: data/ui/style-color-box.blp:18 data/ui/style-preview.blp:27
 msgid "Edit"
@@ -1259,7 +1287,14 @@ msgid ""
 "Trigonometric functions use radians\n"
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
-msgstr "Πρόσθετες μεταβλητές:\nx_min, y_min\nx_max, y_max \n\nΟι τριγωνομετρικές συναρτήσεις χρησιμοποιούν ακτίνια\nαπό προεπιλογή, προσθέστε d στη συνάρτηση\nγια να χρησιμοποιήσετε μοίρες, π.χ. sind(x) ή cosd(x)."
+msgstr ""
+"Πρόσθετες μεταβλητές:\n"
+"x_min, y_min\n"
+"x_max, y_max \n"
+"\n"
+"Οι τριγωνομετρικές συναρτήσεις χρησιμοποιούν ακτίνια\n"
+"από προεπιλογή, προσθέστε d στη συνάρτηση\n"
+"για να χρησιμοποιήσετε μοίρες, π.χ. sind(x) ή cosd(x)."
 
 #: data/ui/transform.blp:40
 msgid "More info"
@@ -1492,6 +1527,11 @@ msgstr "Ρυθμίσεις για Προχωρημένους"
 #: graphs/about.vala:40
 msgid "translator-credits"
 msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Ευστάθιος Ιωσηφίδης <iosifidis@opensuse.org>\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
+"https://gr.gnome.org/"
 
 #: graphs/actions.py:80
 #, python-brace-format
@@ -1520,19 +1560,25 @@ msgstr "Αποτελέσματα:"
 msgid ""
 "Please enter valid fitting \n"
 "parameters to start the fit"
-msgstr "Παρακαλώ εισαγάγετε έγκυρες παραμέτρους \nπροσαρμογής για να ξεκινήσετε την προσαρμογή"
+msgstr ""
+"Παρακαλώ εισαγάγετε έγκυρες παραμέτρους \n"
+"προσαρμογής για να ξεκινήσετε την προσαρμογή"
 
 #: graphs/curve_fitting.py:184
 msgid ""
 "Please enter a valid equation \n"
 "to start the fit"
-msgstr "Παρακαλώ εισαγάγετε μια έγκυρη εξίσωση \nγια να ξεκινήσετε την προσαρμογή"
+msgstr ""
+"Παρακαλώ εισαγάγετε μια έγκυρη εξίσωση \n"
+"για να ξεκινήσετε την προσαρμογή"
 
 #: graphs/curve_fitting.py:188
 msgid ""
 "Please enter valid fitting bounds \n"
 "to start the fit"
-msgstr "Παρακαλώ εισαγάγετε έγκυρα όρια \nπροσαρμογής για να ξεκινήσετε την προσαρμογή"
+msgstr ""
+"Παρακαλώ εισαγάγετε έγκυρα όρια \n"
+"προσαρμογής για να ξεκινήσετε την προσαρμογή"
 
 #: graphs/curve_fitting.py:201
 #, python-brace-format
@@ -1601,7 +1647,9 @@ msgstr "Αρχείο Έργου Γραφημάτων"
 #: graphs/operations.py:129
 #, python-brace-format
 msgid "{name}: Unable to do transformation, make sure the syntax is correct"
-msgstr "{name}: Αδυναμία εκτέλεσης μετασχηματισμού, βεβαιωθείτε ότι η σύνταξη είναι σωστή"
+msgstr ""
+"{name}: Αδυναμία εκτέλεσης μετασχηματισμού, βεβαιωθείτε ότι η σύνταξη είναι "
+"σωστή"
 
 #: graphs/operations.py:133
 msgid "Unable to do transformation"
@@ -1609,7 +1657,8 @@ msgstr "Αδυναμία εκτέλεσης μετασχηματισμού"
 
 #: graphs/operations.py:197
 msgid "Data that was outside of the highlighted area has been discarded"
-msgstr "Τα δεδομένα που βρίσκονταν εκτός της επισημασμένης περιοχής απορρίφθηκαν"
+msgstr ""
+"Τα δεδομένα που βρίσκονταν εκτός της επισημασμένης περιοχής απορρίφθηκαν"
 
 #: graphs/operations.py:234
 msgid "No data found within the highlighted area"
