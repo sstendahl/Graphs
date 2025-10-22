@@ -4,12 +4,16 @@ using Gtk;
 
 namespace Graphs {
     [Compact]
-    private class Node {
-        public double[] data;
-        public Node? next = null;
+    private class Column {
+        public double[] data = new double[64];
+        public string header = "";
+        public uint requests = 0;
 
-        public Node (owned double[] array) {
-            this.data = array;
+        public double[] get_data () {
+            if (requests == 0) assert_not_reached ();
+            // If this is the last time the data is needed, transfer ownership
+            if (requests-- == 1) return (owned) data;
+            return data;
         }
     }
 
@@ -23,9 +27,8 @@ namespace Graphs {
 
         private Bitset used_indices = new Bitset.empty ();
         private uint64 n_used_indices;
-        private Node? head = null;
-        private uint n_nodes = 0;
-        private string[] headers;
+        private Column[] columns;
+        private int value_size = 0;
 
         protected double parse_float_helper { get; set; }
         protected signal bool parse_float_request (string input);
@@ -46,6 +49,19 @@ namespace Graphs {
             }
             this.n_used_indices = used_indices.get_size ();
 
+            this.columns = new Column[n_used_indices];
+            for (uint i = 0; i < n_used_indices; i++) {
+                columns[i] = new Column ();
+            }
+            foreach (string item_string in item_strings) {
+                item_settings.load_from_item_string (item_string);
+
+                if (!item_settings.single_column) {
+                    columns[item_settings.column_x].requests++;
+                }
+                columns[item_settings.column_y].requests++;
+            }
+
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
             string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
 
@@ -59,7 +75,6 @@ namespace Graphs {
         public void parse () throws Error {
             int skip_rows = settings.get_int ("skip-rows");
             int max_index = (int) used_indices.get_maximum ();
-            this.headers = new string[max_index + 1];
 
             var stream = new DataInputStream (settings.file.read ());
 
@@ -67,8 +82,11 @@ namespace Graphs {
             int line_number = 0;
             var bitset_iter = BitsetIter ();
             uint column_index;
-            uint array_index;
-            weak Node? tail = null;
+            uint column_rank;
+            string expression;
+            double val;
+
+            int array_size = columns[0].data.length;
 
             while ((line = stream.read_line ()) != null) {
                 if (++line_number <= skip_rows || line.strip ().length == 0) continue;
@@ -81,42 +99,45 @@ namespace Graphs {
                     );
                 }
 
-                var array = new double[n_used_indices];
+                // if we reach capacity, grow the arrays.
+                if (value_size == array_size) {
+                    array_size *= 2;
+                    foreach (weak Column column in columns) {
+                        column.data.resize (array_size);
+                    }
+                }
 
                 // We assume, that we have at least one valid index
                 bitset_iter.init_first (used_indices, out column_index);
-                array_index = 0;
+                column_rank = 0;
                 do {
-                    string expression = str_values[column_index].strip ();
-                    if (evaluate_string (expression, out array[array_index++])) continue;
+                    expression = str_values[column_index].strip ();
+                    if (evaluate_string (expression, out val)) {
+                        columns[column_rank++].data[value_size] = val;
+                        continue;
+                    };
 
                     // If the data cannot be parsed, treat as header.
                     // But only if there is not already data present
-                    if (head != null) {
+                    if (value_size > 0) {
                         throw new ColumnsParseError.IMPORT_ERROR (
                             _("Cannot import from file, bad value on line %d").printf (line_number)
                         );
                     }
 
-                    headers[column_index] = expression;
+                    columns[column_rank].header = expression;
+                    // prevent leading 0 in data
+                    value_size = -1;
                 } while (bitset_iter.next (out column_index));
+                value_size++;
+            }
 
-                var node = new Node (array);
-                if (head == null) {
-                    tail = node;
-                    head = (owned) node;
-                } else {
-                    tail.next = (owned) node;
-                    tail = tail.next;
-                }
-                n_nodes++;
+            // shrink to actual size
+            foreach (weak Column column in columns) {
+                column.data.resize (value_size);
             }
 
             stream.close ();
-        }
-
-        public string get_header (uint index) {
-            return headers[index];
         }
 
         private uint get_rank (uint val) {
@@ -131,25 +152,12 @@ namespace Graphs {
             assert_not_reached ();
         }
 
-        public void get_column (uint index, out double[] values) {
-            values = new double[n_nodes];
-            uint i = 0;
-            uint array_index = get_rank (index);
-            for (weak Node? current = head; current != null; current = current.next) {
-                values[i++] = current.data[array_index];
-            }
+        public string get_header (uint index) {
+            return columns[get_rank (index)].header;
         }
 
-        public void get_column_pair (uint index1, uint index2, out double[] values1, out double[] values2) {
-            values1 = new double[n_nodes];
-            values2 = new double[n_nodes];
-            uint i = 0;
-            uint array_index1 = get_rank (index1);
-            uint array_index2 = get_rank (index2);
-            for (weak Node? current = head; current != null; current = current.next) {
-                values1[i] = current.data[array_index1];
-                values2[i++] = current.data[array_index2];
-            }
+        public void get_column (uint index, out double[] values) {
+            values = columns[get_rank (index)].get_data ();
         }
 
         private bool evaluate_string (string expression, out double result) {

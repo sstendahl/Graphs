@@ -45,10 +45,10 @@ class ColumnsParser(Parser):
 
             yindex = item_settings.column_y
             ylabel = parser.get_header(yindex)
+            ydata = parser.get_column(yindex)
 
             if item_settings.single_column:
                 xlabel = ""
-                ydata = parser.get_column(yindex)
                 equation = item_settings.equation
                 xdata = numexpr.evaluate(
                     utilities.preprocess(equation) + " + n*0",
@@ -57,7 +57,7 @@ class ColumnsParser(Parser):
                 xdata = numpy.ndarray.tolist(xdata)
             else:
                 xindex = item_settings.column_x
-                xdata, ydata = parser.get_column_pair(xindex, yindex)
+                xdata = parser.get_column(xindex)
                 xlabel = parser.get_header(xindex)
 
             items.append(
