@@ -1,0 +1,414 @@
+# Bulgarian translation for Graphs.
+# Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Graphs package.
+# twlvnn kraftwerk <kraft_werk@tutanota.com>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Graphs main\n"
+"POT-Creation-Date: 2024-07-26 12:54+0000\n"
+"PO-Revision-Date: 2024-08-31 20:22+0200\n"
+"Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
+"Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"X-Generator: Gtranslator 46.1\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "twlvnn kraftwerk <kraft_werk@tutanota.com>"
+
+#. (itstool) path: page/title
+#: C/curve_fitting.page:8
+msgid "Curve Fitting"
+msgstr "Напасване на криви"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:10
+msgid "Fitting data"
+msgstr "Данни за напасване"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:11
+msgid ""
+"Curve fitting allows for a powerful analysis method for your imported data. "
+"To start curve fitting on a data set, press the three vertical dots on the "
+"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
+"Curve Fitting dialog for the selected data set. An extensive list of "
+"predefined equations can be chosen from the dropdown. The corresponding "
+"mathematical formula is shown in the same card."
+msgstr ""
+"Напасване на криви позволява да се използва мощен метод за анализ на "
+"внесените данни. За да стартирате напасване на криви на данни, натиснете "
+"трите вертикални точки върху елемента, който искате да напаснете, и изберете "
+"„Напасване на криви“. Така се отваря прозореца „Напасване на криви“ за "
+"избраните данни. От падащото меню може да се избере списък с предварително "
+"зададени уравнения. Съответната математическа формула е показана в същата "
+"карта."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/curve_fitting.page:19
+msgctxt "_"
+msgid ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+msgstr ""
+"external ref='media/curve_fitting_light.png' "
+"md5='d33b620c42f2c1cf82c94998adf4a670'"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:23
+msgid "Bounds"
+msgstr "Граници"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:24
+msgid ""
+"Each detected parameter in the formula will be shown in the sidebar. Here an "
+"initial guess can be set for the fit, as well as the minimum and maximum "
+"value for this parameter. Make sure that the initial guess is in between the "
+"bounds, and that the minimum bound is smaller than the maximum bound. If you "
+"don't want to use any bounds for the parameter, you can set the bounds to "
+"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
+"maximum bound respectively."
+msgstr ""
+"Всеки открит параметър във формулата ще бъде показан в страничната лента. "
+"Тук може да се зададе първоначална стойност за напасването, както и "
+"минимална и максимална стойност за този параметър. Уверете се, че "
+"първоначалното стойност е между границите и че минималната граница е по-"
+"малка от максималната. Ако не искате да използвате граници за параметъра, "
+"може да зададете границите на безкрайност, като използвате <code>-inf</code> "
+"и <code>inf</code> съответно за минималната и максималната граница."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:36
+msgid "Results"
+msgstr "Резултати"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:37
+msgid ""
+"Below the fitting parameters, a box is shown with the resulting parameters "
+"of the fit. Apart of the final results, a margin is shown as well for each "
+"parameter as well as the sum of R² indicating the goodness of the fit. The "
+"margin can be set using the primary menu in the Curve Fitting dialog as a "
+"multiple of the standard deviation, corresponding to an uncertainty margin "
+"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+msgstr ""
+"Под параметрите на напасването се показва поле с получените параметри на "
+"напасването. Освен крайните резултати, за всеки параметър се показва и марж, "
+"както и сумата на R², показваща колко е добре напасването. Маржът може да се "
+"зададе с помощта на основното меню в прозореца за напасване на криви като "
+"кратно на стандартното отклонение, което съответства на марж на неувереност "
+"от 65, 95 или 99,7% за стандартно отклонение от 1σ, 2σ или 3σ."
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:45
+msgid ""
+"Please note that like all fits, that this standard deviation is mostly a "
+"measure of how well the data agrees with the corresponding model. Factors "
+"such as whether this model is actually physically correct, if there's any "
+"systemic errors in the measurements, and if the parameters are correlated to "
+"each other is not taken into account when fitting data. This is an inherent "
+"property of all curve fitting, and a common point of confusion, leading to "
+"misleading error bars on data points even in scientifically published data."
+msgstr ""
+"Обърнете внимание, че подобно на всички напасвания, това стандартно "
+"отклонение е най-вече мярка за това колко добре данните съвпадат със "
+"съответния модел. При напасването на данните не се вземат предвид фактори "
+"като това дали този модел е действително физически правилен, дали има "
+"някакви системни грешки в измерванията и дали параметрите имат връзка "
+"помежду си. Това е присъщо свойство на всяко напасване на криви и често "
+"срещан момент на объркване, което води до подвеждащи графики на грешките "
+"върху данни дори в научно публикувани данни."
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:57
+msgid "Fitting algorithms"
+msgstr "Алгоритми за напасване"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:58
+msgid ""
+"When performing a fit, there are three different fitting algorithms to "
+"choose from, these can be set from the primary menu."
+msgstr ""
+"Когато извършвате напасване, може да избирате между три различни алгоритъма "
+"за напасване, които могат да бъдат зададени от основното меню."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:64
+msgid "Levenberg-Marquardt"
+msgstr "Левенберг-Марквард"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:65
+msgid ""
+"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
+"algorithm that performs very efficiently. However, it does not handle bounds "
+"for the fitting parameters."
+msgstr ""
+"Алгоритъмът на Левенберг-Маркардт е традиционно сравнително популярен "
+"алгоритъм, който работи много ефективно. Той обаче не се справя с границите "
+"на параметрите на напасване."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:68
+msgid "Trust Region"
+msgstr "Trust Region"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:69
+msgid ""
+"The Trust Region Reflective algorithm is well-suited for solving large "
+"problems with bounds. This method generally performs well for most cases and "
+"should probably be used for most cases."
+msgstr ""
+"Алгоритъмът „Trust Region Reflective“ е подходящ за решаване на големи "
+"задачи с граници. Като цяло този метод се представя добре в повечето случаи "
+"и вероятно трябва да се използва в повечето случаи."
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:72
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#. (itstool) path: item/p
+#: C/curve_fitting.page:73
+msgid ""
+"The Dogbox algorithm uses rectangular trust regions and typically works well "
+"with small problems involving bounds."
+msgstr ""
+"Алгоритъмът „Dogbox“ използва правоъгълни „trust regions“ и обикновено "
+"работи добре с малки проблеми, включващи граници."
+
+#. (itstool) path: page/title
+#: C/import.page:8
+msgid "Importing Data"
+msgstr "Внасяне на данни"
+
+#. (itstool) path: page/p
+#: C/import.page:9
+msgid ""
+"There are two primary ways to import new data in Graphs, importing data "
+"directly by file or generating new data using an equation."
+msgstr ""
+"Има два основни начина за внасяне на нови данни в „Графики“ - внасяне на "
+"данни директно от файл или генериране на нови данни с помощта на уравнение."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:14
+msgctxt "_"
+msgid ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+msgstr ""
+"external ref='media/add_data_light.png' "
+"md5='5246da95eb47c74c7488f9b9016dde3d'"
+
+#. (itstool) path: page/p
+#: C/import.page:16
+msgid ""
+"A wide array of filetypes are supported when importing data by file. Graphs "
+"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
+"files that are saved in a column format such as most .csv files, .dat "
+"files, .xy files or plain text. Finally, data from other Graphs projects can "
+"be imported into the current project as well, simply by adding new data as "
+"usual, but by selecting a project file instead."
+msgstr ""
+"При внасяне на данни чрез файл се поддържат широк набор от видове файлове. "
+"Понастоящем „Графики“ поддържа Panalytical файлове .xrdml, файлове Leybold ."
+"xry, както и файлове, които са записани във формат на колона, като повечето "
+"файлове .csv, .dat, .xy или обикновен текст. И накрая, данните от други "
+"„Графики“ проекти също могат да бъдат внесени в текущия проект, като просто "
+"се добавят нови данни, както обикновено, но вместо това се избира файл на "
+"проекта."
+
+#. (itstool) path: page/p
+#: C/import.page:25
+msgid ""
+"When using a custom delimiter during the import, an extra field will be "
+"visible to enter the delimiter of choice. This field recognizes regular "
+"expressions. For example, to choose a delimiter that looks for whitespace, "
+"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
+"code> denotes that the delimiter is a whitespace character, and the <code>+</"
+"code> denotes that at least one or more whitespace is required. Thus this "
+"input looks for any amount of whitespaces including tabs. Note that this "
+"particular input is equivalent to the default Whitespace option."
+msgstr ""
+"Когато използвате други разделител по време на внасянето, ще се появи "
+"допълнително поле за въвеждане на избрания разделител. Това поле разпознава "
+"регулярни изрази. Например, за да изберете разделител, който търси празни "
+"знаци, може да въведете <code>\\s+</code> като разделител. В този пример "
+"<code>\\s</code> означава, че разделителят е празен знак, а <code>+</code> "
+"означава, че се изисква поне един или повече празни знаци. Така този вход "
+"търси всякакъв брой празни знаци, включително табулация. Обърнете внимание, "
+"че този конкретен вход е еквивалентен на стандартната „Празни знаци“ опция."
+
+#. (itstool) path: page/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/import.page:36
+msgctxt "_"
+msgid ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+msgstr ""
+"external ref='media/add_equation_light.png' "
+"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+
+#. (itstool) path: page/p
+#: C/import.page:38
+msgid ""
+"The other way to import data is to generate data directly using an equation. "
+"This can be done using the \"Add Equation\" button found in the top-left "
+"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
+"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
+"quadratic equation could for instance be created using <code>x²+5</code> as "
+"input. Be aware that trigonometric functions are using radians by default. "
+"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
+"function. For instance <code>cosd(x)</code> generates a cosine where the x "
+"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
+"with the x-coordinate in radians."
+msgstr ""
+"Другият начин за внасяне на данни е директното им генериране с помощта на "
+"уравнение. Това може да стане с помощта на бутона „Добавяне на уравнение“, "
+"който се намира в горния ляв ъгъл, или с натискане на <cmd>Ctrl+Alt+N</cmd>. "
+"Най-често използваният синтаксис е приет, като с <code>x</code> се "
+"обозначава координатата x. Например може да се създаде просто квадратно "
+"уравнение, като се използва <code>x²+5</code> като вход. Имайте предвид, че "
+"тригонометричните функции използват радиани по подразбиране. Ако искате да "
+"използвате градуси, просто добавете <code>d</code> към тригонометричната "
+"функция. Например <code>cosd(x)</code> генерира косинус, при който "
+"координатата x е зададена в градуси, докато <code>cos(x)</code> генерира "
+"косинус с координатата x в радиани."
+
+#. (itstool) path: page/title
+#: C/index.page:10
+msgid "<_:media-1/> Graphs"
+msgstr "<_:media-1/> Графики"
+
+#. (itstool) path: section/title
+#: C/index.page:16
+msgid "How to"
+msgstr "Как да"
+
+#. (itstool) path: section/p
+#: C/index.page:17
+msgid ""
+"There's multiple how-to guides available for Graphs. These can be found here."
+msgstr ""
+"Има множество ръководства за работа с „Графики“. Те могат да бъдат намерени "
+"тук."
+
+#. (itstool) path: page/title
+#: C/manipulate.page:8
+msgid "Manipulating Data"
+msgstr "Манипулиране на данни"
+
+#. (itstool) path: page/p
+#: C/manipulate.page:10
+msgid ""
+"There are many different ways to manipulate data using Graphs. All data is "
+"treated the same using Graphs, independent what file it is imported from, or "
+"if it's a generated equation. When selecting a part of the canvas using the "
+"Highlight tool, only the highlight area will be manipulated."
+msgstr ""
+"Има много различни начини за манипулиране на данни „Графики“. Всички данни "
+"се обработват по един и същи начин с „Графики“, независимо от какъв файл са "
+"внесени или дали са генерирани като уравнение. Когато избирате част от "
+"канавата с помощта на инструмента за открояване, ще се манипулира само "
+"областта на открояване."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:18
+msgid "Smoothening"
+msgstr "Изглаждане"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:19
+msgid ""
+"The smoothening action has two different modes, a rolling average or the "
+"Savitzky-Galov filter. The moving average simply works iterating through the "
+"data set, and replacing each point by the average of the last few data "
+"points that were encountered, this way sharp outliers are ignored but "
+"details may be lost. Sudden actual changes in the data may also be detected "
+"later when a smoothening has been applied. Another way to smoothen the data "
+"is the Savitzky-Galov. The difference with the moving average, is that not a "
+"simple average is used for the last data points, but instead a polynomial "
+"function is fitted between the data points. This makes it possible to filter "
+"the underlaying signal still quite nicely out of very noisy data."
+msgstr ""
+"Действието за изглаждане има два различни режима - пълзяща средна стойност "
+"или филтър на „Savitzky-Galov“. Плъзгащата се средна стойност просто работи, "
+"като итерира през набора от данни и заменя всяка точка със средната стойност "
+"на последните няколко срещнати данни, като по този начин се игнорират резки "
+"отклонения, но може да се загубят подробности. Внезапните действителни "
+"промени в данните могат да бъдат открити и по-късно, когато е приложено "
+"изглаждане. Друг начин за изглаждане на данните е този на „Savitzky-Galov“. "
+"Разликата с плъзгащата се средна стойност е, че не се използва обикновена "
+"средна стойност за последните точки от данните, а вместо това между точките "
+"от данните се напасва многочленна функция. Това дава възможност да се "
+"филтрира все още доста добре основният сигнал от много неясни данни."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:34
+msgid "Custom Transformations"
+msgstr "Други трансформации"
+
+# Не съм сигурен дали „case-sensitive“ става като превод в този случай, но такъв пример намерин в Интернет. Примерно  „чувствителни към малки и големи букви“ дали е често срещано или по разбираемо?
+#. (itstool) path: section/p
+#: C/manipulate.page:35
+#, fuzzy
+msgid ""
+"Another way to manipulate the data is by using custom transformations. This "
+"field transforms both X and Y coordinate piece by piece according to an "
+"equation of choice. For instance, to take the square of all Y-coordinates, "
+"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
+"on the x-data field. Note that the input coordinates are not case-sensitive."
+msgstr ""
+"Друг начин за манипулиране на данните е чрез използване на други "
+"трансформации. Това поле трансформира координатите X и Y парче по парче в "
+"съответствие с избрано уравнение. Например, за да вземете квадрата на всички "
+"Y-координати, просто задайте <code>Y = Y²</code> в полето за данни y, а "
+"<code>X = X</code> в полето за данни x. Обърнете внимание, че входните "
+"координати не са чувствителни към регистъра."
+
+#. (itstool) path: section/media
+#. This is a reference to an external file such as an image or video. When
+#. the file changes, the md5 hash will change to let you know you need to
+#. update your localized copy. The msgstr is not used at all. Set it to
+#. whatever you like once you have updated your copy of the file.
+#: C/manipulate.page:42
+msgctxt "_"
+msgid ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+msgstr ""
+"external ref='media/custom_transform_light.png' "
+"md5='311f5286f3372e5fea1431dd6a63d666'"
+
+# Не съм сигурен дали се превежда лиценза, затова се надявам за второ мнение преди да го преведа. Проверих GitHub, защото знам че много проекти имат различни лицензи там и в тяхната документация (https://docs.github.com/ru/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository) като сменям езика на страницата точно лицензите не са преведени.
+#. (itstool) path: p/link
+#: C/legal.xml:3
+msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr "Признание-Споделяне на споделеното 4.0 Нелокализиран"
+
+#. (itstool) path: license/p
+#: C/legal.xml:3
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Тази работа е лицензирана под <_:link-1/>."

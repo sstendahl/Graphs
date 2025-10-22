@@ -198,14 +198,20 @@
   </schema>
 
   <schema id="se.sjoerd.Graphs.export-figure">
-    <key name="dpi" type="i">
-      <default>100</default>
-    </key>
     <key name="file-format" enum="se.sjoerd.Graphs.export-figure.file-formats">
       <default>"png"</default>
     </key>
     <key name="transparent" type="b">
       <default>true</default>
+    </key>
+    <key name="use-window-size" type="b">
+      <default>false</default>
+    </key>
+    <key name="width" type="i">
+      <default>800</default>
+    </key>
+    <key name="height" type="i">
+      <default>600</default>
     </key>
   </schema>
 

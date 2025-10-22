@@ -128,12 +128,12 @@ namespace Graphs {
                     );
 
                     entry.apply.connect (() => {
-                        double? new_val = application.python_helper.evaluate_string (
-                            entry.get_text ()
+                        double new_val;
+                        application.python_helper.evaluate_string (
+                            entry.get_text (), out new_val
                         );
-                        assert (new_val != null);
 
-                        figure_settings.set (key, (double) new_val);
+                        figure_settings.set (key, new_val);
                         window.data.add_view_history_state ();
                         window.canvas.view_changed ();
 
@@ -187,15 +187,12 @@ namespace Graphs {
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
             var entry = object as Adw.EntryRow;
-            double? new_val = application.python_helper.evaluate_string (
-                entry.get_text ()
-            );
-            if (new_val == null) {
-                entry.add_css_class ("error");
-                entry.set_show_apply_button (false);
-            } else {
+            if (application.python_helper.evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);
+            } else {
+                entry.add_css_class ("error");
+                entry.set_show_apply_button (false);
             }
         }
 
@@ -254,93 +251,17 @@ namespace Graphs {
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
             style_grid.set_model (window.data.style_selection_model);
-
-            var action_group = new SimpleActionGroup ();
-            var import_action = new SimpleAction ("import_style", null);
-            import_action.activate.connect (() => {
-                var dialog = new FileDialog ();
-                dialog.set_filters (get_mplstyle_file_filters ());
-                dialog.open.begin (window, null, (d, response) => {
-                try {
-                    var file = dialog.open.end (response);
-                    var style_dir = application.figure_style_manager.style_dir;
-                    string filename = Tools.get_filename (file);
-                    if (!filename.has_suffix (".mplstyle")) return;
-                    var destination = style_dir.get_child_for_display_name (filename);
-                    uint i = 1;
-                    while (destination.query_exists ()) {
-                        var new_filename = new StringBuilder ();
-                        new_filename
-                            .append (filename[:-9])
-                            .append ("-")
-                            .append (i.to_string ())
-                            .append (".mplstyle");
-                        destination = style_dir.get_child_for_display_name (new_filename.free_and_steal ());
-                        i++;
-                    }
-                    file.copy_async.begin (destination, FileCopyFlags.NONE);
-                } catch {}
-            });
-            });
-            action_group.add_action (import_action);
-            var create_action = new SimpleAction ("create_style", null);
-            create_action.activate.connect (() => {
-                new AddStyleDialog (
-                    application.figure_style_manager,
-                    window,
-                    window.data.figure_settings
-                );
-            });
-            action_group.add_action (create_action);
-            insert_action_group ("figure_settings", action_group);
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = object as ListItem;
+            ListItem item = (ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = object as ListItem;
-            StylePreview preview = item.get_child () as StylePreview;
-            Style style = item.get_item () as Style;
-            preview.style = style;
-            if (style.mutable && !preview.menu_button.get_visible ()) {
-                preview.menu_button.set_visible (true);
-
-                var action_group = new SimpleActionGroup ();
-                var open_action = new SimpleAction ("open", null);
-                open_action.activate.connect (() => {
-                    var style_editor = application.create_style_editor ();
-                    style_editor.load (style.file);
-                    style_editor.present ();
-                });
-                action_group.add_action (open_action);
-                var open_with_action = new SimpleAction ("open_with", null);
-                open_with_action.activate.connect (() => {
-                    var launcher = new FileLauncher (style.file);
-                    launcher.set_always_ask (true);
-                    launcher.launch.begin (window, null);
-                });
-                action_group.add_action (open_with_action);
-                var delete_action = new SimpleAction ("delete", null);
-                delete_action.activate.connect (() => {
-                    var dialog = Tools.build_dialog ("delete_style") as Adw.AlertDialog;
-                    string msg = _("Are you sure you want to delete %s?");
-                    dialog.set_body (msg.printf (style.name));
-                    dialog.response.connect ((d, response) => {
-                        if (response != "delete") return;
-                        try {
-                            style.file.trash ();
-                        } catch {
-                            assert_not_reached ();
-                        }
-                    });
-                    dialog.present (this);
-                });
-                action_group.add_action (delete_action);
-                preview.menu_button.insert_action_group ("style", action_group);
-            }
+            ListItem item = (ListItem) object;
+            StylePreview preview = (StylePreview) item.get_child ();
+            preview.style = (Style) item.get_item ();
         }
     }
 }

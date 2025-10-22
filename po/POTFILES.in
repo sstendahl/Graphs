@@ -2,7 +2,9 @@
 data/se.sjoerd.Graphs.metainfo.xml.in
 data/se.sjoerd.Graphs.desktop.in
 data/se.sjoerd.Graphs.gschema.xml
+data/ui/dialogs/beta-disallowed.blp
 data/ui/dialogs/delete-style.blp
+data/ui/dialogs/legacy-migration-disallowed.blp
 data/ui/dialogs/reset-import-settings.blp
 data/ui/dialogs/save-project-changes.blp
 data/ui/dialogs/save-style-changes.blp
@@ -20,6 +22,11 @@ data/ui/sidebar/figure-settings/settings-page.blp
 data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
+data/ui/sidebar/operations.blp
+data/ui/style-editor/color-box.blp
+data/ui/style-editor/editor-box.blp
+data/ui/style-editor/shortcuts.blp
+data/ui/style-editor/window.blp
 data/ui/add-equation.blp
 data/ui/add-style.blp
 data/ui/curve-fitting.blp
@@ -27,12 +34,7 @@ data/ui/export-figure.blp
 data/ui/fitting-parameters.blp
 data/ui/generate-data.blp
 data/ui/item-box.blp
-data/ui/operations.blp
 data/ui/smoothen-settings.blp
-data/ui/style-color-box.blp
-data/ui/style-editor-box.blp
-data/ui/style-editor-shortcuts.blp
-data/ui/style-editor-window.blp
 data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
@@ -55,6 +57,11 @@ graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala
 graphs/sidebar/operations.vala
+graphs/style_editor/color_box.vala
+graphs/style_editor/color_manager.vala
+graphs/style_editor/editor_box.py
+graphs/style_editor/__init__.py
+graphs/style_editor/window.vala
 graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.py
@@ -85,8 +92,6 @@ graphs/python_helper.py
 graphs/python_helper.vala
 graphs/scales.py
 graphs/smoothen_settings.vala
-graphs/style_editor.py
-graphs/style_editor.vala
 graphs/style_io.py
 graphs/styles.py
 graphs/styles.vala

@@ -4,7 +4,7 @@ using Gtk;
 
 namespace Graphs {
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/operations.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/operations.ui")]
     public class Operations : Box {
 
         [GtkChild]
@@ -98,13 +98,12 @@ namespace Graphs {
 
         private void validate_entry (Entry entry, Button button) {
             var application = _window.application as Application;
-            double? val = application.python_helper.evaluate_string (entry.get_text ());
-            if (val == null) {
-                entry.add_css_class ("error");
-                button.set_sensitive (false);
-            } else {
+            if (application.python_helper.evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 button.set_sensitive (entries_sensitive);
+            } else {
+                entry.add_css_class ("error");
+                button.set_sensitive (false);
             }
         }
     }

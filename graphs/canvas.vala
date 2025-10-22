@@ -17,9 +17,9 @@ namespace Graphs {
         public signal void view_changed ();
         public signal void view_action ();
 
-        protected signal void save_request (File file, string format, int dpi, bool transparent);
-        public void save (File file, string format, int dpi, bool transparent) {
-            this.save_request.emit (file, format, dpi, transparent);
+        public signal void save_request (File file, string format, bool transparent, int width_px, int height_px);
+        public void save (File file, string format, bool transparent, int width_px, int height_px) {
+            this.save_request.emit (file, format, transparent, width_px, height_px);
         }
 
         protected signal void zoom_request (double factor);
