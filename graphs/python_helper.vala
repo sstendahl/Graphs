@@ -35,10 +35,17 @@ namespace Graphs {
         // setting a property on the python side
         protected double evaluate_string_helper { get; set; }
         protected signal bool evaluate_string_request (string input);
-        public double? evaluate_string (string input) {
+        public bool evaluate_string (string input, out double? result = null) {
+            if (double.try_parse (input, out result)) {
+                return true;
+            }
+
             if (evaluate_string_request.emit (input)) {
-                return this.evaluate_string_helper;
-            } else return null;
+                result = this.evaluate_string_helper;
+                return true;
+            }
+
+            return false;
         }
 
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
