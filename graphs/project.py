@@ -18,8 +18,7 @@ class ProjectParseError(Exception):
     """Custom error for parsing projects."""
 
     def __init__(self, message: str, log: bool = True):
-        super().__init__()
-        self.message = message
+        super().__init__(message)
         self.log = log
 
 
