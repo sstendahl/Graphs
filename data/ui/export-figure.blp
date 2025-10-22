@@ -29,44 +29,69 @@ template $GraphsExportFigureDialog: Adw.Dialog {
     }
 
     content: Adw.Clamp {
+      maximum-size: 800;
+      margin-bottom: 12;
+      margin-top: 12;
       margin-start: 12;
       margin-end: 12;
-      margin-top: 12;
-      margin-bottom: 12;
 
-      Adw.PreferencesGroup {
-        focus-on-click: false;
+      child: Box {
+        orientation: vertical;
+        spacing: 10;
 
-        Adw.ComboRow file_format {
-          title: _("File Format");
-          notify::selected => $on_file_format();
+        Adw.PreferencesGroup {
+          title: _("Export Settings");
 
-          model: StringList {
-            strings [
-              C_("file-format", "Encapsulated PostScript"),
-              C_("file-format", "JPEG"),
-              C_("file-format", "PDF"),
-              C_("file-format", "PNG"),
-              C_("file-format", "PostScript"),
-              C_("file-format", "SVG"),
-              C_("file-format", "WebP"),
-            ]
-          };
+          Adw.ComboRow file_format {
+            title: _("File Format");
+
+            model: StringList {
+              strings [
+                C_("file-format", "Encapsulated PostScript"),
+                C_("file-format", "JPEG"),
+                C_("file-format", "PDF"),
+                C_("file-format", "PNG"),
+                C_("file-format", "PostScript"),
+                C_("file-format", "SVG"),
+                C_("file-format", "WebP"),
+              ]
+            };
+          }
+
+          Adw.SwitchRow transparent {
+            title: _("Transparent Background");
+          }
         }
 
-        Adw.SpinRow dpi {
-          title: _("Resolution (dpi)");
+        Adw.PreferencesGroup {
+          title: _("Export Size");
 
-          adjustment: Adjustment {
-            step-increment: 1;
-            upper: 999;
-          };
-        }
+          Adw.SwitchRow use_window_size {
+            title: _("Use Same Size as App");
+            notify::active => $on_use_window_size_changed();
+          }
 
-        Adw.SwitchRow transparent {
-          title: _("Transparent Background");
+          Adw.SpinRow width {
+            title: _("Width (pixels)");
+
+            adjustment: Adjustment {
+              step-increment: 10;
+              lower: 100;
+              upper: 7680;
+            };
+          }
+
+          Adw.SpinRow height {
+            title: _("Height (pixels)");
+
+            adjustment: Adjustment {
+              step-increment: 10;
+              lower: 100;
+              upper: 4320;
+            };
+          }
         }
-      }
+      };
     };
   };
 }

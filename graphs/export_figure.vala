@@ -3,8 +3,6 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    private const uint[] FORMATS_WITH_DPI = {1, 3, 6};
-
     /**
      * Export figure dialog
      */
@@ -12,13 +10,19 @@ namespace Graphs {
     public class ExportFigureDialog : Adw.Dialog {
 
         [GtkChild]
-        public unowned Adw.SpinRow dpi { get; }
-
-        [GtkChild]
         public unowned Adw.SwitchRow transparent { get; }
 
         [GtkChild]
         public unowned Adw.ComboRow file_format { get; }
+
+        [GtkChild]
+        public unowned Adw.SwitchRow use_window_size { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow width { get; }
+
+        [GtkChild]
+        public unowned Adw.SpinRow height { get; }
 
         private Window window;
         private Application application;
@@ -27,16 +31,34 @@ namespace Graphs {
             Object ();
             this.window = window;
             this.application = window.application as Application;
+
             Tools.bind_settings_to_widgets (
                 application.get_settings_child ("export-figure"), this
             );
-            on_file_format ();
+
+            if (use_window_size.get_active ()) {
+                int canvas_width = window.canvas.get_width ();
+                int canvas_height = window.canvas.get_height ();
+                width.set_value (canvas_width);
+                height.set_value (canvas_height);
+            }
+
+            on_use_window_size_changed ();
             present (window);
         }
 
         [GtkCallback]
-        private void on_file_format () {
-            dpi.set_sensitive (file_format.get_selected () in FORMATS_WITH_DPI);
+        private void on_use_window_size_changed () {
+            bool use_window = use_window_size.get_active ();
+            width.set_sensitive (!use_window);
+            height.set_sensitive (!use_window);
+
+            if (use_window) {
+                int canvas_width = window.canvas.get_width ();
+                int canvas_height = window.canvas.get_height ();
+                width.set_value (canvas_width);
+                height.set_value (canvas_height);
+            }
         }
 
         [GtkCallback]
@@ -58,9 +80,14 @@ namespace Graphs {
             dialog.save.begin (window, null, (d, r) => {
                 try {
                     File file = dialog.save.end (r);
+
+                    int export_width = (int) width.get_value ();
+                    int export_height = (int) height.get_value ();
+
                     window.canvas.save (
-                        file, suffix, settings.get_int ("dpi"),
-                        settings.get_boolean ("transparent")
+                        file, suffix,
+                        settings.get_boolean ("transparent"),
+                        export_width, export_height
                     );
                     window.add_toast_string_with_file (
                         _("Exported Figure"), file
