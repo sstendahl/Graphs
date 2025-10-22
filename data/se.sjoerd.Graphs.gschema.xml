@@ -220,6 +220,18 @@
   </schema>
 
   <schema id="se.sjoerd.Graphs.import-params.columns">
+    <!--
+    Item import strings.
+    Values separated by ";", items separated by ";;".
+
+    Settings in order:
+    x-column index
+    y-column index (ignored if single-column)
+    use single-column mode
+    equation for single-column mode (will be ignored if not single-column)
+
+    All settings must be present.
+    -->
     <key name="items" type="s">
       <default>"0;1;false;n"</default>
     </key>
