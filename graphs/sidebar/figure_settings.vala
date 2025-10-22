@@ -128,12 +128,12 @@ namespace Graphs {
                     );
 
                     entry.apply.connect (() => {
-                        double? new_val = application.python_helper.evaluate_string (
-                            entry.get_text ()
+                        double new_val;
+                        application.python_helper.evaluate_string (
+                            entry.get_text (), out new_val
                         );
-                        assert (new_val != null);
 
-                        figure_settings.set (key, (double) new_val);
+                        figure_settings.set (key, new_val);
                         window.data.add_view_history_state ();
                         window.canvas.view_changed ();
 
@@ -187,15 +187,12 @@ namespace Graphs {
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
             var entry = object as Adw.EntryRow;
-            double? new_val = application.python_helper.evaluate_string (
-                entry.get_text ()
-            );
-            if (new_val == null) {
-                entry.add_css_class ("error");
-                entry.set_show_apply_button (false);
-            } else {
+            if (application.python_helper.evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);
+            } else {
+                entry.add_css_class ("error");
+                entry.set_show_apply_button (false);
             }
         }
 
