@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-07 02:37+0000\n"
-"PO-Revision-Date: 2025-10-07 22:05+0200\n"
+"POT-Creation-Date: 2025-10-22 10:29+0000\n"
+"PO-Revision-Date: 2025-10-22 17:20+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -1353,56 +1353,72 @@ msgstr "3σ: zaupanje 99,7 %"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:72
 msgid "Export"
 msgstr "Izvozi"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+msgid "Export Settings"
+msgstr "Nastavitve izvoza"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "Vrsta datoteke"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "EPS (Encapsulated PostScript)"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "Ločljivost (dpi)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "Prosojno ozadje"
+
+#: data/ui/export-figure.blp:67
+msgid "Export Size"
+msgstr "Velikost izvoza"
+
+#: data/ui/export-figure.blp:70
+msgid "Use Same Size as App"
+msgstr "Uporabi enako velikost kot aplikacija"
+
+#: data/ui/export-figure.blp:75
+msgid "Width (pixels)"
+msgstr "Širina (slik. točke)"
+
+#: data/ui/export-figure.blp:85
+msgid "Height (pixels)"
+msgstr "Višina (slik. točke)"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1802,7 +1818,7 @@ msgstr "Oznaka osi X"
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
-#: graphs/sidebar/figure_settings.vala:235
+#: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
@@ -1904,12 +1920,12 @@ msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:66
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:93
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
@@ -2009,7 +2025,7 @@ msgstr "Shranjeni projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/python_helper.vala:48
+#: graphs/python_helper.vala:55
 msgid "Exported Data"
 msgstr "Izvoženi podatki"
 
