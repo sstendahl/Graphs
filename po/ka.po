@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-08 13:48+0000\n"
-"PO-Revision-Date: 2025-10-09 00:35+0200\n"
+"POT-Creation-Date: 2025-10-23 01:28+0000\n"
+"PO-Revision-Date: 2025-10-24 09:04+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:25
 msgid "Graphs"
@@ -1331,56 +1331,72 @@ msgstr "3σ: 99.7% Confidence"
 msgid "Export Figure"
 msgstr "ფიგურის გატანა"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:72
 msgid "Export"
 msgstr "გატანა"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+msgid "Export Settings"
+msgstr "გატანის მორგება"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "ფაილის ფორმატი"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "ჩასმული PostScript"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "გარჩევადობა (DPI)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "გამჭვირვალე ფონი"
+
+#: data/ui/export-figure.blp:67
+msgid "Export Size"
+msgstr "გატანის ზომა"
+
+#: data/ui/export-figure.blp:70
+msgid "Use Same Size as App"
+msgstr "აპის ზომის გამოყენება"
+
+#: data/ui/export-figure.blp:75
+msgid "Width (pixels)"
+msgstr "სიგანე (პიქსელებში)"
+
+#: data/ui/export-figure.blp:85
+msgid "Height (pixels)"
+msgstr "სიმაღლე (პიქსელებში)"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1780,7 +1796,7 @@ msgstr "X-ღერძის ჭდე"
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/sidebar/figure_settings.vala:235
+#: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
@@ -1882,12 +1898,12 @@ msgstr "დახაზვის სტილი {stylename} არ არსე
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:66
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:93
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
@@ -1987,7 +2003,7 @@ msgstr "შენახული პროექტი"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/python_helper.vala:48
+#: graphs/python_helper.vala:55
 msgid "Exported Data"
 msgstr "გატანილი მონაცემები"
 
@@ -2064,6 +2080,9 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgid "Resolution (dpi)"
+#~ msgstr "გარჩევადობა (DPI)"
 
 #~ msgid "Open a Style"
 #~ msgstr "სტილის გახსნა"
