@@ -186,5 +186,13 @@ namespace Graphs {
         public int get_int (string key) {
             return get_value (key).get_int32 ();
         }
+
+        public void set_boolean (string key, bool val) {
+            set_value (key, new Variant.boolean (val));
+        }
+
+        public bool get_boolean (string key) {
+            return get_value (key).get_boolean ();
+        }
     }
 }
