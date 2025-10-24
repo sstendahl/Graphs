@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-22 10:29+0000\n"
-"PO-Revision-Date: 2025-10-22 17:20+0200\n"
+"POT-Creation-Date: 2025-10-24 17:43+0000\n"
+"PO-Revision-Date: 2025-10-24 23:52+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -371,7 +371,7 @@ msgid "Equation"
 msgstr "Enačba"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -445,6 +445,153 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
 
+#: data/ui/import/columns/box.blp:16
+msgid "Add Item"
+msgstr "Dodaj element"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
+msgid "Remove"
+msgstr "Odstrani"
+
+#: data/ui/import/columns/item-group.blp:26
+msgid "X Column"
+msgstr "Stolpec X"
+
+#: data/ui/import/columns/item-group.blp:38
+msgid "Y Column"
+msgstr "Stolpec Y"
+
+#: data/ui/import/columns/item-group.blp:51
+msgid "Single Column"
+msgstr "En stolpec"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
+
+#: data/ui/import/columns/item-group.blp:57
+msgid "X Value Equation"
+msgstr "Enačba vrednosti X"
+
+#: data/ui/import/columns/item-group.blp:64 data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "Več podrobnosti"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>Izračun vrednosti X</b>\n"
+"\n"
+"Vnesite enačbo za izračun vrednosti X.\n"
+"Uporabite »n« za indeks vrstice (začenši z 0).\n"
+"\n"
+"<b>Primeri:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0,5</b> → 0, 0,5, 1,0, 1,5, 2,0 ...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16 ...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16 ...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130 ..."
+
+#: data/ui/import/columns/main-group.blp:5
+msgid "Format"
+msgstr "Oblika"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Ločilo"
+
+#: data/ui/import/columns/main-group.blp:9
+msgid "Character used to separate columns"
+msgstr "Znak, uporabljen za razmejitev stolpcev"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Presledek"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulator"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Dvopičje (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Podpičje (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Vejica (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Pika (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Po meri"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Ločilo po meri"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Decimalno ločilo"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Decimalna vejica (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Decimalna pika (.) "
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Preskoči vrstice"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Število vrstic, ki jih želite preskočiti na začetku"
+
+#: data/ui/import/sql/main-group.blp:6
+msgid "Database Table"
+msgstr "Tabela zbirke podatkov"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "Stolpec X"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Stolpec Y"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "Ta tabela ne vsebuje številskih stolpcev"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "Uvozi parametre"
@@ -468,95 +615,6 @@ msgstr "Način uvoza"
 #: data/ui/import/dialog.blp:115 data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "Nastavi kot privzeto"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "Odstrani"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "Ločilo"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Zaporedje znakov, uporabljeno za razmejitev vrednosti"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Presledek"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Tabulator"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Dvopičje (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Podpičje (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Decimalna vejica (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Decimalna pika (.) "
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Po meri"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "Ločilo po meri"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "Decimalno ločilo"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Decimalna vejica (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Decimalna pika (.) "
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "Stolpec X"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "Indeks stolpcev s podatki X"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "Stolpec Y"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Indeks stolpca s podatki Y"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "Preskoči vrstice"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "Prezrti indeksi vrstic"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5 data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
@@ -1492,13 +1550,9 @@ msgstr "Izbriši …"
 msgid "Transform Data"
 msgstr "Pretvori podatke"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "Več podrobnosti"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1506,7 +1560,7 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"Dodatne spremenljivke:\n"
+"<b>Dodatne spremenljivke:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1514,11 +1568,11 @@ msgstr ""
 "privzeto radiane, funkciji privzeto dodajte d\n"
 "za uporabo stopinj, npr. sind(x) ali cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
@@ -1695,81 +1749,92 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Ponovi dejanje"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Stolpci"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "Uvoz ni uspel, indeks stolpca ni v obsegu"
+#: graphs/file_import/parsers/columns/main.vala:46
+msgid "Custom delimiter cannot be empty"
+msgstr "Ločilo po meri ne more biti prazno"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "Uvoz iz datoteke ni mogoč"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
+msgstr "Napaka indeksa v %s, ni mogoče dostopati do indeksa %d v vrstici %d, najdenih je bilo le %d stolpcev"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Ni mogoče uvoziti iz datoteke, slaba vrednost v vrstici %d"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "Element %d"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Projektna datoteka programa Grafi"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Zbirka podatkov"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Zbirka podatkov SQLite"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid "Could not import data from table \"{table_name}\", no numeric columns were found"
 msgstr "Ni mogoče uvoziti podatkov iz tabele »{table_name}«, številskih stolpcev ni možno najti"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "V stolpcu tabele ni podatkov"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "Intenzivnost (cps)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr "Neveljavna oblika zapisa .xry"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
