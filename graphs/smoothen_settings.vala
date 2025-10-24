@@ -9,28 +9,31 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen-settings.ui")]
     public class SmoothenDialog : Adw.Dialog {
         [GtkChild]
-        public unowned Adw.SpinRow savgol_window { get; }
+        private unowned Adw.SpinRow savgol_window { get; }
 
         [GtkChild]
-        public unowned Adw.SpinRow savgol_polynomial { get; }
+        private unowned Adw.SpinRow savgol_polynomial { get; }
 
         [GtkChild]
-        public unowned Adw.SpinRow moving_average_box { get; }
+        private unowned Adw.SpinRow moving_average_box { get; }
 
-        private Application application { get; set; }
+        private GLib.Settings settings { get; set; }
 
         public SmoothenDialog (Window window) {
             Object ();
-            this.application = window.application as Application;
-            Tools.bind_settings_to_widgets (
-                application.get_settings_child ("actions/smoothen"), this
-            );
+            var application = window.application as Application;
+            this.settings = application.get_settings_child ("actions/smoothen");
+
+            settings.bind ("savgol-window", savgol_window, "value", 0);
+            settings.bind ("savgol-polynomial", savgol_polynomial, "value", 0);
+            settings.bind ("moving-average-box", moving_average_box, "value", 0);
+
             present (window);
         }
 
         [GtkCallback]
         private void on_reset () {
-            Tools.reset_settings (application.get_settings_child ("actions/smoothen"));
+            Tools.reset_settings (settings);
         }
     }
 }
