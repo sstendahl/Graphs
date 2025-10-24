@@ -8,14 +8,9 @@ template $GraphsStylePage: Adw.NavigationPage {
     [top]
     Adw.HeaderBar {
       [end]
-      MenuButton {
-        icon-name: "list-add-symbolic";
-        tooltip-text: _("Add New Style");
-        always-show-arrow: true;
-
-        popover: PopoverMenu {
-          menu-model: add_style_menu;
-        };
+      Button {
+        label: _("Manage");
+        action-name: "app.style-editor";
       }
     }
 
@@ -31,30 +26,16 @@ template $GraphsStylePage: Adw.NavigationPage {
           halign: center;
           hexpand: true;
 
-          GridView style_grid {
+          child: GridView style_grid {
             min-columns: 2;
             max-columns: 2;
 
             styles [
               "style-grid",
             ]
-          }
+          };
         };
       };
     };
-  }
-}
-
-menu add_style_menu {
-  section {
-    item {
-      label: _("Import Style…");
-      action: "figure_settings.import_style";
-    }
-
-    item {
-      label: _("Create Style…");
-      action: "figure_settings.create_style";
-    }
   }
 }

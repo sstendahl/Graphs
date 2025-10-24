@@ -18,21 +18,12 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.SwitchRow discard { get; }
 
-        [GtkChild]
-        private unowned Button help_button { get; }
-
-        [GtkChild]
-        private unowned Popover help_popover { get; }
-
         public signal void accept (string x_input, string y_input, bool discard);
 
         public TransformDialog (Window window) {
             transform_x.set_text ("X");
             transform_y.set_text ("Y");
             discard.set_visible (window.canvas.mode == 2);
-            help_button.clicked.connect (() => {
-                help_popover.popup ();
-            });
             present (window);
         }
 

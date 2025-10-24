@@ -1,0 +1,75 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsColumnsGroup: Adw.PreferencesGroup {
+  title: _("Format");
+
+  Adw.ComboRow delimiter {
+    title: _("Delimiter");
+    subtitle: _("Character used to separate columns");
+
+    model: StringList {
+      strings [
+        C_("delimiter", "Whitespace"),
+        C_("delimiter", "Tab"),
+        C_("delimiter", "Colon (:)"),
+        C_("delimiter", "Semicolon (;)"),
+        C_("delimiter", "Comma (,)"),
+        C_("delimiter", "Period (.)"),
+        C_("delimiter", "Custom"),
+      ]
+    };
+  }
+
+  Adw.EntryRow custom_delimiter {
+    sensitive: false;
+    title: _("Custom Delimiter");
+
+    [suffix]
+    MenuButton {
+      valign: center;
+      icon-name: "info-symbolic";
+      tooltip-text: _("More info");
+
+      styles [
+        "flat",
+      ]
+
+      popover: Popover {
+        position: bottom;
+
+        Label {
+          label: "<b>Uses regex pattern matching</b>\n\nThese characters have special meanings in regex syntax:\n<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n\nTo match these characters literally, escape them with <b>\\</b>\n\n<b>Examples:</b>\n• <b>\\.</b> matches a period\n• <b>\\*</b> matches an asterisk\n• <b>\\|</b> matches a pipe character\n\n<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax...</a>";
+          use-markup: true;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 12;
+          margin-end: 12;
+        }
+      };
+    }
+  }
+
+  Adw.ComboRow separator {
+    title: _("Decimal Separator");
+
+    model: StringList {
+      strings [
+        C_("separator", "Decimal comma (,)"),
+        C_("separator", "Decimal point (.)"),
+      ]
+    };
+  }
+
+  Adw.SpinRow skip_rows {
+    title: _("Skip Rows");
+    subtitle: _("Number of rows to skip at the beginning");
+
+    adjustment: Adjustment {
+      lower: 0;
+      upper: 9999;
+      step-increment: 1;
+      value: 0;
+    };
+  }
+}
