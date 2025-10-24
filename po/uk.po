@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-22 15:21+0000\n"
-"PO-Revision-Date: 2025-10-22 19:38+0300\n"
+"POT-Creation-Date: 2025-10-24 16:04+0000\n"
+"PO-Revision-Date: 2025-10-24 20:42+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -105,12 +105,12 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
-"ation;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
+"tion;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
-"ation;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані"
-";креслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
+"tion;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані;к"
+"реслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
 #: data/ui/style-editor/window.blp:299
@@ -425,7 +425,7 @@ msgstr "Рівняння"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
 #: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -517,6 +517,169 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Обернена"
 
+#: data/ui/import/columns/box.blp:16
+#| msgid "Edit Item"
+msgid "Add Item"
+msgstr "Додати запис"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
+#: data/ui/style-editor/color-box.blp:36
+msgid "Remove"
+msgstr "Вилучити"
+
+#: data/ui/import/columns/item-group.blp:26
+#| msgctxt "import-mode"
+#| msgid "Columns"
+msgid "X Column"
+msgstr "Стовпчик X"
+
+#: data/ui/import/columns/item-group.blp:38
+#| msgctxt "import-mode"
+#| msgid "Columns"
+msgid "Y Column"
+msgstr "Стовпчик Y"
+
+#: data/ui/import/columns/item-group.blp:51
+#| msgctxt "markerstyle"
+#| msgid "Triangle Down"
+msgid "Single Column"
+msgstr "Один стовпчик"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Імпортувати лише значення Y, значення X буде породжено"
+
+#: data/ui/import/columns/item-group.blp:57
+#| msgid "Equation"
+msgid "X Value Equation"
+msgstr "Рівняння для значень X"
+
+#: data/ui/import/columns/item-group.blp:64
+#: data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "Докладніше"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>Обчислення значень X</b>\n"
+"\n"
+"Введіть рівняння для обчислення значень X.\n"
+"Скористайтеся «n» для індексу рядка (відлік від 0).\n"
+"\n"
+"<b>Приклади:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/main-group.blp:5
+#| msgid "File Format"
+msgid "Format"
+msgstr "Формат"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Роздільник"
+
+#: data/ui/import/columns/main-group.blp:9
+#| msgid "Character sequence used to split values"
+msgid "Character used to separate columns"
+msgstr "Символ, який використано для відокремлення стовпчиків"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Пробіл"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Табуляція"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Двокрапка (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Крапка з комою (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+#| msgctxt "delimiter"
+#| msgid "Decimal comma (,)"
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Кома (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Крапка (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Нетипова"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Нетиповий роздільник"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Десятковий роздільник"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Десяткова кома (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Десяткова крапка (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Пропустити рядки"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Кількість рядків, які слід пропустити на початку"
+
+#: data/ui/import/sql/main-group.blp:6
+#| msgctxt "import-mode"
+#| msgid "Database"
+msgid "Database Table"
+msgstr "Таблиця бази даних"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "Стовпчик x"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Стовпчик y"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "У цій таблиці не міститься числових стовпчиків"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "Параметри імпортування"
@@ -541,95 +704,6 @@ msgstr "Режим імпортування"
 #: data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "Зробити типовим"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "Вилучити"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "Роздільник"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Послідовність символів для поділу значень"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Пробіл"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Табуляція"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Двокрапка (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Крапка з комою (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Десяткова кома (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Десяткова крапка (.)"
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Нетипова"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "Нетиповий роздільник"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "Десятковий роздільник"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Десяткова кома (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Десяткова крапка (.)"
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "Стовпчик x"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "Індекс стовпчика даних x"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "Стовпчик y"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Індекс стовпчика даних y"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "Пропустити рядки"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "Індекси ігнорованих рядків"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -1447,7 +1521,6 @@ msgid "Export"
 msgstr "Експортувати"
 
 #: data/ui/export-figure.blp:43
-#| msgid "Smoothen Settings"
 msgid "Export Settings"
 msgstr "Параметри експортування"
 
@@ -1495,7 +1568,6 @@ msgid "Transparent Background"
 msgstr "Прозоре тло"
 
 #: data/ui/export-figure.blp:67
-#| msgid "Export Figure"
 msgid "Export Size"
 msgstr "Розмір експортування"
 
@@ -1584,13 +1656,17 @@ msgstr "Вилучити…"
 msgid "Transform Data"
 msgstr "Перетворити дані"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "Докладніше"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
+#| msgid ""
+#| "Additional variables:\n"
+#| "x_min, y_min\n"
+#| "x_max, y_max \n"
+#| "\n"
+#| "Trigonometric functions use radians\n"
+#| "by default, append d to the function\n"
+#| "to use degrees, e.g. sind(x) or cosd(x)."
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1598,7 +1674,7 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"Додаткові змінні:\n"
+"<b>Додаткові змінні:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1606,11 +1682,11 @@ msgstr ""
 "радіани — додайте d до назви функції, щоб\n"
 "використати градуси. Приклад: sind(x) або cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Відкинути непозначені дані"
 
@@ -1787,40 +1863,56 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повторити дію"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "Не вдалося імпортувати, індекс стовпчика поза припустимим діапазоном"
+#: graphs/file_import/parsers/columns/main.vala:46
+#| msgid "Custom Delimiter"
+msgid "Custom delimiter cannot be empty"
+msgstr "Нетиповий роздільник не може бути порожнім"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "Не вдалося імпортувати дані з файла"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid ""
+"Index error in %s, cannot access index %d on line %d, only %d columns were "
+"found"
+msgstr ""
+"Помилка індексу у %s, не вдалося отримати доступ до індексу %d у рядку %d,"
+" знайдено лише %d стовпчиків"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Не вдалося імпортувати дані з файла, помилкове значення у рядку %d"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "Елемент %d"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "База даних"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "База даних SQLite"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
@@ -1829,43 +1921,43 @@ msgstr ""
 "Не вдалося імпортувати дані з таблиці «{table_name}», не знайдено стовпчиків "
 "із числовими даними"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr "Некоректний формат .xry"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
@@ -2208,6 +2300,26 @@ msgstr "Графіки — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "Десяткова крапка (.)"
+
+#~ msgid "X-data column index"
+#~ msgstr "Індекс стовпчика даних x"
+
+#~ msgid "Y-data column index"
+#~ msgstr "Індекс стовпчика даних y"
+
+#~ msgid "Ignored row indices"
+#~ msgstr "Індекси ігнорованих рядків"
+
+#~ msgid "Import failed, column index out of range"
+#~ msgstr ""
+#~ "Не вдалося імпортувати, індекс стовпчика поза припустимим діапазоном"
+
+#~ msgid "Unable to import from file"
+#~ msgstr "Не вдалося імпортувати дані з файла"
 
 #~| msgid "New Window"
 #~ msgid "New Winodw"
