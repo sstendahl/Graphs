@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-23 01:28+0000\n"
-"PO-Revision-Date: 2025-10-24 09:04+0200\n"
+"POT-Creation-Date: 2025-10-25 00:33+0000\n"
+"PO-Revision-Date: 2025-10-25 16:21+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -357,7 +357,7 @@ msgstr "მარკერის ზომა"
 msgid "Equation"
 msgstr "განტოლება"
 
-#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -425,6 +425,153 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "ინვერსია"
 
+#: data/ui/import/columns/box.blp:16
+msgid "Add Item"
+msgstr "ელემენტის დამატება"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
+msgid "Remove"
+msgstr "წაშლა"
+
+#: data/ui/import/columns/item-group.blp:26
+msgid "X Column"
+msgstr "X სვეტი"
+
+#: data/ui/import/columns/item-group.blp:38
+msgid "Y Column"
+msgstr "Y სვეტი"
+
+#: data/ui/import/columns/item-group.blp:51
+msgid "Single Column"
+msgstr "ერთი სვეტი"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "მხოლოდ Y-ის მნიშვნელობების შემოტანა. X-ის მნიშვნელობები დაგენერირდება"
+
+#: data/ui/import/columns/item-group.blp:57
+msgid "X Value Equation"
+msgstr "X მნიშვნელობის განტოლება"
+
+#: data/ui/import/columns/item-group.blp:64 data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "მეტი ინფორმაცია"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>X მნიშვნელობის გამოთვლა</b>\n"
+"\n"
+"შეიყვანეთ განტოლება X-ის მნიშვნელობების გამოსათვლელად.\n"
+"გამოიყენეთ 'n' მწკრივის ინდექსისთვის (0-დან).\n"
+"\n"
+"<b>მაგალითები:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/main-group.blp:5
+msgid "Format"
+msgstr "ფორმატი"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "გამყოფი"
+
+#: data/ui/import/columns/main-group.blp:9
+msgid "Character used to separate columns"
+msgstr "სვეტების დასაყოფად გამოყენებული სიმბოლო"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "გამოტოვებები"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "ჩანართი"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "ორიწერტილი (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "წერტილმძიმე (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "მძიმე (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "წერტილი (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "ხელით მითითებული"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "მითითებული გამყოფი სიმბოლო"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "ათობითის გამყოფი"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "წილადი მძიმე (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "წილადი წერტილი (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "მწკრივების გამოტოვება"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "დასაწყისში გამოსატოვებელი მწკრივების რაოდენობა"
+
+#: data/ui/import/sql/main-group.blp:6
+msgid "Database Table"
+msgstr "მონაცემთა ბაზის ცხრილი"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "სვეტი X"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "სვეტი Y"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "ეს ცხრილი რიცხვით სვეტებს არ შეიცავს"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "შემოტანის პარამეტრები"
@@ -448,95 +595,6 @@ msgstr "შემოტანის რეჟიმი"
 #: data/ui/import/dialog.blp:115 data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "ნაგულისხმევად დაყენება"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "წაშლა"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "გამყოფი"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "მნიშვნელობების დასაყოფად გამოყენებული სიმბოლოს მნიშვნელობები"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "გამოტოვებები"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "ჩანართი"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "ორიწერტილი (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "წერტილმძიმე (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "წილადი მძიმე (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "წილადი წერტილი (.)"
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "ხელით მითითებული"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "მითითებული გამყოფი სიმბოლო"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "ათობითის გამყოფი"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "წილადი მძიმე (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "წილადი წერტილი (.)"
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "სვეტი X"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "X-მონაცემების სვეტის ინდექსი"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "სვეტი Y"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Y-მონაცემების სვეტის ინდექსი"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "მწკრივების გამოტოვება"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "გამოტოვებული მწკრივის ინდექსები"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5 data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
@@ -1470,13 +1528,9 @@ msgstr "წაშლა…"
 msgid "Transform Data"
 msgstr "მონაცემების გარდაქმნა"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "მეტი ინფორმაცია"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1492,11 +1546,11 @@ msgstr ""
 "რადიანებს იყენებენ. გრადუსების გამოსაყენებლად მიაწერეთ\n"
 "ბოლოში d. მაგალითად sind(x) ან cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "მოუნიშნავი მონაცემების მოცილება"
 
@@ -1673,81 +1727,92 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "ქმედების გამეორება"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "სვეტები"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "შემოტანა ჩავარდა. სვეტის ინდექსი შუალედს გარეთაა"
+#: graphs/file_import/parsers/columns/main.vala:46
+msgid "Custom delimiter cannot be empty"
+msgstr "მომხმარებლის გამყოფი ცარიელი ვერ იქნება"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "ფაილიდან შემოტანა შეუძლებელია"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
+msgstr "ინდექსის შეცდომა %s-ში. წვდომის შეცდომა ინდექსისთვის %d ხაზზე %d. აღმოჩენილია, მხოლოდ, %d სვეტი"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "ფაილიდან შემოტანა შეუძლებელია. არასწორი მნიშვნელობა ხაზზე %d"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "ელემენტი %d"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-ის პროექტის ფაილი"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "მონაცემთა ბაზა"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite მონაცემთა ბაზა"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid "Could not import data from table \"{table_name}\", no numeric columns were found"
 msgstr "მონაცემების შემოტანა ცხრილიდან \"{table_name}\" შეუძლებელია, რადგან რიცხვითი სვეტები აღმოჩენილი არაა"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "ცხრილის სვეტში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "ინტენსივობა (წმ)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr "არასწორი .xry ფორმატი"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/წმ)"
 
@@ -2080,6 +2145,25 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "წილადი წერტილი (.)"
+
+#~ msgid "X-data column index"
+#~ msgstr "X-მონაცემების სვეტის ინდექსი"
+
+#~ msgid "Y-data column index"
+#~ msgstr "Y-მონაცემების სვეტის ინდექსი"
+
+#~ msgid "Ignored row indices"
+#~ msgstr "გამოტოვებული მწკრივის ინდექსები"
+
+#~ msgid "Import failed, column index out of range"
+#~ msgstr "შემოტანა ჩავარდა. სვეტის ინდექსი შუალედს გარეთაა"
+
+#~ msgid "Unable to import from file"
+#~ msgstr "ფაილიდან შემოტანა შეუძლებელია"
 
 #~ msgid "Resolution (dpi)"
 #~ msgstr "გარჩევადობა (DPI)"
