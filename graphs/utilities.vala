@@ -1,50 +1,28 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+using Adw;
 using Gdk;
 using Gtk;
 
 namespace Graphs {
     namespace Tools {
         /**
-         * Bind settings values to UI.
+         * Bind the comborow to a settings key
          */
-        public void bind_settings_to_widgets (
-            GLib.Settings settings, Gtk.Widget parent
+        public void bind_comborow_settings (
+            GLib.Settings settings, string key, Adw.ComboRow comborow
         ) {
-            foreach (string key in settings.settings_schema.list_keys ()) {
-                Gtk.Widget widget;
-                parent.get (key, out widget);
-                if (widget is Adw.EntryRow) {
-                    settings.bind (key, widget, "text", 0);
+            comborow.set_selected (settings.get_enum (key));
+            comborow.notify["selected"].connect (() => {
+                if (settings.get_enum (key)
+                    != comborow.get_selected ()) {
+                    settings.set_enum (
+                        key, (int) comborow.get_selected ()
+                    );
                 }
-                else if (widget is Adw.ComboRow) {
-                    var comborow = widget as Adw.ComboRow;
-                    comborow.set_selected (settings.get_enum (key));
-                    comborow.notify["selected"].connect (() => {
-                        if (settings.get_enum (key)
-                            != comborow.get_selected ()) {
-                            settings.set_enum (
-                                key, (int) comborow.get_selected ()
-                            );
-                        }
-                    });
-                    settings.changed[key].connect (() => {
-                        comborow.set_selected (settings.get_enum (key));
-                    });
-                }
-                else if (widget is Gtk.Switch) {
-                    settings.bind (key, widget, "active", 0);
-                }
-                else if (widget is Adw.SwitchRow) {
-                    settings.bind (key, widget, "active", 0);
-                }
-                else if (widget is Adw.ExpanderRow) {
-                    settings.bind (key, widget, "enable-expansion", 0);
-                    widget.set_expanded (true);
-                }
-                else if (widget is Adw.SpinRow) {
-                    settings.bind (key, widget, "value", 0);
-                }
-            }
+            });
+            settings.changed[key].connect (() => {
+                comborow.set_selected (settings.get_enum (key));
+            });
         }
 
         /**
