@@ -10,38 +10,34 @@ namespace Graphs {
     public class ExportFigureDialog : Adw.Dialog {
 
         [GtkChild]
-        public unowned Adw.SwitchRow transparent { get; }
+        private unowned Adw.SwitchRow transparent { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow file_format { get; }
+        private unowned Adw.ComboRow file_format { get; }
 
         [GtkChild]
-        public unowned Adw.SwitchRow use_window_size { get; }
+        private unowned Adw.SwitchRow use_window_size { get; }
 
         [GtkChild]
-        public unowned Adw.SpinRow width { get; }
+        private unowned Adw.SpinRow width { get; }
 
         [GtkChild]
-        public unowned Adw.SpinRow height { get; }
+        private unowned Adw.SpinRow height { get; }
 
         private Window window;
-        private Application application;
+        private GLib.Settings settings;
 
         public ExportFigureDialog (Window window) {
             Object ();
             this.window = window;
-            this.application = window.application as Application;
+            var application = window.application as Application;
+            this.settings = application.get_settings_child ("export-figure");
 
-            Tools.bind_settings_to_widgets (
-                application.get_settings_child ("export-figure"), this
-            );
-
-            if (use_window_size.get_active ()) {
-                int canvas_width = window.canvas.get_width ();
-                int canvas_height = window.canvas.get_height ();
-                width.set_value (canvas_width);
-                height.set_value (canvas_height);
-            }
+            Tools.bind_comborow_settings (settings, "file-format", file_format);
+            settings.bind ("transparent", transparent, "active", 0);
+            settings.bind ("use-window-size", use_window_size, "active", 0);
+            settings.bind ("width", width, "value", 0);
+            settings.bind ("height", height, "value", 0);
 
             on_use_window_size_changed ();
             present (window);
@@ -54,17 +50,14 @@ namespace Graphs {
             height.set_sensitive (!use_window);
 
             if (use_window) {
-                int canvas_width = window.canvas.get_width ();
-                int canvas_height = window.canvas.get_height ();
-                width.set_value (canvas_width);
-                height.set_value (canvas_height);
+                width.set_value (window.canvas.get_width ());
+                height.set_value (window.canvas.get_height ());
             }
         }
 
         [GtkCallback]
         private void on_accept () {
             string filename = C_("filename", "Exported Figure");
-            GLib.Settings settings = application.get_settings_child ("export-figure");
             string suffix = settings.get_string ("file-format");
 
             var dialog = new FileDialog ();
