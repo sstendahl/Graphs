@@ -86,7 +86,8 @@ namespace Graphs {
         }
 
         public double[] get_column_data (string table_name, string column_name) throws IOError {
-            var data = new Gee.LinkedList<double?> ();
+            double[] result = new double[64];
+            int n_results = 0;
             Sqlite.Statement stmt;
             string sql = "SELECT `%s` FROM `%s`".printf (column_name, table_name);
 
@@ -95,16 +96,17 @@ namespace Graphs {
                     "Failed to prepare SQL statement: %s".printf (db.errmsg ())
                 );
             }
+
             while (stmt.step () == Sqlite.ROW) {
-                double val = stmt.column_double (0);
-                data.add (val);
+                if (n_results == result.length) {
+                    result.resize (result.length * 2);
+                }
+
+                result[n_results++] = stmt.column_double (0);
             }
 
-            double[] result = new double[data.size];
-            int i = 0;
-            foreach (double? val in data) {
-                result[i++] = val;
-            }
+            result.resize (n_results);
+
             return result;
         }
 
