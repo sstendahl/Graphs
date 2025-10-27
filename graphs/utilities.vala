@@ -6,26 +6,6 @@ using Gtk;
 namespace Graphs {
     namespace Tools {
         /**
-         * Bind the comborow to a settings key
-         */
-        public void bind_comborow_settings (
-            GLib.Settings settings, string key, Adw.ComboRow comborow
-        ) {
-            comborow.set_selected (settings.get_enum (key));
-            comborow.notify["selected"].connect (() => {
-                if (settings.get_enum (key)
-                    != comborow.get_selected ()) {
-                    settings.set_enum (
-                        key, (int) comborow.get_selected ()
-                    );
-                }
-            });
-            settings.changed[key].connect (() => {
-                comborow.set_selected (settings.get_enum (key));
-            });
-        }
-
-        /**
          * Reset a settings instance to default values.
          */
         public void reset_settings (GLib.Settings settings) {
