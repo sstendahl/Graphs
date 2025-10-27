@@ -77,7 +77,7 @@ class DataImporter(Graphs.DataImporter):
         the file itself or other runtime variables.
         """
         parser = parsers.get_parser(settings.get_mode())
-        parser.init_settings(settings)
+        return parser.init_settings(settings)
 
     @staticmethod
     def _on_append_settings_widgets_request(

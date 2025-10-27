@@ -4,7 +4,7 @@ from gettext import gettext as _
 from gettext import pgettext as C_
 from typing import Tuple
 
-from gi.repository import Graphs, Gtk
+from gi.repository import Graphs, Gtk, GLib
 
 from graphs import item, misc
 from graphs.file_import.parsers import Parser
@@ -63,11 +63,15 @@ class SqlParser(Parser):
         ]
 
     @staticmethod
-    def init_settings(settings: Graphs.ImportSettings) -> None:
+    def init_settings(settings: Graphs.ImportSettings) -> bool:
         """Init settings with default table and column selection."""
-        db_reader = Graphs.DatabaseReader.new(settings)
-        db_reader.set_default_selection()
-        settings.set_item("db-reader", db_reader)
+        try:
+            db_reader = Graphs.DatabaseReader.new(settings)
+            db_reader.set_default_selection()
+            settings.set_item("db-reader", db_reader)
+            return True
+        except GLib.GError:
+            return False
 
     @staticmethod
     def init_settings_widgets(
@@ -77,5 +81,4 @@ class SqlParser(Parser):
         """Append SQL-specific settings widgets."""
         if not settings.get_item("db-reader"):
             return
-        sql_group = Graphs.SqlGroup.new(settings)
-        box.append(sql_group)
+        box.append(Graphs.SqlGroup.new(settings))

@@ -21,7 +21,7 @@ namespace Graphs {
         public GLib.ListStore file_filters { get; private set; }
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
-        protected signal void init_import_settings_request (ImportSettings settings);
+        protected signal bool init_import_settings_request (ImportSettings settings);
         protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
         protected signal string parse_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
@@ -82,9 +82,9 @@ namespace Graphs {
         public ImportSettings get_settings_for_file (File file) {
             var settings = new ImportSettings (file);
             settings.mode = guess_import_mode_request.emit (settings);
-            init_import_settings (settings);
+            settings.is_valid = init_import_settings (settings);
             settings.notify["mode"].connect (() => {
-                init_import_settings (settings);
+                settings.is_valid = init_import_settings (settings);
             });
             return settings;
         }
@@ -108,11 +108,11 @@ namespace Graphs {
             return parse_request.emit (itemlist, settings, data);
         }
 
-        private void init_import_settings (ImportSettings settings) {
+        private bool init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             string name = parsers[settings.mode].name;
             settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
-            init_import_settings_request.emit (settings);
+            return init_import_settings_request.emit (settings);
         }
     }
 
@@ -122,6 +122,7 @@ namespace Graphs {
         public uint mode { get; set; }
         public string mode_name { get; set; }
         public bool has_schema { get; private set; default = false; }
+        public bool is_valid { get; set; }
 
         public signal void value_changed (string key, Variant val);
 

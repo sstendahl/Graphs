@@ -28,6 +28,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.PreferencesGroup remove_group { get; }
 
+        [GtkChild]
+        private unowned Button confirm_button { get; }
+
         private Window window;
         private DataImporter importer;
         private GLib.ListStore settings_list;
@@ -41,7 +44,10 @@ namespace Graphs {
             mode.set_model (importer.get_parser_names ());
 
             file_list.bind_model (settings_list, (item) => {
-                return new ImportFileRow ((ImportSettings) item);
+                ImportSettings settings = (ImportSettings) item;
+                if (!settings.is_valid) confirm_button.set_sensitive (false);
+                settings.notify["is-valid"].connect (on_is_valid);
+                return new ImportFileRow (settings);
             });
 
             file_list.row_activated.connect (() => {
@@ -58,6 +64,16 @@ namespace Graphs {
             navigation_view.set_show_content (false);
 
             present (window);
+        }
+
+        private void on_is_valid () {
+            bool is_valid = true;
+            for (uint i = 0; i < settings_list.get_n_items (); i++) {
+                ImportSettings settings = (ImportSettings) settings_list.get_item (i);
+                is_valid = is_valid && settings.is_valid;
+                if (!is_valid) break;
+            }
+            confirm_button.set_sensitive (is_valid);
         }
 
         private void load_settings (ImportSettings settings) {
@@ -88,9 +104,10 @@ namespace Graphs {
                     for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                         var file = (File) files_list_model.get_item (i);
                         var settings = importer.get_settings_for_file (file);
+                        if (!settings.is_valid) confirm_button.set_sensitive (false);
                         settings_list.append (settings);
-                        remove_group.set_visible (settings_list.get_n_items () > 1);
                     }
+                    remove_group.set_visible (true);
                 } catch {}
             });
         }
@@ -120,6 +137,7 @@ namespace Graphs {
             settings_list.remove (index);
             int new_index = index == 0 ? 0 : (int) index - 1;
             file_list.select_row (file_list.get_row_at_index (new_index));
+            on_is_valid ();
 
             if (navigation_view.get_collapsed ()) navigation_view.set_show_content (false);
         }
@@ -153,6 +171,16 @@ namespace Graphs {
             this.settings = settings;
             filename.set_label (settings.filename);
             settings.bind_property ("mode_name", mode, "label", BindingFlags.SYNC_CREATE);
+            settings.notify["is-valid"].connect (on_is_valid);
+            on_is_valid ();
+        }
+
+        private void on_is_valid () {
+            if (settings.is_valid) {
+                remove_css_class ("error");
+            } else {
+                add_css_class ("error");
+            }
         }
     }
 }
