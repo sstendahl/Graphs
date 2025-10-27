@@ -4,7 +4,7 @@ from gettext import gettext as _
 from gettext import pgettext as C_
 from typing import Tuple
 
-from gi.repository import Graphs, Gtk, GLib
+from gi.repository import GLib, Graphs, Gtk
 
 from graphs import item, misc
 from graphs.file_import.parsers import Parser
