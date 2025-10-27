@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+using Gdk;
 using Gtk;
 
 namespace Graphs {
@@ -38,21 +39,18 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_color_choose () {
+        private async void on_color_choose () {
             var dialog = new ColorDialog () { with_alpha = false };
-            dialog.choose_rgba.begin (
-                this.get_root () as Gtk.Window,
-                Tools.hex_to_rgba (color),
-                null,
-                (d, result) => {
-                    try {
-                        color = Tools.rgba_to_hex (dialog.choose_rgba.end (result));
-                        load_color ();
-                        color_changed.emit (color);
-                    } catch {}
-
-                }
-            );
+            try {
+                RGBA rgba = yield dialog.choose_rgba (
+                    this.get_root () as Gtk.Window,
+                    Tools.hex_to_rgba (color),
+                    null
+                );
+                color = Tools.rgba_to_hex (rgba);
+                load_color ();
+                color_changed.emit (color);
+            } catch {}
         }
 
         [GtkCallback]
