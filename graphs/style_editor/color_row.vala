@@ -28,19 +28,13 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_color_choose () {
+        private async void on_color_choose () {
             var dialog = new ColorDialog () { with_alpha = false };
-            dialog.choose_rgba.begin (
-                this.get_root () as Gtk.Window,
-                color,
-                null,
-                (d, result) => {
-                    try {
-                        this.color = dialog.choose_rgba.end (result);
-                    } catch {}
-
-                }
-            );
+            try {
+                this.color = yield dialog.choose_rgba (
+                    this.get_root () as Gtk.Window, color, null
+                );
+            } catch {}
         }
     }
 }

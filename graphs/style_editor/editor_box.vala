@@ -4,10 +4,10 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
-    private string title_format_function(Scale scale, double value) {
+    private string title_format_function (Scale scale, double value) {
         // Format a float value as a percentage string (integer part only)
         double percentage = (value / 2.0) * 100.0;
-        return "%d%%".printf((int) percentage);
+        return "%d%%".printf ((int) percentage);
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")]
@@ -146,8 +146,7 @@ namespace Graphs {
 
         [GtkCallback]
         private async void add_color () {
-            var dialog = new ColorDialog ();
-            dialog.set_with_alpha (false);
+            var dialog = new ColorDialog () { with_alpha = false };
             try {
                 RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
