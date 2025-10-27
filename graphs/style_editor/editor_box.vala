@@ -4,6 +4,12 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
+    private string title_format_function(Scale scale, double value) {
+        // Format a float value as a percentage string (integer part only)
+        double percentage = (value / 2.0) * 100.0;
+        return "%d%%".printf((int) percentage);
+    }
+
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")]
     public class StyleEditorBox : Box {
         [GtkChild]
@@ -88,33 +94,45 @@ namespace Graphs {
         protected unowned Scale title_padding { get; }
 
         [GtkChild]
-        protected unowned Button text_color { get; }
+        protected unowned StyleColorRow text_color { get; }
 
         [GtkChild]
-        protected unowned Button tick_color { get; }
+        protected unowned StyleColorRow tick_color { get; }
 
         [GtkChild]
-        protected unowned Button axis_color { get; }
+        protected unowned StyleColorRow axis_color { get; }
 
         [GtkChild]
-        protected unowned Button grid_color { get; }
+        protected unowned StyleColorRow grid_color { get; }
 
         [GtkChild]
-        protected unowned Button background_color { get; }
+        protected unowned StyleColorRow background_color { get; }
 
         [GtkChild]
-        protected unowned Button outline_color { get; }
+        protected unowned StyleColorRow outline_color { get; }
 
         [GtkChild]
-        protected unowned ListBox line_colors_box { get; }
+        private unowned ListBox line_colors_box { get; }
 
         [GtkChild]
-        protected unowned Box poor_contrast_warning { get; }
+        private unowned Box poor_contrast_warning { get; }
 
         public signal void params_changed ();
 
         protected StyleColorManager color_manager { get; set; }
         protected Gtk.Window window { get; set; }
+
+        construct {
+            this.color_manager = new StyleColorManager (line_colors_box);
+
+            titlesize.set_format_value_func (title_format_function);
+            labelsize.set_format_value_func (title_format_function);
+        }
+
+        protected void check_contrast () {
+            double contrast = Tools.get_contrast (outline_color.color, text_color.color);
+            poor_contrast_warning.set_visible (contrast < 4.5);
+        }
 
         [GtkCallback]
         private void on_linestyle () {

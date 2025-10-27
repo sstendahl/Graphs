@@ -1,0 +1,14 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsStyleColorRow: Adw.ActionRow {
+  tooltip-text: _("Change Color");
+  activatable: true;
+  activated => $on_color_choose();
+
+  [suffix]
+  Image image {
+    icon-name: "color-picker-symbolic";
+    pixel-size: 20;
+  }
+}

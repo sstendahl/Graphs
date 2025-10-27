@@ -4,7 +4,7 @@ import contextlib
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, Gio, Graphs, Gtk, Pango
+from gi.repository import Adw, Gio, Graphs, Gtk, Pango
 
 from graphs import misc, style_io
 
@@ -70,11 +70,6 @@ FONT_VARIANT_DICT = {
 }
 
 
-def _title_format_function(_scale, value: float) -> str:
-    """Format a float value as percentage string."""
-    return str(value / 2 * 100).split(".", maxsplit=1)[0] + "%"
-
-
 class StyleEditorBox(Graphs.StyleEditorBox):
     """Style editor widget."""
 
@@ -83,22 +78,6 @@ class StyleEditorBox(Graphs.StyleEditorBox):
     def __init__(self, window):
         super().__init__(window=window)
         self.params = None
-
-        self.props.color_manager = Graphs.StyleColorManager.new(
-            self.props.line_colors_box,
-        )
-
-        self.props.titlesize.set_format_value_func(_title_format_function)
-        self.props.labelsize.set_format_value_func(_title_format_function)
-
-        self.color_buttons = [
-            self.props.text_color,
-            self.props.tick_color,
-            self.props.axis_color,
-            self.props.grid_color,
-            self.props.background_color,
-            self.props.outline_color,
-        ]
 
         # Setup Widgets
         for key, _value in STYLE_DICT.items():
@@ -109,14 +88,8 @@ class StyleEditorBox(Graphs.StyleEditorBox):
                 widget.connect("notify::selected", self._on_combo_change, key)
             elif isinstance(widget, Gtk.Scale):
                 widget.connect("value-changed", self._on_scale_change, key)
-            elif isinstance(widget, Gtk.Button):
-                # Color buttons
-                widget.connect("clicked", self._on_color_change, key)
-                widget.provider = Gtk.CssProvider()
-                widget.get_style_context().add_provider(
-                    widget.provider,
-                    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION,
-                )
+            elif isinstance(widget, Graphs.StyleColorRow):
+                widget.connect("notify::color", self._on_color_change, key)
             elif isinstance(widget, Adw.SwitchRow):
                 widget.connect("notify::active", self._on_switch_change, key)
             else:
@@ -164,8 +137,8 @@ class StyleEditorBox(Graphs.StyleEditorBox):
                 widget.set_selected(int(value))
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
-            elif isinstance(widget, Gtk.Button):
-                widget.color = Graphs.tools_hex_to_rgba(value)
+            elif isinstance(widget, Graphs.StyleColorRow):
+                widget.set_color(Graphs.tools_hex_to_rgba(value))
             elif isinstance(widget, Adw.SwitchRow):
                 widget.set_active(bool(value))
             else:
@@ -193,12 +166,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         )
         self.props.font_chooser.set_font_desc(font_description)
 
-        for button in self.color_buttons:
-            hex_color = Graphs.tools_rgba_to_hex(button.color)
-            button.provider.load_from_string(
-                f"button {{ color: {hex_color}; }}",
-            )
-        self._check_contrast()
+        self.check_contrast()
 
         # line colors
         self.props.color_manager.set_colors(
@@ -288,24 +256,14 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
         self.emit("params-changed")
 
-    def _on_color_change(self, button: Gtk.Button, key: str) -> None:
-        """Handle color change."""
-
-        def on_accept(dialog, result):
-            with contextlib.suppress(GLib.GError):
-                color = dialog.choose_rgba_finish(result)
-                if color is not None:
-                    button.color = color
-                    self._check_contrast()
-                    hex_color = Graphs.tools_rgba_to_hex(button.color)
-                    button.provider.load_from_string(
-                        f"button {{ color: {hex_color}; }}",
-                    )
-                    self._apply_value(key, hex_color)
-
-        dialog = Gtk.ColorDialog()
-        dialog.set_with_alpha(False)
-        dialog.choose_rgba(self.props.window, button.color, None, on_accept)
+    def _on_color_change(
+        self,
+        row: Graphs.StyleColorRow,
+        _param,
+        key: str,
+    ) -> None:
+        self._apply_value(key, Graphs.tools_rgba_to_hex(row.get_color()))
+        self.check_contrast()
 
     def _on_entry_change(self, entry: Gtk.Entry, key: str) -> None:
         self._apply_value(key, str(entry.get_text()))
@@ -328,10 +286,3 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         key: str,
     ) -> None:
         self._apply_value(key, bool(switchrow.get_active()))
-
-    def _check_contrast(self) -> None:
-        contrast = Graphs.tools_get_contrast(
-            self.props.outline_color.color,
-            self.props.text_color.color,
-        )
-        self.props.poor_contrast_warning.set_visible(contrast < 4.5)

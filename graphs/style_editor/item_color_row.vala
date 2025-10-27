@@ -5,8 +5,8 @@ namespace Graphs {
     /**
      * Style Color Box
      */
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-box.ui")]
-    public class StyleColorBox : Adw.ActionRow {
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/item-color-row.ui")]
+    public class StyleItemColorRow : Adw.ActionRow {
         public int index { get; construct set; }
 
         [GtkChild]
@@ -25,7 +25,7 @@ namespace Graphs {
             );
         }
 
-        public StyleColorBox (StyleColorManager color_manager, int index, string color) {
+        public StyleItemColorRow (StyleColorManager color_manager, int index, string color) {
             Object (index: index);
             this.set_title (_("Color %d").printf (index + 1));
             this.color_manager = color_manager;
