@@ -201,14 +201,9 @@ gresource = custom_target('gresource',
 
 gresource_bundle = gnome.compile_resources(application_id, gresource,
       dependencies: gresource,
-  gresource_bundle: true,
         source_dir: meson.current_build_dir(),
-           install: true,
-       install_dir: pkgdatadir,
             c_name: 'graphs',
 )
-
-devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
 if debug

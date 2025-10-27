@@ -60,7 +60,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ComboRow linestyle {
       title: _("Linestyle");
-      notify::selected => $_on_linestyle();
+      notify::selected => $on_linestyle();
 
       model: StringList {
         strings [
@@ -92,7 +92,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ComboRow markers {
       title: _("Markers");
-      notify::selected => $_on_markers();
+      notify::selected => $on_markers();
 
       model: StringList {
         strings [
@@ -551,7 +551,7 @@ template $GraphsStyleEditorBox: Box {
     title: _("Line Colors");
 
     header-suffix: Button {
-      clicked => $_add_color();
+      clicked => $add_color();
 
       styles [
         "flat",
