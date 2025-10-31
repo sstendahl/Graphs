@@ -77,8 +77,7 @@ class DataItem(_PythonItem):
     __gtype_name__ = "GraphsDataItem"
     _typename = _("Dataset")
 
-    xdata = GObject.Property(type=object)
-    ydata = GObject.Property(type=object)
+    data = GObject.Property(type=object)
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     markerstyle = GObject.Property(type=int, default=0)
@@ -101,17 +100,23 @@ class DataItem(_PythonItem):
     ):
         """Create new DataItem."""
         return cls(
-            xdata=xdata,
-            ydata=ydata,
+            data=(xdata, ydata),
             **cls._extract_params(cls, style),
             **kwargs,
         )
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        for prop in ("xdata", "ydata"):
-            if self.get_property(prop) is None:
-                self.set_property(prop, [])
+        if self.props.data is None:
+            self.props.data = ([], [])
+
+    def get_xdata(self) -> list:
+        """Get xdata."""
+        return self.props.data[0]
+
+    def get_ydata(self) -> list:
+        """Get ydata."""
+        return self.props.data[1]
 
 
 class GeneratedDataItem(DataItem):
@@ -173,7 +178,7 @@ class GeneratedDataItem(DataItem):
 
     def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
-        self.props.xdata, self.props.ydata = utilities.equation_to_data(
+        self.props.data = utilities.equation_to_data(
             self._equation,
             [
                 utilities.string_to_float(self.props.xstart),

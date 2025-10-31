@@ -430,8 +430,7 @@ class Data(Graphs.Data):
                 axis = axes[index]
                 axis[1] = True
 
-                xdata = copy.deepcopy(item_.xdata)
-                ydata = copy.deepcopy(item_.ydata)
+                xdata, ydata = copy.deepcopy(item_.props.data)
 
                 min_max = self._get_min_max_from_array(
                     numpy.asarray(ydata if index % 2 else xdata),
