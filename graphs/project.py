@@ -99,18 +99,22 @@ class ProjectMigrator:
 
         self._migrate_inserted_scale(2)  # log2 scale added
 
-        # Handle items no longer making use of uuid
-        def _item_dict_without_uuid(item_):
-            return {
+        # Handle items no longer making use of uuid as well as xdata and ydata
+        # being stored in a tuple as data
+        def _item_dict(item_):
+            return_item = {
                 key: value
-                for (key, value) in item_.items() if key != "uuid"
+                for (key, value) in item_.items()
+                if key not in ("uuid", "xdata", "ydata")
             }
+            return_item["data"] = (item_["xdata"], item_["ydata"])
+            return return_item
 
         item_positions = []
         data = []
         for item_ in self._project_dict["data"]:
             item_positions.append(item_["uuid"])
-            data.append(_item_dict_without_uuid(item_))
+            data.append(_item_dict(item_))
         self._project_dict["data"] = data
         history_states = self._project_dict["history-states"]
         n_states = len(history_states)
@@ -126,28 +130,49 @@ class ProjectMigrator:
                         uuid = item_positions.pop(change[0])
                         item_positions.insert(change[1], uuid)
             history_pos += 1
+        data_changes = {}
         for state_index, state in enumerate(reversed(history_states)):
             state_index = n_states - state_index - 1
-            n_changes = len(state[0])
-            for change_index, (change_type, change) \
-                    in enumerate(reversed(state[0])):
-                change_index = n_changes - change_index - 1
+            new_state = []
+            for change_type, change in reversed(state[0]):
                 match ChangeType(change_type):
                     case ChangeType.ITEM_ADDED:
                         item_positions.remove(change["uuid"])
-                        history_states[state_index][0][change_index][1] = \
-                            _item_dict_without_uuid(change)
+                        change = _item_dict(change)
                     case ChangeType.ITEM_REMOVED:
                         item_positions.insert(change[0], change[1]["uuid"])
-                        history_states[state_index][0][change_index][1] = \
-                            [change[0], _item_dict_without_uuid(change[1])]
+                        change = [change[0], _item_dict(change[1])]
                     case ChangeType.ITEMS_SWAPPED:
                         uuid = item_positions.pop(change[1])
                         item_positions.insert(change[0], uuid)
                     case ChangeType.ITEM_PROPERTY_CHANGED:
                         change[0] = item_positions.index(change[0])
-                        history_states[state_index][0][change_index][1] = \
-                            change
+                        if change[1] in ("xdata", "ydata"):
+                            # Consolidate two change entries into a single one
+                            try:
+                                data_change = data_changes[state_index]
+                                if change[1] == "xdata":
+                                    data_change[0] = change[2:]
+                                else:
+                                    data_change[1] = change[2:]
+
+                                change = [
+                                    ChangeType.ITEM_PROPERTY_CHANGED.value,
+                                    "data",
+                                    (data_change[0][0], data_change[1][0]),
+                                    (data_change[0][1], data_change[1][1]),
+                                ]
+                            except KeyError:
+                                if change[1] == "xdata":
+                                    xdata = change[2:]
+                                    ydata = None
+                                else:
+                                    xdata = None
+                                    ydata = change[2:]
+                                data_changes[state_index] = [xdata, ydata]
+                                continue
+                new_state.insert(0, [change_type, change])
+            history_states[state_index][0] = new_state
         self._project_dict["history-states"] = history_states
 
     def _migrate_inserted_scale(self, scale_index: int) -> None:
