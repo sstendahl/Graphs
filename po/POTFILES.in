@@ -23,12 +23,12 @@ data/ui/sidebar/figure-settings/style-page.blp
 data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
 data/ui/sidebar/operations.blp
+data/ui/style-editor/add-style.blp
 data/ui/style-editor/color-box.blp
 data/ui/style-editor/editor-box.blp
 data/ui/style-editor/shortcuts.blp
 data/ui/style-editor/window.blp
 data/ui/add-equation.blp
-data/ui/add-style.blp
 data/ui/curve-fitting.blp
 data/ui/export-figure.blp
 data/ui/fitting-parameters.blp
@@ -57,6 +57,7 @@ graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala
 graphs/sidebar/operations.vala
+graphs/style_editor/add_style.vala
 graphs/style_editor/color_box.vala
 graphs/style_editor/color_manager.vala
 graphs/style_editor/editor_box.py

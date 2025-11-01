@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gdk;
+using Gee;
 using Gtk;
 
 namespace Graphs {
@@ -17,12 +18,17 @@ namespace Graphs {
         return filename + ".mplstyle";
     }
 
+    private bool filter_system_style (Object style) {
+        return ((Style) style).file != null;
+    }
+
     /**
      * Style manager
      */
     public class StyleManager : Object {
         public Application application { get; construct set; }
         public GLib.ListStore style_model { get; construct set; }
+        public FilterListModel filtered_style_model { get; construct set; }
         public File style_dir { get; construct set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
@@ -33,6 +39,9 @@ namespace Graphs {
 
         construct {
             this.style_model = new GLib.ListStore (typeof (Style));
+            this.filtered_style_model = new FilterListModel (
+                style_model, new CustomFilter (filter_system_style)
+            );
             try {
                 File config_dir = Tools.get_config_directory ();
                 this.style_dir = config_dir.get_child_for_display_name ("styles");
@@ -48,6 +57,16 @@ namespace Graphs {
         }
 
         protected void setup (string system_style) {
+            style_model.append (
+                new Style (
+                    _("System"),
+                    null,
+                    Gdk.Texture.from_resource (
+                        @"/se/sjoerd/Graphs/system-style-$system_style.png"
+                    ),
+                    false
+                )
+            );
             File style_list = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles.txt");
             try {
                 var stream = new DataInputStream (style_list.read ());
@@ -64,24 +83,13 @@ namespace Graphs {
                     );
                 }
             } catch { assert_not_reached (); }
-            style_model.insert (
-                0,
-                new Style (
-                    _("System"),
-                    null,
-                    Gdk.Texture.from_resource (
-                        @"/se/sjoerd/Graphs/system-style-$system_style.png"
-                    ),
-                    false
-                )
-            );
             application.python_helper.run_method (this, "_update_system_style");
             try {
                 FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",
                     FileQueryInfoFlags.NONE
                 );
-                string[] stylenames = list_stylenames ();
+                Gee.List<string> stylenames = new Gee.ArrayList<string>.wrap (list_stylenames ());
                 CompareDataFunc<Style> cmp = style_cmp;
                 FileInfo info = null;
                 while ((info = enumerator.next_file ()) != null) {
@@ -92,10 +100,10 @@ namespace Graphs {
                     ) {
                         Style style = style_request.emit (file);
                         style.name = Tools.get_duplicate_string (
-                            style.name, stylenames
+                            style.name, stylenames.to_array ()
                         );
                         style_model.insert_sorted (style, cmp);
-                        stylenames += style.name;
+                        stylenames.add (style.name);
                     };
                 }
                 enumerator.close ();
@@ -152,12 +160,12 @@ namespace Graphs {
          * The result is guaranteed to be sorted and excludes the system style.
          */
         public string[] list_stylenames () {
-            string[] stylenames = {};
-            for (uint i = 1; i < style_model.get_n_items (); i++) {
-                Style style = style_model.get_item (i) as Style;
-                stylenames += style.name;
+            string[] stylenames = new string[filtered_style_model.get_n_items ()];
+            for (uint i = 0; i < filtered_style_model.get_n_items (); i++) {
+                Style style = (Style) filtered_style_model.get_item (i);
+                stylenames[i] = style.name;
             }
-            return stylenames;
+            return (owned) stylenames;
         }
 
         public File create_style (uint template, string name) {
@@ -250,60 +258,6 @@ namespace Graphs {
             menu_button.get_style_context ().add_provider (
                 provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-        }
-    }
-
-    /**
-     * Add style dialog
-     */
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-style.ui")]
-    public class AddStyleDialog : Adw.Dialog {
-
-        [GtkChild]
-        private unowned Adw.EntryRow new_style_name { get; }
-
-        [GtkChild]
-        private unowned Adw.ComboRow style_templates { get; }
-
-        public signal void accept (File file);
-
-        private StyleManager style_manager;
-        private string[] stylenames;
-
-        public AddStyleDialog (StyleManager style_manager, Widget parent, FigureSettings? figure_settings = null) {
-            this.style_manager = style_manager;
-            this.stylenames = style_manager.list_stylenames ();
-            style_templates.set_model (new StringList (stylenames));
-            if (figure_settings != null && figure_settings.use_custom_style) {
-                string template = figure_settings.custom_style;
-                for (uint i = 0; i < stylenames.length; i++) {
-                    if (stylenames[i] == template) {
-                        style_templates.set_selected (i);
-                        break;
-                    }
-                }
-            }
-            present (parent);
-        }
-
-        private string get_selected () {
-            var item = style_templates.get_selected_item () as StringObject;
-            return item.get_string ();
-        }
-
-        [GtkCallback]
-        private void on_template_changed () {
-            new_style_name.set_text (
-                Tools.get_duplicate_string (get_selected (), stylenames)
-            );
-        }
-
-        [GtkCallback]
-        private void on_accept () {
-            uint template = style_templates.get_selected () + 1;
-            var file = style_manager.create_style (template, new_style_name.get_text ());
-            close ();
-            accept.emit (file);
         }
     }
 
