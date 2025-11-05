@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-06 16:16+0000\n"
-"PO-Revision-Date: 2025-10-06 13:37-0300\n"
+"POT-Creation-Date: 2025-10-26 16:10+0000\n"
+"PO-Revision-Date: 2025-11-05 11:08-0300\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -421,7 +421,7 @@ msgstr "Equação"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
 #: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -513,6 +513,155 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Inverso"
 
+#: data/ui/import/columns/box.blp:16
+msgid "Add Item"
+msgstr "Adicionar item"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
+#: data/ui/style-editor/color-box.blp:36
+msgid "Remove"
+msgstr "Remover"
+
+#: data/ui/import/columns/item-group.blp:26
+msgid "X Column"
+msgstr "Coluna X"
+
+#: data/ui/import/columns/item-group.blp:38
+msgid "Y Column"
+msgstr "Coluna Y"
+
+#: data/ui/import/columns/item-group.blp:51
+msgid "Single Column"
+msgstr "Coluna única"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Importar apenas valores Y, os valores X serão gerados"
+
+#: data/ui/import/columns/item-group.blp:57
+msgid "X Value Equation"
+msgstr "Equação de valor em X"
+
+#: data/ui/import/columns/item-group.blp:64
+#: data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "Mais informações"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>Cálculo do valor X</b>\n"
+"\n"
+"Insira uma equação para calcular os valores em X.\n"
+"Use 'n' para o índice da linha (começando do 0).\n"
+"\n"
+"<b>Exemplos:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/main-group.blp:5
+msgid "Format"
+msgstr "Formatar"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Delimitador"
+
+#: data/ui/import/columns/main-group.blp:9
+msgid "Character used to separate columns"
+msgstr "Caractere usado para separar as colunas"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Espaço em branco"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulação"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Dois pontos (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Ponto e vírgula (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Vírgula (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Período (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Personalizado"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Delimitador personalizado"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Separador decimal"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Vírgula decimal (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Ponto decimal (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Pular linhas"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Número de linhas para pular no começo"
+
+#: data/ui/import/sql/main-group.blp:6
+msgid "Database Table"
+msgstr "Tabela de base de dados"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "Coluna X"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Coluna Y"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "Esta tabela não contém colunas numéricas"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "Importar parâmetros"
@@ -537,95 +686,6 @@ msgstr "Modo de importação"
 #: data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "Definir como padrão"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "Remover"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "Delimitador"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Sequência de caracteres usada para dividir valores"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Espaço em branco"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Tabulação"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Dois pontos (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Ponto e vírgula (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Vírgula decimal (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Ponto decimal (.)"
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Personalizado"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "Delimitador personalizado"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "Separador decimal"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Vírgula decimal (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Ponto decimal (.)"
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "Coluna X"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "Índice da coluna de dados X"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "Coluna Y"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Índice da coluna de dados Y"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "Pular linhas"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "Índices de linha ignorados"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -1434,56 +1494,72 @@ msgstr "3σ: 99,7% de confiança"
 msgid "Export Figure"
 msgstr "Exportar figura"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:65
 msgid "Export"
 msgstr "Exportar"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+msgid "Export Settings"
+msgstr "Exportar configurações"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "Formato do arquivo"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "PostScript encapsulado"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "Postscript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "Resolução (DPI)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "Transparência do fundo"
+
+#: data/ui/export-figure.blp:67
+msgid "Export Size"
+msgstr "Exportar tamanho"
+
+#: data/ui/export-figure.blp:70
+msgid "Use Same Size as App"
+msgstr "Use o mesmo tamanho como programa"
+
+#: data/ui/export-figure.blp:75
+msgid "Width (pixels)"
+msgstr "Largura (pixels)"
+
+#: data/ui/export-figure.blp:85
+msgid "Height (pixels)"
+msgstr "Altura (pixels)"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1557,13 +1633,9 @@ msgstr "Excluir…"
 msgid "Transform Data"
 msgstr "Transformar dados"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "Mais informações"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1571,7 +1643,7 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"Variáveis adicionais:\n"
+"<b>Variáveis adicionais:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max\n"
 "\n"
@@ -1579,11 +1651,11 @@ msgstr ""
 "por padrão. Adicione d à função\n"
 "para usar graus. E.g.: sind(x) ou cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Descartar dados não selecionados"
 
@@ -1760,40 +1832,55 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Refaz ação"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Colunas"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "Falha na importação. Índice da coluna fora do intervalo"
+#: graphs/file_import/parsers/columns/main.vala:46
+msgid "Custom delimiter cannot be empty"
+msgstr "Delimitador personalizado não pode ser vazio"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "Não foi possível importar do arquivo"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid ""
+"Index error in %s, cannot access index %d on line %d, only %d columns were "
+"found"
+msgstr ""
+"Erro de índice em %s, não pode acessar o índice %d na linha  %d, só %d "
+"colunas foram encontradas"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Não pode importar do arquivo, valor incorreto na linha %d"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "Item %d"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Arquivo de projeto do Gráficos"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Base de dados"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Base de dados SQLite"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
@@ -1802,43 +1889,43 @@ msgstr ""
 "Não foi possível importar data da tabela \"{table_name}\", nenhuma coluna "
 "numérica foi encontrada"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "Nenhum dado encontrado na coluna da tabela"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "Intensidade (cps)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr "Formato .xry inválido"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
@@ -1888,7 +1975,7 @@ msgstr "Rótulo do eixo X"
 msgid "Y Axis Scale"
 msgstr "Escala do eixo Y"
 
-#: graphs/sidebar/figure_settings.vala:235
+#: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Padrões atualizados"
 
@@ -1997,12 +2084,12 @@ msgstr ""
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:60
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:86
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
@@ -2104,7 +2191,7 @@ msgstr "Projeto salvo"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/python_helper.vala:48
+#: graphs/python_helper.vala:55
 msgid "Exported Data"
 msgstr "Dados exportados"
 
@@ -2156,11 +2243,11 @@ msgstr "Arquivo {file}, não contém uma etiqueta de nome"
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:190
 msgid "All Files"
 msgstr "Todos os arquivos"
 
-#: graphs/utilities.vala:263
+#: graphs/utilities.vala:241
 msgid "Document Portal"
 msgstr "Portal de documentos"
 
@@ -2185,6 +2272,28 @@ msgstr "Gráficos — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Abrir local"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "Ponto decimal (.)"
+
+#~ msgid "X-data column index"
+#~ msgstr "Índice da coluna de dados X"
+
+#~ msgid "Y-data column index"
+#~ msgstr "Índice da coluna de dados Y"
+
+#~ msgid "Ignored row indices"
+#~ msgstr "Índices de linha ignorados"
+
+#~ msgid "Resolution (dpi)"
+#~ msgstr "Resolução (DPI)"
+
+#~ msgid "Import failed, column index out of range"
+#~ msgstr "Falha na importação. Índice da coluna fora do intervalo"
+
+#~ msgid "Unable to import from file"
+#~ msgstr "Não foi possível importar do arquivo"
 
 #~ msgid "Open a Style"
 #~ msgstr "Abre um estilo"
