@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-07 02:37+0000\n"
-"PO-Revision-Date: 2025-10-07 13:43+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2025-10-26 16:10+0000\n"
+"PO-Revision-Date: 2025-11-05 08:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.7\n"
+"X-Generator: Poedit 3.8\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
@@ -85,10 +85,10 @@ msgid ""
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
 msgstr ""
-"Graphs hem çizim hem de veri düzenlemek için mükemmel seçimdir. Graphs ile "
+"Graphs hem çizim hem de veri düzenlemek için eksiksiz seçimdir. Graphs ile "
 "oluşturulan grafikler, bilimsel bir yayın veya sunum gibi geniş kitleyle "
-"paylaşmaya ve sunmaya uygun çeşitli biçimlerde kaydedilebilir. Ayrıca, "
-"grafikleri vektör görüntüleri olarak kaydetme seçeneği, daha fazla "
+"paylaşmaya ve sunmaya uygun türlü biçimlerde kaydedilebilir. Ayrıca, "
+"grafikleri vektör görüntüleri olarak kaydetme seçeneği, daha çok "
 "iyileştirme için Inkscape gibi yazılımlarla kolayca düzenlenebilmesini de "
 "sağlar Graphs, GNOME ortamı düşünülerek yazılmıştır, ancak diğer masaüstü "
 "ortamları için de uygundur."
@@ -417,7 +417,7 @@ msgstr "Denklem"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
 #: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -509,6 +509,155 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Ters"
 
+#: data/ui/import/columns/box.blp:16
+msgid "Add Item"
+msgstr "Öge Ekle"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
+#: data/ui/style-editor/color-box.blp:36
+msgid "Remove"
+msgstr "Kaldır"
+
+#: data/ui/import/columns/item-group.blp:26
+msgid "X Column"
+msgstr "X Sütunu"
+
+#: data/ui/import/columns/item-group.blp:38
+msgid "Y Column"
+msgstr "Y Sütunu"
+
+#: data/ui/import/columns/item-group.blp:51
+msgid "Single Column"
+msgstr "Tek Sütun"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Yalnızca Y değerlerini içe aktar, X değerleri oluşturulacak"
+
+#: data/ui/import/columns/item-group.blp:57
+msgid "X Value Equation"
+msgstr "X Değer Denklemi"
+
+#: data/ui/import/columns/item-group.blp:64
+#: data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "Daha çok bilgi"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>X Değeri Hesaplama</b>\n"
+"\n"
+"X değerleri hesaplanacak eşitlik gir.\n"
+"Satır dizini için 'n' kullan (0’dan başlayan).\n"
+"\n"
+"<b>Örnekler</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/main-group.blp:5
+msgid "Format"
+msgstr "Biçim"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Ayraç"
+
+#: data/ui/import/columns/main-group.blp:9
+msgid "Character used to separate columns"
+msgstr "Sütunları bölmek için kullanılan karakter"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Beyaz boşluk"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Sekme"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "İki nokta üst üste (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Noktalı virgül (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Virgül (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Nokta (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Özel"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Özel Ayraç"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Ondalık Ayraç"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Ondalık virgülü (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Ondalık nokta (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Satır Atla"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Başlangıçta atlanacak satır sayısı"
+
+#: data/ui/import/sql/main-group.blp:6
+msgid "Database Table"
+msgstr "Veri Tabanı Tablosu"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "Sütun X"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Sütun Y"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "Bu tablo sayısal sütun içermiyor"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "İçe Aktarma Parametreleri"
@@ -533,95 +682,6 @@ msgstr "İçe Aktarma Kipi"
 #: data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "Öntanımlı Olarak Ayarla"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "Kaldır"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "Ayraç"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Değerleri bölmek için kullanılan karakter dizisi"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Beyaz boşluk"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Sekme"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "İki nokta üst üste (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Noktalı virgül (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Ondalık virgülü (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Ondalık nokta (.)"
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Özel"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "Özel Ayraç"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "Ondalık Ayraç"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Ondalık virgülü (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Ondalık nokta (.)"
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "Sütun X"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "X-veri sütun dizini"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "Sütun Y"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Y-veri sütun dizini"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "Satır Atla"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "Yok sayılan satır indisleri"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -659,35 +719,35 @@ msgstr "Eksen Sınırları"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgid "Bottom X Axis Minimum"
-msgstr "Alt X Ekseni Asgari"
+msgstr "Alt X Ekseni En Az"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:76
 msgid "Bottom X Axis Maximum"
-msgstr "Alt X Ekseni Azami"
+msgstr "Alt X Ekseni En Çok"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:91
 msgid "Top X Axis Minimum"
-msgstr "Üst X Ekseni Asgari"
+msgstr "Üst X Ekseni En Az"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:99
 msgid "Top X Axis Maximum"
-msgstr "Üst X Ekseni Azami"
+msgstr "Üst X Ekseni En Çok"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:114
 msgid "Left Y Axis Minimum"
-msgstr "Sol Y Ekseni Asgari"
+msgstr "Sol Y Ekseni En Az"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:122
 msgid "Left Y Axis Maximum"
-msgstr "Sol X Ekseni Azami"
+msgstr "Sol X Ekseni En Çok"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:137
 msgid "Right Y Axis Minimum"
-msgstr "Sağ Y Ekseni Etiketi"
+msgstr "Sağ Y Ekseni En Az"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:145
 msgid "Right Y Axis Maximum"
-msgstr "Sağ Y Ekseni Azami"
+msgstr "Sağ Y Ekseni En Çok"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
 msgid "Scaling"
@@ -991,7 +1051,7 @@ msgstr "Y Çoğalt"
 
 #: data/ui/sidebar/operations.blp:359
 msgid "At Maximum Y Value"
-msgstr "Azami Y Değerinde"
+msgstr "En Çok Y Değerinde"
 
 #: data/ui/sidebar/operations.blp:365
 msgid "At Middle X Value"
@@ -1430,56 +1490,72 @@ msgstr "3σ: %99.7 Güven"
 msgid "Export Figure"
 msgstr "Biçimi Dışa Aktar"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:65
 msgid "Export"
 msgstr "Dışa Aktar"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+msgid "Export Settings"
+msgstr "Dışa Aktarma Ayarları"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "Dosya Biçimi"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "Kapsüllenmiş PostScript"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "Postscript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "Çözünürlük (dpi)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "Saydam Arka Plan"
+
+#: data/ui/export-figure.blp:67
+msgid "Export Size"
+msgstr "Dışa Aktarma Boyutu"
+
+#: data/ui/export-figure.blp:70
+msgid "Use Same Size as App"
+msgstr "Uygulamayla Aynı Boyutu Kullan"
+
+#: data/ui/export-figure.blp:75
+msgid "Width (pixels)"
+msgstr "Genişlik (piksel)"
+
+#: data/ui/export-figure.blp:85
+msgid "Height (pixels)"
+msgstr "Yükseklik (piksel)"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1487,11 +1563,11 @@ msgstr "İlk Kestirim"
 
 #: data/ui/fitting-parameters.blp:45
 msgid "Minimum"
-msgstr "Asgari"
+msgstr "En Az"
 
 #: data/ui/fitting-parameters.blp:59
 msgid "Maximum"
-msgstr "Azami"
+msgstr "En Çok"
 
 #: data/ui/generate-data.blp:6
 msgid "Generate Data"
@@ -1553,13 +1629,9 @@ msgstr "Sil…"
 msgid "Transform Data"
 msgstr "Veri Dönüştür"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "Daha fazla bilgi"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1567,19 +1639,19 @@ msgid ""
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"Ek değişkenler:\n"
+"<b>Ek değişkenler:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
 "Trigonometrik fonksiyonlar öntanımlı olarak radyan kullanır,\n"
 "derece kullanmak için fonksiyona d ekleyin,\n"
-"örneğin sind(x) veya cosd(x)."
+"örneğin sind(x) ya da cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Seçilmemiş Veriyi Gözden Çıkar"
 
@@ -1756,40 +1828,55 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Son İşlemi Yinele"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Sütunlar"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
+#: graphs/file_import/parsers/columns/main.vala:46
+msgid "Custom delimiter cannot be empty"
+msgstr "Özel ayraç boş olamaz"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "Dosyadan içe aktarılamadı"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid ""
+"Index error in %s, cannot access index %d on line %d, only %d columns were "
+"found"
+msgstr ""
+"%1$s içinde dizin hatası, %3$d satırındaki %2$d dizinine erişilemedi, yalnızca %4$d "
+"sütun bulundu"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Dosyadan içe aktarılamadı, %d. satırda kötü değer"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "Öge %d"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Proje"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs Proje Dosyası"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Veri Tabanı"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite Veri Tabanı"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
@@ -1798,43 +1885,43 @@ msgstr ""
 "\"{table_name}\" tablosundan veri içe aktarılamadı, hiçbir sayısal sütun "
 "bulunamadı"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "Tablo sütununda veri bulunamadı"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "Yoğunluk (cps)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr "Geçersiz .xry biçimi"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
@@ -1856,19 +1943,19 @@ msgstr "ASCII dosyalar"
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:147
 msgid "X Axis Minimum"
-msgstr "X Ekseni Asgari"
+msgstr "X Ekseni En Az"
 
 #: graphs/sidebar/figure_settings.vala:148
 msgid "Y Axis Minimum"
-msgstr "Y Ekseni Asgari"
+msgstr "Y Ekseni En Az"
 
 #: graphs/sidebar/figure_settings.vala:150
 msgid "X Axis Maximum"
-msgstr "X Ekseni Azami"
+msgstr "X Ekseni En Çok"
 
 #: graphs/sidebar/figure_settings.vala:151
 msgid "Y Axis Maximum"
-msgstr "Y Ekseni Azami"
+msgstr "Y Ekseni En Çok"
 
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:171
@@ -1884,7 +1971,7 @@ msgstr "X Ekseni Etiketi"
 msgid "Y Axis Scale"
 msgstr "Y Ekseni Ölçeği"
 
-#: graphs/sidebar/figure_settings.vala:235
+#: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Öntanımlılar Güncellendi"
 
@@ -1988,12 +2075,12 @@ msgstr "{stylename} biçemi yok, sistemin yeğlediği biçem yükleniyor"
 msgid "Failed to load project"
 msgstr "Proje yüklenemedi"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:60
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Dışa Aktarılan Biçim"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:86
 msgid "Exported Figure"
 msgstr "Dışa Aktarılan Biçim"
 
@@ -2093,7 +2180,7 @@ msgstr "Kayıtlı Proje"
 msgid "Project"
 msgstr "Proje"
 
-#: graphs/python_helper.vala:48
+#: graphs/python_helper.vala:55
 msgid "Exported Data"
 msgstr "Dışa Aktarılan Veri"
 
@@ -2145,11 +2232,11 @@ msgstr "{file} dosyası ad etiketi içermiyor"
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:190
 msgid "All Files"
 msgstr "Tüm Dosyalar"
 
-#: graphs/utilities.vala:263
+#: graphs/utilities.vala:241
 msgid "Document Portal"
 msgstr "Belge Kapısı"
 
@@ -2174,6 +2261,28 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Konumu Aç"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "Ondalık nokta (.)"
+
+#~ msgid "X-data column index"
+#~ msgstr "X-veri sütun dizini"
+
+#~ msgid "Y-data column index"
+#~ msgstr "Y-veri sütun dizini"
+
+#~ msgid "Ignored row indices"
+#~ msgstr "Yok sayılan satır indisleri"
+
+#~ msgid "Import failed, column index out of range"
+#~ msgstr "İçe aktarılamadı, sütun indeksi erim dışı"
+
+#~ msgid "Unable to import from file"
+#~ msgstr "Dosyadan içe aktarılamadı"
+
+#~ msgid "Resolution (dpi)"
+#~ msgstr "Çözünürlük (dpi)"
 
 #~ msgid "Open a Style"
 #~ msgstr "Biçem Aç"
