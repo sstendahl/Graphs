@@ -28,6 +28,9 @@ class PythonWindow(Graphs.Window):
             "style-changed",
             self._on_style_changed,
         )
+        key_controller = self.props.key_controller
+        key_controller.connect("key-pressed", self._on_key_press_event)
+        key_controller.connect("key-released", self._on_key_release_event)
         self._reload_canvas()
 
     def _on_style_changed(
@@ -55,15 +58,28 @@ class PythonWindow(Graphs.Window):
         self._reload_canvas()
         self.get_canvas().emit("view_action")
 
+    def _on_key_press_event(self, *args) -> None:
+        """Handle key press event."""
+        if self.props.canvas is not None:
+            self.props.canvas.key_press_event(*args)
+
+    def _on_key_release_event(self, *args) -> None:
+        """Handle key release event."""
+        if self.props.canvas is not None:
+            self.props.canvas.key_release_event(*args)
+
+    def _on_edit_request(self, _canvas, label_id: str) -> None:
+        """Handle edit request."""
+        self.open_figure_settings(label_id)
+
+    def _on_view_changed(self, _canvas) -> None:
+        """Handle view change."""
+        self.props.data.add_view_history_state()
+
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
-        key_controller = self.props.key_controller
-        canvas = self.get_canvas()
-        if canvas:
-            key_controller.disconnect_by_func(canvas.key_press_event)
-            key_controller.disconnect_by_func(canvas.key_release_event)
 
         canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
@@ -71,17 +87,8 @@ class PythonWindow(Graphs.Window):
             if prop not in ("use_custom_style", "custom_style"):
                 figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
-        def on_edit_request(_canvas, label_id):
-            self.open_figure_settings(label_id)
-
-        def on_view_changed(_canvas):
-            self.props.data.add_view_history_state()
-
-        canvas.connect("edit-request", on_edit_request)
-        canvas.connect("view-changed", on_view_changed)
-
-        key_controller.connect("key-pressed", canvas.key_press_event)
-        key_controller.connect("key-released", canvas.key_release_event)
+        canvas.connect("edit-request", self._on_edit_request)
+        canvas.connect("view-changed", self._on_view_changed)
 
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(
