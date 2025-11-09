@@ -98,24 +98,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     legend = True
 
     @GObject.Property
-    def xdata(self) -> list:
-        """Get xdata property."""
-        return self._artist.get_xdata()
+    def data(self) -> tuple[list, list]:
+        """Get data property."""
+        return self._artist.get_data()
 
-    @xdata.setter
-    def xdata(self, xdata: list) -> None:
-        """Set xdata property."""
-        self._artist.set_xdata(xdata)
-
-    @GObject.Property
-    def ydata(self) -> list:
-        """Get ydata property."""
-        return self._artist.get_ydata()
-
-    @ydata.setter
-    def ydata(self, ydata: list) -> None:
-        """Set ydata property."""
-        self._artist.set_ydata(ydata)
+    @data.setter
+    def data(self, data: tuple[list, list]) -> None:
+        """Set data property."""
+        self._artist.set_data(data)
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -148,8 +138,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.plot(
-            item.props.xdata,
-            item.props.ydata,
+            item.get_xdata(),
+            item.get_ydata(),
             label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
