@@ -182,10 +182,9 @@ other = files(
   'whats_new',
 )
 
-gresource = custom_target('gresource',
+gresource_xml = custom_target('gresource_xml',
     input: [blueprints, styles, icons, other],
    output: application_id + '.gresource.xml',
-  depends: blueprints,
   command: [
     python,
     files('generate_gresource.py'),
@@ -199,16 +198,10 @@ gresource = custom_target('gresource',
   ],
 )
 
-gresource_bundle = gnome.compile_resources(application_id, gresource,
-      dependencies: gresource,
-  gresource_bundle: true,
-        source_dir: meson.current_build_dir(),
-           install: true,
-       install_dir: pkgdatadir,
-            c_name: 'graphs',
+gresource = gnome.compile_resources(application_id, gresource_xml,
+  source_dir: meson.current_build_dir(),
+      c_name: 'graphs',
 )
-
-devenv.set('GRAPHS_OVERRIDE_RESOURCES', gresource_bundle.full_path())
 
 scalable_dir = join_paths('icons', 'hicolor', 'scalable', 'apps')
 if debug
