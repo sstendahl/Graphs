@@ -185,7 +185,7 @@ namespace Graphs {
         protected void setup () {
             var application = (Application) application;
 
-            var model = new NoSelection (application.figure_style_manager.style_model);
+            var model = new NoSelection (application.figure_style_manager.filtered_style_model);
             style_grid.set_model (model);
         }
 
