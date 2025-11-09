@@ -66,11 +66,6 @@ template $GraphsExportFigureDialog: Adw.Dialog {
         Adw.PreferencesGroup {
           title: _("Export Size");
 
-          Adw.SwitchRow use_window_size {
-            title: _("Use Same Size as App");
-            notify::active => $on_use_window_size_changed();
-          }
-
           Adw.SpinRow width {
             title: _("Width (pixels)");
 
@@ -89,6 +84,11 @@ template $GraphsExportFigureDialog: Adw.Dialog {
               lower: 100;
               upper: 4320;
             };
+          }
+
+          Adw.ButtonRow {
+            title: _("Use Same Size as App");
+            activated => $on_use_window_size();
           }
         }
       };
