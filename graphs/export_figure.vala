@@ -16,9 +16,6 @@ namespace Graphs {
         private unowned Adw.ComboRow file_format { get; }
 
         [GtkChild]
-        private unowned Adw.SwitchRow use_window_size { get; }
-
-        [GtkChild]
         private unowned Adw.SpinRow width { get; }
 
         [GtkChild]
@@ -33,31 +30,25 @@ namespace Graphs {
             var application = window.application as Application;
             this.settings = application.get_settings_child ("export-figure");
 
-            Tools.bind_comborow_settings (settings, "file-format", file_format);
-            settings.bind ("transparent", transparent, "active", 0);
-            settings.bind ("use-window-size", use_window_size, "active", 0);
-            settings.bind ("width", width, "value", 0);
-            settings.bind ("height", height, "value", 0);
+            file_format.set_selected (settings.get_enum ("file-format"));
+            transparent.set_active (settings.get_boolean ("transparent"));
+            width.set_value (settings.get_int ("width"));
+            height.set_value (settings.get_int ("height"));
 
-            on_use_window_size_changed ();
             present (window);
         }
 
         [GtkCallback]
-        private void on_use_window_size_changed () {
-            bool use_window = use_window_size.get_active ();
-            width.set_sensitive (!use_window);
-            height.set_sensitive (!use_window);
-
-            if (use_window) {
-                width.set_value (window.canvas.get_width ());
-                height.set_value (window.canvas.get_height ());
-            }
+        private void on_use_window_size () {
+            width.set_value (window.canvas.get_width ());
+            height.set_value (window.canvas.get_height ());
         }
 
         [GtkCallback]
         private void on_accept () {
             string filename = C_("filename", "Exported Figure");
+            string old_suffix = settings.get_string ("file-format");
+            settings.set_enum ("file-format", (int) file_format.get_selected ());
             string suffix = settings.get_string ("file-format");
 
             var dialog = new FileDialog ();
@@ -74,19 +65,26 @@ namespace Graphs {
                 try {
                     File file = dialog.save.end (r);
 
-                    int export_width = (int) width.get_value ();
-                    int export_height = (int) height.get_value ();
+                    bool transparent = transparent.get_active ();
+                    int width = (int) width.get_value ();
+                    int height = (int) height.get_value ();
 
                     window.canvas.save (
-                        file, suffix,
-                        settings.get_boolean ("transparent"),
-                        export_width, export_height
+                        file, suffix, transparent, width, height
                     );
                     window.add_toast_string_with_file (
                         _("Exported Figure"), file
                     );
+
+                    settings.set_string ("file-format", suffix);
+                    settings.set_boolean ("transparent", transparent);
+                    settings.set_int ("width", width);
+                    settings.set_int ("height", height);
+
                     close ();
-                } catch {}
+                } catch {
+                    settings.set_string ("file-format", old_suffix);
+                }
             });
         }
     }
