@@ -37,6 +37,7 @@ template $GraphsAddStyleDialog: Adw.Dialog {
       Adw.PreferencesGroup {
         Adw.ComboRow style_templates {
           title: _("Template");
+          enable-search: true;
           notify::selected => $on_template_changed();
         }
 
