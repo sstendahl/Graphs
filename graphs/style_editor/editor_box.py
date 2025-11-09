@@ -4,7 +4,7 @@ import contextlib
 
 from cycler import cycler
 
-from gi.repository import Adw, GLib, GObject, Gio, Graphs, Gtk, Pango
+from gi.repository import Adw, GLib, Gio, Graphs, Gtk, Pango
 
 from graphs import misc, style_io
 
@@ -75,77 +75,34 @@ def _title_format_function(_scale, value: float) -> str:
     return str(value / 2 * 100).split(".", maxsplit=1)[0] + "%"
 
 
-@Gtk.Template(resource_path="/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")
-class StyleEditorBox(Gtk.Box):
+class StyleEditorBox(Graphs.StyleEditorBox):
     """Style editor widget."""
 
-    __gtype_name__ = "GraphsStyleEditorBox"
-
-    __gsignals__ = {
-        "params-changed": (GObject.SIGNAL_RUN_FIRST, None, ()),
-    }
-
-    style_name = Gtk.Template.Child()
-    font_chooser = Gtk.Template.Child()
-    titlesize = Gtk.Template.Child()
-    labelsize = Gtk.Template.Child()
-    linestyle = Gtk.Template.Child()
-    linewidth = Gtk.Template.Child()
-    markers = Gtk.Template.Child()
-    markersize = Gtk.Template.Child()
-    draw_frame = Gtk.Template.Child()
-    tick_direction = Gtk.Template.Child()
-    minor_ticks = Gtk.Template.Child()
-    major_tick_width = Gtk.Template.Child()
-    minor_tick_width = Gtk.Template.Child()
-    major_tick_length = Gtk.Template.Child()
-    minor_tick_length = Gtk.Template.Child()
-    tick_bottom = Gtk.Template.Child()
-    tick_left = Gtk.Template.Child()
-    tick_top = Gtk.Template.Child()
-    tick_right = Gtk.Template.Child()
-    tick_labels = Gtk.Template.Child()
-    show_grid = Gtk.Template.Child()
-    grid_linewidth = Gtk.Template.Child()
-    grid_opacity = Gtk.Template.Child()
-    value_padding = Gtk.Template.Child()
-    label_padding = Gtk.Template.Child()
-    title_padding = Gtk.Template.Child()
-    axis_width = Gtk.Template.Child()
-    text_color = Gtk.Template.Child()
-    tick_color = Gtk.Template.Child()
-    axis_color = Gtk.Template.Child()
-    grid_color = Gtk.Template.Child()
-    background_color = Gtk.Template.Child()
-    outline_color = Gtk.Template.Child()
-
-    line_colors_box = Gtk.Template.Child()
-    poor_contrast_warning = Gtk.Template.Child()
+    __gtype_name__ = "GraphsPythonStyleEditorBox"
 
     def __init__(self, window):
-        super().__init__()
-        self.window = window
+        super().__init__(window=window)
         self.params = None
 
-        self._style_color_manager = Graphs.StyleColorManager.new(
-            self.line_colors_box,
+        self.props.color_manager = Graphs.StyleColorManager.new(
+            self.props.line_colors_box,
         )
 
-        self.titlesize.set_format_value_func(_title_format_function)
-        self.labelsize.set_format_value_func(_title_format_function)
+        self.props.titlesize.set_format_value_func(_title_format_function)
+        self.props.labelsize.set_format_value_func(_title_format_function)
 
         self.color_buttons = [
-            self.text_color,
-            self.tick_color,
-            self.axis_color,
-            self.grid_color,
-            self.background_color,
-            self.outline_color,
+            self.props.text_color,
+            self.props.tick_color,
+            self.props.axis_color,
+            self.props.grid_color,
+            self.props.background_color,
+            self.props.outline_color,
         ]
 
         # Setup Widgets
         for key, _value in STYLE_DICT.items():
-            widget = getattr(self, key.replace("-", "_"))
+            widget = self.get_property(key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.connect("changed", self._on_entry_change, key)
             elif isinstance(widget, Adw.ComboRow):
@@ -165,11 +122,20 @@ class StyleEditorBox(Gtk.Box):
             else:
                 raise ValueError
 
-        self.style_name.connect("changed", self._on_name_change)
-        self.font_chooser.connect("notify::font-desc", self._on_font_change)
-        self.titlesize.connect("value-changed", self._on_titlesize_change)
-        self.labelsize.connect("value-changed", self._on_labelsize_change)
-        self._style_color_manager.connect(
+        self.props.style_name.connect("changed", self._on_name_change)
+        self.props.font_chooser.connect(
+            "notify::font-desc",
+            self._on_font_change,
+        )
+        self.props.titlesize.connect(
+            "value-changed",
+            self._on_titlesize_change,
+        )
+        self.props.labelsize.connect(
+            "value-changed",
+            self._on_labelsize_change,
+        )
+        self.props.color_manager.connect(
             "colors-changed",
             self._on_line_colors_changed,
         )
@@ -177,13 +143,13 @@ class StyleEditorBox(Gtk.Box):
     def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
         self.params = None
-        application = self.window.get_application()
+        application = self.props.window.get_application()
         style_params, graphs_params = style_io.parse(
             file,
             application.get_figure_style_manager().get_system_style_params(),
         )
         stylename = graphs_params["name"]
-        self.style_name.set_text(stylename)
+        self.props.style_name.set_text(stylename)
         for key, value in STYLE_DICT.items():
             value = value[0]
             value = graphs_params[
@@ -191,7 +157,7 @@ class StyleEditorBox(Gtk.Box):
             ] if value in style_io.STYLE_CUSTOM_PARAMS else style_params[value]
             with contextlib.suppress(KeyError):
                 value = VALUE_DICT[key].index(value)
-            widget = getattr(self, key.replace("-", "_"))
+            widget = self.get_property(key.replace("-", "_"))
             if isinstance(widget, Adw.EntryRow):
                 widget.set_text(str(value))
             elif isinstance(widget, Adw.ComboRow):
@@ -209,10 +175,10 @@ class StyleEditorBox(Gtk.Box):
         font_description = Pango.FontDescription.new()
         self.font_size = style_params["font.size"]
         font_description.set_size(self.font_size * Pango.SCALE)
-        self.titlesize.set_value(
+        self.props.titlesize.set_value(
             round(style_params["figure.titlesize"] * 2 / self.font_size, 1),
         )
-        self.labelsize.set_value(
+        self.props.labelsize.set_value(
             round(style_params["axes.labelsize"] * 2 / self.font_size, 1),
         )
         font_description.set_family(style_params["font.sans-serif"][0])
@@ -225,7 +191,7 @@ class StyleEditorBox(Gtk.Box):
         font_description.set_variant(
             inverted_variant_dict[style_params["font.variant"]],
         )
-        self.font_chooser.set_font_desc(font_description)
+        self.props.font_chooser.set_font_desc(font_description)
 
         for button in self.color_buttons:
             hex_color = Graphs.tools_rgba_to_hex(button.color)
@@ -235,7 +201,7 @@ class StyleEditorBox(Gtk.Box):
         self._check_contrast()
 
         # line colors
-        self._style_color_manager.set_colors(
+        self.props.color_manager.set_colors(
             style_params["axes.prop_cycle"].by_key()["color"],
         )
 
@@ -249,12 +215,12 @@ class StyleEditorBox(Gtk.Box):
 
     def _on_line_colors_changed(
         self,
-        style_color_manager: Graphs.StyleColorManager,
+        color_manager: Graphs.StyleColorManager,
     ) -> None:
         """Update line colors in params."""
         if self.params is None:
             return
-        line_colors = style_color_manager.get_colors()
+        line_colors = color_manager.get_colors()
         self.params["axes.prop_cycle"] = cycler(color=line_colors)
         self.params["patch.facecolor"] = line_colors[0]
         self.emit("params-changed")
@@ -339,7 +305,7 @@ class StyleEditorBox(Gtk.Box):
 
         dialog = Gtk.ColorDialog()
         dialog.set_with_alpha(False)
-        dialog.choose_rgba(self.window, button.color, None, on_accept)
+        dialog.choose_rgba(self.props.window, button.color, None, on_accept)
 
     def _on_entry_change(self, entry: Gtk.Entry, key: str) -> None:
         self._apply_value(key, str(entry.get_text()))
@@ -365,32 +331,7 @@ class StyleEditorBox(Gtk.Box):
 
     def _check_contrast(self) -> None:
         contrast = Graphs.tools_get_contrast(
-            self.outline_color.color,
-            self.text_color.color,
+            self.props.outline_color.color,
+            self.props.text_color.color,
         )
-        self.poor_contrast_warning.set_visible(contrast < 4.5)
-
-    @Gtk.Template.Callback()
-    def _on_linestyle(self, comborow: Adw.ComboRow, _b) -> None:
-        """Handle linestyle selection."""
-        self.linewidth.set_sensitive(comborow.get_selected() != 0)
-
-    @Gtk.Template.Callback()
-    def _on_markers(self, comborow: Adw.ComboRow, _b) -> None:
-        """Handle marker selection."""
-        self.markersize.set_sensitive(comborow.get_selected() != 0)
-
-    @Gtk.Template.Callback()
-    def _add_color(self, _button) -> None:
-        """Add a color."""
-
-        def on_accept(dialog, result):
-            with contextlib.suppress(GLib.GError):
-                color = dialog.choose_rgba_finish(result)
-                if color is not None:
-                    color = Graphs.tools_rgba_to_hex(color)
-                    self._style_color_manager.add_color(color)
-
-        dialog = Gtk.ColorDialog.new()
-        dialog.set_with_alpha(False)
-        dialog.choose_rgba(self.window, None, None, on_accept)
+        self.props.poor_contrast_warning.set_visible(contrast < 4.5)

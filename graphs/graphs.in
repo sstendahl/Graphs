@@ -52,16 +52,6 @@ if __name__ == "__main__":
     gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
     gettext.textdomain("@GETTEXT_PACKAGE@")
 
-    from gi.repository import Gio
-    gresource_location = os.path.join(
-        "@PKGDATADIR@",
-        "@APPLICATION_ID@.gresource",
-    )
-    if os.environ.get("GRAPHS_OVERRIDE_RESOURCES"):
-        gresource_location = os.environ.get("GRAPHS_OVERRIDE_RESOURCES")
-    resource = Gio.Resource.load(gresource_location)
-    resource._register()
-
     loglevel = logging.DEBUG if "@DEBUG@" == "True" else logging.INFO
     logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
     logging.getLogger("matplotlib.font_manager").disabled = True
@@ -69,6 +59,7 @@ if __name__ == "__main__":
     from gi.events import GLibEventLoopPolicy
     asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
+    from gi.repository import Gio
     from graphs.application import PythonApplication
     application = PythonApplication(
         application_id="@APPLICATION_ID@",
