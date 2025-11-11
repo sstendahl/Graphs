@@ -12,10 +12,10 @@ namespace Graphs {
         public StyleColorManager (ListBox box) {
             this.box = box;
 
-            var drop_target = new Gtk.DropTarget (typeof (StyleColorBox), Gdk.DragAction.MOVE);
+            var drop_target = new Gtk.DropTarget (typeof (StyleItemColorRow), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = val.get_object () as StyleColorBox?;
-                var target_row = box.get_row_at_y ((int) y) as StyleColorBox?;
+                var value_row = val.get_object () as StyleItemColorRow?;
+                var target_row = box.get_row_at_y ((int) y) as StyleItemColorRow?;
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
@@ -56,7 +56,7 @@ namespace Graphs {
         }
 
         private void append_style_color_box (int index) {
-            var row = new StyleColorBox (this, index, this.colors[index]);
+            var row = new StyleItemColorRow (this, index, this.colors[index]);
             row.color_removed.connect (() => {
                 this.colors.remove_at (index);
                 reload_color_boxes ();
@@ -83,7 +83,7 @@ namespace Graphs {
                 drag_x = x;
                 drag_y = y;
 
-                Value val = Value (typeof (StyleColorBox));
+                Value val = Value (typeof (StyleItemColorRow));
                 val.set_object (row);
 
                 return new Gdk.ContentProvider.for_value (val);
@@ -94,7 +94,7 @@ namespace Graphs {
                 drag_widget.set_size_request (row.get_width (), row.get_height ());
                 drag_widget.add_css_class ("boxed-list");
 
-                var drag_row = new StyleColorBox (this, index, this.colors[index]);
+                var drag_row = new StyleItemColorRow (this, index, this.colors[index]);
 
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
