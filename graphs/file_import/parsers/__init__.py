@@ -36,8 +36,9 @@ class Parser(Graphs.Parser):
         raise NotImplementedError
 
     @staticmethod
-    def init_settings(_settings) -> None:
+    def init_settings(_settings) -> bool:
         """Init settings."""
+        return True
 
     @staticmethod
     def init_settings_widgets(_settings, _box) -> None:
