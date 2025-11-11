@@ -382,6 +382,7 @@ template $GraphsStyleEditorBox: Box {
     Grid {
       row-spacing: 20;
       column-spacing: 20;
+      column-homogeneous: true;
 
       Adw.PreferencesGroup {
         layout {
@@ -389,24 +390,8 @@ template $GraphsStyleEditorBox: Box {
           row: 0;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow text_color {
           title: _("Text Color");
-          activatable-widget: text_color;
-          hexpand: true;
-
-          Button text_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
 
@@ -416,24 +401,8 @@ template $GraphsStyleEditorBox: Box {
           row: 0;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow tick_color {
           title: _("Tick Color");
-          activatable-widget: tick_color;
-          hexpand: true;
-
-          Button tick_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
 
@@ -443,24 +412,8 @@ template $GraphsStyleEditorBox: Box {
           row: 1;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow axis_color {
           title: _("Axis Color");
-          activatable-widget: axis_color;
-          hexpand: true;
-
-          Button axis_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
 
@@ -470,24 +423,8 @@ template $GraphsStyleEditorBox: Box {
           row: 1;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow grid_color {
           title: _("Grid Color");
-          activatable-widget: grid_color;
-          hexpand: true;
-
-          Button grid_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
 
@@ -497,24 +434,8 @@ template $GraphsStyleEditorBox: Box {
           row: 2;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow background_color {
           title: _("Background Color");
-          activatable-widget: background_color;
-          hexpand: true;
-
-          Button background_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
 
@@ -524,24 +445,8 @@ template $GraphsStyleEditorBox: Box {
           row: 2;
         }
 
-        Adw.ActionRow {
+        $GraphsStyleColorRow outline_color {
           title: _("Outline Color");
-          activatable-widget: outline_color;
-          hexpand: true;
-
-          Button outline_color {
-            tooltip-text: _("Change Color");
-            valign: center;
-
-            styles [
-              "flat",
-            ]
-
-            Image {
-              icon-name: "color-picker-symbolic";
-              pixel-size: 20;
-            }
-          }
         }
       }
     }
