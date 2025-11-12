@@ -26,6 +26,7 @@ python.install_sources(
     'curve_fitting.py',
     'data.py',
     'export_items.py',
+    'figure.py',
     'file_io.py',
     'item.py',
     'migrate.py',

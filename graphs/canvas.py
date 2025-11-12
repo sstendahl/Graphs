@@ -17,6 +17,7 @@ from typing import Tuple
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs import artist, file_io, misc, scales, utilities
+from graphs.figure import Figure
 
 from matplotlib import RcParams, backend_tools as tools, pyplot
 from matplotlib.backend_bases import (
@@ -93,8 +94,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        self._style_params = style_params
-        pyplot.rcParams.update(self._style_params[0])  # apply style_params
         Graphs.Canvas.__init__(
             self,
             hexpand=True,
@@ -105,8 +104,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.set_draw_func(self._draw_func)
         self.connect("resize", self.resize_event)
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
-        FigureCanvasBase.__init__(self)
-        self.figure.set_tight_layout(True)
+        fig = Figure(style_params, items)
+        FigureCanvasBase.__init__(self, figure=fig)
         self._axis = self.figure.add_subplot(111)
         self._top_left_axis = self._axis.twiny()
         self._right_axis = self._axis.twinx()
@@ -117,6 +116,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self._right_axis,
             self._top_right_axis,
         ]
+        self._hide_unselected = False
         self._legend_axis = self._axis
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
@@ -133,7 +133,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             lambda _self, factor: self.zoom(factor, False),
         )
 
-        self.connect("notify::hide-unselected", self._redraw)
         items.connect("items-changed", self._redraw)
         if isinstance(items, Gtk.SelectionModel):
             items.connect("selection-changed", self._redraw)
@@ -442,12 +441,12 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         return value1, value2
 
     def _redraw(self, *_args) -> None:
-        logging.debug("redrawing canvas")
+        logging.debug("redrawing figure")
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]
         drawable_items = [x for x in self.props.items if x.get_selected()] \
-            if self.props.hide_unselected else list(self.props.items)
+            if self._hide_unselected else list(self.props.items)
         for item in drawable_items:
             xposition = item.get_xposition()
             yposition = item.get_yposition()
@@ -466,7 +465,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self._axis
 
-        params, graphs_params = self._style_params
+        params, graphs_params = self.figure._style_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \
@@ -648,6 +647,16 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.highlight.set_active(highlight_enabled)
         self.highlight.set_visible(highlight_enabled)
         self.queue_draw()
+
+    @GObject.Property(type=bool, default=False)
+    def hide_unselected(self) -> bool:
+        """Whether or not to hide unselected items."""
+        return self._hide_unselected
+
+    @hide_unselected.setter
+    def hide_unselected(self, hide_unselected: bool) -> None:
+        self._hide_unselected = hide_unselected
+        self._redraw()
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:
@@ -1014,3 +1023,4 @@ class _Highlight(SpanSelector):
                     canvas.props.top_scale,
                 ),
             )
+
