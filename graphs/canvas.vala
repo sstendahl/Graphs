@@ -13,12 +13,6 @@ namespace Graphs {
 
         public signal void edit_request (string id);
         public signal void view_changed ();
-        public signal void view_action ();
-
-        public signal void save_request (File file, string format, bool transparent, int width_px, int height_px);
-        public void save (File file, string format, bool transparent, int width_px, int height_px) {
-            this.save_request.emit (file, format, transparent, width_px, height_px);
-        }
 
         protected signal void zoom_request (double factor);
         public void zoom (double factor) {

@@ -56,7 +56,6 @@ class PythonWindow(Graphs.Window):
                     item_.set_color(new_cycle[count])
                     count += 1
         self._reload_canvas()
-        self.get_canvas().emit("view_action")
 
     def _on_key_press_event(self, *args) -> None:
         """Handle key press event."""

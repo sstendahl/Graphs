@@ -156,14 +156,12 @@ namespace Graphs {
             var view_back_action = new SimpleAction ("view-back", null);
             view_back_action.activate.connect (() => {
                 data.view_back ();
-                window.canvas.view_action ();
             });
             window.add_action (view_back_action);
 
             var view_forward_action = new SimpleAction ("view-forward", null);
             view_forward_action.activate.connect (() => {
                 data.view_forward ();
-                window.canvas.view_action ();
             });
             window.add_action (view_forward_action);
 

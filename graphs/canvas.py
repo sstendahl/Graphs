@@ -5,17 +5,13 @@ Custom canvas implementation.
 Acts as an interface between matplotlib and GObject and contains a custom
 implementation of a `SpanSelector` as well as a dummy toolbar used for
 interactive navigation in conjunction with graphs-specific structures.
-
-    Classes:
-        Canvas
 """
-import copy
 import math
 from typing import Tuple
 
 from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
-from graphs import file_io, scales, utilities
+from graphs import scales, utilities
 from graphs.figure import Figure
 
 from matplotlib import RcParams, backend_tools as tools
@@ -31,22 +27,7 @@ _SCROLL_SCALE = 1.08
 
 
 class Canvas(Graphs.Canvas, FigureCanvas):
-    """
-    Custom Canvas.
-
-    Implements properties analouge to `FigureSettings`. Automatically connects
-    to `FigureSettings` and `Data.items` during init.
-
-    Properties:
-        mode: int
-
-        min_selected: float (fraction)
-        max_selected: float (fraction)
-
-    Signals:
-        edit_request
-        view_changed
-    """
+    """Custom Canvas."""
 
     __gtype_name__ = "GraphsPythonCanvas"
 
@@ -79,7 +60,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if interactive:
             self._setup_interactive()
 
-        self.connect("save-request", self._save)
         self.connect(
             "zoom_request",
             lambda _self, factor: self.zoom(factor, False),
@@ -476,31 +456,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         ctx.fill_preserve()
         ctx.set_source_rgba(*self.rubberband_edge_color)
         ctx.stroke()
-
-    @staticmethod
-    def _save(
-        self,
-        file: Gio.File,
-        fmt: str,
-        transparent: bool,
-        width_px: int,
-        height_px: int,
-    ) -> None:
-        with file_io.open(file, "wb") as file_like:
-            fig_copy = copy.deepcopy(self.figure)
-            vector_formats = ["pdf", "eps", "ps", "svg"]
-            canvas_dpi = self.figure.get_dpi()
-            dpi = 100 if fmt.lower() in vector_formats else canvas_dpi
-            width_inches = width_px / dpi
-            height_inches = height_px / dpi
-            fig_copy.set_size_inches(width_inches, height_inches)
-            fig_copy.savefig(
-                file_like,
-                format=fmt,
-                dpi=dpi,
-                transparent=transparent,
-                bbox_inches=None,
-            )
 
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2
