@@ -83,9 +83,14 @@ class PythonWindow(Graphs.Window):
 
         canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
+        canvas_props = ("min_selected", "max_selected")
+
         for prop in dir(figure_settings.props):
-            if prop not in ("use_custom_style", "custom_style"):
-                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
+            if prop not in canvas_props + ("use_custom_style", "custom_style"):
+                figure_settings.bind_property(prop, canvas.figure, prop, 1 | 2)
+
+        for prop in canvas_props:
+            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         canvas.connect("edit-request", self._on_edit_request)
         canvas.connect("view-changed", self._on_view_changed)
