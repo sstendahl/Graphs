@@ -216,7 +216,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
                 self._equation,
                 self._axis.get_xlim(),
                 scale=scales.Scale.from_string(self._axis.get_xscale()),
-            )
+            ),
         )
 
 
