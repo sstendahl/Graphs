@@ -13,10 +13,5 @@ namespace Graphs {
 
         public signal void edit_request (string id);
         public signal void view_changed ();
-
-        protected signal void zoom_request (double factor);
-        public void zoom (double factor) {
-            this.zoom_request.emit (factor);
-        }
     }
 }

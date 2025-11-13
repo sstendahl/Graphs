@@ -60,11 +60,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if interactive:
             self._setup_interactive()
 
-        self.connect(
-            "zoom_request",
-            lambda _self, factor: self.zoom(factor, False),
-        )
-
     def _setup_interactive(self):
         self._ctrl_held, self._shift_held = False, False
         self._xfrac, self._yfrac = None, None

@@ -31,6 +31,12 @@ class PythonWindow(Graphs.Window):
         key_controller = self.props.key_controller
         key_controller.connect("key-pressed", self._on_key_press_event)
         key_controller.connect("key-released", self._on_key_release_event)
+
+        zoom_in_action = self.lookup_action("zoom-in")
+        zoom_in_action.connect("activate", self._on_zoom_in)
+        zoom_out_action = self.lookup_action("zoom-out")
+        zoom_out_action.connect("activate", self._on_zoom_out)
+
         self._reload_canvas()
 
     def _on_style_changed(
@@ -74,6 +80,14 @@ class PythonWindow(Graphs.Window):
     def _on_view_changed(self, _canvas) -> None:
         """Handle view change."""
         self.props.data.add_view_history_state()
+
+    def _on_zoom_in(self, _a, _b) -> None:
+        if self.props.canvas is not None:
+            self.props.canvas.zoom(1.15, False)
+
+    def _on_zoom_out(self, _a, _b) -> None:
+        if self.props.canvas is not None:
+            self.props.canvas.zoom(1 / 1.15, False)
 
     def _reload_canvas(self) -> None:
         """Reload the canvas."""

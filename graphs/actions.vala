@@ -265,17 +265,8 @@ namespace Graphs {
             window.bind_property ("is_main_view", export_figure_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (export_figure_action);
 
-            var zoom_in_action = new SimpleAction ("zoom-in", null);
-            zoom_in_action.activate.connect (() => {
-                window.canvas.zoom (1.15);
-            });
-            window.add_action (zoom_in_action);
-
-            var zoom_out_action = new SimpleAction ("zoom-out", null);
-            zoom_out_action.activate.connect (() => {
-                window.canvas.zoom (1 / 1.15);
-            });
-            window.add_action (zoom_out_action);
+            window.add_action (new SimpleAction ("zoom-in", null));
+            window.add_action (new SimpleAction ("zoom-out", null));
 
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {

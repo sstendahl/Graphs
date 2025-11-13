@@ -211,16 +211,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     def _generate_data(self):
         """Generate new data for the artist."""
-        x_start, x_stop = self._axis.get_xlim()
-        scale = scales.Scale.from_string(self._axis.get_xscale())
-        limits = (
-            utilities.get_value_at_fraction(-1, x_start, x_stop, scale),
-            utilities.get_value_at_fraction(2, x_start, x_stop, scale),
+        self._artist.set_data(
+            *utilities.equation_to_data(
+                self._equation,
+                self._axis.get_xlim(),
+                scale=scales.Scale.from_string(self._axis.get_xscale()),
+            )
         )
-        xdata, ydata = utilities.equation_to_data(
-            self._equation, limits, scale=scale,
-        )
-        self._artist.set_data(xdata, ydata)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):
