@@ -6,16 +6,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2024-07-26 12:54+0000\n"
-"PO-Revision-Date: 2024-08-31 20:22+0200\n"
+"POT-Creation-Date: 2025-11-11 20:19+0000\n"
+"PO-Revision-Date: 2025-11-23 11:22+0100\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"X-Generator: Gtranslator 46.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -229,12 +229,12 @@ msgid ""
 "usual, but by selecting a project file instead."
 msgstr ""
 "При внасяне на данни чрез файл се поддържат широк набор от видове файлове. "
-"Понастоящем „Графики“ поддържа Panalytical файлове .xrdml, файлове Leybold ."
-"xry, както и файлове, които са записани във формат на колона, като повечето "
-"файлове .csv, .dat, .xy или обикновен текст. И накрая, данните от други "
-"„Графики“ проекти също могат да бъдат внесени в текущия проект, като просто "
-"се добавят нови данни, както обикновено, но вместо това се избира файл на "
-"проекта."
+"Понастоящем „Графики“ поддържа Panalytical файлове .xrdml, файлове "
+"Leybold .xry, както и файлове, които са записани във формат на колона, като "
+"повечето файлове .csv, .dat, .xy или обикновен текст. И накрая, данните от "
+"други „Графики“ проекти също могат да бъдат внесени в текущия проект, като "
+"просто се добавят нови данни, както обикновено, но вместо това се избира "
+"файл на проекта."
 
 #. (itstool) path: page/p
 #: C/import.page:25
@@ -373,7 +373,6 @@ msgstr "Други трансформации"
 # Не съм сигурен дали „case-sensitive“ става като превод в този случай, но такъв пример намерин в Интернет. Примерно  „чувствителни към малки и големи букви“ дали е често срещано или по разбираемо?
 #. (itstool) path: section/p
 #: C/manipulate.page:35
-#, fuzzy
 msgid ""
 "Another way to manipulate the data is by using custom transformations. This "
 "field transforms both X and Y coordinate piece by piece according to an "
