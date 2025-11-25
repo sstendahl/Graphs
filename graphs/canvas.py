@@ -5,20 +5,16 @@ Custom canvas implementation.
 Acts as an interface between matplotlib and GObject and contains a custom
 implementation of a `SpanSelector` as well as a dummy toolbar used for
 interactive navigation in conjunction with graphs-specific structures.
-
-    Classes:
-        Canvas
 """
-import copy
-import logging
 import math
 from typing import Tuple
 
-from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
-from graphs import artist, file_io, misc, scales, utilities
+from graphs import scales, utilities
+from graphs.figure import Figure
 
-from matplotlib import RcParams, backend_tools as tools, pyplot
+from matplotlib import RcParams, backend_tools as tools
 from matplotlib.backend_bases import (
     FigureCanvasBase,
     MouseEvent,
@@ -31,52 +27,7 @@ _SCROLL_SCALE = 1.08
 
 
 class Canvas(Graphs.Canvas, FigureCanvas):
-    """
-    Custom Canvas.
-
-    Implements properties analouge to `FigureSettings`. Automatically connects
-    to `FigureSettings` and `Data.items` during init.
-
-    Properties:
-        mode: int
-
-        items: list (write-only)
-
-        title: str
-        bottom_label: str
-        left_label: str
-        top_label: str
-        right_label: str
-
-        bottom_scale: int (0: linear, 1: logarithmic)
-        left_scale: int (0: linear, 1: logarithmic)
-        top_scale: int (0: linear, 1: logarithmic)
-        right_scale: int (0: linear, 1: logarithmic)
-
-        legend: bool
-        legend_position: int
-        use_custom_style: bool
-        custom_style: str
-
-        min_bottom: float
-        max_bottom: float
-        min_left: float
-        max_lef: float
-        min_top: float
-        max_top: float
-        min_right: float
-        max_right: float
-
-        min_selected: float (fraction)
-        max_selected: float (fraction)
-
-    Signals:
-        edit_request
-        view_changed
-
-    Functions:
-        update_legend
-    """
+    """Custom Canvas."""
 
     __gtype_name__ = "GraphsPythonCanvas"
 
@@ -93,51 +44,21 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        self._style_params = style_params
-        pyplot.rcParams.update(self._style_params[0])  # apply style_params
         Graphs.Canvas.__init__(
             self,
             hexpand=True,
             vexpand=True,
-            items=items,
         )
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
         self.connect("resize", self.resize_event)
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
-        FigureCanvasBase.__init__(self)
-        self.figure.set_tight_layout(True)
-        self._axis = self.figure.add_subplot(111)
-        self._top_left_axis = self._axis.twiny()
-        self._right_axis = self._axis.twinx()
-        self._top_right_axis = self._top_left_axis.twinx()
-        self.axes = [
-            self._axis,
-            self._top_left_axis,
-            self._right_axis,
-            self._top_right_axis,
-        ]
-        self._legend_axis = self._axis
-        self._legend = True
-        self._legend_position = misc.LEGEND_POSITIONS[0]
-        self._handles = []
+        FigureCanvasBase.__init__(self, figure=Figure(style_params, items))
         self._rubberband_rect = None
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
             self._setup_interactive()
-
-        self.connect("save-request", self._save)
-        self.connect(
-            "zoom_request",
-            lambda _self, factor: self.zoom(factor, False),
-        )
-
-        self.connect("notify::hide-unselected", self._redraw)
-        items.connect("items-changed", self._redraw)
-        if isinstance(items, Gtk.SelectionModel):
-            items.connect("selection-changed", self._redraw)
-        self._redraw()
 
     def _setup_interactive(self):
         self._ctrl_held, self._shift_held = False, False
@@ -195,7 +116,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def _make_ticklabels_pickable(self) -> None:
         """Make all tick labels pickable."""
-        for ax in self.axes:
+        for ax in self.figure.axes:
             for label in (ax.get_xticklabels() + ax.get_yticklabels()):
                 label.set_picker(True)
 
@@ -265,13 +186,17 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dx *= 10
                 dy *= 10
 
-            for ax in [self._axis, self._top_left_axis]:
+            for ax in [self.figure.axis, self.figure.top_left_axis]:
                 xmin, xmax = ax.get_xlim()
                 scale = scales.Scale.from_string(ax.get_xscale())
                 xmin, xmax = self._calculate_pan_values(xmin, xmax, scale, dx)
                 ax.set_xlim(xmin, xmax)
 
-            for ax in [self._axis, self._right_axis, self._top_right_axis]:
+            for ax in [
+                self.figure.axis,
+                self.figure.right_axis,
+                self.figure.top_right_axis,
+            ]:
                 ymin, ymax = ax.get_ylim()
                 scale = scales.Scale.from_string(ax.get_yscale())
                 ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
@@ -330,19 +255,19 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def _set_mouse_fraction(self, event) -> None:
         """Set the mouse coordinate in terms of fraction of the canvas."""
         if event.inaxes is not None:
-            xlim = self._top_right_axis.get_xlim()
-            ylim = self._top_right_axis.get_ylim()
+            xlim = self.figure.top_right_axis.get_xlim()
+            ylim = self.figure.top_right_axis.get_ylim()
             self._xfrac = utilities.get_fraction_at_value(
                 event.xdata,
                 xlim[0],
                 xlim[1],
-                self.top_scale,
+                self.figure.props.top_scale,
             )
             self._yfrac = utilities.get_fraction_at_value(
                 event.ydata,
                 ylim[0],
                 ylim[1],
-                self.right_scale,
+                self.figure.props.right_scale,
             )
         else:
             self._xfrac, self._yfrac = None, None
@@ -362,7 +287,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if self._xfrac is None or self._yfrac is None:
             return
 
-        for ax in [self._axis, self._top_left_axis]:
+        for ax in [self.figure.axis, self.figure.top_left_axis]:
             ax.set_xlim(
                 self._calculate_zoomed_values(
                     self._xfrac,
@@ -371,7 +296,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                     scaling,
                 ),
             )
-        for ax in [self._axis, self._right_axis, self._top_right_axis]:
+        for ax in [
+            self.figure.axis,
+            self.figure.right_axis,
+            self.figure.top_right_axis,
+        ]:
             ax.set_ylim(
                 self._calculate_zoomed_values(
                     self._yfrac,
@@ -441,80 +370,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             value1, value2 = value2, value1
         return value1, value2
 
-    def _redraw(self, *_args) -> None:
-        logging.debug("redrawing canvas")
-        # bottom, top, left, right
-        used_axes = [False, False, False, False]
-        visible_axes = [False, False, False, False]
-        drawable_items = [x for x in self.props.items if x.get_selected()] \
-            if self.props.hide_unselected else list(self.props.items)
-        for item in drawable_items:
-            xposition = item.get_xposition()
-            yposition = item.get_yposition()
-            visible_axes[xposition] = True
-            visible_axes[2 + yposition] = True
-            used_axes[xposition + 2 * yposition] = True
-        axes_directions = (
-            ("bottom", "left"),  # axis
-            ("top", "left"),  # top_left_axis
-            ("bottom", "right"),  # right_axis
-            ("top", "right"),  # top_right_axis
-        )
-
-        if not any(visible_axes):
-            visible_axes = (True, False, True, False)  # Left and bottom
-            used_axes = (True, False, False, False)  # self.axis visible
-            self._legend_axis = self._axis
-
-        params, graphs_params = self._style_params
-        draw_frame = params["axes.spines.bottom"]
-        ticks = "both" if params["xtick.minor.visible"] else "major"
-        for directions, axis, used \
-                in zip(axes_directions, self.axes, used_axes):
-            axis.get_xaxis().set_visible(False)
-            axis.get_yaxis().set_visible(False)
-            # Set tick where requested, as long as that axis is not occupied
-            # and visible
-            if (
-                params[f"xtick.{directions[0]}"]
-                or params[f"ytick.{directions[1]}"]
-            ):
-                tick_params = {}
-                for i, direction in enumerate(misc.DIRECTIONS):
-                    tick_shown = (
-                        (draw_frame and not visible_axes[i])
-                        or direction in directions
-                    ) and params[f"{'x' if i < 2 else 'y'}tick.{direction}"]
-
-                    tick_params[direction] = tick_shown
-                    if graphs_params["ticklabels"]:
-                        tick_params[f"label{direction}"] = tick_shown
-
-                axis.tick_params(which=ticks, **tick_params)
-
-            for handle in axis.lines + axis.texts:
-                handle.remove()
-            axis_legend = axis.get_legend()
-            if axis_legend is not None:
-                axis_legend.remove()
-            for direction in misc.DIRECTIONS:
-                axis.spines[direction].set_visible(
-                    direction in directions and used or draw_frame,
-                )
-            if used:
-                self._legend_axis = axis
-
-        self._axis.get_xaxis().set_visible(visible_axes[0])
-        self._top_left_axis.get_xaxis().set_visible(visible_axes[1])
-        self._axis.get_yaxis().set_visible(visible_axes[2])
-        self._right_axis.get_yaxis().set_visible(visible_axes[3])
-
-        self._handles = [
-            artist.new_for_item(self, item)
-            for item in reversed(drawable_items)
-        ]
-        self.update_legend()
-
     def _on_pick(self, event) -> None:
         """Emit edit-request signal for picked label, tick or title."""
         artist = event.artist
@@ -550,8 +405,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             label_value, position = artist_position
             side = "bottom" if position == 0 else "top"
 
-        min_val = self.get_property(f"min_{side}")
-        max_val = self.get_property(f"max_{side}")
+        min_val = self.figure.get_property(f"min_{side}")
+        max_val = self.figure.get_property(f"max_{side}")
         midpoint = (min_val + max_val) / 2
         position_type = "max" if label_value > midpoint else "min"
 
@@ -597,268 +452,10 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         ctx.set_source_rgba(*self.rubberband_edge_color)
         ctx.stroke()
 
-    def update_legend(self) -> None:
-        """Update the legend or hide if not used."""
-        if self._legend and self._handles:
-            handles = [
-                handle.get_artist() for handle in self._handles
-                if handle.legend
-            ]
-            if handles:
-                self._legend_axis.legend(
-                    handles=handles,
-                    loc=self._legend_position,
-                    frameon=True,
-                    reverse=True,
-                )
-                self.queue_draw()
-                return
-        legend = self._legend_axis.get_legend()
-        if legend is not None:
-            legend.remove()
-        self.queue_draw()
-
-    @staticmethod
-    def _save(
-        self,
-        file: Gio.File,
-        fmt: str,
-        transparent: bool,
-        width_px: int,
-        height_px: int,
-    ) -> None:
-        with file_io.open(file, "wb") as file_like:
-            fig_copy = copy.deepcopy(self.figure)
-            vector_formats = ["pdf", "eps", "ps", "svg"]
-            canvas_dpi = self.figure.get_dpi()
-            dpi = 100 if fmt.lower() in vector_formats else canvas_dpi
-            width_inches = width_px / dpi
-            height_inches = height_px / dpi
-            fig_copy.set_size_inches(width_inches, height_inches)
-            fig_copy.savefig(
-                file_like,
-                format=fmt,
-                dpi=dpi,
-                transparent=transparent,
-                bbox_inches=None,
-            )
-
     def _on_mode_change(self, *_args) -> None:
         highlight_enabled = self.props.mode == 2
         self.highlight.set_active(highlight_enabled)
         self.highlight.set_visible(highlight_enabled)
-        self.queue_draw()
-
-    @GObject.Property(type=bool, default=True)
-    def legend(self) -> bool:
-        """Whether or not, the legend is visible."""
-        return self._legend
-
-    @legend.setter
-    def legend(self, legend: bool) -> None:
-        self._legend = legend
-        self.update_legend()
-
-    @GObject.Property(type=int, default=0)
-    def legend_position(self) -> int:
-        """Legend Position (see `misc.LEGEND_POSITIONS`)."""
-        return misc.LEGEND_POSITIONS.index(self._legend_position)
-
-    @legend_position.setter
-    def legend_position(self, legend_position: int) -> None:
-        self._legend_position = misc.LEGEND_POSITIONS[legend_position]
-        self.update_legend()
-
-    @GObject.Property(type=str)
-    def title(self) -> str:
-        """Figure title."""
-        return self._axis.get_title()
-
-    @title.setter
-    def title(self, title: str) -> None:
-        self._axis.set_title(title, picker=True).id = "title"
-        self.queue_draw()
-
-    @GObject.Property(type=str)
-    def bottom_label(self) -> str:
-        """Label of the bottom axis."""
-        return self._axis.get_xlabel()
-
-    @bottom_label.setter
-    def bottom_label(self, label: str) -> None:
-        self._axis.set_xlabel(label, picker=True).id = "bottom_label"
-        self.queue_draw()
-
-    @GObject.Property(type=str)
-    def left_label(self) -> str:
-        """Label of the left axis."""
-        return self._axis.get_ylabel()
-
-    @left_label.setter
-    def left_label(self, label: str) -> None:
-        self._axis.set_ylabel(label, picker=True).id = "left_label"
-        self.queue_draw()
-
-    @GObject.Property(type=str)
-    def top_label(self) -> str:
-        """Label of the top axis."""
-        return self._top_left_axis.get_xlabel()
-
-    @top_label.setter
-    def top_label(self, label: str) -> None:
-        self._top_left_axis.set_xlabel(label, picker=True).id = "top_label"
-        self.queue_draw()
-
-    @GObject.Property(type=str)
-    def right_label(self) -> str:
-        """Label of the right axis."""
-        return self._right_axis.get_ylabel()
-
-    @right_label.setter
-    def right_label(self, label: str) -> None:
-        self._right_axis.set_ylabel(label, picker=True).id = "right_label"
-        self.queue_draw()
-
-    @GObject.Property(type=int)
-    def bottom_scale(self) -> int:
-        """Scale of the bottom axis."""
-        return scales.Scale.from_string(self._axis.get_xscale()).value
-
-    @bottom_scale.setter
-    def bottom_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
-        for axis in (self._axis, self._right_axis):
-            axis.set_xscale(scale)
-            axis.set_xlim(None, None)
-        self.queue_draw()
-
-    @GObject.Property(type=int)
-    def left_scale(self) -> int:
-        """Scale of the left axis."""
-        return scales.Scale.from_string(self._axis.get_yscale()).value
-
-    @left_scale.setter
-    def left_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
-        for axis in (self._axis, self._top_left_axis):
-            axis.set_yscale(scale)
-            axis.set_ylim(None, None)
-        self.queue_draw()
-
-    @GObject.Property(type=int)
-    def top_scale(self) -> int:
-        """Scale of the top axis."""
-        return scales.Scale.from_string(self._top_left_axis.get_xscale()).value
-
-    @top_scale.setter
-    def top_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
-        for axis in (self._top_right_axis, self._top_left_axis):
-            axis.set_xscale(scale)
-            axis.set_xlim(None, None)
-        self.queue_draw()
-
-    @GObject.Property(type=int)
-    def right_scale(self) -> int:
-        """Scale of the right axis."""
-        return scales.Scale.from_string(self._right_axis.get_yscale()).value
-
-    @right_scale.setter
-    def right_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
-        for axis in (self._top_right_axis, self._right_axis):
-            axis.set_yscale(scale)
-            axis.set_ylim(None, None)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def min_bottom(self) -> float:
-        """Lower limit for the bottom axis."""
-        return self._axis.get_xlim()[0]
-
-    @min_bottom.setter
-    def min_bottom(self, value: float) -> None:
-        for axis in (self._axis, self._right_axis):
-            axis.set_xlim(value, None)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def max_bottom(self) -> float:
-        """Upper limit for the bottom axis."""
-        return self._axis.get_xlim()[1]
-
-    @max_bottom.setter
-    def max_bottom(self, value: float) -> None:
-        for axis in (self._axis, self._right_axis):
-            axis.set_xlim(None, value)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def min_left(self) -> float:
-        """Lower limit for the left axis."""
-        return self._axis.get_ylim()[0]
-
-    @min_left.setter
-    def min_left(self, value: float) -> None:
-        for axis in (self._axis, self._top_left_axis):
-            axis.set_ylim(value, None)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def max_left(self) -> float:
-        """Upper limit for the left axis."""
-        return self._axis.get_ylim()[1]
-
-    @max_left.setter
-    def max_left(self, value: float) -> None:
-        for axis in (self._axis, self._top_left_axis):
-            axis.set_ylim(None, value)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def min_top(self) -> float:
-        """Lower limit for the top axis."""
-        return self._top_left_axis.get_xlim()[0]
-
-    @min_top.setter
-    def min_top(self, value: float) -> None:
-        for axis in (self._top_left_axis, self._top_right_axis):
-            axis.set_xlim(value, None)
-        self.highlight.load(self)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def max_top(self) -> float:
-        """Upper limit for the top axis."""
-        return self._top_left_axis.get_xlim()[1]
-
-    @max_top.setter
-    def max_top(self, value: float) -> None:
-        for axis in (self._top_left_axis, self._top_right_axis):
-            axis.set_xlim(None, value)
-        self.highlight.load(self)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def min_right(self) -> float:
-        """Lower limit for the right axis."""
-        return self._right_axis.get_ylim()[0]
-
-    @min_right.setter
-    def min_right(self, value: float) -> None:
-        for axis in (self._right_axis, self._top_right_axis):
-            axis.set_ylim(value, None)
-        self.queue_draw()
-
-    @GObject.Property(type=float)
-    def max_right(self) -> float:
-        """Upper limit for the right axis."""
-        return self._right_axis.get_ylim()[1]
-
-    @max_right.setter
-    def max_right(self, value: float) -> None:
-        for axis in (self._right_axis, self._top_right_axis):
-            axis.set_ylim(None, value)
         self.queue_draw()
 
 
@@ -951,8 +548,8 @@ class _DummyToolbar(NavigationToolbar2):
         """Use custom functionality for the view clipboard."""
         self.canvas.highlight.load(self.canvas)
         for direction in ("bottom", "left", "top", "right"):
-            self.canvas.notify(f"min-{direction}")
-            self.canvas.notify(f"max-{direction}")
+            self.canvas.figure.notify(f"min-{direction}")
+            self.canvas.figure.notify(f"max-{direction}")
         self.canvas.emit("view_changed")
 
     # Overwritten function - do not change name
@@ -964,7 +561,7 @@ class _Highlight(SpanSelector):
 
     def __init__(self, canvas: Canvas):
         super().__init__(
-            canvas.axes[3],
+            canvas.figure.top_right_axis,
             lambda _x,
             _y: self.apply(canvas),
             "horizontal",
@@ -978,11 +575,15 @@ class _Highlight(SpanSelector):
             interactive=True,
             drag_from_anywhere=True,
         )
+        canvas.figure.top_right_axis.callbacks.connect(
+            "xlim_changed",
+            lambda _x: self.load(canvas),
+        )
         self.load(canvas)
 
     def load(self, canvas: Canvas) -> None:
-        xmin, xmax = canvas.axes[1].get_xlim()
-        scale = scales.Scale(canvas.props.top_scale).value
+        xmin, xmax = canvas.figure.top_left_axis.get_xlim()
+        scale = scales.Scale(canvas.figure.props.top_scale).value
         self.extents = (
             utilities.get_value_at_fraction(
                 canvas.get_min_selected(),
@@ -999,7 +600,7 @@ class _Highlight(SpanSelector):
         )
 
     def apply(self, canvas: Canvas) -> None:
-        xmin, xmax = canvas.axes[1].get_xlim()
+        xmin, xmax = canvas.figure.top_left_axis.get_xlim()
         extents = self.extents
         extents = max(xmin, extents[0]), min(xmax, extents[1])
         self.extents = extents
@@ -1011,6 +612,6 @@ class _Highlight(SpanSelector):
                     value,
                     xmin,
                     xmax,
-                    canvas.props.top_scale,
+                    canvas.figure.props.top_scale,
                 ),
             )

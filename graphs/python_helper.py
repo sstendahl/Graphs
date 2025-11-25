@@ -5,9 +5,11 @@ from gi.repository import Gio, Graphs, Gtk
 from graphs import (
     curve_fitting,
     export_items,
+    file_io,
     operations,
     utilities,
 )
+from graphs.figure import Figure
 from graphs.item import EquationItem, GeneratedDataItem
 from graphs.sidebar import edit_item
 from graphs.style_editor import PythonStyleEditor
@@ -20,6 +22,7 @@ _REQUESTS = (
     "create-window",
     "curve-fitting-dialog",
     "evaluate-string",
+    "export-figure",
     "export-items",
     "generate-data",
     "perform-operation",
@@ -100,6 +103,29 @@ class PythonHelper(Graphs.PythonHelper):
     ) -> None:
         figure_settings = window.get_data().get_figure_settings()
         return export_items.export_items(mode, file, items, figure_settings)
+
+    @staticmethod
+    def _on_export_figure_request(
+        self,
+        file: Gio.File,
+        settings: Gio.Settings,
+        data: Graphs.Data,
+    ) -> None:
+        with file_io.open(file, "wb") as file_like:
+            figure = Figure(data.get_selected_style_params(), data)
+            vector_formats = ["pdf", "eps", "ps", "svg"]
+            fmt = settings.get_string("file-format")
+            dpi = 100 if fmt.lower() in vector_formats else figure.get_dpi()
+            width_inches = settings.get_int("width") / dpi
+            height_inches = settings.get_int("height") / dpi
+            figure.set_size_inches(width_inches, height_inches)
+            figure.savefig(
+                file_like,
+                format=fmt,
+                dpi=dpi,
+                transparent=settings.get_boolean("transparent"),
+                bbox_inches=None,
+            )
 
     @staticmethod
     def _on_generate_data_request(

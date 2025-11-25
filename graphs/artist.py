@@ -21,7 +21,7 @@ def _ellipsize(name: str) -> str:
     return name[:40] + "…" if len(name) > 40 else name
 
 
-def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
+def new_for_item(fig: Figure, item: Graphs.Item):
     """
     Create a new artist for an item.
 
@@ -42,13 +42,13 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
         case _:
             pass
     artist_wrapper = cls(
-        canvas.axes[item.get_yposition() * 2 + item.get_xposition()],
+        fig.axes[item.get_yposition() * 2 + item.get_xposition()],
         item,
     )
     for prop in dir(artist_wrapper.props):
         if not (prop == "label" and artist_wrapper.legend):
             item.bind_property(prop, artist_wrapper, prop, 0)
-    artist_wrapper.connect("notify", lambda _x, _y: canvas.update_legend())
+    artist_wrapper.connect("notify", lambda _x, _y: fig.update_legend())
     return artist_wrapper
 
 
@@ -255,8 +255,7 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
 
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
-        self._axis.figure.canvas.connect("view-changed", self._generate_data)
-        self._axis.figure.canvas.connect("view-action", self._generate_data)
+        axis.callbacks.connect("xlim_changed", self._on_xlim)
         self._artist = axis.plot(
             [],
             [],
@@ -312,7 +311,10 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self, _axis=None) -> None:
+    def _on_xlim(self, _axis):
+        self._generate_data()
+
+    def _generate_data(self):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         scale = scales.Scale.from_string(self._axis.get_xscale())
@@ -328,9 +330,10 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
 
         singularities = self._find_singularities(limits)
         if singularities:
+            #TODO: FIX Y-INSERTION
             ylim = self._axis.get_ylim()
             xdata, ydata = self._insert_singularity_points(
-                xdata, ydata, singularities, ylim, insert_y_points=True,
+                xdata, ydata, singularities, ylim, insert_y_points=False,
             )
 
         self._artist.set_data(xdata, ydata)
