@@ -80,6 +80,7 @@ graphs/data.vala
 graphs/export_figure.vala
 graphs/export_items.py
 graphs/export_items.vala
+graphs/figure.py
 graphs/figure_settings.vala
 graphs/file_io.py
 graphs/generate_data.vala

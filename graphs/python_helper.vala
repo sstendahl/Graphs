@@ -56,6 +56,11 @@ namespace Graphs {
             );
         }
 
+        public signal void export_figure_request (File file, GLib.Settings settings, Data data);
+        public void export_figure (File file, GLib.Settings settings, Data data) {
+            this.export_figure_request.emit (file, settings, data);
+        }
+
         protected signal Item generate_data_request (Window window, string name);
         public Item generate_data (Window window, string name) {
             return generate_data_request.emit (window, name);

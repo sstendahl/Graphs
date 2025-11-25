@@ -65,21 +65,16 @@ namespace Graphs {
                 try {
                     File file = dialog.save.end (r);
 
-                    bool transparent = transparent.get_active ();
-                    int width = (int) width.get_value ();
-                    int height = (int) height.get_value ();
+                    settings.set_string ("file-format", suffix);
+                    settings.set_boolean ("transparent", transparent.get_active ());
+                    settings.set_int ("width", (int) width.get_value ());
+                    settings.set_int ("height", (int) height.get_value ());
 
-                    window.canvas.save (
-                        file, suffix, transparent, width, height
-                    );
+                    var application = window.application as Application;
+                    application.python_helper.export_figure (file, settings, window.data);
                     window.add_toast_string_with_file (
                         _("Exported Figure"), file
                     );
-
-                    settings.set_string ("file-format", suffix);
-                    settings.set_boolean ("transparent", transparent);
-                    settings.set_int ("width", width);
-                    settings.set_int ("height", height);
 
                     close ();
                 } catch {

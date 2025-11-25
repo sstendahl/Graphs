@@ -31,6 +31,12 @@ class PythonWindow(Graphs.Window):
         key_controller = self.props.key_controller
         key_controller.connect("key-pressed", self._on_key_press_event)
         key_controller.connect("key-released", self._on_key_release_event)
+
+        zoom_in_action = self.lookup_action("zoom-in")
+        zoom_in_action.connect("activate", self._on_zoom_in)
+        zoom_out_action = self.lookup_action("zoom-out")
+        zoom_out_action.connect("activate", self._on_zoom_out)
+
         self._reload_canvas()
 
     def _on_style_changed(
@@ -56,7 +62,6 @@ class PythonWindow(Graphs.Window):
                     item_.set_color(new_cycle[count])
                     count += 1
         self._reload_canvas()
-        self.get_canvas().emit("view_action")
 
     def _on_key_press_event(self, *args) -> None:
         """Handle key press event."""
@@ -76,6 +81,14 @@ class PythonWindow(Graphs.Window):
         """Handle view change."""
         self.props.data.add_view_history_state()
 
+    def _on_zoom_in(self, _a, _b) -> None:
+        if self.props.canvas is not None:
+            self.props.canvas.zoom(1.15, False)
+
+    def _on_zoom_out(self, _a, _b) -> None:
+        if self.props.canvas is not None:
+            self.props.canvas.zoom(1 / 1.15, False)
+
     def _reload_canvas(self) -> None:
         """Reload the canvas."""
         rcParams.update(rcParamsDefault)
@@ -83,9 +96,14 @@ class PythonWindow(Graphs.Window):
 
         canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
+        canvas_props = ("min_selected", "max_selected")
+
         for prop in dir(figure_settings.props):
-            if prop not in ("use_custom_style", "custom_style"):
-                figure_settings.bind_property(prop, canvas, prop, 1 | 2)
+            if prop not in canvas_props + ("use_custom_style", "custom_style"):
+                figure_settings.bind_property(prop, canvas.figure, prop, 1 | 2)
+
+        for prop in canvas_props:
+            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         canvas.connect("edit-request", self._on_edit_request)
         canvas.connect("view-changed", self._on_view_changed)
