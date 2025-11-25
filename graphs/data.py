@@ -18,6 +18,9 @@ from matplotlib import RcParams
 
 import numpy
 
+import sympy
+from sympy.calculus.singularities import singularities
+
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
     "max-selected",
@@ -431,7 +434,6 @@ class Data(Graphs.Data):
                 axis[1] = True
 
                 xdata, ydata = copy.deepcopy(item_.props.data)
-
                 min_max = self._get_min_max_from_array(
                     numpy.asarray(ydata if index % 2 else xdata),
                     axis[4],
@@ -453,10 +455,15 @@ class Data(Graphs.Data):
                     figure_settings.get_property(f"min_{direction}"),
                     figure_settings.get_property(f"max_{direction}"),
                 ]
+
+            x = sympy.Symbol("x")
+            expr = sympy.sympify(item_.equation)
+            domain = sympy.Interval(*x_limits)
+            if singularities(expr, x, domain):
+                continue
+
             yaxis[1] = True
-
             ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
-
             min_max = self._get_min_max_from_array(
                 numpy.asarray(ydata),
                 yaxis[4],

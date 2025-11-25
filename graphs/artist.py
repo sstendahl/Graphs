@@ -11,6 +11,11 @@ from graphs import misc, scales, utilities
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
 
+import numpy
+
+import sympy
+from sympy.calculus.singularities import singularities
+
 
 def _ellipsize(name: str) -> str:
     return name[:40] + "…" if len(name) > 40 else name
@@ -27,7 +32,7 @@ def new_for_item(canvas: Graphs.Canvas, item: Graphs.Item):
         case "GraphsDataItem":
             cls = DataItemArtistWrapper
         case "GraphsGeneratedDataItem":
-            cls = DataItemArtistWrapper
+            cls = GeneratedDataItemArtistWrapper
         case "GraphsEquationItem":
             cls = EquationItemArtistWrapper
         case "GraphsFillItem":
@@ -152,7 +157,92 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._set_properties(None, None)
 
 
-class EquationItemArtistWrapper(ItemArtistWrapper):
+class SingularityHandler:
+    """Mix-in class for handling singularities in equation-based plots."""
+
+    def _find_singularities(self, limits: tuple[float, float]) -> set:
+        """Find singularities within the given limits."""
+        x = sympy.Symbol("x")
+        expr = sympy.sympify(self._equation)
+        domain = sympy.Interval(*limits)
+        return singularities(expr, x, domain)
+
+    def _insert_singularity_points(
+            self,
+            xdata: list,
+            ydata: list,
+            singularities: set,
+            ylim: tuple[float, float],
+            insert_y_points: bool = True) -> tuple:
+        """Insert NaN and optionally infinite value points at singularities."""
+        xdata = numpy.array(xdata)
+        ydata = numpy.array(ydata)
+        # TODO: THIS IS A BIT BUGGED WITH EDGE-CASES WHERE VALUES ARE LARGE,
+        # AND FAR AWAY FROM THE CURRENT CANVAS LIMITS
+        inf_value = abs(ylim[1] - ylim[0]) * 2
+
+        if insert_y_points:
+            x_min, x_max = float(xdata.min()), float(xdata.max())
+            x_range = abs(x_max - x_min)
+            epsilon = x_range * 0.001
+
+        for singularity in sorted(singularities, reverse=True):
+            x_value = float(singularity)
+            insert_idx = numpy.searchsorted(xdata, x_value)
+
+            if insert_y_points:
+                left_sign = numpy.sign(ydata[insert_idx - 1])
+                right_sign = numpy.sign(ydata[insert_idx])
+                xdata = numpy.insert(xdata, insert_idx,
+                                     [x_value - epsilon,
+                                      x_value,
+                                      x_value + epsilon])
+                ydata = numpy.insert(ydata, insert_idx,
+                                     [left_sign * inf_value,
+                                      numpy.nan,
+                                      right_sign * inf_value])
+            else:
+                xdata = numpy.insert(xdata, insert_idx, x_value)
+                ydata = numpy.insert(ydata, insert_idx, numpy.nan)
+        return xdata, ydata
+
+
+class GeneratedDataItemArtistWrapper(SingularityHandler,
+                                     DataItemArtistWrapper):
+    """Wrapper for GeneratedDataItemArtist."""
+
+    __gtype_name__ = "GraphsGeneratedDataItemArtistWrapper"
+
+    def handle_singularities(self, data: tuple[list, list]) -> None:
+        """Handle singularities and update artist data."""
+        xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
+        x_min, x_max = float(numpy.min(xdata)), float(numpy.max(xdata))
+
+        singularities = self._find_singularities((x_min, x_max))
+        if singularities:
+            ylim = self._axis.get_ylim()
+            xdata, ydata = self._insert_singularity_points(
+                xdata, ydata, singularities, ylim, insert_y_points=False,
+            )
+
+        self._artist.set_data(xdata, ydata)
+
+    @GObject.Property(type=str, flags=2)
+    def equation(self) -> None:
+        """Write-only property, ignored."""
+
+    @equation.setter
+    def equation(self, equation: str) -> None:
+        self._equation = utilities.preprocess(equation)
+        self.handle_singularities(self._artist.get_data())
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+        self._axis = axis
+        super().__init__(self._axis, item)
+        self._equation = utilities.preprocess(item.props.equation)
+
+
+class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
     """Wrapper for EquationItem."""
 
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
@@ -186,10 +276,25 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def equation(self) -> None:
         """Write-only property, ignored."""
 
+    def handle_singularities(self, data: tuple[list, list]) -> None:
+        """Handle singularities and update artist data."""
+        xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
+        x_min, x_max = float(numpy.min(xdata)), float(numpy.max(xdata))
+
+        singularities = self._find_singularities((x_min, x_max))
+        if singularities:
+            ylim = self._axis.get_ylim()
+            xdata, ydata = self._insert_singularity_points(
+                xdata, ydata, singularities, ylim, insert_y_points=True,
+            )
+
+        self._artist.set_data(xdata, ydata)
+
     @equation.setter
     def equation(self, equation: str) -> None:
         self._equation = utilities.preprocess(equation)
         self._generate_data()
+        self.handle_singularities(self._artist.get_data())
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -207,17 +312,27 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self, _axis=None):
+    def _generate_data(self, _axis=None) -> None:
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         scale = scales.Scale.from_string(self._axis.get_xscale())
+
         limits = (
             utilities.get_value_at_fraction(-1, x_start, x_stop, scale),
             utilities.get_value_at_fraction(2, x_start, x_stop, scale),
         )
+
         xdata, ydata = utilities.equation_to_data(
             self._equation, limits, scale=scale,
         )
+
+        singularities = self._find_singularities(limits)
+        if singularities:
+            ylim = self._axis.get_ylim()
+            xdata, ydata = self._insert_singularity_points(
+                xdata, ydata, singularities, ylim, insert_y_points=True,
+            )
+
         self._artist.set_data(xdata, ydata)
         self._axis.figure.canvas.queue_draw()
 
