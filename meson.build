@@ -26,7 +26,7 @@ copyright = '2022 - 2025'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
-help_url = 'https://world.pages.gitlab.gnome.org/Graphs/help/'
+help_url = 'https://help.gnome.org/graphs/'
 translation_url = 'https://l10n.gnome.org/module/Graphs/'
 contribute_url = 'https://welcome.gnome.org/app/Graphs/'
 
