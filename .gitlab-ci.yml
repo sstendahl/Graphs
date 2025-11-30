@@ -58,17 +58,3 @@ potfiles:
           exit 1
         fi
       done < po/POTFILES.in
-
-pages:
-  image: debian:latest
-  script:
-    - apt-get update && apt-get upgrade -y
-    - apt-get install -y yelp-tools
-    - sh "build-aux/pages/build-help-html.sh"
-    - chmod -R a=rwx public
-  artifacts:
-    paths:
-      - "public"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "main"
-  stage: deploy
