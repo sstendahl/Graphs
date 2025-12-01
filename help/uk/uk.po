@@ -2,14 +2,14 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>,  2024.
+# Yuri Chornoivan <yurchor@ukr.net>,  2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2024-07-21 16:35+0000\n"
-"PO-Revision-Date: 2024-07-22 08:54+0300\n"
-"Last-Translator: Fracture dept <yurchor@ukr.net>\n"
-"Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
+"POT-Creation-Date: 2025-11-30 22:06+0000\n"
+"PO-Revision-Date: 2025-12-01 20:58+0200\n"
+"Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -275,18 +275,6 @@ msgstr ""
 
 #. (itstool) path: page/p
 #: C/import.page:38
-#| msgid ""
-#| "The other way to import data is to generate data directly using an "
-#| "equation. This can be done using the \"Add data by Equation\" button "
-#| "found in the top-left corner, or by pressing <cmd>Ctrl+Shift+N</cmd>. "
-#| "Most commonly used syntax is accepted, with an <code>x</code> denoting "
-#| "the x-coordinate. A simple quadratic equation could for instance be "
-#| "created using <code>x²+5</code> as input. Be aware that trigonometric "
-#| "functions are using radians by default. If you want to use degrees, "
-#| "simply add a <code>d</code> to the trigonometric function. For instance "
-#| "<code>cosd(x)</code> generates a cosine where the x coordinate is given "
-#| "in degrees while <code>cos(x)</code> generates a cosine with the x-"
-#| "coordinate in radians."
 msgid ""
 "The other way to import data is to generate data directly using an equation. "
 "This can be done using the \"Add Equation\" button found in the top-left "
@@ -300,8 +288,8 @@ msgid ""
 "with the x-coordinate in radians."
 msgstr ""
 "Іншим способом імпортування даних є створення даних безпосередньо за "
-"допомогою рівняння. Це можна зробити за допомогою кнопки «Додати рівняння» у"
-" верхньому лівому куті вікна або натисканням комбінації клавіш "
+"допомогою рівняння. Це можна зробити за допомогою кнопки «Додати рівняння» у "
+"верхньому лівому куті вікна або натисканням комбінації клавіш "
 "<cmd>Ctrl+Alt+N</cmd>. Можна використовувати найбільш поширений синтаксис, "
 "де <code>x</code> позначає координату x. Просте квадратне рівняння можна, "
 "наприклад, створити за допомогою введення <code>x²+5</code>. Майте на увазі, "
@@ -311,18 +299,23 @@ msgstr ""
 "задано в градусах, а <code>cos(x)</code> створює косинус із координатою x у "
 "радіанах."
 
+#. (itstool) path: info/desc
+#: C/index.page:8
+msgid "Plot and manipulate data"
+msgstr "Креслення і робота з даними"
+
 #. (itstool) path: page/title
-#: C/index.page:10
+#: C/index.page:11
 msgid "<_:media-1/> Graphs"
 msgstr "<_:media-1/> Графіки"
 
 #. (itstool) path: section/title
-#: C/index.page:16
+#: C/index.page:17
 msgid "How to"
 msgstr "Рецепти"
 
 #. (itstool) path: section/p
-#: C/index.page:17
+#: C/index.page:18
 msgid ""
 "There's multiple how-to guides available for Graphs. These can be found here."
 msgstr ""
