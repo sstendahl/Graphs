@@ -92,7 +92,7 @@
   </description>
 
   <releases>
-    <release version="1.9.0" date="2025-01-30">
+    <release version="1.9.0" date="2025-12-02">
       <description>
         <p>Version 1.9 of Graphs introduces several new features such as proper equation support and a completely redesigned style editor.</p>
         <p>New in Graphs</p>
@@ -115,6 +115,11 @@
           <li>Graphical fixes for the drag-drop animations</li>
           <li>Overall tweaks and refactors under the hood</li>
         </ul>
+      </description>
+    </release>
+    <release version="1.8.6" date="2025-12-02">
+      <description>
+        <p>Minor update, offering some language updates.</p>
       </description>
     </release>
     <release version="1.8.5" date="2025-07-29">
