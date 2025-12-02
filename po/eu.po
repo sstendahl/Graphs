@@ -4,16 +4,16 @@
 # Asier Saratsua Garmendia <asiersarasua@ni.eus>, 2024, 2025.
 #
 msgid ""
-msgstr " Project-Id-Version: Graphs main\n"
-"Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-11 10:52+0000\n"
-"PO-Revision-Date: 2025-10-11 10:00+0000\n"
+msgstr "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
+"POT-Creation-Date: 2025-12-01 18:58+0000\n"
+"PO-Revision-Date: 2025-12-02 10:00+0000\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+" Project-Id-Version: Graphs main\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
@@ -52,14 +52,14 @@ msgid ""
 "variety of operations such as the ability to select, cut, translate, "
 "multiply, center and smoothen data, as well as apply any custom "
 "transformations on the data."
-msgstr "Grafikoak aplikazioa datuak modu errazean marraztu eta manipulatzeko tresna boteretsua da. Datu berriak inportatu ditzake fitxategi mota askotatik, edo ekuazioen bidez sortu ditzake. Eragiketa anitz ditu datu guztiak manipulatzeko: datuak hautatu, moztu, itzuli, biderkatu, zentratu eta leuntzeko aukera eskaintzen du, bai eta haiei transformazio pertsonalizatuak aplikatzeko ere."
+msgstr "Grafikoak aplikazioa datuak erraz marraztu eta manipulatzea ahalbidetzen duen tresna indartsua da. Datuak fitxategi mota askotatik inportatu daitezke, edo ekuazioen bidez sortu daitezke. Eragiketa anitz ditu datuak manipulatzeko: hautatzea, ebakitzea, lekuz aldatzea, biderkatzea, zentratzea, leuntzea eta abar. Eraldaketa pertsonalizatuak ere aplikatu ahal zaizkie datuei."
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:85
 msgid ""
 "Moreover, Graphs supports curve fitting on imported data and offers "
 "extensive customization options for the style of the plots. You can fine-"
 "tune and personalize stylesheets to your liking."
-msgstr "Horrez gain, Grafikoak aplikazioari buruz datuak inportatu eta haiekin kurbak doitzea onartzen du, eta pertsonalizazio-aukera asko eskaintzen ditu diagramen estilorako. Estilo-orriak aukeran doitu eta pertsonalizatu daitezke."
+msgstr "Are gehiago, Grafikoak aplikazioak inportatutako datuen kurbak doitzea ahalbidetzen du eta marrazkien estiloa moldatzeko pertsonalizazio-aukera ugari ditu. Estilo-orriak nahieran doitu eta pertsonalizatu daitezke."
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:87
 msgid ""
@@ -70,7 +70,7 @@ msgid ""
 "vector images allows for easy editing in software like Inkscape for further "
 "refinement. Graphs is written with the GNOME environment in mind, but should "
 "be suitable for any other desktop environment as well."
-msgstr "Grafikoak aukera bikaina da diagramak marrazteko eta datuak manipulatzeko. Sortutako diagramak formatu anitzetan gorde daitezke eta, gero, argitalpen zientifikoetan partekatu eta aurkezpenak prestatu daitezke haiekin. Diagramak irudi bektorial gisa gorde daitezke eta Inkscape moduko aplikazioetan editatu daitezke itxura hobea emateko. Grafikoak aplikazioa GNOME ingurunerako garatu da, baina beste mahaigain batzuetan ere erabili daiteke."
+msgstr "Grafikoak aukera bikaina da datuak manipulatu eta marrazteko. Grafikoekin sortutako marrazkiak formatu askotan gorde daitezke. Ikusle zabalagoekin partekatzeko erabili daitezke, adibidez argitalpen zientifikoetan edo aurkezpenetan. Horrez gain, marrazkiak irudi bektorial gisa gordetzeko aukerari esker, Inkscape moduko aplikazioetan erraz editatu daitezke, irudiak gehiago fintzeko. Grafikoak aplikazioa GNOME ingurunerako dago idatzia, baina edozein mahaigainetan erabili daiteke."
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
@@ -99,7 +99,7 @@ msgstr "Beta proiektua"
 msgid ""
 "The project you are trying to import is from a beta version of Graphs. It "
 "may contain invalid data."
-msgstr "Inportatzen saiatzen ari zaren proiektua Grafikoak aplikazioaren beta bertsio batekoak dira. Datu baliogabeak eduki ditzake."
+msgstr "Inportatzen saiatzen ari zaren proiektua Grafikoak aplikazioaren beta bertsio batekoa da. Datu baliogabeak eduki ditzake."
 
 #: data/ui/dialogs/beta-disallowed.blp:9
 #: data/ui/dialogs/legacy-migration-disallowed.blp:9
@@ -118,9 +118,10 @@ msgstr "Ezabatu estiloa?"
 #: data/ui/dialogs/delete-style.blp:8
 #: data/ui/dialogs/reset-import-settings.blp:9
 #: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
-#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/transform.blp:17
+#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/style-editor/add-style.blp:16 data/ui/add-equation.blp:17
+#: data/ui/export-figure.blp:16 data/ui/generate-data.blp:17
+#: data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Utzi"
 
@@ -142,9 +143,9 @@ msgid ""
 "Only proceed if you trust the author of this file."
 msgstr "Proiektu zahar bat irekitzen saiatzen ari zara.\n"
 "\n"
-"Proiektu zaharren formatuak kode arriskutsua eduki dezake eta kalteak eragin ditzake zure sisteman.\n"
+"Proiektu zaharren formatuak kode arriskutsua eduki dezake eta zure sistema kaltetu dezake.\n"
 "\n"
-"Jarraitu fitxategiaren egileaz fidatzen bazara soilik."
+"jarraitu fitxategiaren egilea ezagutzen baduzu soilik."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -189,7 +190,7 @@ msgstr "Uneko estiloak gorde gabeko aldaketak ditu, gorde ez diren aldaketa hori
 msgid "Name and Position"
 msgstr "Izena eta posizioa"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "Izena"
 
@@ -381,13 +382,13 @@ msgid "Marker Size"
 msgstr "Markatzaile-tamaina"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:191
+#: data/ui/curve-fitting.blp:65 graphs/item.py:196
 msgid "Equation"
 msgstr "Ekuazioa"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
 #: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
+#: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -479,6 +480,168 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Alderantzikatu"
 
+#: data/ui/import/columns/box.blp:16
+#| msgid "Edit Item"
+msgid "Add Item"
+msgstr "Gehitu elementua"
+
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
+#: data/ui/style-editor/item-color-row.blp:36
+msgid "Remove"
+msgstr "Kendu"
+
+#: data/ui/import/columns/item-group.blp:26
+#| msgctxt "import-mode"
+#| msgid "Columns"
+msgid "X Column"
+msgstr "X zutabea"
+
+#: data/ui/import/columns/item-group.blp:38
+#| msgctxt "import-mode"
+#| msgid "Columns"
+msgid "Y Column"
+msgstr "Y zutabea"
+
+#: data/ui/import/columns/item-group.blp:51
+#| msgctxt "markerstyle"
+#| msgid "Triangle Down"
+msgid "Single Column"
+msgstr "Zutabe bakarra"
+
+#: data/ui/import/columns/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Inportatu Y balioak soilik, X balioak berez sortuko dira"
+
+#: data/ui/import/columns/item-group.blp:57
+#| msgid "Equation"
+msgid "X Value Equation"
+msgstr "X balioaren ekuazioa"
+
+#: data/ui/import/columns/item-group.blp:64
+#: data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+msgid "More info"
+msgstr "Informazio gehiago"
+
+#: data/ui/import/columns/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr "<b>X balioaren kalkulua</b>\n"
+"\n"
+"Sartu ekuazio bat X balioak kalkulatzeko.\n"
+"Erabili 'n' errenkadaren indizea adierazteko (0 baliotik hasita).\n"
+"\n"
+"<b>Adibideak:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/main-group.blp:5
+#| msgid "File Format"
+msgid "Format"
+msgstr "Formatua"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Mugatzailea"
+
+#: data/ui/import/columns/main-group.blp:9
+#| msgid "Character sequence used to split values"
+msgid "Character used to separate columns"
+msgstr "Zutabeak bereizteko erabilitako karakterea"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Zuriunea"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tab"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Bi puntu (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Puntu eta koma (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+#| msgctxt "delimiter"
+#| msgid "Decimal comma (,)"
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Koma (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Puntua (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Pertsonalizatua"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Mugatzaile pertsonalizatua"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Dezimalen bereizlea"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Koma dezimala (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Puntu dezimala (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Saltatu errenkadak"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Hasieratik saltatuko den errenkada kopurua"
+
+#: data/ui/import/sql/main-group.blp:6
+#| msgctxt "import-mode"
+#| msgid "Database"
+msgid "Database Table"
+msgstr "Datu-basearen taula"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "X zutabea"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Y zutabea"
+
+#: data/ui/import/sql/main-group.blp:23
+msgid "This table contains no numeric columns"
+msgstr "Taula honek zenbakizkoak ez diren zutabeak ditu"
+
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
 msgstr "Inportatu parametroak"
@@ -503,95 +666,6 @@ msgstr "Inportatze modua"
 #: data/ui/sidebar/figure-settings/settings-page.blp:273
 msgid "Set as Default"
 msgstr "Ezarri lehenetsi gisa"
-
-#: data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
-msgid "Remove"
-msgstr "Kendu"
-
-#: data/ui/import/mode-columns.blp:6
-msgid "Delimiter"
-msgstr "Mugatzailea"
-
-#: data/ui/import/mode-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Balioak banatzeko karaktere-sekuentzia"
-
-#: data/ui/import/mode-columns.blp:11
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Zuriunea"
-
-#: data/ui/import/mode-columns.blp:12
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Tab"
-
-#: data/ui/import/mode-columns.blp:13
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Bi puntu (:)"
-
-#: data/ui/import/mode-columns.blp:14
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Puntu eta koma (;)"
-
-#: data/ui/import/mode-columns.blp:15
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Koma dezimala (,)"
-
-#: data/ui/import/mode-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Puntu dezimala (.)"
-
-#: data/ui/import/mode-columns.blp:17
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Pertsonalizatua"
-
-#: data/ui/import/mode-columns.blp:25
-msgid "Custom Delimiter"
-msgstr "Mugatzaile pertsonalizatua"
-
-#: data/ui/import/mode-columns.blp:29
-msgid "Decimal Separator"
-msgstr "Dezimalen bereizlea"
-
-#: data/ui/import/mode-columns.blp:33
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Koma dezimala (,)"
-
-#: data/ui/import/mode-columns.blp:34
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Puntu dezimala (.)"
-
-#: data/ui/import/mode-columns.blp:40
-msgid "Column X"
-msgstr "X zutabea"
-
-#: data/ui/import/mode-columns.blp:41
-msgid "X-data column index"
-msgstr "X datuen zutabe-indizea"
-
-#: data/ui/import/mode-columns.blp:51
-msgid "Column Y"
-msgstr "Y zutabea"
-
-#: data/ui/import/mode-columns.blp:53
-msgid "Y-data column index"
-msgstr "Y datuen zutabe-indizea"
-
-#: data/ui/import/mode-columns.blp:62
-msgid "Skip Rows"
-msgstr "Saltatu errenkadak"
-
-#: data/ui/import/mode-columns.blp:63
-msgid "Ignored row indices"
-msgstr "Ez ikusitako errenkada-indizeak"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -778,15 +852,15 @@ msgstr "Gehitu datuak fitxategi batetik edo eskuz ekuazio gisa"
 
 #: data/ui/sidebar/main.blp:93
 msgid "Pan Mode. Click and drag to pan"
-msgstr "Desplazamendu-modua. Klik eta arrastatu mugitzeko"
+msgstr "Desplazamendu-modua. Klik eta arrastatu desplazatzeko"
 
 #: data/ui/sidebar/main.blp:100
 msgid "Zoom Mode. Select an area on the figure to zoom in"
-msgstr "Zoom-modua. Hautatu irudiko area bat zoom egiteko"
+msgstr "Zoom-modua. Hautatu irudiko area bat handiagotzeko"
 
 #: data/ui/sidebar/main.blp:107
 msgid "Select Mode. Click and drag to make a selection of data"
-msgstr "Hautatze-modua. Klik eta arrastatu datuen hautapen bat egiteko"
+msgstr "Hautapen-modua. Klik eta arrastatu datuak hautatzeko"
 
 #: data/ui/sidebar/main.blp:124
 msgid "New Project"
@@ -979,9 +1053,21 @@ msgstr "Batezbesteko mugikorra"
 msgid "Advanced Settings"
 msgstr "Ezarpen aurreratuak"
 
-#: data/ui/style-editor/color-box.blp:18
-msgid "Edit"
-msgstr "Editatu"
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "Gehitu estilo berria"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "Gehitu"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "Txantiloia"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "Aldatu kolorea"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1139,46 +1225,41 @@ msgstr "Etiketaren testua irakurtzeko zaila izan daiteke"
 msgid "Poor Contrast"
 msgstr "Kontraste gutxi"
 
-#: data/ui/style-editor/editor-box.blp:393
+#: data/ui/style-editor/editor-box.blp:394
 msgid "Text Color"
 msgstr "Testuaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:398
-#: data/ui/style-editor/editor-box.blp:425
-#: data/ui/style-editor/editor-box.blp:452
-#: data/ui/style-editor/editor-box.blp:479
-#: data/ui/style-editor/editor-box.blp:506
-#: data/ui/style-editor/editor-box.blp:533
-msgid "Change Color"
-msgstr "Aldatu kolorea"
-
-#: data/ui/style-editor/editor-box.blp:420
+#: data/ui/style-editor/editor-box.blp:405
 msgid "Tick Color"
 msgstr "Marken kolorea"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:416
 msgid "Axis Color"
 msgstr "Ardatzen kolorea"
 
-#: data/ui/style-editor/editor-box.blp:474
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Grid Color"
 msgstr "Saretaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:501
+#: data/ui/style-editor/editor-box.blp:438
 msgid "Background Color"
 msgstr "Atzeko planoaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:528
+#: data/ui/style-editor/editor-box.blp:449
 msgid "Outline Color"
 msgstr "Ingeradaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:551
+#: data/ui/style-editor/editor-box.blp:456
 msgid "Line Colors"
 msgstr "Marren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:563
+#: data/ui/style-editor/editor-box.blp:468
 msgid "Add Color"
 msgstr "Gehitu kolorea"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "Editatu"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1230,10 +1311,6 @@ msgstr "Ireki estiloa"
 msgid "Graphs Style Editor"
 msgstr "Estilo-editorea"
 
-#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "Gehitu estilo berria"
-
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
 msgstr "Inportau fitxategia…"
@@ -1275,10 +1352,6 @@ msgstr "Itxi estiloa…"
 msgid "Add Equation"
 msgstr "Gehitu ekuazioa"
 
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "Gehitu"
-
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Sartu adierazpen matematiko bat"
@@ -1286,10 +1359,6 @@ msgstr "Sartu adierazpen matematiko bat"
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Izena (aukerakoa)"
-
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "Txantiloia"
 
 #: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
@@ -1351,19 +1420,19 @@ msgstr "Txandakatu alboko barra"
 msgid "Optimization Method"
 msgstr "Optimizazio-metodoa"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:160
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:167
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Kofiantza-eskualde islatzailea"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:174
 msgctxt "optimization"
 msgid "Dogbox"
@@ -1400,56 +1469,74 @@ msgstr "3σ: %99,7ko konfiantza"
 msgid "Export Figure"
 msgstr "Esportatu irudia"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
 msgid "Export"
 msgstr "Esportatu"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+#| msgid "Smoothen Settings"
+msgid "Export Settings"
+msgstr "Esportazio-ezarpenak"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "Fitxategi-formatua"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "PostScript kapsulatua"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "Bereizmena (dpi)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "Atzeko plano gardena"
+
+#: data/ui/export-figure.blp:67
+#| msgid "Export Figure"
+msgid "Export Size"
+msgstr "Esportazioaren tamaina"
+
+#: data/ui/export-figure.blp:70
+msgid "Width (pixels)"
+msgstr "Zabalera (pixelak)"
+
+#: data/ui/export-figure.blp:80
+msgid "Height (pixels)"
+msgstr "Altuera (pixelak)"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "Erabili aplikazioaren tamaina bera"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1523,20 +1610,24 @@ msgstr "Ezabatu…"
 msgid "Transform Data"
 msgstr "Transformatu datuak"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "Informazio gehiago"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
+#| msgid ""
+#| "Additional variables:\n"
+#| "x_min, y_min\n"
+#| "x_max, y_max \n"
+#| "\n"
+#| "Trigonometric functions use radians\n"
+#| "by default, append d to the function\n"
+#| "to use degrees, e.g. sind(x) or cosd(x)."
 msgid ""
-"Additional variables:\n"
+"<b>Additional variables:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
 "Trigonometric functions use radians\n"
 "by default, append d to the function\n"
 "to use degrees, e.g. sind(x) or cosd(x)."
-msgstr "Aldagai gehigarriak:\n"
+msgstr "<b>Aldagai gehigarriak:</b>\n"
 "x_min, y_min\n"
 "x_max, y_max \n"
 "\n"
@@ -1545,11 +1636,11 @@ msgstr "Aldagai gehigarriak:\n"
 "d balioa funtzioari graduak erabiltzeko,\n"
 "adibidez sind(x) edo cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Baztertu hautatu gabeko datuak"
 
@@ -1726,87 +1817,101 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Berregin ekintza"
 
-#: graphs/file_import/parsers/columns.py:24
+#: graphs/file_import/parsers/columns/__init__.py:22
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Zutabeak"
 
-#: graphs/file_import/parsers/columns.py:70
-msgid "Import failed, column index out of range"
-msgstr "Inportazioak huts egin du, zutabe-indizea barrutitik kanpo dago"
+#: graphs/file_import/parsers/columns/main.vala:46
+#| msgid "Custom Delimiter"
+msgid "Custom delimiter cannot be empty"
+msgstr "Mugatzaile pertsonalizatuak ezin du hutsik egon"
 
-#: graphs/file_import/parsers/columns.py:89
-msgid "Unable to import from file"
-msgstr "Ezin da fitxategitik inportatu"
+#: graphs/file_import/parsers/columns/parser.vala:97
+#, c-format
+msgid ""
+"Index error in %s, cannot access index %d on line %d, only %d columns were "
+"found"
+msgstr "Indize-errorea hemen: %s. Ezin da atzitu %d indizea %d lerroan, %d zutabe soilik aurkitu da"
 
-#: graphs/file_import/parsers/project.py:19
+#: graphs/file_import/parsers/columns/parser.vala:124
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Ezin da inportatu fitxategitik, balio okerra %d lerroan"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#, c-format
+msgid "Item %d"
+msgstr "%d. elementua"
+
+#: graphs/file_import/parsers/project/__init__.py:19
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Proiektua"
 
-#: graphs/file_import/parsers/project.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Grafikoen proiektu-fitxategia"
 
-#: graphs/file_import/parsers/sql.py:24
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Datu-basea"
 
-#: graphs/file_import/parsers/sql.py:25
+#: graphs/file_import/parsers/sql/__init__.py:25
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite datu-basea"
 
-#: graphs/file_import/parsers/sql.py:42
+#: graphs/file_import/parsers/sql/__init__.py:42
 #, python-brace-format
 msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
 "found"
 msgstr "Ezin dira datuak inportatu \"{table_name}\" taulatik, ez da zenbakizko zutaberik aurkitu"
 
-#: graphs/file_import/parsers/sql.py:52
+#: graphs/file_import/parsers/sql/__init__.py:52
 msgid "No data found in table column"
 msgstr "Ez da daturik aurkitu taula-zutabean"
 
-#: graphs/file_import/parsers/xrdml.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:20
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:21
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:60
 msgid "Intensity (cps)"
 msgstr "Intentsitatea (cps)"
 
-#: graphs/file_import/parsers/xry.py:19
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry.py:20
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry.py:38
+#: graphs/file_import/parsers/xry/__init__.py:38
 msgid "Invalid .xry format"
 msgstr ".xry formatu baliogabea"
 
-#: graphs/file_import/parsers/xry.py:53
+#: graphs/file_import/parsers/xry/__init__.py:53
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry.py:54
+#: graphs/file_import/parsers/xry/__init__.py:54
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:109
+#: graphs/file_import/__init__.py:112
 msgid "Import failed"
 msgstr "Inportazioak huts egin du"
 
@@ -1852,14 +1957,9 @@ msgstr "X ardatzaren etiketa"
 msgid "Y Axis Scale"
 msgstr "Y ardatzaren eskala"
 
-#: graphs/sidebar/figure_settings.vala:235
+#: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Lehenespenak eguneratu dira"
-
-#: graphs/style_editor/color_box.vala:30
-#, c-format
-msgid "Color %d"
-msgstr "%d. kolorea"
 
 #: graphs/style_editor/__init__.py:63
 msgid "Example Item"
@@ -1872,6 +1972,11 @@ msgstr "X etiketa"
 #: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Y etiketa"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "%d. kolorea"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -1892,7 +1997,7 @@ msgstr "Grafikoak aplikazioaren garatzaileak"
 msgid "translator-credits"
 msgstr "Asier Saratsua Garmendia <asiersarasua@ni.eus>"
 
-#: graphs/actions.vala:183 graphs/item_box.vala:56
+#: graphs/actions.vala:181 graphs/item_box.vala:56
 #, c-format
 msgid "Deleted %s"
 msgstr "%s ezabatu da"
@@ -1947,16 +2052,16 @@ msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "{stylename} estiloa ez da existitzen, sistemaren estilo lehenetsia kargatuko da"
 
-#: graphs/data.py:564
+#: graphs/data.py:563
 msgid "Failed to load project"
 msgstr "Huts egin du proiektua kargatzeak"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:49
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Esportatutako irudia"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:76
 msgid "Exported Figure"
 msgstr "Esportatutako irudia"
 
@@ -1973,15 +2078,15 @@ msgstr "Testu-fitxategiak"
 msgid "Dataset"
 msgstr "Datu multzoa"
 
-#: graphs/item.py:121
+#: graphs/item.py:126
 msgid "Generated Dataset"
 msgstr "Sortu datu multzoa"
 
-#: graphs/item.py:239
+#: graphs/item.py:244
 msgid "Label"
 msgstr "Etiketa"
 
-#: graphs/item.py:275
+#: graphs/item.py:280
 msgid "Fill"
 msgstr "Bete"
 
@@ -1990,37 +2095,37 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib estilo-fitxategia"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:252
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Ezin da transformazioa gauzatu, ziurtatu sintaxia zuzena dela"
 
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:295 graphs/operations.py:602
 msgid "No data found within the highlighted area"
 msgstr "Ez da daturik aurkitu nabarmendutako arean"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "Konbinatutako datuak"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name} elementuaren eragiketak ez du eman marraztu daitekeen ekuaziorik"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "Eragiketa ez da onartzen ekuazioetarako."
 
-#: graphs/operations.py:610
+#: graphs/operations.py:608
 msgid "Operation not supported for data items"
 msgstr "Eragiketa ez da onartzen datu-elementuetarako"
 
-#: graphs/operations.py:613
+#: graphs/operations.py:611
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Errorea eragiketa gauzatzean"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Nabarmendutako areatik kanpo dauden datuak baztertu dira"
 
@@ -2032,19 +2137,19 @@ msgstr "Proiektu-fitxategiari datuak falta zaizkio"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Proiektua Grafikoak aplikazioaren bertsio bateraezin berriago batena da"
 
-#: graphs/project.py:262
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "Huts egin du zaharraren migrazioak"
 
-#: graphs/project.py:264
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "Huts egin du proiektu-fitxategiaren analisiak"
 
-#: graphs/project.py:270
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "Ezin izan da proiektua migratu"
 
-#: graphs/project.py:276
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "Ezin izan da proiektua balioztatu"
 
@@ -2056,7 +2161,7 @@ msgstr "Gordetako proiektua"
 msgid "Project"
 msgstr "Proiektua"
 
-#: graphs/python_helper.vala:48
+#: graphs/python_helper.vala:55
 msgid "Exported Data"
 msgstr "Esportatutako datuak"
 
@@ -2102,15 +2207,15 @@ msgstr "Ezin da {filename} analizatu"
 msgid "File {file}, does not contain name tag"
 msgstr "{file} fitxategiak ez du izen-etiketarik"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:170
 msgid "All Files"
 msgstr "Fitxategi guztiak"
 
-#: graphs/utilities.vala:263
+#: graphs/utilities.vala:221
 msgid "Document Portal"
 msgstr "Dokumentu-ataria"
 
@@ -2135,6 +2240,28 @@ msgstr "Grafikoak — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Ireki kokalekua"
+
+#~ msgctxt "delimiter"
+#~ msgid "Decimal point (.)"
+#~ msgstr "Puntu dezimala (.)"
+
+#~ msgid "X-data column index"
+#~ msgstr "X datuen zutabe-indizea"
+
+#~ msgid "Y-data column index"
+#~ msgstr "Y datuen zutabe-indizea"
+
+#~ msgid "Ignored row indices"
+#~ msgstr "Ez ikusitako errenkada-indizeak"
+
+#~ msgid "Resolution (dpi)"
+#~ msgstr "Bereizmena (dpi)"
+
+#~ msgid "Import failed, column index out of range"
+#~ msgstr "Inportazioak huts egin du, zutabe-indizea barrutitik kanpo dago"
+
+#~ msgid "Unable to import from file"
+#~ msgstr "Ezin da fitxategitik inportatu"
 
 #~ msgid "Reset to Defaults…"
 #~ msgstr "Berrezarri lehenespenetara…"
