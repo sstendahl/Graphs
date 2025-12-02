@@ -1,13 +1,13 @@
 # Swedish translation for Graphs.
-# Copyright © 2024 Graphs's COPYRIGHT HOLDER
+# Copyright © 2024-2025 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2024-07-22 18:28+0000\n"
-"PO-Revision-Date: 2024-07-24 13:57+0200\n"
+"POT-Creation-Date: 2025-11-30 22:06+0000\n"
+"PO-Revision-Date: 2025-12-01 00:09+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.8\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -295,18 +295,23 @@ msgstr ""
 "<code>cosd(x)</code> cosinus där x-koordinaten ges i grader medan "
 "<code>cos(x)</code> skapar cosinus där x-koordinaten ges i radianer."
 
+#. (itstool) path: info/desc
+#: C/index.page:8
+msgid "Plot and manipulate data"
+msgstr "Plotta och manipulera data"
+
 #. (itstool) path: page/title
-#: C/index.page:10
+#: C/index.page:11
 msgid "<_:media-1/> Graphs"
 msgstr "<_:media-1/> Graphs"
 
 #. (itstool) path: section/title
-#: C/index.page:16
+#: C/index.page:17
 msgid "How to"
 msgstr "Guider"
 
 #. (itstool) path: section/p
-#: C/index.page:17
+#: C/index.page:18
 msgid ""
 "There's multiple how-to guides available for Graphs. These can be found here."
 msgstr ""
