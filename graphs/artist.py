@@ -160,12 +160,48 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 class SingularityHandler:
     """Mix-in class for handling singularities in equation-based plots."""
 
+    _singularities_cache = {}
+
     def _find_singularities(self, limits: tuple[float, float]) -> set:
         """Find singularities within the given limits."""
+        x_min, x_max = limits
+
+        # TODO: WORK MORE ON CACHING LOGIC? PROBABLY NEED TO CLEAN CACHE ON EQUATION RESETS
+        if self._equation in self._singularities_cache:
+            cached_data = self._singularities_cache[self._equation]
+            cached_min, cached_max = cached_data['limits']
+            cached_singularities = cached_data['singularities']
+
+            if x_min >= cached_min and x_max <= cached_max:
+                return {s for s in cached_singularities if x_min <= s <= x_max}
+
+            new_min = min(x_min, cached_min)
+            new_max = max(x_max, cached_max)
+
+            x = sympy.Symbol("x")
+            expr = sympy.sympify(self._equation)
+            domain = sympy.Interval(new_min, new_max)
+            all_singularities = singularities(expr, x, domain)
+
+            self._singularities_cache[self._equation] = {
+                'limits': (new_min, new_max),
+                'singularities': all_singularities
+            }
+
+            return {s for s in all_singularities if x_min <= s <= x_max}
+
         x = sympy.Symbol("x")
         expr = sympy.sympify(self._equation)
         domain = sympy.Interval(*limits)
-        return singularities(expr, x, domain)
+        result = singularities(expr, x, domain)
+
+        # Store in cache
+        self._singularities_cache[self._equation] = {
+            'limits': limits,
+            'singularities': result
+        }
+
+        return result
 
     def _insert_singularity_points(
             self,
@@ -175,36 +211,56 @@ class SingularityHandler:
             ylim: tuple[float, float],
             insert_y_points: bool = True) -> tuple:
         """Insert NaN and optionally infinite value points at singularities."""
-        xdata = numpy.array(xdata)
-        ydata = numpy.array(ydata)
-        # TODO: THIS IS A BIT BUGGED WITH EDGE-CASES WHERE VALUES ARE LARGE,
-        # AND FAR AWAY FROM THE CURRENT CANVAS LIMITS
-        inf_value = abs(ylim[1] - ylim[0]) * 2
+        xdata = numpy.array(xdata, dtype=float)
+        ydata = numpy.array(ydata, dtype=float)
 
-        if insert_y_points:
-            x_min, x_max = float(xdata.min()), float(xdata.max())
-            x_range = abs(x_max - x_min)
-            epsilon = x_range * 0.001
+        if not singularities:
+            return xdata, ydata
 
-        for singularity in sorted(singularities, reverse=True):
-            x_value = float(singularity)
-            insert_idx = numpy.searchsorted(xdata, x_value)
+        singularities_arr = numpy.array(sorted(singularities), dtype=float)
+        base_indices = numpy.searchsorted(xdata, singularities_arr)
+
+        ylim_range = abs(ylim[1] - ylim[0])
+        ydata_range = numpy.nanmax(ydata) - numpy.nanmin(ydata)
+        inf_value = max(ylim_range, ydata_range) * 2
+
+        x_segments = []
+        y_segments = []
+
+        prev_idx = 0
+        for sing_value, insert_idx in zip(singularities_arr, base_indices):
+            x_segments.append(xdata[prev_idx:insert_idx])
+            y_segments.append(ydata[prev_idx:insert_idx])
 
             if insert_y_points:
-                left_sign = numpy.sign(ydata[insert_idx - 1])
-                right_sign = numpy.sign(ydata[insert_idx])
-                xdata = numpy.insert(xdata, insert_idx,
-                                     [x_value - epsilon,
-                                      x_value,
-                                      x_value + epsilon])
-                ydata = numpy.insert(ydata, insert_idx,
-                                     [left_sign * inf_value,
-                                      numpy.nan,
-                                      right_sign * inf_value])
+                if insert_idx < 2 or insert_idx >= len(ydata) - 1:
+                    continue
+                else:
+                    epsilon = abs(xdata[1] - xdata[0]) / 100
+
+                    left_sign = numpy.sign(ydata[insert_idx - 1] - ydata[insert_idx - 2])
+                    right_sign = -numpy.sign(ydata[insert_idx + 1] - ydata[insert_idx])
+
+                    x_segments.append(numpy.array([
+                        sing_value - epsilon,
+                        sing_value,
+                        sing_value + epsilon
+                    ]))
+                    y_segments.append(numpy.array([
+                        left_sign * inf_value,
+                        numpy.nan,
+                        right_sign * inf_value
+                    ]))
             else:
-                xdata = numpy.insert(xdata, insert_idx, x_value)
-                ydata = numpy.insert(ydata, insert_idx, numpy.nan)
-        return xdata, ydata
+                x_segments.append(numpy.array([sing_value]))
+                y_segments.append(numpy.array([numpy.nan]))
+
+            prev_idx = insert_idx
+
+        x_segments.append(xdata[prev_idx:])
+        y_segments.append(ydata[prev_idx:])
+
+        return numpy.concatenate(x_segments), numpy.concatenate(y_segments)
 
 
 class GeneratedDataItemArtistWrapper(SingularityHandler,
@@ -255,7 +311,8 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
 
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
-        axis.callbacks.connect("xlim_changed", self._on_xlim)
+        self._view_change_timeout_id = None
+        self._axis.figure.canvas.connect("view_changed", self._on_view_change_debounced)
         self._artist = axis.plot(
             [],
             [],
@@ -270,6 +327,24 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
         self._generate_data()
+
+    def _on_view_change_debounced(self, *args):
+        """Debounced wrapper that delays calling the actual handler."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+
+        self._view_change_timeout_id = GObject.timeout_add(
+            100,
+            self._on_view_change_actual,
+            *args
+        )
+
+    def _on_view_change_actual(self, *args):
+        """The actual view change handler."""
+        print("TEST")
+        self._view_change_timeout_id = None
+        self._generate_data()
+        return False
 
     @GObject.Property(type=str, flags=2)
     def equation(self) -> None:
@@ -293,7 +368,6 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
     def equation(self, equation: str) -> None:
         self._equation = utilities.preprocess(equation)
         self._generate_data()
-        self.handle_singularities(self._artist.get_data())
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -311,7 +385,7 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _on_xlim(self, _axis):
+    def _on_view_change(self, _axis):
         self._generate_data()
 
     def _generate_data(self):
@@ -328,15 +402,8 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
             self._equation, limits, scale=scale,
         )
 
-        singularities = self._find_singularities(limits)
-        if singularities:
-            #TODO: FIX Y-INSERTION
-            ylim = self._axis.get_ylim()
-            xdata, ydata = self._insert_singularity_points(
-                xdata, ydata, singularities, ylim, insert_y_points=False,
-            )
-
         self._artist.set_data(xdata, ydata)
+        self.handle_singularities(self._artist.get_data())
         self._axis.figure.canvas.queue_draw()
 
 
