@@ -3,20 +3,21 @@
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>,  2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2025.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2024-07-26 12:51+0000\n"
-"PO-Revision-Date: 2024-08-30 15:02-0300\n"
-"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
-"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao>\n"
+"POT-Creation-Date: 2025-12-02 22:48+0000\n"
+"PO-Revision-Date: 2025-12-09 15:44-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Generator: Gtranslator 46.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Gtranslator 49.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -300,18 +301,23 @@ msgstr ""
 "<code>cosd(x)</code> gera um cosseno onde a coordenada x é dada em graus, "
 "enquanto <code>cos(x)</code> gera um cosseno com a coordenada x em radianos."
 
+#. (itstool) path: info/desc
+#: C/index.page:8
+msgid "Plot and manipulate data"
+msgstr "Plote e manipule dados"
+
 #. (itstool) path: page/title
-#: C/index.page:10
+#: C/index.page:11
 msgid "<_:media-1/> Graphs"
 msgstr "<_:media-1/> Gráficos"
 
 #. (itstool) path: section/title
-#: C/index.page:16
+#: C/index.page:17
 msgid "How to"
 msgstr "Instruções"
 
 #. (itstool) path: section/p
-#: C/index.page:17
+#: C/index.page:18
 msgid ""
 "There's multiple how-to guides available for Graphs. These can be found here."
 msgstr ""
