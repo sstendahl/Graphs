@@ -268,6 +268,7 @@ class GeneratedDataItemArtistWrapper(SingularityHandler,
 
     @equation.setter
     def equation(self, equation: str) -> None:
+        self._singularities_cache.clear()
         self._equation = utilities.preprocess(equation)
         self.handle_singularities(self._artist.get_data(), False)
 
@@ -326,6 +327,7 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
 
     @equation.setter
     def equation(self, equation: str) -> None:
+        self._singularities_cache.clear()
         self._equation = utilities.preprocess(equation)
         self._generate_data()
 
