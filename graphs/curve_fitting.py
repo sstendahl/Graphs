@@ -245,9 +245,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             self.reload_canvas()
         else:
             self._items.remove_all()
-            self._items.append(self.data_curve)
             self._items.append(self.fitted_curve)
             self._items.append(self.fill)
+            self._items.append(self.data_curve)
 
             free_vars = utilities.get_free_variables(
                 self.get_equation_string())
