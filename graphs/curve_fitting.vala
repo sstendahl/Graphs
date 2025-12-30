@@ -94,10 +94,14 @@ namespace Graphs {
                 bool success = equation_change.emit (custom_equation.get_text ());
                 if (success) {
                     custom_equation.remove_css_class ("error");
-                    if (equation.get_selected () == 7) {
-                        settings.set_string ("custom-equation", custom_equation.get_text ());
-                    }
                 } else custom_equation.add_css_class ("error");
+            });
+
+            custom_equation.apply.connect (() => {
+                if (equation.get_selected () == 7) {
+                    settings.set_string ("custom-equation", custom_equation.get_text ());
+                    emit_fit_curve_request ();
+                }
             });
             set_equation ();
         }
@@ -123,6 +127,7 @@ namespace Graphs {
                 custom_equation.set_visible (true);
             }
             custom_equation.set_text (equation);
+            emit_fit_curve_request ();
         }
 
         [GtkCallback]
