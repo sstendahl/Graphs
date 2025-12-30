@@ -386,14 +386,13 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
 
 def get_free_variables(equation_name: str) -> list:
     """Get the free variables (non-x) from an equation."""
-    pattern = (
-        r"\b(?!x\b|X\b"  # Exclude 'x' and 'X'
-        r"|sec\b|sin\b|cos\b|log\b|tan\b|csc\b|cot\b"  # Exclude trig func.
-        r"|arcsin\b|arccos\b|arctan\b"  # Exclude arctrig func.
-        r"|arccot\b|arcsec\b|arccsc\b"  # Exclude arctrig func.
-        r"|sinh\b|cosh\b|tanh\b"  # Exclude hyperbolicus argtrig func.
-        r"|arcsinh\b|arccosh\b|arctanh\b"  # Exclude hyperb. arctrig func.
-        r"|exp\b|sqrt\b|abs\b|log10\b)"  # Exclude 'exp', 'sqrt', 'abs'
-        r"[a-zA-Z]+\b"  # Match any character sequence that is not excluded
-    )
-    return list(set(re.findall(pattern, equation_name)))
+    exclude = {
+        "x", "X", "sec", "sin", "cos", "log", "tan", "csc", "cot",
+        "arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
+        "sinh", "cosh", "tanh", "arcsinh", "arccosh", "arctanh",
+        "exp", "sqrt", "abs", "log10", "pi"
+    }
+    matches = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\b", equation_name)
+    return list(dict.fromkeys(
+            var for var in matches if var not in exclude
+        ))
