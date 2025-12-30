@@ -388,9 +388,7 @@ def get_free_variables(equation_name: str) -> list:
         "x", "X", "sec", "sin", "cos", "log", "tan", "csc", "cot",
         "arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
         "sinh", "cosh", "tanh", "arcsinh", "arccosh", "arctanh",
-        "exp", "sqrt", "abs", "log10", "pi"
+        "exp", "sqrt", "abs", "log10", "pi",
     }
     matches = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\b", equation_name)
-    return list(dict.fromkeys(
-            var for var in matches if var not in exclude
-        ))
+    return list(dict.fromkeys(var for var in matches if var not in exclude))
