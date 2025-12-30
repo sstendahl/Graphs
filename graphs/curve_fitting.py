@@ -16,6 +16,15 @@ from scipy.optimize import _minpack, curve_fit
 import sympy
 
 
+# Constants
+DATA_COLOR = "#1A5FB4"
+FIT_COLOR = "#A51D2D"
+FILL_ALPHA = 0.15
+MARKER_STYLE = 1
+MARKER_SIZE = 13
+LINE_STYLE = 0
+
+
 class CurveFittingDialog(Graphs.CurveFittingDialog):
     """Class for displaying the Curve Fitting dialog."""
 
@@ -44,12 +53,12 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             xdata=item.get_xdata(),
             ydata=item.get_ydata(),
             name=item.get_name(),
-            color="#1A5FB4",
+            color=DATA_COLOR,
         )
-        self.data_curve.linestyle = 0
-        self.data_curve.markerstyle = 1
-        self.data_curve.markersize = 13
-        self.fitted_curve = EquationItem.new(style, "x", color="#A51D2D")
+        self.data_curve.linestyle = LINE_STYLE
+        self.data_curve.markerstyle = MARKER_STYLE
+        self.data_curve.markersize = MARKER_SIZE
+        self.fitted_curve = EquationItem.new(style, "x", color=FIT_COLOR)
         self.fill = FillItem.new(
             style,
             (
@@ -57,8 +66,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 self.data_curve.get_ydata(),
                 self.data_curve.get_ydata(),
             ),
-            color="#1A5FB4",
-            alpha=0.15,
+            color=DATA_COLOR,
+            alpha=FILL_ALPHA,
         )
 
         self._items = Gio.ListStore.new(Graphs.Item)
@@ -99,7 +108,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return False
 
         self.fitting_parameters.update(free_vars)
-        fit_success = self.fit_curve()
 
         box = self.get_fitting_params_box()
         while box.get_last_child() is not None:
@@ -115,12 +123,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                     self.on_entry_change)
             box.append(p_box)
 
-        return bool(fit_success)
+        return True
 
     def on_entry_change(self, entry, _param) -> None:
         """Validate and update fitting parameter bounds on user input."""
         target_row = entry.get_ancestor(Graphs.FittingParameterBox)
-        error = False
+        if not target_row:
+            return
 
         fitting_box = self.get_fitting_params_box()
         for row, params in zip(fitting_box, self.fitting_parameters):
@@ -185,11 +194,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         except RuntimeError:
             self.set_results(error="convergence")
             return False
-        except (ValueError, TypeError, _minpack.error):
+        except (ValueError, TypeError):
             self.set_results(error="domain")
             return False
-        except Exception:
-            self.set_results(error="equation")
+        except _minpack.error:
+            self.set_results(error="convergence")
+            return False
+        except (ZeroDivisionError, OverflowError):
+            self.set_results(error="domain")
             return False
 
         # Update visual equation name
@@ -221,8 +233,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             "convergence": _(
                 "Fit failed: Max iterations \nreached without converging."),
             "domain": _(
-                "Math error: Invalid values \nfound in the data ."),
+                "Domain error: Equation not \nvalid for this data range."),
+            "equation": _(
+                "Invalid equation: Check \nsyntax and variables."),
         }
+
         if error:
             buffer.set_text(f"{_('Results:')}\n{error_messages[error]}")
             self._items.remove_all()
@@ -248,8 +263,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                     line += f" (± {err})"
                 lines.append(line)
 
-            lines.append(f"\n{_('RMSE')}: {self.rmse}")
-            lines.append(f"{_('R²')}: {self.r2}")
+            lines.append(f"\n{_('R²')}: {self.r2}")
+            lines.append(f"{_('RMSE')}: {self.rmse}")
             buffer.set_text("\n".join(lines))
             self.reload_canvas()
 
