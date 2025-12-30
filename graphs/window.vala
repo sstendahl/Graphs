@@ -259,7 +259,7 @@ namespace Graphs {
             optimize_limits_action.set_enabled (true);
         }
 
-        private void on_selection_changed () {
+        public void on_selection_changed () {
             var export_data_action = lookup_action ("export-data") as SimpleAction;
             if (data.is_empty ()) {
                 operations.shift_button.set_sensitive (false);

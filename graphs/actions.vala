@@ -92,9 +92,11 @@ namespace Graphs {
 
             var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
             foreach (string mode in modes) {
-                var action = new SimpleAction (@"mode-$mode", null);
+                string current_mode = mode;
+                var action = new SimpleAction (@"mode-$current_mode", null);
                 action.activate.connect (() => {
-                    window.canvas.mode = modes.index_of (mode);
+                    window.canvas.mode = modes.index_of (current_mode);
+                    window.on_selection_changed ();
                 });
                 window.add_action (action);
             }
