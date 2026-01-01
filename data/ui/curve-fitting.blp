@@ -90,23 +90,35 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
               orientation: vertical;
             }
 
-            ScrolledWindow {
-              vexpand: false;
-              hexpand: false;
-              hscrollbar-policy: automatic;
-              vscrollbar-policy: never;
+            Box results_box {
+              spacing: 6;
+              orientation: vertical;
+              Label {
+                  label: _("Results:");
+                  halign: start;
+                  styles [
+                    "heading",
+                  ]
+                }
 
-              TextView text_view {
-                left-margin: 12;
-                right-margin: 12;
-                top-margin: 12;
-                bottom-margin: 12;
-                halign: fill;
-                editable: false;
+              ScrolledWindow {
+                vexpand: false;
+                hexpand: false;
+                hscrollbar-policy: automatic;
+                vscrollbar-policy: never;
 
-                styles [
-                  "card",
-                ]
+                TextView text_view {
+                  left-margin: 12;
+                  right-margin: 12;
+                  top-margin: 12;
+                  bottom-margin: 12;
+                  halign: fill;
+                  editable: false;
+
+                  styles [
+                    "card",
+                  ]
+                }
               }
             }
 

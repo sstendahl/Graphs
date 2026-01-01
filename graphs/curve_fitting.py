@@ -16,7 +16,6 @@ from scipy.optimize import _minpack, curve_fit
 import sympy
 
 
-# Constants
 DATA_COLOR = "#1A5FB4"
 FIT_COLOR = "#A51D2D"
 FILL_ALPHA = 0.15
@@ -222,7 +221,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def set_results(self, error="") -> None:
         """Display fitting results or error message in the results view."""
-        buffer = self.get_text_view().get_buffer()
+        view = self.get_text_view()
+        buffer = view.get_buffer()
+        buffer.set_text("")
+
+        tag_table = buffer.get_tag_table()
+        bold_tag = tag_table.lookup("bold")
+        if not bold_tag:
+            bold_tag = buffer.create_tag("bold", weight=700)
 
         error_messages = {
             "value": _("Please enter valid \nnumeric parameters."),
@@ -239,19 +245,18 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         }
 
         if error:
-            buffer.set_text(f"{_('Results:')}\n{error_messages[error]}")
+            buffer.insert(buffer.get_end_iter(), error_messages[error])
             self._items.remove_all()
             self._items.append(self.data_curve)
-            self.reload_canvas()
         else:
             self._items.remove_all()
             self._items.append(self.fitted_curve)
             self._items.append(self.fill)
             self._items.append(self.data_curve)
 
-            free_vars = utilities.get_free_variables(
-                self.get_equation_string())
-            lines = [_("Results:")]
+            buffer.insert_with_tags_by_name(
+                buffer.get_end_iter(), f"{_('Parameters')}\n", "bold")
+            free_vars = utilities.get_free_variables(self.get_equation_string())
             diag_cov = numpy.sqrt(numpy.diagonal(self.param_cov))
             conf_level = self.get_settings().get_enum("confidence")
 
@@ -261,21 +266,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 if conf_level > 0:
                     err = utilities.sig_fig_round(diag_cov[i] * conf_level, 3)
                     line += f" (± {err})"
-                lines.append(line)
+                buffer.insert(buffer.get_end_iter(), f"{line}\n")
 
-            lines.append(f"\n{_('R²')}: {self.r2}")
-            lines.append(f"{_('RMSE')}: {self.rmse}")
-            buffer.set_text("\n".join(lines))
-            self.reload_canvas()
+            buffer.insert(buffer.get_end_iter(), "\n")
+            buffer.insert_with_tags_by_name(buffer.get_end_iter(),
+                f"{_('Statistics')}\n", "bold")
 
-        # Style the first word (Results:)
-        start = buffer.get_start_iter()
-        end = buffer.get_start_iter()
-        end.forward_to_line_end()
-        tag = buffer.get_tag_table().lookup("bold")
-        if not tag:
-            tag = buffer.create_tag("bold", weight=700)
-        buffer.apply_tag(tag, start, end)
+            buffer.insert(buffer.get_end_iter(), f"{_('R²')}: {self.r2}\n")
+            buffer.insert(buffer.get_end_iter(), f"{_('RMSE')}: {self.rmse}\n")
+
+        self.reload_canvas()
 
     def set_r2(self, func) -> None:
         """Calculate the r2 coefficient for the fit."""
@@ -313,8 +313,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         param_names = utilities.get_free_variables(eq_str)
 
         # Define Symbols
-        sym_x = sympy.Symbol("x")
-        sym_params_map = {name: sympy.Symbol(name) for name in param_names}
+        sym_x = sympy.Symbol("x", real=True)
+        sym_params_map = {name: sympy.Symbol(name, real=True) for name in param_names}
         sym_params_list = [sym_params_map[name] for name in param_names]
         sym_params_map["x"] = sym_x
         expr = sympy.sympify(eq_str, locals=sym_params_map)
