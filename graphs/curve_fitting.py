@@ -122,19 +122,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             if y_range > 0:
                 y_padding = y_range * 0.025
                 ax.set_ylim(y_min - y_padding, y_max + y_padding)
-
         self.set_canvas(cv)
 
     def reload_residuals_canvas(self, *_args):
-        """Show or hide residuals canvas based on settings."""
-        show_residuals = self.get_settings().get_boolean("show-residuals")
-        if show_residuals and len(self._residuals_items) > 0:
-            self._create_residuals_canvas()
-        else:
-            self.set_residuals_canvas(None)
-
-    def _create_residuals_canvas(self):
         """Create or update the residuals canvas."""
+        if not self.get_settings().get_boolean("show-residuals"):
+            self.set_residuals_canvas(None)
+            return
         app = self.props.window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
         settings = self.props.window.get_data().get_figure_settings()
@@ -146,6 +140,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         res_ax.set_xlabel(settings.get_property("bottom_label"))
         res_ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
         res_ax.set_xlim(*self._xlim)
+        if res_ax.get_legend():
+            res_ax.get_legend().remove()
 
         res_y = numpy.asarray(self._residuals_items[0].get_ydata())
         if res_y.size > 0:
