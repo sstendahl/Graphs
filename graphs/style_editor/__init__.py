@@ -95,9 +95,9 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
         all_params = params, graphs_params
         canvas = Canvas(all_params, self._test_items, False)
-        canvas.props.title = _("Title")
-        canvas.props.bottom_label = _("X Label")
-        canvas.props.left_label = _("Y Label")
+        canvas.figure.props.title = _("Title")
+        canvas.figure.props.bottom_label = _("X Label")
+        canvas.figure.props.left_label = _("Y Label")
         self.set_canvas(canvas)
 
         # Set headerbar color
