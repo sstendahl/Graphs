@@ -7,7 +7,8 @@ from pathlib import Path
 from gi.repository import Gee, Graphs, Gtk
 
 from graphs.file_import import parsers
-from graphs.file_import.parsers import columns, project, sql, xrdml, xry
+from graphs.file_import.parsers import (columns, project, spreadsheet, sql,
+                                        xrdml, xry)
 from graphs.misc import ParseError
 
 _REQUESTS = (
@@ -36,6 +37,7 @@ class DataImporter(Graphs.DataImporter):
         parsers.register_parser(columns.ColumnsParser())
         parsers.register_parser(project.ProjectParser())
         parsers.register_parser(sql.SqlParser())
+        parsers.register_parser(spreadsheet.SpreadsheetParser())
         parsers.register_parser(xrdml.XrdmlParser())
         parsers.register_parser(xry.XryParser())
 

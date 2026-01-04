@@ -1,0 +1,20 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSpreadsheetBox: Box {
+  orientation: vertical;
+  spacing: 10;
+
+  Box items_box {
+    orientation: vertical;
+    spacing: 10;
+    hexpand: true;
+  }
+
+  Adw.PreferencesGroup {
+    Adw.ButtonRow {
+      title: _("Add Item");
+      activated => $add();
+    }
+  }
+}

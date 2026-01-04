@@ -1,0 +1,82 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSpreadsheetItemGroup: Adw.PreferencesGroup {
+  margin-top: 10;
+
+  header-suffix: Button remove_button {
+    icon-name: "user-trash-symbolic";
+    tooltip-text: _("Remove");
+    clicked => $on_remove();
+
+    styles [
+      "flat",
+      "destructive-action",
+    ]
+  };
+
+  Adw.PreferencesRow {
+    activatable: false;
+
+    Box {
+      orientation: horizontal;
+      homogeneous: true;
+
+      Adw.SpinRow column_x {
+        title: _("X Column");
+        sensitive: bind single_column.active inverted;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 16383;
+          step-increment: 1;
+          value: 0;
+        };
+      }
+
+      Adw.SpinRow column_y {
+        title: _("Y Column");
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 16383;
+          step-increment: 1;
+          value: 1;
+        };
+      }
+    }
+  }
+
+  Adw.SwitchRow single_column {
+    title: _("Single Column");
+    subtitle: _("Import only Y values, X values will be generated");
+  }
+
+  Adw.EntryRow equation {
+    sensitive: bind single_column.active;
+    title: _("X Value Equation");
+    text: "n";
+
+    [suffix]
+    MenuButton {
+      valign: center;
+      icon-name: "info-symbolic";
+      tooltip-text: _("More info");
+
+      styles [
+        "flat",
+      ]
+
+      popover: Popover {
+        Label {
+          label: _("<b>X Value Calculation</b>\n\nEnter an equation to calculate X values.\nUse 'n' for the row index (starting from 0).\n\n<b>Examples:</b>\n• <b>n</b> → 0, 1, 2, 3, 4...\n• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n• <b>n^2</b> → 0, 1, 4, 9, 16...\n• <b>2^n</b> → 1, 2, 4, 8, 16...\n• <b>n*10+100</b> → 100, 110, 120, 130...");
+          use-markup: true;
+          margin-top: 12;
+          margin-bottom: 12;
+          margin-start: 12;
+          margin-end: 12;
+        }
+      };
+    }
+  }
+}
