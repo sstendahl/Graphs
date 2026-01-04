@@ -114,6 +114,9 @@
     <key name="custom-equation" type="s">
       <default>"a*x+b"</default>
     </key>
+    <key name="show-residuals" type="b">
+      <default>false</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.actions.smoothen">

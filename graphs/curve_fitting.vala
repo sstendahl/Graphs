@@ -44,17 +44,59 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.OverlaySplitView split_view { get; }
 
+        [GtkChild]
+        private unowned Box canvas_container { get; }
+
+        [GtkChild]
+        private unowned Box residuals_container { get; }
+
+        [GtkChild]
+        private unowned Adw.StatusPage error_page { get; }
+
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; private set; }
         protected string equation_string { get; protected set; }
+
+        private Canvas? _main_canvas = null;
+        private Canvas? _residuals_canvas = null;
+
         protected Canvas canvas {
-            get { return toast_overlay.get_child () as Canvas; }
-            set { toast_overlay.set_child (value); }
+            get { return _main_canvas; }
+            set {
+                clear_container (canvas_container);
+                _main_canvas = value;
+                if (_main_canvas != null) {
+                    canvas_container.append (_main_canvas);
+                    error_page.visible = false;
+                } else {
+                    error_page.visible = true;
+                }
+            }
+        }
+
+        protected void set_residuals_canvas (Canvas? residuals_canvas) {
+            clear_container (residuals_container);
+            _residuals_canvas = residuals_canvas;
+            if (_residuals_canvas != null) {
+                residuals_container.append (_residuals_canvas);
+                residuals_container.visible = settings.get_boolean ("show-residuals");
+            } else {
+                residuals_container.visible = false;
+            }
+        }
+
+        private void clear_container (Box container) {
+            Widget? child = container.get_first_child ();
+            while (child != null) {
+                container.remove (child);
+                child = container.get_first_child ();
+            }
         }
 
         protected signal bool equation_change (string equation);
         protected signal void fit_curve_request ();
         protected signal void add_fit_request ();
+        public signal void show_residuals_changed (bool show);
 
         protected void setup () {
             var application = window.application as Application;
@@ -75,6 +117,17 @@ namespace Graphs {
                 }
             });
             action_map.add_action (optimization_action);
+
+            var res_action = new SimpleAction.stateful ("show-residuals", null, settings.get_value ("show-residuals"));
+            res_action.change_state.connect (v => settings.set_value ("show-residuals", v));
+            settings.changed["show-residuals"].connect (() => {
+                bool show = settings.get_boolean ("show-residuals");
+                res_action.set_state (new Variant.boolean (show));
+                residuals_container.visible = (show && _residuals_canvas != null);
+                show_residuals_changed (show);
+            });
+            action_map.add_action (res_action);
+
             var toggle_sidebar_action = new SimpleAction ("toggle_sidebar", null);
             toggle_sidebar_action.activate.connect (() => {
                 split_view.show_sidebar = !split_view.show_sidebar;
