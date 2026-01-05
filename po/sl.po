@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-24 17:43+0000\n"
-"PO-Revision-Date: 2025-10-24 23:52+0200\n"
+"POT-Creation-Date: 2026-01-05 14:53+0000\n"
+"PO-Revision-Date: 2026-01-05 16:45+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n%100<=4 ? 2 : 3);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:25
 msgid "Graphs"
@@ -118,8 +118,8 @@ msgid "Delete Style?"
 msgstr "Ali želite izbrisati slog?"
 
 #: data/ui/dialogs/delete-style.blp:8 data/ui/dialogs/reset-import-settings.blp:9 data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17 data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/transform.blp:17
+#: data/ui/dialogs/save-style-changes.blp:9 data/ui/style-editor/add-style.blp:16 data/ui/add-equation.blp:17
+#: data/ui/export-figure.blp:16 data/ui/generate-data.blp:17 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Prekliči"
 
@@ -181,7 +181,7 @@ msgstr "Trenutni slog vsebuje ne shranjene spremembe; spremembe, ki niso shranje
 msgid "Name and Position"
 msgstr "Ime in položaj"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "Ime"
 
@@ -366,7 +366,7 @@ msgstr "zapolnjeni X"
 msgid "Marker Size"
 msgstr "Velikost oznake"
 
-#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:65 graphs/item.py:191
+#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:65 graphs/item.py:196
 msgid "Equation"
 msgstr "Enačba"
 
@@ -449,7 +449,7 @@ msgstr "preobrnjena"
 msgid "Add Item"
 msgstr "Dodaj element"
 
-#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "Odstrani"
 
@@ -995,9 +995,21 @@ msgstr "Drseče povprečje"
 msgid "Advanced Settings"
 msgstr "Napredne nastavitve"
 
-#: data/ui/style-editor/color-box.blp:18
-msgid "Edit"
-msgstr "Uredi"
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "Dodaj nov slog"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "Dodaj"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "Predloga"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "Spremeni barvo"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1155,42 +1167,41 @@ msgstr "Besedilo oznake bo morda težko berljivo"
 msgid "Poor Contrast"
 msgstr "Slab kontrast"
 
-#: data/ui/style-editor/editor-box.blp:393
+#: data/ui/style-editor/editor-box.blp:394
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: data/ui/style-editor/editor-box.blp:398 data/ui/style-editor/editor-box.blp:425 data/ui/style-editor/editor-box.blp:452
-#: data/ui/style-editor/editor-box.blp:479 data/ui/style-editor/editor-box.blp:506 data/ui/style-editor/editor-box.blp:533
-msgid "Change Color"
-msgstr "Spremeni barvo"
-
-#: data/ui/style-editor/editor-box.blp:420
+#: data/ui/style-editor/editor-box.blp:405
 msgid "Tick Color"
 msgstr "Barva kljukic"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:416
 msgid "Axis Color"
 msgstr "Barva osi"
 
-#: data/ui/style-editor/editor-box.blp:474
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Grid Color"
 msgstr "Barva mreže"
 
-#: data/ui/style-editor/editor-box.blp:501
+#: data/ui/style-editor/editor-box.blp:438
 msgid "Background Color"
 msgstr "Barva ozadja"
 
-#: data/ui/style-editor/editor-box.blp:528
+#: data/ui/style-editor/editor-box.blp:449
 msgid "Outline Color"
 msgstr "Barva orisa"
 
-#: data/ui/style-editor/editor-box.blp:551
+#: data/ui/style-editor/editor-box.blp:456
 msgid "Line Colors"
 msgstr "Barve črt"
 
-#: data/ui/style-editor/editor-box.blp:563
+#: data/ui/style-editor/editor-box.blp:468
 msgid "Add Color"
 msgstr "Dodaj barvo"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "Uredi"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1242,10 +1253,6 @@ msgstr "Odpri slog"
 msgid "Graphs Style Editor"
 msgstr "Urejevalnik sloga grafov"
 
-#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "Dodaj nov slog"
-
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
 msgstr "Uvozi datoteko ..."
@@ -1286,10 +1293,6 @@ msgstr "Zapri slog ..."
 msgid "Add Equation"
 msgstr "Dodaj enačbo"
 
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "Dodaj"
-
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Vnesite matematični izraz"
@@ -1297,10 +1300,6 @@ msgstr "Vnesite matematični izraz"
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
-
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "Predloga"
 
 #: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
@@ -1362,19 +1361,19 @@ msgstr "Preklopi stransko okno"
 msgid "Optimization Method"
 msgstr "Metoda optimizacije"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:160
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:167
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Odsevno področje zaupanja"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:174
 msgctxt "optimization"
 msgid "Dogbox"
@@ -1411,7 +1410,7 @@ msgstr "3σ: zaupanje 99,7 %"
 msgid "Export Figure"
 msgstr "Izvozi sliko"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:72
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
 msgid "Export"
 msgstr "Izvozi"
 
@@ -1467,16 +1466,16 @@ msgid "Export Size"
 msgstr "Velikost izvoza"
 
 #: data/ui/export-figure.blp:70
-msgid "Use Same Size as App"
-msgstr "Uporabi enako velikost kot aplikacija"
-
-#: data/ui/export-figure.blp:75
 msgid "Width (pixels)"
 msgstr "Širina (slik. točke)"
 
-#: data/ui/export-figure.blp:85
+#: data/ui/export-figure.blp:80
 msgid "Height (pixels)"
 msgstr "Višina (slik. točke)"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "Uporabi enako velikost kot aplikacija"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1838,7 +1837,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:109
+#: graphs/file_import/__init__.py:112
 msgid "Import failed"
 msgstr "Uvoz je spodletel"
 
@@ -1875,7 +1874,7 @@ msgstr "Največja vrednost na osi Y"
 msgid "X Axis Scale"
 msgstr "Merilo osi X"
 
-#: graphs/sidebar/figure_settings.vala:172 graphs/sidebar/figure_settings.vala:176
+#: graphs/sidebar/figure_settings.vala:172
 msgid "X Axis Label"
 msgstr "Oznaka osi X"
 
@@ -1883,14 +1882,13 @@ msgstr "Oznaka osi X"
 msgid "Y Axis Scale"
 msgstr "Merilo osi Y"
 
+#: graphs/sidebar/figure_settings.vala:176
+msgid "Y Axis Label"
+msgstr "Oznaka osi Y"
+
 #: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
-
-#: graphs/style_editor/color_box.vala:30
-#, c-format
-msgid "Color %d"
-msgstr "Barve %d"
 
 #: graphs/style_editor/__init__.py:63
 msgid "Example Item"
@@ -1903,6 +1901,11 @@ msgstr "Oznaka X"
 #: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Oznaka Y"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "Barve %d"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -1981,16 +1984,16 @@ msgstr "Ni bilo mogoče razčleniti sloga {stylename}; nalaga se prednostni sist
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 
-#: graphs/data.py:564
+#: graphs/data.py:563
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:49
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
-#: graphs/export_figure.vala:93
+#: graphs/export_figure.vala:76
 msgid "Exported Figure"
 msgstr "Izvožena slika"
 
@@ -2007,15 +2010,15 @@ msgstr "Besedilne datoteke"
 msgid "Dataset"
 msgstr "Nabor podatkov"
 
-#: graphs/item.py:121
+#: graphs/item.py:126
 msgid "Generated Dataset"
 msgstr "Ustvarjen nabor podatkov"
 
-#: graphs/item.py:239
+#: graphs/item.py:244
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.py:275
+#: graphs/item.py:280
 msgid "Fill"
 msgstr "Polnilo"
 
@@ -2024,37 +2027,37 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:252
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:295 graphs/operations.py:602
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:610
+#: graphs/operations.py:608
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:613
+#: graphs/operations.py:611
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -2066,19 +2069,19 @@ msgstr "V datoteki projekta manjkajo podatki"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
 
-#: graphs/project.py:262
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "Migracija opuščenega je spodletela"
 
-#: graphs/project.py:264
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/project.py:270
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "Migriranje projekta ni uspelo"
 
-#: graphs/project.py:276
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "Preverjanje projekta ni uspelo"
 
@@ -2134,15 +2137,15 @@ msgstr "Ni mogoče razčleniti {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:170
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: graphs/utilities.vala:263
+#: graphs/utilities.vala:221
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
