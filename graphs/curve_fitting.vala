@@ -54,7 +54,7 @@ namespace Graphs {
         private unowned Adw.StatusPage error_page { get; }
 
         public Window window { get; construct set; }
-        protected GLib.Settings settings { get; private set; }
+        protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
 
         private Canvas? _main_canvas = null;
@@ -74,14 +74,17 @@ namespace Graphs {
             }
         }
 
-        protected void set_residuals_canvas (Canvas? residuals_canvas) {
-            clear_container (residuals_container);
-            _residuals_canvas = residuals_canvas;
-            if (_residuals_canvas != null) {
-                residuals_container.append (_residuals_canvas);
-                residuals_container.visible = settings.get_boolean ("show-residuals");
-            } else {
-                residuals_container.visible = false;
+        protected Canvas residuals_canvas {
+            get { return _residuals_canvas; }
+            set {
+                clear_container (residuals_container);
+                _residuals_canvas = value;
+                if (_residuals_canvas != null) {
+                    residuals_container.append (_residuals_canvas);
+                    residuals_container.visible = settings.get_boolean ("show-residuals");
+                } else {
+                    residuals_container.visible = false;
+                }
             }
         }
 
@@ -98,14 +101,14 @@ namespace Graphs {
         protected signal void add_fit_request ();
         public signal void show_residuals_changed (bool show);
 
-        protected void setup () {
+        protected virtual void setup () {
             var application = window.application as Application;
-            this.settings = application.get_settings_child ("curve-fitting");
-
+            settings = application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
             Action confidence_action = settings.create_action ("confidence");
             confidence_action.notify.connect (emit_fit_curve_request);
             action_map.add_action (confidence_action);
+
             Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
                 emit_fit_curve_request ();
@@ -118,13 +121,11 @@ namespace Graphs {
             });
             action_map.add_action (optimization_action);
 
-            var res_action = new SimpleAction.stateful ("show-residuals", null, settings.get_value ("show-residuals"));
-            res_action.change_state.connect (v => settings.set_value ("show-residuals", v));
-            settings.changed["show-residuals"].connect (() => {
-                bool show = settings.get_boolean ("show-residuals");
-                res_action.set_state (new Variant.boolean (show));
-                residuals_container.visible = (show && _residuals_canvas != null);
-                show_residuals_changed (show);
+            Action res_action = settings.create_action ("show-residuals");
+            res_action.notify.connect (() => {
+                bool show_residuals = settings.get_boolean ("show-residuals");
+                residuals_container.visible = (show_residuals && _residuals_canvas != null);
+                show_residuals_changed (show_residuals);
             });
             action_map.add_action (res_action);
 

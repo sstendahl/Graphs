@@ -17,7 +17,8 @@ import sympy
 
 DATA_COLOR = "#1A5FB4"
 FIT_COLOR = "#A51D2D"
-FILL_ALPHA = 0.15
+FILL_COLOR = "#62A0EA"
+FILL_ALPHA = 0.25
 MARKER_STYLE = 1
 MARKER_SIZE = 13
 LINE_STYLE = 0
@@ -36,6 +37,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.connect("add-fit-request", self.add_fit)
         self.connect("show-residuals-changed", self.reload_residuals_canvas)
         Adw.StyleManager.get_default().connect("notify", self.load_canvas)
+
         app = window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
 
@@ -63,7 +65,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 self.data_curve.get_ydata(),
                 self.data_curve.get_ydata(),
             ),
-            color=DATA_COLOR,
+            color=FILL_COLOR,
             alpha=FILL_ALPHA,
         )
 
@@ -77,25 +79,21 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         x_range = x_max - x_min
         padding = x_range * 0.025
         self._xlim = (x_min - padding, x_max + padding)
-
         self.setup()
         self.present(window)
-        self.load_canvas()
 
     def load_canvas(self, *_args) -> None:
-        """Initialize canvases once during dialog creation."""
+        """Load and set the canvas."""
         window_data = self.props.window.get_data()
         settings = window_data.get_figure_settings()
         app = self.props.window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
-
         cv = canvas.Canvas(style, self._items, interactive=False)
         ax = cv.figure.axis
         ax.set(xlabel=settings.get_property("bottom_label"),
                ylabel=settings.get_property("left_label"),
                xlim=self._xlim,
                )
-
         self.reload_residuals_canvas()
         self.set_canvas(cv)
 
@@ -126,16 +124,12 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def reload_residuals_canvas(self, *_args):
         """Create or update the residuals canvas."""
-        if not self.get_settings().get_boolean("show-residuals"):
-            self.set_residuals_canvas(None)
-            return
         app = self.props.window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
         settings = self.props.window.get_data().get_figure_settings()
 
         res_cv = canvas.Canvas(style, self._residuals_items, interactive=False)
         res_ax = res_cv.figure.axis
-        res_ax.get_legend().remove()
         res_ax.set_ylabel(_("Residuals"))
         res_ax.set_xlabel(settings.get_property("bottom_label"))
         res_ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
@@ -143,8 +137,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if res_ax.get_legend():
             res_ax.get_legend().remove()
 
-        res_y = numpy.asarray(self._residuals_items[0].get_ydata())
-        if res_y.size > 0:
+        if len(self._residuals_items) > 0:
+            res_y = numpy.asarray(self._residuals_items[0].get_ydata())
             max_val = abs(res_y).max()
             if max_val > 0:
                 res_pad = max_val * 1.1
@@ -275,9 +269,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
         y_data = numpy.asarray(self.data_curve.get_ydata())
-        self._update_residuals(func, x_data, y_data)
         self.set_r2(func)
         self.get_confidence()
+        self._update_residuals(func, x_data, y_data)
         self.set_results()
 
         return True
@@ -295,7 +289,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             xdata=x_data.tolist(),
             ydata=residuals.tolist(),
             color=DATA_COLOR,
-            name="",
         )
 
         residuals_item.linestyle = LINE_STYLE
@@ -304,6 +297,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         self._residuals_items.remove_all()
         self._residuals_items.append(residuals_item)
+        self.reload_residuals_canvas()
 
     def set_results(self, error="") -> None:
         """Display fitting results or error message in the results view."""
