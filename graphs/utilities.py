@@ -4,6 +4,7 @@ import ast
 import contextlib
 import operator as op
 import re
+from numbers import Number
 from gettext import gettext as _
 
 from gi.repository import Gio, Gtk
