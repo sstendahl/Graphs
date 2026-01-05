@@ -139,6 +139,7 @@ OPERATORS = {
 
 
 def _eval(node):
+    # <number>
     if isinstance(node, ast.Constant) and isinstance(node.value, Number):
         return node.value
     if isinstance(node, ast.BinOp):  # <left> <operator> <right>
