@@ -85,7 +85,7 @@ namespace Graphs {
         }
 
         public string to_item_string () {
-            return "%d;%d;%b;%s".printf (column_x, column_y, single_column, equation);
+            return "%d;%d;%s;%s".printf (column_x, column_y, single_column.to_string (), equation);
         }
     }
 }
