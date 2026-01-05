@@ -1,14 +1,14 @@
 # Chinese (China) translation for Graphs.
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# lumingzh <lumingzh@qq.com>, 2024-2025.
+# lumingzh <lumingzh@qq.com>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-24 21:54+0000\n"
-"PO-Revision-Date: 2025-10-25 08:30+0800\n"
+"POT-Creation-Date: 2026-01-05 14:53+0000\n"
+"PO-Revision-Date: 2026-01-06 07:57+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -132,9 +132,10 @@ msgstr "删除样式吗？"
 #: data/ui/dialogs/delete-style.blp:8
 #: data/ui/dialogs/reset-import-settings.blp:9
 #: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
-#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/transform.blp:17
+#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/style-editor/add-style.blp:16 data/ui/add-equation.blp:17
+#: data/ui/export-figure.blp:16 data/ui/generate-data.blp:17
+#: data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "取消"
 
@@ -204,7 +205,7 @@ msgstr "当前样式包含未保存更改，未保存的更改将会永久丢失
 msgid "Name and Position"
 msgstr "名称和位置"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "名称"
 
@@ -396,7 +397,7 @@ msgid "Marker Size"
 msgstr "标记大小"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:191
+#: data/ui/curve-fitting.blp:65 graphs/item.py:196
 msgid "Equation"
 msgstr "方程式"
 
@@ -499,7 +500,7 @@ msgid "Add Item"
 msgstr "添加项目"
 
 #: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
-#: data/ui/style-editor/color-box.blp:36
+#: data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "移除"
 
@@ -1054,9 +1055,21 @@ msgstr "移动平均"
 msgid "Advanced Settings"
 msgstr "高级设置"
 
-#: data/ui/style-editor/color-box.blp:18
-msgid "Edit"
-msgstr "编辑"
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "添加新样式"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "添加"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "模板"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "更改颜色"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1214,46 +1227,41 @@ msgstr "标签文本可能较难阅读"
 msgid "Poor Contrast"
 msgstr "对比度过低"
 
-#: data/ui/style-editor/editor-box.blp:393
+#: data/ui/style-editor/editor-box.blp:394
 msgid "Text Color"
 msgstr "文本颜色"
 
-#: data/ui/style-editor/editor-box.blp:398
-#: data/ui/style-editor/editor-box.blp:425
-#: data/ui/style-editor/editor-box.blp:452
-#: data/ui/style-editor/editor-box.blp:479
-#: data/ui/style-editor/editor-box.blp:506
-#: data/ui/style-editor/editor-box.blp:533
-msgid "Change Color"
-msgstr "更改颜色"
-
-#: data/ui/style-editor/editor-box.blp:420
+#: data/ui/style-editor/editor-box.blp:405
 msgid "Tick Color"
 msgstr "刻度颜色"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:416
 msgid "Axis Color"
 msgstr "坐标轴颜色"
 
-#: data/ui/style-editor/editor-box.blp:474
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Grid Color"
 msgstr "网格颜色"
 
-#: data/ui/style-editor/editor-box.blp:501
+#: data/ui/style-editor/editor-box.blp:438
 msgid "Background Color"
 msgstr "背景颜色"
 
-#: data/ui/style-editor/editor-box.blp:528
+#: data/ui/style-editor/editor-box.blp:449
 msgid "Outline Color"
 msgstr "轮廓颜色"
 
-#: data/ui/style-editor/editor-box.blp:551
+#: data/ui/style-editor/editor-box.blp:456
 msgid "Line Colors"
 msgstr "线条颜色"
 
-#: data/ui/style-editor/editor-box.blp:563
+#: data/ui/style-editor/editor-box.blp:468
 msgid "Add Color"
 msgstr "添加颜色"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "编辑"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1305,10 +1313,6 @@ msgstr "打开样式"
 msgid "Graphs Style Editor"
 msgstr "Graphs 样式编辑器"
 
-#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "添加新样式"
-
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
 msgstr "导入文件…"
@@ -1350,10 +1354,6 @@ msgstr "关闭样式…"
 msgid "Add Equation"
 msgstr "添加方程式"
 
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "添加"
-
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "输入数学表达式"
@@ -1361,10 +1361,6 @@ msgstr "输入数学表达式"
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "名称（可选）"
-
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "模板"
 
 #: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
 msgid "Curve Fitting"
@@ -1426,19 +1422,19 @@ msgstr "切换侧边栏"
 msgid "Optimization Method"
 msgstr "优化方法"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:160
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "L-M 方法"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:167
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "信赖域反射"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:174
 msgctxt "optimization"
 msgid "Dogbox"
@@ -1475,7 +1471,7 @@ msgstr "3σ：99.7% 置信区间"
 msgid "Export Figure"
 msgstr "导出图表"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:72
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
 msgid "Export"
 msgstr "导出"
 
@@ -1531,16 +1527,16 @@ msgid "Export Size"
 msgstr "导出大小"
 
 #: data/ui/export-figure.blp:70
-msgid "Use Same Size as App"
-msgstr "使用与应用相同的大小"
-
-#: data/ui/export-figure.blp:75
 msgid "Width (pixels)"
 msgstr "宽度（像素）"
 
-#: data/ui/export-figure.blp:85
+#: data/ui/export-figure.blp:80
 msgid "Height (pixels)"
 msgstr "高度（像素）"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "使用与应用相同的大小"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1906,7 +1902,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:109
+#: graphs/file_import/__init__.py:112
 msgid "Import failed"
 msgstr "导入失败"
 
@@ -1944,7 +1940,6 @@ msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
 #: graphs/sidebar/figure_settings.vala:172
-#: graphs/sidebar/figure_settings.vala:176
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
@@ -1952,14 +1947,13 @@ msgstr "X 轴标签"
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
+#: graphs/sidebar/figure_settings.vala:176
+msgid "Y Axis Label"
+msgstr "Y 轴标签"
+
 #: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "默认值已更新"
-
-#: graphs/style_editor/color_box.vala:30
-#, c-format
-msgid "Color %d"
-msgstr "颜色 %d"
 
 #: graphs/style_editor/__init__.py:63
 msgid "Example Item"
@@ -1972,6 +1966,11 @@ msgstr "X 标签"
 #: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Y 标签"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "颜色 %d"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -1991,7 +1990,7 @@ msgstr "Graphs 开发者们"
 #: graphs/actions.vala:42
 msgid "translator-credits"
 msgstr ""
-"lumingzh <lumingzh@qq.com>, 2024-2025\n"
+"lumingzh <lumingzh@qq.com>, 2024-2026\n"
 "SuGotLand <sugotland@outlook.com>, 2024"
 
 #: graphs/actions.vala:183 graphs/item_box.vala:56
@@ -2052,16 +2051,16 @@ msgstr "无法解析样式 {stylename}，加载系统首选样式"
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:564
+#: graphs/data.py:563
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:49
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "导出的图表"
 
-#: graphs/export_figure.vala:93
+#: graphs/export_figure.vala:76
 msgid "Exported Figure"
 msgstr "导出的图表"
 
@@ -2078,15 +2077,15 @@ msgstr "文本文件"
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.py:121
+#: graphs/item.py:126
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.py:239
+#: graphs/item.py:244
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.py:275
+#: graphs/item.py:280
 msgid "Fill"
 msgstr "填充"
 
@@ -2095,37 +2094,37 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:252
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "无法执行变换，请确保语法正确"
 
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:295 graphs/operations.py:602
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "对 {name} 的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:610
+#: graphs/operations.py:608
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:613
+#: graphs/operations.py:611
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:617
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
@@ -2137,19 +2136,19 @@ msgstr "工程文件缺失数据"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
 
-#: graphs/project.py:262
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "旧版本文件迁移失败"
 
-#: graphs/project.py:264
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/project.py:270
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "迁移工程失败"
 
-#: graphs/project.py:276
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "校验工程失败"
 
@@ -2207,15 +2206,15 @@ msgstr "无法解析 {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "系统"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:170
 msgid "All Files"
 msgstr "所有文件"
 
-#: graphs/utilities.vala:263
+#: graphs/utilities.vala:221
 msgid "Document Portal"
 msgstr "文档门户"
 
