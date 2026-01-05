@@ -5,6 +5,7 @@ import contextlib
 import math
 import operator as op
 import re
+from numbers import Number
 
 from graphs import scales
 from graphs.misc import FUNCTIONS
@@ -138,8 +139,8 @@ OPERATORS = {
 
 
 def _eval(node):
-    if isinstance(node, ast.Num):  # <number>
-        return node.n
+    if isinstance(node, ast.Constant) and isinstance(node.value, Number):
+        return node.value
     if isinstance(node, ast.BinOp):  # <left> <operator> <right>
         return OPERATORS[type(node.op)](_eval(node.left), _eval(node.right))
     if isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
