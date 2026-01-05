@@ -99,25 +99,24 @@ namespace Graphs {
         protected signal bool equation_change (string equation);
         protected signal void fit_curve_request ();
         protected signal void add_fit_request ();
+        protected signal void update_confidence_request ();
         public signal void show_residuals_changed (bool show);
 
         protected virtual void setup () {
             var application = window.application as Application;
             settings = application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
+
             Action confidence_action = settings.create_action ("confidence");
-            confidence_action.notify.connect (emit_fit_curve_request);
+            confidence_action.notify.connect (() => {
+                update_confidence_request ();
+            });
             action_map.add_action (confidence_action);
 
             Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
-                emit_fit_curve_request ();
-                bool visible = settings.get_string ("optimization") != "lm";
-                var entry = fitting_params_box.get_first_child () as FittingParameterBox;
-                while (entry != null) {
-                    entry.set_bounds_visible (visible);
-                    entry = entry.get_next_sibling () as FittingParameterBox;
-                }
+                update_bounds_visibility ();
+                fit_curve_request ();
             });
             action_map.add_action (optimization_action);
 
@@ -143,50 +142,90 @@ namespace Graphs {
             insert_action_group ("win", action_map);
 
             equation.set_selected (settings.get_enum ("equation"));
-            equation.notify["selected"].connect (set_equation);
-            custom_equation.notify["text"].connect (() => {
-                bool success = equation_change.emit (custom_equation.get_text ());
+            equation.notify["selected"].connect (on_equation_selection_changed);
+
+            custom_equation.notify["text"].connect (on_custom_equation_text_changed);
+            custom_equation.apply.connect (on_custom_equation_apply);
+
+            set_equation_from_selection ();
+        }
+
+        private void update_bounds_visibility () {
+            bool visible = settings.get_string ("optimization") != "lm";
+            var entry = fitting_params_box.get_first_child () as FittingParameterBox;
+            while (entry != null) {
+                entry.set_bounds_visible (visible);
+                entry = entry.get_next_sibling () as FittingParameterBox;
+            }
+        }
+
+        private void on_equation_selection_changed () {
+            set_equation_from_selection ();
+        }
+
+        private void on_custom_equation_text_changed () {
+            // Only validate if custom equation is visible
+            if (equation.get_selected () != 7) {
+                return;
+            }
+
+            string eq_text = custom_equation.get_text ();
+            bool success = equation_change (eq_text);
+
+            if (success) {
+                custom_equation.remove_css_class ("error");
+            } else {
+                custom_equation.add_css_class ("error");
+            }
+        }
+
+        private void on_custom_equation_apply () {
+            if (equation.get_selected () == 7) {
+                string eq_text = custom_equation.get_text ();
+                settings.set_string ("custom-equation", eq_text);
+
+                // Update equation_string and trigger fit
+                bool success = equation_change (eq_text);
                 if (success) {
-                    custom_equation.remove_css_class ("error");
-                } else custom_equation.add_css_class ("error");
-            });
-
-            custom_equation.apply.connect (() => {
-                if (equation.get_selected () == 7) {
-                    settings.set_string ("custom-equation", custom_equation.get_text ());
-                    emit_fit_curve_request ();
+                    fit_curve_request ();
                 }
-            });
-            set_equation ();
+            }
         }
 
-        private void emit_fit_curve_request () {
-            fit_curve_request.emit ();
-        }
-
-        private void set_equation () {
+        private void set_equation_from_selection () {
             int selected = (int) equation.get_selected ();
-            if (settings.get_enum ("equation") != selected ) {
+
+            // Update settings if changed
+            if (settings.get_enum ("equation") != selected) {
                 settings.set_enum ("equation", selected);
             }
-            string equation;
+
+            string new_equation;
             if (selected != 7) {
-                equation = EQUATIONS[selected];
-                this.equation.set_subtitle (@"Y=$equation");
+                // Preset equation
+                new_equation = EQUATIONS[selected];
+                this.equation.set_subtitle (@"Y=$new_equation");
                 custom_equation.set_visible (false);
             } else {
-                equation = settings.get_string ("custom-equation");
+                // Custom equation
+                new_equation = settings.get_string ("custom-equation");
                 this.equation.set_subtitle ("");
-                settings.set_string ("custom-equation", equation);
+                custom_equation.set_text (new_equation);
                 custom_equation.set_visible (true);
             }
-            custom_equation.set_text (equation);
-            emit_fit_curve_request ();
+
+            // Only trigger fit if equation actually changed
+            if (equation_string != new_equation) {
+                bool success = equation_change (new_equation);
+                if (success) {
+                    fit_curve_request ();
+                }
+            }
         }
 
         [GtkCallback]
         private void emit_add_fit_request () {
-            add_fit_request.emit ();
+            add_fit_request ();
         }
     }
 
