@@ -173,7 +173,7 @@ namespace Graphs {
                 }
                 else if (!x && !both_y) {
                     scale.set_title (_("Y Axis Scale"));
-                    label.set_title (_("X Axis Label"));
+                    label.set_title (_("Y Axis Label"));
                 }
             }
         }
