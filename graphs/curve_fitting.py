@@ -59,7 +59,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         self.fitting_parameters = FittingParameterContainer()
         self.fit_result = None
-        self._error = False
 
         app = window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
@@ -114,17 +113,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.load_canvas()
         self.present(window)
 
-    @property
-    def error(self):
-        """Get the error state."""
-        return self._error
-
-    @error.setter
-    def error(self, value):
-        """Set the error state and update button sensitivity."""
-        self._error = value
-        self.get_confirm_button().set_sensitive(not value)
-
     def load_canvas(self, *_args) -> None:
         """Initialize and set main canvas."""
         cv = self.get_canvas()
@@ -140,7 +128,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                xlim=self._xlim)
         self.set_canvas(cv)
         self.load_residuals_canvas()
-        if self.error:
+        if self.get_error():
             self._clear_fit()
 
     def load_residuals_canvas(self, *_args):
@@ -370,14 +358,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.fitted_curve.equation = equation
         self.fitted_curve.set_name(f"Y = {equation}")
 
-        # Show fill and fit again after succesful fit
+        # Show fill and fit again after successful fit
         cv = self.get_canvas()
-        if self.error and cv:
+        if self.get_error() and cv:
             for line in cv.figure.axis.lines[1:]:
                 line.set_visible(True)
             for collection in cv.figure.axis.collections:
                 collection.set_visible(True)
-            self.error = False
+            self.set_error(False)
             self._update_residuals(self.fit_result.residuals)
             self.load_canvas()
 
@@ -441,7 +429,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
         self.fit_result = None
-        self.error = True
+        self.set_error(True)
         self._update_residuals(numpy.zeros(len(self.data_curve.get_xdata())))
         # Hide fitted curve and fill by hiding their matplotlib artists
         cv = self.get_canvas()

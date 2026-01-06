@@ -60,16 +60,14 @@ namespace Graphs {
         protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
 
-        private Canvas? _main_canvas = null;
-        private Canvas? _residuals_canvas = null;
-
         protected Canvas? canvas {
-            get { return _main_canvas; }
+            get {
+                return canvas_container.get_first_child () as Canvas?;
+            }
             set {
                 clear_container (canvas_container);
-                _main_canvas = value;
-                if (_main_canvas != null) {
-                    canvas_container.append (_main_canvas);
+                if (value != null) {
+                    canvas_container.append (value);
                     error_page.visible = false;
                 } else {
                     error_page.visible = true;
@@ -77,26 +75,28 @@ namespace Graphs {
             }
         }
 
-        protected Canvas residuals_canvas {
-            get { return _residuals_canvas; }
+        protected Canvas? residuals_canvas {
+            get {
+                return residuals_container.get_first_child () as Canvas?;
+            }
             set {
                 clear_container (residuals_container);
-                _residuals_canvas = value;
-                if (_residuals_canvas != null) {
-                    residuals_container.append (_residuals_canvas);
-                    residuals_container.visible = settings.get_boolean ("show-residuals");
-                } else {
+                if (canvas == null) {
                     residuals_container.visible = false;
+                    } else {
+                        if (value != null) {
+                            residuals_container.append (value);
+                            residuals_container.visible = settings.get_boolean ("show-residuals");
+                        } else {
+                            residuals_container.visible = false;
+                        }
                 }
             }
         }
 
-        private void clear_container (Box container) {
-            Widget? child = container.get_first_child ();
-            while (child != null) {
-                container.remove (child);
-                child = container.get_first_child ();
-            }
+        [GtkCallback]
+        private void emit_add_fit_request () {
+            add_fit_request ();
         }
 
         protected signal bool equation_change (string equation);
@@ -126,7 +126,7 @@ namespace Graphs {
             Action res_action = settings.create_action ("show-residuals");
             res_action.notify.connect (() => {
                 bool show_residuals = settings.get_boolean ("show-residuals");
-                residuals_container.visible = (show_residuals && _residuals_canvas != null);
+                residuals_container.visible = (show_residuals && residuals_canvas != null);
                 show_residuals_changed (show_residuals);
             });
             action_map.add_action (res_action);
@@ -152,6 +152,20 @@ namespace Graphs {
 
             set_equation_from_selection ();
         }
+
+        public bool error {
+            get { return !confirm_button.get_sensitive (); }
+            set { confirm_button.set_sensitive (!value); }
+        }
+
+        private void clear_container (Box container) {
+            Widget? child = container.get_first_child ();
+            while (child != null) {
+                container.remove (child);
+                child = container.get_first_child ();
+            }
+        }
+
 
         private void update_bounds_visibility () {
             bool visible = settings.get_string ("optimization") != "lm";
@@ -221,11 +235,6 @@ namespace Graphs {
             if (success) {
                 fit_curve_request ();
             }
-        }
-
-        [GtkCallback]
-        private void emit_add_fit_request () {
-            add_fit_request ();
         }
     }
 
