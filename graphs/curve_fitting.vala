@@ -60,7 +60,7 @@ namespace Graphs {
         private Canvas? _main_canvas = null;
         private Canvas? _residuals_canvas = null;
 
-        protected Canvas canvas {
+        protected Canvas? canvas {
             get { return _main_canvas; }
             set {
                 clear_container (canvas_container);
@@ -214,12 +214,9 @@ namespace Graphs {
                 custom_equation.set_visible (true);
             }
 
-            // Only trigger fit if equation actually changed
-            if (equation_string != new_equation) {
-                bool success = equation_change (new_equation);
-                if (success) {
-                    fit_curve_request ();
-                }
+            bool success = equation_change (new_equation);
+            if (success) {
+                fit_curve_request ();
             }
         }
 
@@ -227,6 +224,23 @@ namespace Graphs {
         private void emit_add_fit_request () {
             add_fit_request ();
         }
+
+        /**
+         * Add a toast to the window.
+         */
+        public void add_toast (Adw.Toast toast) {
+            toast_overlay.add_toast (toast);
+        }
+
+        /**
+         * Add a toast to the window.
+         *
+         * The toast is created automatically with the given title.
+         */
+        public void add_toast_string (string title) {
+            add_toast (new Adw.Toast (title));
+        }
+
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/fitting-parameters.ui")]

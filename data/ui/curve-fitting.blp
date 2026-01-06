@@ -96,37 +96,28 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
               }
 
               Box fitting_params_box {
-                vexpand: true;
                 hexpand: true;
                 spacing: 12;
                 orientation: vertical;
               }
 
-              Box {
-                vexpand: true;
+              ScrolledWindow {
                 hexpand: true;
-                orientation: vertical;
+                hscrollbar-policy: automatic;
+                vscrollbar-policy: never;
+                propagate-natural-height: true;
 
-                ScrolledWindow {
-                  vexpand: true;
-                  hexpand: true;
-                  hscrollbar-policy: automatic;
-                  vscrollbar-policy: never;
-                  propagate-natural-height: true;
+                TextView text_view {
+                  left-margin: 12;
+                  right-margin: 12;
+                  top-margin: 12;
+                  bottom-margin: 12;
+                  halign: fill;
+                  editable: false;
 
-                  TextView text_view {
-                    left-margin: 12;
-                    right-margin: 12;
-                    top-margin: 12;
-                    bottom-margin: 12;
-                    halign: fill;
-                    valign: fill;
-                    editable: false;
-
-                    styles [
-                      "card",
-                    ]
-                  }
+                  styles [
+                    "card",
+                  ]
                 }
               }
             }
@@ -217,7 +208,7 @@ menu fitting_menu {
     }
 
     item {
-      // Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+      // Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
       label: C_("optimization", "Trust Region Reflective");
       action: "win.optimization";
       target: "trf";
