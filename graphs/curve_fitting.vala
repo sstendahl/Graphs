@@ -30,6 +30,9 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
+        protected unowned Button confirm_button { get; }
+
+        [GtkChild]
         protected unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
@@ -224,23 +227,6 @@ namespace Graphs {
         private void emit_add_fit_request () {
             add_fit_request ();
         }
-
-        /**
-         * Add a toast to the window.
-         */
-        public void add_toast (Adw.Toast toast) {
-            toast_overlay.add_toast (toast);
-        }
-
-        /**
-         * Add a toast to the window.
-         *
-         * The toast is created automatically with the given title.
-         */
-        public void add_toast_string (string title) {
-            add_toast (new Adw.Toast (title));
-        }
-
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/fitting-parameters.ui")]

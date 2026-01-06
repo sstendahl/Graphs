@@ -59,7 +59,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         self.fitting_parameters = FittingParameterContainer()
         self.fit_result = None
-        self.error = False
+        self._error = False
 
         app = window.get_application()
         style = app.get_figure_style_manager().get_system_style_params()
@@ -113,6 +113,17 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.setup()
         self.load_canvas()
         self.present(window)
+
+    @property
+    def error(self):
+        """Get the error state."""
+        return self._error
+
+    @error.setter
+    def error(self, value):
+        """Set the error state and update button sensitivity."""
+        self._error = value
+        self.get_confirm_button().set_sensitive(not value)
 
     def load_canvas(self, *_args) -> None:
         """Initialize and set main canvas."""
@@ -507,11 +518,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def add_fit(self, _parent) -> None:
         """Add fitted data to the items in the main application."""
-        if self.error:
-            self.add_toast_string(
-                _("No successful fit to add to the data"),
-            )
-            return
         self.props.window.get_data().add_items([self.fitted_curve])
         self.close()
 
