@@ -54,6 +54,15 @@
     </screenshot>
   </screenshots>
   <releases>
+    <release version="1.8.7" date="2026-01-06">
+      <description>
+        <p>Minor update:</p>
+          <ul>
+            <li>Translation updates</li>
+            <li>Fix compatibility with Python 3.14 for non-Flatpak builds</li>
+          </ul>
+      </description>
+    </release>
     <release version="1.8.6" date="2025-12-02">
       <description>
         <p>Minor update, offering some language updates.</p>
