@@ -5,6 +5,7 @@ import contextlib
 import operator as op
 import re
 from gettext import gettext as _
+from numbers import Number
 
 from gi.repository import Gio, Gtk
 
@@ -146,8 +147,9 @@ OPERATORS = {
 
 
 def _eval(node):
-    if isinstance(node, ast.Num):  # <number>
-        return node.n
+    # <number>
+    if isinstance(node, ast.Constant) and isinstance(node.value, Number):
+        return node.value
     elif isinstance(node, ast.BinOp):  # <left> <operator> <right>
         return OPERATORS[type(node.op)](_eval(node.left), _eval(node.right))
     elif isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
