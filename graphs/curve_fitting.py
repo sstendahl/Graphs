@@ -115,8 +115,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def load_canvas(self, *_args) -> None:
         """Initialize and set main canvas."""
-        cv = self.get_canvas()
-        self.set_canvas(None)
         window_data = self.props.window.get_data()
         settings = window_data.get_figure_settings()
         app = self.props.window.get_application()
@@ -228,16 +226,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         widgets = {
             "init": row.get_initial(),
             "low": row.get_lower_bound(),
+            "high": row.get_upper_bound(),
         }
-
-        for widget in widgets.values():
-            widget.remove_css_class("error")
 
         vals = {}
         value_error = False
         for key, widget in widgets.items():
             try:
                 vals[key] = float(widget.get_text())
+                widget.remove_css_class("error")
             except ValueError:
                 widget.add_css_class("error")
                 value_error = True

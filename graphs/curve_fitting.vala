@@ -60,10 +60,8 @@ namespace Graphs {
         protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
 
-        protected Canvas? canvas {
-            get {
-                return canvas_container.get_first_child () as Canvas?;
-            }
+        protected Canvas canvas {
+            get { return canvas_container.get_first_child () as Canvas; }
             set {
                 clear_container (canvas_container);
                 if (value != null) {
@@ -75,21 +73,17 @@ namespace Graphs {
             }
         }
 
-        protected Canvas? residuals_canvas {
+        protected Canvas residuals_canvas {
             get {
-                return residuals_container.get_first_child () as Canvas?;
+                return residuals_container.get_first_child () as Canvas;
             }
             set {
                 clear_container (residuals_container);
-                if (canvas == null) {
+                if (canvas != null && value != null){
+                    residuals_container.append (value);
+                    residuals_container.visible = settings.get_boolean ("show-residuals");
+                } else {
                     residuals_container.visible = false;
-                    } else {
-                        if (value != null) {
-                            residuals_container.append (value);
-                            residuals_container.visible = settings.get_boolean ("show-residuals");
-                        } else {
-                            residuals_container.visible = false;
-                        }
                 }
             }
         }
@@ -145,7 +139,7 @@ namespace Graphs {
             insert_action_group ("win", action_map);
 
             equation.set_selected (settings.get_enum ("equation"));
-            equation.notify["selected"].connect (on_equation_selection_changed);
+            equation.notify["selected"].connect (set_equation_from_selection);
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
             custom_equation.apply.connect (on_custom_equation_apply);
@@ -174,10 +168,6 @@ namespace Graphs {
                 entry.set_bounds_visible (visible);
                 entry = entry.get_next_sibling () as FittingParameterBox;
             }
-        }
-
-        private void on_equation_selection_changed () {
-            set_equation_from_selection ();
         }
 
         private void on_custom_equation_text_changed () {
