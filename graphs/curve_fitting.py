@@ -351,6 +351,23 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         eq_name = utilities.prettify_equation(eq_name)
 
+        # Clean up combined operators
+        eq_name = (
+            eq_name.replace("--", "+")
+                   .replace("+-", "-")
+                   .replace("-+", "-")
+        )
+        # Remove + signs at the start, or after an opening +
+        eq_name = re.sub(
+            r"""
+            (^|\()   # Group 1: Look for either the start of the line OR a "("
+            \+       # Look for a "+" immediately after it
+            """,
+            r"\1",   # Put back only group 1 without the +
+            eq_name,
+            flags=re.VERBOSE,
+        )
+
         self.fitted_curve.equation = equation
         self.fitted_curve.set_name(f"Y = {eq_name}")
 
