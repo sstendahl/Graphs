@@ -22,9 +22,9 @@ class Figure(GObject.Object, figure.Figure):
 
     def __init__(
         self,
-        parent,
         style_params: Tuple[RcParams, dict],
         items: Gio.ListModel,
+        parent = None,
     ):
         GObject.Object.__init__(self)
         self._style_params = style_params
