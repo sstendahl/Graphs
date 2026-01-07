@@ -293,7 +293,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
         self._axis = axis
         self._view_change_timeout_id = None
         if self._axis.figure.canvas is not None:
-            self._axis.figure.canvas.connect(
+            self._axis.figure.parent.connect(
                 "view_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
@@ -365,7 +365,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
 
         self._artist.set_data(xdata, ydata)
         self._handle_singularities(self._artist.get_data(), True)
-        self._axis.figure.canvas.queue_draw()
+        self._axis.figure.parent.queue_draw()
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):

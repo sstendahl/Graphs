@@ -167,6 +167,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         _xfill, yfill_low, yfill_high = self.fill.props.data
         ydata = self.data_curve.get_ydata()
         all_y = [*yfit, *yfill_low, *yfill_high, *ydata]
+        all_y = [y for y in all_y if numpy.isfinite(y)]
         y_min, y_max = min(all_y), max(all_y)
 
         padding = (y_max - y_min) * 0.025
