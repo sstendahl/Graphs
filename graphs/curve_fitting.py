@@ -336,20 +336,27 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _update_fitted_curve(self, eq_str: str, params: numpy.ndarray) -> None:
         """Update the fitted curve on the main canvas."""
-        equation = str(eq_str).lower()
+        equation = str(utilities.preprocess(eq_str.lower()))
+        eq_name = eq_str
         free_vars = utilities.get_free_variables(eq_str)
 
-        # Substitute each free variable in the equation with its calculated
-        # value, rounded to 3 sig figs. Uses word boundaries (\b) to ensure
-        # partial parameters ("x" in the parameter "x1") are not matched
+        # Substitute each free variables with the calculated value.
         for i, var in enumerate(free_vars):
-            val = utilities.sig_fig_round(params[i], 3)
-            equation = re.sub(rf"\b{var}\b", f"({val})", equation)
+            param_value = params[i]
+            var_pattern = rf"\b{re.escape(var)}\b"
+            equation = re.sub(var_pattern, f"({param_value})", equation)
+            abs_val = abs(param_value)
+            if abs_val < 1 and abs_val > 0:
+                # Use sig figs for small numbers to preserve precision
+                rounded = utilities.sig_fig_round(param_value, 3)
+            else:
+                rounded = f"{param_value:.2f}".rstrip('0').rstrip('.')
+            eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
 
-        equation = str(sympy.simplify(utilities.preprocess(equation)))
-        equation = utilities.prettify_equation(equation)
+        eq_name = utilities.prettify_equation(eq_name)
+
         self.fitted_curve.equation = equation
-        self.fitted_curve.set_name(f"Y = {equation}")
+        self.fitted_curve.set_name(f"Y = {eq_name}")
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
