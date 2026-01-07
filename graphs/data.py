@@ -18,6 +18,9 @@ from matplotlib import RcParams
 
 import numpy
 
+import sympy
+from sympy.calculus.singularities import singularities
+
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
     "max-selected",
@@ -431,7 +434,6 @@ class Data(Graphs.Data):
                 axis[1] = True
 
                 xdata, ydata = copy.deepcopy(item_.props.data)
-
                 min_max = self._get_min_max_from_array(
                     numpy.asarray(ydata if index % 2 else xdata),
                     axis[4],
@@ -453,12 +455,33 @@ class Data(Graphs.Data):
                     figure_settings.get_property(f"min_{direction}"),
                     figure_settings.get_property(f"max_{direction}"),
                 ]
-            yaxis[1] = True
 
+            x = sympy.Symbol("x")
+            expr = sympy.sympify(item_.equation.lower())
+            domain = sympy.Interval(*x_limits)
+            has_singularities = singularities(expr, x, domain)
+            yaxis[1] = True
             ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
 
+            ydata_arr = numpy.asarray(ydata)
+            if has_singularities:
+                # Don't take negative values into account for log scaling
+                if yaxis[4] in (1, 2):
+                    ydata_arr = ydata_arr[ydata_arr > 0]
+
+                y_min, y_max = ydata_arr.min(), ydata_arr.max()
+                lower_bound = utilities.get_value_at_fraction(
+                    0.05, y_min, y_max, yaxis[4],
+                )
+                upper_bound = utilities.get_value_at_fraction(
+                    0.95, y_min, y_max, yaxis[4],
+                )
+                ydata_arr = ydata_arr[
+                    (ydata_arr >= lower_bound) & (ydata_arr <= upper_bound)
+                ]
+
             min_max = self._get_min_max_from_array(
-                numpy.asarray(ydata),
+                ydata_arr,
                 yaxis[4],
             )
             if min_max is None:
