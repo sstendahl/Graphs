@@ -357,12 +357,15 @@ def equation_to_data(
     equation = preprocess(equation)
     xdata = create_equidistant_xdata(limits, scale, steps)
     try:
-        ydata = numpy.ndarray.tolist(
-            numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata}),
-        )
+        ydata = numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata})
+
+        # Remove invalid values
+        mask = numpy.isfinite(ydata)
+        xdata = numpy.asarray(xdata)[mask]
+        ydata = ydata[mask]
     except (KeyError, SyntaxError, ValueError, TypeError):
         return None, None
-    return xdata, ydata
+    return numpy.ndarray.tolist(xdata), numpy.ndarray.tolist(ydata)
 
 
 def validate_equation(equation: str, limits: tuple = None) -> bool:
