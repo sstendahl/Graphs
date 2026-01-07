@@ -162,8 +162,8 @@ class SingularityHandler:
 
     _singularities_cache = {}
 
-    def handle_singularities(self, data: tuple[list, list],
-                             insert_y_points: bool) -> None:
+    def _handle_singularities(self, data: tuple[list, list],
+                              insert_y_points: bool) -> None:
         """Handle singularities and update artist data."""
         xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
         x_min, x_max = float(numpy.min(xdata)), float(numpy.max(xdata))
@@ -256,8 +256,8 @@ class SingularityHandler:
         return numpy.array([left * inf_value, numpy.nan, right * inf_value])
 
 
-class GeneratedDataItemArtistWrapper(SingularityHandler,
-                                     DataItemArtistWrapper):
+class GeneratedDataItemArtistWrapper(DataItemArtistWrapper,
+                                     SingularityHandler):
     """Wrapper for GeneratedDataItemArtist."""
 
     __gtype_name__ = "GraphsGeneratedDataItemArtistWrapper"
@@ -270,7 +270,7 @@ class GeneratedDataItemArtistWrapper(SingularityHandler,
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
         self._equation = utilities.preprocess(equation)
-        self.handle_singularities(self._artist.get_data(), False)
+        self._handle_singularities(self._artist.get_data(), False)
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         self._axis = axis
@@ -278,7 +278,7 @@ class GeneratedDataItemArtistWrapper(SingularityHandler,
         self._equation = utilities.preprocess(item.props.equation)
 
 
-class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
+class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
     """Wrapper for EquationItem."""
 
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
@@ -292,7 +292,9 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
         self._equation = utilities.preprocess(item.props.equation)
         self._axis = axis
         self._view_change_timeout_id = None
-        self._axis.figure.canvas.connect("view_changed", self._on_view_change)
+        if self._axis.figure.canvas is not None:
+            self._axis.figure.canvas.connect(
+                "view_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
             [],
@@ -362,7 +364,7 @@ class EquationItemArtistWrapper(SingularityHandler, ItemArtistWrapper):
         )
 
         self._artist.set_data(xdata, ydata)
-        self.handle_singularities(self._artist.get_data(), True)
+        self._handle_singularities(self._artist.get_data(), True)
         self._axis.figure.canvas.queue_draw()
 
 
