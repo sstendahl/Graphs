@@ -79,7 +79,7 @@ namespace Graphs {
             }
             set {
                 clear_container (residuals_container);
-                if (canvas != null && value != null){
+                if (canvas != null && value != null) {
                     residuals_container.append (value);
                     residuals_container.visible = settings.get_boolean ("show-residuals");
                 } else {
