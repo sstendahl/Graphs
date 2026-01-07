@@ -16,8 +16,8 @@
         "*.a"
     ],
     "modules": [
-        "build-aux/flatpak/python-dependencies.json",
-        "build-aux/flatpak/python-tests.json",
+        "python-dependencies.json",
+        "python-tests.json",
         {
             "name": "graphs",
             "buildsystem": "meson",
