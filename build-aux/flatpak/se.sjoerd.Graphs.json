@@ -24,7 +24,7 @@
             "sources": [
                 {
                     "type": "dir",
-                    "path": "."
+                    "path": "../.."
                 }
             ],
             "config-opts": [
