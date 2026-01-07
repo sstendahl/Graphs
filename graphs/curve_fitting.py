@@ -327,16 +327,17 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Calculate R² and RMSE statistics."""
         ss_res = numpy.sum((y_data - fitted_y)**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
-        r2 = utilities.sig_fig_round(1 - (ss_res / ss_tot), 3)
+        r2 = 1 - (ss_res / ss_tot)
 
         n = len(y_data)
-        rmse = utilities.sig_fig_round(numpy.sqrt(ss_res / n), 3)
+        rmse = numpy.sqrt(ss_res / n)
 
-        return r2, rmse
+        return f"{r2:.3g}", f"{rmse:.3g}"
 
     def _update_fitted_curve(self, eq_str: str, params: numpy.ndarray) -> None:
         """Update the fitted curve on the main canvas."""
-        equation = str(utilities.preprocess(eq_str.lower()))
+        eq_str = eq_str.lower()
+        equation = str(utilities.preprocess(eq_str))
         eq_name = eq_str
         free_vars = utilities.get_free_variables(eq_str)
 
@@ -345,12 +346,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             param_value = params[i]
             var_pattern = rf"\b{re.escape(var)}\b"
             equation = re.sub(var_pattern, f"({param_value})", equation)
-            abs_val = abs(param_value)
-            if abs_val < 1 and abs_val > 0:
-                # Use sig figs for small numbers to preserve precision
-                rounded = utilities.sig_fig_round(param_value, 3)
-            else:
-                rounded = f"{param_value:.2f}".rstrip('0').rstrip('.')
+            rounded = f"{param_value:.3g}"
             eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
 
         eq_name = utilities.prettify_equation(eq_name)
@@ -501,10 +497,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         conf_level = self.get_settings().get_enum("confidence")
 
         for i, var in enumerate(free_vars):
-            val = utilities.sig_fig_round(self.fit_result.parameters[i], 3)
+            val = f"{self.fit_result.parameters[i]:.3g}"
             line = f"{var}: {val}"
             if conf_level > 0:
-                err = utilities.sig_fig_round(diag_cov[i] * conf_level, 3)
+                err = f"{diag_cov[i] * conf_level:.3g}"
                 line += f" (± {err})"
             buffer.insert(buffer.get_end_iter(), f"{line}\n")
 
