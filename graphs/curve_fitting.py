@@ -145,15 +145,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         ax.set_xlim(*self._xlim)
         if ax.get_legend():
             ax.get_legend().remove()
-
-        if len(self._residuals_items) > 0:
-            y = numpy.asarray(self._residuals_items[0].get_ydata())
-            max_val = abs(y).max()
-            if max_val > 0:
-                y_lim = max_val * 1.1
-                ax.set_ylim(-y_lim, y_lim)
-
         self.set_residuals_canvas(cv)
+        self._set_residual_canvas_scale()
 
     def update_canvas_data(self):
         """Update existing canvas data."""
@@ -186,6 +179,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         self.set_equation_string(processed_eq)
         self._update_parameter_widgets(free_vars)
+        if self.fit_result is not None:
+            self._update_residuals(self.fit_result.residuals)
         return True
 
     def _update_parameter_widgets(self, free_vars: list) -> None:
@@ -374,10 +369,23 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Update residuals plot."""
         xdata = numpy.asarray(self.data_curve.get_xdata())
         self.residuals_item.props.data = xdata, residuals
-
         cv = self.get_residuals_canvas()
-        if cv and (legend := cv.figure.axis.get_legend()):
+        if not cv:
+            return
+
+        self._set_residual_canvas_scale()
+        if legend := cv.figure.axis.get_legend():
             legend.remove()
+
+    def _set_residual_canvas_scale(self) -> None:
+        """Set the scaling for the residual canvas."""
+        ax = self.get_residuals_canvas().figure.axis
+        if len(self._residuals_items) > 0:
+            y = numpy.asarray(self.residuals_item.get_ydata())
+            max_val = abs(y).max()
+            if max_val > 0:
+                y_lim = max_val * 1.1
+                ax.set_ylim(-y_lim, y_lim)
 
     def update_confidence_band(self, *_args) -> None:
         """Update confidence band."""
