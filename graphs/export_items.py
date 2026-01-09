@@ -5,7 +5,7 @@ import sys
 from gi.repository import Gio, Graphs
 
 from graphs import utilities
-from graphs.item import DataItem, EquationItem
+from graphs.item import DataItem, EquationItem, GeneratedDataItem
 
 
 def export_items(
@@ -39,7 +39,7 @@ def _export_columns(
 
 def _save_item(
     file: Gio.File,
-    item: DataItem | EquationItem,
+    item: DataItem | EquationItem | GeneratedDataItem,
     figure_settings: Graphs.FigureSettings,
 ) -> None:
     """Save Item in columns format."""
@@ -51,8 +51,8 @@ def _save_item(
     )
     if xlabel != "" and ylabel != "":
         stream.put_string(xlabel + delimiter + ylabel + "\n")
-    if isinstance(item, DataItem):
-        xdata, ydata = item.xdata, item.ydata
+    if isinstance(item, (DataItem, GeneratedDataItem)):
+        xdata, ydata = item.data
     elif isinstance(item, EquationItem):
         limits = figure_settings.get_limits()
         if item.get_xposition() == 0:
