@@ -38,7 +38,7 @@ template $GraphsTransformDialog: Adw.Dialog {
           position: bottom;
 
           Label {
-            label: _("<b>Additional variables:</b>\nx_min, y_min\nx_max, y_max \n\nTrigonometric functions use radians\nby default, append d to the function\nto use degrees, e.g. sind(x) or cosd(x).");
+            label: _("<b>Available variables</b>\nGeneral:\n counts - number of data points\n\nX-Axis:\n x_min, x_max - minimum and maximum values,\n x_mean, x_median - average and median,\n x_std, x_sum — standard deviation and sum\n\nY-Axis:\n y_min, y_max - minimum and maximum,\n y_mean, y_median — average and median,\n y_std, y_sum - standard deviation and sum\n\nTrigonometric functions use radians by default.\nAppend d to use degrees, e.g. sind(x) or cosd(x).");
             use-markup: true;
             margin-top: 12;
             margin-bottom: 12;

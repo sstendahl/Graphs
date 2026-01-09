@@ -562,6 +562,15 @@ class EquationOperations():
             "x_max": max(xdata),
             "y_min": min(ydata),
             "y_max": max(ydata),
+            "counts": len(xdata),
+            "x_mean": numpy.mean(xdata),
+            "y_mean": numpy.mean(ydata),
+            "x_std": numpy.std(xdata),
+            "y_std": numpy.std(ydata),
+            "x_median": numpy.median(xdata),
+            "y_median": numpy.median(ydata),
+            "x_sum": sum(xdata),
+            "y_sum": sum(ydata),
         }
 
         for key, value in local_dict.items():
@@ -820,6 +829,15 @@ class DataOperations():
             "x_max": max(xdata),
             "y_min": min(ydata),
             "y_max": max(ydata),
+            "counts": len(xdata),
+            "x_mean": numpy.mean(xdata),
+            "y_mean": numpy.mean(ydata),
+            "x_std": numpy.std(xdata),
+            "y_std": numpy.std(ydata),
+            "x_median": numpy.median(xdata),
+            "y_median": numpy.median(ydata),
+            "x_sum": sum(xdata),
+            "y_sum": sum(ydata),
         }
         # Add array of zeros to return values, such that output remains a list
         # of the correct size, even when a float is given as input.
