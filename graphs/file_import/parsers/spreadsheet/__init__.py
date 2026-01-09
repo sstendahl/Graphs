@@ -172,7 +172,7 @@ class SpreadsheetParser(Parser):
         super().__init__(
             "spreadsheet",
             C_("import-mode", "Spreadsheet"),
-            C_("file-filter", "Spreadsheet (.ods, .xlsx)"),
+            C_("file-filter", "Spreadsheet"),
             ["ods", "xlsx"],
         )
 
