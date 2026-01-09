@@ -85,11 +85,14 @@ class XlsxParser:
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
-        with zip_file.open("xl/sharedStrings.xml") as strings_file:
-            root = xml.etree.ElementTree.parse(strings_file).getroot()
-            namespace = XLSX_MAIN_NAMESPACE
-            text_elements = root.findall(f".//{{{namespace}}}t")
-            return [element.text or "" for element in text_elements]
+        try:
+            with zip_file.open("xl/sharedStrings.xml") as strings_file:
+                root = xml.etree.ElementTree.parse(strings_file).getroot()
+                namespace = XLSX_MAIN_NAMESPACE
+                text_elements = root.findall(f".//{{{namespace}}}t")
+                return [element.text or "" for element in text_elements]
+        except KeyError:
+            return []  # No shared strings in this file
 
     def _parse_worksheet(
         self,
@@ -121,29 +124,26 @@ class XlsxParser:
         shared_strings: List[str],
     ) -> List[str]:
         """Parse a single row element."""
-        row_data = []
         cell_elements = row_element.findall("main:c", namespaces)
+        if not cell_elements:
+            return []
 
-        for current_col, cell_element in enumerate(cell_elements):
+        # Find max column index in this row
+        max_col = 0
+        cell_data = {}
+
+        for cell_element in cell_elements:
             ref = cell_element.get("r")
             column = "".join(c for c in ref if not c.isdigit())
-            target_col = Graphs.SpreadsheetUtils.label_to_index(column)
+            column_index = Graphs.SpreadsheetUtils.label_to_index(column)
+            max_col = max(max_col, column_index)
 
-            # Fill empty columns, first column in data might not correspond to
-            # column A. So need to adjust current_col index accordingly.
-            while current_col < target_col:
-                row_data.append("")
-                current_col += 1
+            cell_value = self._get_cell_value(
+                cell_element, namespaces, shared_strings)
+            cell_data[column_index] = cell_value
 
-            cell_string = self._get_cell_value(
-                cell_element,
-                namespaces,
-                shared_strings,
-            )
-            row_data.append(cell_string)
-            current_col += 1
-
-        return row_data
+        # Build row with all positions filled
+        return [cell_data.get(i, "") for i in range(max_col + 1)]
 
     def _get_cell_value(
         self,
@@ -237,14 +237,21 @@ class SpreadsheetParser(Parser):
 
             x_index = item_settings.column_x
             y_index = item_settings.column_y
-
             if x_index >= len(columns) or y_index >= len(columns):
                 raise ParseError(_("Column index out of range"))
 
+            data = numpy.array([columns[x_index], columns[y_index]])
+            mask = ~numpy.any(data == "", axis=0)  # Filter empty cells
+
+            # If there's no columns with data from same row, we can't import
+            if not numpy.any(mask):
+                raise ParseError(_("Missing data in selected columns."))
+
+            xcolumn, ycolumn = data[:, mask].tolist()
             parser = Graphs.SpreadsheetDataParser.new(
                 settings,
-                columns[x_index],
-                columns[y_index],
+                xcolumn,
+                ycolumn,
             )
 
             try:
@@ -267,7 +274,6 @@ class SpreadsheetParser(Parser):
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 xdata = numpy.ndarray.tolist(xdata)
-
             items.append(
                 item.DataItem.new(
                     style,
