@@ -92,27 +92,63 @@
   </description>
 
   <releases>
-    <release version="1.9.0" date="2025-12-02">
+    <release version="2.0.0" date="2025-12-02">
       <description>
-        <p>Version 1.9 of Graphs introduces several new features such as proper equation support and a completely redesigned style editor.</p>
-        <p>New in Graphs</p>
+        <p>Version 2.0 of Graphs is a major update, introducing several new features such as proper equation support and a completely redesigned style editor.</p>
+        <p>Different data types:</p>
         <ul>
-          <li>Graphs now differentiates between imported data and equations.</li>
+          <li>Graphs now differentiates between imported data from files, generated data and equations</li>
           <li>Equations now span an infinite range</li>
           <li>Equations can now be edited afterwards, as well as simplified using the item editor</li>
+          <li>Equations with undefined values (e.g. 1/x at x=0) are now properly rendered as well</li>
+          <li>Operations on equations are now performed analytically, meaning the name of the equation will also change accordingly when performing operations</li>
           <li>Generated data can now be changed afterwards with regard to step size and rendered span</li>
-          <li>Data can now be imported by drag-and-drop into Graphs</li>
-          <li>Operations on equations are now performed analytically, meaning the name of the equation will also change accordingly when performing operationsy</li>
-          <li>Graphs has a redesigned style editor with a live preview of the edited styles</li>
+        </ul>
+        <p>New Style Editor:</p>
+        <ul>
+          <li>Graphs has a completely redesigned style editor with a live preview of the edited styles</li>
+          <li>Styles can now be exported</li>
+          <li>New styles can now be imported from matplotlib-style files</li>
+          <li>Added the ability to draw tick labels (values) on all axes</li>
+        </ul>
+        <p>Reworked Curve fitting:</p>
+        <ul>
+          <li>The confidence band in the curve fitting dialog is now correctly calculated using the delta-method</li>
+          <li>The curve fitting dialog now has the option to show residuals</li>
+          <li>The parameter values themselves in the curve fitting dialog are no longer rounded (e.g. 421302 used to be rounded to 421000)</li>
+          <li>The results in the curve fitting dialog now also show the root mean squared error as a second goodness-of-fit figure</li>
+          <li>The curve fitting dialog now shows more useful error messages when things go wrong</li>
+          <li>Custom equations in the curve fitting dialog now have an apply button, greatly improving the smoothness when entering new equations</li>
+        </ul>
+        <p>Improved data import:</p>
+        <ul>
+          <li>Revamped the import dialog, where the import settings can now be set independently for multiple files</li>
+          <li>Added support for sqlite database files</li>
+          <li>Added support for spreadsheets files (both .xlsx and .ods)</li>
+          <li>Added proper support for single-column imports, x-data can be generated using your own equation</li>
+          <li>Multiple items can now easily be imported from the same file at once</li>
+        </ul>
+        <p>Quality of life changes:</p>
+        <ul>
           <li>It is now possible to have multiple instances of Graphs open at the same time</li>
-          <li>Styles can now be exported, and new styles can be imported from matplotlib style files</li>
+          <li>Data can now be imported by drag-and-drop into Graphs</li>
+          <li>The subtitle now also shows the full file path for Flatpaks</li>
+          <li>Limits can now easily be clicking on the numbers near the axes</li>
+          <li>The custom transformation has gained the following extra variables: x_mean, y_mean, x_median, y_median, x_std, y_std and counts</li>
+          <li>Settings that affect the canvas (item or figure settings) are now displayed in the sidebar, so you can immediately see the changes on your graph</li>
+          <li>Graphs now properly supports mobile screen sizes</li>
           <li>Graphs now inhibits the session when unsaved data is still open</li>
+          <li>The resolution (image size) for exported figures can now be set manually</li>
           <li>Added support for base-2 logarithmic scaling</li>
+          <li>Warnings are now displayed when trying to open a project from a beta version</li>
           <li>Translation updates</li>
         </ul>
         <p>Bug fixes:</p>
         <ul>
           <li>Graphical fixes for the drag-drop animations</li>
+          <li>Limit entries can now be properly set even for many significant digits</li>
+          <li>Panning and zooming are now done consistently on all axes when using multiple axes</li>
+          <li>Fixed a bug where the text size was set incorrectly after exporting a figure</li>
           <li>Overall tweaks and refactors under the hood</li>
         </ul>
       </description>
