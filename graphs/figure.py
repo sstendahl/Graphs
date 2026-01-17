@@ -24,10 +24,12 @@ class Figure(GObject.Object, figure.Figure):
         self,
         style_params: Tuple[RcParams, dict],
         items: Gio.ListModel,
+        parent=None,
     ):
         GObject.Object.__init__(self)
         self._style_params = style_params
         self._items = items
+        self.parent = parent
         pyplot.rcParams.update(self._style_params[0])  # apply style_params
         figure.Figure.__init__(self, tight_layout=True)
 

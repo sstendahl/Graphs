@@ -30,6 +30,9 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
+        protected unowned Button confirm_button { get; }
+
+        [GtkChild]
         protected unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
@@ -44,37 +47,84 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.OverlaySplitView split_view { get; }
 
+        [GtkChild]
+        private unowned Box canvas_container { get; }
+
+        [GtkChild]
+        private unowned Box residuals_container { get; }
+
+        [GtkChild]
+        private unowned Adw.StatusPage error_page { get; }
+
         public Window window { get; construct set; }
-        protected GLib.Settings settings { get; private set; }
+        protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
+
         protected Canvas canvas {
-            get { return toast_overlay.get_child () as Canvas; }
-            set { toast_overlay.set_child (value); }
+            get { return canvas_container.get_first_child () as Canvas; }
+            set {
+                clear_container (canvas_container);
+                if (value != null) {
+                    canvas_container.append (value);
+                    error_page.visible = false;
+                } else {
+                    error_page.visible = true;
+                }
+            }
+        }
+
+        protected Canvas residuals_canvas {
+            get {
+                return residuals_container.get_first_child () as Canvas;
+            }
+            set {
+                clear_container (residuals_container);
+                if (canvas != null && value != null) {
+                    residuals_container.append (value);
+                    residuals_container.visible = settings.get_boolean ("show-residuals");
+                } else {
+                    residuals_container.visible = false;
+                }
+            }
+        }
+
+        [GtkCallback]
+        private void emit_add_fit_request () {
+            add_fit_request ();
         }
 
         protected signal bool equation_change (string equation);
         protected signal void fit_curve_request ();
         protected signal void add_fit_request ();
+        protected signal void update_confidence_request ();
+        public signal void show_residuals_changed (bool show);
 
-        protected void setup () {
+        protected virtual void setup () {
             var application = window.application as Application;
-            this.settings = application.get_settings_child ("curve-fitting");
-
+            settings = application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
+
             Action confidence_action = settings.create_action ("confidence");
-            confidence_action.notify.connect (emit_fit_curve_request);
+            confidence_action.notify.connect (() => {
+                update_confidence_request ();
+            });
             action_map.add_action (confidence_action);
+
             Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
-                emit_fit_curve_request ();
-                bool visible = settings.get_string ("optimization") != "lm";
-                var entry = fitting_params_box.get_first_child () as FittingParameterBox;
-                while (entry != null) {
-                    entry.set_bounds_visible (visible);
-                    entry = entry.get_next_sibling () as FittingParameterBox;
-                }
+                update_bounds_visibility ();
+                fit_curve_request ();
             });
             action_map.add_action (optimization_action);
+
+            Action res_action = settings.create_action ("show-residuals");
+            res_action.notify.connect (() => {
+                bool show_residuals = settings.get_boolean ("show-residuals");
+                residuals_container.visible = (show_residuals && residuals_canvas != null);
+                show_residuals_changed (show_residuals);
+            });
+            action_map.add_action (res_action);
+
             var toggle_sidebar_action = new SimpleAction ("toggle_sidebar", null);
             toggle_sidebar_action.activate.connect (() => {
                 split_view.show_sidebar = !split_view.show_sidebar;
@@ -89,45 +139,92 @@ namespace Graphs {
             insert_action_group ("win", action_map);
 
             equation.set_selected (settings.get_enum ("equation"));
-            equation.notify["selected"].connect (set_equation);
-            custom_equation.notify["text"].connect (() => {
-                bool success = equation_change.emit (custom_equation.get_text ());
+            equation.notify["selected"].connect (set_equation_from_selection);
+
+            custom_equation.notify["text"].connect (on_custom_equation_text_changed);
+            custom_equation.apply.connect (on_custom_equation_apply);
+
+            set_equation_from_selection ();
+        }
+
+        public bool error {
+            get { return !confirm_button.get_sensitive (); }
+            set { confirm_button.set_sensitive (!value); }
+        }
+
+        private void clear_container (Box container) {
+            Widget? child = container.get_first_child ();
+            while (child != null) {
+                container.remove (child);
+                child = container.get_first_child ();
+            }
+        }
+
+
+        private void update_bounds_visibility () {
+            bool visible = settings.get_string ("optimization") != "lm";
+            var entry = fitting_params_box.get_first_child () as FittingParameterBox;
+            while (entry != null) {
+                entry.set_bounds_visible (visible);
+                entry = entry.get_next_sibling () as FittingParameterBox;
+            }
+        }
+
+        private void on_custom_equation_text_changed () {
+            // Only validate if custom equation is visible
+            if (equation.get_selected () != 7) {
+                return;
+            }
+
+            string eq_text = custom_equation.get_text ();
+            bool success = equation_change (eq_text);
+
+            if (success) {
+                custom_equation.remove_css_class ("error");
+            } else {
+                custom_equation.add_css_class ("error");
+            }
+        }
+
+        private void on_custom_equation_apply () {
+            if (equation.get_selected () == 7) {
+                string eq_text = custom_equation.get_text ();
+                settings.set_string ("custom-equation", eq_text);
+
+                // Update equation_string and trigger fit
+                bool success = equation_change (eq_text);
                 if (success) {
-                    custom_equation.remove_css_class ("error");
-                    if (equation.get_selected () == 7) {
-                        settings.set_string ("custom-equation", custom_equation.get_text ());
-                    }
-                } else custom_equation.add_css_class ("error");
-            });
-            set_equation ();
+                    fit_curve_request ();
+                }
+            }
         }
 
-        private void emit_fit_curve_request () {
-            fit_curve_request.emit ();
-        }
-
-        private void set_equation () {
+        private void set_equation_from_selection () {
             int selected = (int) equation.get_selected ();
-            if (settings.get_enum ("equation") != selected ) {
+
+            // Update settings if changed
+            if (settings.get_enum ("equation") != selected) {
                 settings.set_enum ("equation", selected);
             }
-            string equation;
+
+            string new_equation;
             if (selected != 7) {
-                equation = EQUATIONS[selected];
-                this.equation.set_subtitle (@"Y=$equation");
+                // Preset equation
+                new_equation = EQUATIONS[selected];
+                this.equation.set_subtitle (@"Y=$new_equation");
                 custom_equation.set_visible (false);
             } else {
-                equation = settings.get_string ("custom-equation");
+                // Custom equation
+                new_equation = settings.get_string ("custom-equation");
                 this.equation.set_subtitle ("");
-                settings.set_string ("custom-equation", equation);
+                custom_equation.set_text (new_equation);
                 custom_equation.set_visible (true);
             }
-            custom_equation.set_text (equation);
-        }
 
-        [GtkCallback]
-        private void emit_add_fit_request () {
-            add_fit_request.emit ();
+            bool success = equation_change (new_equation);
+            if (success) {
+                fit_curve_request ();
+            }
         }
     }
 

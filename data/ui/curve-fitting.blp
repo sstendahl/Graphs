@@ -23,6 +23,14 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
     }
   }
 
+  Adw.Breakpoint {
+    condition ("max-height: 500sp")
+
+    setters {
+      residuals_container.height-request: 150;
+    }
+  }
+
   child: Adw.ToolbarView {
     top-bar-style: flat;
 
@@ -46,72 +54,88 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
           }
         }
 
-        ScrolledWindow {
-          vexpand: true;
-          width-request: 280;
-          hscrollbar-policy: never;
+        content: Box {
+          orientation: vertical;
 
-          Box {
+          ScrolledWindow {
             vexpand: true;
-            orientation: vertical;
-            margin-start: 12;
-            margin-end: 12;
-            margin-bottom: 12;
-            margin-top: 12;
-            spacing: 12;
+            width-request: 280;
+            hscrollbar-policy: never;
 
-            Adw.PreferencesGroup {
-              Adw.ComboRow equation {
-                title: _("Equation");
-
-                model: StringList {
-                  strings [
-                    C_("regression-type", "Linear"),
-                    C_("regression-type", "Quadratic"),
-                    C_("regression-type", "Exponential"),
-                    C_("regression-type", "Power Law"),
-                    C_("regression-type", "Logarithmic"),
-                    C_("regression-type", "Sigmoid Logistic"),
-                    C_("regression-type", "Gaussian"),
-                    C_("regression-type", "Custom"),
-                  ]
-                };
-              }
-
-              Adw.EntryRow custom_equation {
-                visible: false;
-                title: _("Y =");
-              }
-            }
-
-            Box fitting_params_box {
-              spacing: 12;
+            Box {
               orientation: vertical;
-            }
-
-            ScrolledWindow {
-              vexpand: false;
-              hexpand: false;
-              hscrollbar-policy: automatic;
-              vscrollbar-policy: never;
-
-              TextView text_view {
-                left-margin: 12;
-                right-margin: 12;
-                top-margin: 12;
-                bottom-margin: 12;
-                halign: fill;
-                editable: false;
-
-                styles [
-                  "card",
-                ]
-              }
-            }
-
-            Button confirm_button {
               margin-start: 12;
               margin-end: 12;
+              margin-bottom: 12;
+              margin-top: 12;
+              spacing: 12;
+
+              Adw.PreferencesGroup {
+                Adw.ComboRow equation {
+                  title: _("Equation");
+
+                  model: StringList {
+                    strings [
+                      C_("regression-type", "Linear"),
+                      C_("regression-type", "Quadratic"),
+                      C_("regression-type", "Exponential"),
+                      C_("regression-type", "Power Law"),
+                      C_("regression-type", "Logarithmic"),
+                      C_("regression-type", "Sigmoid Logistic"),
+                      C_("regression-type", "Gaussian"),
+                      C_("regression-type", "Custom"),
+                    ]
+                  };
+                }
+
+                Adw.EntryRow custom_equation {
+                  visible: false;
+                  title: _("Y =");
+                  show-apply-button: true;
+                }
+              }
+
+              Box fitting_params_box {
+                hexpand: true;
+                spacing: 12;
+                orientation: vertical;
+              }
+
+              ScrolledWindow {
+                hexpand: true;
+                hscrollbar-policy: automatic;
+                vscrollbar-policy: never;
+                propagate-natural-height: true;
+
+                TextView text_view {
+                  left-margin: 12;
+                  right-margin: 12;
+                  top-margin: 12;
+                  bottom-margin: 12;
+                  halign: fill;
+                  editable: false;
+
+                  styles [
+                    "card",
+                  ]
+                }
+              }
+            }
+          }
+        };
+
+        [bottom]
+        Adw.Clamp {
+          maximum-size: 400;
+
+          child: Box {
+            margin-start: 12;
+            margin-end: 12;
+            margin-top: 6;
+            margin-bottom: 12;
+
+            Button confirm_button {
+              hexpand: true;
               label: _("Add Fit to Data");
               clicked => $emit_add_fit_request();
 
@@ -120,7 +144,7 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
                 "suggested-action",
               ]
             }
-          }
+          };
         }
       };
 
@@ -141,9 +165,30 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
           focusable: true;
           hexpand: true;
 
-          child: Adw.StatusPage {
-            icon-name: "dialog-error-symbolic";
-            title: _("Canvas Failed to Load");
+          child: Box {
+            orientation: vertical;
+            hexpand: true;
+            vexpand: true;
+
+            Box canvas_container {
+              orientation: vertical;
+              hexpand: true;
+              vexpand: true;
+
+              Adw.StatusPage error_page {
+                visible: false;
+                icon-name: "dialog-error-symbolic";
+                title: _("Canvas Failed to Load");
+              }
+            }
+
+            Box residuals_container {
+              orientation: vertical;
+              hexpand: true;
+              vexpand: false;
+              height-request: 200;
+              visible: false;
+            }
           };
         };
       };
@@ -163,7 +208,7 @@ menu fitting_menu {
     }
 
     item {
-      // Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+      // Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
       label: C_("optimization", "Trust Region Reflective");
       action: "win.optimization";
       target: "trf";
@@ -205,6 +250,14 @@ menu fitting_menu {
       label: C_("confidence", "3σ: 99.7% Confidence");
       action: "win.confidence";
       target: "3std";
+    }
+  }
+
+  section {
+
+    item {
+      label: _("Show Residuals");
+      action: "win.show-residuals";
     }
   }
 }
