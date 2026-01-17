@@ -378,6 +378,7 @@ class CommonOperations():
                     shift_value += (ymax - ymin) + 0.1 * y_range
             if shift_value == 0:
                 continue
+            shift_value = utilities.sig_fig_round(shift_value, 3)
             if isinstance(item, EquationItem):
                 if scale == scales.Scale.LOG:
                     equation = f"({item.props.equation})*10**{shift_value}"

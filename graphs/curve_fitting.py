@@ -3,15 +3,43 @@
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs, Gtk
+from gi.repository import Adw, Gio, Graphs
 
-from graphs import utilities
-from graphs.canvas import Canvas
+from graphs import canvas, utilities
 from graphs.item import DataItem, EquationItem, FillItem
 
 import numpy
 
 from scipy.optimize import _minpack, curve_fit
+
+import sympy
+
+
+DATA_COLOR = "#1A5FB4"
+FIT_COLOR = "#A51D2D"
+FILL_COLOR = "#62A0EA"
+FILL_ALPHA = 0.25
+MARKER_STYLE = 1
+MARKER_SIZE = 13
+LINE_STYLE = 0
+
+
+class FitResult:
+    """Container for curve fitting results."""
+
+    def __init__(self, parameters, covariance, r2, rmse, residuals, fitted_y):
+        self.parameters = parameters
+        self.covariance = covariance
+        self.r2 = r2
+        self.rmse = rmse
+        self.residuals = residuals
+        self.fitted_y = fitted_y
+
+    @property
+    def is_valid(self):
+        """Check whether the fit result has a valid variance."""
+        nonfinite_covariance = numpy.any(numpy.isinf(self.covariance))
+        return len(self.parameters) > 0 and not nonfinite_covariance
 
 
 class CurveFittingDialog(Graphs.CurveFittingDialog):
@@ -22,373 +50,516 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
         super().__init__(window=window)
-        application = window.get_application()
-        Adw.StyleManager.get_default().connect("notify", self.reload_canvas)
         self.connect("equation-change", self.on_equation_change)
-        self.connect("fit-curve-request", self.fit_curve)
+        self.connect("fit-curve-request", self.on_fit_curve_request)
         self.connect("add-fit-request", self.add_fit)
+        self.connect("show-residuals-changed", self.load_residuals_canvas)
+        self.connect("update-confidence-request", self.update_confidence_band)
+        Adw.StyleManager.get_default().connect("notify", self.load_canvas)
+
         self.fitting_parameters = FittingParameterContainer()
-        style = \
-            application.get_figure_style_manager().get_system_style_params()
+        self.fit_result = None
 
-        self.param = []
-        self.sigma = []
-        self.r2 = 0
+        app = window.get_application()
+        style = app.get_figure_style_manager().get_system_style_params()
 
-        # Generate items for the canvas
         self.data_curve = DataItem.new(
             style,
-            xdata=item.xdata,
-            ydata=item.ydata,
+            xdata=item.get_xdata(),
+            ydata=item.get_ydata(),
             name=item.get_name(),
-            color="#1A5FB4",
+            color=DATA_COLOR,
         )
-        self.data_curve.linestyle = 0
-        self.data_curve.markerstyle = 1
-        self.data_curve.markersize = 13
-        self.fitted_curve = EquationItem.new(style, "x", color="#A51D2D")
+        self.data_curve.linestyle = LINE_STYLE
+        self.data_curve.markerstyle = MARKER_STYLE
+        self.data_curve.markersize = MARKER_SIZE
+
+        self.fitted_curve = EquationItem.new(style, "x", color=FIT_COLOR)
         self.fill = FillItem.new(
             style,
             (
-                self.data_curve.xdata,
-                self.data_curve.ydata,
-                self.data_curve.ydata,
+                self.data_curve.get_xdata(),
+                self.data_curve.get_ydata(),
+                self.data_curve.get_ydata(),
             ),
-            color="#1A5FB4",
-            alpha=0.15,
+            color=FILL_COLOR,
+            alpha=FILL_ALPHA,
         )
 
         self._items = Gio.ListStore.new(Graphs.Item)
         self._items.append(self.fitted_curve)
-        self._items.append(self.data_curve)
         self._items.append(self.fill)
+        self._items.append(self.data_curve)
 
-        self.reload_canvas()
+        self._residuals_items = Gio.ListStore.new(Graphs.Item)
+        self.residuals_item = DataItem.new(
+            style,
+            xdata=numpy.zeros(len(self.data_curve.get_xdata())),
+            ydata=numpy.zeros(len(self.data_curve.get_xdata())),
+            color=DATA_COLOR,
+        )
+        self.residuals_item.linestyle = LINE_STYLE
+        self.residuals_item.markerstyle = MARKER_STYLE
+        self.residuals_item.markersize = MARKER_SIZE
+        self._residuals_items.append(self.residuals_item)
+
+        x_data = numpy.asarray(self.data_curve.get_xdata())
+        x_min, x_max = x_data.min(), x_data.max()
+        x_range = x_max - x_min
+        padding = x_range * 0.025
+        self._xlim = (x_min - padding, x_max + padding)
+
         self.setup()
+        self.load_canvas()
         self.present(window)
 
-    def reload_canvas(self, *_args) -> None:
-        """Reinitialise the currently used canvas."""
-        figure_settings = self.props.window.get_data().get_figure_settings()
-        style_manager = \
-            self.props.window.get_application().get_figure_style_manager()
-        style = style_manager.get_system_style_params()
-        canvas = Canvas(style, self._items, interactive=False)
-        axis = canvas.axes[0]
-        axis.yscale = "linear"
-        axis.xscale = "linear"
-        axis.xlabel = "X Value"
-        canvas.left_label = figure_settings.get_property("left_label")
-        canvas.bottom_label = figure_settings.get_property("bottom_label")
-        self.set_canvas(canvas)
+    def load_canvas(self, *_args) -> None:
+        """Initialize and set main canvas."""
+        window_data = self.props.window.get_data()
+        settings = window_data.get_figure_settings()
+        app = self.props.window.get_application()
+        style = app.get_figure_style_manager().get_system_style_params()
+        cv = canvas.Canvas(style, self._items, interactive=False)
+        ax = cv.figure.axis
+        ax.set(xlabel=settings.get_property("bottom_label"),
+               ylabel=settings.get_property("left_label"),
+               xlim=self._xlim)
+        self.set_canvas(cv)
+        self.load_residuals_canvas()
+        if self.get_error():
+            self._clear_fit()
 
-    @staticmethod
-    def on_equation_change(self, equation: str) -> bool:
-        """
-        Logic to execute whenever the equation is changed.
+    def load_residuals_canvas(self, *_args):
+        """Initialize and set residuals canvas."""
+        app = self.props.window.get_application()
+        style = app.get_figure_style_manager().get_system_style_params()
+        settings = self.props.window.get_data().get_figure_settings()
 
-        Set the free variables and corresponding entry rows when the equation
-        has been changed.
-        """
-        processed_equation = utilities.preprocess(equation)
-        self.set_equation_string(processed_equation)
-        free_variables = utilities.get_free_variables(processed_equation)
-        if len(free_variables) == 0:
+        cv = canvas.Canvas(style, self._residuals_items, interactive=False)
+        ax = cv.figure.axis
+        ax.set_ylabel(_("Residuals"))
+        ax.set_xlabel(settings.get_property("bottom_label"))
+        ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
+        ax.set_xlim(*self._xlim)
+        if ax.get_legend():
+            ax.get_legend().remove()
+        self.set_residuals_canvas(cv)
+        self._set_residual_canvas_scale()
+
+    def update_canvas_data(self):
+        """Update existing canvas data."""
+        cv = self.get_canvas()
+        if not cv:  # cv does not exist yet during setup phase
+            return
+        ax = cv.figure.axis
+
+        equation = self.fitted_curve.equation
+        _xfit, yfit = utilities.equation_to_data(equation, self._xlim)
+        _xfill, yfill_low, yfill_high = self.fill.props.data
+        ydata = self.data_curve.get_ydata()
+        all_y = [*yfit, *yfill_low, *yfill_high, *ydata]
+        all_y = [y for y in all_y if numpy.isfinite(y)]
+        y_min, y_max = min(all_y), max(all_y)
+
+        padding = (y_max - y_min) * 0.025
+        ax.set_ylim(y_min - padding, y_max + padding)
+
+        cv.queue_draw()
+
+    def on_equation_change(self, _sender, equation: str) -> bool:
+        """Handle equation changes and update parameters."""
+        processed_eq = utilities.preprocess(equation)
+        free_vars = utilities.get_free_variables(processed_eq)
+        if not free_vars:
+            self._clear_fit()
             self.set_results(error="equation")
             return False
-        self.fitting_parameters.update(free_variables)
-        fit = self.fit_curve()
-        if not fit:
-            return False
+
+        self.set_equation_string(processed_eq)
+        self._update_parameter_widgets(free_vars)
+        if self.fit_result is not None:
+            self._update_residuals(self.fit_result.residuals)
+        return True
+
+    def _update_parameter_widgets(self, free_vars: list) -> None:
+        """Update parameter widgets when equation changes."""
+        current_params = set(self.fitting_parameters._items.keys())
+        if current_params == set(free_vars):
+            return
+
+        self.fitting_parameters.update(free_vars)
         box = self.get_fitting_params_box()
-        while box.get_last_child() is not None:
+
+        # Clear existing widgets
+        while box.get_last_child():
             box.remove(box.get_last_child())
 
+        # Create new parameter boxes
+        use_bounds = self.get_settings().get_string("optimization") != "lm"
         for param in self.fitting_parameters:
-            parameter_box = Graphs.FittingParameterBox.new(param)
-            parameter_box.set_bounds_visible(
-                self.get_settings().get_string("optimization") != "lm",
-            )
+            p_box = Graphs.FittingParameterBox.new(param)
+            p_box.set_bounds_visible(use_bounds)
+
             for prop in ("initial", "upper_bound", "lower_bound"):
-                entry = parameter_box.get_property(prop)
-                entry.connect("notify::text", self.on_entry_change)
-            box.append(parameter_box)
-        return bool(fit)
+                p_box.get_property(prop).connect(
+                    "notify::text",
+                    self.on_entry_change)
+            box.append(p_box)
 
     def on_entry_change(self, entry, _param) -> None:
-        """
-        Triggered whenever an entry changes.
+        """Validate and update fitting parameter bounds on user input."""
+        target_row = entry.get_ancestor(Graphs.FittingParameterBox)
+        fitting_box = self.get_fitting_params_box()
 
-        Update the parameters of the curve and perform a new subsequent fit.
-        """
-        error = False
+        for row, params in zip(fitting_box, self.fitting_parameters):
+            if row != target_row:
+                continue
 
-        def _is_float(value):
-            """
-            Check if a value can be converted to a float.
+            if not self._validate_and_update_parameter(row, params):
+                return
 
-            If value cannot be parsed as a float, the CSS class "error" to
-            is added to the entry.
-            """
+        # Only refit if all parameters are valid
+        self.on_fit_curve_request()
+
+    def _validate_and_update_parameter(self, row, params) -> bool:
+        """Validate a single parameter row and update if valid."""
+        widgets = {
+            "init": row.get_initial(),
+            "low": row.get_lower_bound(),
+            "high": row.get_upper_bound(),
+        }
+
+        vals = {}
+        value_error = False
+        for key, widget in widgets.items():
             try:
-                float(value)
-                return True
+                vals[key] = float(widget.get_text())
+                widget.remove_css_class("error")
             except ValueError:
-                entry.add_css_class("error")
-                return False
+                widget.add_css_class("error")
+                value_error = True
 
-        entries = entry.get_ancestor(Graphs.FittingParameterBox)
-        # Set the parameters for the row corresponding to the entry that
-        # was edited
-        for row, params in \
-                zip(self.get_fitting_params_box(), self.fitting_parameters):
-            if row == entries:
-                initial = entries.get_initial().get_text()
-                lower_bound = entries.get_lower_bound().get_text()
-                upper_bound = entries.get_upper_bound().get_text()
-                entries.get_initial().remove_css_class("error")
-                entries.get_lower_bound().remove_css_class("error")
-                entries.get_upper_bound().remove_css_class("error")
-
-                for bound in [initial, lower_bound, upper_bound]:
-                    if not _is_float(bound):
-                        self.set_results(error="value")
-                        return
-
-                initial = float(initial)
-                lower_bound = float(lower_bound)
-                upper_bound = float(upper_bound)
-
-                if (initial < lower_bound or initial > upper_bound):
-                    entries.get_initial().add_css_class("error")
-                    self.set_results(error="bounds")
-                    error = True
-                if lower_bound >= upper_bound:
-                    entries.get_lower_bound().add_css_class("error")
-                    entries.get_upper_bound().add_css_class("error")
-                    error = True
-                    self.set_results(error="bounds")
-
-                params.set_initial(initial)
-                params.set_lower_bound(str(lower_bound))
-                params.set_upper_bound(str(upper_bound))
-
-        if not error:
-            self.fit_curve()
-
-    def set_results(self, error="") -> None:
-        """Set the results dialog based on the fit."""
-        initial_string = _("Results:") + "\n"
-        buffer_string = initial_string
-        if error == "value":
-            buffer_string += _(
-                "Please enter valid fitting \nparameters to start the fit",
-            )
-        elif error == "equation":
-            buffer_string += _(
-                "Please enter a valid equation \nto start the fit",
-            )
-        elif error == "bounds":
-            buffer_string += _(
-                "Please enter valid fitting bounds \nto start the fit",
-            )
-        else:
-            free_variables = utilities.get_free_variables(
-                self.get_equation_string(),
-            )
-            for index, arg in enumerate(free_variables):
-                parameter = utilities.sig_fig_round(self.param[index], 3)
-                sigma = utilities.sig_fig_round(self.sigma[index], 3)
-                buffer_string += f"{arg}: {parameter}"
-                if self.get_settings().get_enum("confidence") != 0:
-                    buffer_string += f" (± {sigma})"
-                buffer_string += "\n"
-            buffer_string += "\n" + _("Sum of R²: {R2}").format(R2=self.r2)
-        self.get_text_view().get_buffer().set_text(buffer_string)
-        bold_tag = Gtk.TextTag(weight=700)
-        self.get_text_view().get_buffer().get_tag_table().add(bold_tag)
-
-        start_iter = self.get_text_view().get_buffer().get_start_iter()
-        end_iter = self.get_text_view().get_buffer().get_start_iter()
-
-        # Highlight first word
-        while not end_iter.ends_word() and not end_iter.ends_sentence():
-            end_iter.forward_char()
-        self.get_text_view().get_buffer().apply_tag(
-            bold_tag,
-            start_iter,
-            end_iter,
-        )
-
-    def fit_curve(self, *_args) -> bool:
-        """
-        Fit the data to the equation in the entry.
-
-        Returns a boolean indicating whether the fit was succesfull or not.
-        """
-
-        def _get_equation_name(equation_name, values):
-            """Obtain the equation name with the fitted parameter values."""
-            free_variables = utilities.get_free_variables(
-                self.get_equation_string(),
-            )
-            var_to_val = dict(zip(free_variables, values))
-            for var, val in var_to_val.items():
-                if var.lower() == "e":
-                    pattern = r"(?<!\d)[Ee]|(?!\d)[Ee](?![-+]?\d)"
-                else:
-                    pattern = (
-                        r"((?<=[\d\)])|\b)" + var
-                        + r"((?=[\u2070-\u209f\u00b0-\u00be])|\b)"
-                    )
-                value = utilities.sig_fig_round(val, 3)
-                equation_name = \
-                    re.sub(pattern, f"({value})", equation_name)
-            return equation_name
-
-        function = utilities.string_to_function(self.get_equation_string())
-        if function is None:
+        if value_error:
+            self.set_results(error="value")
             return False
+
+        if vals["low"] >= vals["high"]:
+            widgets["low"].add_css_class("error")
+            widgets["high"].add_css_class("error")
+            self.set_results(error="bounds")
+            return False
+
+        if not (vals["low"] <= vals["init"] <= vals["high"]):
+            widgets["init"].add_css_class("error")
+            self.set_results(error="bounds")
+            return False
+
+        params.set_initial(vals["init"])
+        params.set_lower_bound(str(vals["low"]))
+        params.set_upper_bound(str(vals["high"]))
+        return True
+
+    def on_fit_curve_request(self, *_args) -> None:
+        """Handle fit curve request."""
+        eq_str = self.get_equation_string()
+        if not eq_str:
+            self.set_results(error="equation")
+            return
+
+        fit_result = self._perform_fit(eq_str)
+
+        if fit_result is None:
+            return
+        self.fit_result = fit_result
+
+        # Update all UI components
+        self._update_fitted_curve(eq_str, fit_result.parameters)
+        self._update_residuals(fit_result.residuals)
+        self._update_confidence_band()
+        self.update_canvas_data()
+        self.set_results()
+
+    def _perform_fit(self, eq_str: str) -> FitResult:
+        """Perform the actual curve fitting."""
+        func = utilities.string_to_function(eq_str)
+        if not func:
+            self.set_results(error="equation")
+            return None
+
+        x_data = numpy.asarray(self.data_curve.get_xdata())
+        y_data = numpy.asarray(self.data_curve.get_ydata())
+
         try:
-            self.param, self.param_cov = curve_fit(
-                function,
-                self.data_curve.xdata, self.data_curve.ydata,
+            param, param_cov = curve_fit(
+                func, x_data, y_data,
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(),
                 nan_policy="omit",
                 method=self.get_settings().get_string("optimization"),
             )
-        except (ValueError, TypeError, _minpack.error, RuntimeError):
-            # Cancel fit if not successful
-            self.set_results(error="equation")
-            return False
 
-        equation = _get_equation_name(
-            str(self.get_custom_equation().get_text()).lower(),
-            self.param,
+            if numpy.any(numpy.isinf(param_cov)):
+                self.set_results(error="singular")
+                return None
+
+        except RuntimeError:
+            self.set_results(error="convergence")
+            return None
+        except (ValueError, TypeError):
+            self.set_results(error="domain")
+            return None
+        except _minpack.error:
+            self.set_results(error="convergence")
+            return None
+        except (ZeroDivisionError, OverflowError):
+            self.set_results(error="domain")
+            return None
+
+        # Calculate statistics
+        fitted_y = func(x_data, *param)
+        residuals = y_data - fitted_y
+        r2, rmse = self._calculate_statistics(y_data, fitted_y)
+
+        return FitResult(param, param_cov, r2, rmse, residuals, fitted_y)
+
+    def _calculate_statistics(self, y_data: numpy.ndarray,
+                              fitted_y: numpy.ndarray) -> tuple:
+        """Calculate R² and RMSE statistics."""
+        ss_res = numpy.sum((y_data - fitted_y)**2)
+        ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
+        r2 = 1 - (ss_res / ss_tot)
+
+        n = len(y_data)
+        rmse = numpy.sqrt(ss_res / n)
+
+        return f"{r2:.3g}", f"{rmse:.3g}"
+
+    def _update_fitted_curve(self, eq_str: str, params: numpy.ndarray) -> None:
+        """Update the fitted curve on the main canvas."""
+        eq_str = eq_str.lower()
+        equation = str(utilities.preprocess(eq_str))
+        eq_name = eq_str
+        free_vars = utilities.get_free_variables(eq_str)
+
+        # Substitute each free variables with the calculated value.
+        for i, var in enumerate(free_vars):
+            param_value = params[i]
+            var_pattern = rf"\b{re.escape(var)}\b"
+            equation = re.sub(var_pattern, f"({param_value})", equation)
+            rounded = f"{param_value:.3g}"
+            eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
+
+        eq_name = utilities.prettify_equation(eq_name)
+
+        # Clean up combined operators
+        eq_name = (
+            eq_name.replace("--", "+")
+                   .replace("+-", "-")
+                   .replace("-+", "-")
         )
+        # Remove + signs at the start, or after an opening +
+        eq_name = re.sub(
+            r"""
+            (^|\()   # Group 1: Look for either the start of the line OR a "("
+            \+       # Look for a "+" immediately after it
+            """,
+            r"\1",   # Put back only group 1 without the +
+            eq_name,
+            flags=re.VERBOSE,
+        )
+
         self.fitted_curve.equation = equation
-        self.fitted_curve.set_name(f"Y = {self.fitted_curve.equation}")
-        self.get_confidence(function)
+        self.fitted_curve.set_name(f"Y = {eq_name}")
+
+        # Show fill and fit again after successful fit
+        cv = self.get_canvas()
+        if self.get_error() and cv:
+            for line in cv.figure.axis.lines[1:]:
+                line.set_visible(True)
+            for collection in cv.figure.axis.collections:
+                collection.set_visible(True)
+            self.set_error(False)
+            self._update_residuals(self.fit_result.residuals)
+            self.load_canvas()
+
+    def _update_residuals(self, residuals: numpy.ndarray) -> None:
+        """Update residuals plot."""
+        xdata = numpy.asarray(self.data_curve.get_xdata())
+        self.residuals_item.props.data = xdata, residuals
+        cv = self.get_residuals_canvas()
+        if not cv:
+            return
+
+        self._set_residual_canvas_scale()
+        if legend := cv.figure.axis.get_legend():
+            legend.remove()
+
+    def _set_residual_canvas_scale(self) -> None:
+        """Set the scaling for the residual canvas."""
+        ax = self.get_residuals_canvas().figure.axis
+        if len(self._residuals_items) > 0:
+            y = numpy.asarray(self.residuals_item.get_ydata())
+            max_val = abs(y).max()
+            if max_val > 0:
+                y_lim = max_val * 1.1
+                ax.set_ylim(-y_lim, y_lim)
+
+    def update_confidence_band(self, *_args) -> None:
+        """Update confidence band."""
+        if self.fit_result is None or not self.fit_result.is_valid:
+            return
+        self._update_confidence_band()
         self.set_results()
-        return True
+        self.update_canvas_data()
 
-    def get_confidence(self, function: str) -> None:
-        """
-        Obtain the confidence interval from the fit.
-
-        Get the confidence interval in terms of the standard deviation
-        resulting from the covariance in the plot. The bounds are navively
-        calculated by using the extremes on each parameter for both sides
-        of the bounds.
-        """
-        # Get standard deviation
-        self.get_canvas().axes[0].relim()  # Reset limits
-        self.sigma = numpy.sqrt(numpy.diagonal(self.param_cov))
-        self.sigma *= self.get_settings().get_enum("confidence")
-        try:
-            fitted_y = [
-                function(x, *self.param) for x in self.data_curve.xdata
-            ]
-        except (OverflowError, ZeroDivisionError):
-            return
-        ss_res = numpy.sum(
-            (numpy.asarray(self.data_curve.ydata)
-             - numpy.asarray(fitted_y))**2,
-        )
-        ss_sum = numpy.sum((self.data_curve.ydata - numpy.mean(fitted_y))**2)
-        self.r2 = utilities.sig_fig_round(1 - (ss_res / ss_sum), 3)
-        limits = self.get_canvas()._axis.get_xlim()
-        xdata, ydata = utilities.equation_to_data(self.fitted_curve.equation,
-                                                  limits)
-        xdata, ydata = numpy.asarray(xdata), numpy.asarray(ydata)
-        # Get confidence band
-        upper_bound = function(
-            xdata,
-            *(self.param + self.sigma),
-        )
-        lower_bound = function(
-            xdata,
-            *(self.param - self.sigma),
-        )
-
-        # Filter non-finite values from the bounds
-        lower_bound = lower_bound[numpy.isfinite(lower_bound)]
-        upper_bound = upper_bound[numpy.isfinite(upper_bound)]
-
-        # Cancel if there's no valid values left after filtering non-finite
-        if len(upper_bound) == 0 or len(lower_bound) == 0:
+    def _update_confidence_band(self) -> None:
+        """Calculate and update confidence band for error propagation."""
+        if self.fit_result is None:
             return
 
-        span = max(ydata) - min(ydata)
-        middle = (max(ydata) - min(ydata)) / 2
+        conf_level = self.get_settings().get_enum("confidence")
+        x_min, x_max = self._xlim
+        x_values, y_values = utilities.equation_to_data(
+            self.fitted_curve.equation, (x_min, x_max))
+        x_values = numpy.asarray(x_values)
 
-        # Don't try to draw complicated and resource-hogging bounds when
-        # far out of range, instead set them to be single-values far away
-        if max(upper_bound) > middle + 1e5 * span:
-            upper_bound = [middle + 1e5 * span]
-        if min(lower_bound) < middle - 1e5 * span:
-            lower_bound = [middle - 1e5 * span]
-        self.fill.props.data = (
-            xdata,
-            lower_bound,
-            upper_bound,
-        )
+        eq_str = self.get_equation_string()
+        param_names = utilities.get_free_variables(eq_str)
 
-    @staticmethod
-    def add_fit(self) -> None:
+        sym_x = sympy.Symbol("x", real=True)
+        sym_params_map = \
+            {name: sympy.Symbol(name, real=True) for name in param_names}
+        sym_params_list = [sym_params_map[name] for name in param_names]
+        sym_params_map["x"] = sym_x
+        expr = sympy.sympify(eq_str, locals=sym_params_map)
+
+        n_points = x_values.size
+        n_params = len(self.fit_result.parameters)
+        jacobian = numpy.zeros((n_points, n_params))
+
+        for i, name in enumerate(param_names):
+            deriv = sympy.diff(expr, sym_params_map[name])
+            f_deriv = sympy.lambdify([sym_x, *sym_params_list], deriv, "numpy")
+            jacobian[:, i] = f_deriv(x_values, *self.fit_result.parameters)
+
+        variance = numpy.sum(
+            (jacobian @ self.fit_result.covariance) * jacobian, axis=1)
+
+        std_dev_y = numpy.sqrt(numpy.abs(variance))
+        confidence_band = std_dev_y * conf_level
+
+        y_upper = y_values + confidence_band
+        y_lower = y_values - confidence_band
+        self.fill.props.data = (x_values, y_lower, y_upper)
+
+    def _clear_fit(self) -> None:
+        """Clear all fit-related data by hiding curves."""
+        self.fit_result = None
+        self.set_error(True)
+        self._update_residuals(numpy.zeros(len(self.data_curve.get_xdata())))
+        # Hide fitted curve and fill by hiding their matplotlib artists
+        cv = self.get_canvas()
+
+        if cv:
+            # Hide all lines except the first one (data curve)
+            for line in cv.figure.axis.lines[1:]:
+                line.set_visible(False)
+            # Hide all collections (fill)
+            for collection in cv.figure.axis.collections:
+                collection.set_visible(False)
+            cv.queue_draw()
+
+    def set_results(self, error="") -> None:
+        """Display fitting results or error message in the results view."""
+        view = self.get_text_view()
+        buffer = view.get_buffer()
+        buffer.set_text("")
+        tag_table = buffer.get_tag_table()
+        bold_tag = tag_table.lookup("bold")
+        if not bold_tag:
+            bold_tag = buffer.create_tag("bold", weight=700)
+        error_messages = {
+            "value": _("Please enter valid \nnumeric parameters."),
+            "bounds": _(
+                "Constraint error: ensure \nLower < Initial < Upper."),
+            "singular": _(
+                "Matrix error: Data is \ninsufficient for this model."),
+            "convergence": _(
+                "Fit failed: Max iterations \nreached without converging."),
+            "domain": _(
+                "Domain error: Equation not \nvalid for this data range."),
+            "equation": _(
+                "Invalid equation: Check \nsyntax and variables."),
+            "confidence": _(
+                "Confidence band error: \nCovariance matrix is unstable."),
+        }
+
+        if error:
+            buffer.insert(buffer.get_end_iter(), error_messages[error])
+            self._clear_fit()
+        else:
+            if self.fit_result is None or not self.fit_result.is_valid:
+                return
+
+            self._display_fit_results(buffer)
+
+    def _display_fit_results(self, buffer) -> None:
+        """Display the fitting results in the text buffer."""
+        buffer.insert_with_tags_by_name(
+            buffer.get_end_iter(), f"{_('Parameters')}\n", "bold")
+
+        eq_str = self.get_equation_string()
+        free_vars = utilities.get_free_variables(eq_str)
+        diag_cov = numpy.sqrt(numpy.diagonal(self.fit_result.covariance))
+        conf_level = self.get_settings().get_enum("confidence")
+
+        for i, var in enumerate(free_vars):
+            val = f"{self.fit_result.parameters[i]:.3g}"
+            line = f"{var}: {val}"
+            if conf_level > 0:
+                err = f"{diag_cov[i] * conf_level:.3g}"
+                line += f" (± {err})"
+            buffer.insert(buffer.get_end_iter(), f"{line}\n")
+
+        buffer.insert(buffer.get_end_iter(), "\n")
+        buffer.insert_with_tags_by_name(
+            buffer.get_end_iter(), f"{_('Statistics')}\n", "bold")
+
+        buffer.insert(buffer.get_end_iter(),
+                      f"{_('R²')}: {self.fit_result.r2}\n")
+        buffer.insert(buffer.get_end_iter(),
+                      f"{_('RMSE')}: {self.fit_result.rmse}")
+
+    def add_fit(self, _parent) -> None:
         """Add fitted data to the items in the main application."""
-        data = self.props.window.get_data()
-        data.add_items([self.fitted_curve])
+        self.props.window.get_data().add_items([self.fitted_curve])
         self.close()
 
 
-class FittingParameterContainer():
-    """
-    Container class for the Fitting Parameters.
-
-    Each item in the container represents one fitting parameter.
-    """
+class FittingParameterContainer:
+    """Container for managing fitting parameters."""
 
     def __init__(self):
+        """Initialize the container."""
         self._items = {}
 
     def __iter__(self):
         """Iterate over items."""
         return iter(self._items.values())
 
-    def get(self, arg):
-        """Retrieve an item."""
-        return self._items[arg]
-
     def update(self, parameters: list) -> None:
-        """
-        Remove unused fitting parameters.
-
-        Removes the used parameters `used_list` from the container, this
-        ensures that the fitting parameters are kept up-to-date with the
-        actual equation.
-        """
-        names = [item.get_name() for item in self]
+        """Update parameters with new values."""
+        new_items = {}
         for var in parameters:
-            if var not in names:
-                self._items[var] = Graphs.FittingParameter(
+            new_items[var] = self._items.get(
+                var,
+                Graphs.FittingParameter(
                     name=var,
-                    initial=1,
+                    initial=1.0,
                     lower_bound="-inf",
                     upper_bound="inf",
-                )
-        # First create list with items to remove
-        # to avoid dict changing size during iteration
-        remove_list = []
-        for item in self._items.values():
-            if item.get_name() not in parameters:
-                remove_list.append(item.get_name())
-
-        for item_name in remove_list:
-            del self._items[item_name]
-
-        self._items = {key: self._items[key] for key in parameters}
+                ))
+        self._items = new_items
 
     def get_p0(self) -> list:
         """Get the initial values of the fitting."""
