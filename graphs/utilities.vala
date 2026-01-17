@@ -204,23 +204,37 @@ namespace Graphs {
             string full_path = Path.build_filename (host + path);
             string filepath = Path.get_dirname (full_path);
 
-            // Fix for rpm-ostree distros, where home is placed in /var/home
-            if (filepath.has_prefix ("/var")) {
-                filepath = filepath.substring (4);
+            // Check if this is a document portal path and query the real host path from the file itself
+            int uid = (int) Posix.getuid ();
+            string doc_portal = @"/run/user/$uid/doc/";
+            if (filepath.has_prefix (doc_portal)) {
+                var info = file.query_info ("xattr::document-portal.host-path", FileQueryInfoFlags.NONE);
+                string? host_path = info.get_attribute_string ("xattr::document-portal.host-path");
+
+                if (host_path != null) {
+                    // Early portal versions added a "\x00" suffix, trim it if present
+                    int len = host_path.length;
+                    if (len > 4 && host_path.has_suffix ("\\x00")) {
+                        host_path = host_path.substring (0, len - 4);
+                    }
+                    filepath = Path.get_dirname (host_path);
+                } else {
+                    // Use "Document Portal" as fallback
+                    return _("Document Portal");
+                }
             }
 
-            // Replace home directory with ~
+            // Remove /var from file path and home path for rpm-ostree based distros
+            if (filepath.has_prefix ("/var/home")) {
+                filepath = filepath.substring (4);
+            }
             string home = Environment.get_home_dir ();
             if (filepath.has_prefix (home)) {
                 filepath = "~" + filepath.substring (home.length);
+                if (filepath == "~") {
+                    filepath = "~/";
+                }
             }
-
-            // Replace document portal path with a user-friendly label
-            int uid = (int) Posix.getuid ();
-            if (filepath.has_prefix (@"/run/user/$uid/doc/")) {
-                filepath = _("Document Portal");
-            }
-
             return filepath;
         }
     }
