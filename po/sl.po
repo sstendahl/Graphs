@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2026-01-17 13:08+0000\n"
-"PO-Revision-Date: 2026-01-17 15:38+0100\n"
+"PO-Revision-Date: 2026-01-17 16:05+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n%100<=4 ? 2 : 3);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:25
 msgid "Graphs"
@@ -1572,6 +1572,22 @@ msgid ""
 "Trigonometric functions use radians by default.\n"
 "Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"<b>Razpoložljive spremenljivke</b>\n"
+"Splošno:\n"
+" counts - število podatkovnih točk\n"
+"\n"
+"X-os:\n"
+" x_min, x_max - minimalne in maksimalne vrednosti,\n"
+" x_mean, x_median - povprečje in mediana,\n"
+" x_std, x_sum — standardni odklon in vsota.\n"
+"\n"
+"Y-os:\n"
+" y_min, y_max - minimum in maksimum,\n"
+" y_mean, y_median — povprečje in mediana,\n"
+" y_std, y_sum - standardni odklon in vsota\n"
+"\n"
+"Trigonometrične funkcije privzeto uporabljajo radiane.\n"
+"Dodajte d za uporabo stopinj, npr. sind(x) ali cosd(x)."
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -1955,12 +1971,11 @@ msgstr ""
 "številske parametre."
 
 #: graphs/curve_fitting.py:484
-#, fuzzy
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
 msgstr ""
-"Napaka omejitve: zagotovite da je,\n"
+"Napaka meja: zagotovite da je,\n"
 "spodnja < začetna < zgornja meja."
 
 #: graphs/curve_fitting.py:486
@@ -1968,12 +1983,16 @@ msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
 msgstr ""
+"Napaka matrike: Podatki so \n"
+"nezadostni za ta model."
 
 #: graphs/curve_fitting.py:488
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
 msgstr ""
+"Prilagajanje ni uspelo: Maksimum \n"
+"iteracij dosežen brez konvergence."
 
 #: graphs/curve_fitting.py:490
 msgid ""
@@ -1992,7 +2011,6 @@ msgstr ""
 "skladnjo in spremenljivke."
 
 #: graphs/curve_fitting.py:494
-#, fuzzy
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2013,7 +2031,6 @@ msgid "R²"
 msgstr "R²"
 
 #: graphs/curve_fitting.py:531
-#, fuzzy
 msgid "RMSE"
 msgstr "RMSE"
 
@@ -2219,41 +2236,3 @@ msgstr "Grafi — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Odpri mesto"
-
-#~ msgid ""
-#~ "<b>Additional variables:</b>\n"
-#~ "x_min, y_min\n"
-#~ "x_max, y_max \n"
-#~ "\n"
-#~ "Trigonometric functions use radians\n"
-#~ "by default, append d to the function\n"
-#~ "to use degrees, e.g. sind(x) or cosd(x)."
-#~ msgstr ""
-#~ "<b>Dodatne spremenljivke:</b>\n"
-#~ "x_min, y_min\n"
-#~ "x_max, y_max \n"
-#~ "\n"
-#~ "Trigonometrične funkcije uporabljajo\n"
-#~ "privzeto radiane, funkciji privzeto dodajte d\n"
-#~ "za uporabo stopinj, npr. sind(x) ali cosd(x)."
-
-#~ msgid "Results:"
-#~ msgstr "Rezultati:"
-
-#~ msgid ""
-#~ "Please enter a valid equation \n"
-#~ "to start the fit"
-#~ msgstr ""
-#~ "Vnesite veljavno enačbo \n"
-#~ "za začetek prileganja"
-
-#~ msgid ""
-#~ "Please enter valid fitting bounds \n"
-#~ "to start the fit"
-#~ msgstr ""
-#~ "Prosimo, vnesite veljavne meje \n"
-#~ "za začetek prileganja"
-
-#, python-brace-format
-#~ msgid "Sum of R²: {R2}"
-#~ msgstr "Vsota R²: {R2}"
