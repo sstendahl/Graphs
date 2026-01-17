@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-01-05 14:53+0000\n"
-"PO-Revision-Date: 2026-01-05 16:45+0100\n"
+"POT-Creation-Date: 2026-01-17 13:08+0000\n"
+"PO-Revision-Date: 2026-01-17 15:38+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -366,12 +366,12 @@ msgstr "zapolnjeni X"
 msgid "Marker Size"
 msgstr "Velikost oznake"
 
-#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:65 graphs/item.py:196
+#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:75 graphs/item.py:196
 msgid "Equation"
 msgstr "Enačba"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -1269,7 +1269,7 @@ msgstr "Odpri datoteko …"
 msgid "Open Preview"
 msgstr "Odpri predogled"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:146 data/ui/window.blp:349
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:181 data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Platno se ni naložilo"
 
@@ -1301,110 +1301,114 @@ msgstr "Vnesite matematični izraz"
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
 
-#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "Prileganje krivulj"
 
-#: data/ui/curve-fitting.blp:43
+#: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
 msgstr "Odprite meni za prileganje krivulje"
 
-#: data/ui/curve-fitting.blp:69
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/curve-fitting.blp:70
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "kvadratna"
 
-#: data/ui/curve-fitting.blp:71
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "eksponentna"
 
-#: data/ui/curve-fitting.blp:72
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "potenčni zakon"
 
-#: data/ui/curve-fitting.blp:73
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "logaritemska"
 
-#: data/ui/curve-fitting.blp:74
+#: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "sigmoidna logistična"
 
-#: data/ui/curve-fitting.blp:75
+#: data/ui/curve-fitting.blp:85
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "po Gaussu"
 
-#: data/ui/curve-fitting.blp:76
+#: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "po meri"
 
-#: data/ui/curve-fitting.blp:115
+#: data/ui/curve-fitting.blp:139
 msgid "Add Fit to Data"
 msgstr "Dodaj Prilagodi podatkom"
 
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:158
 msgid "Toggle Sidebar"
 msgstr "Preklopi stransko okno"
 
-#: data/ui/curve-fitting.blp:156
+#: data/ui/curve-fitting.blp:201
 msgid "Optimization Method"
 msgstr "Metoda optimizacije"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:205
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:167
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
+#: data/ui/curve-fitting.blp:212
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Odsevno področje zaupanja"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:174
+#: data/ui/curve-fitting.blp:219
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:181
+#: data/ui/curve-fitting.blp:226
 msgid "Confidence Bounds"
 msgstr "Meje zaupanja"
 
-#: data/ui/curve-fitting.blp:184
+#: data/ui/curve-fitting.blp:229
 msgctxt "confidence"
 msgid "None"
 msgstr "brez"
 
-#: data/ui/curve-fitting.blp:191
+#: data/ui/curve-fitting.blp:236
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: zaupanje 68 %"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:243
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: zaupanje 95 %"
 
-#: data/ui/curve-fitting.blp:205
+#: data/ui/curve-fitting.blp:250
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: zaupanje 99,7 %"
+
+#: data/ui/curve-fitting.blp:259
+msgid "Show Residuals"
+msgstr "Pokaži ostanke"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -1551,21 +1555,23 @@ msgstr "Pretvori podatke"
 
 #: data/ui/transform.blp:41
 msgid ""
-"<b>Additional variables:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Available variables</b>\n"
+"General:\n"
+" counts - number of data points\n"
 "\n"
-"Trigonometric functions use radians\n"
-"by default, append d to the function\n"
-"to use degrees, e.g. sind(x) or cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - minimum and maximum values,\n"
+" x_mean, x_median - average and median,\n"
+" x_std, x_sum — standard deviation and sum\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - minimum and maximum,\n"
+" y_mean, y_median — average and median,\n"
+" y_std, y_sum - standard deviation and sum\n"
+"\n"
+"Trigonometric functions use radians by default.\n"
+"Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"<b>Dodatne spremenljivke:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
-"\n"
-"Trigonometrične funkcije uporabljajo\n"
-"privzeto radiane, funkciji privzeto dodajte d\n"
-"za uporabo stopinj, npr. sind(x) ali cosd(x)."
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -1936,55 +1942,97 @@ msgstr "Izbrisano %s"
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/curve_fitting.py:181
-msgid "Results:"
-msgstr "Rezultati:"
+#: graphs/curve_fitting.py:140
+msgid "Residuals"
+msgstr "Ostanki"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:482
 msgid ""
-"Please enter valid fitting \n"
-"parameters to start the fit"
+"Please enter valid \n"
+"numeric parameters."
 msgstr ""
-"Prosimo, vnesite veljavne \n"
-"parametre za začetek prileganja"
+"Prosimo, vnesite veljavne\n"
+"številske parametre."
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:484
+#, fuzzy
 msgid ""
-"Please enter a valid equation \n"
-"to start the fit"
+"Constraint error: ensure \n"
+"Lower < Initial < Upper."
 msgstr ""
-"Vnesite veljavno enačbo \n"
-"za začetek prileganja"
+"Napaka omejitve: zagotovite da je,\n"
+"spodnja < začetna < zgornja meja."
 
-#: graphs/curve_fitting.py:193
+#: graphs/curve_fitting.py:486
 msgid ""
-"Please enter valid fitting bounds \n"
-"to start the fit"
+"Matrix error: Data is \n"
+"insufficient for this model."
 msgstr ""
-"Prosimo, vnesite veljavne meje \n"
-"za začetek prileganja"
 
-#: graphs/curve_fitting.py:206
-#, python-brace-format
-msgid "Sum of R²: {R2}"
-msgstr "Vsota R²: {R2}"
+#: graphs/curve_fitting.py:488
+msgid ""
+"Fit failed: Max iterations \n"
+"reached without converging."
+msgstr ""
 
-#: graphs/curve_fitting.vala:150
+#: graphs/curve_fitting.py:490
+msgid ""
+"Domain error: Equation not \n"
+"valid for this data range."
+msgstr ""
+"Napaka domene: enačba ni \n"
+"veljavna za ta obseg podatkov."
+
+#: graphs/curve_fitting.py:492
+msgid ""
+"Invalid equation: Check \n"
+"syntax and variables."
+msgstr ""
+"Neveljavna enačba: preverite \n"
+"skladnjo in spremenljivke."
+
+#: graphs/curve_fitting.py:494
+#, fuzzy
+msgid ""
+"Confidence band error: \n"
+"Covariance matrix is unstable."
+msgstr ""
+"Napaka pasu zaupanja: \n"
+"matrika kovariance ni stabilna."
+
+#: graphs/curve_fitting.py:509
+msgid "Parameters"
+msgstr "Parametri"
+
+#: graphs/curve_fitting.py:526
+msgid "Statistics"
+msgstr "Statistika"
+
+#: graphs/curve_fitting.py:529
+msgid "R²"
+msgstr "R²"
+
+#: graphs/curve_fitting.py:531
+#, fuzzy
+msgid "RMSE"
+msgstr "RMSE"
+
+#: graphs/curve_fitting.vala:247
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:101
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "Ni bilo mogoče razčleniti sloga {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:106
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 
-#: graphs/data.py:563
+#: graphs/data.py:588
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -2031,7 +2079,7 @@ msgstr "Datoteka sloga Matplotlib"
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:295 graphs/operations.py:602
+#: graphs/operations.py:295 graphs/operations.py:612
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
@@ -2039,25 +2087,25 @@ msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:439
+#: graphs/operations.py:440
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:448
+#: graphs/operations.py:449
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:608
+#: graphs/operations.py:618
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:611
+#: graphs/operations.py:621
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:617
+#: graphs/operations.py:627
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -2145,7 +2193,8 @@ msgstr "Sistem"
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: graphs/utilities.vala:221
+#. Use "Document Portal" as fallback
+#: graphs/utilities.vala:223
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
@@ -2170,3 +2219,41 @@ msgstr "Grafi — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Odpri mesto"
+
+#~ msgid ""
+#~ "<b>Additional variables:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max \n"
+#~ "\n"
+#~ "Trigonometric functions use radians\n"
+#~ "by default, append d to the function\n"
+#~ "to use degrees, e.g. sind(x) or cosd(x)."
+#~ msgstr ""
+#~ "<b>Dodatne spremenljivke:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max \n"
+#~ "\n"
+#~ "Trigonometrične funkcije uporabljajo\n"
+#~ "privzeto radiane, funkciji privzeto dodajte d\n"
+#~ "za uporabo stopinj, npr. sind(x) ali cosd(x)."
+
+#~ msgid "Results:"
+#~ msgstr "Rezultati:"
+
+#~ msgid ""
+#~ "Please enter a valid equation \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "Vnesite veljavno enačbo \n"
+#~ "za začetek prileganja"
+
+#~ msgid ""
+#~ "Please enter valid fitting bounds \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "Prosimo, vnesite veljavne meje \n"
+#~ "za začetek prileganja"
+
+#, python-brace-format
+#~ msgid "Sum of R²: {R2}"
+#~ msgstr "Vsota R²: {R2}"
