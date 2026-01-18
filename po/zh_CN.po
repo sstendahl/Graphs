@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-01-05 14:53+0000\n"
-"PO-Revision-Date: 2026-01-06 07:57+0800\n"
+"POT-Creation-Date: 2026-01-17 13:08+0000\n"
+"PO-Revision-Date: 2026-01-18 10:45+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -397,12 +397,12 @@ msgid "Marker Size"
 msgstr "标记大小"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:196
+#: data/ui/curve-fitting.blp:75 graphs/item.py:196
 msgid "Equation"
 msgstr "方程式"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:93
 #: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
@@ -1329,7 +1329,7 @@ msgstr "打开文件…"
 msgid "Open Preview"
 msgstr "打开预览"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:146
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:181
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
@@ -1362,110 +1362,114 @@ msgstr "输入数学表达式"
 msgid "Name (optional)"
 msgstr "名称（可选）"
 
-#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "曲线拟合"
 
-#: data/ui/curve-fitting.blp:43
+#: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
 msgstr "打开曲线拟合菜单"
 
-#: data/ui/curve-fitting.blp:69
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "线性"
 
-#: data/ui/curve-fitting.blp:70
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "平方"
 
-#: data/ui/curve-fitting.blp:71
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "指数"
 
-#: data/ui/curve-fitting.blp:72
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "幂律"
 
-#: data/ui/curve-fitting.blp:73
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "对数"
 
-#: data/ui/curve-fitting.blp:74
+#: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid 函数"
 
-#: data/ui/curve-fitting.blp:75
+#: data/ui/curve-fitting.blp:85
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "高斯"
 
-#: data/ui/curve-fitting.blp:76
+#: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "自定义"
 
-#: data/ui/curve-fitting.blp:115
+#: data/ui/curve-fitting.blp:139
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:158
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:156
+#: data/ui/curve-fitting.blp:201
 msgid "Optimization Method"
 msgstr "优化方法"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:160
+#: data/ui/curve-fitting.blp:205
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "L-M 方法"
 
-#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:167
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
+#: data/ui/curve-fitting.blp:212
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "信赖域反射"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:174
+#: data/ui/curve-fitting.blp:219
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:181
+#: data/ui/curve-fitting.blp:226
 msgid "Confidence Bounds"
 msgstr "置信界限"
 
-#: data/ui/curve-fitting.blp:184
+#: data/ui/curve-fitting.blp:229
 msgctxt "confidence"
 msgid "None"
 msgstr "无"
 
-#: data/ui/curve-fitting.blp:191
+#: data/ui/curve-fitting.blp:236
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ：68% 置信区间"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:243
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ：95% 置信区间"
 
-#: data/ui/curve-fitting.blp:205
+#: data/ui/curve-fitting.blp:250
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ：99.7% 置信区间"
+
+#: data/ui/curve-fitting.blp:259
+msgid "Show Residuals"
+msgstr "显示残差"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -1612,21 +1616,39 @@ msgstr "变换颜色"
 
 #: data/ui/transform.blp:41
 msgid ""
-"<b>Additional variables:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Available variables</b>\n"
+"General:\n"
+" counts - number of data points\n"
 "\n"
-"Trigonometric functions use radians\n"
-"by default, append d to the function\n"
-"to use degrees, e.g. sind(x) or cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - minimum and maximum values,\n"
+" x_mean, x_median - average and median,\n"
+" x_std, x_sum — standard deviation and sum\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - minimum and maximum,\n"
+" y_mean, y_median — average and median,\n"
+" y_std, y_sum - standard deviation and sum\n"
+"\n"
+"Trigonometric functions use radians by default.\n"
+"Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"<b>附加变量：</b>\n"
-"x_min, y_min\n"
-"x_max, y_max\n"
+"<b>可用变量</b>\n"
+"常规：\n"
+" counts - 数据点的数量\n"
 "\n"
-"三角函数默认使用弧度，\n"
-"对函数附加 d 来使用角度，\n"
-"比如 sind(x) 或 cosd(x)。"
+"X 轴：\n"
+" x_min, x_max - 最小值与最大值，\n"
+" x_mean, x_median - 平均值与中值，\n"
+" x_std, x_sum — 标准差与和\n"
+"\n"
+"Y 轴：\n"
+" y_min, y_max - 最小值与最大值，\n"
+" y_mean, y_median — 平均值与中值，\n"
+" y_std, y_sum - 标准差与和\n"
+"\n"
+"三角函数默认使用弧度。\n"
+"附加 d 以使用角度，例如：sind(x) 或 cosd(x)。"
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -2003,55 +2025,98 @@ msgstr "已删除 %s"
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/curve_fitting.py:181
-msgid "Results:"
-msgstr "结果："
+#: graphs/curve_fitting.py:140
+msgid "Residuals"
+msgstr "残差"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:482
 msgid ""
-"Please enter valid fitting \n"
-"parameters to start the fit"
+"Please enter valid \n"
+"numeric parameters."
 msgstr ""
-"请输入有效的拟合参数\n"
-"来开始拟合"
+"请输入有效的\n"
+"数字参数。"
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:484
 msgid ""
-"Please enter a valid equation \n"
-"to start the fit"
+"Constraint error: ensure \n"
+"Lower < Initial < Upper."
 msgstr ""
-"请输入有效的方程式\n"
-"来开始拟合"
+"约束错误：请确保\n"
+"下限 < 初始 < 上限。"
 
-#: graphs/curve_fitting.py:193
+#: graphs/curve_fitting.py:486
 msgid ""
-"Please enter valid fitting bounds \n"
-"to start the fit"
+"Matrix error: Data is \n"
+"insufficient for this model."
 msgstr ""
-"请输入有效的拟合区间\n"
-"来开始拟合"
+"矩阵错误：数据\n"
+"对于此模型不足。"
 
-#: graphs/curve_fitting.py:206
-#, python-brace-format
-msgid "Sum of R²: {R2}"
-msgstr "R² 的总和：{R2}"
+#: graphs/curve_fitting.py:488
+msgid ""
+"Fit failed: Max iterations \n"
+"reached without converging."
+msgstr ""
+"拟合失败：未在达到\n"
+"最大迭代次数时拟合。"
 
-#: graphs/curve_fitting.vala:150
+#: graphs/curve_fitting.py:490
+msgid ""
+"Domain error: Equation not \n"
+"valid for this data range."
+msgstr ""
+"域错误：等式对于\n"
+"此数据范围无效。"
+
+#: graphs/curve_fitting.py:492
+msgid ""
+"Invalid equation: Check \n"
+"syntax and variables."
+msgstr ""
+"无效等式：请检查\n"
+"语法和变量。"
+
+#: graphs/curve_fitting.py:494
+msgid ""
+"Confidence band error: \n"
+"Covariance matrix is unstable."
+msgstr ""
+"置信带错误：\n"
+"协方差矩阵不稳定。"
+
+#: graphs/curve_fitting.py:509
+msgid "Parameters"
+msgstr "参数"
+
+#: graphs/curve_fitting.py:526
+msgid "Statistics"
+msgstr "统计"
+
+#: graphs/curve_fitting.py:529
+msgid "R²"
+msgstr "R²"
+
+#: graphs/curve_fitting.py:531
+msgid "RMSE"
+msgstr "RMSE"
+
+#: graphs/curve_fitting.vala:247
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:101
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "无法解析样式 {stylename}，加载系统首选样式"
 
-#: graphs/data.py:106
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:563
+#: graphs/data.py:588
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -2098,7 +2163,7 @@ msgstr "Matplotlib 样式文件"
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "无法执行变换，请确保语法正确"
 
-#: graphs/operations.py:295 graphs/operations.py:602
+#: graphs/operations.py:295 graphs/operations.py:612
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
@@ -2106,25 +2171,25 @@ msgstr "高亮区域内未发现数据"
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:439
+#: graphs/operations.py:440
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "对 {name} 的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:448
+#: graphs/operations.py:449
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:608
+#: graphs/operations.py:618
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:611
+#: graphs/operations.py:621
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:617
+#: graphs/operations.py:627
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
@@ -2214,7 +2279,8 @@ msgstr "系统"
 msgid "All Files"
 msgstr "所有文件"
 
-#: graphs/utilities.vala:221
+#. Use "Document Portal" as fallback
+#: graphs/utilities.vala:223
 msgid "Document Portal"
 msgstr "文档门户"
 
@@ -2239,6 +2305,44 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "打开位置"
+
+#~ msgid ""
+#~ "<b>Additional variables:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max \n"
+#~ "\n"
+#~ "Trigonometric functions use radians\n"
+#~ "by default, append d to the function\n"
+#~ "to use degrees, e.g. sind(x) or cosd(x)."
+#~ msgstr ""
+#~ "<b>附加变量：</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max\n"
+#~ "\n"
+#~ "三角函数默认使用弧度，\n"
+#~ "对函数附加 d 来使用角度，\n"
+#~ "比如 sind(x) 或 cosd(x)。"
+
+#~ msgid "Results:"
+#~ msgstr "结果："
+
+#~ msgid ""
+#~ "Please enter a valid equation \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "请输入有效的方程式\n"
+#~ "来开始拟合"
+
+#~ msgid ""
+#~ "Please enter valid fitting bounds \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "请输入有效的拟合区间\n"
+#~ "来开始拟合"
+
+#, python-brace-format
+#~ msgid "Sum of R²: {R2}"
+#~ msgstr "R² 的总和：{R2}"
 
 #~ msgctxt "delimiter"
 #~ msgid "Decimal point (.)"
