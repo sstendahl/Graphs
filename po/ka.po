@@ -1,14 +1,14 @@
 # Georgian translation for Graphs.
 # Copyright (C) 2025 Graphs's authors
 # This file is distributed under the same license as the Graphs package.
-# Ekaterine Papava <papava.e@gtu.ge>, 2024-2025.
+# Ekaterine Papava <papava.e@gtu.ge>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-25 00:33+0000\n"
-"PO-Revision-Date: 2025-10-25 16:21+0200\n"
+"POT-Creation-Date: 2026-01-17 13:08+0000\n"
+"PO-Revision-Date: 2026-01-18 03:00+0100\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -105,8 +105,8 @@ msgstr "შეწყვეტა"
 msgid "Delete Style?"
 msgstr "წავშალო სტილი?"
 
-#: data/ui/dialogs/delete-style.blp:8 data/ui/dialogs/reset-import-settings.blp:9 data/ui/dialogs/save-project-changes.blp:9 data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
-#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16 data/ui/generate-data.blp:17 data/ui/transform.blp:17
+#: data/ui/dialogs/delete-style.blp:8 data/ui/dialogs/reset-import-settings.blp:9 data/ui/dialogs/save-project-changes.blp:9 data/ui/dialogs/save-style-changes.blp:9 data/ui/style-editor/add-style.blp:16
+#: data/ui/add-equation.blp:17 data/ui/export-figure.blp:16 data/ui/generate-data.blp:17 data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "შეწყვეტა"
 
@@ -168,7 +168,7 @@ msgstr "მიმდინარე პროექტი შეუნახა�
 msgid "Name and Position"
 msgstr "სახელი და მდებარეობა"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "სახელი"
 
@@ -353,11 +353,11 @@ msgstr "შევსებული X"
 msgid "Marker Size"
 msgstr "მარკერის ზომა"
 
-#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:65 graphs/item.py:191
+#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9 data/ui/curve-fitting.blp:75 graphs/item.py:196
 msgid "Equation"
 msgstr "განტოლება"
 
-#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83 data/ui/generate-data.blp:52 data/ui/transform.blp:69
+#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
 
@@ -429,7 +429,7 @@ msgstr "ინვერსია"
 msgid "Add Item"
 msgstr "ელემენტის დამატება"
 
-#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/color-box.blp:36
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122 data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "წაშლა"
 
@@ -974,9 +974,21 @@ msgstr "მცოცავი საშუალო"
 msgid "Advanced Settings"
 msgstr "დამატებითი პარამეტრები"
 
-#: data/ui/style-editor/color-box.blp:18
-msgid "Edit"
-msgstr "ჩასწორება"
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "ახალი სტილის დამატება"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "დამატება"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "ნიმუში"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "ფერის შეცვლა"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1134,42 +1146,41 @@ msgstr "ჭდის ტექსტი შეიძლება ძნელი
 msgid "Poor Contrast"
 msgstr "ცუდი კონტრასტი"
 
-#: data/ui/style-editor/editor-box.blp:393
+#: data/ui/style-editor/editor-box.blp:394
 msgid "Text Color"
 msgstr "ტექსტის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:398 data/ui/style-editor/editor-box.blp:425 data/ui/style-editor/editor-box.blp:452 data/ui/style-editor/editor-box.blp:479 data/ui/style-editor/editor-box.blp:506
-#: data/ui/style-editor/editor-box.blp:533
-msgid "Change Color"
-msgstr "ფერის შეცვლა"
-
-#: data/ui/style-editor/editor-box.blp:420
+#: data/ui/style-editor/editor-box.blp:405
 msgid "Tick Color"
 msgstr "თოლიის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:416
 msgid "Axis Color"
 msgstr "ღერძის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:474
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Grid Color"
 msgstr "ბადის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:501
+#: data/ui/style-editor/editor-box.blp:438
 msgid "Background Color"
 msgstr "ფონის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:528
+#: data/ui/style-editor/editor-box.blp:449
 msgid "Outline Color"
 msgstr "კიდის ფერი"
 
-#: data/ui/style-editor/editor-box.blp:551
+#: data/ui/style-editor/editor-box.blp:456
 msgid "Line Colors"
 msgstr "ხაზის ფერები"
 
-#: data/ui/style-editor/editor-box.blp:563
+#: data/ui/style-editor/editor-box.blp:468
 msgid "Add Color"
 msgstr "ფერის დამატება"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "ჩასწორება"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1220,10 +1231,6 @@ msgstr "სტილის გახსნა"
 msgid "Graphs Style Editor"
 msgstr "გრაფიკების სტილის რედაქტორი"
 
-#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "ახალი სტილის დამატება"
-
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
 msgstr "ფაილის შემოტანა…"
@@ -1240,7 +1247,7 @@ msgstr "ფაილის გახსნა…"
 msgid "Open Preview"
 msgstr "მინიატურის გახსნა"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:146 data/ui/window.blp:349
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:181 data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
@@ -1264,10 +1271,6 @@ msgstr "სტილის დახურვა…"
 msgid "Add Equation"
 msgstr "განტოლების დამატება"
 
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "დამატება"
-
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "შეიყვანეთ მათემატიკური გამოსახულება"
@@ -1276,120 +1279,120 @@ msgstr "შეიყვანეთ მათემატიკური გა�
 msgid "Name (optional)"
 msgstr "სახელი (არასავალდებულო)"
 
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "ნიმუში"
-
-#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "მრუდის ჩატევა"
 
-#: data/ui/curve-fitting.blp:43
+#: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
 msgstr "მრუდის ჩატევის მენიუს გახსნა"
 
-#: data/ui/curve-fitting.blp:69
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: data/ui/curve-fitting.blp:70
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "კვადრატული"
 
-#: data/ui/curve-fitting.blp:71
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "ექსპოტენციალური"
 
-#: data/ui/curve-fitting.blp:72
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "ხარისხით"
 
-#: data/ui/curve-fitting.blp:73
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
-#: data/ui/curve-fitting.blp:74
+#: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "ლოგისტიკური სიგმოიდი"
 
-#: data/ui/curve-fitting.blp:75
+#: data/ui/curve-fitting.blp:85
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "გაუსის"
 
-#: data/ui/curve-fitting.blp:76
+#: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "ხელით მითითებული"
 
-#: data/ui/curve-fitting.blp:115
+#: data/ui/curve-fitting.blp:139
 msgid "Add Fit to Data"
 msgstr "მონაცემებისთვის აპროქსიმაციის დამატება"
 
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:158
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელის ჩვენების ჩართ/გამორთ"
 
-#: data/ui/curve-fitting.blp:156
+#: data/ui/curve-fitting.blp:201
 msgid "Optimization Method"
 msgstr "ოპტიმიზაციის მეთოდი"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:160
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:205
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "ლევენბერგ-მარკვარდტი"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:167
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
+#: data/ui/curve-fitting.blp:212
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "ნდობის რეგიონი ამრეკლავია"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:174
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:219
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:181
+#: data/ui/curve-fitting.blp:226
 msgid "Confidence Bounds"
 msgstr "სანდოობის საზღვრები"
 
-#: data/ui/curve-fitting.blp:184
+#: data/ui/curve-fitting.blp:229
 msgctxt "confidence"
 msgid "None"
 msgstr "არაფერი"
 
-#: data/ui/curve-fitting.blp:191
+#: data/ui/curve-fitting.blp:236
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% Confidence"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:243
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% Confidence"
 
-#: data/ui/curve-fitting.blp:205
+#: data/ui/curve-fitting.blp:250
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% Confidence"
 
+#: data/ui/curve-fitting.blp:259
+msgid "Show Residuals"
+msgstr "ნაშთების ჩვენება"
+
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "ფიგურის გატანა"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:72
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
 msgid "Export"
 msgstr "გატანა"
 
@@ -1445,16 +1448,16 @@ msgid "Export Size"
 msgstr "გატანის ზომა"
 
 #: data/ui/export-figure.blp:70
-msgid "Use Same Size as App"
-msgstr "აპის ზომის გამოყენება"
-
-#: data/ui/export-figure.blp:75
 msgid "Width (pixels)"
 msgstr "სიგანე (პიქსელებში)"
 
-#: data/ui/export-figure.blp:85
+#: data/ui/export-figure.blp:80
 msgid "Height (pixels)"
 msgstr "სიმაღლე (პიქსელებში)"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "აპის ზომის გამოყენება"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1530,21 +1533,39 @@ msgstr "მონაცემების გარდაქმნა"
 
 #: data/ui/transform.blp:41
 msgid ""
-"<b>Additional variables:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Available variables</b>\n"
+"General:\n"
+" counts - number of data points\n"
 "\n"
-"Trigonometric functions use radians\n"
-"by default, append d to the function\n"
-"to use degrees, e.g. sind(x) or cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - minimum and maximum values,\n"
+" x_mean, x_median - average and median,\n"
+" x_std, x_sum — standard deviation and sum\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - minimum and maximum,\n"
+" y_mean, y_median — average and median,\n"
+" y_std, y_sum - standard deviation and sum\n"
+"\n"
+"Trigonometric functions use radians by default.\n"
+"Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"დამატებითი ცვლადები:\n"
-"x_min, y_min\n"
-"x_max, y_max\n"
+"<b>ხელმისაწვდომი ცვლადები</b>\n"
+"ზოგადი:\n"
+" counts - მონაცემთა წერტილების რაოდენობა\n"
 "\n"
-"ტრიგონომეტრიული ფუნქციები ნაგულისხმევად\n"
-"რადიანებს იყენებენ. გრადუსების გამოსაყენებლად მიაწერეთ\n"
-"ბოლოში d. მაგალითად sind(x) ან cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - მინიმალური და მაქსიმალური მნიშვნელობები,\n"
+" x_mean, x_median - საშუალო და მედიანი,\n"
+" x_std, x_sum — სტანდარტული გადახრა და ჯამი\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - მინიმუმი და მაქსიმუმი,\n"
+" y_mean, y_median — საშუალო და მედიანი,\n"
+" y_std, y_sum - სტანდარტული გადახრა და ჯამი\n"
+"\n"
+"ტრიგონომეტრიული ფუნქციები ნაგულისხმევად რადიანებს იყენებენ.\n"
+"მიაწერეთ ბოლოში d გრადუსების გამოსაყენებლად. მაგ: sind(x) ან cosd(x)."
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -1816,7 +1837,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/წმ)"
 
-#: graphs/file_import/__init__.py:109
+#: graphs/file_import/__init__.py:112
 msgid "Import failed"
 msgstr "შემოტანა ჩავარდა"
 
@@ -1853,7 +1874,7 @@ msgstr "Y ღერძის მაქსიმუმი"
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
-#: graphs/sidebar/figure_settings.vala:172 graphs/sidebar/figure_settings.vala:176
+#: graphs/sidebar/figure_settings.vala:172
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
@@ -1861,14 +1882,13 @@ msgstr "X-ღერძის ჭდე"
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
+#: graphs/sidebar/figure_settings.vala:176
+msgid "Y Axis Label"
+msgstr "Y-ღერძის ჭდე"
+
 #: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
-
-#: graphs/style_editor/color_box.vala:30
-#, c-format
-msgid "Color %d"
-msgstr "ფერი %d"
 
 #: graphs/style_editor/__init__.py:63
 msgid "Example Item"
@@ -1881,6 +1901,11 @@ msgstr "X ჭდე"
 #: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Y ჭდე"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "ფერი %d"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -1911,64 +1936,107 @@ msgstr "წაიშალა %s"
 msgid "Could not load {font}"
 msgstr "{font}-ის ჩატვირთვა შეუძლებელია"
 
-#: graphs/curve_fitting.py:181
-msgid "Results:"
-msgstr "შედეგები:"
+#: graphs/curve_fitting.py:140
+msgid "Residuals"
+msgstr "ნაშთები"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:482
 msgid ""
-"Please enter valid fitting \n"
-"parameters to start the fit"
+"Please enter valid \n"
+"numeric parameters."
 msgstr ""
-"შეიყვანეთ სწორი აპროქსიმაციის\n"
-"პარამეტრები აპროქსიმაციის დასაწყებად"
+"შეიყვანეთ სწორი\n"
+"რიცხვითი პარამეტრები."
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:484
 msgid ""
-"Please enter a valid equation \n"
-"to start the fit"
+"Constraint error: ensure \n"
+"Lower < Initial < Upper."
 msgstr ""
-"შეიყვანეთ სწორი ტოლობა\n"
-"აპროქსიმაციის დასაწყებად"
+"შეზღუდვის შეცდომა: დარწმუნდით, რომ\n"
+"ქვედა < საწყისი < ზედა."
 
-#: graphs/curve_fitting.py:193
+#: graphs/curve_fitting.py:486
 msgid ""
-"Please enter valid fitting bounds \n"
-"to start the fit"
+"Matrix error: Data is \n"
+"insufficient for this model."
 msgstr ""
-"შეიყვანეთ აპროქსიმაცის საზღვრები\n"
-"აპროქსიმაციის დასაწყებად"
+"მატრიცის შეცდომა: ამ მოდელისთვის\n"
+"მონაცემები საკმარისი არაა."
 
-#: graphs/curve_fitting.py:206
-#, python-brace-format
-msgid "Sum of R²: {R2}"
-msgstr "R²-ის ჯამი: {R2}"
+#: graphs/curve_fitting.py:488
+msgid ""
+"Fit failed: Max iterations \n"
+"reached without converging."
+msgstr ""
+"ჩატევა ჩავარდა: მაქსიმალური იტერაციები\n"
+"მიღწეულია შეკრების გარეშე."
 
-#: graphs/curve_fitting.vala:150
+#: graphs/curve_fitting.py:490
+msgid ""
+"Domain error: Equation not \n"
+"valid for this data range."
+msgstr ""
+"დომენის შეცდომა: ტოლობა არასწორია\n"
+"ამ მონაცემთა შუალედისთვის."
+
+#: graphs/curve_fitting.py:492
+msgid ""
+"Invalid equation: Check \n"
+"syntax and variables."
+msgstr ""
+"არასწორი განტოლება: შეამოწმეთ\n"
+"სინტაქსი და ცვლადები."
+
+#: graphs/curve_fitting.py:494
+msgid ""
+"Confidence band error: \n"
+"Covariance matrix is unstable."
+msgstr ""
+"ნდობის ზოლის შეცდომა: \n"
+"კოვარიანტული მატრიცა არასტაბილურია."
+
+#: graphs/curve_fitting.py:509
+msgid "Parameters"
+msgstr "პარამეტრები"
+
+#: graphs/curve_fitting.py:526
+msgid "Statistics"
+msgstr "სტატისტიკა"
+
+#: graphs/curve_fitting.py:529
+msgid "R²"
+msgstr "R²"
+
+#: graphs/curve_fitting.py:531
+msgid "RMSE"
+msgstr "RMSE"
+
+#: graphs/curve_fitting.vala:247
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
 
-#: graphs/data.py:101
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/data.py:106
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/data.py:564
+#: graphs/data.py:588
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
-#: graphs/export_figure.vala:66
+#: graphs/export_figure.vala:49
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/export_figure.vala:93
+#: graphs/export_figure.vala:76
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
@@ -1985,15 +2053,15 @@ msgstr "ტექსტური ფაილები"
 msgid "Dataset"
 msgstr "მონაცემების სეტი"
 
-#: graphs/item.py:121
+#: graphs/item.py:126
 msgid "Generated Dataset"
 msgstr "გენერირებული მონაცემების ნაკრები"
 
-#: graphs/item.py:239
+#: graphs/item.py:244
 msgid "Label"
 msgstr "ჭდე"
 
-#: graphs/item.py:275
+#: graphs/item.py:280
 msgid "Fill"
 msgstr "შევსება"
 
@@ -2002,37 +2070,37 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:252
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "{name}: გარდაქმნის შესრულება შეუძლებელია. დარწმუნდით, რომ სინტაქსი სწორია"
 
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:295 graphs/operations.py:612
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:440
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name}-ზე ოპერაციის შედეგი დახატვადი ტოლობა არაა"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:449
 msgid "Operation not supported for equations."
 msgstr "ოპერაცია განტოლებებისთვის მხარდაჭერილი არაა."
 
-#: graphs/operations.py:610
+#: graphs/operations.py:618
 msgid "Operation not supported for data items"
 msgstr "ოპერაცია მონაცემის ელემენტებისთვის მხარდაჭერილი არაა"
 
-#: graphs/operations.py:613
+#: graphs/operations.py:621
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: ოპერაციის ჩატარების შეცდომა"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:627
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
@@ -2044,19 +2112,19 @@ msgstr "პროექტის ფაილს მონაცემები 
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "პროექტი უფრო Graphs-ის უფრო ახალი, არათავსებადი ვერსიისაა"
 
-#: graphs/project.py:262
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "მოძველებული მიგრაცია ჩავარდა"
 
-#: graphs/project.py:264
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
 
-#: graphs/project.py:270
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "პროექტის მიგრაცია ჩავარდა"
 
-#: graphs/project.py:276
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "პროექტის გადამოწმება ჩავარდა"
 
@@ -2112,15 +2180,16 @@ msgstr "{filename}-ის დამუშავება შეუძლებ�
 msgid "File {file}, does not contain name tag"
 msgstr "ფაილი {file} სახელის ჭდე არ შეიცავს"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "სისტემური"
 
-#: graphs/utilities.vala:212
+#: graphs/utilities.vala:170
 msgid "All Files"
 msgstr "ყველა ფაილი"
 
-#: graphs/utilities.vala:263
+#. Use "Document Portal" as fallback
+#: graphs/utilities.vala:223
 msgid "Document Portal"
 msgstr "დოკუმენტის პორტალი"
 
@@ -2145,6 +2214,44 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgid ""
+#~ "<b>Additional variables:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max \n"
+#~ "\n"
+#~ "Trigonometric functions use radians\n"
+#~ "by default, append d to the function\n"
+#~ "to use degrees, e.g. sind(x) or cosd(x)."
+#~ msgstr ""
+#~ "დამატებითი ცვლადები:\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max\n"
+#~ "\n"
+#~ "ტრიგონომეტრიული ფუნქციები ნაგულისხმევად\n"
+#~ "რადიანებს იყენებენ. გრადუსების გამოსაყენებლად მიაწერეთ\n"
+#~ "ბოლოში d. მაგალითად sind(x) ან cosd(x)."
+
+#~ msgid "Results:"
+#~ msgstr "შედეგები:"
+
+#~ msgid ""
+#~ "Please enter a valid equation \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "შეიყვანეთ სწორი ტოლობა\n"
+#~ "აპროქსიმაციის დასაწყებად"
+
+#~ msgid ""
+#~ "Please enter valid fitting bounds \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "შეიყვანეთ აპროქსიმაცის საზღვრები\n"
+#~ "აპროქსიმაციის დასაწყებად"
+
+#, python-brace-format
+#~ msgid "Sum of R²: {R2}"
+#~ msgstr "R²-ის ჯამი: {R2}"
 
 #~ msgctxt "delimiter"
 #~ msgid "Decimal point (.)"
@@ -2251,9 +2358,6 @@ msgstr "მდებარეობის გახსნა"
 #~ msgctxt "markerstyle"
 #~ msgid "Nothing"
 #~ msgstr "არაფერი"
-
-#~ msgid "Y Axis Label"
-#~ msgstr "Y-ღერძის ჭდე"
 
 #, python-brace-format
 #~ msgid "Unsupported Widget {widget}"
