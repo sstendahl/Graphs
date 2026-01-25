@@ -4,14 +4,14 @@
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024-2025.
 # Álvaro Burns <>, 2025.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2024-2025.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-10-26 16:10+0000\n"
-"PO-Revision-Date: 2025-11-05 11:08-0300\n"
+"POT-Creation-Date: 2026-01-17 13:08+0000\n"
+"PO-Revision-Date: 2026-01-25 11:01-0300\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
@@ -146,9 +146,10 @@ msgstr "Excluir estilo?"
 #: data/ui/dialogs/delete-style.blp:8
 #: data/ui/dialogs/reset-import-settings.blp:9
 #: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9 data/ui/add-equation.blp:17
-#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/transform.blp:17
+#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/style-editor/add-style.blp:16 data/ui/add-equation.blp:17
+#: data/ui/export-figure.blp:16 data/ui/generate-data.blp:17
+#: data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -223,7 +224,7 @@ msgstr ""
 msgid "Name and Position"
 msgstr "Nome e posição"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "Nome"
 
@@ -415,12 +416,12 @@ msgid "Marker Size"
 msgstr "Tamanho do marcador"
 
 #: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:191
+#: data/ui/curve-fitting.blp:75 graphs/item.py:196
 msgid "Equation"
 msgstr "Equação"
 
 #: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
+#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:93
 #: data/ui/generate-data.blp:52 data/ui/transform.blp:69
 msgid "Y ="
 msgstr "Y ="
@@ -518,7 +519,7 @@ msgid "Add Item"
 msgstr "Adicionar item"
 
 #: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
-#: data/ui/style-editor/color-box.blp:36
+#: data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "Remover"
 
@@ -1073,9 +1074,21 @@ msgstr "Média móvel"
 msgid "Advanced Settings"
 msgstr "Configurações avançadas"
 
-#: data/ui/style-editor/color-box.blp:18
-msgid "Edit"
-msgstr "Editar"
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "Adicionar novo estilo"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "Adicionar"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "Modelo"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "Alterar cor"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1233,46 +1246,41 @@ msgstr "O texto do rótulo pode ser difícil de ler"
 msgid "Poor Contrast"
 msgstr "Contraste ruim"
 
-#: data/ui/style-editor/editor-box.blp:393
+#: data/ui/style-editor/editor-box.blp:394
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: data/ui/style-editor/editor-box.blp:398
-#: data/ui/style-editor/editor-box.blp:425
-#: data/ui/style-editor/editor-box.blp:452
-#: data/ui/style-editor/editor-box.blp:479
-#: data/ui/style-editor/editor-box.blp:506
-#: data/ui/style-editor/editor-box.blp:533
-msgid "Change Color"
-msgstr "Alterar cor"
-
-#: data/ui/style-editor/editor-box.blp:420
+#: data/ui/style-editor/editor-box.blp:405
 msgid "Tick Color"
 msgstr "Cor da marca"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:416
 msgid "Axis Color"
 msgstr "Cor do eixo"
 
-#: data/ui/style-editor/editor-box.blp:474
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Grid Color"
 msgstr "Cor da grade"
 
-#: data/ui/style-editor/editor-box.blp:501
+#: data/ui/style-editor/editor-box.blp:438
 msgid "Background Color"
 msgstr "Cor do fundo"
 
-#: data/ui/style-editor/editor-box.blp:528
+#: data/ui/style-editor/editor-box.blp:449
 msgid "Outline Color"
 msgstr "Cor do contorno"
 
-#: data/ui/style-editor/editor-box.blp:551
+#: data/ui/style-editor/editor-box.blp:456
 msgid "Line Colors"
 msgstr "Cores das linhas"
 
-#: data/ui/style-editor/editor-box.blp:563
+#: data/ui/style-editor/editor-box.blp:468
 msgid "Add Color"
 msgstr "Adicionar cor"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "Editar"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1324,10 +1332,6 @@ msgstr "Abre um estilo"
 msgid "Graphs Style Editor"
 msgstr "Editor de estilo de Gráficos"
 
-#: data/ui/style-editor/window.blp:91 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "Adicionar novo estilo"
-
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
 msgstr "Importar um arquivo…"
@@ -1344,7 +1348,7 @@ msgstr "Abrir um arquivo…"
 msgid "Open Preview"
 msgstr "Abrir prévia"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:146
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:181
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Falha ao carregar a tela"
@@ -1369,10 +1373,6 @@ msgstr "Fechar estilo…"
 msgid "Add Equation"
 msgstr "Adicionar equação"
 
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "Adicionar"
-
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Insira uma expressão matemática"
@@ -1381,120 +1381,120 @@ msgstr "Insira uma expressão matemática"
 msgid "Name (optional)"
 msgstr "Nome (opcional)"
 
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "Modelo"
-
-#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "Ajuste de curva"
 
-#: data/ui/curve-fitting.blp:43
+#: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
 msgstr "Abrir o menu de ajuste de curva"
 
-#: data/ui/curve-fitting.blp:69
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Linear"
 
-#: data/ui/curve-fitting.blp:70
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Quadrática"
 
-#: data/ui/curve-fitting.blp:71
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Exponencial"
 
-#: data/ui/curve-fitting.blp:72
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Lei de potência"
 
-#: data/ui/curve-fitting.blp:73
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Logaritmo"
 
-#: data/ui/curve-fitting.blp:74
+#: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Logística sigmoide"
 
-#: data/ui/curve-fitting.blp:75
+#: data/ui/curve-fitting.blp:85
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Gaussiano"
 
-#: data/ui/curve-fitting.blp:76
+#: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: data/ui/curve-fitting.blp:115
+#: data/ui/curve-fitting.blp:139
 msgid "Add Fit to Data"
 msgstr "Adicionar ajuste aos dados"
 
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:158
 msgid "Toggle Sidebar"
 msgstr "Alternar barra lateral"
 
-#: data/ui/curve-fitting.blp:156
+#: data/ui/curve-fitting.blp:201
 msgid "Optimization Method"
 msgstr "Método de otimização"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:160
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:205
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:167
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
+#: data/ui/curve-fitting.blp:212
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Região de Confiança Reflexiva"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:174
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:219
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:181
+#: data/ui/curve-fitting.blp:226
 msgid "Confidence Bounds"
 msgstr "Limites de confiança"
 
-#: data/ui/curve-fitting.blp:184
+#: data/ui/curve-fitting.blp:229
 msgctxt "confidence"
 msgid "None"
 msgstr "Nenhum"
 
-#: data/ui/curve-fitting.blp:191
+#: data/ui/curve-fitting.blp:236
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% de confiança"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:243
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% de confiança"
 
-#: data/ui/curve-fitting.blp:205
+#: data/ui/curve-fitting.blp:250
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99,7% de confiança"
 
+#: data/ui/curve-fitting.blp:259
+msgid "Show Residuals"
+msgstr "Mostrar resíduos"
+
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "Exportar figura"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:65
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
 msgid "Export"
 msgstr "Exportar"
 
@@ -1550,16 +1550,16 @@ msgid "Export Size"
 msgstr "Exportar tamanho"
 
 #: data/ui/export-figure.blp:70
-msgid "Use Same Size as App"
-msgstr "Use o mesmo tamanho como programa"
-
-#: data/ui/export-figure.blp:75
 msgid "Width (pixels)"
 msgstr "Largura (pixels)"
 
-#: data/ui/export-figure.blp:85
+#: data/ui/export-figure.blp:80
 msgid "Height (pixels)"
 msgstr "Altura (pixels)"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "Use o mesmo tamanho como programa"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -1635,21 +1635,39 @@ msgstr "Transformar dados"
 
 #: data/ui/transform.blp:41
 msgid ""
-"<b>Additional variables:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Available variables</b>\n"
+"General:\n"
+" counts - number of data points\n"
 "\n"
-"Trigonometric functions use radians\n"
-"by default, append d to the function\n"
-"to use degrees, e.g. sind(x) or cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - minimum and maximum values,\n"
+" x_mean, x_median - average and median,\n"
+" x_std, x_sum — standard deviation and sum\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - minimum and maximum,\n"
+" y_mean, y_median — average and median,\n"
+" y_std, y_sum - standard deviation and sum\n"
+"\n"
+"Trigonometric functions use radians by default.\n"
+"Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"<b>Variáveis adicionais:</b>\n"
-"x_min, y_min\n"
-"x_max, y_max\n"
+"<b>Variáveis disponíveis</b>\n"
+"Geral:\n"
+" counts - número de pontos de dados\n"
 "\n"
-"Funções trigonométricas usam radianos\n"
-"por padrão. Adicione d à função\n"
-"para usar graus. E.g.: sind(x) ou cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - valores mínimos e máximos,\n"
+" x_mean, x_median - médio e mediana,\n"
+" x_std, x_sum — desvio-padrão e soma\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - mínimo e máximo,\n"
+" y_mean, y_median — médio e mediana,\n"
+" y_std, y_sum - desvio-padrão e soma\n"
+"\n"
+"Funções trigonométricas usam radianos por padrão.\n"
+"Acrescentar d para usar graus, ex. sind(x) ou cosd(x)."
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -1929,7 +1947,7 @@ msgstr "β (°)"
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:109
+#: graphs/file_import/__init__.py:112
 msgid "Import failed"
 msgstr "A importação falhou"
 
@@ -1967,7 +1985,6 @@ msgid "X Axis Scale"
 msgstr "Escala do eixo X"
 
 #: graphs/sidebar/figure_settings.vala:172
-#: graphs/sidebar/figure_settings.vala:176
 msgid "X Axis Label"
 msgstr "Rótulo do eixo X"
 
@@ -1975,14 +1992,13 @@ msgstr "Rótulo do eixo X"
 msgid "Y Axis Scale"
 msgstr "Escala do eixo Y"
 
+#: graphs/sidebar/figure_settings.vala:176
+msgid "Y Axis Label"
+msgstr "Rótulo do eixo Y"
+
 #: graphs/sidebar/figure_settings.vala:232
 msgid "Defaults Updated"
 msgstr "Padrões atualizados"
-
-#: graphs/style_editor/color_box.vala:30
-#, c-format
-msgid "Color %d"
-msgstr "Cor %d"
 
 #: graphs/style_editor/__init__.py:63
 msgid "Example Item"
@@ -1995,6 +2011,11 @@ msgstr "Rótulo X"
 #: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
 msgid "Y Label"
 msgstr "Rótulo Y"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "Cor %d"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -2027,46 +2048,89 @@ msgstr "Excluir %s"
 msgid "Could not load {font}"
 msgstr "Não foi possível carregar {font}"
 
-#: graphs/curve_fitting.py:181
-msgid "Results:"
-msgstr "Resultados:"
+#: graphs/curve_fitting.py:140
+msgid "Residuals"
+msgstr "Residuais"
 
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.py:482
 msgid ""
-"Please enter valid fitting \n"
-"parameters to start the fit"
+"Please enter valid \n"
+"numeric parameters."
 msgstr ""
-"Por favor insira um parâmetro \n"
-"válido para iniciar o ajuste"
+"Por favor, insira um \n"
+"parâmetro numérico válido."
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.py:484
 msgid ""
-"Please enter a valid equation \n"
-"to start the fit"
+"Constraint error: ensure \n"
+"Lower < Initial < Upper."
 msgstr ""
-"Insira uma equação válida \n"
-"para iniciar o ajuste"
+"Erro de restrição: assegure \n"
+"Mínimo < Inicial < Máximo."
 
-#: graphs/curve_fitting.py:193
+#: graphs/curve_fitting.py:486
 msgid ""
-"Please enter valid fitting bounds \n"
-"to start the fit"
+"Matrix error: Data is \n"
+"insufficient for this model."
 msgstr ""
-"Insira limites válidos \n"
-"para iniciar o ajuste"
+"Erro de Matriz: Os dados são \n"
+"insuficientes para este modelo."
 
-#: graphs/curve_fitting.py:206
-#, python-brace-format
-msgid "Sum of R²: {R2}"
-msgstr "Soma de R²: {R2}"
+#: graphs/curve_fitting.py:488
+msgid ""
+"Fit failed: Max iterations \n"
+"reached without converging."
+msgstr ""
+"Ajuste falhou: Máximo de interações \n"
+"alcançado sem conversão."
 
-#: graphs/curve_fitting.vala:150
+#: graphs/curve_fitting.py:490
+msgid ""
+"Domain error: Equation not \n"
+"valid for this data range."
+msgstr ""
+"Erro de domínio: Equação inválida \n"
+"para este intervalo de dados."
+
+#: graphs/curve_fitting.py:492
+msgid ""
+"Invalid equation: Check \n"
+"syntax and variables."
+msgstr ""
+"Equação inválida: Verifique \n"
+"a sintaxe e variáveis."
+
+#: graphs/curve_fitting.py:494
+msgid ""
+"Confidence band error: \n"
+"Covariance matrix is unstable."
+msgstr ""
+"Erro de banda de confiança: \n"
+"Matriz de covariância é instável."
+
+#: graphs/curve_fitting.py:509
+msgid "Parameters"
+msgstr "Parâmetros"
+
+#: graphs/curve_fitting.py:526
+msgid "Statistics"
+msgstr "Estatísticas"
+
+#: graphs/curve_fitting.py:529
+msgid "R²"
+msgstr "R²"
+
+#: graphs/curve_fitting.py:531
+msgid "RMSE"
+msgstr "RMSE"
+
+#: graphs/curve_fitting.vala:247
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Ajustando parâmetros para %s"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:101
+#: graphs/data.py:104
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
@@ -2074,22 +2138,22 @@ msgstr ""
 "predefinido do sistema"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.py:106
+#: graphs/data.py:109
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
 "O estilo {stylename} não existe, carregando o estilo predefinido do sistema"
 
-#: graphs/data.py:564
+#: graphs/data.py:588
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
-#: graphs/export_figure.vala:60
+#: graphs/export_figure.vala:49
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
-#: graphs/export_figure.vala:86
+#: graphs/export_figure.vala:76
 msgid "Exported Figure"
 msgstr "Figura exportada"
 
@@ -2106,15 +2170,15 @@ msgstr "Arquivos de texto"
 msgid "Dataset"
 msgstr "Conjunto de dados"
 
-#: graphs/item.py:121
+#: graphs/item.py:126
 msgid "Generated Dataset"
 msgstr "Conjunto de dados gerados"
 
-#: graphs/item.py:239
+#: graphs/item.py:244
 msgid "Label"
 msgstr "Camada"
 
-#: graphs/item.py:275
+#: graphs/item.py:280
 msgid "Fill"
 msgstr "Preencher"
 
@@ -2123,39 +2187,39 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Arquivo de estilo Matplotlib"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:252
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Não foi possível executar a transformação. Verifique se a sintaxe está "
 "correta"
 
-#: graphs/operations.py:296 graphs/operations.py:604
+#: graphs/operations.py:295 graphs/operations.py:612
 msgid "No data found within the highlighted area"
 msgstr "Nenhum dado encontrado na área destacada"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
 msgid "Combined Data"
 msgstr "Dados combinados"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:440
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "A operação em {name} não resultou em uma equação plotável"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:449
 msgid "Operation not supported for equations."
 msgstr "Operação não suportada para equações."
 
-#: graphs/operations.py:610
+#: graphs/operations.py:618
 msgid "Operation not supported for data items"
 msgstr "Operação não suportada para itens de dados"
 
-#: graphs/operations.py:613
+#: graphs/operations.py:621
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Erro ao executar a operação"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:627
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Os dados que estavam fora da área destacada foram descartados"
 
@@ -2167,19 +2231,19 @@ msgstr "Está faltando dados no arquivo do projeto"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "O projeto é de uma versão mais nova incompatível do Gráficos."
 
-#: graphs/project.py:262
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "Falha ao fazer migração legada"
 
-#: graphs/project.py:264
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "Falha ao analisar o arquivo do projeto"
 
-#: graphs/project.py:270
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "Falha ao migrar o projeto"
 
-#: graphs/project.py:276
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "Falha ao validar o projeto"
 
@@ -2239,15 +2303,16 @@ msgstr "Não foi possível analisar {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Arquivo {file}, não contém uma etiqueta de nome"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:62
 msgid "System"
 msgstr "Sistema"
 
-#: graphs/utilities.vala:190
+#: graphs/utilities.vala:170
 msgid "All Files"
 msgstr "Todos os arquivos"
 
-#: graphs/utilities.vala:241
+#. Use "Document Portal" as fallback
+#: graphs/utilities.vala:223
 msgid "Document Portal"
 msgstr "Portal de documentos"
 
@@ -2272,6 +2337,44 @@ msgstr "Gráficos — %s"
 #: graphs/window.vala:397
 msgid "Open Location"
 msgstr "Abrir local"
+
+#~ msgid ""
+#~ "<b>Additional variables:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max \n"
+#~ "\n"
+#~ "Trigonometric functions use radians\n"
+#~ "by default, append d to the function\n"
+#~ "to use degrees, e.g. sind(x) or cosd(x)."
+#~ msgstr ""
+#~ "<b>Variáveis adicionais:</b>\n"
+#~ "x_min, y_min\n"
+#~ "x_max, y_max\n"
+#~ "\n"
+#~ "Funções trigonométricas usam radianos\n"
+#~ "por padrão. Adicione d à função\n"
+#~ "para usar graus. E.g.: sind(x) ou cosd(x)."
+
+#~ msgid "Results:"
+#~ msgstr "Resultados:"
+
+#~ msgid ""
+#~ "Please enter a valid equation \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "Insira uma equação válida \n"
+#~ "para iniciar o ajuste"
+
+#~ msgid ""
+#~ "Please enter valid fitting bounds \n"
+#~ "to start the fit"
+#~ msgstr ""
+#~ "Insira limites válidos \n"
+#~ "para iniciar o ajuste"
+
+#, python-brace-format
+#~ msgid "Sum of R²: {R2}"
+#~ msgstr "Soma de R²: {R2}"
 
 #~ msgctxt "delimiter"
 #~ msgid "Decimal point (.)"
@@ -2368,9 +2471,6 @@ msgstr "Abrir local"
 
 #~ msgid "WebP Image Format"
 #~ msgstr "Formato de imagem WebP"
-
-#~ msgid "Y Axis Label"
-#~ msgstr "Rótulo do eixo Y"
 
 #, python-brace-format
 #~ msgid "Items {items} already exist"
