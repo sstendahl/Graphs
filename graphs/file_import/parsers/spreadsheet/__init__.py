@@ -4,12 +4,11 @@ import xml.etree.ElementTree
 import zipfile
 from gettext import gettext as _
 from gettext import pgettext as C_
-from itertools import zip_longest
 from typing import List, Tuple
 
-from gi.repository import GLib, Graphs, Gtk
+from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import item, utilities
+from graphs import file_io, item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
@@ -29,9 +28,10 @@ XLSX_MAIN_NAMESPACE = \
 class OdsParser:
     """ODS file parser."""
 
-    def get_sheet_names(self, path: str) -> List[str]:
+    def get_sheet_names(self, file: Gio.File) -> List[str]:
         """Get sheet names from ODS file."""
-        with zipfile.ZipFile(path) as zip_file, \
+        with file_io.open(file, "rb") as file_obj, \
+             zipfile.ZipFile(file_obj) as zip_file, \
              zip_file.open("content.xml") as content_file:
             root = xml.etree.ElementTree.parse(content_file).getroot()
             namespaces = {"table": ODS_TABLE_NAMESPACE}
@@ -39,49 +39,60 @@ class OdsParser:
             attribute_name = f"{{{namespaces['table']}}}name"
             return [sheet.get(attribute_name) for sheet in sheets]
 
-    def parse_file(self, path: str, sheet_index: int) -> List[List[str]]:
-        """Parse ODS file and return 2D array of column values."""
-        with zipfile.ZipFile(path) as zip_file, \
+    def parse_file(self, file: Gio.File, columns: set[int],
+                   sheet_index: int) -> List[List[str]]:
+        """Parse ODS file and return list of requested columns."""
+        with file_io.open(file, "rb") as file_obj, \
+             zipfile.ZipFile(file_obj) as zip_file, \
              zip_file.open("content.xml") as content_file:
             root = xml.etree.ElementTree.parse(content_file).getroot()
             namespaces = {"table": ODS_TABLE_NAMESPACE}
             repeat_key = f"{{{namespaces['table']}}}number-columns-repeated"
             sheets = root.findall(".//table:table", namespaces)
 
-            rows = []
-            table_rows = \
-                sheets[sheet_index].findall("table:table-row", namespaces)
+            max_col = max(columns)
+            column_data = {col_index: [] for col_index in columns}
+            table_rows = sheets[sheet_index].findall("table:table-row",
+                                                     namespaces)
             for table_row in table_rows:
-                row_data = []
                 cells = table_row.findall("table:table-cell", namespaces)
+                current_col = 0
+
                 for table_cell in cells:
                     repeat_count = int(table_cell.get(repeat_key, 1))
                     cell_value = "".join(table_cell.itertext())
 
                     for _count in range(repeat_count):
-                        row_data.append(cell_value)
-                rows.append(row_data)
+                        if current_col > max_col:
+                            break
+                        if current_col in columns:
+                            column_data[current_col].append(cell_value)
+                        current_col += 1
 
-            return [list(col) for col in zip_longest(*rows, fillvalue="")]
+            return [column_data[col_index] for col_index in columns]
 
 
 class XlsxParser:
     """XLSX file parser."""
 
-    def get_sheet_names(self, path: str) -> List[str]:
+    def get_sheet_names(self, file: Gio.File) -> List[str]:
         """Get sheet names from XLSX file."""
-        with zipfile.ZipFile(path) as zip_file, \
+        with file_io.open(file, "rb") as file_obj, \
+             zipfile.ZipFile(file_obj) as zip_file, \
              zip_file.open("xl/workbook.xml") as workbook_file:
             root = xml.etree.ElementTree.parse(workbook_file).getroot()
             namespaces = {"main": XLSX_MAIN_NAMESPACE}
             sheets = root.findall(f".//{{{namespaces['main']}}}sheet")
             return [sheet.get("name") for sheet in sheets]
 
-    def parse_file(self, path: str, sheet_index: int) -> List[List[str]]:
+    def parse_file(self, file: Gio.File, columns: set[int],
+                   sheet_index: int) -> List[List[str]]:
         """Parse XLSX file and return 2D array of cell values."""
-        with zipfile.ZipFile(path) as zip_file:
+        with file_io.open(file, "rb") as file_obj, \
+             zipfile.ZipFile(file_obj) as zip_file:
             shared_strings = self._load_shared_strings(zip_file)
-            return self._parse_worksheet(zip_file, sheet_index, shared_strings)
+            return self._parse_worksheet(zip_file, columns, sheet_index,
+                                         shared_strings)
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
@@ -97,53 +108,49 @@ class XlsxParser:
     def _parse_worksheet(
         self,
         zip_file: zipfile.ZipFile,
+        columns: set[int],
         sheet_index: int,
         shared_strings: List[str],
     ) -> List[List[str]]:
-        """Parse worksheet and return columns."""
+        """Parse worksheet and return requested columns."""
         sheet_file = f"xl/worksheets/sheet{sheet_index + 1}.xml"
 
         with zip_file.open(sheet_file) as worksheet_file:
             root = xml.etree.ElementTree.parse(worksheet_file).getroot()
             namespaces = {"main": XLSX_MAIN_NAMESPACE}
-
-            rows = []
+            column_data = {col_index: [] for col_index in columns}
             row_elements = root.findall(".//main:row", namespaces)
 
             for row_element in row_elements:
-                row_data = \
-                    self._parse_row(row_element, namespaces, shared_strings)
-                rows.append(row_data)
+                row_data = self._parse_row(row_element, namespaces,
+                                           shared_strings, columns)
+                for col_index in columns:
+                    column_data[col_index].append(row_data.get(col_index, ""))
 
-            return [list(col) for col in zip_longest(*rows, fillvalue="")]
+            return [column_data[col_index] for col_index in columns]
 
     def _parse_row(
         self,
         row_element,
         namespaces: dict,
         shared_strings: List[str],
-    ) -> List[str]:
-        """Parse a single row element."""
+        columns: set,
+    ) -> dict:
+        """Parse a single row element, returning only requested columns."""
         cell_elements = row_element.findall("main:c", namespaces)
-        if not cell_elements:
-            return []
-
-        # Find max column index in this row
-        max_col = 0
         cell_data = {}
 
         for cell_element in cell_elements:
             ref = cell_element.get("r")
             column = "".join(c for c in ref if not c.isdigit())
             column_index = Graphs.SpreadsheetUtils.label_to_index(column)
-            max_col = max(max_col, column_index)
 
-            cell_value = self._get_cell_value(
-                cell_element, namespaces, shared_strings)
-            cell_data[column_index] = cell_value
+            if column_index in columns:
+                cell_value = self._get_cell_value(
+                    cell_element, namespaces, shared_strings)
+                cell_data[column_index] = cell_value
 
-        # Build row with all positions filled
-        return [cell_data.get(i, "") for i in range(max_col + 1)]
+        return cell_data
 
     def _get_cell_value(
         self,
@@ -179,17 +186,11 @@ class SpreadsheetParser(Parser):
     @staticmethod
     def init_settings(settings: Graphs.ImportSettings) -> bool:
         """Init settings with default spreadsheet sheet selection."""
-        file_path = settings.get_file().get_path()
-
-        if file_path.endswith(".ods"):
-            parser = OdsParser()
-        elif file_path.endswith(".xlsx"):
-            parser = XlsxParser()
-        else:
-            return False
-
+        file = settings.get_file()
+        parser = \
+            OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
         try:
-            sheet_names = parser.get_sheet_names(file_path)
+            sheet_names = parser.get_sheet_names(file)
             string_list = Gtk.StringList.new(sheet_names)
             settings.set_item("sheet-names", string_list)
             return True
@@ -207,7 +208,6 @@ class SpreadsheetParser(Parser):
 
         group = Graphs.SpreadsheetGroup.new(settings)
         box.append(group)
-
         spreadsheet_box = Graphs.SpreadsheetBox.new(settings)
         box.append(spreadsheet_box)
 
@@ -217,63 +217,57 @@ class SpreadsheetParser(Parser):
         style: Tuple[RcParams, dict],
     ) -> list:
         """Import data from ODS or XLSX file."""
-        file_path = settings.get_file().get_path()
+        file = settings.get_file()
         sheet_index = settings.get_int("sheet-index")
 
-        if file_path.endswith(".ods"):
+        column_indices = set()
+        item_settings_list = []
+        for item_string in settings.get_string("items").split(";;"):
+            item_settings = Graphs.ColumnsItemSettings()
+            item_settings.load_from_item_string(item_string)
+            item_settings_list.append(item_settings)
+
+            column_indices.add(item_settings.column_y)
+            if not item_settings.single_column:
+                column_indices.add(item_settings.column_x)
+
+        if file.get_path().endswith(".ods"):
             file_parser = OdsParser()
         else:
             file_parser = XlsxParser()
 
-        columns = file_parser.parse_file(file_path, sheet_index)
+        columns = \
+            file_parser.parse_file(file, column_indices, sheet_index)
         if not columns:
             raise ParseError(_("No data found in the selected sheet."))
+        parser = Graphs.SpreadsheetDataParser.new(settings)
+        for column in columns:
+            parser.add_column(column)
+
+        try:
+            parser.parse()
+        except GLib.Error as e:
+            raise ParseError(e.message) from e
 
         items = []
-        item_settings = Graphs.ColumnsItemSettings()
-
-        for item_string in settings.get_string("items").split(";;"):
-            item_settings.load_from_item_string(item_string)
-
-            x_index = item_settings.column_x
-            y_index = item_settings.column_y
-            if x_index >= len(columns) or y_index >= len(columns):
-                raise ParseError(_("Column index out of range"))
-
-            data = numpy.array([columns[x_index], columns[y_index]])
-            mask = ~numpy.any(data == "", axis=0)  # Filter empty cells
-
-            # If there's no columns with data from same row, we can't import
-            if not numpy.any(mask):
-                raise ParseError(_("Missing data in selected columns."))
-
-            xcolumn, ycolumn = data[:, mask].tolist()
-            parser = Graphs.SpreadsheetDataParser.new(
-                settings,
-                xcolumn,
-                ycolumn,
-            )
-
-            try:
-                xdata, ydata = parser.get_data()
-            except GLib.Error as e:
-                raise ParseError(e.message) from e
-
-            if len(xdata) != len(ydata):
-                raise ParseError(
-                    _("Selected columns do not have the same length."))
-
-            xlabel = parser.get_x_header()
-            ylabel = parser.get_y_header()
+        for item_settings in item_settings_list:
+            yindex = item_settings.column_y
+            ylabel = parser.get_header(yindex)
+            ydata = parser.get_column(yindex)
 
             if item_settings.single_column:
                 xlabel = ""
                 equation = item_settings.equation
                 xdata = numexpr.evaluate(
-                    utilities.preprocess(equation) + " + n*0",
+                    Graphs.preprocess_equation(equation) + " + n*0",
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 xdata = numpy.ndarray.tolist(xdata)
+            else:
+                xindex = item_settings.column_x
+                xdata = parser.get_column(xindex)
+                xlabel = parser.get_header(xindex)
+
             items.append(
                 item.DataItem.new(
                     style,
