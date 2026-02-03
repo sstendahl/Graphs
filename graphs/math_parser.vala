@@ -46,7 +46,22 @@ namespace Graphs {
         CARET,
         FACT,
         LPAREN, RPAREN,
-        END
+        END;
+
+        public static TokenType parse (char c) {
+            switch (c) {
+                case '+': return TokenType.PLUS;
+                case '-': return TokenType.MINUS;
+                case '*': return TokenType.STAR;
+                case '/': return TokenType.SLASH;
+                case '^': return TokenType.CARET;
+                case '!': return TokenType.FACT;
+                case '(': return TokenType.LPAREN;
+                case ')': return TokenType.RPAREN;
+                default:
+                    throw new MathError.SYNTAX ("invalid token");
+            }
+        }
     }
 
     class Token {
@@ -105,18 +120,7 @@ namespace Graphs {
             }
 
             pos++;
-            switch (c) {
-                case '+': current = new Token (TokenType.PLUS); break;
-                case '-': current = new Token (TokenType.MINUS); break;
-                case '*': current = new Token (TokenType.STAR); break;
-                case '/': current = new Token (TokenType.SLASH); break;
-                case '^': current = new Token (TokenType.CARET); break;
-                case '!': current = new Token (TokenType.FACT); break;
-                case '(': current = new Token (TokenType.LPAREN); break;
-                case ')': current = new Token (TokenType.RPAREN); break;
-                default:
-                    throw new MathError.SYNTAX ("invalid character");
-            }
+            current = new Token (TokenType.parse (c));
         }
 
         private void skip () {
@@ -267,19 +271,19 @@ namespace Graphs {
             }
 
             switch (f) {
-            case "sin": return Math.sin (x);
-            case "cos": return Math.cos (x);
-            case "tan": return Math.tan (x);
-            case "cot": return 1.0 / Math.tan (x);
-            case "sec": return 1.0 / Math.cos (x);
-            case "csc": return 1.0 / Math.sin (x);
+                case "sin": return Math.sin (x);
+                case "cos": return Math.cos (x);
+                case "tan": return Math.tan (x);
+                case "cot": return 1.0 / Math.tan (x);
+                case "sec": return 1.0 / Math.cos (x);
+                case "csc": return 1.0 / Math.sin (x);
 
-            case "arcsin": return Math.asin (x);
-            case "arccos": return Math.acos (x);
-            case "arctan": return Math.atan (x);
-            case "arccot": return Math.asin (1.0 / Math.sqrt (1 + x * x));
-            case "arcsec": return Math.acos (1.0 / x);
-            case "arccsc": return Math.asin (1.0 / x);
+                case "arcsin": return Math.asin (x);
+                case "arccos": return Math.acos (x);
+                case "arctan": return Math.atan (x);
+                case "arccot": return Math.asin (1.0 / Math.sqrt (1 + x * x));
+                case "arcsec": return Math.acos (1.0 / x);
+                case "arccsc": return Math.asin (1.0 / x);
             }
 
             throw new MathError.UNKNOWN_FUNCTION (f);
