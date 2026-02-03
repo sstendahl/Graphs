@@ -39,16 +39,34 @@ namespace Graphs {
         DIV_ZERO
     }
 
+    private int superscript_to_int(unichar c) {
+        switch (c) {
+            case '⁰': return 0;
+            case '¹': return 1;
+            case '²': return 2;
+            case '³': return 3;
+            case '⁴': return 4;
+            case '⁵': return 5;
+            case '⁶': return 6;
+            case '⁷': return 7;
+            case '⁸': return 8;
+            case '⁹': return 9;
+            default: return -1;
+        }
+    }
+
     enum TokenType {
         NUMBER,
         IDENT,
         PLUS, MINUS, STAR, SLASH,
         CARET,
         FACT,
+        SUPERSCRIPT,
         LPAREN, RPAREN,
         END;
 
         public static TokenType parse (unichar c) throws MathError{
+            if (superscript_to_int (c) >= 0) return TokenType.SUPERSCRIPT;
             switch (c) {
                 case '+': return TokenType.PLUS;
                 case '-': return TokenType.MINUS;
@@ -133,6 +151,14 @@ namespace Graphs {
                 }
 
                 current = new Token(TokenType.IDENT, src.substring(start, idx - start));
+                pos = idx;
+                return;
+            }
+
+            // Superscript
+            int superscript_value = superscript_to_int(c);
+            if (superscript_value >= 0) {
+                current = new Token(TokenType.SUPERSCRIPT, c.to_string(), superscript_value);
                 pos = idx;
                 return;
             }
@@ -243,11 +269,24 @@ namespace Graphs {
 
         private double postfix () throws MathError {
             double v = primary ();
-            while (current.type == TokenType.FACT) {
-                if (v < 0 || v != Math.floor (v))
-                    throw new MathError.DOMAIN ("invalid factorial");
-                v = factorial ((int) v);
-                next ();
+
+            while (true) {
+                if (current.type == TokenType.FACT) {
+                    if (v < 0 || v != Math.floor (v))
+                        throw new MathError.DOMAIN ("invalid factorial");
+                    v = factorial ((int) v);
+                    next ();
+                    continue;
+                }
+
+                if (current.type == TokenType.SUPERSCRIPT) {
+                    int exp = (int) current.val;
+                    next ();
+                    v = Math.pow(v, exp);
+                    continue;
+                }
+
+                break;
             }
             return v;
         }
