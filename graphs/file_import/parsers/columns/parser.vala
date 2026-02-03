@@ -30,9 +30,6 @@ namespace Graphs {
         private Column[] columns;
         private int value_size = 0;
 
-        protected double parse_float_helper { get; set; }
-        protected signal bool parse_float_request (string input);
-
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
             this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
@@ -112,7 +109,7 @@ namespace Graphs {
                 column_rank = 0;
                 do {
                     expression = str_values[column_index].strip ();
-                    if (evaluate_string (expression, out val)) {
+                    if (evaluate (expression, out val)) {
                         columns[column_rank++].data[value_size] = val;
                         continue;
                     };
@@ -160,24 +157,9 @@ namespace Graphs {
             values = columns[get_rank (index)].get_data ();
         }
 
-        private bool evaluate_string (string expression, out double result) {
-            if (expression.strip ().length == 0) {
-                result = 0;
-                return false;
-            }
-
+        private bool evaluate (string expression, out double result) {
             string normalized = normalize_decimal_separator (expression);
-            if (double.try_parse (normalized, out result)) {
-                return true;
-            }
-
-            // If Vala can't parse, request Python signal
-            if (parse_float_request.emit (normalized)) {
-                result = this.parse_float_helper;
-                return true;
-            }
-
-            return false;
+            return try_evaluate_string (normalized, out result);
         }
 
         private string normalize_decimal_separator (string str) {

@@ -181,8 +181,8 @@ class GeneratedDataItem(DataItem):
         self.props.data = utilities.equation_to_data(
             self._equation,
             [
-                utilities.string_to_float(self.props.xstart),
-                utilities.string_to_float(self.props.xstop),
+                Graphs.evaluate_string(self.props.xstart),
+                Graphs.evaluate_string(self.props.xstop),
             ],
             self.props.steps,
             self.props.scale,

@@ -21,7 +21,6 @@ _REQUESTS = (
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
-    "evaluate-string",
     "export-figure",
     "export-items",
     "generate-data",
@@ -83,14 +82,6 @@ class PythonHelper(Graphs.PythonHelper):
         item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
-
-    @staticmethod
-    def _on_evaluate_string_request(self, string: str) -> None:
-        value = utilities.string_to_float(string)
-        if value is None:
-            return False
-        self.set_evaluate_string_helper(value)
-        return True
 
     @staticmethod
     def _on_export_items_request(

@@ -31,23 +31,6 @@ namespace Graphs {
             return curve_fitting_dialog_request.emit (window, item);
         }
 
-        // Returning a double/float in a signal has issues, so we work around by
-        // setting a property on the python side
-        protected double evaluate_string_helper { get; set; }
-        protected signal bool evaluate_string_request (string input);
-        public bool evaluate_string (string input, out double? result = null) {
-            if (double.try_parse (input, out result)) {
-                return true;
-            }
-
-            if (evaluate_string_request.emit (input)) {
-                result = this.evaluate_string_helper;
-                return true;
-            }
-
-            return false;
-        }
-
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public void export_items (Window window, string mode, File file, Item[] items) {
             export_items_request.emit (window, mode, file, items);

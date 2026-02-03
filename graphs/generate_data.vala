@@ -83,7 +83,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_entry_change (Object object, ParamSpec _param_spec) {
             var entry = object as Adw.EntryRow;
-            if (application.python_helper.evaluate_string (entry.get_text ())) {
+            if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
             } else {
                 entry.add_css_class ("error");

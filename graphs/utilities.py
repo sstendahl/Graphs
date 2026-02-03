@@ -119,36 +119,6 @@ def get_fraction_at_value(
             raise ValueError
 
 
-def string_to_float(string: str) -> float:
-    """Evaluate a string represantation of a number."""
-    try:
-        return _eval(ast.parse(preprocess(string), mode="eval").body)
-    except (SyntaxError, ValueError):
-        return None
-
-
-OPERATORS = {
-    ast.Add: op.add,
-    ast.Sub: op.sub,
-    ast.Mult: op.mul,
-    ast.Div: op.truediv,
-    ast.Pow: op.pow,
-    ast.BitXor: op.xor,
-    ast.USub: op.neg,
-}
-
-
-def _eval(node):
-    # <number>
-    if isinstance(node, ast.Constant) and isinstance(node.value, Number):
-        return node.value
-    if isinstance(node, ast.BinOp):  # <left> <operator> <right>
-        return OPERATORS[type(node.op)](_eval(node.left), _eval(node.right))
-    if isinstance(node, ast.UnaryOp):  # <operator> <operand> e.g., -1
-        return OPERATORS[type(node.op)](_eval(node.operand))
-    raise ValueError
-
-
 def preprocess(string: str) -> str:
     """Preprocess an equation to be compatible with numexpr syntax."""
 

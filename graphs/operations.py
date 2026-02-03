@@ -34,7 +34,7 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
         operations = window.get_operations()
         try:
             args += [
-                utilities.string_to_float(
+                Graphs.evaluate_string(
                     operations.get_property(name + "_entry").get_text(),
                 ),
             ]
