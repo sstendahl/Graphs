@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    /**
+     * Try evaluating a string to a double.
+     * returns true if successfully parsed.
+     */
     public static bool try_evaluate_string (string expression, out double? result = null) {
         if (expression.strip ().length == 0) {
             result = 0;
@@ -20,7 +24,19 @@ namespace Graphs {
         }
     }
 
+    // This method exists primarily to be used on the python side. Do note that
+    // the potential MathError is intentional here as returning double? or using
+    // an out variable leads to issues when automatically generating a binding.
+    // with the compromise being, that the MathError has to be handled on the
+    // python side when consuming this method.
+    /**
+     * Evaluate a string to a double.
+     */
     public static double evaluate_string (string expression) throws MathError {
+        if (expression.strip ().length == 0) {
+            throw new MathError.SYNTAX ("empty expression");
+        }
+
         double result;
         if (double.try_parse (expression, out result)) {
             return result;
@@ -55,7 +71,7 @@ namespace Graphs {
         }
     }
 
-    enum TokenType {
+    private enum TokenType {
         NUMBER,
         IDENT,
         PLUS, MINUS, STAR, SLASH,
@@ -82,7 +98,7 @@ namespace Graphs {
         }
     }
 
-    class Token {
+    private class Token {
         public TokenType type;
         public string text;
         public double val;
@@ -94,7 +110,7 @@ namespace Graphs {
         }
     }
 
-    class MathParser {
+    private class MathParser {
         private string src;
         private int pos = 0;
         private Token current;
@@ -305,6 +321,9 @@ namespace Graphs {
                 if (name == "pi" || name == "π")
                     return Math.PI;
 
+                if (name == "e")
+                    return Math.E;
+
                 if (current.type == TokenType.LPAREN) {
                     next ();
                     double arg = expr ();
@@ -326,27 +345,37 @@ namespace Graphs {
             throw new MathError.SYNTAX ("unexpected token");
         }
 
+        private const double DEGREES_TO_RADIANS = Math.PI / 180d;
+
         private double call_function (owned string f, double x) throws MathError {
             bool deg = f.has_suffix ("d");
             if (deg) {
                 f = f.substring (0, f.length - 1);
-                x = x * Math.PI / 180.0;
+                x = x * DEGREES_TO_RADIANS;
             }
 
             switch (f) {
                 case "sin": return Math.sin (x);
                 case "cos": return Math.cos (x);
                 case "tan": return Math.tan (x);
-                case "cot": return 1.0 / Math.tan (x);
-                case "sec": return 1.0 / Math.cos (x);
-                case "csc": return 1.0 / Math.sin (x);
+                case "cot": return 1d / Math.tan (x);
+                case "sec": return 1d / Math.cos (x);
+                case "csc": return 1d / Math.sin (x);
 
-                case "arcsin": return Math.asin (x);
-                case "arccos": return Math.acos (x);
-                case "arctan": return Math.atan (x);
-                case "arccot": return Math.asin (1.0 / Math.sqrt (1 + x * x));
-                case "arcsec": return Math.acos (1.0 / x);
-                case "arccsc": return Math.asin (1.0 / x);
+                case "arcsin": case "asin": return Math.asin (x);
+                case "arccos": case "acos": return Math.acos (x);
+                case "arctan": case "atan": return Math.atan (x);
+                case "arccot": case "acot": return Math.asin (1d / Math.sqrt (1 + x * x));
+                case "arcsec": case "asec": return Math.acos (1d / x);
+                case "arccsc": case "acsc": return Math.asin (1d / x);
+
+                case "log": return Math.log (x);
+                case "log2": return Math.log2 (x);
+                case "log10": return Math.log10 (x);
+
+                case "sqrt": return Math.sqrt (x);
+                case "exp": return Math.exp (x);
+                case "abs": return Math.fabs (x);
             }
 
             throw new MathError.UNKNOWN_FUNCTION (f);

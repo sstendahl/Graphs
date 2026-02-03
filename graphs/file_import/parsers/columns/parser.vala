@@ -109,7 +109,8 @@ namespace Graphs {
                 column_rank = 0;
                 do {
                     expression = str_values[column_index].strip ();
-                    if (evaluate (expression, out val)) {
+                    expression = normalize_decimal_separator (expression);
+                    if (try_evaluate_string (expression, out val)) {
                         columns[column_rank++].data[value_size] = val;
                         continue;
                     };
@@ -122,7 +123,7 @@ namespace Graphs {
                         );
                     }
 
-                    columns[column_rank].header = expression;
+                    columns[column_rank].header = str_values[column_index];
                     // prevent leading 0 in data
                     value_size = -1;
                 } while (bitset_iter.next (out column_index));
@@ -155,11 +156,6 @@ namespace Graphs {
 
         public void get_column (uint index, out double[] values) {
             values = columns[get_rank (index)].get_data ();
-        }
-
-        private bool evaluate (string expression, out double result) {
-            string normalized = normalize_decimal_separator (expression);
-            return try_evaluate_string (normalized, out result);
         }
 
         private string normalize_decimal_separator (string str) {
