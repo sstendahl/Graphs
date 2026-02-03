@@ -48,7 +48,7 @@ namespace Graphs {
         LPAREN, RPAREN,
         END;
 
-        public static TokenType parse (char c) {
+        public static TokenType parse (unichar c) throws MathError{
             switch (c) {
                 case '+': return TokenType.PLUS;
                 case '-': return TokenType.MINUS;
@@ -93,39 +93,63 @@ namespace Graphs {
         private void next () throws MathError {
             skip ();
             if (pos >= src.length) {
-                current = new Token (TokenType.END);
+                current = new Token(TokenType.END);
                 return;
             }
 
-            char c = src[pos];
+            int idx = pos;
+            unichar c;
+            if (!src.get_next_char(ref idx, out c)) {
+                current = new Token(TokenType.END);
+                return;
+            }
 
-            if (c.isdigit () || c == '.') {
+            // Number
+            if (c.isdigit() || c == '.') {
                 int start = pos;
-                while (pos < src.length &&
-                       (src[pos].isdigit () || src[pos] == '.'))
-                    pos++;
-                string n = src.substring (start, pos - start);
-                current = new Token (TokenType.NUMBER, n, double.parse (n));
+                while (idx <= src.length) {
+                    unichar d;
+                    int temp_idx = idx;
+                    if (!src.get_next_char(ref temp_idx, out d) || !(d.isdigit() || d == '.'))
+                        break;
+                    idx = temp_idx;
+                }
+
+                string n = src.substring(start, idx - start);
+                current = new Token(TokenType.NUMBER, n, double.parse(n));
+                pos = idx;
                 return;
             }
 
-            if (c.isalpha () || c == 'π') {
+            // Identifier
+            if (c.isalpha() || c == 'π') {
                 int start = pos;
-                while (pos < src.length &&
-                       (src[pos].isalnum () || src[pos] == 'π'))
-                    pos++;
-                current = new Token (TokenType.IDENT,
-                                     src.substring (start, pos - start));
+                while (idx <= src.length) {
+                    unichar d;
+                    int temp_idx = idx;
+                    if (!src.get_next_char(ref temp_idx, out d) || !(d.isalnum() || d == 'π'))
+                        break;
+                    idx = temp_idx;
+                }
+
+                current = new Token(TokenType.IDENT, src.substring(start, idx - start));
+                pos = idx;
                 return;
             }
 
-            pos++;
-            current = new Token (TokenType.parse (c));
+            // Single-character token
+            pos = idx;
+            current = new Token(TokenType.parse(c));
         }
 
         private void skip () {
-            while (pos < src.length && src[pos].isspace ())
-                pos++;
+            while (pos < src.length) {
+                int idx = pos;
+                unichar c;
+                if (!src.get_next_char(ref idx, out c) || !c.isspace())
+                    break;
+                pos = idx;
+            }
         }
 
         public void expect_end () throws MathError {
