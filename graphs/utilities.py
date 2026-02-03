@@ -1,11 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
-import ast
 import contextlib
 import math
-import operator as op
 import re
-from numbers import Number
 
 from graphs import scales
 from graphs.misc import FUNCTIONS

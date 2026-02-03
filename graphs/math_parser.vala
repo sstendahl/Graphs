@@ -55,7 +55,7 @@ namespace Graphs {
         DIV_ZERO
     }
 
-    private int superscript_to_int(unichar c) {
+    private int superscript_to_int (unichar c) {
         switch (c) {
             case '⁰': return 0;
             case '¹': return 1;
@@ -81,7 +81,7 @@ namespace Graphs {
         LPAREN, RPAREN,
         END;
 
-        public static TokenType parse (unichar c) throws MathError{
+        public static TokenType parse (unichar c) throws MathError {
             if (superscript_to_int (c) >= 0) return TokenType.SUPERSCRIPT;
             switch (c) {
                 case '+': return TokenType.PLUS;
@@ -127,68 +127,68 @@ namespace Graphs {
         private void next () throws MathError {
             skip ();
             if (pos >= src.length) {
-                current = new Token(TokenType.END);
+                current = new Token (TokenType.END);
                 return;
             }
 
             int idx = pos;
             unichar c;
-            if (!src.get_next_char(ref idx, out c)) {
-                current = new Token(TokenType.END);
+            if (!src.get_next_char (ref idx, out c)) {
+                current = new Token (TokenType.END);
                 return;
             }
 
             // Number
-            if (c.isdigit() || c == '.') {
+            if (c.isdigit () || c == '.') {
                 int start = pos;
                 while (idx <= src.length) {
                     unichar d;
                     int temp_idx = idx;
-                    if (!src.get_next_char(ref temp_idx, out d) || !(d.isdigit() || d == '.'))
+                    if (!src.get_next_char (ref temp_idx, out d) || !(d.isdigit () || d == '.'))
                         break;
                     idx = temp_idx;
                 }
 
-                string n = src.substring(start, idx - start);
-                current = new Token(TokenType.NUMBER, n, double.parse(n));
+                string n = src.substring (start, idx - start);
+                current = new Token (TokenType.NUMBER, n, double.parse (n));
                 pos = idx;
                 return;
             }
 
             // Identifier
-            if (c.isalpha() || c == 'π') {
+            if (c.isalpha () || c == 'π') {
                 int start = pos;
                 while (idx <= src.length) {
                     unichar d;
                     int temp_idx = idx;
-                    if (!src.get_next_char(ref temp_idx, out d) || !(d.isalnum() || d == 'π'))
+                    if (!src.get_next_char (ref temp_idx, out d) || !(d.isalnum () || d == 'π'))
                         break;
                     idx = temp_idx;
                 }
 
-                current = new Token(TokenType.IDENT, src.substring(start, idx - start));
+                current = new Token (TokenType.IDENT, src.substring (start, idx - start));
                 pos = idx;
                 return;
             }
 
             // Superscript
-            int superscript_value = superscript_to_int(c);
+            int superscript_value = superscript_to_int (c);
             if (superscript_value >= 0) {
-                current = new Token(TokenType.SUPERSCRIPT, c.to_string(), superscript_value);
+                current = new Token (TokenType.SUPERSCRIPT, c.to_string (), superscript_value);
                 pos = idx;
                 return;
             }
 
             // Single-character token
             pos = idx;
-            current = new Token(TokenType.parse(c));
+            current = new Token (TokenType.parse (c));
         }
 
         private void skip () {
             while (pos < src.length) {
                 int idx = pos;
                 unichar c;
-                if (!src.get_next_char(ref idx, out c) || !c.isspace())
+                if (!src.get_next_char (ref idx, out c) || !c.isspace ())
                     break;
                 pos = idx;
             }
@@ -298,7 +298,7 @@ namespace Graphs {
                 if (current.type == TokenType.SUPERSCRIPT) {
                     int exp = (int) current.val;
                     next ();
-                    v = Math.pow(v, exp);
+                    v = Math.pow (v, exp);
                     continue;
                 }
 
