@@ -98,6 +98,7 @@ namespace Graphs {
         }
     }
 
+    [Compact]
     private class Token {
         public TokenType type;
         public string text;
@@ -156,7 +157,7 @@ namespace Graphs {
             }
 
             // Identifier
-            if (c.isalpha () || c == 'π') {
+            if (c.isalpha () || c == 'π' || c == 'e') {
                 int start = pos;
                 while (idx <= src.length) {
                     unichar d;
@@ -347,9 +348,26 @@ namespace Graphs {
 
         private const double DEGREES_TO_RADIANS = Math.PI / 180d;
 
-        private double call_function (owned string f, double x) throws MathError {
-            bool deg = f.has_suffix ("d");
-            if (deg) {
+        private double call_function (string f, double x) throws MathError {
+            try {
+                return trig_function (f, x);
+            } catch (MathError.UNKNOWN_FUNCTION e) {}
+
+            switch (f) {
+                case "log": return Math.log (x);
+                case "log2": return Math.log2 (x);
+                case "log10": return Math.log10 (x);
+
+                case "sqrt": return Math.sqrt (x);
+                case "exp": return Math.exp (x);
+                case "abs": return Math.fabs (x);
+            }
+
+            throw new MathError.UNKNOWN_FUNCTION (f);
+        }
+
+        private double trig_function (owned string f, double x) throws MathError {
+            if (f.has_suffix ("d")) {
                 f = f.substring (0, f.length - 1);
                 x = x * DEGREES_TO_RADIANS;
             }
@@ -368,14 +386,6 @@ namespace Graphs {
                 case "arccot": case "acot": return Math.asin (1d / Math.sqrt (1 + x * x));
                 case "arcsec": case "asec": return Math.acos (1d / x);
                 case "arccsc": case "acsc": return Math.asin (1d / x);
-
-                case "log": return Math.log (x);
-                case "log2": return Math.log2 (x);
-                case "log10": return Math.log10 (x);
-
-                case "sqrt": return Math.sqrt (x);
-                case "exp": return Math.exp (x);
-                case "abs": return Math.fabs (x);
             }
 
             throw new MathError.UNKNOWN_FUNCTION (f);
