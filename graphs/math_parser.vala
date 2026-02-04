@@ -94,12 +94,10 @@ namespace Graphs {
     private class Token {
         public TokenType type;
         public string text;
-        public double val;
 
-        public Token (TokenType type, string text = "", double val = 0) {
+        public Token (TokenType type, string text = "") {
             this.type = type;
             this.text = text;
-            this.val = val;
         }
     }
 
@@ -133,20 +131,20 @@ namespace Graphs {
 
             // Number
             if (c.isdigit () || c == '.') {
-                handle_number (ref idx);
+                handle_number (ref idx, ref c);
                 return;
             }
 
             // Identifier
             if (c.isalpha () || c == 'π' || c == 'e') {
-                handle_identifier (ref idx);
+                handle_identifier (ref idx, ref c);
                 return;
             }
 
             // Superscript
             int superscript_value = superscript_to_int (c);
             if (superscript_value >= 0) {
-                current = new Token (TokenType.SUPERSCRIPT, c.to_string (), superscript_value);
+                current = new Token (TokenType.SUPERSCRIPT, superscript_value.to_string ());
                 pos = idx;
                 return;
             }
@@ -156,27 +154,53 @@ namespace Graphs {
             current = new Token (TokenType.parse (c));
         }
 
-        private void handle_number (ref int idx) {
+        private void handle_number (ref int idx, ref unichar c) throws MathError {
             int start = pos;
-            while (idx <= src.length) {
-                unichar d;
+            bool seen_dot = false;
+            bool seen_digit = false;
+            bool digit_after_dot = false;
+
+            idx--;
+            while (idx < src.length) {
                 int temp_idx = idx;
-                if (!src.get_next_char (ref temp_idx, out d) || !(d.isdigit () || d == '.'))
+
+                if (!src.get_next_char (ref temp_idx, out c))
                     break;
-                idx = temp_idx;
+
+                if (c.isdigit ()) {
+                    seen_digit = true;
+                    if (seen_dot) digit_after_dot = true;
+                    idx = temp_idx;
+                    continue;
+                }
+
+                if (c == '.') {
+                    // only one dot allowed
+                    if (seen_dot)
+                        throw new MathError.SYNTAX ("invalid number");;
+
+                    seen_dot = true;
+                    idx = temp_idx;
+                    continue;
+                }
+
+                break;
             }
 
-            string n = src.substring (start, idx - start);
-            current = new Token (TokenType.NUMBER, n, double.parse (n));
+            // must contain at least one digit
+            // if there is a dot, it must have a digit after it
+            if (!seen_digit || (seen_dot && !digit_after_dot))
+                throw new MathError.SYNTAX ("invalid number");
+
+            current = new Token (TokenType.NUMBER, src.substring (start, idx - start));
             pos = idx;
         }
 
-        private void handle_identifier (ref int idx) {
+        private void handle_identifier (ref int idx, ref unichar c) {
             int start = pos;
             while (idx <= src.length) {
-                unichar d;
                 int temp_idx = idx;
-                if (!src.get_next_char (ref temp_idx, out d) || !(d.isalnum () || d == 'π'))
+                if (!src.get_next_char (ref temp_idx, out c) || !(c.isalnum () || c == 'π'))
                     break;
                 idx = temp_idx;
             }
@@ -297,7 +321,7 @@ namespace Graphs {
                 }
 
                 if (current.type == TokenType.SUPERSCRIPT) {
-                    int exp = (int) current.val;
+                    int exp = int.parse (current.text);
                     next ();
                     v = Math.pow (v, exp);
                     continue;
@@ -310,7 +334,7 @@ namespace Graphs {
 
         private double primary () throws MathError {
             if (current.type == TokenType.NUMBER) {
-                double v = current.val;
+                double v = double.parse (current.text);
                 next ();
                 return v;
             }
