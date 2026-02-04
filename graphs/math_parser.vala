@@ -10,16 +10,13 @@ namespace Graphs {
             return false;
         }
 
-        if (double.try_parse (expression, out result)) {
-            return true;
-        }
-
         try {
             var parser = new MathParser (expression);
             result = parser.parse ();
             parser.expect_end ();
             return true;
         } catch (Error e) {
+            result = 0;
             return false;
         }
     }
@@ -37,13 +34,8 @@ namespace Graphs {
             throw new MathError.SYNTAX ("empty expression");
         }
 
-        double result;
-        if (double.try_parse (expression, out result)) {
-            return result;
-        }
-
         var parser = new MathParser (expression);
-        result = parser.parse ();
+        double result = parser.parse ();
         parser.expect_end ();
         return result;
     }
