@@ -160,31 +160,23 @@ namespace Graphs {
             bool seen_digit = false;
             bool digit_after_dot = false;
 
-            idx--;
-            while (idx < src.length) {
-                int temp_idx = idx;
-
-                if (!src.get_next_char (ref temp_idx, out c))
-                    break;
-
+            while (true) {
                 if (c.isdigit ()) {
                     seen_digit = true;
-                    if (seen_dot) digit_after_dot = true;
-                    idx = temp_idx;
-                    continue;
-                }
-
-                if (c == '.') {
+                    if (seen_dot)
+                        digit_after_dot = true;
+                } else if (c == '.') {
                     // only one dot allowed
                     if (seen_dot)
-                        throw new MathError.SYNTAX ("invalid number");;
-
+                        throw new MathError.SYNTAX ("invalid number");
                     seen_dot = true;
-                    idx = temp_idx;
-                    continue;
-                }
+                } else break;
 
-                break;
+                // advance to next character
+                int temp_idx = idx;
+                if (!src.get_next_char (ref temp_idx, out c))
+                    break;
+                idx = temp_idx;
             }
 
             // must contain at least one digit
