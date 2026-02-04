@@ -84,8 +84,7 @@ namespace Graphs {
                 case '!': return TokenType.FACT;
                 case '(': return TokenType.LPAREN;
                 case ')': return TokenType.RPAREN;
-                default:
-                    throw new MathError.SYNTAX ("invalid token");
+                default: throw new MathError.SYNTAX ("invalid token");
             }
         }
     }
@@ -117,11 +116,6 @@ namespace Graphs {
 
         private void next () throws MathError {
             skip ();
-            if (pos >= src.length) {
-                current = new Token (TokenType.END);
-                return;
-            }
-
             int idx = pos;
             unichar c;
             if (!src.get_next_char (ref idx, out c)) {
@@ -136,7 +130,7 @@ namespace Graphs {
             }
 
             // Identifier
-            if (c.isalpha () || c == 'π' || c == 'e') {
+            if (c.isalpha () || c == 'π') {
                 handle_identifier (ref idx, ref c);
                 return;
             }
@@ -150,14 +144,15 @@ namespace Graphs {
             }
 
             // Single-character token
-            pos = idx;
             current = new Token (TokenType.parse (c));
+            pos = idx;
         }
 
         private void handle_number (ref int idx, ref unichar c) throws MathError {
             bool seen_dot = false;
             bool last_is_dot = false;
             bool seen_exp = false;
+            int tmp_idx = idx;
 
             while (true) {
                 if (c.isdigit ()) {
@@ -169,51 +164,40 @@ namespace Graphs {
                     last_is_dot = true;
                 } else if (c == 'e' && !seen_exp) {
                     // Look ahead to see if this is really an exponent
-                    int look_idx = idx;
-
-                    if (!src.get_next_char (ref look_idx, out c))
-                        break;
+                    if (!src.get_next_char (ref tmp_idx, out c)) break;
 
                     // Optional sign
                     if (c == '+' || c == '-') {
-                        int sign_idx = look_idx;
+                        int sign_idx = tmp_idx;
                         if (!src.get_next_char (ref sign_idx, out c))
                             break;
-                        look_idx = sign_idx;
+                        tmp_idx = sign_idx;
                     }
 
                     // Must have at least one digit to be an exponent
-                    if (!c.isdigit ())
-                        break;
-
-                    // Commit exponent
+                    if (!c.isdigit ()) break;
                     seen_exp = true;
                     last_is_dot = false;
-                    idx = look_idx;
-                    continue;
                 } else break;
 
                 // advance to next character
-                int temp_idx = idx;
-                if (!src.get_next_char (ref temp_idx, out c))
-                    break;
-                idx = temp_idx;
+                idx = tmp_idx;
+                if (!src.get_next_char (ref tmp_idx, out c)) break;
             }
 
             // must contain at least one digit and must not have a trailing dot
-            if (last_is_dot)
-                throw new MathError.SYNTAX ("invalid number");
+            if (last_is_dot) throw new MathError.SYNTAX ("invalid number");
 
             current = new Token (TokenType.NUMBER, src.substring (pos, idx - pos));
             pos = idx;
         }
 
         private void handle_identifier (ref int idx, ref unichar c) {
+            int tmp_idx = idx;
             while (idx <= src.length) {
-                int temp_idx = idx;
-                if (!src.get_next_char (ref temp_idx, out c) || !(c.isalnum () || c == 'π'))
+                if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π'))
                     break;
-                idx = temp_idx;
+                idx = tmp_idx;
             }
 
             current = new Token (TokenType.IDENT, src.substring (pos, idx - pos));
@@ -221,11 +205,10 @@ namespace Graphs {
         }
 
         private void skip () {
+            int idx = pos;
             while (pos < src.length) {
-                int idx = pos;
                 unichar c;
-                if (!src.get_next_char (ref idx, out c) || !c.isspace ())
-                    break;
+                if (!src.get_next_char (ref idx, out c) || !c.isspace ()) break;
                 pos = idx;
             }
         }
@@ -248,17 +231,18 @@ namespace Graphs {
             return r;
         }
 
-        private bool starts_value (Token t) {
-            return t.type == TokenType.NUMBER
-                || t.type == TokenType.IDENT
-                || t.type == TokenType.LPAREN;
+        private bool starts_value (TokenType t) {
+            return t == TokenType.NUMBER
+                || t == TokenType.IDENT
+                || t == TokenType.LPAREN;
         }
 
         /* Grammar:
-           expr  -> term ((+|-) term)*
-           term  -> power ((*|/) power)*
-           power -> unary ((^|**) power)?
-           unary -> (- unary) | postfix
+           expr    -> term ((+|-) term)*
+           term    -> power ((*|/) power)*
+           term    -> power expr
+           power   -> unary ((^|**) power)?
+           unary   -> (- unary) | postfix
            postfix -> primary (!)*
            primary -> number | constant | func | '(' expr ')'
         */
@@ -278,9 +262,9 @@ namespace Graphs {
             double v = power ();
 
             while (true) {
-                /* explicit * or / */
-                if (current.type == TokenType.STAR || current.type == TokenType.SLASH) {
-                    var t = current.type;
+                TokenType t = current.type;
+                // explicit * or /
+                if (t == TokenType.STAR || t == TokenType.SLASH) {
                     next ();
                     double r = power ();
                     if (t == TokenType.SLASH && r == 0)
@@ -289,13 +273,10 @@ namespace Graphs {
                     continue;
                 }
 
-                /* implicit multiplication */
-                if (starts_value (current)) {
-                    double r = power ();
-                    v *= r;
-                    continue;
+                // implicit multiplication
+                if (starts_value (t)) {
+                    v *= expr ();
                 }
-
                 break;
             }
 
@@ -344,41 +325,37 @@ namespace Graphs {
         }
 
         private double primary () throws MathError {
-            if (current.type == TokenType.NUMBER) {
-                double v = double.parse (current.text);
-                next ();
-                return v;
-            }
-
-            if (current.type == TokenType.IDENT) {
-                string name = current.text;
-                next ();
-
-                if (name == "pi" || name == "π")
-                    return Math.PI;
-
-                if (name == "e")
-                    return Math.E;
-
-                if (current.type == TokenType.LPAREN) {
+            switch (current.type) {
+                case TokenType.NUMBER:
+                    double v = double.parse (current.text);
                     next ();
-                    double arg = expr ();
+                    return v;
+                case TokenType.IDENT:
+                    string text = current.text;
+                    next ();
+
+                    if (text == "pi" || text == "π")
+                        return Math.PI;
+
+                    if (text == "e")
+                        return Math.E;
+
+                    if (current.type == TokenType.LPAREN) {
+                        next ();
+                        double arg = expr ();
+                        expect (TokenType.RPAREN);
+
+                        return call_function (text, arg);
+                    }
+                    throw new MathError.UNKNOWN_FUNCTION (text);
+                case TokenType.LPAREN:
+                    next ();
+                    double v = expr ();
                     expect (TokenType.RPAREN);
-
-                    return call_function (name, arg);
-                }
-
-                throw new MathError.UNKNOWN_FUNCTION (name);
+                    return v;
+                default:
+                    throw new MathError.SYNTAX ("unexpected token");
             }
-
-            if (current.type == TokenType.LPAREN) {
-                next ();
-                double v = expr ();
-                expect (TokenType.RPAREN);
-                return v;
-            }
-
-            throw new MathError.SYNTAX ("unexpected token");
         }
 
         private const double DEGREES_TO_RADIANS = Math.PI / 180d;
