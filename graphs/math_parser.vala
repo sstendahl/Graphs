@@ -157,16 +157,40 @@ namespace Graphs {
         private void handle_number (ref int idx, ref unichar c) throws MathError {
             bool seen_dot = false;
             bool last_is_dot = false;
+            bool seen_exp = false;
 
             while (true) {
                 if (c.isdigit ()) {
                     last_is_dot = false;
                 } else if (c == '.') {
-                    // only one dot allowed
-                    if (seen_dot)
+                    if (seen_dot || seen_exp)
                         throw new MathError.SYNTAX ("invalid number");
                     seen_dot = true;
                     last_is_dot = true;
+                } else if (c == 'e' && !seen_exp) {
+                    // Look ahead to see if this is really an exponent
+                    int look_idx = idx;
+
+                    if (!src.get_next_char (ref look_idx, out c))
+                        break;
+
+                    // Optional sign
+                    if (c == '+' || c == '-') {
+                        int sign_idx = look_idx;
+                        if (!src.get_next_char (ref sign_idx, out c))
+                            break;
+                        look_idx = sign_idx;
+                    }
+
+                    // Must have at least one digit to be an exponent
+                    if (!c.isdigit ())
+                        break;
+
+                    // Commit exponent
+                    seen_exp = true;
+                    last_is_dot = false;
+                    idx = look_idx;
+                    continue;
                 } else break;
 
                 // advance to next character
