@@ -156,19 +156,17 @@ namespace Graphs {
 
         private void handle_number (ref int idx, ref unichar c) throws MathError {
             bool seen_dot = false;
-            bool seen_digit = false;
-            bool digit_after_dot = false;
+            bool last_is_dot = false;
 
             while (true) {
                 if (c.isdigit ()) {
-                    seen_digit = true;
-                    if (seen_dot)
-                        digit_after_dot = true;
+                    last_is_dot = false;
                 } else if (c == '.') {
                     // only one dot allowed
                     if (seen_dot)
                         throw new MathError.SYNTAX ("invalid number");
                     seen_dot = true;
+                    last_is_dot = true;
                 } else break;
 
                 // advance to next character
@@ -178,9 +176,8 @@ namespace Graphs {
                 idx = temp_idx;
             }
 
-            // must contain at least one digit
-            // if there is a dot, it must have a digit after it
-            if (!seen_digit || (seen_dot && !digit_after_dot))
+            // must contain at least one digit and must not have a trailing dot
+            if (last_is_dot)
                 throw new MathError.SYNTAX ("invalid number");
 
             current = new Token (TokenType.NUMBER, src.substring (pos, idx - pos));
