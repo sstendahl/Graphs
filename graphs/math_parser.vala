@@ -155,7 +155,6 @@ namespace Graphs {
         }
 
         private void handle_number (ref int idx, ref unichar c) throws MathError {
-            int start = pos;
             bool seen_dot = false;
             bool seen_digit = false;
             bool digit_after_dot = false;
@@ -184,12 +183,11 @@ namespace Graphs {
             if (!seen_digit || (seen_dot && !digit_after_dot))
                 throw new MathError.SYNTAX ("invalid number");
 
-            current = new Token (TokenType.NUMBER, src.substring (start, idx - start));
+            current = new Token (TokenType.NUMBER, src.substring (pos, idx - pos));
             pos = idx;
         }
 
         private void handle_identifier (ref int idx, ref unichar c) {
-            int start = pos;
             while (idx <= src.length) {
                 int temp_idx = idx;
                 if (!src.get_next_char (ref temp_idx, out c) || !(c.isalnum () || c == 'π'))
@@ -197,7 +195,7 @@ namespace Graphs {
                 idx = temp_idx;
             }
 
-            current = new Token (TokenType.IDENT, src.substring (start, idx - start));
+            current = new Token (TokenType.IDENT, src.substring (pos, idx - pos));
             pos = idx;
         }
 
