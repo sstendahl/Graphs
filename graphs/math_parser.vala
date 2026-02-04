@@ -133,34 +133,13 @@ namespace Graphs {
 
             // Number
             if (c.isdigit () || c == '.') {
-                int start = pos;
-                while (idx <= src.length) {
-                    unichar d;
-                    int temp_idx = idx;
-                    if (!src.get_next_char (ref temp_idx, out d) || !(d.isdigit () || d == '.'))
-                        break;
-                    idx = temp_idx;
-                }
-
-                string n = src.substring (start, idx - start);
-                current = new Token (TokenType.NUMBER, n, double.parse (n));
-                pos = idx;
+                handle_number (ref idx);
                 return;
             }
 
             // Identifier
             if (c.isalpha () || c == 'π' || c == 'e') {
-                int start = pos;
-                while (idx <= src.length) {
-                    unichar d;
-                    int temp_idx = idx;
-                    if (!src.get_next_char (ref temp_idx, out d) || !(d.isalnum () || d == 'π'))
-                        break;
-                    idx = temp_idx;
-                }
-
-                current = new Token (TokenType.IDENT, src.substring (start, idx - start));
-                pos = idx;
+                handle_identifier (ref idx);
                 return;
             }
 
@@ -175,6 +154,35 @@ namespace Graphs {
             // Single-character token
             pos = idx;
             current = new Token (TokenType.parse (c));
+        }
+
+        private void handle_number (ref int idx) {
+            int start = pos;
+            while (idx <= src.length) {
+                unichar d;
+                int temp_idx = idx;
+                if (!src.get_next_char (ref temp_idx, out d) || !(d.isdigit () || d == '.'))
+                    break;
+                idx = temp_idx;
+            }
+
+            string n = src.substring (start, idx - start);
+            current = new Token (TokenType.NUMBER, n, double.parse (n));
+            pos = idx;
+        }
+
+        private void handle_identifier (ref int idx) {
+            int start = pos;
+            while (idx <= src.length) {
+                unichar d;
+                int temp_idx = idx;
+                if (!src.get_next_char (ref temp_idx, out d) || !(d.isalnum () || d == 'π'))
+                    break;
+                idx = temp_idx;
+            }
+
+            current = new Token (TokenType.IDENT, src.substring (start, idx - start));
+            pos = idx;
         }
 
         private void skip () {
