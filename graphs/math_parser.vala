@@ -4,7 +4,7 @@ namespace Graphs {
      * Try evaluating a string to a double.
      * returns true if successfully parsed.
      */
-    public static bool try_evaluate_string (string expression, out double? result = null) {
+    public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
         if (expression.strip ().length == 0) {
             result = 0;
             return false;
@@ -12,7 +12,7 @@ namespace Graphs {
 
         try {
             var parser = MathParser.instance ();
-            result = parser.parse (expression);
+            result = parser.parse (expression, decimal_separator);
             parser.expect_end ();
             return true;
         } catch (Error e) {
@@ -164,6 +164,7 @@ namespace Graphs {
     private class MathParser {
         private string src;
         private int pos;
+        private unichar decimal_separator;
 
         private TokenType current_type;
         private Ident current_ident;
@@ -175,9 +176,10 @@ namespace Graphs {
             return _instance.once (() => { return new MathParser (); });
         }
 
-        public double parse (string src) throws MathError {
+        public double parse (string src, unichar decimal_separator = '.') throws MathError {
             this.src = src.down ();
             this.pos = 0;
+            this.decimal_separator = decimal_separator;
             next ();
             return expr ();
         }
@@ -195,7 +197,7 @@ namespace Graphs {
             }
 
             // Number
-            if (c.isdigit () || c == '.') {
+            if (c.isdigit () || c == decimal_separator) {
                 handle_number (ref idx, ref c);
                 return;
             }
@@ -226,8 +228,8 @@ namespace Graphs {
             bool seen_exp = false;
             int tmp_idx = idx;
 
-            int int_part = 0;
-            int frac_part = 0;
+            long int_part = 0;
+            long frac_part = 0;
             int frac_digits = 0;
             int exp = 0;
             int exp_sign = 1;
@@ -249,7 +251,7 @@ namespace Graphs {
                     }
 
                     last_is_dot = false;
-                } else if (c == '.') {
+                } else if (c == decimal_separator) {
                     if (seen_dot || seen_exp)
                         throw new MathError.SYNTAX ("invalid number");
                     seen_dot = true;
@@ -285,9 +287,9 @@ namespace Graphs {
 
             double val = int_part;
             if (seen_dot) val += frac_part / ipow (10d, frac_digits);
-            if (seen_exp) {
+            if (seen_exp && exp != 0) {
                 int e = exp_sign * exp;
-                val *= (e >= 0 && e <= 308) ? ipow (10d, e) : Math.pow (10d, e);
+                val *= (e > 0 && e <= 308) ? ipow (10d, e) : Math.pow (10d, e);
             }
 
             current_type = TokenType.NUMBER;
