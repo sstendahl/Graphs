@@ -333,7 +333,7 @@ namespace Graphs {
 
             while (e > 0) {
                 if ((e & 1) == 1) result *= b;
-                b = b*b;
+                b = b * b;
                 e >>= 1;
             }
 
@@ -463,46 +463,46 @@ namespace Graphs {
         private double call_function (Ident id, double x) {
             switch (id) {
                 // trig radians
-                case Ident.SIN: return Math.sin(x);
-                case Ident.COS: return Math.cos(x);
-                case Ident.TAN: return Math.tan(x);
-                case Ident.COT: return 1d / Math.tan(x);
-                case Ident.SEC: return 1d / Math.cos(x);
-                case Ident.CSC: return 1d / Math.sin(x);
+                case Ident.SIN: return Math.sin (x);
+                case Ident.COS: return Math.cos (x);
+                case Ident.TAN: return Math.tan (x);
+                case Ident.COT: return 1d / Math.tan (x);
+                case Ident.SEC: return 1d / Math.cos (x);
+                case Ident.CSC: return 1d / Math.sin (x);
 
                 // trig degrees
-                case Ident.SIND: return Math.sin(x * DEGREES_TO_RADIANS);
-                case Ident.COSD: return Math.cos(x * DEGREES_TO_RADIANS);
-                case Ident.TAND: return Math.tan(x * DEGREES_TO_RADIANS);
-                case Ident.COTD: return 1d / Math.tan(x * DEGREES_TO_RADIANS);
-                case Ident.SECD: return 1d / Math.cos(x * DEGREES_TO_RADIANS);
-                case Ident.CSCD: return 1d / Math.sin(x * DEGREES_TO_RADIANS);
+                case Ident.SIND: return Math.sin (x * DEGREES_TO_RADIANS);
+                case Ident.COSD: return Math.cos (x * DEGREES_TO_RADIANS);
+                case Ident.TAND: return Math.tan (x * DEGREES_TO_RADIANS);
+                case Ident.COTD: return 1d / Math.tan (x * DEGREES_TO_RADIANS);
+                case Ident.SECD: return 1d / Math.cos (x * DEGREES_TO_RADIANS);
+                case Ident.CSCD: return 1d / Math.sin (x * DEGREES_TO_RADIANS);
 
                 // inverse trig radians
-                case Ident.ASIN: return Math.asin(x);
-                case Ident.ACOS: return Math.acos(x);
-                case Ident.ATAN: return Math.atan(x);
-                case Ident.ACOT: return Math.asin(1d / Math.sqrt(1 + x*x));
-                case Ident.ASEC: return Math.acos(1d / x);
-                case Ident.ACSC: return Math.asin(1d / x);
+                case Ident.ASIN: return Math.asin (x);
+                case Ident.ACOS: return Math.acos (x);
+                case Ident.ATAN: return Math.atan (x);
+                case Ident.ACOT: return Math.asin (1d / Math.sqrt (1 + x * x));
+                case Ident.ASEC: return Math.acos (1d / x);
+                case Ident.ACSC: return Math.asin (1d / x);
 
                 // inverse trig degrees
-                case Ident.ASIND: return Math.asin(x * DEGREES_TO_RADIANS);
-                case Ident.ACOSD: return Math.acos(x * DEGREES_TO_RADIANS);
-                case Ident.ATAND: return Math.atan(x * DEGREES_TO_RADIANS);
+                case Ident.ASIND: return Math.asin (x * DEGREES_TO_RADIANS);
+                case Ident.ACOSD: return Math.acos (x * DEGREES_TO_RADIANS);
+                case Ident.ATAND: return Math.atan (x * DEGREES_TO_RADIANS);
                 case Ident.ACOTD:
                     double x2 = x * DEGREES_TO_RADIANS;
-                    return Math.asin(1d / Math.sqrt(1 + x2 * x2));
-                case Ident.ASECD: return Math.acos(1d / x * DEGREES_TO_RADIANS);
-                case Ident.ACSCD: return Math.asin(1d / x * DEGREES_TO_RADIANS);
+                    return Math.asin (1d / Math.sqrt (1 + x2 * x2));
+                case Ident.ASECD: return Math.acos (1d / x * DEGREES_TO_RADIANS);
+                case Ident.ACSCD: return Math.asin (1d / x * DEGREES_TO_RADIANS);
 
                 // misc
-                case Ident.LOG: return Math.log(x);
-                case Ident.LOG2: return Math.log2(x);
-                case Ident.LOG10: return Math.log10(x);
-                case Ident.SQRT: return Math.sqrt(x);
-                case Ident.EXP: return Math.exp(x);
-                case Ident.ABS: return Math.fabs(x);
+                case Ident.LOG: return Math.log (x);
+                case Ident.LOG2: return Math.log2 (x);
+                case Ident.LOG10: return Math.log10 (x);
+                case Ident.SQRT: return Math.sqrt (x);
+                case Ident.EXP: return Math.exp (x);
+                case Ident.ABS: return Math.fabs (x);
 
                 default: assert_not_reached ();
             }
