@@ -89,12 +89,84 @@ namespace Graphs {
         }
     }
 
+    private enum Ident {
+        // constants
+        PI,
+        E,
+
+        // trig
+        SIN, COS, TAN, COT, SEC, CSC,
+        SIND, COSD, TAND, COTD, SECD, CSCD,
+
+        // inverse trig
+        ASIN, ACOS, ATAN, ACOT, ASEC, ACSC,
+        ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
+
+        // misc math
+        LOG,
+        LOG2,
+        LOG10,
+        SQRT,
+        EXP,
+        ABS;
+
+        public static Ident parse (string s) throws MathError {
+            switch (s) {
+                // constants
+                case "pi": case "π": return Ident.PI;
+                case "e": return Ident.E;
+
+                // trig radians
+                case "sin": return Ident.SIN;
+                case "cos": return Ident.COS;
+                case "tan": return Ident.TAN;
+                case "cot": return Ident.COT;
+                case "sec": return Ident.SEC;
+                case "csc": return Ident.CSC;
+
+                // trig degrees
+                case "sind": return Ident.SIND;
+                case "cosd": return Ident.COSD;
+                case "tand": return Ident.TAND;
+                case "cotd": return Ident.COTD;
+                case "secd": return Ident.SECD;
+                case "cscd": return Ident.CSCD;
+
+                // inverse trig radians
+                case "asin": case "arcsin": return Ident.ASIN;
+                case "acos": case "arccos": return Ident.ACOS;
+                case "atan": case "arctan": return Ident.ATAN;
+                case "acot": case "arccot": return Ident.ACOT;
+                case "asec": case "arcsec": return Ident.ASEC;
+                case "acsc": case "arccsc": return Ident.ACSC;
+
+                // inverse trig degrees
+                case "asind": case "arcsind": return Ident.ASIND;
+                case "acosd": case "arccosd": return Ident.ACOSD;
+                case "atand": case "arctand": return Ident.ATAND;
+                case "acotd": case "arccotd": return Ident.ACOTD;
+                case "asecd": case "arcsecd": return Ident.ASECD;
+                case "acscd": case "arccscd": return Ident.ACSCD;
+
+                // misc
+                case "log": return Ident.LOG;
+                case "log2": return Ident.LOG2;
+                case "log10": return Ident.LOG10;
+                case "sqrt": return Ident.SQRT;
+                case "exp": return Ident.EXP;
+                case "abs": return Ident.ABS;
+
+                default: throw new MathError.UNKNOWN_FUNCTION (s);
+            }
+        }
+    }
+
     private class MathParser {
         private string src;
         private int pos = 0;
 
         private TokenType current_type;
-        private string current_text;
+        private Ident current_ident;
         private double current_val;
 
         public MathParser (string src) throws MathError {
@@ -109,13 +181,13 @@ namespace Graphs {
         private void next () throws MathError {
             int idx = pos;
             unichar c;
-            while (pos < src.length) {
-                if (!src.get_next_char (ref idx, out c) || !c.isspace ()) break;
+            while (true) {
+                if (!src.get_next_char (ref idx, out c)) {
+                    current_type = TokenType.END;
+                    return;
+                }
+                if (!c.isspace ()) break;
                 pos = idx;
-            }
-            if (!src.get_next_char (ref idx, out c)) {
-                current_type = TokenType.END;
-                return;
             }
 
             // Number
@@ -219,7 +291,7 @@ namespace Graphs {
             pos = idx;
         }
 
-        private void handle_identifier (ref int idx, ref unichar c) {
+        private void handle_identifier (ref int idx, ref unichar c) throws MathError {
             int tmp_idx = idx;
             while (idx <= src.length) {
                 if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π'))
@@ -228,7 +300,7 @@ namespace Graphs {
             }
 
             current_type = TokenType.IDENT;
-            current_text = src.substring (pos, idx - pos);
+            current_ident = Ident.parse (src.substring (pos, idx - pos));
             pos = idx;
         }
 
@@ -364,23 +436,20 @@ namespace Graphs {
                     next ();
                     return v;
                 case TokenType.IDENT:
-                    string text = current_text;
+                    Ident id = current_ident;
                     next ();
 
-                    if (text == "pi" || text == "π")
-                        return Math.PI;
-
-                    if (text == "e")
-                        return Math.E;
-
-                    if (current_type == TokenType.LPAREN) {
-                        next ();
-                        double arg = expr ();
-                        expect (TokenType.RPAREN);
-
-                        return call_function (text, arg);
+                    switch (id) {
+                        case Ident.PI: return Math.PI;
+                        case Ident.E: return Math.E;
+                        default: break;
                     }
-                    throw new MathError.UNKNOWN_FUNCTION (text);
+
+                    expect (TokenType.LPAREN);
+                    double arg = expr ();
+                    expect (TokenType.RPAREN);
+
+                    return call_function (id, arg);
                 case TokenType.LPAREN:
                     next ();
                     double v = expr ();
@@ -393,47 +462,52 @@ namespace Graphs {
 
         private const double DEGREES_TO_RADIANS = Math.PI / 180d;
 
-        private double call_function (string f, double x) throws MathError {
-            try {
-                return trig_function (f, x);
-            } catch (MathError.UNKNOWN_FUNCTION e) {}
+        private double call_function (Ident id, double x) {
+            switch (id) {
+                // trig radians
+                case Ident.SIN: return Math.sin(x);
+                case Ident.COS: return Math.cos(x);
+                case Ident.TAN: return Math.tan(x);
+                case Ident.COT: return 1d / Math.tan(x);
+                case Ident.SEC: return 1d / Math.cos(x);
+                case Ident.CSC: return 1d / Math.sin(x);
 
-            switch (f) {
-                case "log": return Math.log (x);
-                case "log2": return Math.log2 (x);
-                case "log10": return Math.log10 (x);
+                // trig degrees
+                case Ident.SIND: return Math.sin(x * DEGREES_TO_RADIANS);
+                case Ident.COSD: return Math.cos(x * DEGREES_TO_RADIANS);
+                case Ident.TAND: return Math.tan(x * DEGREES_TO_RADIANS);
+                case Ident.COTD: return 1d / Math.tan(x * DEGREES_TO_RADIANS);
+                case Ident.SECD: return 1d / Math.cos(x * DEGREES_TO_RADIANS);
+                case Ident.CSCD: return 1d / Math.sin(x * DEGREES_TO_RADIANS);
 
-                case "sqrt": return Math.sqrt (x);
-                case "exp": return Math.exp (x);
-                case "abs": return Math.fabs (x);
+                // inverse trig radians
+                case Ident.ASIN: return Math.asin(x);
+                case Ident.ACOS: return Math.acos(x);
+                case Ident.ATAN: return Math.atan(x);
+                case Ident.ACOT: return Math.asin(1d / Math.sqrt(1 + x*x));
+                case Ident.ASEC: return Math.acos(1d / x);
+                case Ident.ACSC: return Math.asin(1d / x);
+
+                // inverse trig degrees
+                case Ident.ASIND: return Math.asin(x * DEGREES_TO_RADIANS);
+                case Ident.ACOSD: return Math.acos(x * DEGREES_TO_RADIANS);
+                case Ident.ATAND: return Math.atan(x * DEGREES_TO_RADIANS);
+                case Ident.ACOTD:
+                    double x2 = x * DEGREES_TO_RADIANS;
+                    return Math.asin(1d / Math.sqrt(1 + x2 * x2));
+                case Ident.ASECD: return Math.acos(1d / x * DEGREES_TO_RADIANS);
+                case Ident.ACSCD: return Math.asin(1d / x * DEGREES_TO_RADIANS);
+
+                // misc
+                case Ident.LOG: return Math.log(x);
+                case Ident.LOG2: return Math.log2(x);
+                case Ident.LOG10: return Math.log10(x);
+                case Ident.SQRT: return Math.sqrt(x);
+                case Ident.EXP: return Math.exp(x);
+                case Ident.ABS: return Math.fabs(x);
+
+                default: assert_not_reached ();
             }
-
-            throw new MathError.UNKNOWN_FUNCTION (f);
-        }
-
-        private double trig_function (owned string f, double x) throws MathError {
-            if (f.has_suffix ("d")) {
-                f = f.substring (0, f.length - 1);
-                x = x * DEGREES_TO_RADIANS;
-            }
-
-            switch (f) {
-                case "sin": return Math.sin (x);
-                case "cos": return Math.cos (x);
-                case "tan": return Math.tan (x);
-                case "cot": return 1d / Math.tan (x);
-                case "sec": return 1d / Math.cos (x);
-                case "csc": return 1d / Math.sin (x);
-
-                case "arcsin": case "asin": return Math.asin (x);
-                case "arccos": case "acos": return Math.acos (x);
-                case "arctan": case "atan": return Math.atan (x);
-                case "arccot": case "acot": return Math.asin (1d / Math.sqrt (1 + x * x));
-                case "arcsec": case "asec": return Math.acos (1d / x);
-                case "arccsc": case "acsc": return Math.asin (1d / x);
-            }
-
-            throw new MathError.UNKNOWN_FUNCTION (f);
         }
     }
 }
