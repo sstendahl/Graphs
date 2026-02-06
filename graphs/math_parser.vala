@@ -205,8 +205,11 @@ namespace Graphs {
             if (last_is_dot) throw new MathError.SYNTAX ("invalid number");
 
             double val = int_part;
-            if (seen_dot) val += frac_part / Math.pow (10d, frac_digits);
-            if (seen_exp) val *= Math.pow (10d, exp_sign * exp);
+            if (seen_dot) val += frac_part / ipow (10d, frac_digits);
+            if (seen_exp) {
+                int e = exp_sign * exp;
+                val *= (e >= 0 && e <= 308) ? ipow (10d, e) : Math.pow (10d, e);
+            }
 
             current_type = TokenType.NUMBER;
             current_val = val;
@@ -251,6 +254,20 @@ namespace Graphs {
             for (int i = 2; i <= n; i++)
                 r *= i;
             return r;
+        }
+
+        private double ipow (double bas, int exp) {
+            double result = 1;
+            double b = bas;
+            int e = exp;
+
+            while (e > 0) {
+                if ((e & 1) == 1) result *= b;
+                b = b*b;
+                e >>= 1;
+            }
+
+            return result;
         }
 
         private bool starts_value (TokenType t) {
@@ -337,7 +354,7 @@ namespace Graphs {
                 if (current_type == TokenType.SUPERSCRIPT) {
                     int exp = (int) current_val;
                     next ();
-                    v = Math.pow (v, exp);
+                    v = ipow (v, exp);
                     continue;
                 }
 
