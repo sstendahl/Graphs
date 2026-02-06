@@ -95,6 +95,7 @@ namespace Graphs {
 
         private TokenType current_type;
         private string current_text;
+        private double current_val;
 
         public MathParser (string src) throws MathError {
             this.src = src.down ();
@@ -130,7 +131,7 @@ namespace Graphs {
             int superscript_value = superscript_to_int (c);
             if (superscript_value >= 0) {
                 current_type = TokenType.SUPERSCRIPT;
-                current_text = superscript_value.to_string ();
+                current_val = superscript_value;
                 pos = idx;
                 return;
             }
@@ -146,8 +147,28 @@ namespace Graphs {
             bool seen_exp = false;
             int tmp_idx = idx;
 
+            int int_part = 0;
+            int frac_part = 0;
+            int frac_digits = 0;
+            int exp = 0;
+            int exp_sign = 1;
+
+            int digit;
+            int sign_idx;
+
             while (true) {
                 if (c.isdigit ()) {
+                    digit = (int) (c - '0');
+
+                    if (seen_exp) {
+                        exp = exp * 10 + digit;
+                    } else if (seen_dot) {
+                        frac_part = frac_part * 10 + digit;
+                        frac_digits++;
+                    } else {
+                        int_part = int_part * 10 + digit;
+                    }
+
                     last_is_dot = false;
                 } else if (c == '.') {
                     if (seen_dot || seen_exp)
@@ -160,7 +181,8 @@ namespace Graphs {
 
                     // Optional sign
                     if (c == '+' || c == '-') {
-                        int sign_idx = tmp_idx;
+                        if (c == '-') exp_sign = -1;
+                        sign_idx = tmp_idx;
                         if (!src.get_next_char (ref sign_idx, out c))
                             break;
                         tmp_idx = sign_idx;
@@ -170,6 +192,8 @@ namespace Graphs {
                     if (!c.isdigit ()) break;
                     seen_exp = true;
                     last_is_dot = false;
+                    idx = tmp_idx;
+                    continue;
                 } else break;
 
                 // advance to next character
@@ -180,8 +204,12 @@ namespace Graphs {
             // must contain at least one digit and must not have a trailing dot
             if (last_is_dot) throw new MathError.SYNTAX ("invalid number");
 
+            double val = int_part;
+            if (seen_dot) val += frac_part / Math.pow (10d, frac_digits);
+            if (seen_exp) val *= Math.pow (10d, exp_sign * exp);
+
             current_type = TokenType.NUMBER;
-            current_text = src.substring (pos, idx - pos);
+            current_val = val;
             pos = idx;
         }
 
@@ -307,7 +335,7 @@ namespace Graphs {
                 }
 
                 if (current_type == TokenType.SUPERSCRIPT) {
-                    int exp = int.parse (current_text);
+                    int exp = (int) current_val;
                     next ();
                     v = Math.pow (v, exp);
                     continue;
@@ -321,7 +349,7 @@ namespace Graphs {
         private double primary () throws MathError {
             switch (current_type) {
                 case TokenType.NUMBER:
-                    double v = double.parse (current_text);
+                    double v = current_val;
                     next ();
                     return v;
                 case TokenType.IDENT:
