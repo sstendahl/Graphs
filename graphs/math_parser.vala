@@ -264,8 +264,7 @@ namespace Graphs {
                     if (c == '+' || c == '-') {
                         if (c == '-') exp_sign = -1;
                         sign_idx = tmp_idx;
-                        if (!src.get_next_char (ref sign_idx, out c))
-                            break;
+                        if (!src.get_next_char (ref sign_idx, out c)) break;
                         tmp_idx = sign_idx;
                     }
 
@@ -275,7 +274,7 @@ namespace Graphs {
                     last_is_dot = false;
                     idx = tmp_idx;
                     continue;
-                } else break;
+                } else if (!(c == '.' || c == ',' || c == ' ')) break;
 
                 // advance to next character
                 idx = tmp_idx;
