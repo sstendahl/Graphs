@@ -336,12 +336,6 @@ namespace Graphs {
             return result;
         }
 
-        private bool starts_value (TokenType t) {
-            return t == TokenType.NUMBER
-                || t == TokenType.IDENT
-                || t == TokenType.LPAREN;
-        }
-
         /* Grammar:
            expr    -> term ((+|-) term)*
            term    -> power ((*|/) power)*
@@ -379,7 +373,7 @@ namespace Graphs {
                 }
 
                 // implicit multiplication
-                if (starts_value (t)) {
+                if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
                     v *= expr ();
                 }
                 break;
