@@ -11,8 +11,8 @@ namespace Graphs {
         }
 
         try {
-            var parser = new MathParser (expression);
-            result = parser.parse ();
+            var parser = new MathParser ();
+            result = parser.parse (expression);
             parser.expect_end ();
             return true;
         } catch (Error e) {
@@ -34,8 +34,8 @@ namespace Graphs {
             throw new MathError.SYNTAX ("empty expression");
         }
 
-        var parser = new MathParser (expression);
-        double result = parser.parse ();
+        var parser = new MathParser ();
+        double result = parser.parse (expression);
         parser.expect_end ();
         return result;
     }
@@ -163,18 +163,16 @@ namespace Graphs {
 
     private class MathParser {
         private string src;
-        private int pos = 0;
+        private int pos;
 
         private TokenType current_type;
         private Ident current_ident;
         private double current_val;
 
-        public MathParser (string src) throws MathError {
+        public double parse (string src) throws MathError {
             this.src = src.down ();
+            this.pos = 0;
             next ();
-        }
-
-        public double parse () throws MathError {
             return expr ();
         }
 
