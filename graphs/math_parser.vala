@@ -107,9 +107,12 @@ namespace Graphs {
         }
 
         private void next () throws MathError {
-            skip ();
             int idx = pos;
             unichar c;
+            while (pos < src.length) {
+                if (!src.get_next_char (ref idx, out c) || !c.isspace ()) break;
+                pos = idx;
+            }
             if (!src.get_next_char (ref idx, out c)) {
                 current_type = TokenType.END;
                 return;
@@ -227,15 +230,6 @@ namespace Graphs {
             current_type = TokenType.IDENT;
             current_text = src.substring (pos, idx - pos);
             pos = idx;
-        }
-
-        private void skip () {
-            int idx = pos;
-            while (pos < src.length) {
-                unichar c;
-                if (!src.get_next_char (ref idx, out c) || !c.isspace ()) break;
-                pos = idx;
-            }
         }
 
         public void expect_end () throws MathError {
