@@ -89,21 +89,12 @@ namespace Graphs {
         }
     }
 
-    [Compact]
-    private class Token {
-        public TokenType type;
-        public string text;
-
-        public Token (TokenType type, string text = "") {
-            this.type = type;
-            this.text = text;
-        }
-    }
-
     private class MathParser {
         private string src;
         private int pos = 0;
-        private Token current;
+
+        private TokenType current_type;
+        private string current_text;
 
         public MathParser (string src) throws MathError {
             this.src = src.down ();
@@ -119,7 +110,7 @@ namespace Graphs {
             int idx = pos;
             unichar c;
             if (!src.get_next_char (ref idx, out c)) {
-                current = new Token (TokenType.END);
+                current_type = TokenType.END;
                 return;
             }
 
@@ -138,13 +129,14 @@ namespace Graphs {
             // Superscript
             int superscript_value = superscript_to_int (c);
             if (superscript_value >= 0) {
-                current = new Token (TokenType.SUPERSCRIPT, superscript_value.to_string ());
+                current_type = TokenType.SUPERSCRIPT;
+                current_text = superscript_value.to_string ();
                 pos = idx;
                 return;
             }
 
             // Single-character token
-            current = new Token (TokenType.parse (c));
+            current_type = TokenType.parse (c);
             pos = idx;
         }
 
@@ -188,7 +180,8 @@ namespace Graphs {
             // must contain at least one digit and must not have a trailing dot
             if (last_is_dot) throw new MathError.SYNTAX ("invalid number");
 
-            current = new Token (TokenType.NUMBER, src.substring (pos, idx - pos));
+            current_type = TokenType.NUMBER;
+            current_text = src.substring (pos, idx - pos);
             pos = idx;
         }
 
@@ -200,7 +193,8 @@ namespace Graphs {
                 idx = tmp_idx;
             }
 
-            current = new Token (TokenType.IDENT, src.substring (pos, idx - pos));
+            current_type = TokenType.IDENT;
+            current_text = src.substring (pos, idx - pos);
             pos = idx;
         }
 
@@ -214,12 +208,12 @@ namespace Graphs {
         }
 
         public void expect_end () throws MathError {
-            if (current.type != TokenType.END)
+            if (current_type != TokenType.END)
                 throw new MathError.SYNTAX ("trailing input");
         }
 
         private void expect (TokenType t) throws MathError {
-            if (current.type != t)
+            if (current_type != t)
                 throw new MathError.SYNTAX ("expected token");
             next ();
         }
@@ -249,8 +243,8 @@ namespace Graphs {
 
         private double expr () throws MathError {
             double v = term ();
-            while (current.type == TokenType.PLUS || current.type == TokenType.MINUS) {
-                var t = current.type;
+            while (current_type == TokenType.PLUS || current_type == TokenType.MINUS) {
+                var t = current_type;
                 next ();
                 double r = term ();
                 v = (t == TokenType.PLUS) ? v + r : v - r;
@@ -262,7 +256,7 @@ namespace Graphs {
             double v = power ();
 
             while (true) {
-                TokenType t = current.type;
+                TokenType t = current_type;
                 // explicit * or /
                 if (t == TokenType.STAR || t == TokenType.SLASH) {
                     next ();
@@ -285,7 +279,7 @@ namespace Graphs {
 
         private double power () throws MathError {
             double v = unary ();
-            if (current.type == TokenType.CARET) {
+            if (current_type == TokenType.CARET) {
                 next ();
                 v = Math.pow (v, power ());
             }
@@ -293,7 +287,7 @@ namespace Graphs {
         }
 
         private double unary () throws MathError {
-            if (current.type == TokenType.MINUS) {
+            if (current_type == TokenType.MINUS) {
                 next ();
                 return -unary ();
             }
@@ -304,7 +298,7 @@ namespace Graphs {
             double v = primary ();
 
             while (true) {
-                if (current.type == TokenType.FACT) {
+                if (current_type == TokenType.FACT) {
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
                     v = factorial ((int) v);
@@ -312,8 +306,8 @@ namespace Graphs {
                     continue;
                 }
 
-                if (current.type == TokenType.SUPERSCRIPT) {
-                    int exp = int.parse (current.text);
+                if (current_type == TokenType.SUPERSCRIPT) {
+                    int exp = int.parse (current_text);
                     next ();
                     v = Math.pow (v, exp);
                     continue;
@@ -325,13 +319,13 @@ namespace Graphs {
         }
 
         private double primary () throws MathError {
-            switch (current.type) {
+            switch (current_type) {
                 case TokenType.NUMBER:
-                    double v = double.parse (current.text);
+                    double v = double.parse (current_text);
                     next ();
                     return v;
                 case TokenType.IDENT:
-                    string text = current.text;
+                    string text = current_text;
                     next ();
 
                     if (text == "pi" || text == "π")
@@ -340,7 +334,7 @@ namespace Graphs {
                     if (text == "e")
                         return Math.E;
 
-                    if (current.type == TokenType.LPAREN) {
+                    if (current_type == TokenType.LPAREN) {
                         next ();
                         double arg = expr ();
                         expect (TokenType.RPAREN);
