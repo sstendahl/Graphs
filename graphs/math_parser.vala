@@ -47,7 +47,7 @@ namespace Graphs {
         DIV_ZERO
     }
 
-    private int superscript_to_int (unichar c) {
+    private inline int superscript_to_int (unichar c) {
         switch (c) {
             case '⁰': return 0;
             case '¹': return 1;
@@ -293,7 +293,7 @@ namespace Graphs {
 
         private void handle_identifier (ref int idx, ref unichar c) throws MathError {
             int tmp_idx = idx;
-            while (idx <= src.length) {
+            while (true) {
                 if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π'))
                     break;
                 idx = tmp_idx;
@@ -309,13 +309,13 @@ namespace Graphs {
                 throw new MathError.SYNTAX ("trailing input");
         }
 
-        private void expect (TokenType t) throws MathError {
+        private inline void expect (TokenType t) throws MathError {
             if (current_type != t)
                 throw new MathError.SYNTAX ("expected token");
             next ();
         }
 
-        private int factorial (int n) {
+        private inline int factorial (int n) {
             int r = 1;
             for (int i = 2; i <= n; i++)
                 r *= i;
