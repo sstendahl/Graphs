@@ -11,7 +11,7 @@ namespace Graphs {
         }
 
         try {
-            var parser = new MathParser ();
+            var parser = MathParser.instance ();
             result = parser.parse (expression);
             parser.expect_end ();
             return true;
@@ -34,7 +34,7 @@ namespace Graphs {
             throw new MathError.SYNTAX ("empty expression");
         }
 
-        var parser = new MathParser ();
+        var parser = MathParser.instance ();
         double result = parser.parse (expression);
         parser.expect_end ();
         return result;
@@ -168,6 +168,12 @@ namespace Graphs {
         private TokenType current_type;
         private Ident current_ident;
         private double current_val;
+
+        private static Once<MathParser> _instance;
+
+        public static unowned MathParser instance () {
+            return _instance.once (() => { return new MathParser (); });
+        }
 
         public double parse (string src) throws MathError {
             this.src = src.down ();
