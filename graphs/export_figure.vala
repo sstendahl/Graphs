@@ -70,8 +70,7 @@ namespace Graphs {
                     settings.set_int ("width", (int) width.get_value ());
                     settings.set_int ("height", (int) height.get_value ());
 
-                    var application = window.application as Application;
-                    application.python_helper.export_figure (file, settings, window.data);
+                    PythonHelper.export_figure (file, settings, window.data);
                     window.add_toast_string_with_file (
                         _("Exported Figure"), file
                     );

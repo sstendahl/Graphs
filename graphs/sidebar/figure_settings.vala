@@ -129,7 +129,7 @@ namespace Graphs {
 
                     entry.apply.connect (() => {
                         double new_val;
-                        application.python_helper.evaluate_string (
+                        PythonHelper.evaluate_string (
                             entry.get_text (), out new_val
                         );
 
@@ -187,7 +187,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
             var entry = object as Adw.EntryRow;
-            if (application.python_helper.evaluate_string (entry.get_text ())) {
+            if (PythonHelper.evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);
             } else {
@@ -239,12 +239,10 @@ namespace Graphs {
         [GtkChild]
         private unowned GridView style_grid { get; }
 
-        private Application application;
         private Window window;
 
         public StylePage (Window window) {
             this.window = window;
-            this.application = window.application as Application;
 
             var factory = new SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);

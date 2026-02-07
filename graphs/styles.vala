@@ -52,7 +52,7 @@ namespace Graphs {
                 assert_not_reached ();
             }
             application.style_manager.notify.connect (() => {
-                application.python_helper.run_method (this, "_update_system_style");
+                PythonHelper.run_method (this, "_update_system_style");
             });
         }
 
@@ -83,7 +83,7 @@ namespace Graphs {
                     );
                 }
             } catch { assert_not_reached (); }
-            application.python_helper.run_method (this, "_update_system_style");
+            PythonHelper.run_method (this, "_update_system_style");
             try {
                 FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",

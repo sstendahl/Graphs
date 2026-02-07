@@ -31,8 +31,7 @@ class PythonApplication(Graphs.Application):
 
         # We need to keep references as per
         # https://bugzilla.gnome.org/show_bug.cgi?id=687522
-        self._python_helper = PythonHelper(self)
-        self.props.python_helper = self._python_helper
+        PythonHelper(self)
         self._figure_style_manager = StyleManager(self)
         self.props.figure_style_manager = self._figure_style_manager
         self._data_importer = DataImporter(self)

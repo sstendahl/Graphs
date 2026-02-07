@@ -108,7 +108,7 @@ namespace Graphs {
         }
 
         private void run_python_method (string method) {
-            application.python_helper.run_method (this, method);
+            PythonHelper.run_method (this, method);
         }
 
         // Section ListModel

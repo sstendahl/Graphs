@@ -347,8 +347,7 @@ namespace Graphs {
             edit_page.clear ();
             edit_page.append (new EditItemBaseBox (item));
 
-            var application = application as Application;
-            application.python_helper.create_item_settings (edit_page, item);
+            PythonHelper.create_item_settings (edit_page, item);
 
             push_sidebar_page (edit_page);
         }

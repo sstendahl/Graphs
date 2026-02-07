@@ -14,7 +14,6 @@ namespace Graphs {
     public class Application : Adw.Application {
         public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
-        public PythonHelper python_helper { get; protected set; }
         public DataImporter data_importer { get; protected set; }
 
         private Gee.List<Window> main_windows;
@@ -145,13 +144,13 @@ namespace Graphs {
         }
 
         public Window create_main_window () {
-            Window window = python_helper.create_window ();
+            Window window = PythonHelper.create_window ();
             main_windows.add (window);
             return window;
         }
 
         public StyleEditor create_style_editor () {
-            var style_editor = python_helper.create_style_editor ();
+            var style_editor = PythonHelper.create_style_editor ();
             style_editors.add (style_editor);
             return style_editor;
         }

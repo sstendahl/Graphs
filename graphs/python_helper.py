@@ -37,6 +37,8 @@ class PythonHelper(Graphs.PythonHelper):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
 
+        self.set_instance(self)
+
         for request in _REQUESTS:
             request = request + "-request"
             self.connect(
