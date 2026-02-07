@@ -208,9 +208,16 @@ namespace Graphs {
             int uid = (int) Posix.getuid ();
             string doc_portal = @"/run/user/$uid/doc/";
             if (filepath.has_prefix (doc_portal)) {
-                var info = file.query_info ("xattr::document-portal.host-path", FileQueryInfoFlags.NONE);
-                string? host_path = info.get_attribute_string ("xattr::document-portal.host-path");
+                string fallback = _("Document Portal");
 
+                FileInfo info;
+                try {
+                    info = file.query_info ("xattr::document-portal.host-path", FileQueryInfoFlags.NONE);
+                } catch (Error e) {
+                    return fallback;
+                }
+
+                string? host_path = info.get_attribute_string ("xattr::document-portal.host-path");
                 if (host_path != null) {
                     // Early portal versions added a "\x00" suffix, trim it if present
                     int len = host_path.length;
@@ -219,8 +226,7 @@ namespace Graphs {
                     }
                     filepath = Path.get_dirname (host_path);
                 } else {
-                    // Use "Document Portal" as fallback
-                    return _("Document Portal");
+                    return fallback;
                 }
             }
 
