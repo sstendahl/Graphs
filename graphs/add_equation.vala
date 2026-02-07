@@ -24,8 +24,7 @@ namespace Graphs {
         public AddEquationDialog (Window window) {
             Object ();
             this.window = window;
-            var application = window.application as Application;
-            this.settings = application.get_settings_child ("add-equation");
+            this.settings = Application.get_settings_child ("add-equation");
             this.equation.set_text (settings.get_string ("equation"));
             present (window);
         }

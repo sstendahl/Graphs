@@ -36,8 +36,7 @@ namespace Graphs {
         public GenerateDataDialog (Window window) {
             Object ();
             this.window = window;
-            var application = window.application as Application;
-            this.settings = application.get_settings_child ("generate-data");
+            this.settings = Application.get_settings_child ("generate-data");
             this.equation.set_text (settings.get_string ("equation"));
             this.xstart.set_text (settings.get_string ("xstart"));
             this.xstop.set_text (settings.get_string ("xstop"));

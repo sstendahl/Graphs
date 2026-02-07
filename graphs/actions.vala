@@ -74,7 +74,6 @@ namespace Graphs {
         }
 
         public void setup_local (Window window) {
-            var application = window.application as Application;
             var data = window.data;
 
             var toggle_sidebar_action = new SimpleAction ("toggle-sidebar", null);
@@ -102,7 +101,7 @@ namespace Graphs {
             }
 
             string[] settings_actions = {"center", "smoothen"};
-            GLib.Settings actions_settings = application.get_settings_child ("actions");
+            GLib.Settings actions_settings = Application.get_settings_child ("actions");
             foreach (string settings_action in settings_actions) {
                 window.add_action (actions_settings.create_action (settings_action));
             }

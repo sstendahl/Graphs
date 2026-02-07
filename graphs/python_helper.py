@@ -52,7 +52,7 @@ class PythonHelper(Graphs.PythonHelper):
         window: Graphs.Window,
         name: str,
     ) -> EquationItem:
-        settings = self.props.application.get_settings_child("add-equation")
+        settings = Graphs.Application.get_settings_child("add-equation")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
@@ -135,7 +135,7 @@ class PythonHelper(Graphs.PythonHelper):
         window: Graphs.Window,
         name: str,
     ) -> GeneratedDataItem:
-        settings = self.props.application.get_settings_child("generate-data")
+        settings = Graphs.Application.get_settings_child("generate-data")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"

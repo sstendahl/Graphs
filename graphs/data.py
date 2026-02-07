@@ -32,9 +32,9 @@ class Data(Graphs.Data):
 
     __gtype_name__ = "GraphsPythonData"
 
-    def __init__(self, application: Graphs.Application):
+    def __init__(self):
         self._selected_style_params = None, {}
-        super().__init__(application=application)
+        super().__init__()
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
         self.connect("item-changed", self._on_item_changed)

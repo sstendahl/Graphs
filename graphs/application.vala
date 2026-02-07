@@ -12,7 +12,7 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public GLib.Settings settings { get; private set; }
+        public static GLib.Settings settings { get; private set; }
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
@@ -34,9 +34,12 @@ namespace Graphs {
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
 
             this.version = Config.VERSION;
-            this.settings = new GLib.Settings (application_id);
 
             add_main_option_entries (OPTION_ENTRIES);
+        }
+
+        protected void setup_settings () {
+            settings = new GLib.Settings (application_id);
         }
 
         /**
@@ -163,7 +166,7 @@ namespace Graphs {
          *
          * @param path a slash-separated path
          */
-        public GLib.Settings get_settings_child (string path) {
+        public static GLib.Settings get_settings_child (string path) {
             GLib.Settings settings_child = settings;
             foreach (string child_name in path.split ("/")) {
                 settings_child = settings_child.get_child (child_name);

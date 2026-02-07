@@ -29,8 +29,10 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
+        self.setup_settings()
+
         PythonHelper(self)
         StyleManager()
-        DataImporter(self.get_settings_child("import-params"))
+        DataImporter()
 
         Graphs.Application.do_startup(self)

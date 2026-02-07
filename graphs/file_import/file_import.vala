@@ -31,13 +31,13 @@ namespace Graphs {
 
         private static DataImporter instance;
 
-        protected void setup (Parser[] parsers, GLib.Settings mode_settings) {
+        protected void setup (Parser[] parsers) {
             DataImporter.parsers = parsers;
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
 
-            DataImporter.mode_settings = mode_settings;
+            mode_settings = Application.get_settings_child ("import-params");
             mode_settings_list = mode_settings.settings_schema.list_children ();
 
             init_file_filters ();

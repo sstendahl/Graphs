@@ -83,12 +83,10 @@ namespace Graphs {
         [GtkChild]
         private unowned Label style_name { get; }
 
-        private Application application;
         private Window window;
 
         public FigureSettingsPage (Window window) {
             this.window = window;
-            this.application = window.application as Application;
 
             FigureSettings figure_settings = window.data.figure_settings;
 
@@ -204,7 +202,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void set_as_default () {
-            GLib.Settings settings = application.get_settings_child ("figure");
+            GLib.Settings settings = Application.get_settings_child ("figure");
             string[] strings = {
                 "custom-style", "title",
                 "bottom-label", "left-label", "top-label", "right-label"

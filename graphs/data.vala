@@ -7,7 +7,6 @@ namespace Graphs {
      * Data class
      */
     public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
-        public Application application { get; construct set; }
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; protected set; default = false; }
@@ -56,7 +55,7 @@ namespace Graphs {
             this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
             items_changed.connect (_update_used_positions);
-            this._settings = application.get_settings_child ("figure");
+            this._settings = Application.get_settings_child ("figure");
             this.style_selection_model = new SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
 
@@ -79,7 +78,7 @@ namespace Graphs {
                 }
             });
 
-            application.style_manager.notify.connect (() => {
+            Adw.StyleManager.get_default().notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
                     handle_style_change.begin ();
                 }

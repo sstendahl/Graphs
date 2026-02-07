@@ -27,8 +27,7 @@ namespace Graphs {
         public ExportFigureDialog (Window window) {
             Object ();
             this.window = window;
-            var application = window.application as Application;
-            this.settings = application.get_settings_child ("export-figure");
+            this.settings = Application.get_settings_child ("export-figure");
 
             file_format.set_selected (settings.get_enum ("file-format"));
             transparent.set_active (settings.get_boolean ("transparent"));
