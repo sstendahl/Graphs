@@ -78,7 +78,7 @@ namespace Graphs {
                 }
             });
 
-            Adw.StyleManager.get_default().notify.connect (() => {
+            Adw.StyleManager.get_default ().notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
                     handle_style_change.begin ();
                 }
