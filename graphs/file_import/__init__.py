@@ -4,7 +4,7 @@ import logging
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Gee, Graphs, Gtk
+from gi.repository import Gee, Gio, Graphs, Gtk
 
 from graphs.file_import import parsers
 from graphs.file_import.parsers import columns, project, sql, xrdml, xry
@@ -23,7 +23,7 @@ class DataImporter(Graphs.DataImporter):
 
     __gtype_name__ = "GraphsPythonDataImporter"
 
-    def __init__(self, application: Graphs.Application):
+    def __init__(self, mode_settings: Gio.Settings):
         super().__init__()
         for request in _REQUESTS:
             request = request + "-request"
@@ -39,7 +39,7 @@ class DataImporter(Graphs.DataImporter):
         parsers.register_parser(xrdml.XrdmlParser())
         parsers.register_parser(xry.XryParser())
 
-        self.setup(parsers.list_parsers(), application)
+        self.setup(parsers.list_parsers(), mode_settings)
 
     @staticmethod
     def _on_guess_import_mode_request(

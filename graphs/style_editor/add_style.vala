@@ -17,18 +17,15 @@ namespace Graphs {
 
         public signal void accept (File file);
 
-        private StyleManager style_manager;
-
-        public AddStyleDialog (StyleManager style_manager, Widget parent) {
-            this.style_manager = style_manager;
+        public AddStyleDialog (Widget parent) {
             style_templates.set_expression (new PropertyExpression (typeof (Style), null, "name"));
-            style_templates.set_model (style_manager.filtered_style_model);
+            style_templates.set_model (StyleManager.filtered_style_model);
             present (parent);
         }
 
         [GtkCallback]
         private void on_template_changed () {
-            string[] stylenames = style_manager.list_stylenames ();
+            string[] stylenames = StyleManager.list_stylenames ();
             string template = stylenames[style_templates.get_selected ()];
             new_style_name.set_text (Tools.get_duplicate_string (template, stylenames));
         }
@@ -36,7 +33,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_accept () {
             uint template = style_templates.get_selected () + 1;
-            var file = style_manager.create_style (template, new_style_name.get_text ());
+            var file = StyleManager.create_style (template, new_style_name.get_text ());
             close ();
             accept.emit (file);
         }

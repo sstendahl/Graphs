@@ -116,10 +116,9 @@ class StyleEditorBox(Graphs.StyleEditorBox):
     def load_style(self, file: Gio.File) -> None:
         """Load style params from file."""
         self.params = None
-        application = self.props.window.get_application()
         style_params, graphs_params = style_io.parse(
             file,
-            application.get_figure_style_manager().get_system_style_params(),
+            Graphs.StyleManager.get_instance().get_system_style_params(),
         )
         stylename = graphs_params["name"]
         self.props.style_name.set_text(stylename)

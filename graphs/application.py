@@ -30,7 +30,7 @@ class PythonApplication(Graphs.Application):
                 logging.warning(_("Could not load {font}").format(font=font))
 
         PythonHelper(self)
-        self.props.figure_style_manager = StyleManager(self)
-        DataImporter(self)
+        StyleManager()
+        DataImporter(self.get_settings_child("import-params"))
 
         Graphs.Application.do_startup(self)

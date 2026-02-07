@@ -76,7 +76,7 @@ class Data(Graphs.Data):
 
     def _update_selected_style(self) -> None:
         figure_settings = self.props.figure_settings
-        style_manager = self.props.application.get_figure_style_manager()
+        style_manager = Graphs.StyleManager.get_instance()
         error_msg = None
         if figure_settings.get_use_custom_style():
             stylename = figure_settings.get_custom_style()

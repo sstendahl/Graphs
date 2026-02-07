@@ -57,10 +57,10 @@ namespace Graphs {
             this._color_cycle = {};
             items_changed.connect (_update_used_positions);
             this._settings = application.get_settings_child ("figure");
-            var style_manager = application.figure_style_manager;
-            this.style_selection_model = new SingleSelection (style_manager.style_model);
+            this.style_selection_model = new SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
 
+            var style_manager = StyleManager.instance;
             style_manager.style_changed.connect (stylename => {
                 if (!figure_settings.use_custom_style) return;
                 if (figure_settings.custom_style == stylename) {
