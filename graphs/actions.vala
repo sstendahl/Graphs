@@ -215,14 +215,14 @@ namespace Graphs {
             var add_data_action = new SimpleAction ("add-data", null);
             add_data_action.activate.connect (() => {
                 var dialog = new FileDialog ();
-                dialog.set_filters (application.data_importer.file_filters);
+                dialog.set_filters (DataImporter.file_filters);
                 dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
                         var files_list_model = dialog.open_multiple.end (response);
                         var settings_list = new GLib.ListStore (typeof (ImportSettings));
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                             var file = (File) files_list_model.get_item (i);
-                            var settings = application.data_importer.get_settings_for_file (file);
+                            var settings = DataImporter.get_settings_for_file (file);
                             settings_list.append (settings);
                         }
                         new ImportDialog (window, settings_list);

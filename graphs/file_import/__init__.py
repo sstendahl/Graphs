@@ -24,7 +24,7 @@ class DataImporter(Graphs.DataImporter):
     __gtype_name__ = "GraphsPythonDataImporter"
 
     def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
+        super().__init__()
         for request in _REQUESTS:
             request = request + "-request"
             self.connect(
@@ -39,7 +39,7 @@ class DataImporter(Graphs.DataImporter):
         parsers.register_parser(xrdml.XrdmlParser())
         parsers.register_parser(xry.XryParser())
 
-        self.setup(parsers.list_parsers())
+        self.setup(parsers.list_parsers(), application)
 
     @staticmethod
     def _on_guess_import_mode_request(

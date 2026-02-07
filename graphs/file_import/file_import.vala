@@ -17,21 +17,22 @@ namespace Graphs {
     }
 
     public class DataImporter : Object {
-        public Application application { get; construct set; }
-        public GLib.ListStore file_filters { get; private set; }
+        public static GLib.ListStore file_filters { get; private set; }
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal bool init_import_settings_request (ImportSettings settings);
         protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
         protected signal string parse_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
 
-        private GLib.Settings mode_settings;
-        private string[] mode_settings_list;
-        private Parser[] parsers;
-        private StringList parser_names = new StringList (null);
+        private static GLib.Settings mode_settings;
+        private static string[] mode_settings_list;
+        private static Parser[] parsers;
+        private static StringList parser_names = new StringList (null);
 
-        protected void setup (Parser[] parsers) {
-            this.parsers = parsers;
+        private static DataImporter instance;
+
+        protected void setup (Parser[] parsers, Application application) {
+            DataImporter.parsers = parsers;
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
@@ -40,9 +41,11 @@ namespace Graphs {
             mode_settings_list = mode_settings.settings_schema.list_children ();
 
             init_file_filters ();
+
+            DataImporter.instance = this;
         }
 
-        private void init_file_filters () {
+        private static void init_file_filters () {
             file_filters = new GLib.ListStore (typeof (FileFilter));
 
             var supported_filter = new FileFilter () { name = C_("file-filter", "Supported files") };
@@ -71,17 +74,17 @@ namespace Graphs {
             file_filters.append (Tools.create_all_filter ());
         }
 
-        public Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
-            return append_settings_widgets_request.emit (settings, settings_box);
+        public static Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
+            return instance.append_settings_widgets_request.emit (settings, settings_box);
         }
 
-        public StringList get_parser_names () {
+        public static StringList get_parser_names () {
             return parser_names;
         }
 
-        public ImportSettings get_settings_for_file (File file) {
+        public static ImportSettings get_settings_for_file (File file) {
             var settings = new ImportSettings (file);
-            settings.mode = guess_import_mode_request.emit (settings);
+            settings.mode = instance.guess_import_mode_request.emit (settings);
             settings.is_valid = init_import_settings (settings);
             settings.notify["mode"].connect (() => {
                 settings.is_valid = init_import_settings (settings);
@@ -89,14 +92,14 @@ namespace Graphs {
             return settings;
         }
 
-        public void set_as_default (ImportSettings settings) {
+        public static void set_as_default (ImportSettings settings) {
             string name = parsers[settings.mode].name;
             if (!(name in mode_settings_list)) return;
             settings.set_as_default (mode_settings.get_child (name));
         }
 
-        public void reset (ImportSettings settings) {
-            uint guessed_mode = guess_import_mode_request.emit (settings);
+        public static void reset (ImportSettings settings) {
+            uint guessed_mode = instance.guess_import_mode_request.emit (settings);
             if (guessed_mode == settings.mode) {
                 init_import_settings (settings);
             } else {
@@ -104,15 +107,15 @@ namespace Graphs {
             }
         }
 
-        public string parse (Gee.List<Item> itemlist, ImportSettings settings, Data data) {
-            return parse_request.emit (itemlist, settings, data);
+        public static string parse (Gee.List<Item> itemlist, ImportSettings settings, Data data) {
+            return instance.parse_request.emit (itemlist, settings, data);
         }
 
-        private bool init_import_settings (ImportSettings settings) {
+        private static bool init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             string name = parsers[settings.mode].name;
             settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
-            return init_import_settings_request.emit (settings);
+            return instance.init_import_settings_request.emit (settings);
         }
     }
 

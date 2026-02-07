@@ -14,7 +14,6 @@ namespace Graphs {
     public class Application : Adw.Application {
         public GLib.Settings settings { get; private set; }
         public StyleManager figure_style_manager { get; protected set; }
-        public DataImporter data_importer { get; protected set; }
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
@@ -99,7 +98,7 @@ namespace Graphs {
 
             var settings_list = new GLib.ListStore (typeof (ImportSettings));
             for (uint i = 0; i < files.length; i++) {
-                settings_list.append (data_importer.get_settings_for_file (files[i]));
+                settings_list.append (DataImporter.get_settings_for_file (files[i]));
             }
             new ImportDialog (window, settings_list);
         }

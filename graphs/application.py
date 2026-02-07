@@ -29,11 +29,8 @@ class PythonApplication(Graphs.Application):
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=font))
 
-        # We need to keep references as per
-        # https://bugzilla.gnome.org/show_bug.cgi?id=687522
         PythonHelper(self)
         self.props.figure_style_manager = StyleManager(self)
-        self._data_importer = DataImporter(self)
-        self.props.data_importer = self._data_importer
+        DataImporter(self)
 
         Graphs.Application.do_startup(self)
