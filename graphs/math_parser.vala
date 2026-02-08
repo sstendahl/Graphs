@@ -5,15 +5,8 @@ namespace Graphs {
      * returns true if successfully parsed.
      */
     public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
-        if (expression.strip ().length == 0) {
-            result = 0;
-            return false;
-        }
-
         try {
-            var parser = MathParser.instance ();
-            result = parser.parse (expression, decimal_separator);
-            parser.expect_end ();
+            result = MathParser.instance ().parse (expression, decimal_separator);
             return true;
         } catch (Error e) {
             result = 0;
@@ -30,14 +23,7 @@ namespace Graphs {
      * Evaluate a string to a double.
      */
     public static double evaluate_string (string expression) throws MathError {
-        if (expression.strip ().length == 0) {
-            throw new MathError.SYNTAX ("empty expression");
-        }
-
-        var parser = MathParser.instance ();
-        double result = parser.parse (expression);
-        parser.expect_end ();
-        return result;
+        return MathParser.instance ().parse (expression);
     }
 
     public errordomain MathError {
@@ -181,7 +167,9 @@ namespace Graphs {
             this.pos = 0;
             this.decimal_separator = decimal_separator;
             next ();
-            return expr ();
+            double result = expr ();
+            expect_end ();
+            return result;
         }
 
         private void next () throws MathError {
@@ -189,6 +177,7 @@ namespace Graphs {
             unichar c;
             while (true) {
                 if (!src.get_next_char (ref idx, out c)) {
+                    if (idx == 0) throw new MathError.SYNTAX ("empty expression");
                     current_type = TokenType.END;
                     return;
                 }
@@ -308,7 +297,7 @@ namespace Graphs {
             pos = idx;
         }
 
-        public void expect_end () throws MathError {
+        private inline void expect_end () throws MathError {
             if (current_type != TokenType.END)
                 throw new MathError.SYNTAX ("trailing input");
         }
@@ -319,7 +308,7 @@ namespace Graphs {
             next ();
         }
 
-        private inline int factorial (int n) {
+        private static inline int factorial (int n) {
             int r = 1;
             for (int i = 2; i <= n; i++)
                 r *= i;
