@@ -177,7 +177,7 @@ namespace Graphs {
         }
 
         public double parse (string src, unichar decimal_separator = '.') throws MathError {
-            this.src = src.down ();
+            this.src = src;
             this.pos = 0;
             this.decimal_separator = decimal_separator;
             next ();
@@ -218,7 +218,7 @@ namespace Graphs {
             }
 
             // Single-character token
-            current_type = TokenType.parse (c);
+            current_type = TokenType.parse (c.tolower ());
             pos = idx;
         }
 
@@ -238,9 +238,8 @@ namespace Graphs {
             int sign_idx;
 
             while (true) {
-                if (c.isdigit ()) {
-                    digit = (int) (c - '0');
-
+                digit = c.digit_value ();
+                if (digit >= 0) {
                     if (seen_exp) {
                         exp = exp * 10 + digit;
                     } else if (seen_dot) {
@@ -256,7 +255,7 @@ namespace Graphs {
                         throw new MathError.SYNTAX ("invalid number");
                     seen_dot = true;
                     last_is_dot = true;
-                } else if (c == 'e' && !seen_exp) {
+                } else if ((c == 'e' || c == 'E') && !seen_exp) {
                     // Look ahead to see if this is really an exponent
                     if (!src.get_next_char (ref tmp_idx, out c)) break;
 
@@ -274,7 +273,7 @@ namespace Graphs {
                     last_is_dot = false;
                     idx = tmp_idx;
                     continue;
-                } else if (!(c == '.' || c == ',' || c == ' ')) break;
+                } else if (!(c == '.' || c == ',' || c.isspace ())) break;
 
                 // advance to next character
                 idx = tmp_idx;
@@ -305,7 +304,7 @@ namespace Graphs {
             }
 
             current_type = TokenType.IDENT;
-            current_ident = Ident.parse (src.substring (pos, idx - pos));
+            current_ident = Ident.parse (src[pos:idx - pos].down ());
             pos = idx;
         }
 
