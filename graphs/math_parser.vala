@@ -147,8 +147,12 @@ namespace Graphs {
         }
     }
 
+    // See comment in handle_identifier ()
+    [CCode (cname = "g_strndup", cheader_filename = "glib.h")]
+    private extern string? strndup (char* str, size_t n);
+
     private class MathParser {
-        private string src;
+        private unowned string src;
         private int pos;
         private unichar decimal_separator;
 
@@ -293,7 +297,12 @@ namespace Graphs {
             }
 
             current_type = TokenType.IDENT;
-            current_ident = Ident.parse (src[pos:idx - pos].down ());
+            // If we were to slice here or call substring() the compiler would
+            // generate bounds checking, which includes a call to strlen()
+            // increasing the complexity of parsing to O(n²). As we already did
+            // bound checking it is safe to call g_strndup() in this way.
+            string id = strndup ((char*)src + pos, idx - pos).down ();
+            current_ident = Ident.parse (id);
             pos = idx;
         }
 
