@@ -324,7 +324,7 @@ namespace Graphs {
             return r;
         }
 
-        private double ipow (double bas, int exp) {
+        private static inline double ipow (double bas, int exp) {
             double result = 1;
             double b = bas;
             int e = exp;
