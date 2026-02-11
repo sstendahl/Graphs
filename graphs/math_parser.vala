@@ -94,62 +94,10 @@ namespace Graphs {
         LOG10,
         SQRT,
         EXP,
-        ABS;
+        ABS,
 
-        public static Ident parse (string s) throws MathError {
-            switch (s) {
-                // constants
-                case "pi": case "π": return Ident.PI;
-                case "e": return Ident.E;
-
-                // trig radians
-                case "sin": return Ident.SIN;
-                case "cos": return Ident.COS;
-                case "tan": return Ident.TAN;
-                case "cot": return Ident.COT;
-                case "sec": return Ident.SEC;
-                case "csc": return Ident.CSC;
-
-                // trig degrees
-                case "sind": return Ident.SIND;
-                case "cosd": return Ident.COSD;
-                case "tand": return Ident.TAND;
-                case "cotd": return Ident.COTD;
-                case "secd": return Ident.SECD;
-                case "cscd": return Ident.CSCD;
-
-                // inverse trig radians
-                case "asin": case "arcsin": return Ident.ASIN;
-                case "acos": case "arccos": return Ident.ACOS;
-                case "atan": case "arctan": return Ident.ATAN;
-                case "acot": case "arccot": return Ident.ACOT;
-                case "asec": case "arcsec": return Ident.ASEC;
-                case "acsc": case "arccsc": return Ident.ACSC;
-
-                // inverse trig degrees
-                case "asind": case "arcsind": return Ident.ASIND;
-                case "acosd": case "arccosd": return Ident.ACOSD;
-                case "atand": case "arctand": return Ident.ATAND;
-                case "acotd": case "arccotd": return Ident.ACOTD;
-                case "asecd": case "arcsecd": return Ident.ASECD;
-                case "acscd": case "arccscd": return Ident.ACSCD;
-
-                // misc
-                case "log": return Ident.LOG;
-                case "log2": return Ident.LOG2;
-                case "log10": return Ident.LOG10;
-                case "sqrt": return Ident.SQRT;
-                case "exp": return Ident.EXP;
-                case "abs": return Ident.ABS;
-
-                default: throw new MathError.UNKNOWN_FUNCTION (s);
-            }
-        }
+        NONE
     }
-
-    // See comment in handle_identifier ()
-    [CCode (cname = "g_strndup", cheader_filename = "glib.h")]
-    private extern string? strndup (char* str, size_t n);
 
     private class MathParser {
         private unowned string src;
@@ -211,7 +159,7 @@ namespace Graphs {
             }
 
             // Single-character token
-            current_type = TokenType.parse (c.tolower ());
+            current_type = TokenType.parse (c);
             pos = idx;
         }
 
@@ -288,21 +236,273 @@ namespace Graphs {
             pos = idx;
         }
 
+        private static inline void fail_identifier () throws MathError {
+            throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
+        }
+
         private void handle_identifier (ref int idx, ref unichar c) throws MathError {
+            current_type = TokenType.IDENT;
+            current_ident = Ident.NONE;
+
+            int state = 0;
             int tmp_idx = idx;
+
+            c = c.tolower ();
             while (true) {
-                if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π'))
+                // process current char in trie
+                switch (state) {
+                    case 0:
+                        switch (c) {
+                            case 'π': {
+                                current_ident = Ident.PI;
+                                state = 200;
+                                break;
+                            }
+                            case 'p': state = 1; break;
+                            case 'e': state = 10; break;
+                            case 's': state = 20; break;
+                            case 'c': state = 40; break;
+                            case 't': state = 60; break;
+                            case 'l': state = 70; break;
+                            case 'a': state = 80; break;
+                            default: fail_identifier (); break;
+                        }
+                        break;
+
+                    // p
+                    case 1:
+                        if (c == 'i') { current_ident = Ident.PI; state = 200; }
+                        else fail_identifier (); break;
+
+                    // e
+                    case 10:
+                        if (c == 'x') state = 11;
+                        else fail_identifier (); break;
+
+                    // ex
+                    case 11:
+                        if (c == 'p') { current_ident = Ident.EXP; state = 200; }
+                        else fail_identifier (); break;
+
+                    // s
+                    case 20:
+                        if (c == 'i') state = 21;
+                        else if (c == 'e') state = 25;
+                        else if (c == 'q') state = 28;
+                        else fail_identifier (); break;
+
+                    // si
+                    case 21:
+                        if (c == 'n') { current_ident = Ident.SIN; state = 22; }
+                        else fail_identifier (); break;
+
+                    // sin
+                    case 22:
+                        if (c == 'd') { current_ident = Ident.SIND; state = 200; }
+                        else fail_identifier (); break;
+
+                    // se
+                    case 25:
+                        if (c == 'c') { current_ident = Ident.SEC; state = 26; }
+                        else fail_identifier (); break;
+
+                    // sec
+                    case 26:
+                        if (c == 'd') { current_ident = Ident.SECD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // sq
+                    case 28:
+                        if (c == 'r') state = 29;
+                        else fail_identifier (); break;
+
+                    // sqr
+                    case 29:
+                        if (c == 't') { current_ident = Ident.SQRT; state = 200; }
+                        else fail_identifier (); break;
+
+                    // c
+                    case 40:
+                        if (c == 'o') state = 41;
+                        else if (c == 's') state = 45;
+                        else fail_identifier (); break;
+
+                    // co
+                    case 41:
+                        if (c == 's') { current_ident = Ident.COS; state = 42; }
+                        else if (c == 't') { current_ident = Ident.COT; state = 43; }
+                        else fail_identifier (); break;
+
+                    // cos
+                    case 42:
+                        if (c == 'd') { current_ident = Ident.COSD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // cot
+                    case 43:
+                        if (c == 'd') { current_ident = Ident.COTD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // cs
+                    case 45:
+                        if (c == 'c') { current_ident = Ident.CSC; state = 46; }
+                        else fail_identifier (); break;
+
+                    // csc
+                    case 46:
+                        if (c == 'd') { current_ident = Ident.CSCD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // t
+                    case 60:
+                        if (c == 'a') state = 61;
+                        else fail_identifier (); break;
+
+                    // ta
+                    case 61:
+                        if (c == 'n') { current_ident = Ident.TAN; state = 62; }
+                        else fail_identifier (); break;
+
+                    // tan
+                    case 62:
+                        if (c == 'd') { current_ident = Ident.TAND; state = 200; }
+                        else fail_identifier (); break;
+
+                    // l
+                    case 70:
+                        if (c == 'o') state = 71;
+                        else fail_identifier (); break;
+
+                    // lo
+                    case 71:
+                        if (c == 'g') { current_ident = Ident.LOG; state = 72; }
+                        else fail_identifier (); break;
+
+                    // log
+                    case 72:
+                        if (c == '2') { current_ident = Ident.LOG2; state = 200; }
+                        else if (c == '1') { current_ident = Ident.NONE; state = 73; }
+                        else fail_identifier (); break;
+
+                    // log1
+                    case 73:
+                        if (c == '0') { current_ident = Ident.LOG10; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a
+                    case 80:
+                        if (c == 'b') state = 81;
+                        else if (c == 'r') state = 83;
+                        else if (c == 'c') state = 90;
+                        else if (c == 's') state = 96;
+                        else if (c == 't') state = 101;
+                        else fail_identifier (); break;
+
+                    // ab
+                    case 81:
+                        if (c == 's') { current_ident = Ident.ABS; state = 200; }
+                        else fail_identifier (); break;
+
+                    // ar
+                    case 83:
+                        if (c == 'c') state = 84;
+                        else fail_identifier (); break;
+
+                    // arc
+                    case 84:
+                        if (c == 'c') state = 90;
+                        else if (c == 's') state = 96;
+                        else if (c == 't') state = 101;
+                        else fail_identifier (); break;
+
+                    // a(rc)c
+                    case 90:
+                        if (c == 'o') state = 91;
+                        else if (c == 's') state = 94;
+                        else fail_identifier (); break;
+
+                    // a(rc)co
+                    case 91:
+                        if (c == 's') { current_ident = Ident.ACOS; state = 92; }
+                        else if (c == 't') { current_ident = Ident.ACOT; state = 93; }
+                        else fail_identifier (); break;
+
+                    // a(rc)cos
+                    case 92:
+                        if (c == 'd') { current_ident = Ident.ACOSD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a(rc)cot
+                    case 93:
+                        if (c == 'd') { current_ident = Ident.ACOTD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a(rc)cs
+                    case 94:
+                        if (c == 'c') { current_ident = Ident.ACSC; state = 95; }
+                        else fail_identifier (); break;
+
+                    // a(rc)csc
+                    case 95:
+                        if (c == 'd') { current_ident = Ident.ACSCD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a(rc)s
+                    case 96:
+                        if (c == 'e') state = 97;
+                        else if (c == 'i') state = 97;
+                        else fail_identifier (); break;
+
+                    // a(rc)se
+                    case 97:
+                        if (c == 'c') { current_ident = Ident.ASEC; state = 98; }
+                        else fail_identifier (); break;
+
+                    // a(rc)sec
+                    case 98:
+                        if (c == 'd') { current_ident = Ident.ASECD; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a(rc)si
+                    case 99:
+                        if (c == 'n') { current_ident = Ident.ASIN; state = 100; }
+                        else fail_identifier (); break;
+
+                    // a(rc)sin
+                    case 100:
+                        if (c == 'd') { current_ident = Ident.ASIND; state = 200; }
+                        else fail_identifier (); break;
+
+                    // a(rc)t
+                    case 101:
+                        if (c == 'a') state = 102;
+                        else fail_identifier (); break;
+
+                    // a(rc)ta
+                    case 102:
+                        if (c == 'n') { current_ident = Ident.ATAN; state = 103; }
+                        else fail_identifier (); break;
+
+                    // a(rc)tan
+                    case 103:
+                        if (c == 'd') { current_ident = Ident.ATAND; state = 200; }
+                        else fail_identifier (); break;
+
+                    case 200: fail_identifier (); break;
+                    default: assert_not_reached ();
+                }
+
+                if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π')) {
+                    if (state == 10) {
+                        current_ident = Ident.E;
+                    } else if (current_ident == Ident.NONE) fail_identifier ();
                     break;
+                }
+
                 idx = tmp_idx;
+                c = c.tolower ();
             }
 
-            current_type = TokenType.IDENT;
-            // If we were to slice here or call substring() the compiler would
-            // generate bounds checking, which includes a call to strlen()
-            // increasing the complexity of parsing to O(n²). As we already did
-            // bound checking it is safe to call g_strndup() in this way.
-            string id = strndup ((char*)src + pos, idx - pos).down ();
-            current_ident = Ident.parse (id);
             pos = idx;
         }
 
