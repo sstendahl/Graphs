@@ -3,6 +3,7 @@ namespace Graphs.MathParser {
     private class Lexer {
         private unowned string src;
         private int pos;
+        private unichar c;
         private unichar decimal_separator;
 
         public TokenType current_type;
@@ -17,7 +18,6 @@ namespace Graphs.MathParser {
         }
 
         public void next () throws MathError {
-            unichar c;
             while (true) {
                 if (!src.get_next_char (ref pos, out c)) {
                     if (pos == 0) throw new MathError.SYNTAX ("empty expression");
@@ -29,13 +29,13 @@ namespace Graphs.MathParser {
 
             // Number
             if (c.isdigit () || c == decimal_separator) {
-                handle_number (ref c);
+                handle_number ();
                 return;
             }
 
             // Identifier
             if (c.isalpha () || c == 'π') {
-                handle_identifier (ref c);
+                handle_identifier ();
                 return;
             }
 
@@ -64,7 +64,7 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void handle_number (ref unichar c) throws MathError {
+        private void handle_number () throws MathError {
             bool seen_dot = false;
             bool last_is_dot = false;
             bool seen_exp = false;
@@ -139,7 +139,7 @@ namespace Graphs.MathParser {
             throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
         }
 
-        private void handle_identifier (ref unichar c) throws MathError {
+        private void handle_identifier () throws MathError {
             current_type = TokenType.IDENT;
             current_ident = Ident.CUSTOM;
 
