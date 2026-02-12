@@ -93,7 +93,7 @@ def _on_equation_change(entry_row: Adw.EntryRow, item: Graphs.Item) -> None:
 def _on_simplify(_row, item: Graphs.Item, entry_row: Adw.EntryRow) -> None:
     """Simplify the equation."""
     equation = item.props.equation
-    equation = str(sympy.simplify(utilities.preprocess(equation)))
+    equation = str(sympy.simplify(Graphs.preprocess_equation(equation)))
     equation = utilities.prettify_equation(equation)
     item.props.equation = equation
     entry_row.set_text(equation)

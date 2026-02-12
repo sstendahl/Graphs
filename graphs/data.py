@@ -457,12 +457,12 @@ class Data(Graphs.Data):
                 ]
 
             x = sympy.Symbol("x")
-            equation = utilities.preprocess(item_.equation.lower())
+            equation = Graphs.preprocess_equation(item_.equation)
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
             yaxis[1] = True
-            ydata = utilities.equation_to_data(item_.equation, x_limits)[1]
+            ydata = utilities.equation_to_data(equation, x_limits)[1]
 
             ydata_arr = numpy.asarray(ydata)
             if has_singularities:

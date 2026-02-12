@@ -4,8 +4,9 @@ import contextlib
 import math
 import re
 
+from gi.repository import GLib, Graphs
+
 from graphs import scales
-from graphs.misc import FUNCTIONS
 
 import numexpr
 
@@ -116,136 +117,6 @@ def get_fraction_at_value(
             raise ValueError
 
 
-def preprocess(string: str) -> str:
-    """Preprocess an equation to be compatible with numexpr syntax."""
-
-    def convert_degrees(match):
-        """Convert degree expressions to radian expressions."""
-        function, remainder = match.group(1), match.group(2)
-        if function not in FUNCTIONS:
-            return f"{function}{remainder}"
-        expression, rest = _extract_expression(remainder)
-        return f"{function}({expression}*{numpy.pi}/180){rest}"
-
-    def _extract_expression(remainder):
-        """Isolate the expression within the first pair of parentheses."""
-        stack = []
-        for i, char in enumerate(remainder.lower()):
-            if char == "(":
-                stack.append(char)
-            elif char == ")":
-                stack.pop()
-                if not stack:  # Matching parenthesis found
-                    stop_index = i + 1
-                    break
-        expression = remainder[:stop_index]
-        rest = remainder[stop_index:]
-        return expression, rest
-
-    def convert_degrees_recursive(old_string):
-        """Recursively convert degrees to match all parenthesis properly."""
-        new_string = re.sub(r"(\w+)d(\(.*\))", convert_degrees, old_string)
-        if new_string != old_string:
-            return convert_degrees_recursive(new_string)
-        return new_string
-
-    def convert_cot(match):
-        """Convert cotangent expressions to reciprocal tangent expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"1/(tan({expression}))"
-
-    def convert_sec(match):
-        """Convert secant expressions to reciprocal cosine expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"1/(cos({expression}))"
-
-    def convert_csc(match):
-        """Convert cosecant expressions to reciprocal sine expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"1/(sin({expression}))"
-
-    def convert_arccot(match):
-        """Convert arccotangent to reciprocal arcsine expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"arcsin(1/sqrt(1+{expression}**2))"
-
-    def convert_arcsec(match):
-        """Convert arcsecant to reciprocal cosine expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"(arccos(1/({expression})))"
-
-    def convert_arccsc(match):
-        """Convert arccosecant to reciprocal arcsine expressions."""
-        expression = match.group(1)  # Get the content inside the brackets
-        return f"(arcsin(1/({expression})))"
-
-    def convert_factorial(expr: str) -> str:
-        """Replace factorials of integers with their numerical values."""
-        factorial_pattern = re.compile(r"(?<![.,])(\d+)!")
-
-        def _replace_factorial(match):
-            number = int(match.group(1))
-            return str(math.factorial(number))
-
-        return re.sub(factorial_pattern, _replace_factorial, expr)
-
-    def convert_superscript(match):
-        """Convert superscript expressions to Python's power operator."""
-        superscript_mapping = {
-            "⁰": "0",
-            "¹": "1",
-            "²": "2",
-            "³": "3",
-            "⁴": "4",
-            "⁵": "5",
-            "⁶": "6",
-            "⁷": "7",
-            "⁸": "8",
-            "⁹": "9",
-        }
-        sequence = match.group(1)  # Get the content inside the superscript
-        sequence = "".join(
-            superscript_mapping.get(char, char) for char in sequence
-        )
-        return f"**{sequence}"
-
-    def add_asterix(match):
-        """
-        Add asterix to an equation.
-
-        Adds asterix in equation when missing in case a number is followed
-        by an alphabetical character, and adds parantheses around.
-
-        Pattern is to check for least one digit, followed by at least one
-        alphabetical character. e.g y = 24*x + 3sigma -> y = (24*x) + (3*sigma)
-        """
-        var, exp2 = match.group(1), match.group(2).lower()
-        if var in FUNCTIONS:
-            return f"{var}{exp2}"
-        return f"{var}*{exp2}"
-
-    string = string.lower()
-    string = string.replace(",", ".")
-    string = convert_degrees_recursive(string)
-    string = re.sub(
-        r"([\u2070-\u209f\u00b0-\u00be]+)",
-        convert_superscript,
-        string,
-    )
-    string = convert_factorial(string)
-    string = re.sub(r"(\d*\.?\d+)(?![Ee]?[-+]?\d)(\w+)", add_asterix, string)
-    string = re.sub(r"(\w+)(\([\w\(]+)", add_asterix, string)
-    string = string.replace("π", "pi").replace("pi", f"({float(numpy.pi)})")
-    string = string.replace("^", "**")
-    string = string.replace(")(", ")*(")
-    string = re.sub(r"arccot\((.*?)\)", convert_arccot, string)
-    string = re.sub(r"arcsec\((.*?)\)", convert_arcsec, string)
-    string = re.sub(r"arccsc\((.*?)\)", convert_arccsc, string)
-    string = re.sub(r"cot\((.*?)\)", convert_cot, string)
-    string = re.sub(r"sec\((.*?)\)", convert_sec, string)
-    return re.sub(r"csc\((.*?)\)", convert_csc, string)
-
-
 def prettify_equation(equation: str) -> str:
     """Return an equation in a prettier, more humanly readable, format."""
 
@@ -321,7 +192,6 @@ def equation_to_data(
     """Convert an equation into data over a specified range of x-values."""
     if limits is None:
         limits = (0, 10)
-    equation = preprocess(equation)
     xdata = create_equidistant_xdata(limits, scale, steps)
     try:
         ydata = numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata})
@@ -337,9 +207,12 @@ def equation_to_data(
 
 def validate_equation(equation: str, limits: tuple = None) -> bool:
     """Validate whether an equation can be parsed."""
-    equation = preprocess(equation)
-    validate, _ = equation_to_data(equation, limits, steps=10)
-    return validate is not None
+    try:
+        equation = Graphs.preprocess_equation(equation)
+        validate, _ = equation_to_data(equation, limits, steps=10)
+        return validate is not None
+    except GLib.Error:
+        return False
 
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:

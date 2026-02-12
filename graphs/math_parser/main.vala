@@ -26,6 +26,13 @@ namespace Graphs {
         return MathParser.Evaluator.instance ().parse (expression);
     }
 
+    /**
+     * Preprocess an equation to be compatible with numexpr syntax.
+     */
+    public static string preprocess_equation (string equation) throws MathError {
+        return MathParser.Preprocessor.instance ().preprocess (equation);
+    }
+
     public errordomain MathError {
         SYNTAX,
         UNKNOWN_FUNCTION,

@@ -137,8 +137,8 @@ namespace Graphs.MathParser {
             }
         }
 
-        private const double DEGREES_TO_RADIANS = Math.PI / 180d;
-        private const double RADIANS_TO_DEGREES = 180d / Math.PI;
+        private const double DEGREES_TO_RADIANS = 0.017453292519943295; // pi/180
+        private const double RADIANS_TO_DEGREES = 57.29577951308232; // 180/pi
 
         private static double call_function (Ident id, double x) {
             switch (id) {

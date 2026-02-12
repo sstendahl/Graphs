@@ -4,7 +4,7 @@ from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs
 
-from graphs import item, utilities
+from graphs import item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
@@ -47,7 +47,7 @@ class ColumnsParser(Parser):
                 xlabel = ""
                 equation = item_settings.equation
                 xdata = numexpr.evaluate(
-                    utilities.preprocess(equation) + " + n*0",
+                    Graphs.preprocess_equation(equation) + " + n*0",
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 xdata = numpy.ndarray.tolist(xdata)

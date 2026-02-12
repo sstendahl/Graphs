@@ -2,25 +2,33 @@
 namespace Graphs.MathParser {
     private class Lexer {
         private unowned string src;
-        private int pos;
         private unichar c;
         private unichar decimal_separator;
+        private bool allow_custom_ident;
 
         public TokenType current_type;
         public Ident current_ident;
         public double current_val;
 
+        private int current_start;
+        private int current_end;
+
+        public Lexer (bool allow_custom_ident = false) {
+            this.allow_custom_ident = allow_custom_ident;
+        }
+
         public void start_lexing (string src, unichar decimal_separator = '.') throws MathError {
             this.src = src;
-            this.pos = 0;
+            this.current_end = 0;
             this.decimal_separator = decimal_separator;
             next ();
         }
 
         public void next () throws MathError {
+            current_start = current_end;
             while (true) {
-                if (!src.get_next_char (ref pos, out c)) {
-                    if (pos == 0) throw new MathError.SYNTAX ("empty expression");
+                if (!src.get_next_char (ref current_end, out c)) {
+                    if (current_end == 0) throw new MathError.SYNTAX ("empty expression");
                     current_type = TokenType.END;
                     return;
                 }
@@ -68,7 +76,7 @@ namespace Graphs.MathParser {
             bool seen_dot = false;
             bool last_is_dot = false;
             bool seen_exp = false;
-            int idx = pos;
+            int idx = current_end;
             int tmp_idx = idx;
 
             long int_part = 0;
@@ -132,11 +140,14 @@ namespace Graphs.MathParser {
 
             current_type = TokenType.NUMBER;
             current_val = val;
-            pos = idx;
+            current_end = idx;
         }
 
-        private static inline void fail_identifier () throws MathError {
-            throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
+        private inline void fail_identifier (ref int state) throws MathError {
+            if (!allow_custom_ident || !c.isalpha ())
+                throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
+            current_ident = Ident.CUSTOM;
+            state = 200;
         }
 
         private void handle_identifier () throws MathError {
@@ -144,7 +155,7 @@ namespace Graphs.MathParser {
             current_ident = Ident.CUSTOM;
 
             int state = 0;
-            int tmp_idx = pos;
+            int tmp_idx = current_end;
 
             c = c.tolower ();
             while (true) {
@@ -164,129 +175,129 @@ namespace Graphs.MathParser {
                             case 't': state = 60; break;
                             case 'l': state = 70; break;
                             case 'a': state = 80; break;
-                            default: fail_identifier (); break;
+                            default: fail_identifier (ref state); break;
                         }
                         break;
 
                     // p
                     case 1:
                         if (c == 'i') { current_ident = Ident.PI; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // e
                     case 10:
                         if (c == 'x') state = 11;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // ex
                     case 11:
                         if (c == 'p') { current_ident = Ident.EXP; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // s
                     case 20:
                         if (c == 'i') state = 21;
                         else if (c == 'e') state = 25;
                         else if (c == 'q') state = 28;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // si
                     case 21:
                         if (c == 'n') { current_ident = Ident.SIN; state = 22; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // sin
                     case 22:
                         if (c == 'd') { current_ident = Ident.SIND; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // se
                     case 25:
                         if (c == 'c') { current_ident = Ident.SEC; state = 26; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // sec
                     case 26:
                         if (c == 'd') { current_ident = Ident.SECD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // sq
                     case 28:
                         if (c == 'r') state = 29;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // sqr
                     case 29:
                         if (c == 't') { current_ident = Ident.SQRT; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // c
                     case 40:
                         if (c == 'o') state = 41;
                         else if (c == 's') state = 45;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // co
                     case 41:
                         if (c == 's') { current_ident = Ident.COS; state = 42; }
                         else if (c == 't') { current_ident = Ident.COT; state = 43; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // cos
                     case 42:
                         if (c == 'd') { current_ident = Ident.COSD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // cot
                     case 43:
                         if (c == 'd') { current_ident = Ident.COTD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // cs
                     case 45:
                         if (c == 'c') { current_ident = Ident.CSC; state = 46; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // csc
                     case 46:
                         if (c == 'd') { current_ident = Ident.CSCD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // t
                     case 60:
                         if (c == 'a') state = 61;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // ta
                     case 61:
                         if (c == 'n') { current_ident = Ident.TAN; state = 62; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // tan
                     case 62:
                         if (c == 'd') { current_ident = Ident.TAND; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // l
                     case 70:
                         if (c == 'o') state = 71;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // lo
                     case 71:
                         if (c == 'g') { current_ident = Ident.LOG; state = 72; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // log
                     case 72:
                         if (c == '2') { current_ident = Ident.LOG2; state = 200; }
                         else if (c == '1') { current_ident = Ident.CUSTOM; state = 73; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // log1
                     case 73:
                         if (c == '0') { current_ident = Ident.LOG10; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a
                     case 80:
@@ -295,110 +306,111 @@ namespace Graphs.MathParser {
                         else if (c == 'c') state = 90;
                         else if (c == 's') state = 96;
                         else if (c == 't') state = 101;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // ab
                     case 81:
                         if (c == 's') { current_ident = Ident.ABS; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // ar
                     case 83:
                         if (c == 'c') state = 84;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // arc
                     case 84:
                         if (c == 'c') state = 90;
                         else if (c == 's') state = 96;
                         else if (c == 't') state = 101;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)c
                     case 90:
                         if (c == 'o') state = 91;
                         else if (c == 's') state = 94;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)co
                     case 91:
                         if (c == 's') { current_ident = Ident.ACOS; state = 92; }
                         else if (c == 't') { current_ident = Ident.ACOT; state = 93; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)cos
                     case 92:
                         if (c == 'd') { current_ident = Ident.ACOSD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)cot
                     case 93:
                         if (c == 'd') { current_ident = Ident.ACOTD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)cs
                     case 94:
                         if (c == 'c') { current_ident = Ident.ACSC; state = 95; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)csc
                     case 95:
                         if (c == 'd') { current_ident = Ident.ACSCD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)s
                     case 96:
                         if (c == 'e') state = 97;
                         else if (c == 'i') state = 99;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)se
                     case 97:
                         if (c == 'c') { current_ident = Ident.ASEC; state = 98; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)sec
                     case 98:
                         if (c == 'd') { current_ident = Ident.ASECD; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)si
                     case 99:
                         if (c == 'n') { current_ident = Ident.ASIN; state = 100; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)sin
                     case 100:
                         if (c == 'd') { current_ident = Ident.ASIND; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)t
                     case 101:
                         if (c == 'a') state = 102;
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)ta
                     case 102:
                         if (c == 'n') { current_ident = Ident.ATAN; state = 103; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
                     // a(rc)tan
                     case 103:
                         if (c == 'd') { current_ident = Ident.ATAND; state = 200; }
-                        else fail_identifier (); break;
+                        else fail_identifier (ref state); break;
 
-                    case 200: fail_identifier (); break;
+                    case 200: fail_identifier (ref state); break;
                     default: assert_not_reached ();
                 }
 
                 if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π')) {
                     if (state == 10) {
                         current_ident = Ident.E;
-                    } else if (current_ident == Ident.CUSTOM) fail_identifier ();
+                    } else if (current_ident == Ident.CUSTOM && !allow_custom_ident)
+                        throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
                     break;
                 }
 
-                pos = tmp_idx;
+                current_end = tmp_idx;
                 c = c.tolower ();
             }
         }
@@ -412,6 +424,10 @@ namespace Graphs.MathParser {
             if (current_type != t)
                 throw new MathError.SYNTAX ("expected token");
             next ();
+        }
+
+        public string get_current_token_as_string () {
+            return src.substring (current_start, current_end - current_start);
         }
     }
 }

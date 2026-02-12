@@ -277,8 +277,9 @@ class CommonOperations():
                 item,
             )
             if isinstance(item, EquationItem):
+                equation = Graphs.preprocess_equation(item._equation)
                 xdata, ydata = \
-                    utilities.equation_to_data(item._equation, selected_limits)
+                    utilities.equation_to_data(equation, selected_limits)
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
@@ -332,7 +333,8 @@ class CommonOperations():
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, EquationItem):
                 xdata, ydata = utilities.equation_to_data(
-                    item.props.equation, selected_limits,
+                    Graphs.preprocess_equation(item.props.equation),
+                    selected_limits,
                 )
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(
@@ -351,7 +353,9 @@ class CommonOperations():
 
                 if isinstance(previous_item, EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
-                        previous_item.props.equation, selected_limits,
+                        Graphs.preprocess_equation(
+                            previous_item.props.equation),
+                        selected_limits,
                     )
                 else:
                     prev_xdata, prev_ydata = previous_item.props.data
@@ -385,7 +389,7 @@ class CommonOperations():
                     equation = f"({item.props.equation})*2**{shift_value}"
                 else:
                     equation = f"{item.equation}+{shift_value}"
-                equation = utilities.preprocess(equation)
+                equation = Graphs.preprocess_equation(equation)
                 equation = str(sympy.simplify(equation))
                 item.props.equation = utilities.prettify_equation(equation)
                 continue
@@ -431,7 +435,7 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            equation = utilities.preprocess(str(callback(item, *args)))
+            equation = Graphs.preprocess_equation(str(callback(item, *args)))
             valid_equation = utilities.validate_equation(equation)
             if not valid_equation:
                 raise misc.InvalidEquationError(
@@ -471,7 +475,8 @@ class EquationOperations():
     @staticmethod
     def normalize(item, limits) -> str:
         """Normalize all selected data."""
-        ydata = utilities.equation_to_data(item._equation, limits)[1]
+        equation = Graphs.preprocess_equation(item._equation)
+        ydata = utilities.equation_to_data(equation, limits)[1]
         return f"({item.equation})/{max(ydata)}"
 
     @staticmethod
@@ -482,10 +487,11 @@ class EquationOperations():
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        xdata, ydata = utilities.equation_to_data(item._equation, limits)
+        equation = Graphs.preprocess_equation(item._equation)
+        xdata, ydata = utilities.equation_to_data(equation, limits)
         if center_maximum == 0:  # Center at maximum Y
             x = sympy.symbols("x")
-            equation = sympy.sympify(utilities.preprocess(item._equation))
+            equation = sympy.sympify(equation)
             derivative = sympy.diff(equation, x)
             critical_points = sympy.solveset(
                 derivative,
@@ -519,21 +525,21 @@ class EquationOperations():
     def derivative(item) -> str:
         """Calculate derivative of all selected data."""
         x = sympy.symbols("x")
-        equation = utilities.preprocess(item._equation)
+        equation = Graphs.preprocess_equation(item._equation)
         return str(sympy.diff(equation, x))
 
     @staticmethod
     def integral(item) -> str:
         """Calculate indefinite integral of all selected data."""
         x = sympy.symbols("x")
-        equation = utilities.preprocess(item._equation)
+        equation = Graphs.preprocess_equation(item._equation)
         return str(sympy.integrate(equation, x))
 
     @staticmethod
     def fft(item) -> str:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = utilities.preprocess(item._equation)
+        equation = Graphs.preprocess_equation(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         return equation.replace("k", "x")
 
@@ -541,7 +547,7 @@ class EquationOperations():
     def inverse_fft(item) -> str:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = utilities.preprocess(item._equation)
+        equation = Graphs.preprocess_equation(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         return equation.replace("k", "x")
 
@@ -554,7 +560,8 @@ class EquationOperations():
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
-        xdata, ydata = utilities.equation_to_data(item._equation, limits)
+        equation = Graphs.preprocess_equation(item._equation)
+        xdata, ydata = utilities.equation_to_data(equation, limits)
         local_dict = {
             "x": xdata,
             "y": ydata,
@@ -843,11 +850,11 @@ class DataOperations():
         # of the correct size, even when a float is given as input.
         return (
             numexpr.evaluate(
-                utilities.preprocess(input_x) + "+ 0*x",
+                Graphs.preprocess_equation(input_x) + "+ 0*x",
                 local_dict,
             ),
             numexpr.evaluate(
-                utilities.preprocess(input_y) + "+ 0*y",
+                Graphs.preprocess_equation(input_y) + "+ 0*y",
                 local_dict,
             ),
             True,
