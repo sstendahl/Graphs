@@ -4,7 +4,6 @@ using Gtk;
 namespace Graphs {
     namespace Export {
         public void export_items (Window window) {
-            var application = window.application as Application;
             Data data = window.data;
             if (data.is_empty ()) {
                 window.add_toast_string (_("No data to export"));
@@ -15,7 +14,7 @@ namespace Graphs {
             if (data.get_n_items () > 1) {
                 dialog.select_folder.begin (window, null, (d, response) => {
                     try {
-                        application.python_helper.export_items (
+                        PythonHelper.export_items (
                             window,
                             "columns",
                             dialog.select_folder.end (response),
@@ -34,7 +33,7 @@ namespace Graphs {
                 ));
                 dialog.save.begin (window, null, (d, response) => {
                     try {
-                        application.python_helper.export_items (
+                        PythonHelper.export_items (
                             window,
                             "columns",
                             dialog.save.end (response),

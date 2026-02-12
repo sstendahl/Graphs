@@ -100,8 +100,7 @@ namespace Graphs {
         public signal void show_residuals_changed (bool show);
 
         protected virtual void setup () {
-            var application = window.application as Application;
-            settings = application.get_settings_child ("curve-fitting");
+            settings = Application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
 
             Action confidence_action = settings.create_action ("confidence");

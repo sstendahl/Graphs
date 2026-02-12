@@ -79,7 +79,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
     ) -> None:
         await asyncio.sleep(timeout)
         if style_editor.params is None:
-            style_manager = self.props.application.get_figure_style_manager()
+            style_manager = Graphs.StyleManager.get_instance()
             params, graphs_params = style_manager.get_system_style_params()
         else:
             params = style_editor.params

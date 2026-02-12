@@ -32,16 +32,14 @@ namespace Graphs {
         private unowned Button confirm_button { get; }
 
         private Window window;
-        private DataImporter importer;
         private GLib.ListStore settings_list;
         private ImportSettings current_settings;
 
         public ImportDialog (Window window, GLib.ListStore settings_list) {
             assert (settings_list.get_item_type () == typeof (ImportSettings));
             this.window = window;
-            this.importer = ((Application) window.application).data_importer;
             this.settings_list = settings_list;
-            mode.set_model (importer.get_parser_names ());
+            mode.set_model (DataImporter.get_parser_names ());
 
             file_list.bind_model (settings_list, (item) => {
                 ImportSettings settings = (ImportSettings) item;
@@ -89,7 +87,7 @@ namespace Graphs {
                 file_settings_box.remove (widget);
             }
 
-            importer.append_settings_widgets (current_settings, file_settings_box);
+            DataImporter.append_settings_widgets (current_settings, file_settings_box);
             default_group.set_visible (current_settings.has_schema);
             remove_group.set_visible (settings_list.get_n_items () > 1);
         }
@@ -97,13 +95,13 @@ namespace Graphs {
         [GtkCallback]
         private void on_add () {
             var dialog = new FileDialog ();
-            dialog.set_filters (importer.file_filters);
+            dialog.set_filters (DataImporter.file_filters);
             dialog.open_multiple.begin (window, null, (d, response) => {
                 try {
                     var files_list_model = dialog.open_multiple.end (response);
                     for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                         var file = (File) files_list_model.get_item (i);
-                        var settings = importer.get_settings_for_file (file);
+                        var settings = DataImporter.get_settings_for_file (file);
                         if (!settings.is_valid) confirm_button.set_sensitive (false);
                         settings_list.append (settings);
                     }
@@ -121,13 +119,13 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_reset () {
-            importer.reset (current_settings);
+            DataImporter.reset (current_settings);
             load_settings (current_settings);
         }
 
         [GtkCallback]
         private void set_as_default () {
-            importer.set_as_default (current_settings);
+            DataImporter.set_as_default (current_settings);
         }
 
         [GtkCallback]
@@ -147,7 +145,7 @@ namespace Graphs {
             Gee.List<Item> itemlist = new LinkedList<Item> ();
             for (uint i = 0; i < settings_list.get_n_items (); i++) {
                 var settings = (ImportSettings) settings_list.get_item (i);
-                string message = importer.parse (itemlist, settings, window.data);
+                string message = DataImporter.parse (itemlist, settings, window.data);
                 if (message.length != 0) {
                     window.add_toast_string (message);
                 }

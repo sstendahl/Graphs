@@ -21,8 +21,7 @@ namespace Graphs {
 
         public SmoothenDialog (Window window) {
             Object ();
-            var application = window.application as Application;
-            this.settings = application.get_settings_child ("actions/smoothen");
+            this.settings = Application.get_settings_child ("actions/smoothen");
 
             settings.bind ("savgol-window", savgol_window, "value", 0);
             settings.bind ("savgol-polynomial", savgol_polynomial, "value", 0);

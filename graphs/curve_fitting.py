@@ -60,8 +60,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.fitting_parameters = FittingParameterContainer()
         self.fit_result = None
 
-        app = window.get_application()
-        style = app.get_figure_style_manager().get_system_style_params()
+        style = Graphs.StyleManager.get_instance().get_system_style_params()
 
         self.data_curve = DataItem.new(
             style,
@@ -117,8 +116,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Initialize and set main canvas."""
         window_data = self.props.window.get_data()
         settings = window_data.get_figure_settings()
-        app = self.props.window.get_application()
-        style = app.get_figure_style_manager().get_system_style_params()
+        style = Graphs.StyleManager.get_instance().get_system_style_params()
         cv = canvas.Canvas(style, self._items, interactive=False)
         ax = cv.figure.axis
         ax.set(xlabel=settings.get_property("bottom_label"),
@@ -131,8 +129,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def load_residuals_canvas(self, *_args):
         """Initialize and set residuals canvas."""
-        app = self.props.window.get_application()
-        style = app.get_figure_style_manager().get_system_style_params()
+        style = Graphs.StyleManager.get_instance().get_system_style_params()
         settings = self.props.window.get_data().get_figure_settings()
 
         cv = canvas.Canvas(style, self._residuals_items, interactive=False)
