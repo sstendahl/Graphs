@@ -26,10 +26,9 @@ namespace Graphs {
      * Style manager
      */
     public class StyleManager : Object {
-        public Application application { get; construct set; }
-        public GLib.ListStore style_model { get; construct set; }
-        public FilterListModel filtered_style_model { get; construct set; }
-        public File style_dir { get; construct set; }
+        public static GLib.ListStore style_model { get; private set; }
+        public static FilterListModel filtered_style_model { get; private set; }
+        public static File style_dir { get; private set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
@@ -37,26 +36,23 @@ namespace Graphs {
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
 
-        construct {
-            this.style_model = new GLib.ListStore (typeof (Style));
-            this.filtered_style_model = new FilterListModel (
+        public static StyleManager instance { get; private set; }
+
+        protected void setup (string system_style, StyleManager instance) {
+            StyleManager.instance = instance;
+            style_model = new GLib.ListStore (typeof (Style));
+            filtered_style_model = new FilterListModel (
                 style_model, new CustomFilter (filter_system_style)
             );
             try {
                 File config_dir = Tools.get_config_directory ();
-                this.style_dir = config_dir.get_child_for_display_name ("styles");
+                style_dir = config_dir.get_child_for_display_name ("styles");
                 if (!style_dir.query_exists ()) {
                     style_dir.make_directory_with_parents ();
                 }
             } catch {
                 assert_not_reached ();
             }
-            application.style_manager.notify.connect (() => {
-                application.python_helper.run_method (this, "_update_system_style");
-            });
-        }
-
-        protected void setup (string system_style) {
             style_model.append (
                 new Style (
                     _("System"),
@@ -83,7 +79,6 @@ namespace Graphs {
                     );
                 }
             } catch { assert_not_reached (); }
-            application.python_helper.run_method (this, "_update_system_style");
             try {
                 FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",
@@ -98,7 +93,7 @@ namespace Graphs {
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
                     ) {
-                        Style style = style_request.emit (file);
+                        Style style = instance.style_request.emit (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, stylenames.to_array ()
                         );
@@ -115,7 +110,7 @@ namespace Graphs {
             } catch { assert_not_reached (); }
         }
 
-        private async void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
+        private async static void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
             Style? style = null;
             switch (event_type) {
@@ -123,12 +118,12 @@ namespace Graphs {
                     var index = find_style_for_file (file, out style);
                     if (index == -1) return;
                     style_model.remove (index);
-                    style_deleted.emit (style.name);
+                    instance.style_deleted.emit (style.name);
                     return;
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     find_style_for_file (file, out style);
                     if (style == null) {
-                        style = style_request.emit (file);
+                        style = instance.style_request.emit (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, list_stylenames ()
                         );
@@ -136,18 +131,18 @@ namespace Graphs {
                         style_model.insert_sorted (style, cmp);
                         return;
                     }
-                    Style tmp_style = style_request.emit (file);
+                    Style tmp_style = instance.style_request.emit (file);
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
                     if (style.name == tmp_style.name) {
-                        style_changed.emit (style.name);
+                        instance.style_changed.emit (style.name);
                         return;
                     }
                     string old_name = style.name;
                     style.name = Tools.get_duplicate_string (
                         tmp_style.name, list_stylenames ()
                     );
-                    style_renamed.emit (old_name, style.name);
+                    instance.style_renamed.emit (old_name, style.name);
                     return;
                 default:
                     return;
@@ -159,7 +154,7 @@ namespace Graphs {
          *
          * The result is guaranteed to be sorted and excludes the system style.
          */
-        public string[] list_stylenames () {
+        public static string[] list_stylenames () {
             string[] stylenames = new string[filtered_style_model.get_n_items ()];
             for (uint i = 0; i < filtered_style_model.get_n_items (); i++) {
                 Style style = (Style) filtered_style_model.get_item (i);
@@ -168,7 +163,7 @@ namespace Graphs {
             return (owned) stylenames;
         }
 
-        public File create_style (uint template, string name) {
+        public static File create_style (uint template, string name) {
             string new_name = Tools.get_duplicate_string (
                 name, list_stylenames ()
             );
@@ -176,12 +171,12 @@ namespace Graphs {
             var filename = filename_from_stylename (new_name);
             try {
                 var destination = style_dir.get_child_for_display_name (filename);
-                create_style_request.emit (style, destination, new_name);
+                instance.create_style_request.emit (style, destination, new_name);
                 return destination;
             } catch { assert_not_reached (); }
         }
 
-        private int find_style_for_file (File file, out Style? style) {
+        private static int find_style_for_file (File file, out Style? style) {
             for (uint i = 1; i < style_model.get_n_items (); i++) {
                 Style i_style = style_model.get_item (i) as Style;
                 if (i_style.file.equal (file)) {
@@ -261,14 +256,14 @@ namespace Graphs {
         }
     }
 
-    public async void import_style (Gtk.Window window, StyleManager style_manager) {
+    public async void import_style (Gtk.Window window) {
         var dialog = new FileDialog ();
         dialog.set_filters (get_mplstyle_file_filters ());
         try {
             var file = yield dialog.open (window, null);
             string filename = Tools.get_filename (file);
             if (!filename.has_suffix (".mplstyle")) return;
-            var style_dir = style_manager.style_dir;
+            var style_dir = StyleManager.style_dir;
             var destination = style_dir.get_child_for_display_name (filename);
             uint i = 1;
             while (destination.query_exists ()) {

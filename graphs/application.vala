@@ -12,10 +12,7 @@ namespace Graphs {
      * Graphs application
      */
     public class Application : Adw.Application {
-        public GLib.Settings settings { get; private set; }
-        public StyleManager figure_style_manager { get; protected set; }
-        public PythonHelper python_helper { get; protected set; }
-        public DataImporter data_importer { get; protected set; }
+        public static GLib.Settings settings { get; private set; }
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
@@ -37,9 +34,12 @@ namespace Graphs {
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
 
             this.version = Config.VERSION;
-            this.settings = new GLib.Settings (application_id);
 
             add_main_option_entries (OPTION_ENTRIES);
+        }
+
+        protected void setup_settings () {
+            settings = new GLib.Settings (application_id);
         }
 
         /**
@@ -100,7 +100,7 @@ namespace Graphs {
 
             var settings_list = new GLib.ListStore (typeof (ImportSettings));
             for (uint i = 0; i < files.length; i++) {
-                settings_list.append (data_importer.get_settings_for_file (files[i]));
+                settings_list.append (DataImporter.get_settings_for_file (files[i]));
             }
             new ImportDialog (window, settings_list);
         }
@@ -145,13 +145,13 @@ namespace Graphs {
         }
 
         public Window create_main_window () {
-            Window window = python_helper.create_window ();
+            Window window = PythonHelper.create_window ();
             main_windows.add (window);
             return window;
         }
 
         public StyleEditor create_style_editor () {
-            var style_editor = python_helper.create_style_editor ();
+            var style_editor = PythonHelper.create_style_editor ();
             style_editors.add (style_editor);
             return style_editor;
         }
@@ -166,7 +166,7 @@ namespace Graphs {
          *
          * @param path a slash-separated path
          */
-        public GLib.Settings get_settings_child (string path) {
+        public static GLib.Settings get_settings_child (string path) {
             GLib.Settings settings_child = settings;
             foreach (string child_name in path.split ("/")) {
                 settings_child = settings_child.get_child (child_name);

@@ -45,8 +45,6 @@ namespace Graphs {
          * for drag and drop.
          */
         public void setup_interactions (bool is_data_item) {
-            var application = window.application as Application;
-
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
             delete_action.activate.connect (() => {
@@ -59,7 +57,7 @@ namespace Graphs {
             if (is_data_item) {
                 var curve_fitting_action = new SimpleAction ("curve_fitting", null);
                 curve_fitting_action.activate.connect (() => {
-                    application.python_helper.create_curve_fitting_dialog (window, item);
+                    PythonHelper.create_curve_fitting_dialog (window, item);
                 });
                 action_group.add_action (curve_fitting_action);
             }

@@ -20,12 +20,11 @@ import sympy
 
 def perform_operation(window: Graphs.Window, name: str) -> None:
     """Perform an operation."""
-    application = window.get_application()
     interaction_mode = window.get_mode()
     if name == "cut" and interaction_mode != 2:
         return
     args = []
-    actions_settings = application.get_settings_child("actions")
+    actions_settings = Graphs.Application.get_settings_child("actions")
     if name in ("center", "smoothen"):
         args = [actions_settings.get_enum(name)]
     if name == "smoothen":

@@ -31,18 +31,21 @@ class StyleManager(Graphs.StyleManager):
 
     __gtype_name__ = "GraphsPythonStyleManager"
 
-    def __init__(self, application: Graphs.Application):
+    def __init__(self):
         # Check for Ubuntu
         gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
         self._system_style_name = "Yaru" \
             if "SNAP" in os.environ \
             and gtk_theme.lower().startswith("yaru") \
             else "Adwaita"
-        super().__init__(application=application)
+        super().__init__()
         self.connect("style-request", self._on_style_request)
         self.connect("create-style-request", self._on_create_style_request)
+        Adw.StyleManager.get_default().connect(
+            "notify", self._update_system_style,
+        )
 
-        self.setup(self._system_style_name.lower())
+        self.setup(self._system_style_name.lower(), self)
         self._update_system_style()
 
     @staticmethod
@@ -72,7 +75,7 @@ class StyleManager(Graphs.StyleManager):
         """Get the system style properties."""
         return self._system_style_params
 
-    def _update_system_style(self) -> None:
+    def _update_system_style(self, *_args) -> None:
         system_style = self._system_style_name
         if Adw.StyleManager.get_default().get_dark():
             system_style += " Dark"

@@ -31,14 +31,12 @@ namespace Graphs {
         private unowned Adw.EntryRow item_name { get; }
 
         private Window window;
-        private Application application;
         private GLib.Settings settings;
 
         public GenerateDataDialog (Window window) {
             Object ();
             this.window = window;
-            this.application = window.application as Application;
-            this.settings = application.get_settings_child ("generate-data");
+            this.settings = Application.get_settings_child ("generate-data");
             this.equation.set_text (settings.get_string ("equation"));
             this.xstart.set_text (settings.get_string ("xstart"));
             this.xstop.set_text (settings.get_string ("xstop"));
@@ -63,7 +61,7 @@ namespace Graphs {
             this.settings.set_string ("xstop", xstop.get_text ());
             this.settings.set_int ("steps", (int) this.steps.get_value ());
             this.settings.set_int ("scale", (int) this.scale.get_selected ());
-            Item item = application.python_helper.generate_data (window, item_name.get_text ());
+            Item item = PythonHelper.generate_data (window, item_name.get_text ());
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();
@@ -72,7 +70,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_change () {
-            if (application.python_helper.validate_equation (equation.get_text ())) {
+            if (PythonHelper.validate_equation (equation.get_text ())) {
                 equation.remove_css_class ("error");
             } else {
                 equation.add_css_class ("error");

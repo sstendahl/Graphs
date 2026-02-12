@@ -143,15 +143,13 @@ namespace Graphs {
 
             var import_action = new SimpleAction ("import-style", null);
             import_action.activate.connect (() => {
-                var application = (Application) application;
-                import_style.begin (this, application.figure_style_manager);
+                import_style.begin (this);
             });
             add_action (import_action);
 
             var create_action = new SimpleAction ("create-style", null);
             create_action.activate.connect (() => {
-                var application = (Application) application;
-                var dialog = new AddStyleDialog (application.figure_style_manager, this);
+                var dialog = new AddStyleDialog (this);
                 dialog.accept.connect ((file) => {
                     load (file);
                 });
@@ -183,9 +181,7 @@ namespace Graphs {
         }
 
         protected void setup () {
-            var application = (Application) application;
-
-            var model = new NoSelection (application.figure_style_manager.filtered_style_model);
+            var model = new NoSelection (StyleManager.filtered_style_model);
             style_grid.set_model (model);
         }
 
