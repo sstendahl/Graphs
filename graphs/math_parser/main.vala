@@ -57,22 +57,7 @@ namespace Graphs {
         FACT,
         SUPERSCRIPT,
         LPAREN, RPAREN,
-        END;
-
-        public static TokenType parse (unichar c) throws MathError {
-            if (superscript_to_int (c) >= 0) return TokenType.SUPERSCRIPT;
-            switch (c) {
-                case '+': return TokenType.PLUS;
-                case '-': return TokenType.MINUS;
-                case '*': return TokenType.STAR;
-                case '/': return TokenType.SLASH;
-                case '^': return TokenType.CARET;
-                case '!': return TokenType.FACT;
-                case '(': return TokenType.LPAREN;
-                case ')': return TokenType.RPAREN;
-                default: throw new MathError.SYNTAX ("invalid token");
-            }
-        }
+        END
     }
 
     private enum Ident {
@@ -96,7 +81,7 @@ namespace Graphs {
         EXP,
         ABS,
 
-        NONE
+        CUSTOM
     }
 
     private class MathParserCls {
@@ -159,7 +144,17 @@ namespace Graphs {
             }
 
             // Single-character token
-            current_type = TokenType.parse (c);
+            switch (c) {
+                case '+': current_type = TokenType.PLUS; break;
+                case '-': current_type = TokenType.MINUS; break;
+                case '*': current_type = TokenType.STAR; break;
+                case '/': current_type = TokenType.SLASH; break;
+                case '^': current_type = TokenType.CARET; break;
+                case '!': current_type = TokenType.FACT; break;
+                case '(': current_type = TokenType.LPAREN; break;
+                case ')': current_type = TokenType.RPAREN; break;
+                default: throw new MathError.SYNTAX ("invalid token");
+            }
             pos = idx;
         }
 
@@ -242,7 +237,7 @@ namespace Graphs {
 
         private void handle_identifier (ref int idx, ref unichar c) throws MathError {
             current_type = TokenType.IDENT;
-            current_ident = Ident.NONE;
+            current_ident = Ident.CUSTOM;
 
             int state = 0;
             int tmp_idx = idx;
@@ -381,7 +376,7 @@ namespace Graphs {
                     // log
                     case 72:
                         if (c == '2') { current_ident = Ident.LOG2; state = 200; }
-                        else if (c == '1') { current_ident = Ident.NONE; state = 73; }
+                        else if (c == '1') { current_ident = Ident.CUSTOM; state = 73; }
                         else fail_identifier (); break;
 
                     // log1
@@ -495,7 +490,7 @@ namespace Graphs {
                 if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π')) {
                     if (state == 10) {
                         current_ident = Ident.E;
-                    } else if (current_ident == Ident.NONE) fail_identifier ();
+                    } else if (current_ident == Ident.CUSTOM) fail_identifier ();
                     break;
                 }
 
