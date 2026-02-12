@@ -349,7 +349,7 @@ namespace Graphs.MathParser {
                     // a(rc)s
                     case 96:
                         if (c == 'e') state = 97;
-                        else if (c == 'i') state = 97;
+                        else if (c == 'i') state = 99;
                         else fail_identifier (); break;
 
                     // a(rc)se

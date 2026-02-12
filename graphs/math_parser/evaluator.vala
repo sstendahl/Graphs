@@ -28,9 +28,10 @@ namespace Graphs.MathParser {
 
         private double expr () throws MathError {
             double v = term ();
-            TokenType t = lexer.current_type;
-            while (t == TokenType.PLUS || t == TokenType.MINUS) {
+            TokenType t;
+            while (true) {
                 t = lexer.current_type;
+                if (!(t == TokenType.PLUS || t == TokenType.MINUS)) break;
                 lexer.next ();
                 double r = term ();
                 v = (t == TokenType.PLUS) ? v + r : v - r;
@@ -55,7 +56,8 @@ namespace Graphs.MathParser {
 
                 // implicit multiplication
                 if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    v *= expr ();
+                    v *= power ();
+                    continue;
                 }
                 break;
             }
@@ -136,6 +138,7 @@ namespace Graphs.MathParser {
         }
 
         private const double DEGREES_TO_RADIANS = Math.PI / 180d;
+        private const double RADIANS_TO_DEGREES = 180d / Math.PI;
 
         private static double call_function (Ident id, double x) {
             switch (id) {
@@ -164,14 +167,12 @@ namespace Graphs.MathParser {
                 case Ident.ACSC: return Math.asin (1d / x);
 
                 // inverse trig degrees
-                case Ident.ASIND: return Math.asin (x * DEGREES_TO_RADIANS);
-                case Ident.ACOSD: return Math.acos (x * DEGREES_TO_RADIANS);
-                case Ident.ATAND: return Math.atan (x * DEGREES_TO_RADIANS);
-                case Ident.ACOTD:
-                    double x2 = x * DEGREES_TO_RADIANS;
-                    return Math.asin (1d / Math.sqrt (1 + x2 * x2));
-                case Ident.ASECD: return Math.acos (1d / x * DEGREES_TO_RADIANS);
-                case Ident.ACSCD: return Math.asin (1d / x * DEGREES_TO_RADIANS);
+                case Ident.ASIND: return Math.asin (x) * RADIANS_TO_DEGREES;
+                case Ident.ACOSD: return Math.acos (x) * RADIANS_TO_DEGREES;
+                case Ident.ATAND: return Math.atan (x) * RADIANS_TO_DEGREES;
+                case Ident.ACOTD: return Math.asin (1d / Math.sqrt (1 + x * x)) * RADIANS_TO_DEGREES;
+                case Ident.ASECD: return Math.acos (1d / x) * RADIANS_TO_DEGREES;
+                case Ident.ACSCD: return Math.asin (1d / x) * RADIANS_TO_DEGREES;
 
                 // misc
                 case Ident.LOG: return Math.log (x);

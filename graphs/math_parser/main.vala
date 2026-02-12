@@ -69,8 +69,8 @@ namespace Graphs {
             CUSTOM
         }
 
-        private static inline int factorial (int n) {
-            int r = 1;
+        private static inline long factorial (int n) {
+            long r = 1;
             for (int i = 2; i <= n; i++)
                 r *= i;
             return r;
