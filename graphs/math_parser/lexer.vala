@@ -17,27 +17,25 @@ namespace Graphs.MathParser {
         }
 
         public void next () throws MathError {
-            int idx = pos;
             unichar c;
             while (true) {
-                if (!src.get_next_char (ref idx, out c)) {
-                    if (idx == 0) throw new MathError.SYNTAX ("empty expression");
+                if (!src.get_next_char (ref pos, out c)) {
+                    if (pos == 0) throw new MathError.SYNTAX ("empty expression");
                     current_type = TokenType.END;
                     return;
                 }
                 if (!c.isspace ()) break;
-                pos = idx;
             }
 
             // Number
             if (c.isdigit () || c == decimal_separator) {
-                handle_number (ref idx, ref c);
+                handle_number (ref c);
                 return;
             }
 
             // Identifier
             if (c.isalpha () || c == 'π') {
-                handle_identifier (ref idx, ref c);
+                handle_identifier (ref c);
                 return;
             }
 
@@ -64,13 +62,13 @@ namespace Graphs.MathParser {
                 case '⁹': current_type = TokenType.SUPERSCRIPT; current_val = 9; break;
                 default: throw new MathError.SYNTAX ("invalid token");
             }
-            pos = idx;
         }
 
-        private void handle_number (ref int idx, ref unichar c) throws MathError {
+        private void handle_number (ref unichar c) throws MathError {
             bool seen_dot = false;
             bool last_is_dot = false;
             bool seen_exp = false;
+            int idx = pos;
             int tmp_idx = idx;
 
             long int_part = 0;
@@ -80,7 +78,6 @@ namespace Graphs.MathParser {
             int exp_sign = 1;
 
             int digit;
-            int sign_idx;
 
             while (true) {
                 digit = c.digit_value ();
@@ -107,9 +104,7 @@ namespace Graphs.MathParser {
                     // Optional sign
                     if (c == '+' || c == '-') {
                         if (c == '-') exp_sign = -1;
-                        sign_idx = tmp_idx;
-                        if (!src.get_next_char (ref sign_idx, out c)) break;
-                        tmp_idx = sign_idx;
+                        if (!src.get_next_char (ref tmp_idx, out c)) break;
                     }
 
                     // Must have at least one digit to be an exponent
@@ -144,12 +139,12 @@ namespace Graphs.MathParser {
             throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
         }
 
-        private void handle_identifier (ref int idx, ref unichar c) throws MathError {
+        private void handle_identifier (ref unichar c) throws MathError {
             current_type = TokenType.IDENT;
             current_ident = Ident.CUSTOM;
 
             int state = 0;
-            int tmp_idx = idx;
+            int tmp_idx = pos;
 
             c = c.tolower ();
             while (true) {
@@ -403,11 +398,9 @@ namespace Graphs.MathParser {
                     break;
                 }
 
-                idx = tmp_idx;
+                pos = tmp_idx;
                 c = c.tolower ();
             }
-
-            pos = idx;
         }
 
         public inline void expect_end () throws MathError {
