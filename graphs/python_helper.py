@@ -37,6 +37,8 @@ class PythonHelper(Graphs.PythonHelper):
     def __init__(self, application: Graphs.Application):
         super().__init__(application=application)
 
+        self.set_instance(self)
+
         for request in _REQUESTS:
             request = request + "-request"
             self.connect(
@@ -50,7 +52,7 @@ class PythonHelper(Graphs.PythonHelper):
         window: Graphs.Window,
         name: str,
     ) -> EquationItem:
-        settings = self.props.application.get_settings_child("add-equation")
+        settings = Graphs.Application.get_settings_child("add-equation")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"
@@ -133,7 +135,7 @@ class PythonHelper(Graphs.PythonHelper):
         window: Graphs.Window,
         name: str,
     ) -> GeneratedDataItem:
-        settings = self.props.application.get_settings_child("generate-data")
+        settings = Graphs.Application.get_settings_child("generate-data")
         equation = settings.get_string("equation")
         if name == "":
             name = f"Y = {settings.get_string('equation')}"

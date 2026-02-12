@@ -97,8 +97,7 @@ namespace Graphs {
         }
 
         private void validate_entry (Entry entry, Button button) {
-            var application = _window.application as Application;
-            if (application.python_helper.evaluate_string (entry.get_text ())) {
+            if (PythonHelper.evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 button.set_sensitive (entries_sensitive);
             } else {

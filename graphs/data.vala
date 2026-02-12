@@ -7,7 +7,6 @@ namespace Graphs {
      * Data class
      */
     public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
-        public Application application { get; construct set; }
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; protected set; default = false; }
@@ -56,11 +55,11 @@ namespace Graphs {
             this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
             items_changed.connect (_update_used_positions);
-            this._settings = application.get_settings_child ("figure");
-            var style_manager = application.figure_style_manager;
-            this.style_selection_model = new SingleSelection (style_manager.style_model);
+            this._settings = Application.get_settings_child ("figure");
+            this.style_selection_model = new SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
 
+            var style_manager = StyleManager.instance;
             style_manager.style_changed.connect (stylename => {
                 if (!figure_settings.use_custom_style) return;
                 if (figure_settings.custom_style == stylename) {
@@ -79,7 +78,7 @@ namespace Graphs {
                 }
             });
 
-            application.style_manager.notify.connect (() => {
+            Adw.StyleManager.get_default ().notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
                     handle_style_change.begin ();
                 }
@@ -108,7 +107,7 @@ namespace Graphs {
         }
 
         private void run_python_method (string method) {
-            application.python_helper.run_method (this, method);
+            PythonHelper.run_method (this, method);
         }
 
         // Section ListModel

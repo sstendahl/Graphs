@@ -23,8 +23,8 @@ class DataImporter(Graphs.DataImporter):
 
     __gtype_name__ = "GraphsPythonDataImporter"
 
-    def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
+    def __init__(self):
+        super().__init__()
         for request in _REQUESTS:
             request = request + "-request"
             self.connect(
