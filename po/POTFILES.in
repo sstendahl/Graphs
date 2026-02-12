@@ -53,6 +53,9 @@ graphs/file_import/parsers/xrdml/__init__.py
 graphs/file_import/parsers/xry/__init__.py
 graphs/file_import/__init__.py
 graphs/file_import/file_import.vala
+graphs/math_parser/evaluator.vala
+graphs/math_parser/lexer.vala
+graphs/math_parser/main.vala
 graphs/sidebar/edit_item.py
 graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
@@ -87,7 +90,6 @@ graphs/generate_data.vala
 graphs/item.py
 graphs/item.vala
 graphs/item_box.vala
-graphs/math_parser.vala
 graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala

@@ -6,7 +6,7 @@ namespace Graphs {
      */
     public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
         try {
-            result = MathParser.instance ().parse (expression, decimal_separator);
+            result = MathParserCls.instance ().parse (expression, decimal_separator);
             return true;
         } catch (Error e) {
             result = 0;
@@ -23,7 +23,7 @@ namespace Graphs {
      * Evaluate a string to a double.
      */
     public static double evaluate_string (string expression) throws MathError {
-        return MathParser.instance ().parse (expression);
+        return MathParserCls.instance ().parse (expression);
     }
 
     public errordomain MathError {
@@ -99,7 +99,7 @@ namespace Graphs {
         NONE
     }
 
-    private class MathParser {
+    private class MathParserCls {
         private unowned string src;
         private int pos;
         private unichar decimal_separator;
@@ -108,10 +108,10 @@ namespace Graphs {
         private Ident current_ident;
         private double current_val;
 
-        private static Once<MathParser> _instance;
+        private static Once<MathParserCls> _instance;
 
-        public static unowned MathParser instance () {
-            return _instance.once (() => { return new MathParser (); });
+        public static unowned MathParserCls instance () {
+            return _instance.once (() => { return new MathParserCls (); });
         }
 
         public double parse (string src, unichar decimal_separator = '.') throws MathError {
