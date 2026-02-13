@@ -3,6 +3,7 @@ namespace Graphs.MathParser {
     private class Preprocessor {
         private Lexer lexer = new Lexer (true);
         private StringBuilder builder;
+        private bool prettify;
 
         private static Once<Preprocessor> _instance;
 
@@ -10,8 +11,9 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Preprocessor (); });
         }
 
-        public string preprocess (string src) throws MathError {
+        public string preprocess (string src, bool prettify = false) throws MathError {
             this.builder = new StringBuilder ();
+            this.prettify = prettify;
             lexer.start_lexing (src);
             expr ();
             lexer.expect_end ();
@@ -55,7 +57,7 @@ namespace Graphs.MathParser {
 
                 // implicit multiplication
                 if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    builder.append_c ('*');
+                    if (!prettify) builder.append_c ('*');
                     power ();
                     continue;
                 }
@@ -66,7 +68,7 @@ namespace Graphs.MathParser {
         private void power () throws MathError {
             unary ();
             if (lexer.current_type == TokenType.CARET) {
-                builder.append ("**");
+                builder.append (prettify ? "^" : "**");
                 lexer.next ();
                 power ();
             }
@@ -109,7 +111,7 @@ namespace Graphs.MathParser {
                         v = ipow (v, exp);
                         builder.append (v.to_string ());
                     } else {
-                        builder.append ("**");
+                        builder.append (prettify ? "^" : "**");
                         builder.append (exp.to_string ());
                     }
                     output = true;
@@ -122,10 +124,40 @@ namespace Graphs.MathParser {
             if (!output && v != null) builder.append (v.to_string ());
         }
 
+        private const double PI_THRESH = 0.00010000314159265359; // 1e-4 + 1e-9 * pi
+        private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
+
         private double? primary () throws MathError {
             switch (lexer.current_type) {
                 case TokenType.NUMBER:
                     double v = lexer.current_val;
+
+                    if (prettify) {
+                        // check if it is a multiple of pi
+                        double remainder = Math.fmod (v, Math.PI);
+                        if (remainder <= PI_THRESH || remainder >= Math.PI - PI_THRESH) {
+                            // fast rounding check evasion
+                            double factor = Math.floor(v / Math.PI + 0.5);
+                            if (factor != 1) builder.append (factor.to_string ());
+                            builder.append ("pi");
+
+                            lexer.next ();
+                            return null;
+                        }
+
+                        // or e
+                        remainder = Math.fmod (v, Math.E);
+                        if (remainder <= E_THRESH || remainder >= Math.E - E_THRESH) {
+                            // fast rounding check evasion
+                            double factor = Math.floor(v / Math.E + 0.5);
+                            if (factor != 1) builder.append (factor.to_string ());
+                            builder.append_c ('e');
+
+                            lexer.next ();
+                            return null;
+                        }
+                    }
+
                     lexer.next ();
                     return v;
                 case TokenType.IDENT:

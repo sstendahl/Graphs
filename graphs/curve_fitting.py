@@ -346,7 +346,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             rounded = f"{param_value:.3g}"
             eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
 
-        eq_name = utilities.prettify_equation(eq_name)
+        eq_name = Graphs.prettify_equation(eq_name)
 
         # Clean up combined operators
         eq_name = (

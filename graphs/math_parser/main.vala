@@ -33,6 +33,13 @@ namespace Graphs {
         return MathParser.Preprocessor.instance ().preprocess (equation);
     }
 
+    /**
+     * Return an equation in a prettier, more humanly readable, format.
+     */
+    public static string prettify_equation (string equation) throws MathError {
+        return MathParser.Preprocessor.instance ().preprocess (equation, true).replace (")*(", "()");
+    }
+
     public errordomain MathError {
         SYNTAX,
         UNKNOWN_FUNCTION,

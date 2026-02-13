@@ -391,7 +391,7 @@ class CommonOperations():
                     equation = f"{item.equation}+{shift_value}"
                 equation = Graphs.preprocess_equation(equation)
                 equation = str(sympy.simplify(equation))
-                item.props.equation = utilities.prettify_equation(equation)
+                item.props.equation = Graphs.prettify_equation(equation)
                 continue
             if isinstance(item, DataItem):
                 if scale == scales.Scale.LOG:
@@ -445,7 +445,7 @@ class EquationOperations():
                     ).format(name=item.props.name),
                 )
             equation = str(sympy.simplify(equation))
-            item.props.equation = utilities.prettify_equation(equation)
+            item.props.equation = Graphs.prettify_equation(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
         except (NotImplementedError, AttributeError, KeyError):

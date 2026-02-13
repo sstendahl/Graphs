@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
 import contextlib
-import math
 import re
 
 from gi.repository import GLib, Graphs
@@ -115,28 +114,6 @@ def get_fraction_at_value(
             return (scaled_data_point - 1 / end) / scaled_range
         case _:
             raise ValueError
-
-
-def prettify_equation(equation: str) -> str:
-    """Return an equation in a prettier, more humanly readable, format."""
-
-    def reformat_pi(match):
-        """
-        Turn an integer amount of pi from SymPy into the format `npi`.
-
-        Here n is an integer number.
-        """
-        number_string = match.group(1)
-        number = float(number_string)
-        if numpy.allclose(number % numpy.pi, 0, rtol=1e-04):
-            int_pi = math.floor(number / numpy.pi)
-            number_string = "pi" if int_pi == 1 else f"{int_pi}pi"
-        return number_string
-
-    equation = equation.replace(" ", "")
-    equation = re.sub(r"(\d+\.\d+)", reformat_pi, equation)
-    equation = equation.replace("**", "^")
-    return equation.replace(")*(", ")(")
 
 
 def create_equidistant_xdata(
