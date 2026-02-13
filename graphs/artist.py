@@ -65,12 +65,12 @@ class ItemArtistWrapper(GObject.Object):
     @GObject.Property(type=str, default="")
     def name(self) -> str:
         """Get name/label property."""
-        return self._artist.get_label()
+        return self.plot.get_label()
 
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._artist.set_label(_ellipsize(name))
+        self.plot.set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
@@ -102,6 +102,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     markersize = GObject.Property(type=float, default=7)
     legend = True
 
+
     @GObject.Property
     def data(self) -> tuple[list, list]:
         """Get data property."""
@@ -109,8 +110,78 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     @data.setter
     def data(self, data: tuple[list, list]) -> None:
-        """Set data property."""
-        self._artist.set_data(data)
+        """Set data property, updating error bars to follow."""
+        xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
+        self._artist.set_data(xdata, ydata)
+        self._update_errorbars(xdata, ydata, self._xerr, self._yerr)
+
+    @GObject.Property
+    def xerr(self):
+        """Get xerr property."""
+        return self._xerr
+
+    @xerr.setter
+    def xerr(self, xerr) -> None:
+        """Set xerr property, updating error bars to follow."""
+        self._xerr = xerr
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(xdata, ydata, xerr, self._yerr)
+
+    @GObject.Property
+    def yerr(self):
+        """Get yerr property."""
+        return self._yerr
+
+    @yerr.setter
+    def yerr(self, yerr) -> None:
+        """Set yerr property, updating error bars to follow."""
+        self._yerr = yerr
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(xdata, ydata, self._xerr, yerr)
+
+    def _update_errorbars(self, xdata, ydata, xerr, yerr) -> None:
+        """Update all error bar artists to match the current data position."""
+        xdata = numpy.asarray(xdata)
+        ydata = numpy.asarray(ydata)
+
+        if numpy.isscalar(xerr):
+            xerr = numpy.full_like(xdata, xerr, dtype=float)
+        else:
+            xerr = numpy.asarray(xerr, dtype=float)
+
+        if numpy.isscalar(yerr):
+            yerr = numpy.full_like(ydata, yerr, dtype=float)
+        else:
+            yerr = numpy.asarray(yerr, dtype=float)
+
+        _, caplines, barlinecols = self.plot
+
+        # barlinecols[0] = y-direction, barlinecols[1] = x-direction
+        if yerr is not None and len(barlinecols) > 0:
+            barlinecols[0].set_segments(
+                [[[x, y - ye], [x, y + ye]]
+                 for x, y, ye in zip(xdata, ydata, yerr)]
+            )
+        if xerr is not None and len(barlinecols) > 1:
+            barlinecols[1].set_segments(
+                [[[x - xe, y], [x + xe, y]]
+                 for x, y, xe in zip(xdata, ydata, xerr)]
+            )
+
+        if caplines:
+            cap_xlo, cap_xhi, cap_ylo, cap_yhi = caplines
+            if yerr is not None:
+                cap_ylo.set_data(xdata, ydata - yerr)
+                cap_yhi.set_data(xdata, ydata + yerr)
+            if xerr is not None:
+                cap_xlo.set_data(xdata - xerr, ydata)
+                cap_xhi.set_data(xdata + xerr, ydata)
+
+    def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
+        return self.plot
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -139,18 +210,37 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             markersize *= 0.35
         self._artist.set_linewidth(linewidth)
         self._artist.set_markersize(markersize)
+        _, caplines, barlinecols = self.plot
+        err_linewidth = linewidth * 0.5
+        for bar in barlinecols:
+            bar.set_linewidth(err_linewidth)
+            bar.set_color("black")
+        for cap in caplines:
+            cap.set_markeredgewidth(err_linewidth)
+            cap.set_color("black")
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
-        self._artist = axis.plot(
-            item.get_xdata(),
-            item.get_ydata(),
-            label=_ellipsize(item.get_name()),
+        self._xerr = item.get_xerr()
+        self._yerr = item.get_yerr()
+        xdata = item.get_xdata()
+        ydata = item.get_ydata()
+        self.plot = axis.errorbar(
+            xdata,
+            ydata,
+            xerr=self._xerr,
+            yerr=self._yerr,
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
-        )[0]
+            capsize=4,
+            ecolor="black",
+            elinewidth=item.props.linewidth * 0.5,
+            capthick=item.props.linewidth * 0.5,
+        )
+        self.name = item.get_name()
+        self._artist = self.plot[0]
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)

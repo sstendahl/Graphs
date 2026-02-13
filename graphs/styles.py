@@ -45,8 +45,8 @@ class StyleManager(Graphs.StyleManager):
             "notify", self._update_system_style,
         )
 
-        self.setup(self._system_style_name.lower(), self)
         self._update_system_style()
+        self.setup(self._system_style_name.lower(), self)
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
