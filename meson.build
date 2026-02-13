@@ -22,7 +22,7 @@ devenv = environment()
 devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
 
 application_id = 'se.sjoerd.Graphs'
-copyright = '2022 - 2025'
+copyright = '2022 - 2026'
 homepage_url = 'https://apps.gnome.org/Graphs/'
 vcs_url = 'https://gitlab.gnome.org/World/Graphs'
 issue_url = vcs_url + '/issues'
