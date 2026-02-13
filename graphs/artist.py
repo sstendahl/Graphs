@@ -269,13 +269,13 @@ class GeneratedDataItemArtistWrapper(DataItemArtistWrapper,
     @equation.setter
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
-        self._equation = utilities.preprocess(equation)
+        self._equation = Graphs.preprocess_equation(equation)
         self._handle_singularities(self._artist.get_data(), False)
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         self._axis = axis
         super().__init__(self._axis, item)
-        self._equation = utilities.preprocess(item.props.equation)
+        self._equation = Graphs.preprocess_equation(item.props.equation)
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
@@ -289,7 +289,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        self._equation = utilities.preprocess(item.props.equation)
+        self._equation = Graphs.preprocess_equation(item.props.equation)
         self._axis = axis
         self._view_change_timeout_id = None
         if self._axis.figure.parent is not None:
@@ -330,7 +330,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
     @equation.setter
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
-        self._equation = utilities.preprocess(equation)
+        self._equation = Graphs.preprocess_equation(equation)
         self._generate_data()
 
     @GObject.Property(type=int, default=1)

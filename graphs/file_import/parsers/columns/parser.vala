@@ -22,7 +22,7 @@ namespace Graphs {
      */
     public class ColumnsParser : Object {
         private ImportSettings settings;
-        private ColumnsSeparator separator;
+        private unichar separator;
         private Regex delimiter_regex;
 
         private Bitset used_indices = new Bitset.empty ();
@@ -30,12 +30,10 @@ namespace Graphs {
         private Column[] columns;
         private int value_size = 0;
 
-        protected double parse_float_helper { get; set; }
-        protected signal bool parse_float_request (string input);
-
         public ColumnsParser (ImportSettings settings) throws Error {
             this.settings = settings;
-            this.separator = ColumnsSeparator.parse (settings.get_string ("separator"));
+            var separator = ColumnsSeparator.parse (settings.get_string ("separator"));
+            this.separator = separator.as_unichar ();
 
             string[] item_strings = settings.get_string ("items").split (";;");
             ColumnsItemSettings item_settings = ColumnsItemSettings ();
@@ -83,7 +81,6 @@ namespace Graphs {
             var bitset_iter = BitsetIter ();
             uint column_index;
             uint column_rank;
-            string expression;
             double val;
 
             int array_size = columns[0].data.length;
@@ -111,8 +108,7 @@ namespace Graphs {
                 bitset_iter.init_first (used_indices, out column_index);
                 column_rank = 0;
                 do {
-                    expression = str_values[column_index].strip ();
-                    if (evaluate_string (expression, out val)) {
+                    if (try_evaluate_string (str_values[column_index], out val, separator)) {
                         columns[column_rank++].data[value_size] = val;
                         continue;
                     };
@@ -125,7 +121,7 @@ namespace Graphs {
                         );
                     }
 
-                    columns[column_rank].header = expression;
+                    columns[column_rank].header = str_values[column_index];
                     // prevent leading 0 in data
                     value_size = -1;
                 } while (bitset_iter.next (out column_index));
@@ -158,41 +154,6 @@ namespace Graphs {
 
         public void get_column (uint index, out double[] values) {
             values = columns[get_rank (index)].get_data ();
-        }
-
-        private bool evaluate_string (string expression, out double result) {
-            if (expression.strip ().length == 0) {
-                result = 0;
-                return false;
-            }
-
-            string normalized = normalize_decimal_separator (expression);
-            if (double.try_parse (normalized, out result)) {
-                return true;
-            }
-
-            // If Vala can't parse, request Python signal
-            if (parse_float_request.emit (normalized)) {
-                result = this.parse_float_helper;
-                return true;
-            }
-
-            return false;
-        }
-
-        private string normalize_decimal_separator (string str) {
-            // First remove spaces (used as thousands separators in some locales)
-            string cleaned = str.replace (" ", "");
-            string decimal_char = (separator == ColumnsSeparator.COMMA ? "," : ".");
-            string thousands_char = decimal_char == "," ? "." : ",";
-
-            cleaned = cleaned.replace (thousands_char, "");
-
-            if (decimal_char == ",") {
-                cleaned = cleaned.replace (",", ".");
-            }
-
-            return cleaned;
         }
     }
 }

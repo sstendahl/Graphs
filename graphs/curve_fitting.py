@@ -150,7 +150,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return
         ax = cv.figure.axis
 
-        equation = self.fitted_curve.equation
+        equation = Graphs.preprocess_equation(self.fitted_curve.equation)
         _xfit, yfit = utilities.equation_to_data(equation, self._xlim)
         _xfill, yfill_low, yfill_high = self.fill.props.data
         ydata = self.data_curve.get_ydata()
@@ -165,7 +165,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def on_equation_change(self, _sender, equation: str) -> bool:
         """Handle equation changes and update parameters."""
-        processed_eq = utilities.preprocess(equation)
+        processed_eq = Graphs.preprocess_equation(equation)
         free_vars = utilities.get_free_variables(processed_eq)
         if not free_vars:
             self._clear_fit()
@@ -334,7 +334,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def _update_fitted_curve(self, eq_str: str, params: numpy.ndarray) -> None:
         """Update the fitted curve on the main canvas."""
         eq_str = eq_str.lower()
-        equation = str(utilities.preprocess(eq_str))
+        equation = Graphs.preprocess_equation(eq_str)
         eq_name = eq_str
         free_vars = utilities.get_free_variables(eq_str)
 
@@ -346,7 +346,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             rounded = f"{param_value:.3g}"
             eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
 
-        eq_name = utilities.prettify_equation(eq_name)
+        eq_name = Graphs.prettify_equation(eq_name)
 
         # Clean up combined operators
         eq_name = (
@@ -416,8 +416,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         conf_level = self.get_settings().get_enum("confidence")
         x_min, x_max = self._xlim
+        equation = Graphs.preprocess_equation(self.fitted_curve.equation)
         x_values, y_values = utilities.equation_to_data(
-            self.fitted_curve.equation, (x_min, x_max))
+            equation, (x_min, x_max))
         x_values = numpy.asarray(x_values)
 
         eq_str = self.get_equation_string()
