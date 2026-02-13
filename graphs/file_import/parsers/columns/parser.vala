@@ -42,8 +42,14 @@ namespace Graphs {
 
                 if (!item_settings.single_column) {
                     used_indices.add (item_settings.column_x);
+                    if (item_settings.use_xerr) {
+                        used_indices.add (item_settings.xerr_index);
+                    }
                 }
                 used_indices.add (item_settings.column_y);
+                if (item_settings.use_yerr) {
+                    used_indices.add (item_settings.yerr_index);
+                }
             }
             this.n_used_indices = used_indices.get_size ();
 
@@ -55,9 +61,15 @@ namespace Graphs {
                 item_settings.load_from_item_string (item_string);
 
                 if (!item_settings.single_column) {
-                    columns[item_settings.column_x].requests++;
+                    columns[get_rank (item_settings.column_x)].requests++;
+                    if (item_settings.use_xerr) {
+                        columns[get_rank (item_settings.xerr_index)].requests++;
+                    }
                 }
-                columns[item_settings.column_y].requests++;
+                columns[get_rank (item_settings.column_y)].requests++;
+                if (item_settings.use_yerr) {
+                    columns[get_rank (item_settings.yerr_index)].requests++;
+                }
             }
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));

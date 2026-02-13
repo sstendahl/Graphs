@@ -43,6 +43,8 @@ class ColumnsParser(Parser):
             ylabel = parser.get_header(yindex)
             ydata = parser.get_column(yindex)
 
+            yerr = parser.get_column(item_settings.yerr_index) \
+                if item_settings.use_yerr else None
             if item_settings.single_column:
                 xlabel = ""
                 equation = item_settings.equation
@@ -51,16 +53,22 @@ class ColumnsParser(Parser):
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 xdata = numpy.ndarray.tolist(xdata)
+                xerr = None
             else:
                 xindex = item_settings.column_x
                 xdata = parser.get_column(xindex)
                 xlabel = parser.get_header(xindex)
+
+                xerr = parser.get_column(item_settings.xerr_index) \
+                    if item_settings.use_xerr else None
 
             items.append(
                 item.DataItem.new(
                     style,
                     xdata,
                     ydata,
+                    xerr,
+                    yerr,
                     xlabel=xlabel,
                     ylabel=ylabel,
                     name=settings.get_filename(),

@@ -83,6 +83,8 @@ class DataItem(_PythonItem):
     _typename = _("Dataset")
 
     data = GObject.Property(type=object)
+    xerr = GObject.Property(type=object)
+    yerr = GObject.Property(type=object)
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     markerstyle = GObject.Property(type=int, default=0)
@@ -101,11 +103,15 @@ class DataItem(_PythonItem):
         style: Tuple[RcParams, dict],
         xdata: list[float] = None,
         ydata: list[float] = None,
+        xerr: list[float] = None,
+        yerr: list[float] = None,
         **kwargs,
     ):
         """Create new DataItem."""
         return cls(
             data=(xdata, ydata),
+            xerr=xerr,
+            yerr=yerr,
             **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
@@ -122,6 +128,14 @@ class DataItem(_PythonItem):
     def get_ydata(self) -> list:
         """Get ydata."""
         return self.props.data[1]
+
+    def get_xerr(self):
+        """Get xerr."""
+        return self.props.xerr
+
+    def get_yerr(self):
+        """Get yerr."""
+        return self.props.yerr
 
 
 class GeneratedDataItem(DataItem):

@@ -43,6 +43,11 @@ FONT_SIZE_KEYS = [
 STYLE_CUSTOM_PARAMS = [
     "name",
     "ticklabels",
+    "errorbar.capsize",
+    "errorbar.capthick",
+    "errorbar.linewidth",
+    "errorbar.barsabove",
+    "errorbar.ecolor",
 ]
 
 
@@ -88,11 +93,11 @@ def parse(
                 line = line[9:]
             else:
                 graphs_param = False
+                line = cbook._strip_comment(line)
             # legacy support for names at second line
             if line_number == 2 and graphs_params["name"] is None \
                     and line[:2] == "# ":
                 graphs_params["name"] = line[2:]
-            line = cbook._strip_comment(line)
             if not line:
                 continue
             try:
@@ -145,6 +150,20 @@ def parse(
                         # Convert boolean-strings to boolean:
                         bool_mapping = {"false": False, "true": True}
                         value = bool_mapping.get(value.lower(), value)
+                        floats = \
+                            ("errorbar.capsize",
+                             "errorbar.capthick",
+                             "errorbar.linewidth")
+                        if key in floats:
+                            try:
+                                value = float(value)
+                            except ValueError:
+                                msg = _(
+                                    "Bad value in file {file} on line {line}")
+                                logging.warning(
+                                    msg.format(
+                                        file=filename, line=line_number))
+                                continue
                         graphs_params[key] = value
                     else:
                         style[key] = value

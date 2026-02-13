@@ -48,13 +48,13 @@ template $GraphsColumnsItemGroup: Adw.PreferencesGroup {
   }
 
   Adw.SwitchRow single_column {
-    title: _("Single Column");
+    title: _("Y Values Only");
     subtitle: _("Import only Y values, X values will be generated");
   }
 
   Adw.EntryRow equation {
     sensitive: bind single_column.active;
-    title: _("X Value Equation");
+    title: _("Equation");
     text: "n";
 
     [suffix]
@@ -77,6 +77,51 @@ template $GraphsColumnsItemGroup: Adw.PreferencesGroup {
           margin-end: 12;
         }
       };
+    }
+  }
+
+  Adw.PreferencesRow {
+      activatable: false;
+      Box {
+        orientation: horizontal;
+        homogeneous: true;
+        Adw.SwitchRow use_xerr {
+          title: _("X Error Bars");
+        }
+        Adw.SwitchRow use_yerr {
+          title: _("Y Error Bars");
+        }
+      }
+    }
+  Adw.PreferencesRow {
+    activatable: false;
+
+    Box {
+      orientation: horizontal;
+      homogeneous: true;
+
+      Adw.SpinRow column_xerr {
+        title: _("X Error Column");
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 100;
+          step-increment: 1;
+          value: 0;
+        };
+      }
+
+      Adw.SpinRow column_yerr {
+        title: _("Y Error Column");
+        sensitive: bind use_yerr.active;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 100;
+          step-increment: 1;
+          value: 1;
+        };
+      }
     }
   }
 }

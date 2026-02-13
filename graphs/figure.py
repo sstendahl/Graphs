@@ -99,7 +99,7 @@ class Figure(GObject.Object, figure.Figure):
 
                 axis.tick_params(which=ticks, **tick_params)
 
-            for handle in axis.lines + axis.texts:
+            for handle in [*axis.collections, *axis.lines, *axis.texts]:
                 handle.remove()
             axis_legend = axis.get_legend()
             if axis_legend is not None:

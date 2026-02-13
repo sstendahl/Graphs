@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #~graphs name: Matplotlib
 #~graphs ticklabels: False
+#~graphs errorbar.capthick: 1.5
+#~graphs errorbar.capsize: 0
+#~graphs errorbar.linewidth: 1.5
+#~graphs errorbar.barsabove: False
+#~graphs errorbar.ecolor: None
 
 # font
 font.family: sans-serif

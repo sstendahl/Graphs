@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #~graphs name: FiveThirtyEight
 #~graphs ticklabels: False
+#~graphs errorbar.capthick: 4
+#~graphs errorbar.capsize: 2
+#~graphs errorbar.linewidth: 2
+#~graphs errorbar.barsabove: False
+#~graphs errorbar.ecolor: None
 
 # font
 font.family: sans-serif

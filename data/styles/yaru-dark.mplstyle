@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #~graphs name: Yaru Dark
 #~graphs ticklabels: False
+#~graphs errorbar.capthick: 1.2
+#~graphs errorbar.capsize: 4.0
+#~graphs errorbar.linewidth: 1.2
+#~graphs errorbar.barsabove: False
+#~graphs errorbar.ecolor: #FFFFFF
 
 # font
 font.family: sans-serif
