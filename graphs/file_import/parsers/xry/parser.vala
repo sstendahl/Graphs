@@ -6,7 +6,7 @@ namespace Graphs {
         public int? first_val = null;
         public int last_val = 0;
 
-        public XryColumn(int size) {
+        public XryColumn (int size) {
             this.data = new double[size];
         }
     }
@@ -41,7 +41,7 @@ namespace Graphs {
             double x_step = evaluate_string (b_params[3]);
             double x_value = evaluate_string (b_params[0]);
 
-            skip(12);
+            skip (12);
             string[] info = input.read_line ().strip ().split (" ");
             item_count = (int) evaluate_string (info[0]);
             int length = (int) evaluate_string (info[1]);

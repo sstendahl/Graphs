@@ -1,15 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing xry files."""
-from copy import copy
-
 from gettext import gettext as _
 from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-from graphs import file_io, item, misc
+from graphs import item, misc
 from graphs.file_import.parsers import Parser
-from graphs.misc import ParseError
 
 
 class XryParser(Parser):
@@ -36,7 +33,7 @@ class XryParser(Parser):
         items = []
 
         for i in range(item_count):
-            xdata, ydata = parser.get_data_pair (i)
+            xdata, ydata = parser.get_data_pair(i)
             items.append(
                 item.DataItem.new(
                     style,
@@ -45,7 +42,7 @@ class XryParser(Parser):
                     name=f"{name} - {i + 1}" if item_count > 1 else name,
                     xlabel=_("β (°)"),
                     ylabel=_("R (1/s)"),
-                )
+                ),
             )
 
         for i in range(text_item_count):
