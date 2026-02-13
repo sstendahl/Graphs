@@ -7,7 +7,7 @@ namespace Graphs {
 
 [Compact]
 private class SpreadsheetColumn {
-    public double[] data = new double[64];
+    public double[] data;
     public string header = "";
     public uint requests = 0;
 
@@ -148,10 +148,9 @@ public class SpreadsheetDataParser : Object {
 
     private void parse_column (string[] column, uint column_index, uint column_rank,
                                out int data_start, out int data_count) throws Error {
-        int array_size = parsed_columns[column_rank].data.length;
+        parsed_columns[column_rank].data = new double[column.length];
         int value_size = 0;
         data_start = -1;
-
         for (int i = 0; i < column.length; i++) {
             string expression = column[i].strip ();
             if (expression.length == 0) continue;
@@ -162,36 +161,23 @@ public class SpreadsheetDataParser : Object {
                 if (data_start == -1) {
                     data_start = i;
                 }
-
-                // if we reach capacity, grow the arrays
-                if (value_size == array_size) {
-                    array_size *= 2;
-                    parsed_columns[column_rank].data.resize (array_size);
-                }
                 parsed_columns[column_rank].data[value_size++] = val;
                 continue;
             }
-
-            // If the data cannot be parsed, treat as header.
-            // But only if there is not already data present
             if (value_size > 0) {
                 throw new ColumnsParseError.IMPORT_ERROR (
                     _("Cannot parse value '%s' on row %d").printf (column[i], i + 1)
                 );
             }
-
             parsed_columns[column_rank].header = expression;
         }
-
         if (value_size == 0) {
             throw new ColumnsParseError.IMPORT_ERROR (
                 _("Missing data in column %u").printf (column_index)
             );
         }
-
         // shrink to actual size
         parsed_columns[column_rank].data.resize (value_size);
-
         data_count = value_size;
     }
 
