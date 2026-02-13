@@ -66,8 +66,9 @@ namespace Graphs.MathParser {
         private void power () throws MathError {
             unary ();
             if (lexer.current_type == TokenType.CARET) {
-                builder.append_c ('^');
+                builder.append ("**");
                 lexer.next ();
+                power ();
             }
         }
 
@@ -211,7 +212,7 @@ namespace Graphs.MathParser {
             switch (id) {
                 case Ident.ACOT: case Ident.ACOTD: builder.append ("**2))"); break;
                 case Ident.SIND: case Ident.COSD: case Ident.TAND:
-                case Ident.COTD: case Ident.SEC: case Ident.CSC:
+                case Ident.COTD: case Ident.SECD: case Ident.CSCD:
                 case Ident.ASEC: case Ident.ACSC:
                 case Ident.ASECD: case Ident.ACSCD:
                     builder.append ("))"); break;
