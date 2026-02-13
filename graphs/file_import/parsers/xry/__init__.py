@@ -30,19 +30,17 @@ class XryParser(Parser):
         """Import data from .xry files used by Leybold X-ray apparatus."""
         parser = Graphs.XryParser.new()
 
-        parser.parse(settings.get_file())
-        xdata = parser.get_xdata()
+        item_count, text_item_count = parser.parse(settings.get_file())
 
         name = settings.get_filename()
         items = []
 
-        item_count = parser.get_item_count()
         for i in range(item_count):
-            ydata = parser.get_ydata (i)
+            xdata, ydata = parser.get_data_pair (i)
             items.append(
                 item.DataItem.new(
                     style,
-                    copy(xdata[:len(ydata)]),
+                    xdata,
                     ydata,
                     name=f"{name} - {i + 1}" if item_count > 1 else name,
                     xlabel=_("β (°)"),
@@ -50,7 +48,6 @@ class XryParser(Parser):
                 )
             )
 
-        text_item_count = parser.get_text_item_count()
         for i in range(text_item_count):
             text, x, y = parser.get_text_data(i)
             items.append(

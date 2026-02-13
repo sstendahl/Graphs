@@ -27,15 +27,14 @@ namespace Graphs {
         private double[] xdata;
         private XryText[] texts;
 
-        private int item_count;
-        private int text_item_count = 0;
-
         private void skip (int n) throws Error {
             for (int i = 0; i < n; i++) input.read_line ();
         }
 
-        public void parse (File file) throws Error {
-            this.input = new DataInputStream (file.read ());
+        public void parse (File file, out int item_count, out int text_item_count) throws Error {
+            var converter = new CharsetConverter ("UTF-8", "ISO-8859-1");
+            var conv_stream = new ConverterInputStream (file.read (), converter);
+            this.input = new DataInputStream (conv_stream);
 
             skip (4);
             string[] b_params = input.read_line ().strip ().split (" ");
@@ -53,8 +52,11 @@ namespace Graphs {
             }
             xdata = new double[length];
 
+            Regex whitespace = new Regex ("\\s+");
+
             for (int i = 0; i < length; i++) {
-                string[] values = input.read_line ().strip ().split (" ");
+                string line = input.read_line ().strip ();
+                string[] values = whitespace.split (line);
                 for (int j = 0; j < item_count; j++) {
                     if (!(values[j].down () == "nan")) {
                         columns[j].data[i] = evaluate_string (values[j]);
@@ -71,11 +73,12 @@ namespace Graphs {
                 if (column.first_val != 0)
                     column.data = column.data[column.first_val:];
                 if (column.last_val != column.data.length - 1 + column.first_val)
-                    column.data.resize (column.last_val - column.first_val);
+                    column.data.resize (column.last_val - column.first_val + 1);
             }
 
             skip (9 + item_count);
             text_item_count = (int) evaluate_string (input.read_line ());
+            texts = new XryText[text_item_count];
 
             for (int i = 0; i < text_item_count; i++) {
                 XryText text = new XryText ();
@@ -87,22 +90,13 @@ namespace Graphs {
 
                 texts[i] = (owned) text;
             }
+
+            input.close ();
         }
 
-        public int get_item_count () {
-            return item_count;
-        }
-
-        public int get_text_item_count () {
-            return text_item_count;
-        }
-
-        public double[] get_xdata () {
-            return (owned) xdata;
-        }
-
-        public double[] get_ydata (int idx) {
-            return (owned) columns[idx].data;
+        public void get_data_pair (int idx, out double[] xdata, out double[] ydata) {
+            ydata = columns[idx].data;
+            xdata = this.xdata[columns[idx].first_val:columns[idx].last_val + 1];
         }
 
         public string get_text_data (int idx, out double x, out double y) {
