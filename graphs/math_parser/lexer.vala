@@ -47,11 +47,22 @@ namespace Graphs.MathParser {
                 return;
             }
 
+            if (c == '*') {
+                // look ahead and treat double asterisk as caret
+                int tmp_idx = current_end;
+                if (!src.get_next_char (ref tmp_idx, out c))
+                    throw new MathError.SYNTAX ("expected token");
+                if (c == '*') {
+                    current_type = TokenType.CARET;
+                    current_end = tmp_idx;
+                } else current_type = TokenType.STAR;
+                return;
+            }
+
             // Single-character token
             switch (c) {
                 case '+': current_type = TokenType.PLUS; break;
                 case '-': current_type = TokenType.MINUS; break;
-                case '*': current_type = TokenType.STAR; break;
                 case '/': current_type = TokenType.SLASH; break;
                 case '^': current_type = TokenType.CARET; break;
                 case '!': current_type = TokenType.FACT; break;
