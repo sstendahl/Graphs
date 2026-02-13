@@ -53,6 +53,11 @@ STYLE_DICT = {
     "grid_opacity": ["grid.alpha"],
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
+    "errorbar_capsize": ["errorbar.capsize"],
+    "errorbar_capthick": ["errorbar.capthick"],
+    "errorbar_linewidth": ["errorbar.linewidth"],
+    "errorbar_barsabove": ["errorbar.barsabove"],
+    "errorbar_ecolor": ["errorbar.ecolor"],
 }
 VALUE_DICT = {
     "linestyle": misc.LINESTYLES,

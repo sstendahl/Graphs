@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #~graphs name: ggplot
 #~graphs ticklabels: False
+#~graphs errorbar.capthick: 1
+#~graphs errorbar.capsize: 3
+#~graphs errorbar.linewidth: 1
+#~graphs errorbar.barsabove: False
+#~graphs errorbar.ecolor: #000000
 
 # font
 font.family: sans-serif

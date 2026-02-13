@@ -15,6 +15,8 @@ import numpy
 
 _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
 _PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
+_PREVIEW_YERR1 = numpy.linspace(500, 2500, 10)
+_PREVIEW_XERR1 = numpy.linspace(0.1, 0.5, 10)
 _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 CSS_TEMPLATE = """
@@ -51,15 +53,19 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def _initialize_test_items(self):
         """Initialize example test items with predefined preview data."""
-        preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
-                        (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
+        preview_data = [
+            (_PREVIEW_XDATA1, _PREVIEW_YDATA1, _PREVIEW_XERR1, _PREVIEW_YERR1),
+            (_PREVIEW_XDATA2, _PREVIEW_YDATA2, None, None),
+        ]
         test_style = pyplot.rcParams, {}
-        for xdata, ydata in preview_data:
+        for xdata, ydata, xerr, yerr in preview_data:
             self._test_items.append(
                 DataItem.new(
                     test_style,
                     xdata=xdata,
                     ydata=ydata,
+                    xerr=xerr,
+                    yerr=yerr,
                     name=_("Example Item"),
                     color="#000000",
                 ),

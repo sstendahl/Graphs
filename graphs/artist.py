@@ -65,12 +65,12 @@ class ItemArtistWrapper(GObject.Object):
     @GObject.Property(type=str, default="")
     def name(self) -> str:
         """Get name/label property."""
-        return self._artist.get_label()
+        return self.plot.get_label()
 
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._artist.set_label(_ellipsize(name))
+        self.plot.set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
@@ -109,8 +109,72 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     @data.setter
     def data(self, data: tuple[list, list]) -> None:
-        """Set data property."""
-        self._artist.set_data(data)
+        """Set data property, updating error bars to follow."""
+        xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
+        self._artist.set_data(xdata, ydata)
+        self._update_errorbars(xdata, ydata, self._xerr, self._yerr)
+
+    @GObject.Property
+    def xerr(self):
+        """Get xerr property."""
+        return self._xerr
+
+    @xerr.setter
+    def xerr(self, xerr) -> None:
+        """Set xerr property, updating error bars to follow."""
+        self._xerr = xerr
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(xdata, ydata, xerr, self._yerr)
+
+    @GObject.Property
+    def yerr(self):
+        """Get yerr property."""
+        return self._yerr
+
+    @yerr.setter
+    def yerr(self, yerr) -> None:
+        """Set yerr property, updating error bars to follow."""
+        self._yerr = yerr
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(xdata, ydata, self._xerr, yerr)
+
+    def _update_errorbars(self, xdata, ydata, xerr, yerr) -> None:
+        """Update all error bar artists to match the current data position."""
+        xdata = numpy.asarray(xdata)
+        ydata = numpy.asarray(ydata)
+        _, caplines, barlinecols = self.plot
+
+        # barlinecols[0] = y-direction, barlinecols[1] = x-direction
+        bar_iter = iter(barlinecols)
+        if yerr is not None:
+            bar = next(bar_iter)
+            bar.set_segments(
+                [[[x, y - ye], [x, y + ye]]
+                 for x, y, ye in zip(xdata, ydata, yerr)],
+            )
+        if xerr is not None:
+            bar = next(bar_iter)
+            bar.set_segments(
+                [[[x - xe, y], [x + xe, y]]
+                 for x, y, xe in zip(xdata, ydata, xerr)],
+            )
+
+        if caplines:
+            it = iter(caplines)
+            if xerr is not None:
+                cap_xlo, cap_xhi = next(it), next(it)
+                cap_xlo.set_data(xdata - xerr, ydata)
+                cap_xhi.set_data(xdata + xerr, ydata)
+            if yerr is not None:
+                cap_ylo, cap_yhi = next(it), next(it)
+                cap_ylo.set_data(xdata, ydata - yerr)
+                cap_yhi.set_data(xdata, ydata + yerr)
+
+    def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
+        return self.plot
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -142,15 +206,30 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
-        self._artist = axis.plot(
-            item.get_xdata(),
-            item.get_ydata(),
-            label=_ellipsize(item.get_name()),
+        self._xerr = item.get_xerr()
+        self._yerr = item.get_yerr()
+        xdata = item.get_xdata()
+        ydata = item.get_ydata()
+        _, graphs_params = axis.figure._style_params
+        ecolor = graphs_params.get("errorbar.ecolor")
+        ecolor = None if ecolor == "None" else ecolor
+
+        self.plot = axis.errorbar(
+            xdata, ydata,
+            xerr=self._xerr,
+            yerr=self._yerr,
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
-        )[0]
+            capsize=graphs_params["errorbar.capsize"],
+            capthick=graphs_params["errorbar.capthick"],
+            elinewidth=graphs_params["errorbar.linewidth"],
+            barsabove=graphs_params["errorbar.barsabove"],
+            ecolor=ecolor,
+        )
+        self.name = item.get_name()
+        self._artist = self.plot[0]
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)

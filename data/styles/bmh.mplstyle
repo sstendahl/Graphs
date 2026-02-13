@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 #~graphs name: BMH
 #~graphs ticklabels: False
+#~graphs errorbar.capthick: 2
+#~graphs errorbar.capsize: 0
+#~graphs errorbar.linewidth: 2
+#~graphs errorbar.barsabove: False
+#~graphs errorbar.ecolor: #262626
 
 # font
 font.family: sans-serif

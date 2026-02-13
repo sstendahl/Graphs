@@ -74,7 +74,7 @@ template $GraphsStyleEditorBox: Box {
     }
 
     Adw.ActionRow {
-      title: _("Linewidth");
+      title: _("Line width");
       sensitive: bind linewidth.sensitive;
 
       Scale linewidth {
@@ -139,6 +139,63 @@ template $GraphsStyleEditorBox: Box {
           upper: 20;
         };
       }
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Error Bars");
+
+    Adw.ActionRow {
+      title: _("Cap Size");
+
+      Scale errorbar_capsize {
+        draw-value: true;
+        width-request: 200;
+        valign: center;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 12;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Cap Thickness");
+
+      Scale errorbar_capthick {
+        draw-value: true;
+        width-request: 200;
+        valign: center;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 6;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Line Width");
+
+      Scale errorbar_linewidth {
+        draw-value: true;
+        width-request: 200;
+        valign: center;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 8;
+        };
+      }
+    }
+
+    Adw.SwitchRow errorbar_barsabove {
+      title: _("Draw Bars Above Data");
+    }
+
+    $GraphsStyleColorRow errorbar_ecolor {
+      title: _("Error Bar Color");
     }
   }
 

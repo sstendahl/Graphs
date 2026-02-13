@@ -117,6 +117,21 @@ namespace Graphs {
         [GtkChild]
         private unowned Box poor_contrast_warning { get; }
 
+        [GtkChild]
+        protected unowned Scale errorbar_capsize { get; }
+
+        [GtkChild]
+        protected unowned Scale errorbar_capthick { get; }
+
+        [GtkChild]
+        protected unowned Scale errorbar_linewidth { get; }
+
+        [GtkChild]
+        protected unowned Adw.SwitchRow errorbar_barsabove { get; }
+
+        [GtkChild]
+        protected unowned StyleColorRow errorbar_ecolor { get; }
+
         public signal void params_changed ();
 
         protected StyleColorManager color_manager { get; set; }

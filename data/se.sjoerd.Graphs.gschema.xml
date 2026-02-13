@@ -233,11 +233,14 @@
     y-column index (ignored if single-column)
     use single-column mode
     equation for single-column mode (will be ignored if not single-column)
-
+    use_xerr
+    use_yerr (ignored if single-column)
+    x_errorbar-column index
+    y_errorbar-column index (ignored if single-column)
     All settings must be present.
     -->
     <key name="items" type="s">
-      <default>"0;1;false;n"</default>
+        <default>"0;1;false;n;false;false;2;3"</default>
     </key>
     <key name="delimiter" enum="se.sjoerd.Graphs.import-params.columns.delimiters">
       <default>"whitespace"</default>
