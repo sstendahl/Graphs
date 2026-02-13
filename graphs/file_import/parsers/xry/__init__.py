@@ -1,7 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing xry files."""
+from copy import copy
+
 from gettext import gettext as _
 from gettext import pgettext as C_
+
+from gi.repository import Graphs
 
 from graphs import file_io, item, misc
 from graphs.file_import.parsers import Parser
@@ -11,7 +15,7 @@ from graphs.misc import ParseError
 class XryParser(Parser):
     """Xry parser."""
 
-    __gtype_name__ = "GraphsXryParser"
+    __gtype_name__ = "GraphsPythonXryParser"
 
     def __init__(self):
         super().__init__(
@@ -24,54 +28,39 @@ class XryParser(Parser):
     @staticmethod
     def parse(settings, style) -> misc.ItemList:
         """Import data from .xry files used by Leybold X-ray apparatus."""
-        with file_io.open(
-            settings.get_file(),
-            "rt",
-            encoding="ISO-8859-1",
-        ) as file_like:
+        parser = Graphs.XryParser.new()
 
-            def skip(lines: int):
-                for _count in range(lines):
-                    next(file_like)
+        parser.parse(settings.get_file())
+        xdata = parser.get_xdata()
 
-            if file_like.readline().strip() != "XR01":
-                raise ParseError(_("Invalid .xry format"))
-            skip(3)
-            b_params = file_like.readline().strip().split()
-            x_step = float(b_params[3])
-            x_value = float(b_params[0])
+        name = settings.get_filename()
+        items = []
 
-            skip(12)
-            info = file_like.readline().strip().split()
-            item_count = int(info[0])
-
-            name = settings.get_filename()
-            items = [
+        item_count = parser.get_item_count()
+        for i in range(item_count):
+            ydata = parser.get_ydata (i)
+            items.append(
                 item.DataItem.new(
                     style,
+                    copy(xdata[:len(ydata)]),
+                    ydata,
                     name=f"{name} - {i + 1}" if item_count > 1 else name,
                     xlabel=_("β (°)"),
                     ylabel=_("R (1/s)"),
-                ) for i in range(item_count)
-            ]
-            for _count in range(int(info[1])):
-                values = file_like.readline().strip().split()
-                for value, item_ in zip(values, items):
-                    if value != "NaN":
-                        item_.xdata.append(x_value)
-                        item_.ydata.append(float(value))
-                x_value += x_step
-            skip(9 + item_count)
-            for _count in range(int(file_like.readline().strip())):
-                values = file_like.readline().strip().split()
-                text = " ".join(values[7:])
-                items.append(
-                    item.TextItem.new(
-                        style,
-                        float(values[5]),
-                        float(values[6]),
-                        text,
-                        name=text,
-                    ),
                 )
-            return items
+            )
+
+        text_item_count = parser.get_text_item_count()
+        for i in range(text_item_count):
+            text, x, y = parser.get_text_data(i)
+            items.append(
+                item.TextItem.new(
+                    style,
+                    x,
+                    y,
+                    text,
+                    name=text,
+                ),
+            )
+
+        return items
