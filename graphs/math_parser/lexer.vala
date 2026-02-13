@@ -155,7 +155,7 @@ namespace Graphs.MathParser {
         }
 
         private inline void fail_identifier (ref int state) throws MathError {
-            if (!allow_custom_ident || !c.isalpha ())
+            if (!allow_custom_ident)
                 throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
             current_ident = Ident.CUSTOM;
             state = 200;
@@ -413,7 +413,9 @@ namespace Graphs.MathParser {
                     default: assert_not_reached ();
                 }
 
-                if (!src.get_next_char (ref tmp_idx, out c) || !(c.isalnum () || c == 'π')) {
+                if (!src.get_next_char (ref tmp_idx, out c)
+                    || !(c.isalnum () || c == 'π')
+                    || is_superscript (c)) {
                     if (state == 10) {
                         current_ident = Ident.E;
                     } else if (current_ident == Ident.CUSTOM && !allow_custom_ident)

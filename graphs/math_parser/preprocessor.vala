@@ -113,6 +113,7 @@ namespace Graphs.MathParser {
                     } else {
                         builder.append (prettify ? "^" : "**");
                         builder.append (exp.to_string ());
+                        lexer.next ();
                     }
                     output = true;
                     continue;
