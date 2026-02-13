@@ -143,12 +143,13 @@
           <li>Warnings are now displayed when trying to open a project from a beta version</li>
           <li>Translation updates</li>
         </ul>
-        <p>Bug fixes:</p>
+        <p>Bug fixes and tweaks:</p>
         <ul>
           <li>Graphical fixes for the drag-drop animations</li>
           <li>Limit entries can now be properly set even for many significant digits</li>
           <li>Panning and zooming are now done consistently on all axes when using multiple axes</li>
           <li>Fixed a bug where the text size was set incorrectly after exporting a figure</li>
+          <li>Implemented a custom math parser, which is more performant and robust</li>
           <li>Overall tweaks and refactors under the hood</li>
         </ul>
       </description>
