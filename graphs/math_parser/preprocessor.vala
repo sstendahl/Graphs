@@ -137,7 +137,7 @@ namespace Graphs.MathParser {
                         double remainder = Math.fmod (v, Math.PI);
                         if (remainder <= PI_THRESH || remainder >= Math.PI - PI_THRESH) {
                             // fast rounding check evasion
-                            double factor = Math.floor(v / Math.PI + 0.5);
+                            double factor = Math.floor (v / Math.PI + 0.5);
                             if (factor != 1) builder.append (factor.to_string ());
                             builder.append ("pi");
 
@@ -149,7 +149,7 @@ namespace Graphs.MathParser {
                         remainder = Math.fmod (v, Math.E);
                         if (remainder <= E_THRESH || remainder >= Math.E - E_THRESH) {
                             // fast rounding check evasion
-                            double factor = Math.floor(v / Math.E + 0.5);
+                            double factor = Math.floor (v / Math.E + 0.5);
                             if (factor != 1) builder.append (factor.to_string ());
                             builder.append_c ('e');
 
