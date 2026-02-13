@@ -92,29 +92,3 @@ LIMITS = [
     f"{prefix}-{direction}" for direction in DIRECTIONS
     for prefix in ("min", "max")
 ]
-
-FUNCTIONS = {
-    "sin",
-    "cos",
-    "tan",
-    "sinh",
-    "cosh",
-    "tanh",
-    "arcsin",
-    "arccos",
-    "arctan",
-    "arcsinh",
-    "arccosh",
-    "arctanh",
-    "cot",
-    "sec",
-    "csc",
-    "arccot",
-    "arcsec",
-    "arccsc",
-    "sqrt",
-    "exp",
-    "abs",
-    "log",
-    "log10",
-}

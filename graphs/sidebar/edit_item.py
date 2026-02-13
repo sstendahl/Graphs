@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for Editing an Item."""
-from gi.repository import Adw, Graphs, Gtk
+from gi.repository import Adw, GLib, Graphs, Gtk
 
 from graphs import utilities
 from graphs.item import DataItem, EquationItem, GeneratedDataItem
@@ -93,8 +93,8 @@ def _on_equation_change(entry_row: Adw.EntryRow, item: Graphs.Item) -> None:
 def _on_simplify(_row, item: Graphs.Item, entry_row: Adw.EntryRow) -> None:
     """Simplify the equation."""
     equation = item.props.equation
-    equation = str(sympy.simplify(utilities.preprocess(equation)))
-    equation = utilities.prettify_equation(equation)
+    equation = str(sympy.simplify(Graphs.preprocess_equation(equation)))
+    equation = Graphs.prettify_equation(equation)
     item.props.equation = equation
     entry_row.set_text(equation)
 
@@ -106,8 +106,9 @@ def _on_entry_change(
 ) -> None:
     """Handle xstart and xstop entry change."""
     value = entry_row.get_text()
-    if utilities.string_to_float(value) is None:
-        entry_row.add_css_class("error")
-    else:
+    try:
+        Graphs.evalutate_string(value)
         entry_row.remove_css_class("error")
         item.set_property(prop, value)
+    except GLib.Error:
+        entry_row.add_css_class("error")

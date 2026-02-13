@@ -60,6 +60,10 @@ namespace Graphs {
             return this.to_string ()[25:].down ();
         }
 
+        public unichar as_unichar () {
+            return this == ColumnsSeparator.COMMA ? ',' : '.';
+        }
+
         public static ColumnsSeparator parse (string separator) {
             switch (separator) {
                 case "comma": return ColumnsSeparator.COMMA;

@@ -127,9 +127,7 @@ namespace Graphs {
 
                     entry.apply.connect (() => {
                         double new_val;
-                        PythonHelper.evaluate_string (
-                            entry.get_text (), out new_val
-                        );
+                        try_evaluate_string (entry.get_text (), out new_val);
 
                         figure_settings.set (key, new_val);
                         window.data.add_view_history_state ();
@@ -185,7 +183,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
             var entry = object as Adw.EntryRow;
-            if (PythonHelper.evaluate_string (entry.get_text ())) {
+            if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);
             } else {
