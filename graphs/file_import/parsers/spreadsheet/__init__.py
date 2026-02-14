@@ -25,6 +25,31 @@ XLSX_MAIN_NAMESPACE = \
     "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 
 
+def _try_evaluate(value: str) -> float | None:
+    """Try to evaluate a cell string to a float, return None on failure."""
+    try:
+        return Graphs.evaluate_string(value)
+    except GLib.Error:
+        return None
+
+
+def _parse_column_data(raw_cells: List[str]) -> Tuple[str, List[float]]:
+    """Extract header and float data from a list of raw cell strings."""
+    header = ""
+    data = []
+    for cell in raw_cells:
+        value = _try_evaluate(cell)
+        if value is not None:
+            data.append(value)
+        elif not data:
+            header = cell.strip()
+        else:
+            raise ParseError(_("Cannot parse value '%s'") % cell)
+    if not data:
+        raise ParseError(_("No numeric data found in column."))
+    return header, data
+
+
 class OdsParser:
     """ODS file parser."""
 
@@ -51,9 +76,10 @@ class OdsParser:
             sheets = root.findall(".//table:table", namespaces)
 
             max_col = max(columns)
-            column_data = {col_index: [] for col_index in columns}
-            table_rows = sheets[sheet_index].findall("table:table-row",
-                                                     namespaces)
+            raw_columns = {col_index: [] for col_index in columns}
+
+            table_rows = sheets[sheet_index].findall(
+                "table:table-row", namespaces)
             for table_row in table_rows:
                 cells = table_row.findall("table:table-cell", namespaces)
                 current_col = 0
@@ -61,15 +87,14 @@ class OdsParser:
                 for table_cell in cells:
                     repeat_count = int(table_cell.get(repeat_key, 1))
                     cell_value = "".join(table_cell.itertext())
-
                     for _count in range(repeat_count):
                         if current_col > max_col:
                             break
                         if current_col in columns:
-                            column_data[current_col].append(cell_value)
+                            raw_columns[current_col].append(cell_value)
                         current_col += 1
 
-            return [column_data[col_index] for col_index in columns]
+            return [_parse_column_data(raw_columns[i]) for i in columns]
 
 
 class XlsxParser:
@@ -91,8 +116,10 @@ class XlsxParser:
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
             shared_strings = self._load_shared_strings(zip_file)
-            return self._parse_worksheet(zip_file, columns, sheet_index,
-                                         shared_strings)
+            raw_columns = self._parse_worksheet(
+                zip_file, columns, sheet_index, shared_strings)
+
+        return [_parse_column_data(raw_columns[i]) for i in sorted(columns)]
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
@@ -114,20 +141,16 @@ class XlsxParser:
     ) -> List[List[str]]:
         """Parse worksheet and return requested columns."""
         sheet_file = f"xl/worksheets/sheet{sheet_index + 1}.xml"
-
         with zip_file.open(sheet_file) as worksheet_file:
             root = xml.etree.ElementTree.parse(worksheet_file).getroot()
             namespaces = {"main": XLSX_MAIN_NAMESPACE}
-            column_data = {col_index: [] for col_index in columns}
-            row_elements = root.findall(".//main:row", namespaces)
-
-            for row_element in row_elements:
-                row_data = self._parse_row(row_element, namespaces,
-                                           shared_strings, columns)
+            raw_columns = {col_index: [] for col_index in columns}
+            for row_element in root.findall(".//main:row", namespaces):
+                row_data = self._parse_row(
+                    row_element, namespaces, shared_strings, columns)
                 for col_index in columns:
-                    column_data[col_index].append(row_data.get(col_index, ""))
-
-            return [column_data[col_index] for col_index in columns]
+                    raw_columns[col_index].append(row_data.get(col_index, ""))
+        return raw_columns
 
     def _parse_row(
         self,
@@ -146,10 +169,8 @@ class XlsxParser:
             column_index = Graphs.SpreadsheetUtils.label_to_index(column)
 
             if column_index in columns:
-                cell_value = self._get_cell_value(
+                cell_data[column_index] = self._get_cell_value(
                     cell_element, namespaces, shared_strings)
-                cell_data[column_index] = cell_value
-
         return cell_data
 
     def _get_cell_value(
@@ -205,11 +226,8 @@ class SpreadsheetParser(Parser):
         """Append Spreadsheet-specific settings widgets."""
         if not settings.get_item("sheet-names"):
             return
-
-        group = Graphs.SpreadsheetGroup.new(settings)
-        box.append(group)
-        spreadsheet_box = Graphs.SpreadsheetBox.new(settings)
-        box.append(spreadsheet_box)
+        box.append(Graphs.SpreadsheetGroup.new(settings))
+        box.append(Graphs.SpreadsheetBox.new(settings))
 
     @staticmethod
     def parse(
@@ -231,18 +249,14 @@ class SpreadsheetParser(Parser):
             if not item_settings.single_column:
                 column_indices.add(item_settings.column_x)
 
-        if file.get_path().endswith(".ods"):
-            file_parser = OdsParser()
-        else:
-            file_parser = XlsxParser()
-
-        columns = \
+        file_parser = \
+            OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
+        parsed_columns = \
             file_parser.parse_file(file, column_indices, sheet_index)
-        if not columns:
-            raise ParseError(_("No data found in the selected sheet."))
+
         parser = Graphs.SpreadsheetDataParser.new(settings)
-        for column in columns:
-            parser.add_column(column)
+        for header, data in parsed_columns:
+            parser.add_column(data, header)
 
         try:
             parser.parse()
@@ -261,8 +275,7 @@ class SpreadsheetParser(Parser):
                 xdata = numexpr.evaluate(
                     Graphs.preprocess_equation(equation) + " + n*0",
                     local_dict={"n": numpy.arange(len(ydata))},
-                )
-                xdata = numpy.ndarray.tolist(xdata)
+                ).tolist()
             else:
                 xindex = item_settings.column_x
                 xdata = parser.get_column(xindex)
