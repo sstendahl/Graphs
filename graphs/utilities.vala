@@ -243,5 +243,38 @@ namespace Graphs {
             }
             return filepath;
         }
+
+        /**
+         * Convert an integer to an alphabetic representation.
+         * example: 27 -> AA
+         *
+         * often used in spreadsheets.
+         */
+        public static string int_to_alpha (int i) {
+            StringBuilder result = new StringBuilder ();
+            int num = i + 1;
+            while (num > 0) {
+                int remainder = (num - 1) % 26;
+                result.prepend_c ((char) ('A' + remainder));
+                num = (num - 1) / 26;
+            }
+            return result.free_and_steal ();
+        }
+
+        /**
+         * Convert an alphabetic representation to an integer.
+         * example: AA -> 27
+         *
+         * often used in spreadsheets.
+         */
+        public static int alpha_to_int (string label) {
+            int index = 0;
+            for (int i = 0; i < label.length; i++) {
+                char c = label[i];
+                if (!c.isalpha()) return -1;
+                index = index * 26 + (c - 'A' + 1);
+            }
+            return index - 1;
+        }
     }
 }
