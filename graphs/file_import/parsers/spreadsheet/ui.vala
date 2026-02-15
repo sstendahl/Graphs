@@ -29,15 +29,15 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/item-group.ui")]
     public class SpreadsheetItemGroup : Adw.PreferencesGroup {
         [GtkChild]
-        public unowned Adw.SpinRow column_x { get; }
+        private unowned Adw.SpinRow column_x { get; }
         [GtkChild]
-        public unowned Adw.SpinRow column_y { get; }
+        private unowned Adw.SpinRow column_y { get; }
         [GtkChild]
-        public unowned Adw.SwitchRow single_column { get; }
+        private unowned Adw.SwitchRow single_column { get; }
         [GtkChild]
-        public unowned Adw.EntryRow equation { get; }
+        private unowned Adw.EntryRow equation { get; }
         [GtkChild]
-        public unowned Button remove_button { get; }
+        private unowned Button remove_button { get; }
 
         public signal void settings_changed (ColumnsItemSettings new_settings);
         public signal void remove_request ();
@@ -97,7 +97,7 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/box.ui")]
     public class SpreadsheetBox : Box {
         [GtkChild]
-        public unowned Box items_box { get; }
+        private unowned Box items_box { get; }
 
         private ImportSettings settings;
         private Gee.List<string> item_strings;
