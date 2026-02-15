@@ -40,7 +40,9 @@ class OdsParser:
             return [sheet.get(attribute_name) for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int) -> List[Tuple[str, List[float]]]:
+                   sheet_index: int,
+                   spreadsheet_parser: Graphs.SpreadsheetParser,
+                   ) -> List[Tuple[str, List[float]]]:
         """Parse ODS file and return list of requested columns."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -70,7 +72,7 @@ class OdsParser:
                         current_col += 1
 
             return [
-                Graphs.Spreadsheet.parse_column_data(raw_columns[i])
+                spreadsheet_parser.parse_column(raw_columns[i])
                 for i in columns
             ]
 
@@ -89,7 +91,9 @@ class XlsxParser:
             return [sheet.get("name") for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int) -> List[Tuple[str, List[float]]]:
+                   sheet_index: int,
+                   spreadsheet_parser: Graphs.SpreadsheetParser,
+                   ) -> List[Tuple[str, List[float]]]:
         """Parse XLSX file and return 2D array of cell values."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
@@ -98,7 +102,7 @@ class XlsxParser:
                 zip_file, columns, sheet_index, shared_strings)
 
         return [
-            Graphs.Spreadsheet.parse_column_data(raw_columns[i])
+            spreadsheet_parser.parse_column(raw_columns[i])
             for i in sorted(columns)
         ]
 
@@ -175,8 +179,6 @@ class XlsxParser:
 class SpreadsheetParser(Parser):
     """Main spreadsheet parser that delegates to ODS/XLSX parsers."""
 
-    __gtype_name__ = "GraphsSpreadsheetParser"
-
     def __init__(self):
         super().__init__(
             "spreadsheet",
@@ -232,9 +234,11 @@ class SpreadsheetParser(Parser):
 
         file_parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
+        spreadsheet_parser = Graphs.SpreadsheetParser.new(settings)
         parsed_columns = dict(zip(
             sorted(column_indices),
-            file_parser.parse_file(file, column_indices, sheet_index),
+            file_parser.parse_file(
+                file, column_indices, sheet_index, spreadsheet_parser),
         ))
 
         items = []
