@@ -271,7 +271,7 @@ namespace Graphs {
             int index = 0;
             for (int i = 0; i < label.length; i++) {
                 char c = label[i];
-                if (!c.isalpha()) return -1;
+                if (!c.isalpha ()) return -1;
                 index = index * 26 + (c - 'A' + 1);
             }
             return index - 1;
