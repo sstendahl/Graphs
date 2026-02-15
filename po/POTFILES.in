@@ -16,6 +16,9 @@ data/ui/import/columns/box.blp
 data/ui/import/columns/item-group.blp
 data/ui/import/columns/main-group.blp
 data/ui/import/sql/main-group.blp
+data/ui/import/spreadsheet/box.blp
+data/ui/import/spreadsheet/main-group.blp
+data/ui/import/spreadsheet/item-group.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
 data/ui/sidebar/figure-settings/settings-page.blp
