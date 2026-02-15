@@ -46,6 +46,8 @@ graphs/file_import/parsers/columns/main.vala
 graphs/file_import/parsers/columns/parser.vala
 graphs/file_import/parsers/columns/ui.vala
 graphs/file_import/parsers/project/__init__.py
+graphs/file_import/parsers/spreadsheet/__init__.py
+graphs/file_import/parsers/spreadsheet/ui.vala
 graphs/file_import/parsers/sql/__init__.py
 graphs/file_import/parsers/sql/reader.vala
 graphs/file_import/parsers/sql/ui.vala
