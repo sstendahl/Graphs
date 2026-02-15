@@ -84,12 +84,12 @@ namespace Graphs {
         }
 
         private bool on_output (Adw.SpinRow spin_button) {
-            spin_button.set_text (Spreadsheet.index_to_label ((int) spin_button.get_value ()));
+            spin_button.set_text (Tools.int_to_alpha ((int) spin_button.get_value ()));
             return true;
         }
 
         private int on_input (Adw.SpinRow spin_button, out double new_value) {
-            new_value = Spreadsheet.label_to_index (spin_button.get_text ().strip ().up ());
+            new_value = Tools.alpha_to_int (spin_button.get_text ().strip ().up ());
             return 1;
         }
     }
