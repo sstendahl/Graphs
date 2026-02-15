@@ -29,23 +29,12 @@ public class Spreadsheet : Object {
         return index - 1;
     }
 
-    public static bool try_evaluate (string value, out double result, unichar separator = '.') {
-        result = 0;
-        if (value.strip () == "") {
-            return false;
-        }
-        double? res;
-        bool success = Graphs.try_evaluate_string (value, out res, separator);
-        result = res ?? 0;
-        return success;
-    }
-
     public static double[] parse_column_data (string[] raw_cells, out string header, unichar separator = '.') throws ParseError {
         header = "";
         var data = new Array<double> ();
         foreach (string cell in raw_cells) {
             double value;
-            if (try_evaluate (cell, out value, separator)) {
+            if (try_evaluate_string (cell, out value, separator)) {
                 data.append_val (value);
             } else if (data.length == 0) {
                 header = cell.strip ();
