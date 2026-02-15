@@ -29,24 +29,23 @@ public class Spreadsheet : Object {
         return index - 1;
     }
 
-    public static bool try_evaluate (string value, out double result) {
+    public static bool try_evaluate (string value, out double result, unichar separator = '.') {
+        result = 0;
         if (value.strip () == "") {
             return false;
         }
-        try {
-            result = Graphs.evaluate_string (value);
-            return true;
-        } catch (GLib.Error e) {
-            return false;
-        }
+        double? res;
+        bool success = Graphs.try_evaluate_string (value, out res, separator);
+        result = res ?? 0;
+        return success;
     }
 
-    public static double[] parse_column_data (string[] raw_cells, out string header) throws ParseError {
+    public static double[] parse_column_data (string[] raw_cells, out string header, unichar separator = '.') throws ParseError {
         header = "";
         var data = new Array<double> ();
         foreach (string cell in raw_cells) {
             double value;
-            if (try_evaluate (cell, out value)) {
+            if (try_evaluate (cell, out value, separator)) {
                 data.append_val (value);
             } else if (data.length == 0) {
                 header = cell.strip ();
@@ -60,4 +59,18 @@ public class Spreadsheet : Object {
         return data.data;
     }
 }
+
+    public class SpreadsheetParser : Object {
+        private unichar separator;
+
+        public SpreadsheetParser (ImportSettings settings) {
+            this.separator = ColumnsSeparator.parse (
+                settings.get_string ("separator")
+            ).as_unichar ();
+        }
+
+        public double[] parse_column (string[] raw_cells, out string header) throws ParseError {
+            return Spreadsheet.parse_column_data (raw_cells, out header, separator);
+        }
+    }
 }
