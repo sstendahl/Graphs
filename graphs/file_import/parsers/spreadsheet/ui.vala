@@ -94,61 +94,61 @@ namespace Graphs {
         }
     }
 
-[GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/box.ui")]
-public class SpreadsheetBox : Box {
-    [GtkChild]
-    public unowned Box items_box { get; }
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/box.ui")]
+    public class SpreadsheetBox : Box {
+        [GtkChild]
+        public unowned Box items_box { get; }
 
-    private ImportSettings settings;
-    private Gee.List<string> item_strings;
+        private ImportSettings settings;
+        private Gee.List<string> item_strings;
 
-    public SpreadsheetBox (ImportSettings settings) {
-        this.settings = settings;
+        public SpreadsheetBox (ImportSettings settings) {
+            this.settings = settings;
 
-        string[] item_string_array = settings.get_string ("items").split (";;");
-        item_strings = new Gee.ArrayList<string>.wrap (item_string_array);
+            string[] item_string_array = settings.get_string ("items").split (";;");
+            item_strings = new Gee.ArrayList<string>.wrap (item_string_array);
 
-        reload_item_groups ();
-    }
-
-    private void reload_item_groups () {
-        Widget widget;
-        while ((widget = items_box.get_last_child ()) != null) {
-            items_box.remove (widget);
+            reload_item_groups ();
         }
 
-        for (int i = 0; i < item_strings.size; i++) {
-            int index = i;
-            var item_settings = ColumnsItemSettings ();
-            item_settings.load_from_item_string (item_strings[i]);
+        private void reload_item_groups () {
+            Widget widget;
+            while ((widget = items_box.get_last_child ()) != null) {
+                items_box.remove (widget);
+            }
 
-            var item_group = new SpreadsheetItemGroup (item_settings, i > 0);
-            item_group.set_title (_("Item %d").printf (i + 1));
+            for (int i = 0; i < item_strings.size; i++) {
+                int index = i;
+                var item_settings = ColumnsItemSettings ();
+                item_settings.load_from_item_string (item_strings[i]);
 
-            item_group.settings_changed.connect ((new_settings) => {
-                item_strings[index] = new_settings.to_item_string ();
-                update_settings ();
-            });
+                var item_group = new SpreadsheetItemGroup (item_settings, i > 0);
+                item_group.set_title (_("Item %d").printf (i + 1));
 
-            item_group.remove_request.connect (() => {
-                item_strings.remove_at (index);
-                update_settings ();
-                reload_item_groups ();
-            });
+                item_group.settings_changed.connect ((new_settings) => {
+                    item_strings[index] = new_settings.to_item_string ();
+                    update_settings ();
+                });
 
-            items_box.append (item_group);
+                item_group.remove_request.connect (() => {
+                    item_strings.remove_at (index);
+                    update_settings ();
+                    reload_item_groups ();
+                });
+
+                items_box.append (item_group);
+            }
+        }
+
+        [GtkCallback]
+        private void add () {
+            item_strings.add (item_strings[0]);
+            update_settings ();
+            reload_item_groups ();
+        }
+
+        private void update_settings () {
+            settings.set_string ("items", string.joinv (";;", item_strings.to_array ()));
         }
     }
-
-    [GtkCallback]
-    private void add () {
-        item_strings.add (item_strings[0]);
-        update_settings ();
-        reload_item_groups ();
-    }
-
-    private void update_settings () {
-        settings.set_string ("items", string.joinv (";;", item_strings.to_array ()));
-    }
-}
 }
