@@ -6,7 +6,7 @@ from gettext import gettext as _
 from gettext import pgettext as C_
 from typing import List, Tuple
 
-from gi.repository import GLib, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import file_io, item
 from graphs.file_import.parsers import Parser
@@ -25,31 +25,6 @@ XLSX_MAIN_NAMESPACE = \
     "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
 
 
-def _try_evaluate(value: str) -> float | None:
-    """Try to evaluate a cell string to a float, return None on failure."""
-    try:
-        return Graphs.evaluate_string(value)
-    except GLib.Error:
-        return None
-
-
-def _parse_column_data(raw_cells: List[str]) -> Tuple[str, List[float]]:
-    """Extract header and float data from a list of raw cell strings."""
-    header = ""
-    data = []
-    for cell in raw_cells:
-        value = _try_evaluate(cell)
-        if value is not None:
-            data.append(value)
-        elif not data:
-            header = cell.strip()
-        else:
-            raise ParseError(_("Cannot parse value '%s'") % cell)
-    if not data:
-        raise ParseError(_("No numeric data found in column."))
-    return header, data
-
-
 class OdsParser:
     """ODS file parser."""
 
@@ -65,7 +40,7 @@ class OdsParser:
             return [sheet.get(attribute_name) for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int) -> List[List[str]]:
+                   sheet_index: int) -> List[Tuple[str, List[float]]]:
         """Parse ODS file and return list of requested columns."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -94,7 +69,10 @@ class OdsParser:
                             raw_columns[current_col].append(cell_value)
                         current_col += 1
 
-            return [_parse_column_data(raw_columns[i]) for i in columns]
+            return [
+                Graphs.Spreadsheet.parse_column_data(raw_columns[i])
+                for i in columns
+            ]
 
 
 class XlsxParser:
@@ -111,7 +89,7 @@ class XlsxParser:
             return [sheet.get("name") for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int) -> List[List[str]]:
+                   sheet_index: int) -> List[Tuple[str, List[float]]]:
         """Parse XLSX file and return 2D array of cell values."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
@@ -119,7 +97,10 @@ class XlsxParser:
             raw_columns = self._parse_worksheet(
                 zip_file, columns, sheet_index, shared_strings)
 
-        return [_parse_column_data(raw_columns[i]) for i in sorted(columns)]
+        return [
+            Graphs.Spreadsheet.parse_column_data(raw_columns[i])
+            for i in sorted(columns)
+        ]
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
@@ -166,7 +147,7 @@ class XlsxParser:
         for cell_element in cell_elements:
             ref = cell_element.get("r")
             column = "".join(c for c in ref if not c.isdigit())
-            column_index = Graphs.SpreadsheetUtils.label_to_index(column)
+            column_index = Graphs.Spreadsheet.label_to_index(column)
 
             if column_index in columns:
                 cell_data[column_index] = self._get_cell_value(
@@ -251,23 +232,15 @@ class SpreadsheetParser(Parser):
 
         file_parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
-        parsed_columns = \
-            file_parser.parse_file(file, column_indices, sheet_index)
-
-        parser = Graphs.SpreadsheetDataParser.new(settings)
-        for header, data in parsed_columns:
-            parser.add_column(data, header)
-
-        try:
-            parser.parse()
-        except GLib.Error as e:
-            raise ParseError(e.message) from e
+        parsed_columns = dict(zip(
+            sorted(column_indices),
+            file_parser.parse_file(file, column_indices, sheet_index),
+        ))
 
         items = []
         for item_settings in item_settings_list:
             yindex = item_settings.column_y
-            ylabel = parser.get_header(yindex)
-            ydata = parser.get_column(yindex)
+            ydata, ylabel = parsed_columns[yindex]
 
             if item_settings.single_column:
                 xlabel = ""
@@ -278,8 +251,9 @@ class SpreadsheetParser(Parser):
                 ).tolist()
             else:
                 xindex = item_settings.column_x
-                xdata = parser.get_column(xindex)
-                xlabel = parser.get_header(xindex)
+                xdata, xlabel = parsed_columns[xindex]
+                if len(xdata) != len(ydata):
+                    raise ParseError(_("Columns do not have the same length."))
 
             items.append(
                 item.DataItem.new(
