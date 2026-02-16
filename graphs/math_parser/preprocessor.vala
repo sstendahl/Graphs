@@ -94,7 +94,7 @@ namespace Graphs.MathParser {
                         if (v < 0 || v != Math.floor (v))
                             throw new MathError.DOMAIN ("invalid factorial");
                         v = factorial ((int) v);
-                        builder.append (v.to_string ());
+                        builder.append ("%.15g".printf (v));
                     } else {
                         builder.append_c ('!');
                     }
@@ -109,7 +109,7 @@ namespace Graphs.MathParser {
                     if (v != null) {
                         lexer.next ();
                         v = ipow (v, exp);
-                        builder.append (v.to_string ());
+                        builder.append ("%.15g".printf (v));
                     } else {
                         builder.append (prettify ? "^" : "**");
                         builder.append (exp.to_string ());
@@ -122,7 +122,7 @@ namespace Graphs.MathParser {
                 break;
             }
 
-            if (!output && v != null) builder.append (v.to_string ());
+            if (!output && v != null) builder.append ("%.15g".printf (v));
         }
 
         private const double PI_THRESH = 0.00010000314159265359; // 1e-4 + 1e-9 * pi
@@ -139,11 +139,12 @@ namespace Graphs.MathParser {
                         if (remainder <= PI_THRESH || remainder >= Math.PI - PI_THRESH) {
                             // fast rounding check evasion
                             double factor = Math.floor (v / Math.PI + 0.5);
-                            if (factor != 1) builder.append (factor.to_string ());
-                            builder.append ("pi");
-
-                            lexer.next ();
-                            return null;
+                            if (factor != 0) {
+                                if (factor != 1) builder.append ("%.15g".printf (factor));
+                                builder.append ("pi");
+                                lexer.next ();
+                                return null;
+                            }
                         }
 
                         // or e
@@ -151,11 +152,12 @@ namespace Graphs.MathParser {
                         if (remainder <= E_THRESH || remainder >= Math.E - E_THRESH) {
                             // fast rounding check evasion
                             double factor = Math.floor (v / Math.E + 0.5);
-                            if (factor != 1) builder.append (factor.to_string ());
-                            builder.append_c ('e');
-
-                            lexer.next ();
-                            return null;
+                            if (factor != 0) {
+                                if (factor != 1) builder.append ("%.15g".printf (factor));
+                                builder.append_c ('e');
+                                lexer.next ();
+                                return null;
+                            }
                         }
                     }
 
