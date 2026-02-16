@@ -14,16 +14,6 @@ import numpy
 import sympy
 
 
-def sig_fig_round(number: float, digits: int) -> float:
-    """Round a number to the specified number of significant digits."""
-    try:
-        # Convert to scientific notation, and get power
-        power = f"{float(number):e}".split("e")[1]
-    except IndexError:
-        return None
-    return round(float(number), -(int(power) - digits + 1))
-
-
 def get_value_at_fraction(
     fraction: float,
     start: float,

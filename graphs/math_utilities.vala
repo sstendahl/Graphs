@@ -44,5 +44,17 @@ namespace Graphs {
             builder.append (val.to_string ());
             return builder.free_and_steal ();
         }
+
+        public static double sig_fig_round (double number, int digits) {
+            if (number == 0) return 0.0;
+
+            double abs_number = Math.fabs (number);
+            int power = (int) Math.floor (Math.log10 (abs_number));
+
+            int scale_power = digits - power - 1;
+            double factor = Math.pow (10.0, scale_power);
+
+            return Math.round (number * factor) / factor;
+        }
     }
 }
