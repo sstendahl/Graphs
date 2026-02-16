@@ -8,15 +8,4 @@ template $GraphsSpreadsheetGroup : Adw.PreferencesGroup {
     title: _("Sheet");
     subtitle: _("Select which sheet to import");
   }
-
-  Adw.ComboRow separator {
-    title: _("Decimal Separator");
-
-    model: StringList {
-      strings [
-        C_("separator", "Decimal comma (,)"),
-        C_("separator", "Decimal point (.)"),
-      ]
-    };
-  }
 }
