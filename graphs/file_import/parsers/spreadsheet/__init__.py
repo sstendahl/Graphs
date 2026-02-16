@@ -40,7 +40,7 @@ class OdsParser:
             return [sheet.get(attribute_name) for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int, separator: str,
+                   sheet_index: int,
                    ) -> List[Tuple[str, List[float]]]:
         """Parse ODS file and return list of requested columns."""
         with file_io.open(file, "rb") as file_obj, \
@@ -68,9 +68,7 @@ class OdsParser:
                             break
                         if current_col in columns:
                             try:
-                                val = Graphs.evaluate_string_with_separator(
-                                    cell_value, separator,
-                                )
+                                val = Graphs.evaluate_string(cell_value)
                                 raw_columns[current_col][0].append(val)
                             except GLib.Error:
                                 if len(raw_columns[current_col][0]) == 0:
@@ -96,14 +94,14 @@ class XlsxParser:
             return [sheet.get("name") for sheet in sheets]
 
     def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int, separator: str,
+                   sheet_index: int,
                    ) -> List[Tuple[str, List[float]]]:
         """Parse XLSX file and return 2D array of cell values."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
             shared_strings = self._load_shared_strings(zip_file)
             return self._parse_worksheet(
-                zip_file, columns, sheet_index, shared_strings, separator)
+                zip_file, columns, sheet_index, shared_strings)
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
@@ -122,7 +120,6 @@ class XlsxParser:
         columns: set[int],
         sheet_index: int,
         shared_strings: List[str],
-        separator: str,
     ) -> List[List[str]]:
         """Parse worksheet and return requested columns."""
         sheet_file = f"xl/worksheets/sheet{sheet_index + 1}.xml"
@@ -136,9 +133,7 @@ class XlsxParser:
                 for col_index in columns:
                     cell_value = row_data.get(col_index, "")
                     try:
-                        val = Graphs.evaluate_string_with_separator(
-                            cell_value, separator,
-                        )
+                        val = Graphs.evaluate_string(cell_value)
                         raw_columns[col_index][0].append(val)
                     except GLib.Error:
                         if len(raw_columns[col_index][0]) == 0:
@@ -231,8 +226,6 @@ class SpreadsheetParser(Parser):
         file = settings.get_file()
         sheet_index = settings.get_int("sheet-index")
 
-        separator = "," if settings.get_string("separator") == "comma" else "."
-
         column_indices = set()
         item_settings_list = []
         for item_string in settings.get_string("items").split(";;"):
@@ -247,7 +240,7 @@ class SpreadsheetParser(Parser):
         file_parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
         parsed_columns = file_parser.parse_file(
-            file, column_indices, sheet_index, separator,
+            file, column_indices, sheet_index,
         )
 
         items = []

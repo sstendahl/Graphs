@@ -6,19 +6,10 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow sheet_selector;
 
-        [GtkChild]
-        private unowned Adw.ComboRow separator;
-
         public SpreadsheetGroup (ImportSettings settings) {
             var string_list = settings.get_item ("sheet-names") as Gtk.StringList;
             sheet_selector.set_model (string_list);
             sheet_selector.set_selected (settings.get_int ("sheet-index"));
-
-            separator.set_selected (ColumnsSeparator.parse (settings.get_string ("separator")));
-
-            separator.notify["selected"].connect (() => {
-                settings.set_string ("separator", ((ColumnsSeparator) separator.get_selected ()).friendly_string ());
-            });
 
             sheet_selector.notify["selected"].connect (() => {
                 settings.set_int ("sheet-index", (int) sheet_selector.get_selected ());
