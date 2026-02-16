@@ -16,6 +16,9 @@ data/ui/import/columns/box.blp
 data/ui/import/columns/item-group.blp
 data/ui/import/columns/main-group.blp
 data/ui/import/sql/main-group.blp
+data/ui/import/spreadsheet/box.blp
+data/ui/import/spreadsheet/main-group.blp
+data/ui/import/spreadsheet/item-group.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
 data/ui/sidebar/figure-settings/settings-page.blp
@@ -46,6 +49,8 @@ graphs/file_import/parsers/columns/main.vala
 graphs/file_import/parsers/columns/parser.vala
 graphs/file_import/parsers/columns/ui.vala
 graphs/file_import/parsers/project/__init__.py
+graphs/file_import/parsers/spreadsheet/__init__.py
+graphs/file_import/parsers/spreadsheet/ui.vala
 graphs/file_import/parsers/sql/__init__.py
 graphs/file_import/parsers/sql/reader.vala
 graphs/file_import/parsers/sql/ui.vala

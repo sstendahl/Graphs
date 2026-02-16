@@ -26,6 +26,15 @@ namespace Graphs {
         return MathParser.Evaluator.instance ().parse (expression);
     }
 
+    // This method exists separately as optional arguments are not automatically
+    // bound by python
+    /**
+     * Evaluate a string to a double with given decimal separator.
+     */
+    public static double evaluate_string_with_separator (string expression, unichar separator) throws MathError {
+        return MathParser.Evaluator.instance ().parse (expression, separator);
+    }
+
     /**
      * Preprocess an equation to be compatible with numexpr syntax.
      */
