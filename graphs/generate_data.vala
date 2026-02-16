@@ -41,6 +41,7 @@ namespace Graphs {
             this.xstart.set_text (settings.get_string ("xstart"));
             this.xstop.set_text (settings.get_string ("xstop"));
             this.steps.set_value (settings.get_int ("steps"));
+            this.steps.input.connect (on_steps);
             this.scale.set_selected (settings.get_int ("scale"));
             present (window);
         }
@@ -87,6 +88,14 @@ namespace Graphs {
                 entry.add_css_class ("error");
             }
             set_confirm_sensitivity ();
+        }
+
+        private int on_steps (out double val) {
+            if (try_evaluate_string (steps.get_text (), out val)) {
+                return 1;
+            } else {
+                return Gtk.INPUT_ERROR;
+            }
         }
     }
 }
