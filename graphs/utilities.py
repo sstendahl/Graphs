@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
 import contextlib
-import re
 
 from gi.repository import GLib, Graphs
 
