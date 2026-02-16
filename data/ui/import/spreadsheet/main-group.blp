@@ -1,0 +1,11 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsSpreadsheetGroup : Adw.PreferencesGroup {
+  title: _("Spreadsheet");
+
+  Adw.ComboRow sheet_selector {
+    title: _("Sheet");
+    subtitle: _("Select which sheet to import");
+  }
+}
