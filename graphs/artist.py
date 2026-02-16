@@ -162,8 +162,11 @@ class SingularityHandler:
 
     _singularities_cache = {}
 
-    def _handle_singularities(self, data: tuple[list, list],
-                              insert_y_points: bool) -> None:
+    def _handle_singularities(
+        self,
+        data: tuple[list, list],
+        insert_y_points: bool,
+    ) -> None:
         """Handle singularities and update artist data."""
         xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
         x_min, x_max = float(numpy.min(xdata)), float(numpy.max(xdata))
@@ -186,8 +189,10 @@ class SingularityHandler:
             cached_min, cached_max = cached["limits"]
 
             if x_min >= cached_min and x_max <= cached_max:
-                return {s for s in cached["singularities"]
-                        if x_min <= s <= x_max}
+                return {
+                    s
+                    for s in cached["singularities"] if x_min <= s <= x_max
+                }
 
             x_min, x_max = min(x_min, cached_min), max(x_max, cached_max)
 
@@ -203,8 +208,14 @@ class SingularityHandler:
 
         return {s for s in all_singularities if limits[0] <= s <= limits[1]}
 
-    def _insert_singularity_points(self, xdata, ydata, singularities, ylim,
-                                   insert_y_points=True) -> tuple:
+    def _insert_singularity_points(
+        self,
+        xdata,
+        ydata,
+        singularities,
+        ylim,
+        insert_y_points=True,
+    ) -> tuple:
         """Insert NaN and optionally infinite value points at singularities."""
         if not singularities:
             return xdata, ydata
@@ -228,9 +239,7 @@ class SingularityHandler:
             y_parts.append(ydata[prev_idx:insert_idx])
 
             if insert_y_points and 1 < insert_idx < len(ydata) - 1:
-                x_parts.append(
-                    self._make_singularity_x(value, epsilon),
-                )
+                x_parts.append(self._make_singularity_x(value, epsilon))
                 y_parts.append(
                     self._make_singularity_y(ydata, insert_idx, inf_value),
                 )
@@ -256,8 +265,10 @@ class SingularityHandler:
         return numpy.array([left * inf_value, numpy.nan, right * inf_value])
 
 
-class GeneratedDataItemArtistWrapper(DataItemArtistWrapper,
-                                     SingularityHandler):
+class GeneratedDataItemArtistWrapper(
+    DataItemArtistWrapper,
+    SingularityHandler,
+):
     """Wrapper for GeneratedDataItemArtist."""
 
     __gtype_name__ = "GraphsGeneratedDataItemArtistWrapper"
@@ -294,7 +305,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
         self._view_change_timeout_id = None
         if self._axis.figure.parent is not None:
             self._axis.figure.parent.connect(
-                "view_changed", self._on_view_change)
+                "view_changed",
+                self._on_view_change,
+            )
         self._artist = axis.plot(
             [],
             [],

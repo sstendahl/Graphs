@@ -207,7 +207,7 @@ class Data(Graphs.Data):
         for change_type, data in self._current_batch:
             match ChangeType(change_type):
                 case ChangeType.ITEM_PROPERTY_CHANGED:
-                    index, prop, old_value, new_value = data
+                    index, prop, _old_value, new_value = data
                     key = (change_type, index, prop)
 
                     if key not in collapsed:
@@ -223,7 +223,7 @@ class Data(Graphs.Data):
                             )
 
                 case ChangeType.FIGURE_SETTINGS_CHANGED:
-                    prop, old_value, new_value = data
+                    prop, _old_value, new_value = data
                     key = (change_type, prop)
 
                     if key not in collapsed:
@@ -472,14 +472,19 @@ class Data(Graphs.Data):
 
                 y_min, y_max = ydata_arr.min(), ydata_arr.max()
                 lower_bound = utilities.get_value_at_fraction(
-                    0.05, y_min, y_max, yaxis[4],
+                    0.05,
+                    y_min,
+                    y_max,
+                    yaxis[4],
                 )
                 upper_bound = utilities.get_value_at_fraction(
-                    0.95, y_min, y_max, yaxis[4],
+                    0.95,
+                    y_min,
+                    y_max,
+                    yaxis[4],
                 )
-                ydata_arr = ydata_arr[
-                    (ydata_arr >= lower_bound) & (ydata_arr <= upper_bound)
-                ]
+                ydata_arr = ydata_arr[(ydata_arr >= lower_bound)
+                                      & (ydata_arr <= upper_bound)]
 
             min_max = self._get_min_max_from_array(
                 ydata_arr,
@@ -516,8 +521,8 @@ class Data(Graphs.Data):
                 padding_factor = 0.05 if count % 2 else 0.015
                 log_min -= padding_factor * log_span
                 log_max += padding_factor * log_span
-                min_all = 10 ** log_min
-                max_all = 10 ** log_max
+                min_all = 10**log_min
+                max_all = 10**log_max
             figure_settings.set_property(f"min_{direction}", min_all)
             figure_settings.set_property(f"max_{direction}", max_all)
 

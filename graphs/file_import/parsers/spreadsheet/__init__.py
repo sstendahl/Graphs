@@ -18,7 +18,6 @@ import numexpr
 
 import numpy
 
-
 # XML Namespaces
 ODS_TABLE_NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:table:1.0"
 XLSX_MAIN_NAMESPACE = \
@@ -39,9 +38,12 @@ class OdsParser:
             attribute_name = f"{{{namespaces['table']}}}name"
             return [sheet.get(attribute_name) for sheet in sheets]
 
-    def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int,
-                   ) -> List[Tuple[str, List[float]]]:
+    def parse_file(
+        self,
+        file: Gio.File,
+        columns: set[int],
+        sheet_index: int,
+    ) -> List[Tuple[str, List[float]]]:
         """Parse ODS file and return list of requested columns."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -55,7 +57,9 @@ class OdsParser:
             raw_columns = {col_index: [[], ""] for col_index in columns}
 
             table_rows = sheets[sheet_index].findall(
-                "table:table-row", namespaces)
+                "table:table-row",
+                namespaces,
+            )
             for table_row in table_rows:
                 cells = table_row.findall("table:table-cell", namespaces)
                 current_col = 0
@@ -93,15 +97,22 @@ class XlsxParser:
             sheets = root.findall(f".//{{{namespaces['main']}}}sheet")
             return [sheet.get("name") for sheet in sheets]
 
-    def parse_file(self, file: Gio.File, columns: set[int],
-                   sheet_index: int,
-                   ) -> List[Tuple[str, List[float]]]:
+    def parse_file(
+        self,
+        file: Gio.File,
+        columns: set[int],
+        sheet_index: int,
+    ) -> List[Tuple[str, List[float]]]:
         """Parse XLSX file and return 2D array of cell values."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
             shared_strings = self._load_shared_strings(zip_file)
             return self._parse_worksheet(
-                zip_file, columns, sheet_index, shared_strings)
+                zip_file,
+                columns,
+                sheet_index,
+                shared_strings,
+            )
 
     def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
         """Load shared strings from XLSX file."""
@@ -129,7 +140,11 @@ class XlsxParser:
             raw_columns = {col_index: [[], ""] for col_index in columns}
             for row_element in root.findall(".//main:row", namespaces):
                 row_data = self._parse_row(
-                    row_element, namespaces, shared_strings, columns)
+                    row_element,
+                    namespaces,
+                    shared_strings,
+                    columns,
+                )
                 for col_index in columns:
                     cell_value = row_data.get(col_index, "")
                     try:
@@ -160,7 +175,10 @@ class XlsxParser:
 
             if column_index in columns:
                 cell_data[column_index] = self._get_cell_value(
-                    cell_element, namespaces, shared_strings)
+                    cell_element,
+                    namespaces,
+                    shared_strings,
+                )
         return cell_data
 
     def _get_cell_value(
@@ -240,7 +258,9 @@ class SpreadsheetParser(Parser):
         file_parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
         parsed_columns = file_parser.parse_file(
-            file, column_indices, sheet_index,
+            file,
+            column_indices,
+            sheet_index,
         )
 
         items = []
@@ -256,7 +276,9 @@ class SpreadsheetParser(Parser):
                 equation = item_settings.equation
                 xdata = numexpr.evaluate(
                     Graphs.preprocess_equation(equation) + " + n*0",
-                    local_dict={"n": numpy.arange(len(ydata))},
+                    local_dict={
+                        "n": numpy.arange(len(ydata)),
+                    },
                 ).tolist()
             else:
                 xindex = item_settings.column_x

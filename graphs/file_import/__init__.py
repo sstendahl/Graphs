@@ -7,8 +7,14 @@ from pathlib import Path
 from gi.repository import Gee, Graphs, Gtk
 
 from graphs.file_import import parsers
-from graphs.file_import.parsers import (columns, project, spreadsheet, sql,
-                                        xrdml, xry)
+from graphs.file_import.parsers import (
+    columns,
+    project,
+    spreadsheet,
+    sql,
+    xrdml,
+    xry,
+)
 from graphs.misc import ParseError
 
 _REQUESTS = (

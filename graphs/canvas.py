@@ -54,7 +54,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.connect("resize", self.resize_event)
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
         FigureCanvasBase.__init__(
-            self, figure=Figure(style_params, items, self))
+            self,
+            figure=Figure(style_params, items, self),
+        )
         self._rubberband_rect = None
 
         # Handle stuff only used if the canvas is interactive
