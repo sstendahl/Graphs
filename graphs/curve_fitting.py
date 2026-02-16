@@ -166,7 +166,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def on_equation_change(self, _sender, equation: str) -> bool:
         """Handle equation changes and update parameters."""
         processed_eq = Graphs.preprocess_equation(equation)
-        free_vars = utilities.get_free_variables(processed_eq)
+        free_vars = Graphs.math_tools_get_free_variables(processed_eq)
         if not free_vars:
             self._clear_fit()
             self.set_results(error="equation")
@@ -336,7 +336,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         eq_str = eq_str.lower()
         equation = Graphs.preprocess_equation(eq_str)
         eq_name = eq_str
-        free_vars = utilities.get_free_variables(eq_str)
+        free_vars = Graphs.math_tools_get_free_variables(eq_str)
 
         # Substitute each free variables with the calculated value.
         for i, var in enumerate(free_vars):
@@ -422,7 +422,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         x_values = numpy.asarray(x_values)
 
         eq_str = self.get_equation_string()
-        param_names = utilities.get_free_variables(eq_str)
+        param_names = Graphs.math_tools_get_free_variables(eq_str)
 
         sym_x = sympy.Symbol("x", real=True)
         sym_params_map = \
@@ -507,7 +507,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             buffer.get_end_iter(), f"{_('Parameters')}\n", "bold")
 
         eq_str = self.get_equation_string()
-        free_vars = utilities.get_free_variables(eq_str)
+        free_vars = Graphs.math_tools_get_free_variables(eq_str)
         diag_cov = numpy.sqrt(numpy.diagonal(self.fit_result.covariance))
         conf_level = self.get_settings().get_enum("confidence")
 

@@ -120,7 +120,7 @@ namespace Graphs {
                     figure_settings.bind_property (key, entry, "text", BindingFlags.SYNC_CREATE,
                         (binding, source_value, ref target_value) => {
                             double val = source_value.get_double ();
-                            target_value.set_string (Tools.evaluate_double (val));
+                            target_value.set_string (MathTools.prettyprint_double (val));
                             return true;
                         }
                     );

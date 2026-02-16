@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
 import contextlib
-import re
 
 from gi.repository import GLib, Graphs
 
@@ -12,16 +11,6 @@ import numexpr
 import numpy
 
 import sympy
-
-
-def sig_fig_round(number: float, digits: int) -> float:
-    """Round a number to the specified number of significant digits."""
-    try:
-        # Convert to scientific notation, and get power
-        power = f"{float(number):e}".split("e")[1]
-    except IndexError:
-        return None
-    return round(float(number), -(int(power) - digits + 1))
 
 
 def get_value_at_fraction(
@@ -194,7 +183,7 @@ def validate_equation(equation: str, limits: tuple = None) -> bool:
 
 def string_to_function(equation_name: str) -> sympy.FunctionClass:
     """Convert a string into a sympy function."""
-    variables = ["x"] + get_free_variables(equation_name)
+    variables = ["x"] + Graphs.math_tools_get_free_variables(equation_name)
     sym_vars = sympy.symbols(variables)
     with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
         symbolic = sympy.sympify(
@@ -202,15 +191,3 @@ def string_to_function(equation_name: str) -> sympy.FunctionClass:
             locals=dict(zip(variables, sym_vars)),
         )
         return sympy.lambdify(sym_vars, symbolic)
-
-
-def get_free_variables(equation_name: str) -> list:
-    """Get the free variables (non-x) from an equation."""
-    exclude = {
-        "x", "X", "sec", "sin", "cos", "log", "tan", "csc", "cot",
-        "arcsin", "arccos", "arctan", "arccot", "arcsec", "arccsc",
-        "sinh", "cosh", "tanh", "arcsinh", "arccosh", "arctanh",
-        "exp", "sqrt", "abs", "log10", "pi",
-    }
-    matches = re.findall(r"\b[a-zA-Z_][a-zA-Z0-9_]*\b", equation_name)
-    return list(dict.fromkeys(var for var in matches if var not in exclude))
