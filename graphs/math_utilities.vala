@@ -25,10 +25,11 @@ namespace Graphs.MathTools {
         if (remainder <= PI_THRESH || remainder >= Math.PI - PI_THRESH) {
             // fast rounding check evasion
             double factor = Math.floor (val / Math.PI + 0.5);
-            if (factor != 1) builder.append (factor.to_string ());
-            builder.append ("pi");
-
-            return builder.free_and_steal ();
+            if (factor != 0) {
+                if (factor != 1) builder.append ("%.15g".printf (factor));
+                builder.append ("pi");
+                return builder.free_and_steal ();
+            }
         }
 
         // or e
@@ -36,13 +37,14 @@ namespace Graphs.MathTools {
         if (remainder <= E_THRESH || remainder >= Math.E - E_THRESH) {
             // fast rounding check evasion
             double factor = Math.floor (val / Math.E + 0.5);
-            if (factor != 1) builder.append (factor.to_string ());
-            builder.append_c ('e');
-
-            return builder.free_and_steal ();
+            if (factor != 0) {
+                if (factor != 1) builder.append ("%.15g".printf (factor));
+                builder.append_c ('e');
+                return builder.free_and_steal ();
+            }
         }
 
-        builder.append (val.to_string ());
+        builder.append ("%.15g".printf (val));
         return builder.free_and_steal ();
     }
 
