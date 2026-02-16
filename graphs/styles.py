@@ -42,7 +42,8 @@ class StyleManager(Graphs.StyleManager):
         self.connect("style-request", self._on_style_request)
         self.connect("create-style-request", self._on_create_style_request)
         Adw.StyleManager.get_default().connect(
-            "notify", self._update_system_style,
+            "notify",
+            self._update_system_style,
         )
 
         self._update_system_style()

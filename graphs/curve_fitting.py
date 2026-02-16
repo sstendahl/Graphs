@@ -14,7 +14,6 @@ from scipy.optimize import _minpack, curve_fit
 
 import sympy
 
-
 DATA_COLOR = "#1A5FB4"
 FIT_COLOR = "#A51D2D"
 FILL_COLOR = "#62A0EA"
@@ -119,9 +118,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         style = Graphs.StyleManager.get_instance().get_system_style_params()
         cv = canvas.Canvas(style, self._items, interactive=False)
         ax = cv.figure.axis
-        ax.set(xlabel=settings.get_property("bottom_label"),
-               ylabel=settings.get_property("left_label"),
-               xlim=self._xlim)
+        ax.set(
+            xlabel=settings.get_property("bottom_label"),
+            ylabel=settings.get_property("left_label"),
+            xlim=self._xlim,
+        )
         self.set_canvas(cv)
         self.load_residuals_canvas()
         if self.get_error():
@@ -200,7 +201,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             for prop in ("initial", "upper_bound", "lower_bound"):
                 p_box.get_property(prop).connect(
                     "notify::text",
-                    self.on_entry_change)
+                    self.on_entry_change,
+                )
             box.append(p_box)
 
     def on_entry_change(self, entry, _param) -> None:
@@ -319,8 +321,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         return FitResult(param, param_cov, r2, rmse, residuals, fitted_y)
 
-    def _calculate_statistics(self, y_data: numpy.ndarray,
-                              fitted_y: numpy.ndarray) -> tuple:
+    def _calculate_statistics(
+        self,
+        y_data: numpy.ndarray,
+        fitted_y: numpy.ndarray,
+    ) -> tuple:
         """Calculate R² and RMSE statistics."""
         ss_res = numpy.sum((y_data - fitted_y)**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
@@ -350,9 +355,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         # Clean up combined operators
         eq_name = (
-            eq_name.replace("--", "+")
-                   .replace("+-", "-")
-                   .replace("-+", "-")
+            eq_name.replace("--", "+").replace("+-", "-").replace("-+", "-")
         )
         # Remove + signs at the start, or after an opening +
         eq_name = re.sub(
@@ -360,7 +363,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             (^|\()   # Group 1: Look for either the start of the line OR a "("
             \+       # Look for a "+" immediately after it
             """,
-            r"\1",   # Put back only group 1 without the +
+            r"\1",  # Put back only group 1 without the +
             eq_name,
             flags=re.VERBOSE,
         )
@@ -440,8 +443,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             f_deriv = sympy.lambdify([sym_x, *sym_params_list], deriv, "numpy")
             jacobian[:, i] = f_deriv(x_values, *self.fit_result.parameters)
 
-        variance = numpy.sum(
-            (jacobian @ self.fit_result.covariance) * jacobian, axis=1)
+        variance = numpy.sum((jacobian @ self.fit_result.covariance)
+                             * jacobian,
+                             axis=1)
 
         std_dev_y = numpy.sqrt(numpy.abs(variance))
         confidence_band = std_dev_y * conf_level
@@ -477,19 +481,20 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if not bold_tag:
             bold_tag = buffer.create_tag("bold", weight=700)
         error_messages = {
-            "value": _("Please enter valid \nnumeric parameters."),
-            "bounds": _(
-                "Constraint error: ensure \nLower < Initial < Upper."),
-            "singular": _(
-                "Matrix error: Data is \ninsufficient for this model."),
-            "convergence": _(
-                "Fit failed: Max iterations \nreached without converging."),
-            "domain": _(
-                "Domain error: Equation not \nvalid for this data range."),
-            "equation": _(
-                "Invalid equation: Check \nsyntax and variables."),
-            "confidence": _(
-                "Confidence band error: \nCovariance matrix is unstable."),
+            "value":
+            _("Please enter valid \nnumeric parameters."),
+            "bounds":
+            _("Constraint error: ensure \nLower < Initial < Upper."),
+            "singular":
+            _("Matrix error: Data is \ninsufficient for this model."),
+            "convergence":
+            _("Fit failed: Max iterations \nreached without converging."),
+            "domain":
+            _("Domain error: Equation not \nvalid for this data range."),
+            "equation":
+            _("Invalid equation: Check \nsyntax and variables."),
+            "confidence":
+            _("Confidence band error: \nCovariance matrix is unstable."),
         }
 
         if error:
@@ -504,7 +509,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def _display_fit_results(self, buffer) -> None:
         """Display the fitting results in the text buffer."""
         buffer.insert_with_tags_by_name(
-            buffer.get_end_iter(), f"{_('Parameters')}\n", "bold")
+            buffer.get_end_iter(),
+            f"{_('Parameters')}\n",
+            "bold",
+        )
 
         eq_str = self.get_equation_string()
         free_vars = Graphs.math_tools_get_free_variables(eq_str)
@@ -521,12 +529,19 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         buffer.insert(buffer.get_end_iter(), "\n")
         buffer.insert_with_tags_by_name(
-            buffer.get_end_iter(), f"{_('Statistics')}\n", "bold")
+            buffer.get_end_iter(),
+            f"{_('Statistics')}\n",
+            "bold",
+        )
 
-        buffer.insert(buffer.get_end_iter(),
-                      f"{_('R²')}: {self.fit_result.r2}\n")
-        buffer.insert(buffer.get_end_iter(),
-                      f"{_('RMSE')}: {self.fit_result.rmse}")
+        buffer.insert(
+            buffer.get_end_iter(),
+            f"{_('R²')}: {self.fit_result.r2}\n",
+        )
+        buffer.insert(
+            buffer.get_end_iter(),
+            f"{_('RMSE')}: {self.fit_result.rmse}",
+        )
 
     def add_fit(self, _parent) -> None:
         """Add fitted data to the items in the main application."""
@@ -556,7 +571,8 @@ class FittingParameterContainer:
                     initial=1.0,
                     lower_bound="-inf",
                     upper_bound="inf",
-                ))
+                ),
+            )
         self._items = new_items
 
     def get_p0(self) -> list:

@@ -47,14 +47,12 @@ class XryParser(Parser):
 
         for i in range(text_item_count):
             text, x, y = parser.get_text_data(i)
-            items.append(
-                item.TextItem.new(
-                    style,
-                    x,
-                    y,
-                    text,
-                    name=text,
-                ),
-            )
+            items.append(item.TextItem.new(
+                style,
+                x,
+                y,
+                text,
+                name=text,
+            ))
 
         return items
