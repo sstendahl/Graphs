@@ -97,6 +97,7 @@ graphs/generate_data.vala
 graphs/item.py
 graphs/item.vala
 graphs/item_box.vala
+graphs/math_utilities.vala
 graphs/migrate.py
 graphs/misc.py
 graphs/misc.vala

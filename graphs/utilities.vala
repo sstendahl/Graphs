@@ -69,28 +69,6 @@ namespace Graphs {
             return max_value / min_value;
         }
 
-        /**
-         * Evaluate a double as a string, prettifies for typical constants such
-         * as integer values of pi
-         */
-        public string evaluate_double (double val) {
-            double tolerance = 1e-10;
-
-            // Check if ratio is integer by checking if it is close enough to nearest integer
-            double ratio = val / Math.PI;
-            int rounded = (int) Math.round (ratio);
-            if (Math.fabs (ratio - rounded) < tolerance && rounded != 0) {
-                if (rounded == 1) {
-                    return "π";
-                } else if (rounded == -1) {
-                    return "-π";
-                } else {
-                    return "%dπ".printf (rounded);
-                }
-            }
-            return "%.12g".printf (val);
-        }
-
         public string get_duplicate_string (string original, string[] used) {
             if (!(original in used)) return original;
             string old_str = original;
