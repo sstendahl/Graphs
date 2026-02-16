@@ -271,8 +271,5 @@
     <key name="sheet-index" type="i">
       <default>0</default>
     </key>
-    <key name="separator" enum="se.sjoerd.Graphs.import-params.columns.separators">
-      <default>"period"</default>
-    </key>
   </schema>
 </schemalist>
