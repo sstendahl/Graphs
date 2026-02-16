@@ -7,7 +7,7 @@ namespace Graphs.MathTools {
 
     /**
      * String representation of a double, prettifies for typical constants
-     * such as integer values of pi
+     * such as integer values of pi and e.
      */
     public string prettyprint_double (double val) {
         if (val == 0) {
@@ -46,6 +46,9 @@ namespace Graphs.MathTools {
         return builder.free_and_steal ();
     }
 
+    /**
+     * Round a number to specified digits.
+     */
     public static double sig_fig_round (double number, int digits) {
         if (number == 0) return 0.0;
 
@@ -58,6 +61,9 @@ namespace Graphs.MathTools {
         return Math.round (number * factor) / factor;
     }
 
+    /**
+     * Get all free variables (without x) in an equation.
+     */
     public static string[] get_free_variables (string equation) throws MathError {
         HashSet<string> strings = new HashSet<string> ();
 
