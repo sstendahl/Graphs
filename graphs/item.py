@@ -114,7 +114,7 @@ class DataItem(_PythonItem):
             data=(xdata, ydata),
             xerr=xerr,
             yerr=yerr,
-            **cls._extract_params(cls, style, kwargs),
+            **cls._extract_params(cls, style),
             **kwargs,
         )
 
