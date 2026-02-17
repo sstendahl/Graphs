@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 from graphs import (
     curve_fitting,
@@ -11,7 +11,6 @@ from graphs import (
 )
 from graphs.figure import Figure
 from graphs.item import EquationItem, GeneratedDataItem
-from graphs.sidebar import edit_item
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
