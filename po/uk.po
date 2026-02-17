@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-01-17 13:08+0000\n"
-"PO-Revision-Date: 2026-01-18 02:45+0200\n"
+"POT-Creation-Date: 2026-02-16 16:50+0000\n"
+"PO-Revision-Date: 2026-02-17 07:51+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -105,12 +105,12 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
-"tion;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
-"tion;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані;к"
-"реслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані"
+";креслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
 #: data/ui/style-editor/window.blp:299
@@ -518,41 +518,49 @@ msgctxt "scale"
 msgid "Inverse"
 msgstr "Обернена"
 
-#: data/ui/import/columns/box.blp:16
+#: data/ui/import/columns/box.blp:16 data/ui/import/spreadsheet/box.blp:16
 msgid "Add Item"
 msgstr "Додати запис"
 
-#: data/ui/import/columns/item-group.blp:9 data/ui/import/dialog.blp:122
+#: data/ui/import/columns/item-group.blp:9
+#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:122
 #: data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "Вилучити"
 
 #: data/ui/import/columns/item-group.blp:26
+#: data/ui/import/spreadsheet/item-group.blp:26
 msgid "X Column"
 msgstr "Стовпчик X"
 
 #: data/ui/import/columns/item-group.blp:38
+#: data/ui/import/spreadsheet/item-group.blp:38
 msgid "Y Column"
 msgstr "Стовпчик Y"
 
 #: data/ui/import/columns/item-group.blp:51
+#: data/ui/import/spreadsheet/item-group.blp:51
 msgid "Single Column"
 msgstr "Один стовпчик"
 
 #: data/ui/import/columns/item-group.blp:52
+#: data/ui/import/spreadsheet/item-group.blp:52
 msgid "Import only Y values, X values will be generated"
 msgstr "Імпортувати лише значення Y, значення X буде породжено"
 
 #: data/ui/import/columns/item-group.blp:57
+#: data/ui/import/spreadsheet/item-group.blp:57
 msgid "X Value Equation"
 msgstr "Рівняння для значень X"
 
 #: data/ui/import/columns/item-group.blp:64
-#: data/ui/import/columns/main-group.blp:32 data/ui/transform.blp:35
+#: data/ui/import/columns/main-group.blp:32
+#: data/ui/import/spreadsheet/item-group.blp:64 data/ui/transform.blp:35
 msgid "More info"
 msgstr "Докладніше"
 
 #: data/ui/import/columns/item-group.blp:72
+#: data/ui/import/spreadsheet/item-group.blp:72
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -666,6 +674,18 @@ msgstr "Стовпчик y"
 #: data/ui/import/sql/main-group.blp:23
 msgid "This table contains no numeric columns"
 msgstr "У цій таблиці не міститься числових стовпчиків"
+
+#: data/ui/import/spreadsheet/main-group.blp:5
+msgid "Spreadsheet"
+msgstr "Електронна таблиця"
+
+#: data/ui/import/spreadsheet/main-group.blp:8
+msgid "Sheet"
+msgstr "Аркуш"
+
+#: data/ui/import/spreadsheet/main-group.blp:9
+msgid "Select which sheet to import"
+msgstr "Виберіть аркуш для імпортування"
 
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
@@ -1336,7 +1356,7 @@ msgid "Open Style"
 msgstr "Відкрити стиль"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:205
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
 msgid "Graphs Style Editor"
 msgstr "Редактор стилю графіка"
 
@@ -1494,8 +1514,7 @@ msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: довірчий інтервал 99.7%C"
 
-#: data/ui/curve-fitting.blp:259
-#| msgid "Show Sidebar"
+#: data/ui/curve-fitting.blp:258
 msgid "Show Residuals"
 msgstr "Показувати лишки"
 
@@ -1503,7 +1522,7 @@ msgstr "Показувати лишки"
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:56
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
 msgid "Export"
 msgstr "Експортувати"
 
@@ -1695,7 +1714,7 @@ msgstr "Скиньте сюди для імпортування"
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:407
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:405
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -1869,7 +1888,7 @@ msgstr "Стовпчики"
 msgid "Custom delimiter cannot be empty"
 msgstr "Нетиповий роздільник не може бути порожнім"
 
-#: graphs/file_import/parsers/columns/parser.vala:97
+#: graphs/file_import/parsers/columns/parser.vala:94
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -1878,12 +1897,13 @@ msgstr ""
 "Помилка індексу у %s, не вдалося отримати доступ до індексу %d у рядку %d, "
 "знайдено лише %d стовпчиків"
 
-#: graphs/file_import/parsers/columns/parser.vala:124
+#: graphs/file_import/parsers/columns/parser.vala:120
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Не вдалося імпортувати дані з файла, помилкове значення у рядку %d"
 
 #: graphs/file_import/parsers/columns/ui.vala:38
+#: graphs/file_import/parsers/spreadsheet/ui.vala:117
 #, c-format
 msgid "Item %d"
 msgstr "Елемент %d"
@@ -1897,6 +1917,25 @@ msgstr "Проєкт"
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+msgctxt "import-mode"
+msgid "Spreadsheet"
+msgstr "Електронна таблиця"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+msgctxt "file-filter"
+msgid "Spreadsheet"
+msgstr "Електронна таблиця"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:272
+#| msgid "No data found in table column"
+msgid "No numeric data found in column."
+msgstr "У стовпчику не знайдено числових даних."
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:287
+msgid "Columns do not have the same length."
+msgstr "Довжина стовпчиків є різною."
 
 #: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "import-mode"
@@ -1935,78 +1974,74 @@ msgstr "XRDML PANalytical"
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/__init__.py:20
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:21
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
 
-#: graphs/file_import/parsers/xry/__init__.py:38
-msgid "Invalid .xry format"
-msgstr "Некоректний формат .xry"
-
-#: graphs/file_import/parsers/xry/__init__.py:53
+#: graphs/file_import/parsers/xry/__init__.py:43
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:54
+#: graphs/file_import/parsers/xry/__init__.py:44
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:112
+#: graphs/file_import/__init__.py:120
 msgid "Import failed"
 msgstr "Імпортування зазнало невдачі"
 
-#: graphs/file_import/file_import.vala:48
+#: graphs/file_import/file_import.vala:51
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
 #. columns
-#: graphs/file_import/file_import.vala:52
+#: graphs/file_import/file_import.vala:55
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:147
+#: graphs/sidebar/figure_settings.vala:143
 msgid "X Axis Minimum"
 msgstr "Мінімум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:148
+#: graphs/sidebar/figure_settings.vala:144
 msgid "Y Axis Minimum"
 msgstr "Мінімум на вісі y"
 
-#: graphs/sidebar/figure_settings.vala:150
+#: graphs/sidebar/figure_settings.vala:146
 msgid "X Axis Maximum"
 msgstr "Максимум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:151
+#: graphs/sidebar/figure_settings.vala:147
 msgid "Y Axis Maximum"
 msgstr "Максимум на вісі y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:171
+#: graphs/sidebar/figure_settings.vala:167
 msgid "X Axis Scale"
 msgstr "Шкала вісі X"
 
-#: graphs/sidebar/figure_settings.vala:172
+#: graphs/sidebar/figure_settings.vala:168
 msgid "X Axis Label"
 msgstr "Мітка вісі x"
 
-#: graphs/sidebar/figure_settings.vala:175
+#: graphs/sidebar/figure_settings.vala:171
 msgid "Y Axis Scale"
 msgstr "Шкала вісі y"
 
-#: graphs/sidebar/figure_settings.vala:176
+#: graphs/sidebar/figure_settings.vala:172
 msgid "Y Axis Label"
 msgstr "Мітка вісі y"
 
-#: graphs/sidebar/figure_settings.vala:232
+#: graphs/sidebar/figure_settings.vala:228
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
@@ -2033,7 +2068,7 @@ msgstr "Колір %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
-#: graphs/style_editor/window.vala:238
+#: graphs/style_editor/window.vala:234
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
@@ -2046,7 +2081,7 @@ msgstr "Розробники «Графіків»"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
-#: graphs/actions.vala:183 graphs/item_box.vala:56
+#: graphs/actions.vala:182 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
@@ -2056,14 +2091,11 @@ msgstr "Вилучено %s"
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
 
-#: graphs/curve_fitting.py:140
+#: graphs/curve_fitting.py:138
 msgid "Residuals"
 msgstr "Лишки"
 
-#: graphs/curve_fitting.py:482
-#| msgid ""
-#| "Please enter valid fitting \n"
-#| "parameters to start the fit"
+#: graphs/curve_fitting.py:485
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2071,7 +2103,7 @@ msgstr ""
 "Будь ласка, введіть коректні \n"
 "числові параметри."
 
-#: graphs/curve_fitting.py:484
+#: graphs/curve_fitting.py:487
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2079,7 +2111,7 @@ msgstr ""
 "Помилка обмеження: переконайтеся, що \n"
 "Нижня < Початкова < Верхня."
 
-#: graphs/curve_fitting.py:486
+#: graphs/curve_fitting.py:489
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2087,7 +2119,7 @@ msgstr ""
 "Помилка у матриці: недостатньо \n"
 "даних для цієї моделі."
 
-#: graphs/curve_fitting.py:488
+#: graphs/curve_fitting.py:491
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2095,7 +2127,7 @@ msgstr ""
 "Помилка апроксимації: перевищено максимальну \n"
 "кількість ітерацій без досягнення збіжності."
 
-#: graphs/curve_fitting.py:490
+#: graphs/curve_fitting.py:493
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2103,7 +2135,7 @@ msgstr ""
 "Помилка у домені: рівняння є некоректним \n"
 "для цього діапазону даних."
 
-#: graphs/curve_fitting.py:492
+#: graphs/curve_fitting.py:495
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2111,7 +2143,7 @@ msgstr ""
 "Некоректне рівняння: перевірте \n"
 "синтаксис і змінні."
 
-#: graphs/curve_fitting.py:494
+#: graphs/curve_fitting.py:497
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2119,24 +2151,23 @@ msgstr ""
 "Похибка довірчої смуги: \n"
 "Коваріаційна матриця нестабільна."
 
-#: graphs/curve_fitting.py:509
-#| msgid "Import Parameters"
+#: graphs/curve_fitting.py:513
 msgid "Parameters"
 msgstr "Параметри"
 
-#: graphs/curve_fitting.py:526
+#: graphs/curve_fitting.py:533
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.py:529
+#: graphs/curve_fitting.py:539
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.py:531
+#: graphs/curve_fitting.py:543
 msgid "RMSE"
 msgstr "КСКП"
 
-#: graphs/curve_fitting.vala:247
+#: graphs/curve_fitting.vala:246
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
@@ -2153,24 +2184,24 @@ msgstr ""
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стилю {stylename} не існує. Завантажуємо пріоритетний системний стиль"
 
-#: graphs/data.py:588
+#: graphs/data.py:593
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
-#: graphs/export_figure.vala:49
+#: graphs/export_figure.vala:48
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
-#: graphs/export_figure.vala:76
+#: graphs/export_figure.vala:74
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
-#: graphs/export_items.vala:10
+#: graphs/export_items.vala:9
 msgid "No data to export"
 msgstr "Немає даних для експортування"
 
-#: graphs/export_items.vala:32
+#: graphs/export_items.vala:31
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
@@ -2196,13 +2227,13 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "файл стилю Matplotlib"
 
-#: graphs/operations.py:252
+#: graphs/operations.py:251
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Не вдалося виконати перетворення. Переконайтеся, що правильно вказано "
 "синтаксичну конструкцію"
 
-#: graphs/operations.py:295 graphs/operations.py:612
+#: graphs/operations.py:295 graphs/operations.py:618
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
@@ -2210,26 +2241,26 @@ msgstr "У підсвіченій області даних не знайден�
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:440
+#: graphs/operations.py:443
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
 
-#: graphs/operations.py:449
+#: graphs/operations.py:452
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:618
+#: graphs/operations.py:624
 msgid "Operation not supported for data items"
 msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:621
+#: graphs/operations.py:627
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: помилка під час виконання дії"
 
-#: graphs/operations.py:627
+#: graphs/operations.py:633
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
@@ -2265,7 +2296,7 @@ msgstr "Збережений проєкт"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/python_helper.vala:55
+#: graphs/python_helper.vala:43
 msgid "Exported Data"
 msgstr "Експортовані дані"
 
@@ -2313,40 +2344,42 @@ msgstr "Не вдалося обробити {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "У файлі {file} не міститься теґу name"
 
-#: graphs/styles.vala:62
+#: graphs/styles.vala:58
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:170
+#: graphs/utilities.vala:148
 msgid "All Files"
 msgstr "усі файли"
 
-#. Use "Document Portal" as fallback
-#: graphs/utilities.vala:223
+#: graphs/utilities.vala:189
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:143
+#: graphs/window.vala:142
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:194
 msgid "Untitled Project"
 msgstr "Проєкт без назви"
 
-#: graphs/window.vala:196
+#: graphs/window.vala:195
 msgid "Draft"
 msgstr "Чернетка"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:202
+#: graphs/window.vala:201
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
-#: graphs/window.vala:397
+#: graphs/window.vala:395
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "Invalid .xry format"
+#~ msgstr "Некоректний формат .xry"
 
 #~| msgid ""
 #~| "Additional variables:\n"
