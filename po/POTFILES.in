@@ -11,6 +11,7 @@ data/ui/dialogs/save-style-changes.blp
 data/ui/edit-item/base.blp
 data/ui/edit-item/data.blp
 data/ui/edit-item/equation.blp
+data/ui/edit-item/equation-group.blp
 data/ui/edit-item/generated-data.blp
 data/ui/import/columns/box.blp
 data/ui/import/columns/item-group.blp
@@ -63,7 +64,6 @@ graphs/math_parser/evaluator.vala
 graphs/math_parser/lexer.vala
 graphs/math_parser/main.vala
 graphs/math_parser/preprocessor.vala
-graphs/sidebar/edit_item.py
 graphs/sidebar/edit_item.vala
 graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala

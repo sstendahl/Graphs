@@ -15,9 +15,10 @@ from graphs.sidebar import edit_item
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
+import sympy
+
 _REQUESTS = (
     "add-equation",
-    "create-item-settings",
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
@@ -26,6 +27,7 @@ _REQUESTS = (
     "generate-data",
     "perform-operation",
     "python-method",
+    "simplify-equation",
     "validate-equation",
 )
 
@@ -60,14 +62,6 @@ class PythonHelper(Graphs.PythonHelper):
             equation,
             name=name,
         )
-
-    @staticmethod
-    def _on_create_item_settings_request(
-        self,
-        edit_item_box: Gtk.Box,
-        item: Graphs.Item,
-    ) -> Gtk.Widget:
-        return edit_item.create_item_settings(edit_item_box, item)
 
     @staticmethod
     def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
@@ -153,5 +147,9 @@ class PythonHelper(Graphs.PythonHelper):
         getattr(obj, method)()
 
     @staticmethod
-    def _on_validate_equation_request(self, equation: str) -> None:
+    def _on_simplify_equation_request(self, equation: str) -> str:
+        return str(sympy.simplify(equation))
+
+    @staticmethod
+    def _on_validate_equation_request(self, equation: str) -> bool:
         return utilities.validate_equation(equation)

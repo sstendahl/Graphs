@@ -5,18 +5,7 @@ template $GraphsEditItemEquationItemBox: Box {
   orientation: vertical;
   spacing: 20;
 
-  Adw.PreferencesGroup {
-    title: _("Equation");
-
-    Adw.EntryRow equation {
-      max-width-chars: 25;
-      title: _("Y =");
-    }
-
-    Adw.ButtonRow simplify {
-      title: _("Simplify");
-    }
-  }
+  $GraphsEditItemEquationGroup equation_group {}
 
   Adw.PreferencesGroup {
     title: _("Line");
