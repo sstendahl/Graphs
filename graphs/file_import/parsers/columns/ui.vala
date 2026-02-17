@@ -128,17 +128,13 @@ namespace Graphs {
             load_item_settings (item_settings);
 
             single_column.notify["active"].connect (on_settings_changed);
-            single_column.notify["active"].connect (update_xerr_sensitivity);
             column_x.notify["value"].connect (on_settings_changed);
             column_y.notify["value"].connect (on_settings_changed);
             equation.notify["text"].connect (on_settings_changed);
             use_xerr.notify["active"].connect (on_settings_changed);
-            use_xerr.notify["active"].connect (update_xerr_sensitivity);
             use_yerr.notify["active"].connect (on_settings_changed);
             column_xerr.notify["value"].connect (on_settings_changed);
             column_yerr.notify["value"].connect (on_settings_changed);
-
-            update_xerr_sensitivity ();
         }
 
         private void load_item_settings (ColumnsItemSettings item_settings) {
@@ -164,12 +160,6 @@ namespace Graphs {
             item_settings.xerr_index = (int) column_xerr.get_value ();
             item_settings.yerr_index = (int) column_yerr.get_value ();
             return item_settings;
-        }
-
-        private void update_xerr_sensitivity () {
-            bool single = single_column.get_active ();
-            use_xerr.set_sensitive (!single);
-            column_xerr.set_sensitive (!single && use_xerr.get_active ());
         }
 
         private void on_settings_changed () {

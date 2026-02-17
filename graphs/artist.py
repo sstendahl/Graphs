@@ -65,7 +65,7 @@ class ItemArtistWrapper(GObject.Object):
     @GObject.Property(type=str, default="")
     def name(self) -> str:
         """Get name/label property."""
-        return self._artist.get_label()
+        return self.get_artist().get_label()
 
     @name.setter
     def name(self, name: str) -> None:
@@ -112,7 +112,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Set data property, updating error bars to follow."""
         xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
         self._artist.set_data(xdata, ydata)
-        self._update_errorbars(xdata, ydata, self._xerr, self._yerr)
+        self._update_errorbars(
+            xdata, ydata,
+            self._xerr if self._show_xerr else None,
+            self._yerr if self._show_yerr else None,
+        )
 
     @GObject.Property
     def xerr(self):
@@ -125,7 +129,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._xerr = xerr
         xdata = numpy.asarray(self._artist.get_xdata())
         ydata = numpy.asarray(self._artist.get_ydata())
-        self._update_errorbars(xdata, ydata, xerr, self._yerr)
+        self._update_errorbars(
+            xdata, ydata,
+            xerr if self._show_xerr else None,
+            self._yerr if self._show_yerr else None,
+        )
 
     @GObject.Property
     def yerr(self):
@@ -138,7 +146,45 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._yerr = yerr
         xdata = numpy.asarray(self._artist.get_xdata())
         ydata = numpy.asarray(self._artist.get_ydata())
-        self._update_errorbars(xdata, ydata, self._xerr, yerr)
+        self._update_errorbars(
+            xdata, ydata,
+            self._xerr if self._show_xerr else None,
+            yerr if self._show_yerr else None,
+        )
+
+    @GObject.Property(type=bool, default=True)
+    def showxerr(self) -> bool:
+        """Get showxerr property."""
+        return self._show_xerr
+
+    @showxerr.setter
+    def showxerr(self, value: bool) -> None:
+        """Set showxerr property."""
+        self._show_xerr = value
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(
+            xdata, ydata,
+            self._xerr if value else None,
+            self._yerr if self._show_yerr else None,
+        )
+
+    @GObject.Property(type=bool, default=True)
+    def showyerr(self) -> bool:
+        """Get show_yerr property."""
+        return self._show_yerr
+
+    @showyerr.setter
+    def showyerr(self, value: bool) -> None:
+        """Set showyerr property."""
+        self._show_yerr = value
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        self._update_errorbars(
+            xdata, ydata,
+            self._xerr if self._show_xerr else None,
+            self._yerr if value else None,
+        )
 
     def _update_errorbars(self, xdata, ydata, xerr, yerr) -> None:
         """Update all error bar artists to match the current data position."""
@@ -208,16 +254,22 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
         self._xerr = item.get_xerr()
         self._yerr = item.get_yerr()
+        self._show_xerr = item.props.showxerr
+        self._show_yerr = item.props.showyerr
         xdata = item.get_xdata()
         ydata = item.get_ydata()
         _, graphs_params = axis.figure._style_params
-        ecolor = graphs_params.get("errorbar.ecolor")
-        ecolor = None if ecolor == "None" else ecolor
-
+        ecolor = graphs_params.get("errorbar.ecolor") or None
+        if ecolor:
+            if not Graphs.tools_hex_to_rgba(f"#{ecolor}").equal(
+                Graphs.tools_hex_to_rgba("invalid")
+            ):
+                ecolor = f"#{ecolor}"
         self.plot = axis.errorbar(
-            xdata, ydata,
-            xerr=self._xerr,
-            yerr=self._yerr,
+            xdata,
+            ydata,
+            xerr = self._xerr if self._show_xerr else None,
+            yerr = self._yerr if self._show_yerr else None,
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],

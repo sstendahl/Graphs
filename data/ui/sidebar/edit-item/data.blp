@@ -3,6 +3,7 @@ using Adw 1;
 
 template $GraphsEditItemDataItemBox: Box {
   orientation: vertical;
+  spacing: 20;
 
   Adw.PreferencesGroup {
     title: _("Line and Markers");
@@ -84,6 +85,16 @@ template $GraphsEditItemDataItemBox: Box {
           upper: 20;
         };
       }
+    }
+  }
+  Adw.PreferencesGroup {
+    title: _("Error Bars");
+
+    Adw.SwitchRow use_xerr {
+      title: _("Show X");
+    }
+    Adw.SwitchRow use_yerr {
+      title: _("Show Y");
     }
   }
 }

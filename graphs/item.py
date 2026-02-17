@@ -89,6 +89,8 @@ class DataItem(_PythonItem):
     linewidth = GObject.Property(type=float, default=3)
     markerstyle = GObject.Property(type=int, default=0)
     markersize = GObject.Property(type=float, default=7)
+    showxerr = GObject.Property(type=bool, default=True)
+    showyerr = GObject.Property(type=bool, default=True)
 
     _style_properties = {
         "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
@@ -167,7 +169,7 @@ class GeneratedDataItem(DataItem):
             xstop=xstop,
             steps=steps,
             scale=scale,
-            **cls._extract_params(cls, style, kwargs),
+            **cls._extract_params(cls, style),
             **kwargs,
         )
 
@@ -229,7 +231,7 @@ class EquationItem(_PythonItem):
         """Create new EquationItem."""
         return cls(
             equation=equation,
-            **cls._extract_params(cls, style, kwargs),
+            **cls._extract_params(cls, style),
             **kwargs,
         )
 
@@ -285,7 +287,7 @@ class TextItem(_PythonItem):
             xanchor=xanchor,
             yanchor=yanchor,
             text=text,
-            **cls._extract_params(cls, style, kwargs),
+            **cls._extract_params(cls, style),
             **kwargs,
         )
 

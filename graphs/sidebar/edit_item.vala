@@ -104,6 +104,12 @@ namespace Graphs {
             );
         }
 
+        [GtkChild]
+        public unowned Adw.SwitchRow use_xerr { get; }
+
+        [GtkChild]
+        public unowned Adw.SwitchRow use_yerr { get; }
+
         [GtkCallback]
         private void on_linestyle () {
             linewidth.set_sensitive (linestyle.get_selected () != 0);
