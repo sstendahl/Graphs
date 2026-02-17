@@ -119,6 +119,7 @@ namespace Graphs.MathParser {
                     switch (id) {
                         case Ident.PI: return Math.PI;
                         case Ident.E: return Math.E;
+                        case Ident.INF: return double.INFINITY;
                         default: break;
                     }
 

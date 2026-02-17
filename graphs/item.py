@@ -54,11 +54,16 @@ class _PythonItem(Graphs.Item):
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(self, style: Tuple[RcParams, dict]) -> dict:
+    def _extract_params(
+        self,
+        style: Tuple[RcParams, dict],
+        kwargs: dict,
+    ) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()
+            if prop not in kwargs
         }
 
     def to_dict(self) -> dict:
@@ -101,7 +106,7 @@ class DataItem(_PythonItem):
         """Create new DataItem."""
         return cls(
             data=(xdata, ydata),
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -148,7 +153,7 @@ class GeneratedDataItem(DataItem):
             xstop=xstop,
             steps=steps,
             scale=scale,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -211,7 +216,7 @@ class EquationItem(_PythonItem):
         """Create new EquationItem."""
         return cls(
             equation=equation,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -268,7 +273,7 @@ class TextItem(_PythonItem):
             xanchor=xanchor,
             yanchor=yanchor,
             text=text,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 

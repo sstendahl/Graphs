@@ -72,6 +72,7 @@ namespace Graphs {
             // constants
             PI,
             E,
+            INF,
 
             // trig
             SIN, COS, TAN, COT, SEC, CSC,

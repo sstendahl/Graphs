@@ -181,6 +181,7 @@ namespace Graphs.MathParser {
                             }
                             case 'p': state = 1; break;
                             case 'e': state = 10; break;
+                            case 'i': state = 15; break;
                             case 's': state = 20; break;
                             case 'c': state = 40; break;
                             case 't': state = 60; break;
@@ -203,6 +204,16 @@ namespace Graphs.MathParser {
                     // ex
                     case 11:
                         if (c == 'p') { current_ident = Ident.EXP; state = 200; }
+                        else fail_identifier (ref state); break;
+
+                    // i
+                    case 15:
+                        if (c == 'n') state = 16;
+                        else fail_identifier (ref state); break;
+
+                    // in
+                    case 16:
+                        if (c == 'f') { current_ident = Ident.INF; state = 200; }
                         else fail_identifier (ref state); break;
 
                     // s
