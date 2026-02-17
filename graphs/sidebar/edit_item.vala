@@ -150,11 +150,8 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_simplify () {
-            Value eq_val = Value (typeof (string));
-            item.get_property ("equation", ref eq_val);
-
             try {
-                string equation_str = eq_val.get_string ();
+                string equation_str = equation.get_text ();
                 equation_str = preprocess_equation (equation_str);
                 equation_str = PythonHelper.simplify_equation (equation_str);
                 equation_str = prettify_equation (equation_str);
