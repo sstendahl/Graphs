@@ -102,6 +102,7 @@ template $GraphsColumnsItemGroup: Adw.PreferencesGroup {
 
       Adw.SpinRow column_xerr {
         title: _("X Error Column");
+        sensitive: bind use_xerr.active;
 
         adjustment: Adjustment {
           lower: 0;

@@ -42,13 +42,13 @@ namespace Graphs {
 
                 if (!item_settings.single_column) {
                     used_indices.add (item_settings.column_x);
-                    if (item_settings.use_xerr) {
-                        used_indices.add (item_settings.xerr_index);
-                    }
                 }
                 used_indices.add (item_settings.column_y);
                 if (item_settings.use_yerr) {
                     used_indices.add (item_settings.yerr_index);
+                }
+                if (item_settings.use_xerr) {
+                    used_indices.add (item_settings.xerr_index);
                 }
             }
             this.n_used_indices = used_indices.get_size ();
@@ -62,11 +62,11 @@ namespace Graphs {
 
                 if (!item_settings.single_column) {
                     columns[get_rank (item_settings.column_x)].requests++;
-                    if (item_settings.use_xerr) {
-                        columns[get_rank (item_settings.xerr_index)].requests++;
-                    }
                 }
                 columns[get_rank (item_settings.column_y)].requests++;
+                if (item_settings.use_xerr) {
+                    columns[get_rank (item_settings.xerr_index)].requests++;
+                }
                 if (item_settings.use_yerr) {
                     columns[get_rank (item_settings.yerr_index)].requests++;
                 }
