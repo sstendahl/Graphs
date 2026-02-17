@@ -102,6 +102,44 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     markersize = GObject.Property(type=float, default=7)
     legend = True
 
+    @GObject.Property(type=object)
+    def xerr(self):
+        """Get xerr property."""
+        return self._xerr
+
+    @xerr.setter
+    def xerr(self, value) -> None:
+        """Set xerr property."""
+        self._xerr = value
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        xerr = self._xerr if self._show_xerr else None
+        yerr = self._yerr if self._show_yerr else None
+        if xerr is not None and len(xerr) != len(xdata):
+            return
+        if yerr is not None and len(yerr) != len(xdata):
+            return
+        self._update_errorbars(xdata, ydata, xerr, yerr)
+
+    @GObject.Property(type=object)
+    def yerr(self):
+        """Get yerr property."""
+        return self._yerr
+
+    @yerr.setter
+    def yerr(self, value) -> None:
+        """Set yerr property."""
+        self._yerr = value
+        xdata = numpy.asarray(self._artist.get_xdata())
+        ydata = numpy.asarray(self._artist.get_ydata())
+        xerr = self._xerr if self._show_xerr else None
+        yerr = self._yerr if self._show_yerr else None
+        if xerr is not None and len(xerr) != len(xdata):
+            return
+        if yerr is not None and len(yerr) != len(xdata):
+            return
+        self._update_errorbars(xdata, ydata, xerr, yerr)
+
     @GObject.Property
     def data(self) -> tuple[list, list]:
         """Get data property."""
@@ -112,45 +150,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Set data property, updating error bars to follow."""
         xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
         self._artist.set_data(xdata, ydata)
-        self._update_errorbars(
-            xdata, ydata,
-            self._xerr if self._show_xerr else None,
-            self._yerr if self._show_yerr else None,
-        )
-
-    @GObject.Property
-    def xerr(self):
-        """Get xerr property."""
-        return self._xerr
-
-    @xerr.setter
-    def xerr(self, xerr) -> None:
-        """Set xerr property, updating error bars to follow."""
-        self._xerr = xerr
-        xdata = numpy.asarray(self._artist.get_xdata())
-        ydata = numpy.asarray(self._artist.get_ydata())
-        self._update_errorbars(
-            xdata, ydata,
-            xerr if self._show_xerr else None,
-            self._yerr if self._show_yerr else None,
-        )
-
-    @GObject.Property
-    def yerr(self):
-        """Get yerr property."""
-        return self._yerr
-
-    @yerr.setter
-    def yerr(self, yerr) -> None:
-        """Set yerr property, updating error bars to follow."""
-        self._yerr = yerr
-        xdata = numpy.asarray(self._artist.get_xdata())
-        ydata = numpy.asarray(self._artist.get_ydata())
-        self._update_errorbars(
-            xdata, ydata,
-            self._xerr if self._show_xerr else None,
-            yerr if self._show_yerr else None,
-        )
+        if self._xerr is None or len(self._xerr) == len(xdata):
+            self._update_errorbars(
+                xdata, ydata,
+                self._xerr if self._show_xerr else None,
+                self._yerr if self._show_yerr else None,
+            )
 
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
@@ -190,33 +195,34 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Update all error bar artists to match the current data position."""
         xdata = numpy.asarray(xdata)
         ydata = numpy.asarray(ydata)
-        _, caplines, barlinecols = self.plot
 
-        # barlinecols[0] = y-direction, barlinecols[1] = x-direction
-        bar_iter = iter(barlinecols)
-        if yerr is not None:
-            bar = next(bar_iter)
-            bar.set_segments(
-                [[[x, y - ye], [x, y + ye]]
-                 for x, y, ye in zip(xdata, ydata, yerr)],
-            )
-        if xerr is not None:
-            bar = next(bar_iter)
-            bar.set_segments(
-                [[[x - xe, y], [x + xe, y]]
-                 for x, y, xe in zip(xdata, ydata, xerr)],
-            )
-
-        if caplines:
-            it = iter(caplines)
+        if self._xbar is not None:
+            self._xbar.set_visible(xerr is not None)
             if xerr is not None:
-                cap_xlo, cap_xhi = next(it), next(it)
-                cap_xlo.set_data(xdata - xerr, ydata)
-                cap_xhi.set_data(xdata + xerr, ydata)
+                self._xbar.set_segments(
+                    [[[x - xe, y], [x + xe, y]]
+                     for x, y, xe in zip(xdata, ydata, xerr)],
+                )
+
+        if self._ybar is not None:
+            self._ybar.set_visible(yerr is not None)
             if yerr is not None:
-                cap_ylo, cap_yhi = next(it), next(it)
-                cap_ylo.set_data(xdata, ydata - yerr)
-                cap_yhi.set_data(xdata, ydata + yerr)
+                self._ybar.set_segments(
+                    [[[x, y - ye], [x, y + ye]]
+                     for x, y, ye in zip(xdata, ydata, yerr)],
+                )
+
+        for cap in self._xcaps:
+            cap.set_visible(xerr is not None)
+        if xerr is not None and self._xcaps:
+            self._xcaps[0].set_data(xdata - xerr, ydata)
+            self._xcaps[1].set_data(xdata + xerr, ydata)
+
+        for cap in self._ycaps:
+            cap.set_visible(yerr is not None)
+        if yerr is not None and self._ycaps:
+            self._ycaps[0].set_data(xdata, ydata - yerr)
+            self._ycaps[1].set_data(xdata, ydata + yerr)
 
     def get_artist(self) -> artist:
         """Get underlying mpl artist."""
@@ -259,17 +265,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         xdata = item.get_xdata()
         ydata = item.get_ydata()
         _, graphs_params = axis.figure._style_params
-        ecolor = graphs_params.get("errorbar.ecolor") or None
-        if ecolor:
-            if not Graphs.tools_hex_to_rgba(f"#{ecolor}").equal(
-                Graphs.tools_hex_to_rgba("invalid")
-            ):
-                ecolor = f"#{ecolor}"
+        ecolor = graphs_params["errorbar.ecolor"]
+        if ecolor.lower() == "none":
+            ecolor = None  # None follows linecolor instead
         self.plot = axis.errorbar(
             xdata,
             ydata,
-            xerr = self._xerr if self._show_xerr else None,
-            yerr = self._yerr if self._show_yerr else None,
+            xerr=self._xerr,
+            yerr=self._yerr,
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
@@ -279,6 +282,18 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             elinewidth=graphs_params["errorbar.linewidth"],
             barsabove=graphs_params["errorbar.barsabove"],
             ecolor=ecolor,
+        )
+        _, caplines, barlinecols = self.plot
+        bar_iter = iter(barlinecols)
+        self._xbar = next(bar_iter) if self._xerr is not None else None
+        self._ybar = next(bar_iter) if self._yerr is not None else None
+        cap_iter = iter(caplines)
+        self._xcaps = (next(cap_iter), next(cap_iter)) if self._xerr is not None and caplines else ()
+        self._ycaps = (next(cap_iter), next(cap_iter)) if self._yerr is not None and caplines else ()
+        self._update_errorbars(
+            xdata, ydata,
+            self._xerr if self._show_xerr else None,
+            self._yerr if self._show_yerr else None,
         )
         self.name = item.get_name()
         self._artist = self.plot[0]

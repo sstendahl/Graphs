@@ -641,6 +641,12 @@ class DataOperations():
                 for index in sorted(remove_list, reverse=True):
                     new_xdata.pop(index)
                     new_ydata.pop(index)
+                if item.props.xerr is not None:
+                    item.props.xerr = numpy.delete(
+                        item.props.xerr, remove_list)
+                if item.props.yerr is not None:
+                    item.props.yerr = numpy.delete(
+                        item.props.yerr, remove_list)
             else:
                 i = 0
                 for index, masked in enumerate(mask):
