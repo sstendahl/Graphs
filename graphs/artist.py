@@ -65,12 +65,12 @@ class ItemArtistWrapper(GObject.Object):
     @GObject.Property(type=str, default="")
     def name(self) -> str:
         """Get name/label property."""
-        return self.plot.get_label()
+        return self._artist.get_label()
 
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self.plot.set_label(_ellipsize(name))
+        self.get_artist().set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
