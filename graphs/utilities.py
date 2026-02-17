@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
-import contextlib
-
 from gi.repository import GLib, Graphs
 
 from graphs import scales
@@ -9,8 +7,6 @@ from graphs import scales
 import numexpr
 
 import numpy
-
-import sympy
 
 
 def get_value_at_fraction(
@@ -179,15 +175,3 @@ def validate_equation(equation: str, limits: tuple = None) -> bool:
         return validate is not None
     except GLib.Error:
         return False
-
-
-def string_to_function(equation_name: str) -> sympy.FunctionClass:
-    """Convert a string into a sympy function."""
-    variables = ["x"] + Graphs.math_tools_get_free_variables(equation_name)
-    sym_vars = sympy.symbols(variables)
-    with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
-        symbolic = sympy.sympify(
-            equation_name,
-            locals=dict(zip(variables, sym_vars)),
-        )
-        return sympy.lambdify(sym_vars, symbolic)

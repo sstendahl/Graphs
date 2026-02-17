@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Curve fitting module."""
+import contextlib
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs
+from gi.repository import Adw, GLib, Gio, Graphs
 
 from graphs import canvas, utilities
 from graphs.item import DataItem, EquationItem, FillItem
@@ -95,10 +96,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             xdata=numpy.zeros(len(self.data_curve.get_xdata())),
             ydata=numpy.zeros(len(self.data_curve.get_xdata())),
             color=DATA_COLOR,
+            linestyle=LINE_STYLE,
+            markerstyle=MARKER_STYLE,
+            markersize=MARKER_SIZE,
         )
-        self.residuals_item.linestyle = LINE_STYLE
-        self.residuals_item.markerstyle = MARKER_STYLE
-        self.residuals_item.markersize = MARKER_SIZE
         self._residuals_items.append(self.residuals_item)
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
@@ -151,7 +152,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return
         ax = cv.figure.axis
 
-        equation = Graphs.preprocess_equation(self.fitted_curve.equation)
+        equation = self.fitted_curve.equation
         _xfit, yfit = utilities.equation_to_data(equation, self._xlim)
         _xfill, yfill_low, yfill_high = self.fill.props.data
         ydata = self.data_curve.get_ydata()
@@ -166,8 +167,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def on_equation_change(self, _sender, equation: str) -> bool:
         """Handle equation changes and update parameters."""
-        processed_eq = Graphs.preprocess_equation(equation)
-        free_vars = Graphs.math_tools_get_free_variables(processed_eq)
+        try:
+            processed_eq = Graphs.preprocess_equation(equation)
+            free_vars = set(Graphs.math_tools_get_free_variables(processed_eq))
+        except GLib.Error:
+            return False
         if not free_vars:
             self._clear_fit()
             self.set_results(error="equation")
@@ -176,13 +180,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.set_equation_string(processed_eq)
         self._update_parameter_widgets(free_vars)
         if self.fit_result is not None:
-            self._update_residuals(self.fit_result.residuals)
+            self._update_residuals()
         return True
 
-    def _update_parameter_widgets(self, free_vars: list) -> None:
+    def _update_parameter_widgets(self, free_vars: set) -> None:
         """Update parameter widgets when equation changes."""
         current_params = set(self.fitting_parameters._items.keys())
-        if current_params == set(free_vars):
+        if current_params == free_vars:
             return
 
         self.fitting_parameters.update(free_vars)
@@ -232,9 +236,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         value_error = False
         for key, widget in widgets.items():
             try:
-                vals[key] = float(widget.get_text())
+                vals[key] = Graphs.evaluate_string(widget.get_text())
                 widget.remove_css_class("error")
-            except ValueError:
+            except GLib.Error:
                 widget.add_css_class("error")
                 value_error = True
 
@@ -254,33 +258,42 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return False
 
         params.set_initial(vals["init"])
-        params.set_lower_bound(str(vals["low"]))
-        params.set_upper_bound(str(vals["high"]))
+        params.set_lower_bound(vals["low"])
+        params.set_upper_bound(vals["high"])
         return True
 
     def on_fit_curve_request(self, *_args) -> None:
         """Handle fit curve request."""
-        eq_str = self.get_equation_string()
-        if not eq_str:
+        if not self.get_equation_string():
             self.set_results(error="equation")
             return
 
-        fit_result = self._perform_fit(eq_str)
+        fit_result = self._perform_fit()
 
         if fit_result is None:
             return
         self.fit_result = fit_result
 
         # Update all UI components
-        self._update_fitted_curve(eq_str, fit_result.parameters)
-        self._update_residuals(fit_result.residuals)
+        self._update_fitted_curve()
+        self._update_residuals()
         self._update_confidence_band()
         self.update_canvas_data()
         self.set_results()
 
-    def _perform_fit(self, eq_str: str) -> FitResult:
+    def _get_function(self) -> sympy.FunctionClass:
+        variables = ["x"] + list(self.fitting_parameters.parameters)
+        sym_vars = sympy.symbols(variables)
+        with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
+            symbolic = sympy.sympify(
+                self.get_equation_string(),
+                locals=dict(zip(variables, sym_vars)),
+            )
+            return sympy.lambdify(sym_vars, symbolic)
+
+    def _perform_fit(self) -> FitResult:
         """Perform the actual curve fitting."""
-        func = utilities.string_to_function(eq_str)
+        func = self._get_function()
         if not func:
             self.set_results(error="equation")
             return None
@@ -289,7 +302,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         y_data = numpy.asarray(self.data_curve.get_ydata())
 
         try:
-            param, param_cov = curve_fit(
+            params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.fitting_parameters.get_p0(),
                 bounds=self.fitting_parameters.get_bounds(),
@@ -315,11 +328,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return None
 
         # Calculate statistics
-        fitted_y = func(x_data, *param)
+        fitted_y = func(x_data, *params)
         residuals = y_data - fitted_y
         r2, rmse = self._calculate_statistics(y_data, fitted_y)
 
-        return FitResult(param, param_cov, r2, rmse, residuals, fitted_y)
+        return FitResult(params, param_cov, r2, rmse, residuals, fitted_y)
 
     def _calculate_statistics(
         self,
@@ -336,16 +349,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         return f"{r2:.3g}", f"{rmse:.3g}"
 
-    def _update_fitted_curve(self, eq_str: str, params: numpy.ndarray) -> None:
+    def _update_fitted_curve(self) -> None:
         """Update the fitted curve on the main canvas."""
-        eq_str = eq_str.lower()
-        equation = Graphs.preprocess_equation(eq_str)
-        eq_name = eq_str
-        free_vars = Graphs.math_tools_get_free_variables(eq_str)
+        equation = self.get_equation_string()
+        eq_name = equation.lower()
 
         # Substitute each free variables with the calculated value.
-        for i, var in enumerate(free_vars):
-            param_value = params[i]
+        free_vars = self.fitting_parameters.parameters
+        params = self.fit_result.parameters
+        for var, param_value in zip(free_vars, params):
             var_pattern = rf"\b{re.escape(var)}\b"
             equation = re.sub(var_pattern, f"({param_value})", equation)
             rounded = f"{param_value:.3g}"
@@ -379,12 +391,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             for collection in cv.figure.axis.collections:
                 collection.set_visible(True)
             self.set_error(False)
-            self._update_residuals(self.fit_result.residuals)
+            self._update_residuals()
             self.load_canvas()
 
-    def _update_residuals(self, residuals: numpy.ndarray) -> None:
+    def _update_residuals(self) -> None:
         """Update residuals plot."""
         xdata = numpy.asarray(self.data_curve.get_xdata())
+        if self.fit_result is None:
+            residuals = numpy.zeros(len(self.data_curve.get_xdata()))
+        else:
+            residuals = self.fit_result.residuals
         self.residuals_item.props.data = xdata, residuals
         cv = self.get_residuals_canvas()
         if not cv:
@@ -419,13 +435,12 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         conf_level = self.get_settings().get_enum("confidence")
         x_min, x_max = self._xlim
-        equation = Graphs.preprocess_equation(self.fitted_curve.equation)
         x_values, y_values = utilities.equation_to_data(
-            equation, (x_min, x_max))
+            self.fitted_curve.equation, (x_min, x_max))
         x_values = numpy.asarray(x_values)
 
         eq_str = self.get_equation_string()
-        param_names = Graphs.math_tools_get_free_variables(eq_str)
+        param_names = self.fitting_parameters.parameters
 
         sym_x = sympy.Symbol("x", real=True)
         sym_params_map = \
@@ -458,7 +473,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Clear all fit-related data by hiding curves."""
         self.fit_result = None
         self.set_error(True)
-        self._update_residuals(numpy.zeros(len(self.data_curve.get_xdata())))
+        self._update_residuals()
         # Hide fitted curve and fill by hiding their matplotlib artists
         cv = self.get_canvas()
 
@@ -514,16 +529,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             "bold",
         )
 
-        eq_str = self.get_equation_string()
-        free_vars = Graphs.math_tools_get_free_variables(eq_str)
-        diag_cov = numpy.sqrt(numpy.diagonal(self.fit_result.covariance))
+        free_vars = self.fitting_parameters.parameters
+        diag_covars = numpy.sqrt(numpy.diagonal(self.fit_result.covariance))
+        params = self.fit_result.parameters
         conf_level = self.get_settings().get_enum("confidence")
 
-        for i, var in enumerate(free_vars):
-            val = f"{self.fit_result.parameters[i]:.3g}"
-            line = f"{var}: {val}"
+        for var, diag_cov, param in zip(free_vars, diag_covars, params):
+            line = f"{var}: {param:.3g}"
             if conf_level > 0:
-                err = f"{diag_cov[i] * conf_level:.3g}"
+                err = f"{diag_cov * conf_level:.3g}"
                 line += f" (± {err})"
             buffer.insert(buffer.get_end_iter(), f"{line}\n")
 
@@ -560,20 +574,13 @@ class FittingParameterContainer:
         """Iterate over items."""
         return iter(self._items.values())
 
-    def update(self, parameters: list) -> None:
+    def update(self, parameters: set) -> None:
         """Update parameters with new values."""
-        new_items = {}
-        for var in parameters:
-            new_items[var] = self._items.get(
-                var,
-                Graphs.FittingParameter(
-                    name=var,
-                    initial=1.0,
-                    lower_bound="-inf",
-                    upper_bound="inf",
-                ),
-            )
-        self._items = new_items
+        self.parameters = parameters
+        self._items = {
+            var: self._items.get(var, Graphs.FittingParameter.new(var))
+            for var in parameters
+        }
 
     def get_p0(self) -> list:
         """Get the initial values of the fitting."""
@@ -581,6 +588,6 @@ class FittingParameterContainer:
 
     def get_bounds(self) -> tuple:
         """Get the bounds of the fitting parameters."""
-        lower_bounds = [float(item_.get_lower_bound()) for item_ in self]
-        upper_bounds = [float(item_.get_upper_bound()) for item_ in self]
+        lower_bounds = [item_.get_lower_bound() for item_ in self]
+        upper_bounds = [item_.get_upper_bound() for item_ in self]
         return (lower_bounds, upper_bounds)

@@ -6,8 +6,29 @@ namespace Graphs {
     public class FittingParameter : Object {
         public string name { get; construct set; }
         public double initial { get; construct set; }
-        public string lower_bound { get; construct set; }
-        public string upper_bound { get; construct set; }
+        // properties cannot assume infinite values
+        private double lower_bound = -double.INFINITY;
+        private double upper_bound = double.INFINITY;
+
+        public FittingParameter (string name) {
+            Object (name: name, initial: 1d);
+        }
+
+        public double get_lower_bound () {
+            return lower_bound;
+        }
+
+        public void set_lower_bound (double lower_bound) {
+            this.lower_bound = lower_bound;
+        }
+
+        public double get_upper_bound () {
+            return upper_bound;
+        }
+
+        public void set_upper_bound (double upper_bound) {
+            this.upper_bound = upper_bound;
+        }
     }
 
     private const string[] EQUATIONS = {
