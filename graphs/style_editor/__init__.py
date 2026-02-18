@@ -66,8 +66,6 @@ class PythonStyleEditor(Graphs.StyleEditor):
                     ydata=ydata,
                     xerr=xerr,
                     yerr=yerr,
-                    showxerr=True,
-                    showyerr=True,
                     name=_("Example Item"),
                     color="#000000",
                 ),
