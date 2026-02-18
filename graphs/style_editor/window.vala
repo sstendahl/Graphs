@@ -26,11 +26,11 @@ namespace Graphs {
         protected unowned Adw.ToolbarView content_view { get; }
 
         protected Gtk.Box editor_box {
-            get { return editor_bin.get_child () as Gtk.Box; }
+            get { return (Gtk.Box) editor_bin.get_child (); }
             set { editor_bin.set_child (value); }
         }
         protected Canvas canvas {
-            get { return canvas_bin.get_child () as Canvas; }
+            get { return (Canvas) canvas_bin.get_child (); }
             set { canvas_bin.set_child (value); }
         }
         protected string stylename {
@@ -114,7 +114,7 @@ namespace Graphs {
                     close_style ();
                     return;
                 }
-                var dialog = Tools.build_dialog ("save_style_changes") as Adw.AlertDialog;
+                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_style_changes");
                 dialog.response.connect ((d, response) => {
                     switch (response) {
                         case "discard": {
@@ -136,7 +136,7 @@ namespace Graphs {
             show_shortcuts_action.activate.connect (() => {
                 string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
                 var builder = new Builder.from_resource (path);
-                var shortcuts_dialog = builder.get_object ("shortcuts") as Adw.ShortcutsDialog;
+                var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (this);
             });
             add_action (show_shortcuts_action);
@@ -203,14 +203,14 @@ namespace Graphs {
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = object as ListItem;
+            ListItem item = (ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = object as ListItem;
-            StylePreview preview = item.get_child () as StylePreview;
-            Style style = item.get_item () as Style;
+            ListItem item = (ListItem) object;
+            StylePreview preview = (StylePreview) item.get_child ();
+            Style style = (Style) item.get_item ();
             preview.style = style;
             if (style.mutable && !preview.menu_button.get_visible ()) {
                 preview.menu_button.set_visible (true);
@@ -230,7 +230,7 @@ namespace Graphs {
                 action_group.add_action (open_with_action);
                 var delete_action = new SimpleAction ("delete", null);
                 delete_action.activate.connect (() => {
-                    var dialog = Tools.build_dialog ("delete_style") as Adw.AlertDialog;
+                    var dialog = (Adw.AlertDialog) Tools.build_dialog ("delete_style");
                     string msg = _("Are you sure you want to delete %s?");
                     dialog.set_body (msg.printf (style.name));
                     dialog.response.connect ((d, response) => {
@@ -249,7 +249,7 @@ namespace Graphs {
         }
 
         public override bool close_request () {
-            var application = application as Application;
+            var application = (Application) application;
 
             if (_force_close) {
                 application.on_style_editor_closed (this);
@@ -257,7 +257,7 @@ namespace Graphs {
             }
 
             if (unsaved) {
-                var dialog = Tools.build_dialog ("save_style_changes") as Adw.AlertDialog;
+                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_style_changes");
                 dialog.response.connect ((d, response) => {
                     switch (response) {
                         case "discard": {

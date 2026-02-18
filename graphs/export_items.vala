@@ -23,7 +23,7 @@ namespace Graphs {
                     } catch {}
                 });
             } else {
-                Item item = data.get_item (0) as Item;
+                Item item = (Item) data.get_item (0);
                 dialog.set_initial_name (item.name + ".txt");
                 dialog.set_filters (Tools.create_file_filters (
                     true,

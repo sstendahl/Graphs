@@ -7,7 +7,7 @@ namespace Graphs {
         private unowned Adw.ComboRow sheet_selector;
 
         public SpreadsheetGroup (ImportSettings settings) {
-            var string_list = settings.get_item ("sheet-names") as Gtk.StringList;
+            var string_list = (Gtk.StringList) settings.get_item ("sheet-names");
             sheet_selector.set_model (string_list);
             sheet_selector.set_selected (settings.get_int ("sheet-index"));
 

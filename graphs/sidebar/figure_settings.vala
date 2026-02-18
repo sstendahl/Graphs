@@ -183,7 +183,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
-            var entry = object as Adw.EntryRow;
+            var entry = (Adw.EntryRow) object;
             if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);

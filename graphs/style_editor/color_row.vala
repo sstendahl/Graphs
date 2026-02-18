@@ -32,7 +32,7 @@ namespace Graphs {
             var dialog = new ColorDialog () { with_alpha = false };
             try {
                 this.color = yield dialog.choose_rgba (
-                    this.get_root () as Gtk.Window, color, null
+                    (Gtk.Window) this.get_root (), color, null
                 );
             } catch {}
         }

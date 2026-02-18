@@ -43,7 +43,7 @@ namespace Graphs {
             var dialog = new ColorDialog () { with_alpha = false };
             try {
                 RGBA rgba = yield dialog.choose_rgba (
-                    this.get_root () as Gtk.Window,
+                    (Gtk.Window) this.get_root (),
                     Tools.hex_to_rgba (color),
                     null
                 );

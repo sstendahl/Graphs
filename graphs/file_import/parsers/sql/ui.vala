@@ -22,7 +22,7 @@ namespace Graphs {
         private bool is_initial_setup = true;
 
         public SqlGroup (ImportSettings settings) throws IOError {
-            this.db_reader = settings.get_item ("db-reader") as Graphs.DatabaseReader;
+            this.db_reader = (DatabaseReader) settings.get_item ("db-reader");
             this.settings = settings;
 
             setup_ui ();
@@ -48,7 +48,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_table_changed () {
             if (is_initial_setup) return;
-            var selected_item = table_row.get_selected_item () as StringObject;
+            var selected_item = (StringObject) table_row.get_selected_item ();
             if (selected_item == null) return;
 
             settings.set_string ("table-name", selected_item.get_string ());
@@ -62,8 +62,8 @@ namespace Graphs {
         [GtkCallback]
         private void on_columns_changed () {
             if (is_initial_setup) return;
-            var selected_x = column_x.get_selected_item () as StringObject;
-            var selected_y = column_y.get_selected_item () as StringObject;
+            var selected_x = (StringObject) column_x.get_selected_item ();
+            var selected_y = (StringObject) column_y.get_selected_item ();
 
             if (selected_x == null || selected_y == null) return;
             settings.set_string ("x-column", selected_x.get_string ());

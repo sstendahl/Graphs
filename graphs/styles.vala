@@ -167,7 +167,7 @@ namespace Graphs {
             string new_name = Tools.get_duplicate_string (
                 name, list_stylenames ()
             );
-            var style = style_model.get_item (template) as Style;
+            var style = (Style) style_model.get_item (template);
             var filename = filename_from_stylename (new_name);
             try {
                 var destination = style_dir.get_child_for_display_name (filename);
@@ -178,7 +178,7 @@ namespace Graphs {
 
         private static int find_style_for_file (File file, out Style? style) {
             for (uint i = 1; i < style_model.get_n_items (); i++) {
-                Style i_style = style_model.get_item (i) as Style;
+                Style i_style = (Style) style_model.get_item (i);
                 if (i_style.file.equal (file)) {
                     style = i_style;
                     return (int) i;
@@ -235,7 +235,7 @@ namespace Graphs {
         }
 
         public Texture preview {
-            get { return picture.get_paintable () as Texture; }
+            get { return (Texture) picture.get_paintable (); }
             set {
                 picture.set_paintable (value);
                 if (_style.mutable) {
