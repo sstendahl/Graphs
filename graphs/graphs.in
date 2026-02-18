@@ -43,10 +43,9 @@ if __name__ == "__main__":
     def on_startup(application):
         """Handle Application setup."""
         import logging
-        loglevel = logging.DEBUG if "@DEBUG@" == "True" else logging.INFO
         logging.basicConfig(
             format="%(levelname)s: %(message)s",
-            level=loglevel,
+            level=logging.DEBUG if "@DEBUG@" == "True" else logging.INFO,
         )
         logging.getLogger("matplotlib.font_manager").disabled = True
         logging.debug("Begin Application startup")
