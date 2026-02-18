@@ -16,11 +16,6 @@ namespace Graphs {
             return instance.add_equation_request.emit (window, name);
         }
 
-        protected signal void create_item_settings_request (EditItemPage page, Item item);
-        public static void create_item_settings (EditItemPage page, Item item) {
-            instance.create_item_settings_request.emit (page, item);
-        }
-
         protected signal StyleEditor create_style_editor_request ();
         public static StyleEditor create_style_editor () {
             return instance.create_style_editor_request.emit ();
@@ -62,6 +57,11 @@ namespace Graphs {
         protected signal void python_method_request (Object object, string method);
         public static void run_method (Object object, string method) {
             instance.python_method_request.emit (object, method);
+        }
+
+        protected signal string simplify_equation_request (string input);
+        public static string simplify_equation (string input) {
+            return instance.simplify_equation_request.emit (input);
         }
 
         protected signal bool validate_equation_request (string input);

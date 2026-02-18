@@ -18,7 +18,6 @@ python.install_sources(
     'file_import/parsers/xrdml/__init__.py',
     'file_import/parsers/xry/__init__.py',
     'file_import/__init__.py',
-    'sidebar/edit_item.py',
     'style_editor/__init__.py',
     'style_editor/editor_box.py',
     'application.py',

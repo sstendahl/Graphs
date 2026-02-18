@@ -8,17 +8,23 @@ namespace Graphs {
         [GtkChild]
         private unowned Box edit_item_box { get; }
 
-        public EditItemPage () {}
-
-        public void clear () {
+        public void load_item (Item item) {
             Widget widget;
             while ((widget = edit_item_box.get_last_child ()) != null) {
                 edit_item_box.remove (widget);
             }
-        }
 
-        public void append (Widget widget) {
-            edit_item_box.append (widget);
+            edit_item_box.append (new EditItemBaseBox (item));
+            string typename = item.get_type ().name ();
+
+            if (typename == "GraphsGeneratedDataItem") {
+                edit_item_box.append (new EditItemGeneratedDataItemBox (item));
+            }
+            if (typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem") {
+                edit_item_box.append (new EditItemDataItemBox (item));
+            } else if (typename == "GraphsEquationItem") {
+                edit_item_box.append (new EditItemEquationItemBox (item));
+            }
         }
     }
 
@@ -26,13 +32,13 @@ namespace Graphs {
     public class EditItemBaseBox : Box {
 
         [GtkChild]
-        public unowned Adw.EntryRow name_entry { get; }
+        private unowned Adw.EntryRow name_entry { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow xposition { get; }
+        private unowned Adw.ComboRow xposition { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow yposition { get; }
+        private unowned Adw.ComboRow yposition { get; }
 
         public EditItemBaseBox (Item item) {
             item.bind_property (
@@ -60,16 +66,43 @@ namespace Graphs {
     public class EditItemDataItemBox : Box {
 
         [GtkChild]
-        public unowned Adw.ComboRow linestyle { get; }
+        private unowned Adw.ComboRow linestyle { get; }
 
         [GtkChild]
-        public unowned Scale linewidth { get; }
+        private unowned Scale linewidth { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow markerstyle { get; }
+        private unowned Adw.ComboRow markerstyle { get; }
 
         [GtkChild]
-        public unowned Scale markersize { get; }
+        private unowned Scale markersize { get; }
+
+        public EditItemDataItemBox (Item item) {
+            item.bind_property (
+                "linestyle",
+                linestyle,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "linewidth",
+                linewidth.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "markerstyle",
+                markerstyle,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "markersize",
+                markersize.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+        }
 
         [GtkCallback]
         private void on_linestyle () {
@@ -82,41 +115,139 @@ namespace Graphs {
         }
     }
 
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation-group.ui")]
+    public class EditItemEquationGroup : Adw.PreferencesGroup {
+
+        [GtkChild]
+        private unowned Adw.EntryRow equation { get; }
+
+        [GtkChild]
+        private unowned Adw.ButtonRow simplify { get; }
+
+        private Item item;
+
+        public void setup (Item item) {
+            this.item = item;
+
+            Value text = Value (typeof (string));
+            item.get_property ("equation", ref text);
+
+            equation.set_text (text.get_string ());
+            equation.changed.connect (on_equation_change);
+        }
+
+        private void on_equation_change () {
+            string text = equation.get_text ();
+            if (PythonHelper.validate_equation (text)) {
+                equation.remove_css_class ("error");
+                Value val = Value (typeof (string));
+                val.set_string (text);
+                item.set_property ("equation", val);
+            } else {
+                equation.add_css_class ("error");
+            }
+        }
+
+        [GtkCallback]
+        private void on_simplify () {
+            try {
+                string equation_str = equation.get_text ();
+                equation_str = preprocess_equation (equation_str);
+                equation_str = PythonHelper.simplify_equation (equation_str);
+                equation_str = prettify_equation (equation_str);
+
+                equation.set_text (equation_str);
+            } catch (MathError e) {}
+        }
+    }
+
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation.ui")]
     public class EditItemEquationItemBox : Box {
 
         [GtkChild]
-        public unowned Adw.EntryRow equation { get; }
+        private unowned EditItemEquationGroup equation_group { get; }
 
         [GtkChild]
-        public unowned Adw.ButtonRow simplify { get; }
+        private unowned Adw.ComboRow linestyle { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow linestyle { get; }
+        private unowned Scale linewidth { get; }
 
-        [GtkChild]
-        public unowned Scale linewidth { get; }
+        public EditItemEquationItemBox (Item item) {
+            equation_group.setup (item);
+            item.bind_property (
+                "linestyle",
+                linestyle,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "linewidth",
+                linewidth.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+        }
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/generated-data.ui")]
     public class EditItemGeneratedDataItemBox : Box {
 
         [GtkChild]
-        public unowned Adw.EntryRow equation { get; }
+        private unowned EditItemEquationGroup equation_group { get; }
 
         [GtkChild]
-        public unowned Adw.ButtonRow simplify { get; }
+        private unowned Adw.EntryRow xstart { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow xstart { get; }
+        private unowned Adw.EntryRow xstop { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow xstop { get; }
+        private unowned Adw.SpinRow steps { get; }
 
         [GtkChild]
-        public unowned Adw.SpinRow steps { get; }
+        private unowned Adw.ComboRow scale { get; }
 
-        [GtkChild]
-        public unowned Adw.ComboRow scale { get; }
+        private Item item;
+
+        public EditItemGeneratedDataItemBox (Item item) {
+            this.item = item;
+            equation_group.setup (item);
+
+            Value text = Value (typeof (string));
+            item.get_property ("xstart", ref text);
+            xstart.set_text (text.get_string ());
+            item.get_property ("xstop", ref text);
+            xstop.set_text (text.get_string ());
+
+            xstart.changed.connect (on_entry_change);
+            xstop.changed.connect (on_entry_change);
+
+            item.bind_property (
+                "steps",
+                steps,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "scale",
+                scale,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+        }
+
+        private void on_entry_change (Editable entry) {
+            string text = entry.get_text ();
+            string prop = entry.get_buildable_id ();
+            if (try_evaluate_string (text)) {
+                entry.remove_css_class ("error");
+                Value val = Value (typeof (string));
+                val.set_string (text);
+                item.set_property (prop, val);
+            } else {
+                entry.add_css_class ("error");
+            }
+        }
     }
 }

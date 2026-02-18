@@ -80,6 +80,7 @@ blueprint_files = [
   'ui/edit-item/base.blp',
   'ui/edit-item/data.blp',
   'ui/edit-item/equation.blp',
+  'ui/edit-item/equation-group.blp',
   'ui/edit-item/generated-data.blp',
   'ui/import/columns/box.blp',
   'ui/import/columns/item-group.blp',
