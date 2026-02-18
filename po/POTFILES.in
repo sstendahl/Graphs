@@ -8,11 +8,6 @@ data/ui/dialogs/legacy-migration-disallowed.blp
 data/ui/dialogs/reset-import-settings.blp
 data/ui/dialogs/save-project-changes.blp
 data/ui/dialogs/save-style-changes.blp
-data/ui/edit-item/base.blp
-data/ui/edit-item/data.blp
-data/ui/edit-item/equation.blp
-data/ui/edit-item/equation-group.blp
-data/ui/edit-item/generated-data.blp
 data/ui/import/columns/box.blp
 data/ui/import/columns/item-group.blp
 data/ui/import/columns/main-group.blp
@@ -22,9 +17,14 @@ data/ui/import/spreadsheet/main-group.blp
 data/ui/import/spreadsheet/item-group.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
+data/ui/sidebar/edit-item/base.blp
+data/ui/sidebar/edit-item/data.blp
+data/ui/sidebar/edit-item/equation.blp
+data/ui/sidebar/edit-item/equation-group.blp
+data/ui/sidebar/edit-item/generated-data.blp
+data/ui/sidebar/edit-item/page.blp
 data/ui/sidebar/figure-settings/settings-page.blp
 data/ui/sidebar/figure-settings/style-page.blp
-data/ui/sidebar/edit-item.blp
 data/ui/sidebar/main.blp
 data/ui/sidebar/operations.blp
 data/ui/style-editor/add-style.blp

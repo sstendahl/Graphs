@@ -3,7 +3,7 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/page.ui")]
     public class EditItemPage : Adw.NavigationPage {
         [GtkChild]
         private unowned Box edit_item_box { get; }
@@ -28,7 +28,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/base.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/base.ui")]
     public class EditItemBaseBox : Box {
 
         [GtkChild]
@@ -62,7 +62,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/data.ui")]
     public class EditItemDataItemBox : Box {
 
         [GtkChild]
@@ -115,7 +115,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation-group.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/equation-group.ui")]
     public class EditItemEquationGroup : Adw.PreferencesGroup {
 
         [GtkChild]
@@ -164,7 +164,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/equation.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/equation.ui")]
     public class EditItemEquationItemBox : Box {
 
         [GtkChild]
@@ -193,7 +193,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/edit-item/generated-data.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/generated-data.ui")]
     public class EditItemGeneratedDataItemBox : Box {
 
         [GtkChild]
