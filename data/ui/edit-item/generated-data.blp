@@ -16,12 +16,18 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
       Adw.PreferencesGroup {
         Adw.EntryRow xstart {
           title: _("X Start");
+          show-apply-button: true;
+          notify::text => $on_entry_change();
+          apply => $on_entry_apply();
         }
       }
 
       Adw.PreferencesGroup {
         Adw.EntryRow xstop {
           title: _("X Stop");
+          show-apply-button: true;
+          notify::text => $on_entry_change();
+          apply => $on_entry_apply();
         }
       }
     }
@@ -30,6 +36,7 @@ template $GraphsEditItemGeneratedDataItemBox: Box {
   Adw.PreferencesGroup {
     Adw.SpinRow steps {
       title: _("Steps");
+      input => $on_steps_input();
 
       adjustment: Adjustment {
         step-increment: 1;

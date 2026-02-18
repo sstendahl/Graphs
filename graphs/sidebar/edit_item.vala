@@ -125,27 +125,31 @@ namespace Graphs {
         private unowned Adw.ButtonRow simplify { get; }
 
         private Item item;
+        private Value val;
 
         public void setup (Item item) {
             this.item = item;
+            this.val = Value (typeof (string));
 
-            Value text = Value (typeof (string));
-            item.get_property ("equation", ref text);
-
-            equation.set_text (text.get_string ());
-            equation.changed.connect (on_equation_change);
+            item.get_property ("equation", ref val);
+            equation.set_text (val.get_string ());
         }
 
+        [GtkCallback]
         private void on_equation_change () {
-            string text = equation.get_text ();
-            if (PythonHelper.validate_equation (text)) {
+            if (PythonHelper.validate_equation (equation.get_text ())) {
                 equation.remove_css_class ("error");
-                Value val = Value (typeof (string));
-                val.set_string (text);
-                item.set_property ("equation", val);
+                equation.set_show_apply_button (true);
             } else {
                 equation.add_css_class ("error");
+                equation.set_show_apply_button (false);
             }
+        }
+
+        [GtkCallback]
+        private void on_equation_apply () {
+            val.set_string (equation.get_text ());
+            item.set_property ("equation", val);
         }
 
         [GtkCallback]
@@ -157,6 +161,8 @@ namespace Graphs {
                 equation_str = prettify_equation (equation_str);
 
                 equation.set_text (equation_str);
+                val.set_string (equation_str);
+                item.set_property ("equation", val);
             } catch (MathError e) {}
         }
     }
@@ -220,9 +226,6 @@ namespace Graphs {
             item.get_property ("xstop", ref text);
             xstop.set_text (text.get_string ());
 
-            xstart.changed.connect (on_entry_change);
-            xstop.changed.connect (on_entry_change);
-
             item.bind_property (
                 "steps",
                 steps,
@@ -237,16 +240,31 @@ namespace Graphs {
             );
         }
 
-        private void on_entry_change (Editable entry) {
-            string text = entry.get_text ();
-            string prop = entry.get_buildable_id ();
-            if (try_evaluate_string (text)) {
+        [GtkCallback]
+        private void on_entry_change (Object object, ParamSpec spec) {
+            var entry = (Adw.EntryRow) object;
+            if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
-                Value val = Value (typeof (string));
-                val.set_string (text);
-                item.set_property (prop, val);
+                entry.set_show_apply_button (true);
             } else {
                 entry.add_css_class ("error");
+                entry.set_show_apply_button (false);
+            }
+        }
+
+        [GtkCallback]
+        private void on_entry_apply (Editable editable) {
+            Value val = Value (typeof (string));
+            val.set_string (editable.get_text ());
+            item.set_property (editable.get_buildable_id (), val);
+        }
+
+        [GtkCallback]
+        private int on_steps_input (out double val) {
+            if (try_evaluate_string (steps.get_text (), out val)) {
+                return 1;
+            } else {
+                return Gtk.INPUT_ERROR;
             }
         }
     }
