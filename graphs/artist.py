@@ -117,25 +117,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._refresh()
 
     @GObject.Property(type=object)
-    def xerr(self) -> list:
-        """Get xerr property."""
-        return self._xerr
+    def err(self) -> object:
+        """Get err property."""
+        return self._xerr, self._yerr
 
-    @xerr.setter
-    def xerr(self, xerr: object) -> None:
-        """Set xerr property."""
-        self._xerr = xerr
-        self._refresh()
-
-    @GObject.Property(type=object)
-    def yerr(self) -> list:
-        """Get yerr property."""
-        return self._yerr
-
-    @yerr.setter
-    def yerr(self, yerr: object) -> None:
-        """Set yerr property."""
-        self._yerr = yerr
+    @err.setter
+    def err(self, err: tuple[list, list]) -> None:
+        """Set err property."""
+        self._xerr, self._yerr = err
         self._refresh()
 
     @GObject.Property(type=bool, default=True)
@@ -196,13 +185,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         x_err = self._xerr if self._show_xerr else None
         y_err = self._yerr if self._show_yerr else None
 
-        # Don't update error bars if out of sync with data
-        # TODO: This is a workaround, look into fixing this for final MR
+        # data and err are restored as separate property assignments during cut
+        # and undo/redo. So only refresh if lengths are in sync:
         if x_err is not None and len(x_err) != len(x_data):
-            x_err = None
+            return
         if y_err is not None and len(y_err) != len(y_data):
-            y_err = None
-
+            return
         self._apply_updates(x_data, y_data, x_err, y_err)
 
     def _apply_updates(
@@ -241,8 +229,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        self._xerr = item.get_xerr()
-        self._yerr = item.get_yerr()
+        self._xerr, self._yerr = item.props.err
         self._show_xerr = item.props.showxerr
         self._show_yerr = item.props.showyerr
 
@@ -268,14 +255,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         caps, barlines = self.plot[1], self.plot[2]
 
         bar_iter = iter(barlines)
-        self._xbar = next(bar_iter) if self._xerr is not None else None
-        self._ybar = next(bar_iter) if self._yerr is not None else None
+        self._xbar = next(bar_iter) if item.props.has_xerr else None
+        self._ybar = next(bar_iter) if item.props.has_yerr else None
 
         cap_iter = iter(caps)
         self._xcaps = (next(cap_iter), next(cap_iter)) \
-            if self._xerr is not None and caps else ()
+            if item.props.has_xerr and caps else ()
         self._ycaps = (next(cap_iter), next(cap_iter)) \
-            if self._yerr is not None and caps else ()
+            if item.props.has_yerr and caps else ()
 
         self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):

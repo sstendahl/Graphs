@@ -642,18 +642,17 @@ class DataOperations():
 
             xdata, ydata = new_xdata, new_ydata
             new_xdata, new_ydata = item.props.data
+            xerr, yerr = item.props.err
             if xdata == []:  # If cut action was performed
                 remove_list = \
                     [index for index, masked in enumerate(mask) if masked]
                 for index in sorted(remove_list, reverse=True):
                     new_xdata.pop(index)
                     new_ydata.pop(index)
-                if item.props.xerr is not None:
-                    item.props.xerr = numpy.delete(
-                        item.props.xerr, remove_list)
-                if item.props.yerr is not None:
-                    item.props.yerr = numpy.delete(
-                        item.props.yerr, remove_list)
+                xerr = numpy.delete(xerr, remove_list) \
+                    if xerr is not None else None
+                yerr = numpy.delete(yerr, remove_list) \
+                    if yerr is not None else None
             else:
                 i = 0
                 for index, masked in enumerate(mask):
@@ -662,13 +661,13 @@ class DataOperations():
                         new_xdata[index] = xdata[i]
                         new_ydata[index] = ydata[i]
                         i += 1
-
-        if sort:
-            logging.debug("Sorting data")
-            new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
-
-        item.props.data = new_xdata, new_ydata
-        return True, message
+            if sort:
+                logging.debug("Sorting data")
+                new_xdata, new_ydata = \
+                    DataHelper.sort_data(new_xdata, new_ydata)
+            item.props.data = new_xdata, new_ydata
+            item.props.err = xerr, yerr
+            return True, message
 
     @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:

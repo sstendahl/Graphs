@@ -83,8 +83,7 @@ class DataItem(_PythonItem):
     _typename = _("Dataset")
 
     data = GObject.Property(type=object)
-    xerr = GObject.Property(type=object)
-    yerr = GObject.Property(type=object)
+    err = GObject.Property(type=object)
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     markerstyle = GObject.Property(type=int, default=0)
@@ -112,8 +111,7 @@ class DataItem(_PythonItem):
         """Create new DataItem."""
         return cls(
             data=(xdata, ydata),
-            xerr=xerr,
-            yerr=yerr,
+            err=(xerr, yerr),
             **cls._extract_params(cls, style),
             **kwargs,
         )
@@ -122,8 +120,10 @@ class DataItem(_PythonItem):
         super().__init__(**kwargs)
         if self.props.data is None:
             self.props.data = ([], [])
-        self.props.has_xerr = self.props.xerr is not None
-        self.props.has_yerr = self.props.yerr is not None
+        if self.props.err is None:
+            self.props.err = (None, None)
+        self.props.has_xerr = self.props.err[0] is not None
+        self.props.has_yerr = self.props.err[1] is not None
 
     def get_xdata(self) -> list:
         """Get xdata."""
@@ -135,11 +135,11 @@ class DataItem(_PythonItem):
 
     def get_xerr(self) -> list:
         """Get xerr."""
-        return self.props.xerr
+        return self.props.err[0]
 
     def get_yerr(self) -> list:
         """Get yerr."""
-        return self.props.yerr
+        return self.props.err[1]
 
 
 class GeneratedDataItem(DataItem):
