@@ -436,8 +436,8 @@ class EquationOperations():
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
             equation = Graphs.preprocess_equation(str(callback(item, *args)))
-            valid_equation = utilities.validate_equation(equation)
-            if not valid_equation:
+            validate, _ = utilities.equation_to_data(equation, steps=10)
+            if validate is None:
                 raise misc.InvalidEquationError(
                     _(
                         "The operation on {name} "

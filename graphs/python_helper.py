@@ -151,4 +151,5 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_validate_equation_request(self, equation: str) -> bool:
-        return utilities.validate_equation(equation)
+        validate, _ = utilities.equation_to_data(equation, steps=10)
+        return validate is not None

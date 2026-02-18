@@ -172,8 +172,7 @@ class GeneratedDataItem(DataItem):
     @equation.setter
     def equation(self, equation: str) -> None:
         old_equation = self._equation
-        valid_equation = utilities.validate_equation(str(equation))
-        if old_equation == equation or not valid_equation:
+        if old_equation == equation:
             return
         self._equation = equation
         self.notify("equation")
@@ -232,8 +231,7 @@ class EquationItem(_PythonItem):
     @equation.setter
     def equation(self, equation: str) -> None:
         old_equation = self._equation
-        valid_equation = utilities.validate_equation(str(equation))
-        if old_equation == equation or not valid_equation:
+        if old_equation == equation:
             return
         self._equation = equation
         self.notify("equation")

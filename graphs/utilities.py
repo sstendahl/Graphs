@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
-from gi.repository import GLib, Graphs
-
 from graphs import scales
 
 import numexpr
@@ -165,13 +163,3 @@ def equation_to_data(
     except (KeyError, SyntaxError, ValueError, TypeError):
         return None, None
     return numpy.ndarray.tolist(xdata), numpy.ndarray.tolist(ydata)
-
-
-def validate_equation(equation: str, limits: tuple = None) -> bool:
-    """Validate whether an equation can be parsed."""
-    try:
-        equation = Graphs.preprocess_equation(equation)
-        validate, _ = equation_to_data(equation, limits, steps=10)
-        return validate is not None
-    except GLib.Error:
-        return False
