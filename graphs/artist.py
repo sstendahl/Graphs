@@ -102,6 +102,22 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     markersize = GObject.Property(type=float, default=7)
     legend = True
 
+    def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
+        return self._errorbar_container
+
+    @GObject.Property(type=str, default="")
+    def name(self) -> str:
+        """Get name/label property."""
+        return self._artist.get_label()
+
+    @name.setter
+    def name(self, name: str) -> None:
+        """Set name/label property."""
+        label = _ellipsize(name)
+        self._artist.set_label(label)
+        self._errorbar_container.set_label(label)
+
     @GObject.Property
     def data(self) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Get data property."""
@@ -238,7 +254,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         if ecolor.lower() == "none":
             ecolor = None
 
-        self.plot = axis.errorbar(
+        self._errorbar_container = axis.errorbar(
             item.get_xdata(), item.get_ydata(),
             xerr=self._xerr, yerr=self._yerr,
             color=item.get_color(), alpha=item.get_alpha(),
@@ -251,8 +267,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             ecolor=ecolor,
         )
 
-        self._artist = self.plot[0]
-        caps, barlines = self.plot[1], self.plot[2]
+        self._artist, caps, barlines = self._errorbar_container
 
         bar_iter = iter(barlines)
         self._xbar = next(bar_iter) if item.props.has_xerr else None
