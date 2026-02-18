@@ -96,10 +96,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             xdata=numpy.zeros(len(self.data_curve.get_xdata())),
             ydata=numpy.zeros(len(self.data_curve.get_xdata())),
             color=DATA_COLOR,
-            linestyle=LINE_STYLE,
-            markerstyle=MARKER_STYLE,
-            markersize=MARKER_SIZE,
         )
+        self.residuals_item.linestyle = LINE_STYLE
+        self.residuals_item.markerstyle = MARKER_STYLE
+        self.residuals_item.markersize = MARKER_SIZE
         self._residuals_items.append(self.residuals_item)
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
