@@ -44,6 +44,8 @@ template $GraphsImportDialog: Adw.Dialog {
                   selection-mode: single;
                   vexpand: true;
                   valign: start;
+                  row-activated => $on_row_activated();
+                  row-selected => $on_row_selected();
 
                   styles [
                     "navigation-sidebar",
