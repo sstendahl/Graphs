@@ -86,6 +86,7 @@ template $GraphsGenerateDataDialog: Adw.Dialog {
             Adw.PreferencesGroup {
               Adw.SpinRow steps {
                 title: _("Steps");
+                input => $on_steps_input();
 
                 adjustment: Adjustment {
                   step-increment: 1;
