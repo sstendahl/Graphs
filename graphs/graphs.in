@@ -23,15 +23,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Main graphs module."""
-
-import asyncio
-import gettext
-import locale
-import logging
-import os
-import signal
-import sys
-
 if __name__ == "__main__":
     import gi
 
@@ -39,31 +30,62 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "4.0")
     gi.require_version("Graphs", "1")
 
+    import os
+    import signal
+    import sys
+
     graph_path_dir = "@PKGDATADIR@"
     if os.environ.get("GRAPHS_DEVEL_PATH"):
         graph_path_dir = os.environ.get("GRAPHS_DEVEL_PATH")
     sys.path.insert(1, graph_path_dir)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
-    localedir = "@LOCALEDIR@"
-    if os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR"):
-        localedir = os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR")
-    locale.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
-    locale.textdomain("@GETTEXT_PACKAGE@")
-    gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
-    gettext.textdomain("@GETTEXT_PACKAGE@")
 
-    loglevel = logging.DEBUG if "@DEBUG@" == "True" else logging.INFO
-    logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
-    logging.getLogger("matplotlib.font_manager").disabled = True
+    def on_startup(application):
+        """Handle Application setup."""
+        import logging
+        loglevel = logging.DEBUG if "@DEBUG@" == "True" else logging.INFO
+        logging.basicConfig(
+            format="%(levelname)s: %(message)s",
+            level=loglevel,
+        )
+        logging.getLogger("matplotlib.font_manager").disabled = True
+        logging.debug("Begin Application startup")
 
-    from gi.events import GLibEventLoopPolicy
-    asyncio.set_event_loop_policy(GLibEventLoopPolicy())
+        import asyncio
+        from gi.events import GLibEventLoopPolicy
+        asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
-    from gi.repository import Gio
-    from graphs.application import PythonApplication
-    application = PythonApplication(
+        import gettext
+        import locale
+        localedir = "@LOCALEDIR@"
+        if os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR"):
+            localedir = os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR")
+        locale.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
+        locale.textdomain("@GETTEXT_PACKAGE@")
+        gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
+        gettext.textdomain("@GETTEXT_PACKAGE@")
+
+        from matplotlib import font_manager
+        font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
+        _ = gettext.gettext
+        for font in font_list:
+            try:
+                font_manager.fontManager.addfont(font)
+            except RuntimeError:
+                logging.warning(_("Could not load {font}").format(font=font))
+
+        from graphs.file_import import DataImporter
+        from graphs.python_helper import PythonHelper
+        from graphs.styles import StyleManager
+        PythonHelper(application)
+        StyleManager()
+        DataImporter()
+
+    from gi.repository import Gio, Graphs
+    application = Graphs.Application(
         application_id="@APPLICATION_ID@",
         flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
         | Gio.ApplicationFlags.HANDLES_OPEN,
     )
+    application.connect("startup", on_startup)
     sys.exit(application.run(sys.argv))
