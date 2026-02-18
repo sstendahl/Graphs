@@ -26,20 +26,7 @@ namespace Graphs {
         };
 
         construct {
-            Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
-            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
-            Intl.textdomain (Config.GETTEXT_PACKAGE);
-
-            this.main_windows = new Gee.LinkedList<Window> ();
-            this.style_editors = new Gee.LinkedList<StyleEditor> ();
-
             this.version = Config.VERSION;
-
-            add_main_option_entries (OPTION_ENTRIES);
-        }
-
-        protected void setup_settings () {
-            settings = new GLib.Settings (application_id);
         }
 
         /**
@@ -47,6 +34,17 @@ namespace Graphs {
          */
         public override void startup () {
             base.startup ();
+
+            Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+            Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+            Intl.textdomain (Config.GETTEXT_PACKAGE);
+
+            settings = new GLib.Settings (application_id);
+
+            this.main_windows = new Gee.LinkedList<Window> ();
+            this.style_editors = new Gee.LinkedList<StyleEditor> ();
+
+            add_main_option_entries (OPTION_ENTRIES);
 
             Gtk.Window.set_default_icon_name (application_id);
 

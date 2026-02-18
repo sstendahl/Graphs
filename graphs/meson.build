@@ -20,7 +20,6 @@ python.install_sources(
     'file_import/__init__.py',
     'style_editor/__init__.py',
     'style_editor/editor_box.py',
-    'application.py',
     'artist.py',
     'canvas.py',
     'curve_fitting.py',
