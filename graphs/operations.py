@@ -265,47 +265,54 @@ class CommonOperations():
     def combine(window: Graphs.Window) -> bool:
         """Combine the selected data into a new data set."""
         data = window.get_data()
-        new_xdata, new_ydata = [], []
-        interaction_mode = window.get_mode()
-        for item in data:
-            if not item.get_selected():
-                continue
-            xdata, ydata = [], []
-            selected_limits = DataHelper.get_selected_limits(
-                data.get_figure_settings(),
-                interaction_mode,
-                item,
-            )
+        mode = window.get_mode()
+        settings = data.get_figure_settings()
+
+        selected = [i for i in data if i.get_selected()]
+        data_items = [i for i in selected if isinstance(i, DataItem)]
+
+        def get_err_info(attr):
+            has_err = [getattr(i.props, attr) is not None for i in data_items]
+            return (all(has_err) if has_err else False), any(has_err)
+
+        all_x, some_x = get_err_info("xerr")
+        all_y, some_y = get_err_info("yerr")
+
+        new_xdata, new_ydata, new_xerr, new_yerr = [], [], [], []
+
+        for item in selected:
+            lims = DataHelper.get_selected_limits(settings, mode, item)
+            xdata, ydata = None, None
+
             if isinstance(item, EquationItem):
-                equation = Graphs.preprocess_equation(item.props.equation)
-                xdata, ydata = \
-                    utilities.equation_to_data(equation, selected_limits)
+                eq = Graphs.preprocess_equation(item._equation)
+                xdata, ydata = utilities.equation_to_data(eq, lims)
             elif isinstance(item, DataItem):
-                xdata, ydata = DataHelper().get_xydata(
-                    interaction_mode, selected_limits, item,
-                )
-            else:
-                continue
+                xdata, ydata = DataHelper().get_xydata(mode, lims, item)
+                if all_x:
+                    new_xerr.extend(item.props.xerr)
+                if all_y:
+                    new_yerr.extend(item.props.yerr)
+
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
                 new_ydata.extend(ydata)
 
-        if (not new_xdata) or (not new_ydata):
-            window.add_toast_string(
-                _("No data found within the highlighted area"),
-            )
+        if not new_xdata or not new_ydata:
+            window.add_toast_string(_("No data found in highlighted area"))
             return False
 
-        # Create the item itself
+        if (some_x and not all_x) or (some_y and not all_y):
+            msg = _("Some items lack error bars; they will be discarded")
+            window.add_toast_string(msg)
+
         new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
-        data.add_items([
-            DataItem.new(
-                data.get_selected_style_params(),
-                new_xdata,
-                new_ydata,
-                name=_("Combined Data"),
-            ),
-        ])
+        data.add_items([DataItem.new(
+            data.get_selected_style_params(), new_xdata, new_ydata,
+            xerr=new_xerr if all_x else None,
+            yerr=new_yerr if all_y else None,
+            name=_("Combined Data"),
+        )])
         return True
 
     @staticmethod

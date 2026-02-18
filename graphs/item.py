@@ -133,11 +133,11 @@ class DataItem(_PythonItem):
         """Get ydata."""
         return self.props.data[1]
 
-    def get_xerr(self):
+    def get_xerr(self) -> list:
         """Get xerr."""
         return self.props.xerr
 
-    def get_yerr(self):
+    def get_yerr(self) -> list:
         """Get yerr."""
         return self.props.yerr
 
