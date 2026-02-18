@@ -78,7 +78,6 @@ graphs/style_editor/item_color_row.vala
 graphs/style_editor/window.vala
 graphs/actions.vala
 graphs/add_equation.vala
-graphs/application.py
 graphs/application.vala
 graphs/artist.py
 graphs/canvas.py
@@ -94,6 +93,7 @@ graphs/figure.py
 graphs/figure_settings.vala
 graphs/file_io.py
 graphs/generate_data.vala
+graphs/graphs.in
 graphs/item.py
 graphs/item.vala
 graphs/item_box.vala
