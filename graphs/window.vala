@@ -343,11 +343,7 @@ namespace Graphs {
         }
 
         public void edit_item (Item item) {
-            edit_page.clear ();
-            edit_page.append (new EditItemBaseBox (item));
-
-            PythonHelper.create_item_settings (edit_page, item);
-
+            edit_page.load_item (item);
             push_sidebar_page (edit_page);
         }
 
