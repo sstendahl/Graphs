@@ -122,6 +122,8 @@ class DataItem(_PythonItem):
         super().__init__(**kwargs)
         if self.props.data is None:
             self.props.data = ([], [])
+        self.props.has_xerr = self.props.xerr is not None
+        self.props.has_yerr = self.props.yerr is not None
 
     def get_xdata(self) -> list:
         """Get xdata."""
