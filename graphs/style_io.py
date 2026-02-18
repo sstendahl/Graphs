@@ -155,15 +155,7 @@ def parse(
                              "errorbar.capthick",
                              "errorbar.linewidth")
                         if key in floats:
-                            try:
-                                value = float(value)
-                            except ValueError:
-                                msg = _(
-                                    "Bad value in file {file} on line {line}")
-                                logging.warning(
-                                    msg.format(
-                                        file=filename, line=line_number))
-                                continue
+                            value = float(value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
