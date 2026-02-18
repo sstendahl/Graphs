@@ -125,14 +125,13 @@ namespace Graphs {
         private unowned Adw.ButtonRow simplify { get; }
 
         private Item item;
-        private Value val;
 
         public void setup (Item item) {
             this.item = item;
-            this.val = Value (typeof (string));
 
-            item.get_property ("equation", ref val);
-            equation.set_text (val.get_string ());
+            string text;
+            item.get ("equation", out text);
+            equation.set_text (text);
         }
 
         [GtkCallback]
@@ -148,8 +147,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_apply () {
-            val.set_string (equation.get_text ());
-            item.set_property ("equation", val);
+            item.set ("equation", equation.get_text ());
         }
 
         [GtkCallback]
@@ -161,8 +159,7 @@ namespace Graphs {
                 equation_str = prettify_equation (equation_str);
 
                 equation.set_text (equation_str);
-                val.set_string (equation_str);
-                item.set_property ("equation", val);
+                item.set ("equation", equation_str);
             } catch (MathError e) {}
         }
     }
@@ -220,11 +217,11 @@ namespace Graphs {
             this.item = item;
             equation_group.setup (item);
 
-            Value text = Value (typeof (string));
-            item.get_property ("xstart", ref text);
-            xstart.set_text (text.get_string ());
-            item.get_property ("xstop", ref text);
-            xstop.set_text (text.get_string ());
+            string text;
+            item.get ("xstart", out text);
+            xstart.set_text (text);
+            item.get ("xstop", out text);
+            xstop.set_text (text);
 
             item.bind_property (
                 "steps",
@@ -254,9 +251,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_entry_apply (Editable editable) {
-            Value val = Value (typeof (string));
-            val.set_string (editable.get_text ());
-            item.set_property (editable.get_buildable_id (), val);
+            item.set (editable.get_buildable_id (), editable.get_text ());
         }
 
         [GtkCallback]
