@@ -65,12 +65,12 @@ class ItemArtistWrapper(GObject.Object):
     @GObject.Property(type=str, default="")
     def name(self) -> str:
         """Get name/label property."""
-        return self.get_artist().get_label()
+        return self._artist.get_label()
 
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self.get_artist().set_label(_ellipsize(name))
+        self._artist.set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
@@ -119,18 +119,15 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._errorbar_container.set_label(label)
 
     @GObject.Property
-    def data(self) -> tuple[numpy.ndarray, numpy.ndarray]:
+    def data(self) -> tuple[list, list]:
         """Get data property."""
         return self._artist.get_data()
 
     @data.setter
     def data(self, data: tuple[list, list]) -> None:
         """Set data property."""
-        x_vals, y_vals = data
-        self._artist.set_data(
-            numpy.asarray(x_vals), numpy.asarray(y_vals),
-        )
-        self._refresh()
+        self._artist.set_data(data)
+        self._refresh_errorbars()
 
     @GObject.Property(type=object)
     def err(self) -> object:
@@ -141,7 +138,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def err(self, err: tuple[list, list]) -> None:
         """Set err property."""
         self._xerr, self._yerr = err
-        self._refresh()
+        self._refresh_errorbars()
 
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
@@ -152,7 +149,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def showxerr(self, showxerr: bool) -> None:
         """Set showxerr property."""
         self._show_xerr = showxerr
-        self._refresh()
+        self._refresh_errorbars()
 
     @GObject.Property(type=bool, default=True)
     def showyerr(self) -> bool:
@@ -163,7 +160,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def showyerr(self, showyerr: bool) -> None:
         """Set showyerr property."""
         self._show_yerr = showyerr
-        self._refresh()
+        self._refresh_errorbars()
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -193,7 +190,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_linewidth(linewidth)
         self._artist.set_markersize(markersize)
 
-    def _refresh(self) -> None:
+    def _refresh_errorbars(self) -> None:
         """Sync error bar visibility and positions."""
         x_data, y_data = self._artist.get_data()
         x_data = numpy.asarray(x_data)
@@ -201,7 +198,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         x_err = self._xerr if self._show_xerr else None
         y_err = self._yerr if self._show_yerr else None
 
-        # data and err are restored as separate property assignments during cut
+        # data and err are set as separate property assignments during cut
         # and undo/redo. So only refresh if lengths are in sync:
         if x_err is not None and len(x_err) != len(x_data):
             return
@@ -217,31 +214,36 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         y_err: numpy.ndarray,
     ) -> None:
         """Update the segments and positions of mpl artists."""
+        has_xerr = x_err is not None
+        has_yerr = y_err is not None
+
         if self._xbar:
-            self._xbar.set_visible(x_err is not None)
-            if x_err is not None:
-                segs = [[[x - e, y], [x + e, y]]
-                        for x, y, e in zip(x_data, y_data, x_err)]
-                self._xbar.set_segments(segs)
+            self._xbar.set_visible(has_xerr)
+            if has_xerr:
+                start = numpy.column_stack((x_data - x_err, y_data))
+                end = numpy.column_stack((x_data + x_err, y_data))
+                self._xbar.set_segments(numpy.stack((start, end), axis=1))
+
+        if self._xcaps:
+            for cap in self._xcaps:
+                cap.set_visible(has_xerr)
+            if has_xerr:
+                self._xcaps[0].set_data(x_data - x_err, y_data)
+                self._xcaps[1].set_data(x_data + x_err, y_data)
 
         if self._ybar:
-            self._ybar.set_visible(y_err is not None)
-            if y_err is not None:
-                segs = [[[x, y - e], [x, y + e]]
-                        for x, y, e in zip(x_data, y_data, y_err)]
-                self._ybar.set_segments(segs)
+            self._ybar.set_visible(has_yerr)
+            if has_yerr:
+                start = numpy.column_stack((x_data, y_data - y_err))
+                end = numpy.column_stack((x_data, y_data + y_err))
+                self._ybar.set_segments(numpy.stack((start, end), axis=1))
 
-        for cap in self._xcaps:
-            cap.set_visible(x_err is not None)
-        if x_err is not None and self._xcaps:
-            self._xcaps[0].set_data(x_data - x_err, y_data)
-            self._xcaps[1].set_data(x_data + x_err, y_data)
-
-        for cap in self._ycaps:
-            cap.set_visible(y_err is not None)
-        if y_err is not None and self._ycaps:
-            self._ycaps[0].set_data(x_data, y_data - y_err)
-            self._ycaps[1].set_data(x_data, y_data + y_err)
+        if self._ycaps:
+            for cap in self._ycaps:
+                cap.set_visible(has_yerr)
+            if has_yerr:
+                self._ycaps[0].set_data(x_data, y_data - y_err)
+                self._ycaps[1].set_data(x_data, y_data + y_err)
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
@@ -269,6 +271,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         self._artist, caps, barlines = self._errorbar_container
 
+        # We iterate over bar and caps in assignments to handle all
+        # combinations with error bars on either or both axes.
         bar_iter = iter(barlines)
         self._xbar = next(bar_iter) if item.props.has_xerr else None
         self._ybar = next(bar_iter) if item.props.has_yerr else None
