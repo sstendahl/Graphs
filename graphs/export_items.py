@@ -44,15 +44,16 @@ def _save_item(
 ) -> None:
     """Save Item in columns format."""
     delimiter = "\t"
-    fmt = delimiter.join(["%.12e"] * 2)
     xlabel, ylabel = item.get_xlabel(), item.get_ylabel()
     stream = Gio.DataOutputStream.new(
         file.replace(None, False, Gio.FileCreateFlags.NONE, None),
     )
-    if xlabel != "" and ylabel != "":
-        stream.put_string(xlabel + delimiter + ylabel + "\n")
+
+    xerr, yerr = None, None
     if isinstance(item, (DataItem, GeneratedDataItem)):
         xdata, ydata = item.data
+        xerr = item.props.xerr
+        yerr = item.props.yerr
     elif isinstance(item, EquationItem):
         limits = figure_settings.get_limits()
         if item.get_xposition() == 0:
@@ -61,6 +62,19 @@ def _save_item(
             limits = [limits[2], limits[3]]
         equation = Graphs.preprocess_equation(item.props.equation)
         xdata, ydata = utilities.equation_to_data(equation, limits)
-    for values in zip(xdata, ydata):
+
+    n_cols = 2 + (xerr is not None) + (yerr is not None)
+    fmt = delimiter.join(["%.12e"] * n_cols)
+
+    if xlabel != "" and ylabel != "":
+        headers = [xlabel, ylabel]
+        if xerr is not None:
+            headers.append("x_err")
+        if yerr is not None:
+            headers.append("y_err")
+        stream.put_string(delimiter.join(headers) + "\n")
+
+    err_cols = [e for e in (xerr, yerr) if e is not None]
+    for values in zip(xdata, ydata, *err_cols):
         stream.put_string(fmt % values + "\n")
     stream.close()
