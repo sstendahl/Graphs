@@ -102,6 +102,31 @@ namespace Graphs {
                 "value",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+            item.bind_property (
+                "showxerr",
+                use_xerr,
+                "active",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "showyerr",
+                use_yerr,
+                "active",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "has_xerr",
+                use_xerr,
+                "visible",
+                BindingFlags.SYNC_CREATE
+            );
+            item.bind_property (
+                "has_yerr",
+                use_yerr,
+                "visible",
+                BindingFlags.SYNC_CREATE
+            );
+            error_bars_group.set_visible (item.has_xerr || item.has_yerr);
         }
 
         [GtkChild]
@@ -109,6 +134,9 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Adw.SwitchRow use_yerr { get; }
+
+        [GtkChild]
+        private unowned Adw.PreferencesGroup error_bars_group { get; }
 
         [GtkCallback]
         private void on_linestyle () {

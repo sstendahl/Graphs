@@ -288,8 +288,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._xbar = next(bar_iter) if self._xerr is not None else None
         self._ybar = next(bar_iter) if self._yerr is not None else None
         cap_iter = iter(caplines)
-        self._xcaps = (next(cap_iter), next(cap_iter)) if self._xerr is not None and caplines else ()
-        self._ycaps = (next(cap_iter), next(cap_iter)) if self._yerr is not None and caplines else ()
+        self._xcaps = (next(cap_iter), next(cap_iter)) \
+            if self._xerr is not None and caplines else ()
+        self._ycaps = (next(cap_iter), next(cap_iter)) \
+            if self._yerr is not None and caplines else ()
         self._update_errorbars(
             xdata, ydata,
             self._xerr if self._show_xerr else None,
