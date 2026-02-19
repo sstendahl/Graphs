@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Gdk;
-
 namespace Graphs {
     /**
      * Base item class
@@ -15,13 +14,15 @@ namespace Graphs {
         public string ylabel { get; set; default = ""; }
         public int xposition { get; set; default = 0; }
         public int yposition { get; set; default = 0; }
-
+        public float errorbar_capsize { get; set; default = 0; }
+        public float errorbar_capthick { get; set; default = 1; }
+        public float errorbar_linewidth { get; set; default = 1; }
+        public bool errorbar_barsabove { get; set; default = false; }
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);
             rgba.alpha = alpha;
             return rgba;
         }
-
         public void set_rgba (Gdk.RGBA rgba) {
             this.color = Tools.rgba_to_hex (rgba);
             this.alpha = rgba.alpha;

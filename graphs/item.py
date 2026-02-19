@@ -90,12 +90,20 @@ class DataItem(_PythonItem):
     markersize = GObject.Property(type=float, default=7)
     showxerr = GObject.Property(type=bool, default=True)
     showyerr = GObject.Property(type=bool, default=True)
+    errorbar_capsize = GObject.Property(type=float, default=0)
+    errorbar_capthick = GObject.Property(type=float, default=1)
+    errorbar_linewidth = GObject.Property(type=float, default=1)
+    errorbar_barsabove = GObject.Property(type=bool, default=False)
 
     _style_properties = {
         "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
         "linewidth": ("lines.linewidth", None),
         "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
         "markersize": ("lines.markersize", None),
+        "errorbar_capsize": ("errorbar.capsize", None),
+        "errorbar_capthick": ("errorbar.capthick", None),
+        "errorbar_linewidth": ("errorbar.linewidth", None),
+        "errorbar_barsabove": ("errorbar.barsabove", None),
     }
 
     @classmethod

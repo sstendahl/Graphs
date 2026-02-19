@@ -150,12 +150,10 @@ def parse(
                         # Convert boolean-strings to boolean:
                         bool_mapping = {"false": False, "true": True}
                         value = bool_mapping.get(value.lower(), value)
-                        floats = \
-                            ("errorbar.capsize",
-                             "errorbar.capthick",
-                             "errorbar.linewidth")
-                        if key in floats:
+                        try:
                             value = float(value)
+                        except ValueError:
+                            pass
                         graphs_params[key] = value
                     else:
                         style[key] = value
