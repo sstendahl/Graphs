@@ -31,6 +31,30 @@ namespace Graphs {
         }
     }
 
+    public enum CurveFittingError {
+        NONE,
+        VALUE,
+        BOUNDS,
+        SINGULAR,
+        CONVERGENCE,
+        DOMAIN,
+        EQUATION,
+        CONFIDENCE;
+
+        public string to_text () {
+            switch (this) {
+                case VALUE: return _("Please enter valid \nnumeric parameters.");
+                case BOUNDS: return _("Constraint error: ensure \nLower < Initial < Upper.");
+                case SINGULAR: return _("Matrix error: Data is \ninsufficient for this model.");
+                case CONVERGENCE: return _("Fit failed: Max iterations \nreached without converging.");
+                case DOMAIN: return _("Domain error: Equation not \nvalid for this data range.");
+                case EQUATION: return _("Invalid equation: Check \nsyntax and variables.");
+                case CONFIDENCE: return _("Confidence band error: \nCovariance matrix is unstable.");
+                default: assert_not_reached ();
+            }
+        }
+    }
+
     private const string[] EQUATIONS = {
         "a*x+b", // linear
         "a*x²+b*x+c", // quadratic
@@ -109,12 +133,7 @@ namespace Graphs {
             }
         }
 
-        [GtkCallback]
-        private void emit_add_fit_request () {
-            add_fit_request ();
-        }
-
-        protected signal bool equation_change (string equation);
+        protected signal bool equation_change (string[] free_vars);
         protected signal void fit_curve_request ();
         protected signal void add_fit_request ();
         protected signal void update_confidence_request ();
@@ -162,14 +181,77 @@ namespace Graphs {
             equation.notify["selected"].connect (set_equation_from_selection);
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
-            custom_equation.apply.connect (on_custom_equation_apply);
 
             set_equation_from_selection ();
         }
 
-        public bool error {
-            get { return !confirm_button.get_sensitive (); }
-            set { confirm_button.set_sensitive (!value); }
+        protected void set_results (CurveFittingError error) {
+            var buffer = text_view.get_buffer ();
+            buffer.set_text ("");
+            var tag_table = buffer.get_tag_table ();
+            var bold_tag = tag_table.lookup("bold");
+            if (bold_tag == null) bold_tag = buffer.create_tag ("bold", "weight", 700);
+
+            if (error != CurveFittingError.NONE) {
+                TextIter end_iter;
+                buffer.get_end_iter (out end_iter);
+                buffer.insert (ref end_iter, error.to_text (), -1);
+                confirm_button.set_sensitive (false);
+                PythonHelper.run_method (this, "_clear_fit");
+                return;
+            }
+
+            confirm_button.set_sensitive (true);
+            PythonHelper.run_method (this, "_display_fit_results");
+        }
+
+        protected bool validate_and_update_parameter (FittingParameterBox row, FittingParameter param) {
+            double init, low, high;
+            bool value_error = false;
+
+            var widget = row.initial;
+            if (try_evaluate_string (widget.get_text (), out init)) {
+                widget.remove_css_class ("error");
+            } else {
+                widget.add_css_class ("error");
+            }
+
+            widget = row.lower_bound;
+            if (try_evaluate_string (widget.get_text (), out low)) {
+                widget.remove_css_class ("error");
+            } else {
+                widget.add_css_class ("error");
+            }
+
+            widget = row.upper_bound;
+            if (try_evaluate_string (widget.get_text (), out high)) {
+                widget.remove_css_class ("error");
+            } else {
+                widget.add_css_class ("error");
+            }
+
+            if (value_error) {
+                set_results (CurveFittingError.VALUE);
+                return false;
+            }
+
+            if (low >= high) {
+                row.lower_bound.add_css_class ("error");
+                row.upper_bound.add_css_class ("error");
+                set_results (CurveFittingError.BOUNDS);
+                return false;
+            }
+
+            if (!(low <= init <= high)) {
+                row.initial.add_css_class ("error");
+                set_results (CurveFittingError.BOUNDS);
+                return false;
+            }
+
+            param.initial = init;
+            param.set_lower_bound (low);
+            param.set_upper_bound (high);
+            return true;
         }
 
         private void clear_container (Box container) {
@@ -192,30 +274,14 @@ namespace Graphs {
 
         private void on_custom_equation_text_changed () {
             // Only validate if custom equation is visible
-            if (equation.get_selected () != 7) {
-                return;
-            }
+            if (equation.get_selected () != 7) return;
 
-            string eq_text = custom_equation.get_text ();
-            bool success = equation_change (eq_text);
-
-            if (success) {
+            string text = custom_equation.get_text ();
+            if (handle_new_equation (text)) {
                 custom_equation.remove_css_class ("error");
+                settings.set_string ("custom-equation", text);
             } else {
                 custom_equation.add_css_class ("error");
-            }
-        }
-
-        private void on_custom_equation_apply () {
-            if (equation.get_selected () == 7) {
-                string eq_text = custom_equation.get_text ();
-                settings.set_string ("custom-equation", eq_text);
-
-                // Update equation_string and trigger fit
-                bool success = equation_change (eq_text);
-                if (success) {
-                    fit_curve_request ();
-                }
             }
         }
 
@@ -241,10 +307,31 @@ namespace Graphs {
                 custom_equation.set_visible (true);
             }
 
-            bool success = equation_change (new_equation);
-            if (success) {
-                fit_curve_request ();
+            handle_new_equation (new_equation);
+        }
+
+        private bool handle_new_equation (string equation) {
+            try {
+                string processed = preprocess_equation (equation);
+                string[] free_vars = MathTools.get_free_variables (processed);
+
+                if (free_vars.length == 0) {
+                    set_results (CurveFittingError.EQUATION);
+                    return false;
+                }
+
+                equation_string = processed;
+                equation_change.emit (free_vars);
+                fit_curve_request.emit ();
+                return true;
+            } catch (MathError e) {
+                return false;
             }
+        }
+
+        [GtkCallback]
+        private void emit_add_fit_request () {
+            add_fit_request ();
         }
     }
 

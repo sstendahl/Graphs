@@ -50,7 +50,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
         super().__init__(window=window)
-        self.connect("equation-change", self.on_equation_change)
+        self.connect("equation-change", self._on_equation_change)
         self.connect("fit-curve-request", self.on_fit_curve_request)
         self.connect("add-fit-request", self.add_fit)
         self.connect("show-residuals-changed", self.load_residuals_canvas)
@@ -126,7 +126,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
         self.set_canvas(cv)
         self.load_residuals_canvas()
-        if self.get_error():
+        if self.get_confirm_button().get_sensitive():
             self._clear_fit()
 
     def load_residuals_canvas(self, *_args):
@@ -165,27 +165,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         cv.queue_draw()
 
-    def on_equation_change(self, _sender, equation: str) -> bool:
-        """Handle equation changes and update parameters."""
-        try:
-            processed_eq = Graphs.preprocess_equation(equation)
-            free_vars = set(Graphs.math_tools_get_free_variables(processed_eq))
-        except GLib.Error:
-            return False
-        if not free_vars:
-            self._clear_fit()
-            self.set_results(error="equation")
-            return False
-
-        self.set_equation_string(processed_eq)
-        self._update_parameter_widgets(free_vars)
-        if self.fit_result is not None:
-            self._update_residuals()
-        return True
-
-    def _update_parameter_widgets(self, free_vars: set) -> None:
+    @staticmethod
+    def _on_equation_change(self, free_vars: list, _n_free_vars: int) -> None:
         """Update parameter widgets when equation changes."""
-        current_params = set(self.fitting_parameters._items.keys())
+        free_vars = set(free_vars)
+        current_params = self.fitting_parameters.parameters
         if current_params == free_vars:
             return
 
@@ -209,6 +193,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 )
             box.append(p_box)
 
+        if self.fit_result is not None:
+            self._update_residuals()
+
     def on_entry_change(self, entry, _param) -> None:
         """Validate and update fitting parameter bounds on user input."""
         target_row = entry.get_ancestor(Graphs.FittingParameterBox)
@@ -218,54 +205,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             if row != target_row:
                 continue
 
-            if not self._validate_and_update_parameter(row, params):
+            if not self.validate_and_update_parameter(row, params):
                 return
 
         # Only refit if all parameters are valid
         self.on_fit_curve_request()
 
-    def _validate_and_update_parameter(self, row, params) -> bool:
-        """Validate a single parameter row and update if valid."""
-        widgets = {
-            "init": row.get_initial(),
-            "low": row.get_lower_bound(),
-            "high": row.get_upper_bound(),
-        }
-
-        vals = {}
-        value_error = False
-        for key, widget in widgets.items():
-            try:
-                vals[key] = Graphs.evaluate_string(widget.get_text())
-                widget.remove_css_class("error")
-            except GLib.Error:
-                widget.add_css_class("error")
-                value_error = True
-
-        if value_error:
-            self.set_results(error="value")
-            return False
-
-        if vals["low"] >= vals["high"]:
-            widgets["low"].add_css_class("error")
-            widgets["high"].add_css_class("error")
-            self.set_results(error="bounds")
-            return False
-
-        if not (vals["low"] <= vals["init"] <= vals["high"]):
-            widgets["init"].add_css_class("error")
-            self.set_results(error="bounds")
-            return False
-
-        params.set_initial(vals["init"])
-        params.set_lower_bound(vals["low"])
-        params.set_upper_bound(vals["high"])
-        return True
-
     def on_fit_curve_request(self, *_args) -> None:
         """Handle fit curve request."""
         if not self.get_equation_string():
-            self.set_results(error="equation")
+            self.set_results(Graphs.CurveFittingError.EQUATION)
             return
 
         fit_result = self._perform_fit()
@@ -279,7 +228,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._update_residuals()
         self._update_confidence_band()
         self.update_canvas_data()
-        self.set_results()
+        self.set_results(Graphs.CurveFittingError.NONE)
 
     def _get_function(self) -> sympy.FunctionClass:
         variables = ["x"] + list(self.fitting_parameters.parameters)
@@ -295,7 +244,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Perform the actual curve fitting."""
         func = self._get_function()
         if not func:
-            self.set_results(error="equation")
+            self.set_results(Graphs.CurveFittingError.EQUATION)
             return None
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
@@ -311,20 +260,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             )
 
             if numpy.any(numpy.isinf(param_cov)):
-                self.set_results(error="singular")
+                self.set_results(Graphs.CurveFittingError.SINGULAR)
                 return None
 
-        except RuntimeError:
-            self.set_results(error="convergence")
+        except (RuntimeError, _minpack.error):
+            self.set_results(Graphs.CurveFittingError.CONVERGENCE)
             return None
-        except (ValueError, TypeError):
-            self.set_results(error="domain")
-            return None
-        except _minpack.error:
-            self.set_results(error="convergence")
-            return None
-        except (ZeroDivisionError, OverflowError):
-            self.set_results(error="domain")
+        except (ValueError, TypeError, ZeroDivisionError, OverflowError):
+            self.set_results(Graphs.CurveFittingError.DOMAIN)
             return None
 
         # Calculate statistics
@@ -385,12 +328,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
-        if self.get_error() and cv:
+        if self.get_confirm_button().get_sensitive() and cv:
             for line in cv.figure.axis.lines[1:]:
                 line.set_visible(True)
             for collection in cv.figure.axis.collections:
                 collection.set_visible(True)
-            self.set_error(False)
             self._update_residuals()
             self.load_canvas()
 
@@ -425,7 +367,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if self.fit_result is None or not self.fit_result.is_valid:
             return
         self._update_confidence_band()
-        self.set_results()
+        self.set_results(Graphs.CurveFittingError.NONE)
         self.update_canvas_data()
 
     def _update_confidence_band(self) -> None:
@@ -472,7 +414,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
         self.fit_result = None
-        self.set_error(True)
         self._update_residuals()
         # Hide fitted curve and fill by hiding their matplotlib artists
         cv = self.get_canvas()
@@ -486,43 +427,12 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 collection.set_visible(False)
             cv.queue_draw()
 
-    def set_results(self, error="") -> None:
-        """Display fitting results or error message in the results view."""
-        view = self.get_text_view()
-        buffer = view.get_buffer()
-        buffer.set_text("")
-        tag_table = buffer.get_tag_table()
-        bold_tag = tag_table.lookup("bold")
-        if not bold_tag:
-            bold_tag = buffer.create_tag("bold", weight=700)
-        error_messages = {
-            "value":
-            _("Please enter valid \nnumeric parameters."),
-            "bounds":
-            _("Constraint error: ensure \nLower < Initial < Upper."),
-            "singular":
-            _("Matrix error: Data is \ninsufficient for this model."),
-            "convergence":
-            _("Fit failed: Max iterations \nreached without converging."),
-            "domain":
-            _("Domain error: Equation not \nvalid for this data range."),
-            "equation":
-            _("Invalid equation: Check \nsyntax and variables."),
-            "confidence":
-            _("Confidence band error: \nCovariance matrix is unstable."),
-        }
-
-        if error:
-            buffer.insert(buffer.get_end_iter(), error_messages[error])
-            self._clear_fit()
-        else:
-            if self.fit_result is None or not self.fit_result.is_valid:
-                return
-
-            self._display_fit_results(buffer)
-
-    def _display_fit_results(self, buffer) -> None:
+    def _display_fit_results(self) -> None:
         """Display the fitting results in the text buffer."""
+        if self.fit_result is None or not self.fit_result.is_valid:
+            return
+
+        buffer = self.get_text_view().get_buffer()
         buffer.insert_with_tags_by_name(
             buffer.get_end_iter(),
             f"{_('Parameters')}\n",
@@ -569,6 +479,7 @@ class FittingParameterContainer:
     def __init__(self):
         """Initialize the container."""
         self._items = {}
+        self.parameters = set()
 
     def __iter__(self):
         """Iterate over items."""
