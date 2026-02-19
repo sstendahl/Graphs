@@ -285,7 +285,7 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, EquationItem):
-                eq = Graphs.preprocess_equation(item._equation)
+                eq = Graphs.preprocess_equation(item.props.equation)
                 xdata, ydata = utilities.equation_to_data(eq, lims)
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)

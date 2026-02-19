@@ -86,8 +86,8 @@ namespace Graphs {
             settings.set_string ("x-column", selected_x.get_string ());
             settings.set_string ("y-column", selected_y.get_string ());
 
-            var selected_xerr = column_xerr.get_selected_item () as StringObject;
-            var selected_yerr = column_yerr.get_selected_item () as StringObject;
+            var selected_xerr = (StringObject) column_xerr.get_selected_item ();
+            var selected_yerr = (StringObject) column_yerr.get_selected_item ();
             if (selected_xerr != null) {
                 settings.set_string ("xerr-column", selected_xerr.get_string ());
             }

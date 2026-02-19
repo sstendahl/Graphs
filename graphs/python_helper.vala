@@ -44,6 +44,13 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
+        protected signal int has_err_request (Item item);
+        public static void item_has_err (Item item, out bool xerr, out bool yerr) {
+            int result = instance.has_err_request.emit (item);
+            xerr = result == 1 || result == 3;
+            yerr = result == 2 || result == 3;
+        }
+
         protected signal Item generate_data_request (Window window, string name);
         public static Item generate_data (Window window, string name) {
             return instance.generate_data_request.emit (window, name);
@@ -72,15 +79,6 @@ namespace Graphs {
             } catch (MathError e) {
                 return false;
             }
-        }
-
-        protected signal bool item_has_xerr_request (Item item);
-        public static bool item_has_xerr (Item item) {
-            return instance.item_has_xerr_request.emit (item);
-        }
-        protected signal bool item_has_yerr_request (Item item);
-        public static bool item_has_yerr (Item item) {
-            return instance.item_has_yerr_request.emit (item);
         }
     }
 }
