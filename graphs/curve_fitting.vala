@@ -82,7 +82,7 @@ namespace Graphs {
         protected string equation_string { get; protected set; }
 
         protected Canvas canvas {
-            get { return (Canvas) canvas_container.get_first_child (); }
+            get { return canvas_container.get_first_child () as Canvas; }
             set {
                 clear_container (canvas_container);
                 if (value != null) {
