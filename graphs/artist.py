@@ -100,6 +100,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
+    errcapsize = GObject.Property(type=float, default=0)
+    errcapthick = GObject.Property(type=float, default=1)
+    errlinewidth = GObject.Property(type=float, default=1)
+    errbarsabove = GObject.Property(type=bool, default=False)
     legend = True
 
     def get_artist(self) -> artist:
@@ -252,7 +256,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._show_xerr = item.props.showxerr
         self._show_yerr = item.props.showyerr
 
-        _, graphs_params = axis.figure._style_params
+        _style_params, graphs_params = axis.figure._style_params
         ecolor = graphs_params["errorbar.ecolor"]
         if ecolor.lower() == "none":
             ecolor = None
@@ -264,10 +268,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             color=item.get_color(), alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
-            capsize=graphs_params["errorbar.capsize"],
-            capthick=graphs_params["errorbar.capthick"],
-            elinewidth=graphs_params["errorbar.linewidth"],
-            barsabove=graphs_params["errorbar.barsabove"],
+            capsize=item.props.errcapsize,
+            capthick=item.props.errcapthick,
+            elinewidth=item.props.errlinewidth,
+            barsabove=item.props.errbarsabove,
             ecolor=ecolor,
         )
 
@@ -287,7 +291,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             if has_yerr and caps else ()
 
         self.name = item.get_name()
-        for prop in ("selected", "linewidth", "markersize"):
+        for prop in ("selected", "linewidth", "markersize",
+                     "errcapsize", "errcapthick",
+                     "errlinewidth", "errbarsabove"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)

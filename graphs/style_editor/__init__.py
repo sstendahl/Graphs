@@ -57,7 +57,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
             (_PREVIEW_XDATA1, _PREVIEW_YDATA1, _PREVIEW_XERR1, _PREVIEW_YERR1),
             (_PREVIEW_XDATA2, _PREVIEW_YDATA2, None, None),
         ]
-        test_style = pyplot.rcParams, {}
+        style_manager = Graphs.StyleManager.get_instance()
+        test_style = style_manager.get_system_style_params()
         for xdata, ydata, xerr, yerr in preview_data:
             self._test_items.append(
                 DataItem.new(
