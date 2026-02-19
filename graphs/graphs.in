@@ -30,9 +30,13 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "4.0")
     gi.require_version("Graphs", "1")
 
+    import asyncio
     import os
     import signal
     import sys
+
+    from gi.events import GLibEventLoopPolicy
+    asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
     graph_path_dir = "@PKGDATADIR@"
     if os.environ.get("GRAPHS_DEVEL_PATH"):
@@ -49,10 +53,6 @@ if __name__ == "__main__":
         )
         logging.getLogger("matplotlib.font_manager").disabled = True
         logging.debug("Begin Application startup")
-
-        import asyncio
-        from gi.events import GLibEventLoopPolicy
-        asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
         import gettext
         import locale
