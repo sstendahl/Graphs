@@ -35,12 +35,6 @@ class FitResult:
         self.residuals = residuals
         self.fitted_y = fitted_y
 
-    @property
-    def is_valid(self):
-        """Check whether the fit result has a valid variance."""
-        nonfinite_covariance = numpy.any(numpy.isinf(self.covariance))
-        return len(self.parameters) > 0 and not nonfinite_covariance
-
 
 class CurveFittingDialog(Graphs.CurveFittingDialog):
     """Class for displaying the Curve Fitting dialog."""
@@ -161,39 +155,17 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _fit_curve(self) -> None:
         """Handle fit curve request."""
-        if not self.get_equation_string():
-            self.set_results(Graphs.CurveFittingError.EQUATION)
-            return
-
-        fit_result = self._perform_fit()
-
-        if fit_result is None:
-            return
-        self.fit_result = fit_result
-
-        # Update all UI components
-        self._update_fitted_curve()
-        self._update_residuals()
-        self._update_confidence_band()
-        self.update_canvas_data()
-        self.set_results(Graphs.CurveFittingError.NONE)
-
-    def _get_function(self) -> sympy.FunctionClass:
         variables = ["x"] + self.props.fitting_parameters.get_free_vars()
         sym_vars = sympy.symbols(variables)
-        with contextlib.suppress(sympy.SympifyError, TypeError, SyntaxError):
+        try:
             symbolic = sympy.sympify(
                 self.get_equation_string(),
                 locals=dict(zip(variables, sym_vars)),
             )
-            return sympy.lambdify(sym_vars, symbolic)
-
-    def _perform_fit(self) -> FitResult:
-        """Perform the actual curve fitting."""
-        func = self._get_function()
-        if not func:
+            func = sympy.lambdify(sym_vars, symbolic)
+        except (sympy.SympifyError, TypeError, SyntaxError):
             self.set_results(Graphs.CurveFittingError.EQUATION)
-            return None
+            return
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
         y_data = numpy.asarray(self.data_curve.get_ydata())
@@ -209,36 +181,37 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
             if numpy.any(numpy.isinf(param_cov)):
                 self.set_results(Graphs.CurveFittingError.SINGULAR)
-                return None
+                return
 
         except (RuntimeError, _minpack.error):
             self.set_results(Graphs.CurveFittingError.CONVERGENCE)
-            return None
+            return
         except (ValueError, TypeError, ZeroDivisionError, OverflowError):
             self.set_results(Graphs.CurveFittingError.DOMAIN)
-            return None
+            return
 
         # Calculate statistics
         fitted_y = func(x_data, *params)
-        residuals = y_data - fitted_y
-        r2, rmse = self._calculate_statistics(y_data, fitted_y)
-
-        return FitResult(params, param_cov, r2, rmse, residuals, fitted_y)
-
-    def _calculate_statistics(
-        self,
-        y_data: numpy.ndarray,
-        fitted_y: numpy.ndarray,
-    ) -> tuple:
-        """Calculate R² and RMSE statistics."""
         ss_res = numpy.sum((y_data - fitted_y)**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
         r2 = 1 - (ss_res / ss_tot)
 
         n = len(y_data)
-        rmse = numpy.sqrt(ss_res / n)
+        self.fit_result = FitResult(
+            params,
+            param_cov,
+            f"{r2:.3g}",
+            f"{numpy.sqrt(ss_res / n):.3g}",
+            y_data - fitted_y,
+            fitted_y,
+        )
 
-        return f"{r2:.3g}", f"{rmse:.3g}"
+        # Update all UI components
+        self._update_fitted_curve()
+        self._update_residuals()
+        self._update_confidence_band()
+        self.update_canvas_data()
+        self.set_results(Graphs.CurveFittingError.NONE)
 
     def _update_fitted_curve(self) -> None:
         """Update the fitted curve on the main canvas."""
@@ -312,7 +285,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def update_confidence_band(self) -> None:
         """Update confidence band."""
-        if self.fit_result is None or not self.fit_result.is_valid:
+        if self.fit_result is None:
             return
         self._update_confidence_band()
         self.set_results(Graphs.CurveFittingError.NONE)
@@ -377,7 +350,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _display_fit_results(self) -> None:
         """Display the fitting results in the text buffer."""
-        if self.fit_result is None or not self.fit_result.is_valid:
+        if self.fit_result is None:
             return
 
         buffer = self.get_text_view().get_buffer()
