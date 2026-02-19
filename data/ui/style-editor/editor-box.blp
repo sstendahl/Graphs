@@ -146,7 +146,7 @@ template $GraphsStyleEditorBox: Box {
     title: _("Error Bars");
 
     Adw.ActionRow {
-      title: _("Cap Size");
+      title: _("Cap Length");
 
       Scale errorbar_capsize {
         draw-value: true;
@@ -191,11 +191,7 @@ template $GraphsStyleEditorBox: Box {
     }
 
     Adw.SwitchRow errorbar_barsabove {
-      title: _("Draw Bars Above Data");
-    }
-
-    $GraphsStyleColorRow errorbar_ecolor {
-      title: _("Error Bar Color");
+      title: _("Draw Above Data");
     }
   }
 
@@ -527,6 +523,35 @@ template $GraphsStyleEditorBox: Box {
     };
 
     ListBox line_colors_box {
+      vexpand: false;
+      valign: start;
+      hexpand: true;
+      selection-mode: none;
+
+      styles [
+        "boxed-list",
+      ]
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Error Bar Colors");
+
+    header-suffix: Button {
+      clicked => $add_errbar_color();
+
+      styles [
+        "flat",
+      ]
+
+      Adw.ButtonContent {
+        halign: center;
+        icon-name: "list-add-symbolic";
+        label: _("Add Color");
+      }
+    };
+
+    ListBox errbar_line_colors_box {
       vexpand: false;
       valign: start;
       hexpand: true;

@@ -1,0 +1,69 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemErrorBarGroup: Box {
+  orientation: vertical;
+  spacing: 20;
+
+  Adw.PreferencesGroup {
+    title: _("Error Bars");
+
+    Adw.SwitchRow use_xerr {
+      title: _("Show Horizontal");
+    }
+
+    Adw.SwitchRow use_yerr {
+      title: _("Show Vertical");
+    }
+
+    Adw.SwitchRow errbarsabove {
+      title: _("Draw Above Data");
+    }
+
+    $GraphsStyleColorRow errcolor_row {
+      title: _("Color");
+    }
+
+    Adw.ActionRow {
+      title: _("Cap Length");
+
+      Scale errcapsize {
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 12;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Cap Thickness");
+
+      Scale errcapthick {
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+
+    Adw.ActionRow {
+      title: _("Line Width");
+
+      Scale errlinewidth {
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+  }
+}

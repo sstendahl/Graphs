@@ -98,6 +98,10 @@ class Data(Graphs.Data):
                         self.set_color_cycle(
                             style_params["axes.prop_cycle"].by_key()["color"],
                         )
+                        self.set_errbar_color_cycle(
+                            graphs_params[
+                                "errorbar.color_cycle"].by_key()["color"],
+                        )
                         return
                     except (ValueError, SyntaxError, AttributeError):
                         error_msg = _(
@@ -118,6 +122,10 @@ class Data(Graphs.Data):
         self._selected_style_params = style_manager.get_system_style_params()
         color_cycle = self._selected_style_params[0]["axes.prop_cycle"]
         self.set_color_cycle(color_cycle.by_key()["color"])
+        graphs_params = self._selected_style_params[1]
+        self.set_errbar_color_cycle(
+            graphs_params["errorbar.color_cycle"].by_key()["color"],
+        )
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits()
