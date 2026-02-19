@@ -85,14 +85,6 @@ namespace Graphs {
         public FittingParameter[] get_parameters () {
             return map.values.to_array ();
         }
-
-        public Iterator<FittingParameter> iterator () {
-            return map.values.iterator ();
-        }
-
-        public bool @foreach (ForallFunc<FittingParameter> f) {
-            return map.values.@foreach (f);
-        }
     }
 
     public enum CurveFittingError {
