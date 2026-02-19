@@ -10,7 +10,7 @@ namespace Graphs.MathTools {
      * such as integer values of pi and e.
      */
     public string prettyprint_double (double val) {
-        if (val >= -PI_THRESH && val <= PI_THRESH) {
+        if (val == 0) {
             return "0";
         }
         StringBuilder builder = new StringBuilder ();
@@ -25,9 +25,11 @@ namespace Graphs.MathTools {
         if (remainder <= PI_THRESH || remainder >= Math.PI - PI_THRESH) {
             // fast rounding check evasion
             double factor = Math.floor (val / Math.PI + 0.5);
-            if (factor != 1) builder.append ("%.15g".printf (factor));
-            builder.append ("pi");
-            return builder.free_and_steal ();
+            if (factor != 0) {
+                if (factor != 1) builder.append ("%.15g".printf (factor));
+                builder.append ("pi");
+                return builder.free_and_steal ();
+            }
         }
 
         // or e
@@ -35,9 +37,11 @@ namespace Graphs.MathTools {
         if (remainder <= E_THRESH || remainder >= Math.E - E_THRESH) {
             // fast rounding check evasion
             double factor = Math.floor (val / Math.E + 0.5);
-            if (factor != 1) builder.append ("%.15g".printf (factor));
-            builder.append_c ('e');
-            return builder.free_and_steal ();
+            if (factor != 0) {
+                if (factor != 1) builder.append ("%.15g".printf (factor));
+                builder.append_c ('e');
+                return builder.free_and_steal ();
+            }
         }
 
         builder.append ("%.15g".printf (val));
