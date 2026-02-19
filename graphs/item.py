@@ -122,8 +122,14 @@ class DataItem(_PythonItem):
             self.props.data = ([], [])
         if self.props.err is None:
             self.props.err = (None, None)
-        self.props.has_xerr = self.props.err[0] is not None
-        self.props.has_yerr = self.props.err[1] is not None
+
+    @GObject.Property(type=bool, default=False)
+    def has_xerr(self) -> bool:
+        return self.props.err[0] is not None
+
+    @GObject.Property(type=bool, default=False)
+    def has_yerr(self) -> bool:
+        return self.props.err[1] is not None
 
     def get_xdata(self) -> list:
         """Get xdata."""

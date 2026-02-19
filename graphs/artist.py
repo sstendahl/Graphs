@@ -274,14 +274,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
         bar_iter = iter(barlines)
-        self._xbar = next(bar_iter) if item.props.has_xerr else None
-        self._ybar = next(bar_iter) if item.props.has_yerr else None
+        self._xbar = next(bar_iter) if item.has_xerr else None
+        self._ybar = next(bar_iter) if item.has_yerr else None
 
         cap_iter = iter(caps)
         self._xcaps = (next(cap_iter), next(cap_iter)) \
-            if item.props.has_xerr and caps else ()
+            if item.has_xerr and caps else ()
         self._ycaps = (next(cap_iter), next(cap_iter)) \
-            if item.props.has_yerr and caps else ()
+            if item.has_yerr and caps else ()
 
         self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):

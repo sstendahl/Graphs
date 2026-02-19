@@ -254,6 +254,10 @@ class SpreadsheetParser(Parser):
             column_indices.add(item_settings.column_y)
             if not item_settings.single_column:
                 column_indices.add(item_settings.column_x)
+            if item_settings.use_xerr:
+                column_indices.add(item_settings.xerr_index)
+            if item_settings.use_yerr:
+                column_indices.add(item_settings.yerr_index)
 
         file_parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
@@ -286,11 +290,18 @@ class SpreadsheetParser(Parser):
                 if len(xdata) != len(ydata):
                     raise ParseError(_("Columns do not have the same length."))
 
+            xerr, _ = parsed_columns[item_settings.xerr_index] \
+                if item_settings.use_xerr else (None, None)
+            yerr, _ = parsed_columns[item_settings.yerr_index] \
+                if item_settings.use_yerr else (None, None)
+
             items.append(
                 item.DataItem.new(
                     style,
                     xdata,
                     ydata,
+                    xerr=xerr,
+                    yerr=yerr,
                     xlabel=xlabel,
                     ylabel=ylabel,
                     name=settings.get_filename(),

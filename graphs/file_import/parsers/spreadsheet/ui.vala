@@ -28,6 +28,14 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.EntryRow equation { get; }
         [GtkChild]
+        private unowned Adw.SwitchRow use_xerr { get; }
+        [GtkChild]
+        private unowned Adw.SwitchRow use_yerr { get; }
+        [GtkChild]
+        private unowned Adw.SpinRow column_xerr { get; }
+        [GtkChild]
+        private unowned Adw.SpinRow column_yerr { get; }
+        [GtkChild]
         private unowned Button remove_button { get; }
 
         public signal void settings_changed (ColumnsItemSettings new_settings);
@@ -40,6 +48,10 @@ namespace Graphs {
             column_x.input.connect (on_input);
             column_y.output.connect (on_output);
             column_y.input.connect (on_input);
+            column_xerr.output.connect (on_output);
+            column_xerr.input.connect (on_input);
+            column_yerr.output.connect (on_output);
+            column_yerr.input.connect (on_input);
 
             load_item_settings (item_settings);
 
@@ -47,6 +59,10 @@ namespace Graphs {
             column_x.notify["value"].connect (on_settings_changed);
             column_y.notify["value"].connect (on_settings_changed);
             equation.notify["text"].connect (on_settings_changed);
+            use_xerr.notify["active"].connect (on_settings_changed);
+            use_yerr.notify["active"].connect (on_settings_changed);
+            column_xerr.notify["value"].connect (on_settings_changed);
+            column_yerr.notify["value"].connect (on_settings_changed);
         }
 
         private void load_item_settings (ColumnsItemSettings item_settings) {
@@ -54,6 +70,10 @@ namespace Graphs {
             column_y.set_value (item_settings.column_y);
             single_column.set_active (item_settings.single_column);
             equation.set_text (item_settings.equation);
+            use_xerr.set_active (item_settings.use_xerr);
+            use_yerr.set_active (item_settings.use_yerr);
+            column_xerr.set_value (item_settings.xerr_index);
+            column_yerr.set_value (item_settings.yerr_index);
         }
 
         private ColumnsItemSettings get_item_settings () {
@@ -62,6 +82,10 @@ namespace Graphs {
             item_settings.column_y = (int) column_y.get_value ();
             item_settings.single_column = single_column.get_active ();
             item_settings.equation = equation.get_text ().replace (";", "");
+            item_settings.use_xerr = use_xerr.get_active ();
+            item_settings.use_yerr = use_yerr.get_active ();
+            item_settings.xerr_index = (int) column_xerr.get_value ();
+            item_settings.yerr_index = (int) column_yerr.get_value ();
             return item_settings;
         }
 
