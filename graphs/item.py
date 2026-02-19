@@ -125,10 +125,12 @@ class DataItem(_PythonItem):
 
     @GObject.Property(type=bool, default=False)
     def has_xerr(self) -> bool:
+        """Check if the item has an horizontal error bars."""
         return self.props.err[0] is not None
 
     @GObject.Property(type=bool, default=False)
     def has_yerr(self) -> bool:
+        """Check if the item has an vertical error bars."""
         return self.props.err[1] is not None
 
     def get_xdata(self) -> list:
