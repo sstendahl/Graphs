@@ -73,5 +73,14 @@ namespace Graphs {
                 return false;
             }
         }
+
+        protected signal bool item_has_xerr_request (Item item);
+        public static bool item_has_xerr (Item item) {
+            return instance.item_has_xerr_request.emit (item);
+        }
+        protected signal bool item_has_yerr_request (Item item);
+        public static bool item_has_yerr (Item item) {
+            return instance.item_has_yerr_request.emit (item);
+        }
     }
 }

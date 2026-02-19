@@ -112,7 +112,7 @@ class DataItem(_PythonItem):
         return cls(
             data=(xdata, ydata),
             err=(xerr, yerr),
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -122,16 +122,6 @@ class DataItem(_PythonItem):
             self.props.data = ([], [])
         if self.props.err is None:
             self.props.err = (None, None)
-
-    @GObject.Property(type=bool, default=False)
-    def has_xerr(self) -> bool:
-        """Check if the item has an horizontal error bars."""
-        return self.props.err[0] is not None
-
-    @GObject.Property(type=bool, default=False)
-    def has_yerr(self) -> bool:
-        """Check if the item has an vertical error bars."""
-        return self.props.err[1] is not None
 
     def get_xdata(self) -> list:
         """Get xdata."""
@@ -179,7 +169,7 @@ class GeneratedDataItem(DataItem):
             xstop=xstop,
             steps=steps,
             scale=scale,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -241,7 +231,7 @@ class EquationItem(_PythonItem):
         """Create new EquationItem."""
         return cls(
             equation=equation,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
@@ -297,7 +287,7 @@ class TextItem(_PythonItem):
             xanchor=xanchor,
             yanchor=yanchor,
             text=text,
-            **cls._extract_params(cls, style),
+            **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
