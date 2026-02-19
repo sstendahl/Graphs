@@ -290,9 +290,9 @@ class SpreadsheetParser(Parser):
                 if len(xdata) != len(ydata):
                     raise ParseError(_("Columns do not have the same length."))
 
-            xerr, _ = parsed_columns[item_settings.xerr_index] \
+            xerr, _label = parsed_columns[item_settings.xerr_index] \
                 if item_settings.use_xerr else (None, None)
-            yerr, _ = parsed_columns[item_settings.yerr_index] \
+            yerr, _label = parsed_columns[item_settings.yerr_index] \
                 if item_settings.use_yerr else (None, None)
 
             items.append(
