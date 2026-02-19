@@ -79,27 +79,35 @@ template $GraphsSpreadsheetItemGroup: Adw.PreferencesGroup {
       };
     }
   }
-Adw.PreferencesRow {
+
+  Adw.PreferencesRow {
     activatable: false;
+
     Box {
       orientation: horizontal;
       homogeneous: true;
+
       Adw.SwitchRow use_xerr {
         title: _("X Error Bars");
       }
+
       Adw.SwitchRow use_yerr {
         title: _("Y Error Bars");
       }
     }
   }
+
   Adw.PreferencesRow {
     activatable: false;
+
     Box {
       orientation: horizontal;
       homogeneous: true;
+
       Adw.SpinRow column_xerr {
         title: _("X Error Column");
         sensitive: bind use_xerr.active;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 16383;
@@ -107,9 +115,11 @@ Adw.PreferencesRow {
           value: 0;
         };
       }
+
       Adw.SpinRow column_yerr {
         title: _("Y Error Column");
         sensitive: bind use_yerr.active;
+
         adjustment: Adjustment {
           lower: 0;
           upper: 16383;
