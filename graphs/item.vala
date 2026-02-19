@@ -15,8 +15,6 @@ namespace Graphs {
         public string ylabel { get; set; default = ""; }
         public int xposition { get; set; default = 0; }
         public int yposition { get; set; default = 0; }
-        public bool has_xerr { get; set; default = false; }
-        public bool has_yerr { get; set; default = false; }
 
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);
