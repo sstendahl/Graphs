@@ -2,10 +2,10 @@
 #~graphs name: Adwaita Dark
 #~graphs ticklabels: False
 #~graphs errorbar.capthick: 1.2
-#~graphs errorbar.capsize: 4.0
+#~graphs errorbar.capsize: 3.0
 #~graphs errorbar.linewidth: 1.2
 #~graphs errorbar.barsabove: False
-#~graphs errorbar.ecolor: #FFFFFF
+#~graphs errorbar.color_cycle: #FFFFFF
 
 # font
 font.family: sans-serif

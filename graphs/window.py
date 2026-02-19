@@ -51,16 +51,32 @@ class PythonWindow(Graphs.Window):
 
             old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
             new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
+            old_errbar_cycle = \
+                old_style[1]["errorbar.color_cycle"].by_key()["color"]
+            new_errbar_cycle = \
+                new_style[1]["errorbar.color_cycle"].by_key()["color"]
+
             for item_ in data:
                 item_.reset(old_style, new_style)
+
             count = 0
+            errbar_count = 0
             for item_ in data:
-                if isinstance(item_, (item.DataItem, item.EquationItem)) \
-                        and item_.get_color() in old_cycle:
-                    if count > len(new_cycle):
-                        count = 0
+                if (isinstance(item_, (item.DataItem, item.EquationItem))
+                        and item_.get_color() in old_cycle):
+                    count %= len(new_cycle)
                     item_.set_color(new_cycle[count])
                     count += 1
+
+                    if isinstance(item_, item.DataItem):
+                        has_err = item_.get_xerr() or item_.get_yerr()
+                        if not has_err:
+                            continue
+                        if item_.get_errcolor() in old_errbar_cycle:
+                            errbar_count %= len(new_errbar_cycle)
+                            item_.set_errcolor(new_errbar_cycle[errbar_count])
+                            errbar_count += 1
+
         self._reload_canvas()
 
     def _on_key_press_event(self, *args) -> None:

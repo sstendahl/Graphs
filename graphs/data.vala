@@ -37,6 +37,8 @@ namespace Graphs {
         private Gee.AbstractList<Item> _items;
         private string[] _color_cycle;
         private string[] _used_colors;
+        private string[] _errbar_color_cycle;
+        private string[] _used_errbar_colors;
         private GLib.Settings _settings;
         private bool _notify_selection_changed = true;
 
@@ -54,6 +56,7 @@ namespace Graphs {
         construct {
             this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
+            this._errbar_color_cycle = {};
             items_changed.connect (_update_used_positions);
             this._settings = Application.get_settings_child ("figure");
             this.style_selection_model = new SingleSelection (StyleManager.style_model);
@@ -298,6 +301,13 @@ namespace Graphs {
             if (_used_colors.length == _color_cycle.length) _used_colors = {};
         }
 
+        private void append_used_errbar_color (string color) {
+            if (color in _used_errbar_colors) return;
+            if (!(color in _errbar_color_cycle)) return;
+            _used_errbar_colors += color;
+            if (_used_errbar_colors.length == _errbar_color_cycle.length) _used_errbar_colors = {};
+        }
+
         public void add_items (Item[] items) {
             add_items_from_list (new Gee.ArrayList<Item>.wrap (items));
         }
@@ -312,8 +322,10 @@ namespace Graphs {
          */
         public void add_items_from_list (Gee.List<Item> items) {
             _used_colors = {};
+            _used_errbar_colors = {};
             foreach (Item item in _items) {
                 if (item.color in _color_cycle) append_used_color (item.color);
+                if (item.errcolor in _errbar_color_cycle) append_used_errbar_color (item.errcolor);
             }
             string[] used_names = get_names ();
             uint prev_size = get_n_items ();
@@ -326,6 +338,15 @@ namespace Graphs {
                         if (!(color in _used_colors)) {
                             append_used_color (color);
                             item.color = color;
+                            break;
+                        }
+                    }
+                }
+                if (item.errcolor == "") {
+                    foreach (string color in _errbar_color_cycle) {
+                        if (!(color in _used_errbar_colors)) {
+                            append_used_errbar_color (color);
+                            item.errcolor = color;
                             break;
                         }
                     }
@@ -419,6 +440,10 @@ namespace Graphs {
         protected void set_color_cycle (string[] color_cycle) {
             this._color_cycle = color_cycle;
         }
+
+        protected void set_errbar_color_cycle (string[] color_cycle) {
+                    this._errbar_color_cycle = color_cycle;
+                }
 
         // End section style
 

@@ -5,7 +5,7 @@
 #~graphs errorbar.capsize: 0
 #~graphs errorbar.linewidth: 1.5
 #~graphs errorbar.barsabove: False
-#~graphs errorbar.ecolor: None
+#~graphs errorbar.color_cycle: #1F77B4, #FF7F0E, #2CA02C, #D62728', #9467BD, #8C564B, #E377C2, #7F7F7F, #BCBD22, #17BECF
 
 # font
 font.family: sans-serif
@@ -95,7 +95,7 @@ axes.facecolor: FFFFFF
 figure.facecolor: FFFFFF
 figure.edgecolor: FFFFFF
 
-axes.prop_cycle: cycler('color', ['1f77b4', 'ff7f0e', '2ca02c', 'd62728', '9467bd', '8c564b', 'e377c2', '7f7f7f', 'bcbd22', '17becf'])
+axes.prop_cycle: cycler('color', ['1F77B4', 'FF7F0E', '2CA02C', 'D62728', '9467BD', '8C564B', 'E377C2', '7F7F7F', 'BCBD22', '17BECF'])
 patch.facecolor: 1f77b4
 
 # other

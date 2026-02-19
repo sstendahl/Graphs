@@ -115,6 +115,9 @@ namespace Graphs {
         private unowned ListBox line_colors_box { get; }
 
         [GtkChild]
+        private unowned ListBox errbar_line_colors_box { get; }
+
+        [GtkChild]
         private unowned Box poor_contrast_warning { get; }
 
         [GtkChild]
@@ -129,16 +132,15 @@ namespace Graphs {
         [GtkChild]
         protected unowned Adw.SwitchRow errorbar_barsabove { get; }
 
-        [GtkChild]
-        protected unowned StyleColorRow errorbar_ecolor { get; }
-
         public signal void params_changed ();
 
         protected StyleColorManager color_manager { get; set; }
+        protected StyleColorManager errbar_color_manager { get; set; }
         protected Gtk.Window window { get; set; }
 
         construct {
             this.color_manager = new StyleColorManager (line_colors_box);
+            this.errbar_color_manager = new StyleColorManager (errbar_line_colors_box);
 
             titlesize.set_format_value_func (title_format_function);
             labelsize.set_format_value_func (title_format_function);
@@ -166,6 +168,16 @@ namespace Graphs {
                 RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
                 color_manager.add_color (hex);
+            } catch {}
+        }
+
+        [GtkCallback]
+        private async void add_errbar_color () {
+            var dialog = new ColorDialog () { with_alpha = false };
+            try {
+                RGBA color = yield dialog.choose_rgba (window, null, null);
+                string hex = Tools.rgba_to_hex (color);
+                errbar_color_manager.add_color (hex);
             } catch {}
         }
     }
