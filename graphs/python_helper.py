@@ -24,6 +24,8 @@ _REQUESTS = (
     "export-figure",
     "export-items",
     "generate-data",
+    "item-has-xerr",
+    "item-has-yerr",
     "perform-operation",
     "python-method",
     "simplify-equation",
@@ -132,6 +134,14 @@ class PythonHelper(Graphs.PythonHelper):
             settings.get_int("scale"),
             name=name,
         )
+
+    @staticmethod
+    def _on_item_has_xerr_request(self, item: Graphs.Item) -> bool:
+        return item.props.err[0] is not None
+
+    @staticmethod
+    def _on_item_has_yerr_request(self, item: Graphs.Item) -> bool:
+        return item.props.err[1] is not None
 
     @staticmethod
     def _on_perform_operation_request(

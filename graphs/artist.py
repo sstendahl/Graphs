@@ -130,14 +130,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._refresh_errorbars()
 
     @GObject.Property(type=object)
-    def err(self) -> object:
+    def err(self) -> tuple:
         """Get err property."""
-        return self._xerr, self._yerr
+        return self._err
 
     @err.setter
     def err(self, err: tuple[list, list]) -> None:
         """Set err property."""
-        self._xerr, self._yerr = err
+        self._err = err
         self._refresh_errorbars()
 
     @GObject.Property(type=bool, default=True)
@@ -195,8 +195,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         x_data, y_data = self._artist.get_data()
         x_data = numpy.asarray(x_data)
         y_data = numpy.asarray(y_data)
-        x_err = self._xerr if self._show_xerr else None
-        y_err = self._yerr if self._show_yerr else None
+        x_err, y_err = self._err
+        x_err = x_err if self._show_xerr else None
+        y_err = y_err if self._show_yerr else None
 
         # data and err are set as separate property assignments during cut
         # and undo/redo. So only refresh if lengths are in sync:
@@ -247,7 +248,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        self._xerr, self._yerr = item.props.err
+        self._err = item.props.err
         self._show_xerr = item.props.showxerr
         self._show_yerr = item.props.showyerr
 
@@ -256,9 +257,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         if ecolor.lower() == "none":
             ecolor = None
 
+        x_err, y_err = self._err
         self._errorbar_container = axis.errorbar(
             item.get_xdata(), item.get_ydata(),
-            xerr=self._xerr, yerr=self._yerr,
+            xerr=x_err, yerr=y_err,
             color=item.get_color(), alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
@@ -273,15 +275,16 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
+        has_xerr, has_yerr = x_err is not None, y_err is not None
         bar_iter = iter(barlines)
-        self._xbar = next(bar_iter) if item.has_xerr else None
-        self._ybar = next(bar_iter) if item.has_yerr else None
+        self._xbar = next(bar_iter) if has_xerr else None
+        self._ybar = next(bar_iter) if has_yerr else None
 
         cap_iter = iter(caps)
         self._xcaps = (next(cap_iter), next(cap_iter)) \
-            if item.has_xerr and caps else ()
+            if has_xerr and caps else ()
         self._ycaps = (next(cap_iter), next(cap_iter)) \
-            if item.has_yerr and caps else ()
+            if has_yerr and caps else ()
 
         self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):

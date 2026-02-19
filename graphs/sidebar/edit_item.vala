@@ -111,9 +111,8 @@ namespace Graphs {
                 "value",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
-            bool has_xerr;
-            bool has_yerr;
-            item.get ("has_xerr", out has_xerr, "has_yerr", out has_yerr);
+            bool has_xerr = PythonHelper.item_has_xerr (item);
+            bool has_yerr = PythonHelper.item_has_yerr (item);
             if (has_xerr) {
                 item.bind_property (
                     "showxerr",
