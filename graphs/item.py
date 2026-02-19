@@ -57,13 +57,13 @@ class _PythonItem(Graphs.Item):
     def _extract_params(
         self,
         style: Tuple[RcParams, dict],
-        kwargs: dict,
+        kwargs: dict = None,
     ) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in self._style_properties.items()
-            if prop not in kwargs
+            if kwargs is None or prop not in kwargs
         }
 
     def to_dict(self) -> dict:
