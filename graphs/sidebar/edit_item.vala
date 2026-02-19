@@ -77,6 +77,15 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale markersize { get; }
 
+        [GtkChild]
+        private unowned Adw.SwitchRow use_xerr { get; }
+
+        [GtkChild]
+        private unowned Adw.SwitchRow use_yerr { get; }
+
+        [GtkChild]
+        private unowned Adw.PreferencesGroup error_bars_group { get; }
+
         public EditItemDataItemBox (Item item) {
             item.bind_property (
                 "linestyle",
@@ -102,41 +111,29 @@ namespace Graphs {
                 "value",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
-            item.bind_property (
-                "showxerr",
-                use_xerr,
-                "active",
-                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
-            );
-            item.bind_property (
-                "showyerr",
-                use_yerr,
-                "active",
-                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
-            );
-            item.bind_property (
-                "has_xerr",
-                use_xerr,
-                "visible",
-                BindingFlags.SYNC_CREATE
-            );
-            item.bind_property (
-                "has_yerr",
-                use_yerr,
-                "visible",
-                BindingFlags.SYNC_CREATE
-            );
-            error_bars_group.set_visible (item.has_xerr || item.has_yerr);
+            bool has_xerr;
+            bool has_yerr;
+            item.get ("has_xerr", out has_xerr, "has_yerr", out has_yerr);
+            if (has_xerr) {
+                item.bind_property (
+                    "showxerr",
+                    use_xerr,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            }
+            if (has_yerr) {
+                item.bind_property (
+                    "showyerr",
+                    use_yerr,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            }
+            use_xerr.set_visible (has_xerr);
+            use_yerr.set_visible (has_yerr);
+            error_bars_group.set_visible (has_xerr || has_yerr);
         }
-
-        [GtkChild]
-        public unowned Adw.SwitchRow use_xerr { get; }
-
-        [GtkChild]
-        public unowned Adw.SwitchRow use_yerr { get; }
-
-        [GtkChild]
-        private unowned Adw.PreferencesGroup error_bars_group { get; }
 
         [GtkCallback]
         private void on_linestyle () {

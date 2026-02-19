@@ -290,9 +290,9 @@ class CommonOperations():
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)
                 if all_x:
-                    new_xerr.extend(item.props.xerr)
+                    new_xerr.extend(item.get_xerr())
                 if all_y:
-                    new_yerr.extend(item.props.yerr)
+                    new_yerr.extend(item.get_yerr())
 
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)

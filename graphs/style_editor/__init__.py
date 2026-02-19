@@ -15,8 +15,8 @@ import numpy
 
 _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
 _PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
-_PREVIEW_YERR1 = numpy.linspace(500, 2500, 10)
 _PREVIEW_XERR1 = numpy.linspace(0.1, 0.5, 10)
+_PREVIEW_YERR1 = numpy.linspace(500, 2500, 10)
 _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 CSS_TEMPLATE = """
