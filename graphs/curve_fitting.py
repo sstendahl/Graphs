@@ -195,13 +195,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         ss_res = numpy.sum((y_data - fitted_y)**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
         r2 = 1 - (ss_res / ss_tot)
+        rmse = numpy.sqrt(ss_res / n)
 
         n = len(y_data)
         self.fit_result = FitResult(
             params,
             param_cov,
             f"{r2:.3g}",
-            f"{numpy.sqrt(ss_res / n):.3g}",
+            f"{rmse:.3g}",
             y_data - fitted_y,
             fitted_y,
         )
@@ -391,4 +392,3 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def _add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
         self.props.window.get_data().add_items([self.fitted_curve])
-        self.close()

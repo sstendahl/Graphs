@@ -417,6 +417,7 @@ namespace Graphs {
         [GtkCallback]
         private void emit_add_fit_request () {
             PythonHelper.run_method (this, "_add_fit");
+            close ();
         }
     }
 
