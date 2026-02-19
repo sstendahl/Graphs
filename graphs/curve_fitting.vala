@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
+using Gee;
 using Gtk;
 
 namespace Graphs {
@@ -28,6 +29,69 @@ namespace Graphs {
 
         public void set_upper_bound (double upper_bound) {
             this.upper_bound = upper_bound;
+        }
+    }
+
+    public class FittingParameterContainer : Object {
+        private Map<string, FittingParameter> map;
+
+        construct {
+            map = new HashMap<string, FittingParameter> ();
+        }
+
+        public void update (string[] free_vars) {
+            var new_map = new HashMap<string, FittingParameter> ();
+            FittingParameter param;
+            foreach (string variable in free_vars) {
+                if (map.has_key (variable)) {
+                    param = map.get (variable);
+                } else {
+                    param = new FittingParameter (variable);
+                }
+                new_map.set (variable, param);
+            }
+            map = new_map;
+        }
+
+        public double[] get_p0 () {
+            double[] result = new double[map.size];
+            var iterator = map.map_iterator ();
+            int idx = 0;
+            while (iterator.has_next ()) {
+                iterator.next ();
+                result[idx++] = iterator.get_value ().initial;
+            }
+            return result;
+        }
+
+        public void get_bounds (out double[] lower, out double[] upper) {
+            lower = new double[map.size];
+            upper = new double[map.size];
+            var iterator = map.map_iterator ();
+            int idx = 0;
+            while (iterator.has_next ()) {
+                iterator.next ();
+                var param = iterator.get_value ();
+                lower[idx] = param.get_lower_bound ();
+                upper[idx] = param.get_upper_bound ();
+                idx++;
+            }
+        }
+
+        public string[] get_free_vars () {
+            return map.keys.to_array ();
+        }
+
+        public FittingParameter[] get_parameters () {
+            return map.values.to_array ();
+        }
+
+        public Iterator<FittingParameter> iterator () {
+            return map.values.iterator ();
+        }
+
+        public bool @foreach (ForallFunc<FittingParameter> f) {
+            return map.values.@foreach (f);
         }
     }
 
@@ -104,6 +168,7 @@ namespace Graphs {
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
+        protected FittingParameterContainer fitting_parameters { get; private set; }
 
         protected Canvas canvas {
             get { return canvas_container.get_first_child () as Canvas; }
@@ -133,26 +198,22 @@ namespace Graphs {
             }
         }
 
-        protected signal bool equation_change (string[] free_vars);
-        protected signal void fit_curve_request ();
-        protected signal void add_fit_request ();
-        protected signal void update_confidence_request ();
-        public signal void show_residuals_changed (bool show);
-
         protected virtual void setup () {
+            fitting_parameters = new FittingParameterContainer ();
+
             settings = Application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
 
             Action confidence_action = settings.create_action ("confidence");
             confidence_action.notify.connect (() => {
-                update_confidence_request ();
+                PythonHelper.run_method (this, "update_confidence_band");
             });
             action_map.add_action (confidence_action);
 
             Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
                 update_bounds_visibility ();
-                fit_curve_request ();
+                PythonHelper.run_method (this, "_fit_curve");
             });
             action_map.add_action (optimization_action);
 
@@ -160,7 +221,7 @@ namespace Graphs {
             res_action.notify.connect (() => {
                 bool show_residuals = settings.get_boolean ("show-residuals");
                 residuals_container.visible = (show_residuals && residuals_canvas != null);
-                show_residuals_changed (show_residuals);
+                PythonHelper.run_method (this, "_load_residuals_canvas");
             });
             action_map.add_action (res_action);
 
@@ -177,6 +238,7 @@ namespace Graphs {
             action_map.add_action (toggle_sidebar_action);
             insert_action_group ("win", action_map);
 
+            custom_equation.set_text (settings.get_string ("custom-equation"));
             equation.set_selected (settings.get_enum ("equation"));
             equation.notify["selected"].connect (set_equation_from_selection);
 
@@ -205,7 +267,10 @@ namespace Graphs {
             PythonHelper.run_method (this, "_display_fit_results");
         }
 
-        protected bool validate_and_update_parameter (FittingParameterBox row, FittingParameter param) {
+        private void on_entry_change (Object object, ParamSpec p) {
+            var entry = (Adw.EntryRow) object;
+            var row = (FittingParameterBox) entry.get_ancestor (typeof (FittingParameterBox));
+
             double init, low, high;
             bool value_error = false;
 
@@ -232,26 +297,27 @@ namespace Graphs {
 
             if (value_error) {
                 set_results (CurveFittingError.VALUE);
-                return false;
+                return;
             }
 
             if (low >= high) {
                 row.lower_bound.add_css_class ("error");
                 row.upper_bound.add_css_class ("error");
                 set_results (CurveFittingError.BOUNDS);
-                return false;
+                return;
             }
 
             if (!(low <= init <= high)) {
                 row.initial.add_css_class ("error");
                 set_results (CurveFittingError.BOUNDS);
-                return false;
+                return;
             }
 
+            var param = row.param;
             param.initial = init;
             param.set_lower_bound (low);
             param.set_upper_bound (high);
-            return true;
+            PythonHelper.run_method (this, "_fit_curve");
         }
 
         private void clear_container (Box container) {
@@ -301,9 +367,8 @@ namespace Graphs {
                 custom_equation.set_visible (false);
             } else {
                 // Custom equation
-                new_equation = settings.get_string ("custom-equation");
+                new_equation = custom_equation.get_text ();
                 this.equation.set_subtitle ("");
-                custom_equation.set_text (new_equation);
                 custom_equation.set_visible (true);
             }
 
@@ -321,8 +386,28 @@ namespace Graphs {
                 }
 
                 equation_string = processed;
-                equation_change.emit (free_vars);
-                fit_curve_request.emit ();
+                fitting_parameters.update (free_vars);
+
+                // clear existing widgets
+                Widget widget;
+                while ((widget = fitting_params_box.get_last_child ()) != null) {
+                    fitting_params_box.remove (widget);
+                }
+
+                // create new parameter boxes
+                bool use_bounds = settings.get_string ("optimization") != "lm";
+                foreach (FittingParameter param in fitting_parameters) {
+                    var p_box = new FittingParameterBox (param);
+                    p_box.set_bounds_visible (use_bounds);
+
+                    p_box.initial.notify["text"].connect (on_entry_change);
+                    p_box.upper_bound.notify["text"].connect (on_entry_change);
+                    p_box.lower_bound.notify["text"].connect (on_entry_change);
+
+                    fitting_params_box.append (p_box);
+                }
+
+                PythonHelper.run_method (this, "_fit_curve");
                 return true;
             } catch (MathError e) {
                 return false;
@@ -331,7 +416,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void emit_add_fit_request () {
-            add_fit_request ();
+            PythonHelper.run_method (this, "_add_fit");
         }
     }
 
@@ -350,7 +435,10 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.EntryRow lower_bound { get; }
 
+        public FittingParameter param { get; construct set; }
+
         public FittingParameterBox (FittingParameter param) {
+            this.param = param;
             string msg = _("Fitting Parameters for %s").printf (param.name);
             label.set_markup (@"<b> $msg: </b>");
             initial.set_text (param.initial.to_string ());
