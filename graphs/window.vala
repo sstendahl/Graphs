@@ -57,7 +57,7 @@ namespace Graphs {
         }
 
         public Canvas canvas {
-            get { return toast_overlay.get_child () as Canvas; }
+            get { return (Canvas) toast_overlay.get_child (); }
             set {
                 value.bind_property ("mode", this, "mode", 2);
                 toast_overlay.set_child (value);
@@ -89,8 +89,8 @@ namespace Graphs {
 
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = val.get_object () as ItemBox?;
-                var target_row = main_page.item_list.get_row_at_y ((int) y) as ItemBox?;
+                var value_row = (ItemBox?) val.get_object ();
+                var target_row = (ItemBox?) main_page.item_list.get_row_at_y ((int) y);
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
@@ -144,7 +144,7 @@ namespace Graphs {
         }
 
         protected void setup () {
-            var application = application as Application;
+            var application = (Application) application;
 
             content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
 
@@ -170,14 +170,14 @@ namespace Graphs {
 
         private void update_history_actions () {
             bool enable = is_main_view;
-            var undo_action = lookup_action ("undo") as SimpleAction;
-            var redo_action = lookup_action ("redo") as SimpleAction;
+            var undo_action = (SimpleAction) lookup_action ("undo");
+            var redo_action = (SimpleAction) lookup_action ("redo");
             undo_action.set_enabled (enable && data.can_undo);
             redo_action.set_enabled (enable && data.can_redo);
         }
 
         private void update_close_project_action () {
-            var close_action = lookup_action ("close-project") as SimpleAction;
+            var close_action = (SimpleAction) lookup_action ("close-project");
             close_action.set_enabled (data.file != null && is_main_view);
         }
 
@@ -201,8 +201,8 @@ namespace Graphs {
             set_title (_("Graphs — %s").printf (title));
             content_title.set_subtitle (path);
 
-            var save_action = lookup_action ("save-project") as SimpleAction;
-            var save_as_action = lookup_action ("save-project-as") as SimpleAction;
+            var save_action = (SimpleAction) lookup_action ("save-project");
+            var save_as_action = (SimpleAction) lookup_action ("save-project-as");
             if (data.unsaved) {
                 if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                     this,
@@ -225,8 +225,8 @@ namespace Graphs {
 
         private void on_items_changed () {
             main_page.item_list.remove_all ();
-            var export_data_action = lookup_action ("export-data") as SimpleAction;
-            var optimize_limits_action = lookup_action ("optimize-limits") as SimpleAction;
+            var export_data_action = (SimpleAction) lookup_action ("export-data");
+            var optimize_limits_action = (SimpleAction) lookup_action ("optimize-limits");
             if (data.is_empty ()) {
                 main_page.set_show_empty_data_page (true);
                 operations.shift_button.set_sensitive (false);
@@ -259,7 +259,7 @@ namespace Graphs {
         }
 
         public void on_selection_changed () {
-            var export_data_action = lookup_action ("export-data") as SimpleAction;
+            var export_data_action = (SimpleAction) lookup_action ("export-data");
             if (data.is_empty ()) {
                 operations.shift_button.set_sensitive (false);
                 operations.smoothen_button.set_sensitive (false);
@@ -321,7 +321,7 @@ namespace Graphs {
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
 
-                var icon = Gtk.DragIcon.get_for_drag (drag) as Gtk.DragIcon;
+                var icon = (Gtk.DragIcon) Gtk.DragIcon.get_for_drag (drag);
                 icon.child = drag_widget;
 
                 drag.set_hotspot ((int) drag_x, (int) drag_y);
@@ -404,7 +404,7 @@ namespace Graphs {
         }
 
         public override bool close_request () {
-            var application = application as Application;
+            var application = (Application) application;
 
             if (_force_close) {
                 application.on_main_window_closed (this);
@@ -412,7 +412,7 @@ namespace Graphs {
             }
 
             if (data.unsaved) {
-                var dialog = Tools.build_dialog ("save_project_changes") as Adw.AlertDialog;
+                var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_project_changes");
                 dialog.response.connect ((d, response) => {
                     switch (response) {
                         case "discard": {

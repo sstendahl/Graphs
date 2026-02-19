@@ -14,8 +14,8 @@ namespace Graphs {
 
             var drop_target = new Gtk.DropTarget (typeof (StyleItemColorRow), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = val.get_object () as StyleItemColorRow?;
-                var target_row = box.get_row_at_y ((int) y) as StyleItemColorRow?;
+                var value_row = (StyleItemColorRow?) val.get_object ();
+                var target_row = (StyleItemColorRow?) box.get_row_at_y ((int) y);
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
@@ -99,7 +99,7 @@ namespace Graphs {
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
 
-                var icon = Gtk.DragIcon.get_for_drag (drag) as Gtk.DragIcon;
+                var icon = (Gtk.DragIcon) Gtk.DragIcon.get_for_drag (drag);
                 icon.child = drag_widget;
 
                 drag.set_hotspot ((int) drag_x, (int) drag_y);

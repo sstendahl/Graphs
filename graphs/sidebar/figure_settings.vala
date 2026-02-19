@@ -117,12 +117,8 @@ namespace Graphs {
                     string key = s + "_" + direction;
                     Adw.EntryRow entry;
                     this.get (key, out entry);
-                    figure_settings.bind_property (key, entry, "text", BindingFlags.SYNC_CREATE,
-                        (binding, source_value, ref target_value) => {
-                            double val = source_value.get_double ();
-                            target_value.set_string (MathTools.prettyprint_double (val));
-                            return true;
-                        }
+                    figure_settings.bind_property (
+                        key, entry, "text", BindingFlags.SYNC_CREATE, prettyprint_transform
                     );
 
                     entry.apply.connect (() => {
@@ -180,9 +176,14 @@ namespace Graphs {
             widget.grab_focus ();
         }
 
+        private static bool prettyprint_transform (Binding binding, Value source, ref Value target) {
+            target.set_string (MathTools.prettyprint_double (source.get_double ()));
+            return true;
+        }
+
         [GtkCallback]
         private void on_limit_entry_change (Object object, ParamSpec spec) {
-            var entry = object as Adw.EntryRow;
+            var entry = (Adw.EntryRow) object;
             if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 entry.set_show_apply_button (true);

@@ -55,7 +55,7 @@ namespace Graphs {
             dialog.set_accept_label (_("Export"));
             GLib.ListStore filter_store = new GLib.ListStore (typeof (FileFilter));
             var filter = new FileFilter ();
-            var selected = file_format.get_selected_item () as StringObject;
+            var selected = (StringObject) file_format.get_selected_item ();
             filter.name = selected.get_string ();
             filter.add_suffix (suffix);
             filter_store.append (filter);

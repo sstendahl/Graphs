@@ -273,7 +273,7 @@ namespace Graphs {
             show_shortcuts_action.activate.connect (() => {
                 string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
                 var builder = new Builder.from_resource (path);
-                var shortcuts_dialog = builder.get_object ("shortcuts") as Adw.ShortcutsDialog;
+                var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (window);
             });
             window.add_action (show_shortcuts_action);

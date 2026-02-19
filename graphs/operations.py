@@ -277,7 +277,7 @@ class CommonOperations():
                 item,
             )
             if isinstance(item, EquationItem):
-                equation = Graphs.preprocess_equation(item._equation)
+                equation = Graphs.preprocess_equation(item.props.equation)
                 xdata, ydata = \
                     utilities.equation_to_data(equation, selected_limits)
             elif isinstance(item, DataItem):
@@ -435,9 +435,9 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            equation = Graphs.preprocess_equation(str(callback(item, *args)))
-            validate, _ = utilities.equation_to_data(equation, steps=10)
-            if validate is None:
+            equation = Graphs.preprocess_equation(item.props.equation)
+            equation = str(callback(equation, *args))
+            if utilities.equation_to_data(equation, steps=10)[0] is None:
                 raise misc.InvalidEquationError(
                     _(
                         "The operation on {name} "
@@ -453,41 +453,39 @@ class EquationOperations():
         return True, ""
 
     @staticmethod
-    def translate_x(item, offset) -> str:
+    def translate_x(equation, offset) -> str:
         """Translate all selected data on the x-axis."""
-        return re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", item.equation)
+        return re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", equation)
 
     @staticmethod
-    def translate_y(item, offset) -> str:
+    def translate_y(equation, offset) -> str:
         """Translate all selected data on the y-axis."""
-        return f"({item.equation})+{offset}"
+        return f"({equation})+{offset}"
 
     @staticmethod
-    def multiply_x(item, multiplier: float) -> str:
+    def multiply_x(equation, multiplier: float) -> str:
         """Multiply all selected data on the x-axis."""
-        return re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", item.equation)
+        return re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", equation)
 
     @staticmethod
-    def multiply_y(item, multiplier: float) -> str:
+    def multiply_y(equation, multiplier: float) -> str:
         """Multiply all selected data on the y-axis."""
-        return f"({item.equation})*{multiplier}"
+        return f"({equation})*{multiplier}"
 
     @staticmethod
-    def normalize(item, limits) -> str:
+    def normalize(equation, limits) -> str:
         """Normalize all selected data."""
-        equation = Graphs.preprocess_equation(item._equation)
         ydata = utilities.equation_to_data(equation, limits)[1]
-        return f"({item.equation})/{max(ydata)}"
+        return f"({equation})/{max(ydata)}"
 
     @staticmethod
-    def center(item, limits, center_maximum: int) -> str:
+    def center(equation, limits, center_maximum: int) -> str:
         """
         Center all selected data.
 
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        equation = Graphs.preprocess_equation(item._equation)
         xdata, ydata = utilities.equation_to_data(equation, limits)
         if center_maximum == 0:  # Center at maximum Y
             x = sympy.symbols("x")
@@ -519,48 +517,41 @@ class EquationOperations():
 
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
-        return re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", item.equation)
+        return re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", equation)
 
     @staticmethod
-    def derivative(item) -> str:
+    def derivative(equation) -> str:
         """Calculate derivative of all selected data."""
-        x = sympy.symbols("x")
-        equation = Graphs.preprocess_equation(item._equation)
-        return str(sympy.diff(equation, x))
+        return str(sympy.diff(equation, sympy.symbols("x")))
 
     @staticmethod
-    def integral(item) -> str:
+    def integral(equation) -> str:
         """Calculate indefinite integral of all selected data."""
-        x = sympy.symbols("x")
-        equation = Graphs.preprocess_equation(item._equation)
-        return str(sympy.integrate(equation, x))
+        return str(sympy.integrate(equation, sympy.symbols("x")))
 
     @staticmethod
-    def fft(item) -> str:
+    def fft(equation) -> str:
         """Perform Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = Graphs.preprocess_equation(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         return equation.replace("k", "x")
 
     @staticmethod
-    def inverse_fft(item) -> str:
+    def inverse_fft(equation) -> str:
         """Perform Inverse Fourier transformation on all selected data."""
         x, k = sympy.symbols("x k")
-        equation = Graphs.preprocess_equation(item._equation)
         equation = str(sympy.fourier_transform(equation, x, k))
         return equation.replace("k", "x")
 
     @staticmethod
     def transform(
-        item,
+        equation: str,
         limits: list,
         input_x: str,
         input_y: str,
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
-        equation = Graphs.preprocess_equation(item._equation)
         xdata, ydata = utilities.equation_to_data(equation, limits)
         local_dict = {
             "x": xdata,
@@ -585,7 +576,7 @@ class EquationOperations():
                 input_x = input_x.lower().replace(key, str(value))
                 input_y = input_y.lower().replace(key, str(value))
 
-        equation = re.sub(r"(?<!e)x(?!p)", input_x, item.equation)
+        equation = re.sub(r"(?<!e)x(?!p)", input_x, equation)
         return input_y.lower().replace("y", equation)
 
 

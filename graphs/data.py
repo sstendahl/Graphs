@@ -457,7 +457,7 @@ class Data(Graphs.Data):
                 ]
 
             x = sympy.Symbol("x")
-            equation = Graphs.preprocess_equation(item_.equation)
+            equation = Graphs.preprocess_equation(item_.props.equation)
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)

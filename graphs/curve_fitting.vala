@@ -96,7 +96,7 @@ namespace Graphs {
 
         protected Canvas residuals_canvas {
             get {
-                return residuals_container.get_first_child () as Canvas;
+                return (Canvas) residuals_container.get_first_child ();
             }
             set {
                 clear_container (residuals_container);
@@ -183,10 +183,10 @@ namespace Graphs {
 
         private void update_bounds_visibility () {
             bool visible = settings.get_string ("optimization") != "lm";
-            var entry = fitting_params_box.get_first_child () as FittingParameterBox;
+            var entry = (FittingParameterBox) fitting_params_box.get_first_child ();
             while (entry != null) {
                 entry.set_bounds_visible (visible);
-                entry = entry.get_next_sibling () as FittingParameterBox;
+                entry = (FittingParameterBox) entry.get_next_sibling ();
             }
         }
 
