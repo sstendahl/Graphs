@@ -10,7 +10,7 @@ namespace Graphs.MathTools {
      * such as integer values of pi and e.
      */
     public string prettyprint_double (double val) {
-        if (val == 0) {
+        if (val >= -PI_THRESH && val <= PI_THRESH) {
             return "0";
         }
         StringBuilder builder = new StringBuilder ();
