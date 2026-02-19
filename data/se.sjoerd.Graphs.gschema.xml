@@ -221,6 +221,7 @@
   <schema id="se.sjoerd.Graphs.import-params">
     <child name="columns" schema="se.sjoerd.Graphs.import-params.columns"/>
     <child name="spreadsheet" schema="se.sjoerd.Graphs.import-params.spreadsheet"/>
+    <child name="sql" schema="se.sjoerd.Graphs.import-params.sql"/>
   </schema>
 
   <schema id="se.sjoerd.Graphs.import-params.columns">
@@ -278,6 +279,14 @@
     </key>
     <key name="sheet-index" type="i">
       <default>0</default>
+    </key>
+  </schema>
+  <schema id="se.sjoerd.Graphs.import-params.sql">
+    <key name="use-xerr" type="b">
+      <default>false</default>
+    </key>
+    <key name="use-yerr" type="b">
+      <default>false</default>
     </key>
   </schema>
 </schemalist>

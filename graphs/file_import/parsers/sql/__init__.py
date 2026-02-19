@@ -51,11 +51,24 @@ class SqlParser(Parser):
         if len(xdata) == 0:
             raise ParseError(_("No data found in table column"))
 
+        xerr = None
+        yerr = None
+        if settings.get_boolean("use-xerr"):
+            xerr = db_reader.get_column_data(
+                table_name, settings.get_string("xerr-column"),
+            )
+        if settings.get_boolean("use-yerr"):
+            yerr = db_reader.get_column_data(
+                table_name, settings.get_string("yerr-column"),
+            )
+
         return [
             item.DataItem.new(
                 style,
                 xdata=xdata,
                 ydata=ydata,
+                xerr=xerr,
+                yerr=yerr,
                 xlabel=x_column,
                 ylabel=y_column,
                 name=f"{x_column} vs {y_column}",
