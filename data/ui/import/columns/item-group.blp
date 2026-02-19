@@ -81,18 +81,22 @@ template $GraphsColumnsItemGroup: Adw.PreferencesGroup {
   }
 
   Adw.PreferencesRow {
-      activatable: false;
-      Box {
-        orientation: horizontal;
-        homogeneous: true;
-        Adw.SwitchRow use_xerr {
-          title: _("X Error Bars");
-        }
-        Adw.SwitchRow use_yerr {
-          title: _("Y Error Bars");
-        }
+    activatable: false;
+
+    Box {
+      orientation: horizontal;
+      homogeneous: true;
+
+      Adw.SwitchRow use_xerr {
+        title: _("X Error Bars");
+      }
+
+      Adw.SwitchRow use_yerr {
+        title: _("Y Error Bars");
       }
     }
+  }
+
   Adw.PreferencesRow {
     activatable: false;
 
