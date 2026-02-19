@@ -59,7 +59,7 @@ def _save_item(
             limits = [limits[0], limits[1]]
         elif item.get_xposition() == 1:
             limits = [limits[2], limits[3]]
-        equation = Graphs.preprocess_equation(item.equation)
+        equation = Graphs.preprocess_equation(item.props.equation)
         xdata, ydata = utilities.equation_to_data(equation, limits)
     for values in zip(xdata, ydata):
         stream.put_string(fmt % values + "\n")

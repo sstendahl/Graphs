@@ -413,7 +413,7 @@ namespace Graphs {
         }
 
         protected Style get_selected_style () {
-            return style_selection_model.get_selected_item () as Style;
+            return (Style) style_selection_model.get_selected_item ();
         }
 
         protected void set_color_cycle (string[] color_cycle) {
@@ -595,7 +595,7 @@ namespace Graphs {
             if (!figure_settings.use_custom_style) return;
             var style_model = style_selection_model.get_model ();
             for (uint i = 1; i < style_model.get_n_items (); i++) {
-                Style style = style_model.get_item (i) as Style;
+                Style style = (Style) style_model.get_item (i);
                 if (style.name == figure_settings.custom_style) {
                     style_selection_model.set_selected (i);
                     break;

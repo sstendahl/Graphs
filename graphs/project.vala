@@ -73,12 +73,12 @@ namespace Graphs {
                         new_flags = flags | ProjectParseFlags.ALLOW_BETA;
                         break;
                     default:
-                        var error_dialog = Tools.build_dialog ("invalid_project") as Adw.AlertDialog;
+                        var error_dialog = (Adw.AlertDialog) Tools.build_dialog ("invalid_project");
                         error_dialog.set_body (e.message);
                         error_dialog.present (window);
                         return false;
                     }
-                var dialog = Tools.build_dialog (dialog_name) as Adw.AlertDialog;
+                var dialog = (Adw.AlertDialog) Tools.build_dialog (dialog_name);
                 var response = yield dialog.choose (window, null);
                 if (response != "continue") return false;
                 return yield load (window, data, file, new_flags);
@@ -95,7 +95,7 @@ namespace Graphs {
                     return;
                 }
 
-                Application application = window.application as Application;
+                Application application = (Application) window.application;
                 Window new_window = application.create_main_window ();
                 if (yield load (window, new_window.data, file)) {
                     new_window.present ();
@@ -110,7 +110,7 @@ namespace Graphs {
                 window.data.clear ();
                 return;
             }
-            var dialog = Tools.build_dialog ("save_project_changes") as Adw.AlertDialog;
+            var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_project_changes");
             dialog.response.connect ((d, response) => {
                 switch (response) {
                     case "discard": {

@@ -7,7 +7,6 @@ template $GraphsEditItemEquationGroup: Adw.PreferencesGroup {
   Adw.EntryRow equation {
     max-width-chars: 25;
     title: _("Y =");
-    show-apply-button: true;
     notify::text => $on_equation_change();
     apply => $on_equation_apply();
   }

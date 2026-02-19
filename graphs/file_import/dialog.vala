@@ -48,16 +48,6 @@ namespace Graphs {
                 return new ImportFileRow (settings);
             });
 
-            file_list.row_activated.connect (() => {
-                if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
-            });
-            file_list.row_selected.connect ((row) => {
-                if (row == null) return;
-                var file_row = (ImportFileRow) row;
-                file_settings_page.set_title (file_row.settings.filename);
-                load_settings (file_row.settings);
-            });
-
             file_list.select_row (file_list.get_row_at_index (0));
             navigation_view.set_show_content (false);
 
@@ -90,6 +80,19 @@ namespace Graphs {
             DataImporter.append_settings_widgets (current_settings, file_settings_box);
             default_group.set_visible (current_settings.has_schema);
             remove_group.set_visible (settings_list.get_n_items () > 1);
+        }
+
+        [GtkCallback]
+        private void on_row_activated () {
+            if (navigation_view.get_collapsed ()) navigation_view.set_show_content (true);
+        }
+
+        [GtkCallback]
+        private void on_row_selected (ListBoxRow? row) {
+            if (row == null) return;
+            var file_row = (ImportFileRow) row;
+            file_settings_page.set_title (file_row.settings.filename);
+            load_settings (file_row.settings);
         }
 
         [GtkCallback]

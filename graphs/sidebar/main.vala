@@ -50,7 +50,7 @@ namespace Graphs {
         }
 
         public Operations operations {
-            get { return operations_bin.get_child () as Operations; }
+            get { return (Operations) operations_bin.get_child (); }
             set { operations_bin.set_child (value); }
         }
 
