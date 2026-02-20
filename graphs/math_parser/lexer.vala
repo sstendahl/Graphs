@@ -26,14 +26,12 @@ namespace Graphs.MathParser {
 
         public void next () throws MathError {
             current_start = current_end;
-            while (true) {
-                if (!src.get_next_char (ref current_end, out c)) {
-                    if (current_end == 0) throw new MathError.SYNTAX ("empty expression");
-                    current_type = TokenType.END;
-                    return;
-                }
-                if (!c.isspace ()) break;
-            }
+            do {
+                if (src.get_next_char (ref current_end, out c)) continue;
+                if (current_end == 0) throw new MathError.SYNTAX ("empty expression");
+                current_type = TokenType.END;
+                return;
+            } while (c.isspace ());
 
             // Number
             if (c.isdigit () || c == decimal_separator) {
@@ -59,10 +57,25 @@ namespace Graphs.MathParser {
                 return;
             }
 
+            if (c == '+' || c == '-') {
+                // look ahead and resolve stacked unary operators
+                bool plus = c == '+';
+                int tmp_idx = current_end;
+                while (true) {
+                    do {
+                        if (!src.get_next_char (ref tmp_idx, out c))
+                            throw new MathError.SYNTAX ("expected token");
+                    } while (c.isspace ());
+                    if (c == '-') plus = !plus;
+                    else if (c != '+') break;
+                    current_end = tmp_idx;
+                }
+                current_type = plus ? TokenType.PLUS : TokenType.MINUS;
+                return;
+            }
+
             // Single-character token
             switch (c) {
-                case '+': current_type = TokenType.PLUS; break;
-                case '-': current_type = TokenType.MINUS; break;
                 case '/': current_type = TokenType.SLASH; break;
                 case '^': current_type = TokenType.CARET; break;
                 case '!': current_type = TokenType.FACT; break;

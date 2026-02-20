@@ -47,18 +47,10 @@ namespace Graphs {
      */
     public static string prettify_equation (string equation) throws MathError {
         string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
+
+        // remove asterisk between parentheses
         result =  result.replace (")*(", "()");
 
-        // Clean up combined operators
-        result = result.replace("--", "+").replace("+-", "-").replace("-+", "-");
-
-        // Remove + signs at the start, or after an opening "("
-        try {
-            // Match start of line OR "(" followed by "+"
-            Regex regex = new Regex("(^|\\()\\+");
-
-            result = regex.replace(result, -1, 0, "\\1");
-        } catch (RegexError e) {}
         return result;
     }
 
