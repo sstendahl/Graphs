@@ -5,7 +5,7 @@
 #~graphs errorbar.capsize: 3
 #~graphs errorbar.linewidth: 1
 #~graphs errorbar.barsabove: False
-#~graphs errorbar.color_cycle: #000000
+#~graphs errorbar.color_cycle: 000000
 
 # font
 font.family: sans-serif

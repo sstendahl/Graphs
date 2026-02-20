@@ -96,11 +96,11 @@ def parse(
                 line = line[9:]
             else:
                 graphs_param = False
-                line = cbook._strip_comment(line)
             # legacy support for names at second line
             if line_number == 2 and graphs_params["name"] is None \
                     and line[:2] == "# ":
                 graphs_params["name"] = line[2:]
+            line = cbook._strip_comment(line)
             if not line:
                 continue
             try:
@@ -153,11 +153,12 @@ def parse(
                         # Convert boolean-strings to boolean:
                         bool_mapping = {"false": False, "true": True}
                         value = bool_mapping.get(value.lower(), value)
-                        with contextlib.suppress(ValueError):
-                            value = float(value)
                         if key == "errorbar.color_cycle":
                             colors = [c.strip() for c in value.split(",")]
                             value = cycler(color=colors)
+                        else:
+                            with contextlib.suppress(ValueError):
+                                value = float(value)
                         graphs_params[key] = value
                     else:
                         style[key] = value

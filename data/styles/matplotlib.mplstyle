@@ -5,7 +5,7 @@
 #~graphs errorbar.capsize: 0
 #~graphs errorbar.linewidth: 1.5
 #~graphs errorbar.barsabove: False
-#~graphs errorbar.color_cycle: #1F77B4, #FF7F0E, #2CA02C, #D62728', #9467BD, #8C564B, #E377C2, #7F7F7F, #BCBD22, #17BECF
+#~graphs errorbar.color_cycle: 1F77B4, FF7F0E, 2CA02C, D62728', 9467BD, 8C564B, E377C2, 7F7F7F, BCBD22, 17BECF
 
 # font
 font.family: sans-serif
