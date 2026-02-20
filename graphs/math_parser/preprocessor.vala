@@ -78,8 +78,10 @@ namespace Graphs.MathParser {
             if (lexer.current_type == TokenType.MINUS) {
                 builder.append_c ('-');
                 lexer.next ();
-                unary ();
+                postfix ();
                 return;
+            } else if (lexer.current_type == TokenType.PLUS) {
+                lexer.next ();
             }
             postfix ();
         }

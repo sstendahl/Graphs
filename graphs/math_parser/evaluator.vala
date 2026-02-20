@@ -77,7 +77,9 @@ namespace Graphs.MathParser {
         private double unary () throws MathError {
             if (lexer.current_type == TokenType.MINUS) {
                 lexer.next ();
-                return -unary ();
+                return -postfix ();
+            } else if (lexer.current_type == TokenType.PLUS) {
+                lexer.next ();
             }
             return postfix ();
         }

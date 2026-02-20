@@ -50,12 +50,11 @@ class PythonHelper(Graphs.PythonHelper):
     def _on_add_equation_request(
         self,
         window: Graphs.Window,
+        equation: str,
         name: str,
     ) -> EquationItem:
-        settings = Graphs.Application.get_settings_child("add-equation")
-        equation = settings.get_string("equation")
         if name == "":
-            name = f"Y = {settings.get_string('equation')}"
+            name = f"Y = {equation}"
         return EquationItem.new(
             window.get_data().get_selected_style_params(),
             equation,
