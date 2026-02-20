@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Curve fitting module."""
-import contextlib
 import re
 from gettext import gettext as _
 
-from gi.repository import Adw, GLib, Gio, Graphs
+from gi.repository import Adw, Gio, Graphs
 
 from graphs import canvas, utilities
 from graphs.item import DataItem, EquationItem, FillItem
@@ -212,7 +211,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._update_confidence_band()
         self._update_canvas_data()
         self.set_results(Graphs.CurveFittingError.NONE)
-
 
     def _update_residuals(self) -> None:
         """Update residuals plot."""

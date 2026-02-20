@@ -39,18 +39,12 @@ namespace Graphs {
             map = new HashMap<string, FittingParameter> ();
         }
 
-        public void update (string[] free_vars) {
-            var new_map = new HashMap<string, FittingParameter> ();
-            FittingParameter param;
-            foreach (string variable in free_vars) {
-                if (map.has_key (variable)) {
-                    param = map.get (variable);
-                } else {
-                    param = new FittingParameter (variable);
-                }
-                new_map.set (variable, param);
-            }
+        public void update (Map<string, FittingParameter> new_map) {
             map = new_map;
+        }
+
+        public Map<string, FittingParameter> get_map () {
+            return map;
         }
 
         public double[] get_p0 () {
@@ -80,10 +74,6 @@ namespace Graphs {
 
         public string[] get_free_vars () {
             return map.keys.to_array ();
-        }
-
-        public FittingParameter[] get_parameters () {
-            return map.values.to_array ();
         }
     }
 
@@ -397,10 +387,8 @@ namespace Graphs {
             // Only validate if custom equation is visible
             if (equation.get_selected () != 7) return;
 
-            string text = custom_equation.get_text ();
-            if (handle_new_equation (text)) {
+            if (handle_new_equation (custom_equation.get_text ())) {
                 custom_equation.remove_css_class ("error");
-                settings.set_string ("custom-equation", text);
             } else {
                 custom_equation.add_css_class ("error");
             }
@@ -408,11 +396,6 @@ namespace Graphs {
 
         private void set_equation_from_selection () {
             int selected = (int) equation.get_selected ();
-
-            // Update settings if changed
-            if (settings.get_enum ("equation") != selected) {
-                settings.set_enum ("equation", selected);
-            }
 
             string new_equation;
             if (selected != 7) {
@@ -447,11 +430,18 @@ namespace Graphs {
                 }
 
                 equation_string = processed;
-                fitting_parameters.update (free_vars);
 
-                // create new parameter boxes
+                var old_map = fitting_parameters.get_map ();
+                var new_map = new HashMap<string, FittingParameter> ();
+                FittingParameter param;
                 bool use_bounds = settings.get_string ("optimization") != "lm";
-                foreach (FittingParameter param in fitting_parameters.get_parameters ()) {
+                foreach (string variable in free_vars) {
+                    if (old_map.has_key (variable)) {
+                        param = old_map.get (variable);
+                    } else {
+                        param = new FittingParameter (variable);
+                    }
+
                     var p_box = new FittingParameterBox (param);
                     p_box.set_bounds_visible (use_bounds);
 
@@ -460,7 +450,9 @@ namespace Graphs {
                     p_box.lower_bound.notify["text"].connect (on_entry_change);
 
                     fitting_params_box.append (p_box);
+                    new_map.set (variable, param);
                 }
+                fitting_parameters.update (new_map);
 
                 PythonHelper.run_method (this, "_fit_curve");
                 return true;
@@ -472,6 +464,9 @@ namespace Graphs {
 
         [GtkCallback]
         private void emit_add_fit_request () {
+            settings.set_enum ("equation", (int) equation.get_selected ());
+            settings.set_string ("custom-equation", custom_equation.get_text ());
+
             PythonHelper.run_method (this, "_add_fit");
             window.data.optimize_limits ();
             close ();
