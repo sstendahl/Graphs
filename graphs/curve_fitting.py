@@ -32,7 +32,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
         super().__init__(window=window)
-        Adw.StyleManager.get_default().connect("notify", self.load_canvas)
+        Adw.StyleManager.get_default().connect("notify", self._load_canvas)
 
         style = Graphs.StyleManager.get_instance().get_system_style_params()
 
@@ -83,10 +83,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._xlim = (x_min - padding, x_max + padding)
 
         self.setup()
-        self.load_canvas()
+        self._load_canvas()
         self.present(window)
 
-    def load_canvas(self, *_args) -> None:
+    def _load_canvas(self, *_args) -> None:
         """Initialize and set main canvas."""
         window_data = self.props.window.get_data()
         settings = window_data.get_figure_settings()
@@ -99,12 +99,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             xlim=self._xlim,
         )
         self.set_canvas(cv)
-        self._load_residuals_canvas()
-
-    def _load_residuals_canvas(self):
-        """Initialize and set residuals canvas."""
-        style = Graphs.StyleManager.get_instance().get_system_style_params()
-        settings = self.props.window.get_data().get_figure_settings()
 
         cv = canvas.Canvas(style, self._residuals_items, interactive=False)
         ax = cv.figure.axis
@@ -117,7 +111,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.set_residuals_canvas(cv)
         self._set_residual_canvas_scale()
 
-    def update_canvas_data(self):
+    def _update_canvas_data(self) -> None:
         """Update existing canvas data."""
         cv = self.get_canvas()
         if not cv:  # cv does not exist yet during setup phase
@@ -207,18 +201,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
-        if self.get_confirm_button().get_sensitive() and cv:
+        if cv:
             for line in cv.figure.axis.lines[1:]:
                 line.set_visible(True)
             for collection in cv.figure.axis.collections:
                 collection.set_visible(True)
-            self._update_residuals()
-            self.load_canvas()
 
         # Update all UI components
         self._update_residuals()
         self._update_confidence_band()
-        self.update_canvas_data()
+        self._update_canvas_data()
         self.set_results(Graphs.CurveFittingError.NONE)
 
 

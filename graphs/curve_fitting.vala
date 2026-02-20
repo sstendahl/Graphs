@@ -236,7 +236,7 @@ namespace Graphs {
                 if (fit_result == null) return;
                 PythonHelper.run_method (this, "_update_confidence_band");
                 set_results (CurveFittingError.NONE);
-                PythonHelper.run_method (this, "update_canvas_data");
+                PythonHelper.run_method (this, "_update_canvas_data");
             });
             action_map.add_action (confidence_action);
 
@@ -431,6 +431,12 @@ namespace Graphs {
         }
 
         private bool handle_new_equation (string equation) {
+            // clear existing widgets
+            Widget widget;
+            while ((widget = fitting_params_box.get_last_child ()) != null) {
+                fitting_params_box.remove (widget);
+            }
+
             try {
                 string processed = preprocess_equation (equation);
                 string[] free_vars = MathTools.get_free_variables (processed);
@@ -442,12 +448,6 @@ namespace Graphs {
 
                 equation_string = processed;
                 fitting_parameters.update (free_vars);
-
-                // clear existing widgets
-                Widget widget;
-                while ((widget = fitting_params_box.get_last_child ()) != null) {
-                    fitting_params_box.remove (widget);
-                }
 
                 // create new parameter boxes
                 bool use_bounds = settings.get_string ("optimization") != "lm";
@@ -465,6 +465,7 @@ namespace Graphs {
                 PythonHelper.run_method (this, "_fit_curve");
                 return true;
             } catch (MathError e) {
+                set_results (CurveFittingError.EQUATION);
                 return false;
             }
         }
