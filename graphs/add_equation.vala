@@ -31,8 +31,9 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            this.settings.set_string ("equation", this.equation.get_text ());
-            Item item = PythonHelper.add_equation (window, item_name.get_text ());
+            string equation_str = this.equation.get_text ();
+            this.settings.set_string ("equation", equation_str);
+            Item item = PythonHelper.add_equation (window, equation_str, item_name.get_text ());
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();

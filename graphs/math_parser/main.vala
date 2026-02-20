@@ -46,7 +46,12 @@ namespace Graphs {
      * Return an equation in a prettier, more humanly readable, format.
      */
     public static string prettify_equation (string equation) throws MathError {
-        return MathParser.Preprocessor.instance ().preprocess (equation, true).replace (")*(", "()");
+        string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
+
+        // remove asterisk between parentheses
+        result = result.replace (")*(", "()");
+
+        return result;
     }
 
     public errordomain MathError {
