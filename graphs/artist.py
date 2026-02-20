@@ -306,7 +306,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             capthick=item.props.errcapthick,
             elinewidth=item.props.errlinewidth,
             barsabove=item.props.errbarsabove,
-            ecolor=item.get_errcolor(),
+            ecolor=item.props.errcolor,
         )
 
         self._artist, caps, barlines = self._errorbar_container

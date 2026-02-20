@@ -96,11 +96,11 @@ def parse(
                 line = line[9:]
             else:
                 graphs_param = False
-                line = cbook._strip_comment(line)
             # legacy support for names at second line
             if line_number == 2 and graphs_params["name"] is None \
                     and line[:2] == "# ":
                 graphs_params["name"] = line[2:]
+            line = cbook._strip_comment(line)
             if not line:
                 continue
             try:
@@ -153,11 +153,12 @@ def parse(
                         # Convert boolean-strings to boolean:
                         bool_mapping = {"false": False, "true": True}
                         value = bool_mapping.get(value.lower(), value)
-                        with contextlib.suppress(ValueError):
-                            value = float(value)
                         if key == "errorbar.color_cycle":
-                            colors = [c.strip() for c in value.split(",")]
-                            value = cycler(color=colors)
+                            color = ["#" + c.strip() for c in value.split(",")]
+                            value = cycler(color=color)
+                        else:
+                            with contextlib.suppress(ValueError):
+                                value = float(value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
@@ -200,9 +201,7 @@ def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     stream.put_string("# Generated via Graphs\n")
     for key, value in graphs_params.items():
         if key == "errorbar.color_cycle":
-            value = ", ".join(
-                c for c in value.by_key()["color"]
-            )
+            value = ", ".join(c.lstrip("#") for c in value.by_key()["color"])
         stream.put_string(f"#~graphs {key}: {value}\n")
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:

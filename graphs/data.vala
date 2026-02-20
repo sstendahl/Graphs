@@ -325,7 +325,12 @@ namespace Graphs {
             _used_errbar_colors = {};
             foreach (Item item in _items) {
                 if (item.color in _color_cycle) append_used_color (item.color);
-                if (item.errcolor in _errbar_color_cycle) append_used_errbar_color (item.errcolor);
+                string typename = item.get_type ().name ();
+                if (typename == "GraphsDataItem") {
+                    string errcolor;
+                    item.get ("errcolor", out errcolor);
+                    if (errcolor in _errbar_color_cycle) append_used_errbar_color (errcolor);
+                }
             }
             string[] used_names = get_names ();
             uint prev_size = get_n_items ();
@@ -333,6 +338,7 @@ namespace Graphs {
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
+                string typename = item.get_type ().name ();
                 if (item.color == "") {
                     foreach (string color in _color_cycle) {
                         if (!(color in _used_colors)) {
@@ -342,12 +348,16 @@ namespace Graphs {
                         }
                     }
                 }
-                if (item.errcolor == "") {
-                    foreach (string color in _errbar_color_cycle) {
-                        if (!(color in _used_errbar_colors)) {
-                            append_used_errbar_color (color);
-                            item.errcolor = color;
-                            break;
+                if (typename == "GraphsDataItem") {
+                    string errcolor;
+                    item.get ("errcolor", out errcolor);
+                    if (errcolor == "") {
+                        foreach (string color in _errbar_color_cycle) {
+                            if (!(color in _used_errbar_colors)) {
+                                append_used_errbar_color (color);
+                                item.set ("errcolor", color);
+                                break;
+                            }
                         }
                     }
                 }
@@ -443,7 +453,7 @@ namespace Graphs {
 
         protected void set_errbar_color_cycle (string[] color_cycle) {
                     this._errbar_color_cycle = color_cycle;
-                }
+        }
 
         // End section style
 
