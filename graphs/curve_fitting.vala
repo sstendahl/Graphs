@@ -80,7 +80,6 @@ namespace Graphs {
     public class FitResult : Object {
         private double[] parameters;
         private double[] diag_covars;
-        private double[] residuals;
         private string r2;
         private string rmse;
 
@@ -432,7 +431,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void emit_add_fit_request () {
+        private void on_accept () {
             settings.set_enum ("equation", (int) equation.get_selected ());
             settings.set_string ("custom-equation", custom_equation.get_text ());
 

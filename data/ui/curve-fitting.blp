@@ -136,7 +136,7 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
             Button confirm_button {
               hexpand: true;
               label: _("Add Fit to Data");
-              clicked => $emit_add_fit_request();
+              clicked => $on_accept();
 
               styles [
                 "pill",
