@@ -87,6 +87,39 @@ namespace Graphs {
         }
     }
 
+    public class FitResult : Object {
+        private double[] parameters;
+        private double[] diag_covars;
+        private double[] residuals;
+        private string r2;
+        private string rmse;
+
+        public FitResult (double[] parameters, double[] diag_covars, double[] residuals, string r2, string rmse) {
+            this.parameters = parameters;
+            this.diag_covars = diag_covars;
+            this.residuals = residuals;
+            this.r2 = r2;
+            this.rmse = rmse;
+        }
+
+        public double[] get_parameters () {
+            return parameters;
+        }
+
+        public double[] get_diag_covars () {
+            return diag_covars;
+        }
+
+        public double[] get_residuals () {
+            return residuals;
+        }
+
+        public void get_r2_rmse (out string r2, out string rmse) {
+            r2 = this.r2;
+            rmse = this.rmse;
+        }
+    }
+
     public enum CurveFittingError {
         NONE,
         VALUE,
@@ -161,6 +194,7 @@ namespace Graphs {
         protected GLib.Settings settings { get; protected set; }
         protected string equation_string { get; protected set; }
         protected FittingParameterContainer fitting_parameters { get; private set; }
+        protected FitResult? fit_result { get; protected set; }
 
         protected Canvas canvas {
             get { return canvas_container.get_first_child () as Canvas; }
@@ -192,6 +226,7 @@ namespace Graphs {
 
         protected virtual void setup () {
             fitting_parameters = new FittingParameterContainer ();
+            fit_result = null;
 
             settings = Application.get_settings_child ("curve-fitting");
             var action_map = new SimpleActionGroup ();
@@ -388,7 +423,7 @@ namespace Graphs {
 
                 // create new parameter boxes
                 bool use_bounds = settings.get_string ("optimization") != "lm";
-                foreach (FittingParameter param in fitting_parameters) {
+                foreach (FittingParameter param in fitting_parameters.get_parameters ()) {
                     var p_box = new FittingParameterBox (param);
                     p_box.set_bounds_visible (use_bounds);
 

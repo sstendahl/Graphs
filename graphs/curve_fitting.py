@@ -24,18 +24,6 @@ MARKER_SIZE = 13
 LINE_STYLE = 0
 
 
-class FitResult:
-    """Container for curve fitting results."""
-
-    def __init__(self, parameters, covariance, r2, rmse, residuals, fitted_y):
-        self.parameters = parameters
-        self.covariance = covariance
-        self.r2 = r2
-        self.rmse = rmse
-        self.residuals = residuals
-        self.fitted_y = fitted_y
-
-
 class CurveFittingDialog(Graphs.CurveFittingDialog):
     """Class for displaying the Curve Fitting dialog."""
 
@@ -45,8 +33,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Initialize the curve fitting dialog."""
         super().__init__(window=window)
         Adw.StyleManager.get_default().connect("notify", self.load_canvas)
-
-        self.fit_result = None
 
         style = Graphs.StyleManager.get_instance().get_system_style_params()
 
@@ -155,11 +141,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _fit_curve(self) -> None:
         """Handle fit curve request."""
-        variables = ["x"] + self.props.fitting_parameters.get_free_vars()
+        free_vars = self.props.fitting_parameters.get_free_vars()
+        variables = ["x"] + free_vars
         sym_vars = sympy.symbols(variables)
+        equation = self.get_equation_string()
         try:
             symbolic = sympy.sympify(
-                self.get_equation_string(),
+                equation,
                 locals=dict(zip(variables, sym_vars)),
             )
             func = sympy.lambdify(sym_vars, symbolic)
@@ -191,62 +179,33 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return
 
         # Calculate statistics
+        n = len(y_data)
         fitted_y = func(x_data, *params)
         ss_res = numpy.sum((y_data - fitted_y)**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
         r2 = 1 - (ss_res / ss_tot)
         rmse = numpy.sqrt(ss_res / n)
 
-        n = len(y_data)
-        self.fit_result = FitResult(
+        self._covariance = param_cov
+        diag_cov = numpy.sqrt(numpy.diagonal(param_cov))
+        self.props.fit_result = Graphs.FitResult.new(
             params,
-            param_cov,
+            diag_cov,
+            y_data - fitted_y,
             f"{r2:.3g}",
             f"{rmse:.3g}",
-            y_data - fitted_y,
-            fitted_y,
         )
 
-        # Update all UI components
-        self._update_fitted_curve()
-        self._update_residuals()
-        self._update_confidence_band()
-        self.update_canvas_data()
-        self.set_results(Graphs.CurveFittingError.NONE)
-
-    def _update_fitted_curve(self) -> None:
-        """Update the fitted curve on the main canvas."""
-        equation = self.get_equation_string()
-        eq_name = equation.lower()
-
         # Substitute each free variables with the calculated value.
-        free_vars = self.props.fitting_parameters.get_free_vars()
-        params = self.fit_result.parameters
+        eq_name = equation.lower()
         for var, param_value in zip(free_vars, params):
             var_pattern = rf"\b{re.escape(var)}\b"
             equation = re.sub(var_pattern, f"({param_value})", equation)
             rounded = f"{param_value:.3g}"
             eq_name = re.sub(var_pattern, f"{rounded}", eq_name)
 
-        eq_name = Graphs.prettify_equation(eq_name)
-
-        # Clean up combined operators
-        eq_name = (
-            eq_name.replace("--", "+").replace("+-", "-").replace("-+", "-")
-        )
-        # Remove + signs at the start, or after an opening +
-        eq_name = re.sub(
-            r"""
-            (^|\()   # Group 1: Look for either the start of the line OR a "("
-            \+       # Look for a "+" immediately after it
-            """,
-            r"\1",  # Put back only group 1 without the +
-            eq_name,
-            flags=re.VERBOSE,
-        )
-
         self.fitted_curve.equation = equation
-        self.fitted_curve.set_name(f"Y = {eq_name}")
+        self.fitted_curve.set_name(f"Y = {Graphs.prettify_equation(eq_name)}")
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
@@ -258,13 +217,20 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             self._update_residuals()
             self.load_canvas()
 
+        # Update all UI components
+        self._update_residuals()
+        self._update_confidence_band()
+        self.update_canvas_data()
+        self.set_results(Graphs.CurveFittingError.NONE)
+
+
     def _update_residuals(self) -> None:
         """Update residuals plot."""
         xdata = numpy.asarray(self.data_curve.get_xdata())
-        if self.fit_result is None:
+        if self.props.fit_result is None:
             residuals = numpy.zeros(len(self.data_curve.get_xdata()))
         else:
-            residuals = self.fit_result.residuals
+            residuals = self.props.fit_result.get_residuals()
         self.residuals_item.props.data = xdata, residuals
         cv = self.get_residuals_canvas()
         if not cv:
@@ -286,7 +252,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def update_confidence_band(self) -> None:
         """Update confidence band."""
-        if self.fit_result is None:
+        if self.props.fit_result is None:
             return
         self._update_confidence_band()
         self.set_results(Graphs.CurveFittingError.NONE)
@@ -294,7 +260,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _update_confidence_band(self) -> None:
         """Calculate and update confidence band for error propagation."""
-        if self.fit_result is None:
+        if self.props.fit_result is None:
             return
 
         conf_level = self.get_settings().get_enum("confidence")
@@ -313,16 +279,17 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         sym_params_map["x"] = sym_x
         expr = sympy.sympify(eq_str, locals=sym_params_map)
 
+        parameters = self.props.fit_result.get_parameters()
         n_points = x_values.size
-        n_params = len(self.fit_result.parameters)
+        n_params = len(parameters)
         jacobian = numpy.zeros((n_points, n_params))
 
         for i, name in enumerate(param_names):
             deriv = sympy.diff(expr, sym_params_map[name])
             f_deriv = sympy.lambdify([sym_x, *sym_params_list], deriv, "numpy")
-            jacobian[:, i] = f_deriv(x_values, *self.fit_result.parameters)
+            jacobian[:, i] = f_deriv(x_values, *parameters)
 
-        variance = numpy.sum((jacobian @ self.fit_result.covariance)
+        variance = numpy.sum((jacobian @ self._covariance)
                              * jacobian,
                              axis=1)
 
@@ -335,7 +302,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
-        self.fit_result = None
+        self.props.fit_result = None
         self._update_residuals()
         # Hide fitted curve and fill by hiding their matplotlib artists
         cv = self.get_canvas()
@@ -351,7 +318,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _display_fit_results(self) -> None:
         """Display the fitting results in the text buffer."""
-        if self.fit_result is None:
+        if self.props.fit_result is None:
             return
 
         buffer = self.get_text_view().get_buffer()
@@ -362,8 +329,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
 
         free_vars = self.props.fitting_parameters.get_free_vars()
-        diag_covars = numpy.sqrt(numpy.diagonal(self.fit_result.covariance))
-        params = self.fit_result.parameters
+        diag_covars = self.props.fit_result.get_diag_covars()
+        params = self.props.fit_result.get_parameters()
         conf_level = self.get_settings().get_enum("confidence")
 
         for var, diag_cov, param in zip(free_vars, diag_covars, params):
@@ -380,13 +347,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             "bold",
         )
 
+        r2, rmse = self.props.fit_result.get_r2_rmse()
+
         buffer.insert(
             buffer.get_end_iter(),
-            f"{_('R²')}: {self.fit_result.r2}\n",
+            f"{_('R²')}: {r2}\n",
         )
         buffer.insert(
             buffer.get_end_iter(),
-            f"{_('RMSE')}: {self.fit_result.rmse}",
+            f"{_('RMSE')}: {rmse}",
         )
 
     def _add_fit(self) -> None:

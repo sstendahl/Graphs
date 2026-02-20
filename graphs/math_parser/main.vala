@@ -46,7 +46,20 @@ namespace Graphs {
      * Return an equation in a prettier, more humanly readable, format.
      */
     public static string prettify_equation (string equation) throws MathError {
-        return MathParser.Preprocessor.instance ().preprocess (equation, true).replace (")*(", "()");
+        string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
+        result =  result.replace (")*(", "()");
+
+        // Clean up combined operators
+        result = result.replace("--", "+").replace("+-", "-").replace("-+", "-");
+
+        // Remove + signs at the start, or after an opening "("
+        try {
+            // Match start of line OR "(" followed by "+"
+            Regex regex = new Regex("(^|\\()\\+");
+
+            result = regex.replace(result, -1, 0, "\\1");
+        } catch (RegexError e) {}
+        return result;
     }
 
     public errordomain MathError {
