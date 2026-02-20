@@ -49,7 +49,7 @@ namespace Graphs {
         string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
 
         // remove asterisk between parentheses
-        result =  result.replace (")*(", "()");
+        result = result.replace (")*(", "()");
 
         return result;
     }

@@ -271,7 +271,7 @@ namespace Graphs {
             var buffer = text_view.get_buffer ();
             buffer.set_text ("");
             var tag_table = buffer.get_tag_table ();
-            var bold_tag = tag_table.lookup("bold");
+            var bold_tag = tag_table.lookup ("bold");
             if (bold_tag == null) bold_tag = buffer.create_tag ("bold", "weight", 700);
 
             TextIter end_iter;

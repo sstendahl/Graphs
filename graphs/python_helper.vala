@@ -12,7 +12,7 @@ namespace Graphs {
         }
 
         protected signal Item add_equation_request (Window window, string equation, string name);
-        public static Item add_equation (Window window,  string equation, string name) {
+        public static Item add_equation (Window window, string equation, string name) {
             return instance.add_equation_request.emit (window, equation, name);
         }
 
