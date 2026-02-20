@@ -324,6 +324,7 @@ namespace Graphs {
                 widget.remove_css_class ("error");
             } else {
                 widget.add_css_class ("error");
+                value_error = true;
             }
 
             widget = row.lower_bound;
@@ -331,6 +332,7 @@ namespace Graphs {
                 widget.remove_css_class ("error");
             } else {
                 widget.add_css_class ("error");
+                value_error = true;
             }
 
             widget = row.upper_bound;
@@ -338,6 +340,7 @@ namespace Graphs {
                 widget.remove_css_class ("error");
             } else {
                 widget.add_css_class ("error");
+                value_error = true;
             }
 
             if (value_error) {
