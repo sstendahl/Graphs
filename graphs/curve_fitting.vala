@@ -281,9 +281,10 @@ namespace Graphs {
             var bold_tag = tag_table.lookup("bold");
             if (bold_tag == null) bold_tag = buffer.create_tag ("bold", "weight", 700);
 
+            TextIter end_iter;
+            buffer.get_end_iter (out end_iter);
+
             if (error != CurveFittingError.NONE) {
-                TextIter end_iter;
-                buffer.get_end_iter (out end_iter);
                 buffer.insert (ref end_iter, error.to_text (), -1);
                 confirm_button.set_sensitive (false);
                 PythonHelper.run_method (this, "_clear_fit");
@@ -291,7 +292,30 @@ namespace Graphs {
             }
 
             confirm_button.set_sensitive (true);
-            PythonHelper.run_method (this, "_display_fit_results");
+            if (fit_result == null) return;
+
+            buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
+
+            string[] free_vars = fitting_parameters.get_free_vars ();
+            double[] diag_covars = fit_result.get_diag_covars ();
+            double[] parameters = fit_result.get_parameters ();
+            int conf_level = settings.get_enum ("confidence");
+
+            int n = free_vars.length;
+            for (int i = 0; i < n; i++) {
+                buffer.insert (ref end_iter, "%s: %.3g".printf (free_vars[i], parameters[i]), -1);
+                if (conf_level > 0) {
+                    double err = diag_covars[i] * conf_level;
+                    buffer.insert (ref end_iter, " (± %.3g)".printf (err), -1);
+                }
+                buffer.insert (ref end_iter, "\n", -1);
+            }
+
+            buffer.insert_with_tags_by_name (ref end_iter, "\n" + _("Statistics") + "\n", -1, "bold");
+            string r2, rmse;
+            fit_result.get_r2_rmse (out r2, out rmse);
+            string r2_rmse = "%s: %s\n%s: %s".printf (_("R²"), r2, _("RMSE"), rmse);
+            buffer.insert (ref end_iter, r2_rmse, -1);
         }
 
         private void on_entry_change (Object object, ParamSpec p) {

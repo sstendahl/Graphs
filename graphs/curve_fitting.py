@@ -316,48 +316,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 collection.set_visible(False)
             cv.queue_draw()
 
-    def _display_fit_results(self) -> None:
-        """Display the fitting results in the text buffer."""
-        if self.props.fit_result is None:
-            return
-
-        buffer = self.get_text_view().get_buffer()
-        buffer.insert_with_tags_by_name(
-            buffer.get_end_iter(),
-            f"{_('Parameters')}\n",
-            "bold",
-        )
-
-        free_vars = self.props.fitting_parameters.get_free_vars()
-        diag_covars = self.props.fit_result.get_diag_covars()
-        params = self.props.fit_result.get_parameters()
-        conf_level = self.get_settings().get_enum("confidence")
-
-        for var, diag_cov, param in zip(free_vars, diag_covars, params):
-            line = f"{var}: {param:.3g}"
-            if conf_level > 0:
-                err = f"{diag_cov * conf_level:.3g}"
-                line += f" (± {err})"
-            buffer.insert(buffer.get_end_iter(), f"{line}\n")
-
-        buffer.insert(buffer.get_end_iter(), "\n")
-        buffer.insert_with_tags_by_name(
-            buffer.get_end_iter(),
-            f"{_('Statistics')}\n",
-            "bold",
-        )
-
-        r2, rmse = self.props.fit_result.get_r2_rmse()
-
-        buffer.insert(
-            buffer.get_end_iter(),
-            f"{_('R²')}: {r2}\n",
-        )
-        buffer.insert(
-            buffer.get_end_iter(),
-            f"{_('RMSE')}: {rmse}",
-        )
-
     def _add_fit(self) -> None:
         """Add fitted data to the items in the main application."""
         self.props.window.get_data().add_items([self.fitted_curve])
