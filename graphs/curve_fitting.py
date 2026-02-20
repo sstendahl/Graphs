@@ -41,10 +41,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             ydata=item.get_ydata(),
             name=item.get_name(),
             color=DATA_COLOR,
+            linestyle=LINE_STYLE,
+            markerstyle=MARKER_STYLE,
+            markersize=MARKER_SIZE,
         )
-        self.data_curve.linestyle = LINE_STYLE
-        self.data_curve.markerstyle = MARKER_STYLE
-        self.data_curve.markersize = MARKER_SIZE
 
         self.fitted_curve = EquationItem.new(style, "x", color=FIT_COLOR)
         self.fill = FillItem.new(
@@ -58,12 +58,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             alpha=FILL_ALPHA,
         )
 
-        self._items = Gio.ListStore.new(Graphs.Item)
-        self._items.append(self.fitted_curve)
-        self._items.append(self.fill)
-        self._items.append(self.data_curve)
-
-        self._residuals_items = Gio.ListStore.new(Graphs.Item)
         self.residuals_item = DataItem.new(
             style,
             xdata=numpy.zeros(len(self.data_curve.get_xdata())),
@@ -73,7 +67,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             markerstyle=MARKER_STYLE,
             markersize=MARKER_SIZE,
         )
-        self._residuals_items.append(self.residuals_item)
 
         x_data = numpy.asarray(self.data_curve.get_xdata())
         x_min, x_max = x_data.min(), x_data.max()
@@ -81,40 +74,43 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         padding = x_range * 0.025
         self._xlim = (x_min - padding, x_max + padding)
 
-        self.setup()
         self._load_canvas()
+        self.setup()
         self.present(window)
 
     def _load_canvas(self, *_args) -> None:
         """Initialize and set main canvas."""
-        window_data = self.props.window.get_data()
-        settings = window_data.get_figure_settings()
+        settings = self.props.window.get_data().get_figure_settings()
         style = Graphs.StyleManager.get_instance().get_system_style_params()
-        cv = canvas.Canvas(style, self._items, interactive=False)
+
+        listmodel = Gio.ListStore.new(Graphs.Item)
+        listmodel.append(self.fitted_curve)
+        listmodel.append(self.fill)
+        listmodel.append(self.data_curve)
+        cv = canvas.Canvas(style, listmodel, interactive=False)
         ax = cv.figure.axis
         ax.set(
-            xlabel=settings.get_property("bottom_label"),
-            ylabel=settings.get_property("left_label"),
+            xlabel=settings.get_bottom_label(),
+            ylabel=settings.get_left_label(),
             xlim=self._xlim,
         )
         self.set_canvas(cv)
 
-        cv = canvas.Canvas(style, self._residuals_items, interactive=False)
+        listmodel = Gio.ListStore.new(Graphs.Item)
+        listmodel.append(self.residuals_item)
+        cv = canvas.Canvas(style, listmodel, interactive=False)
         ax = cv.figure.axis
         ax.set_ylabel(_("Residuals"))
-        ax.set_xlabel(settings.get_property("bottom_label"))
+        ax.set_xlabel(settings.get_bottom_label())
         ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
         ax.set_xlim(*self._xlim)
-        if ax.get_legend():
-            ax.get_legend().remove()
+        cv.figure.props.legend = False
         self.set_residuals_canvas(cv)
         self._set_residual_canvas_scale()
 
     def _update_canvas_data(self) -> None:
         """Update existing canvas data."""
         cv = self.get_canvas()
-        if not cv:  # cv does not exist yet during setup phase
-            return
         ax = cv.figure.axis
 
         equation = self.fitted_curve.equation
@@ -182,7 +178,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.props.fit_result = Graphs.FitResult.new(
             params,
             diag_cov,
-            y_data - fitted_y,
             f"{r2:.3g}",
             f"{rmse:.3g}",
         )
@@ -198,51 +193,33 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.fitted_curve.equation = equation
         self.fitted_curve.set_name(f"Y = {Graphs.prettify_equation(eq_name)}")
 
+        residuals = y_data - fitted_y
+        self.residuals_item.props.data = x_data, residuals
+
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
-        if cv:
-            for line in cv.figure.axis.lines[1:]:
-                line.set_visible(True)
-            for collection in cv.figure.axis.collections:
-                collection.set_visible(True)
+        for line in cv.figure.axis.lines[1:]:
+            line.set_visible(True)
+        for collection in cv.figure.axis.collections:
+            collection.set_visible(True)
 
         # Update all UI components
-        self._update_residuals()
+        self._set_residual_canvas_scale()
         self._update_confidence_band()
         self._update_canvas_data()
         self.set_results(Graphs.CurveFittingError.NONE)
 
-    def _update_residuals(self) -> None:
-        """Update residuals plot."""
-        xdata = numpy.asarray(self.data_curve.get_xdata())
-        if self.props.fit_result is None:
-            residuals = numpy.zeros(len(self.data_curve.get_xdata()))
-        else:
-            residuals = self.props.fit_result.get_residuals()
-        self.residuals_item.props.data = xdata, residuals
-        cv = self.get_residuals_canvas()
-        if not cv:
-            return
-
-        self._set_residual_canvas_scale()
-        if legend := cv.figure.axis.get_legend():
-            legend.remove()
-
     def _set_residual_canvas_scale(self) -> None:
         """Set the scaling for the residual canvas."""
         ax = self.get_residuals_canvas().figure.axis
-        if len(self._residuals_items) > 0:
-            y = numpy.asarray(self.residuals_item.get_ydata())
-            max_val = abs(y).max()
-            if max_val > 0:
-                y_lim = max_val * 1.1
-                ax.set_ylim(-y_lim, y_lim)
+        y = numpy.asarray(self.residuals_item.get_ydata())
+        max_val = abs(y).max()
+        if max_val > 0:
+            y_lim = max_val * 1.1
+            ax.set_ylim(-y_lim, y_lim)
 
     def _update_confidence_band(self) -> None:
         """Calculate and update confidence band for error propagation."""
-        if self.props.fit_result is None:
-            return
-
         conf_level = self.get_settings().get_enum("confidence")
         x_min, x_max = self._xlim
         x_values, y_values = utilities.equation_to_data(
@@ -282,18 +259,19 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
-        self._update_residuals()
-        # Hide fitted curve and fill by hiding their matplotlib artists
-        cv = self.get_canvas()
+        xdata = self.data_curve.get_xdata()
+        residuals = numpy.zeros(len(xdata))
+        self.residuals_item.props.data = xdata, residuals
+        self._set_residual_canvas_scale()
 
-        if cv:
-            # Hide all lines except the first one (data curve)
-            for line in cv.figure.axis.lines[1:]:
-                line.set_visible(False)
-            # Hide all collections (fill)
-            for collection in cv.figure.axis.collections:
-                collection.set_visible(False)
-            cv.queue_draw()
+        # Hide all lines except the first one (data curve)
+        cv = self.get_canvas()
+        for line in cv.figure.axis.lines[1:]:
+            line.set_visible(False)
+        # Hide all collections (fill)
+        for collection in cv.figure.axis.collections:
+            collection.set_visible(False)
+        cv.queue_draw()
 
     def _add_fit(self) -> None:
         """Add fitted data to the items in the main application."""

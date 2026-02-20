@@ -84,10 +84,9 @@ namespace Graphs {
         private string r2;
         private string rmse;
 
-        public FitResult (double[] parameters, double[] diag_covars, double[] residuals, string r2, string rmse) {
+        public FitResult (double[] parameters, double[] diag_covars, string r2, string rmse) {
             this.parameters = parameters;
             this.diag_covars = diag_covars;
-            this.residuals = residuals;
             this.r2 = r2;
             this.rmse = rmse;
         }
@@ -98,10 +97,6 @@ namespace Graphs {
 
         public double[] get_diag_covars () {
             return diag_covars;
-        }
-
-        public double[] get_residuals () {
-            return residuals;
         }
 
         public void get_r2_rmse (out string r2, out string rmse) {
@@ -172,13 +167,10 @@ namespace Graphs {
         private unowned Adw.OverlaySplitView split_view { get; }
 
         [GtkChild]
-        private unowned Box canvas_container { get; }
+        private unowned Adw.Bin canvas_container { get; }
 
         [GtkChild]
-        private unowned Box residuals_container { get; }
-
-        [GtkChild]
-        private unowned Adw.StatusPage error_page { get; }
+        private unowned Adw.Bin residuals_container { get; }
 
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; protected set; }
@@ -186,32 +178,14 @@ namespace Graphs {
         protected FittingParameterContainer fitting_parameters { get; private set; }
         protected FitResult? fit_result { get; protected set; }
 
-        protected Canvas canvas {
-            get { return canvas_container.get_first_child () as Canvas; }
-            set {
-                clear_container (canvas_container);
-                if (value != null) {
-                    canvas_container.append (value);
-                    error_page.visible = false;
-                } else {
-                    error_page.visible = true;
-                }
-            }
+        protected Canvas? canvas {
+            get { return canvas_container.get_child () as Canvas; }
+            set { canvas_container.set_child (value); }
         }
 
-        protected Canvas residuals_canvas {
-            get {
-                return (Canvas) residuals_container.get_first_child ();
-            }
-            set {
-                clear_container (residuals_container);
-                if (canvas != null && value != null) {
-                    residuals_container.append (value);
-                    residuals_container.visible = settings.get_boolean ("show-residuals");
-                } else {
-                    residuals_container.visible = false;
-                }
-            }
+        protected Canvas? residuals_canvas {
+            get { return residuals_container.get_child () as Canvas; }
+            set { residuals_container.set_child (value); }
         }
 
         protected virtual void setup () {
@@ -225,8 +199,8 @@ namespace Graphs {
             confidence_action.notify.connect (() => {
                 if (fit_result == null) return;
                 PythonHelper.run_method (this, "_update_confidence_band");
-                set_results (CurveFittingError.NONE);
                 PythonHelper.run_method (this, "_update_canvas_data");
+                set_results (CurveFittingError.NONE);
             });
             action_map.add_action (confidence_action);
 
@@ -240,9 +214,11 @@ namespace Graphs {
             Action res_action = settings.create_action ("show-residuals");
             res_action.notify.connect (() => {
                 bool show_residuals = settings.get_boolean ("show-residuals");
-                residuals_container.visible = (show_residuals && residuals_canvas != null);
+                residuals_container.set_visible (show_residuals && residuals_canvas != null);
             });
             action_map.add_action (res_action);
+            bool show_residuals = settings.get_boolean ("show-residuals");
+            residuals_container.set_visible (show_residuals && residuals_canvas != null);
 
             var toggle_sidebar_action = new SimpleAction ("toggle_sidebar", null);
             toggle_sidebar_action.activate.connect (() => {
@@ -366,15 +342,6 @@ namespace Graphs {
             param.set_upper_bound (high);
             PythonHelper.run_method (this, "_fit_curve");
         }
-
-        private void clear_container (Box container) {
-            Widget? child = container.get_first_child ();
-            while (child != null) {
-                container.remove (child);
-                child = container.get_first_child ();
-            }
-        }
-
 
         private void update_bounds_visibility () {
             bool visible = settings.get_string ("optimization") != "lm";

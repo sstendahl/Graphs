@@ -169,20 +169,18 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
             hexpand: true;
             vexpand: true;
 
-            Box canvas_container {
-              orientation: vertical;
+            Adw.Bin canvas_container {
               hexpand: true;
               vexpand: true;
 
-              Adw.StatusPage error_page {
+              Adw.StatusPage {
                 visible: false;
                 icon-name: "dialog-error-symbolic";
                 title: _("Canvas Failed to Load");
               }
             }
 
-            Box residuals_container {
-              orientation: vertical;
+            Adw.Bin residuals_container {
               hexpand: true;
               vexpand: false;
               height-request: 200;
