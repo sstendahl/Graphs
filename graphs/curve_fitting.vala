@@ -241,7 +241,6 @@ namespace Graphs {
             res_action.notify.connect (() => {
                 bool show_residuals = settings.get_boolean ("show-residuals");
                 residuals_container.visible = (show_residuals && residuals_canvas != null);
-                PythonHelper.run_method (this, "_load_residuals_canvas");
             });
             action_map.add_action (res_action);
 
