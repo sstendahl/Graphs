@@ -11,9 +11,9 @@ namespace Graphs {
             PythonHelper.instance = instance;
         }
 
-        protected signal Item add_equation_request (Window window, string name);
-        public static Item add_equation (Window window, string name) {
-            return instance.add_equation_request.emit (window, name);
+        protected signal Item add_equation_request (Window window, string equation, string name);
+        public static Item add_equation (Window window,  string equation, string name) {
+            return instance.add_equation_request.emit (window, equation, name);
         }
 
         protected signal StyleEditor create_style_editor_request ();

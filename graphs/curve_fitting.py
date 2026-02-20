@@ -100,8 +100,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
         self.set_canvas(cv)
         self._load_residuals_canvas()
-        if self.get_confirm_button().get_sensitive():
-            self._clear_fit()
 
     def _load_residuals_canvas(self):
         """Initialize and set residuals canvas."""
@@ -250,14 +248,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
                 y_lim = max_val * 1.1
                 ax.set_ylim(-y_lim, y_lim)
 
-    def update_confidence_band(self) -> None:
-        """Update confidence band."""
-        if self.props.fit_result is None:
-            return
-        self._update_confidence_band()
-        self.set_results(Graphs.CurveFittingError.NONE)
-        self.update_canvas_data()
-
     def _update_confidence_band(self) -> None:
         """Calculate and update confidence band for error propagation."""
         if self.props.fit_result is None:
@@ -302,7 +292,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
-        self.props.fit_result = None
         self._update_residuals()
         # Hide fitted curve and fill by hiding their matplotlib artists
         cv = self.get_canvas()

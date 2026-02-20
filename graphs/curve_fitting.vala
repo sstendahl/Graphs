@@ -233,7 +233,10 @@ namespace Graphs {
 
             Action confidence_action = settings.create_action ("confidence");
             confidence_action.notify.connect (() => {
-                PythonHelper.run_method (this, "update_confidence_band");
+                if (fit_result == null) return;
+                PythonHelper.run_method (this, "_update_confidence_band");
+                set_results (CurveFittingError.NONE);
+                PythonHelper.run_method (this, "update_canvas_data");
             });
             action_map.add_action (confidence_action);
 
@@ -287,6 +290,7 @@ namespace Graphs {
             if (error != CurveFittingError.NONE) {
                 buffer.insert (ref end_iter, error.to_text (), -1);
                 confirm_button.set_sensitive (false);
+                fit_result = null;
                 PythonHelper.run_method (this, "_clear_fit");
                 return;
             }
@@ -468,6 +472,7 @@ namespace Graphs {
         [GtkCallback]
         private void emit_add_fit_request () {
             PythonHelper.run_method (this, "_add_fit");
+            window.data.optimize_limits ();
             close ();
         }
     }
