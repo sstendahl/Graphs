@@ -187,52 +187,31 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Set markerstyle property."""
         self._artist.set_marker(misc.MARKERSTYLES[markerstyle])
 
-    def _set_properties(self, _x, _y) -> None:
-        linewidth, markersize = self.props.linewidth, self.props.markersize
+    def _set_size_properties(self, *_args) -> None:
+        linewidth = self.props.linewidth
+        markersize = self.props.markersize
         if not self.props.selected:
             linewidth *= 0.35
             markersize *= 0.35
         self._artist.set_linewidth(linewidth)
         self._artist.set_markersize(markersize)
 
-    def _set_errorbar_properties(self, _x, _y) -> None:
-        capsize = self.props.errcapsize
-        capthick = self.props.errcapthick
-        elinewidth = self.props.errlinewidth
-        barsabove = self.props.errbarsabove
-        errcolor = self.props.errcolor
-
-        if self._xbar:
-            self._xbar.set_linewidth(elinewidth)
-            if errcolor:
-                self._xbar.set_color(errcolor)
-        if self._ybar:
-            self._ybar.set_linewidth(elinewidth)
-            if errcolor:
-                self._ybar.set_color(errcolor)
-        if self._xcaps:
-            for cap in self._xcaps:
-                cap.set_markersize(capsize * 2)
-                cap.set_markeredgewidth(capthick)
-                if errcolor:
-                    cap.set_color(errcolor)
-                    cap.set_markerfacecolor(errcolor)
-                    cap.set_markeredgecolor(errcolor)
-        if self._ycaps:
-            for cap in self._ycaps:
-                cap.set_markersize(capsize * 2)
-                cap.set_markeredgewidth(capthick)
-                if errcolor:
-                    cap.set_color(errcolor)
-                    cap.set_markerfacecolor(errcolor)
-                    cap.set_markeredgecolor(errcolor)
-
+    def _set_errbar_properties(self, *_args) -> None:
+        for bar in (self._xbar, self._ybar):
+            if bar:
+                bar.set_linewidth(self.props.errlinewidth)
+                bar.set_color(self.props.errcolor)
+        for cap in (*self._xcaps, *self._ycaps):
+            cap.set_markersize(self.props.errcapsize * 2)
+            cap.set_markeredgewidth(self.props.errcapthick)
+            cap.set_color(self.props.errcolor)
+            cap.set_markerfacecolor(self.props.errcolor)
+            cap.set_markeredgecolor(self.props.errcolor)
         zorder = self._artist.get_zorder()
-        offset = 1 if barsabove else -1
-        if self._xbar:
-            self._xbar.set_zorder(zorder + offset)
-        if self._ybar:
-            self._ybar.set_zorder(zorder + offset)
+        offset = 1 if self.props.errbarsabove else -1
+        for bar in (self._xbar, self._ybar):
+            if bar:
+                bar.set_zorder(zorder + offset)
 
     def _refresh_errorbars(self) -> None:
         """Sync error bar visibility and positions."""
@@ -327,14 +306,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
-            self.connect(f"notify::{prop}", self._set_properties)
-        self._set_properties(None, None)
+            self.connect(f"notify::{prop}", self._set_size_properties)
+        self._set_size_properties()
 
         for prop in ("errcapsize", "errcapthick", "errlinewidth",
                      "errbarsabove", "errcolor"):
             self.set_property(prop, item.get_property(prop))
-            self.connect(f"notify::{prop}", self._set_errorbar_properties)
-        self._set_errorbar_properties(None, None)
+            self.connect(f"notify::{prop}", self._set_errbar_properties)
+        self._set_errbar_properties()
 
 
 class SingularityHandler:

@@ -17,15 +17,15 @@ namespace Graphs {
             edit_item_box.append (new EditItemBaseBox (item));
             string typename = item.get_type ().name ();
 
-            if (typename == "GraphsGeneratedDataItem") {
-                edit_item_box.append (new EditItemGeneratedDataItemBox (item));
-            }
-            if (typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem") {
+            if (item is DataItemBase) {
                 edit_item_box.append (new EditItemDataItemBox (item));
+                if (typename == "GraphsGeneratedDataItem") {
+                    edit_item_box.append (new EditItemGeneratedDataItemBox (item));
+                }
                 bool has_xerr, has_yerr;
                 PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
                 if (has_xerr || has_yerr) {
-                    edit_item_box.append (new EditItemErrorBarGroup (item));
+                    edit_item_box.append (new EditItemErrorBarGroup (item, has_xerr, has_yerr));
                 }
             } else if (typename == "GraphsEquationItem") {
                 edit_item_box.append (new EditItemEquationItemBox (item));
@@ -146,11 +146,8 @@ namespace Graphs {
 
         private Item item;
 
-        public EditItemErrorBarGroup (Item item) {
+        public EditItemErrorBarGroup (Item item, bool has_xerr, bool has_yerr) {
             this.item = item;
-
-            bool has_xerr, has_yerr;
-            PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
 
             use_xerr.set_visible (has_xerr);
             use_yerr.set_visible (has_yerr);

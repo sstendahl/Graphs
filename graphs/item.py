@@ -29,9 +29,7 @@ def new_from_dict(dictionary: dict) -> Graphs.Item:
     return cls(**dictionary)
 
 
-class _PythonItem(Graphs.Item):
-
-    __gtype_name__ = "GraphsPythonItem"
+class _PythonItem:
 
     def __init__(self, **kwargs):
         super().__init__(typename=self._typename, **kwargs)
@@ -76,7 +74,7 @@ class _PythonItem(Graphs.Item):
         return dictionary
 
 
-class DataItem(_PythonItem):
+class DataItem(_PythonItem, Graphs.DataItemBase):
     """DataItem."""
 
     __gtype_name__ = "GraphsDataItem"
@@ -84,26 +82,26 @@ class DataItem(_PythonItem):
 
     data = GObject.Property(type=object)
     err = GObject.Property(type=object)
+    errbarsabove = GObject.Property(type=bool, default=False)
+    errcapsize = GObject.Property(type=float, default=0)
+    errcapthick = GObject.Property(type=float, default=1)
+    errlinewidth = GObject.Property(type=float, default=1)
     linestyle = GObject.Property(type=int, default=1)
     linewidth = GObject.Property(type=float, default=3)
     markerstyle = GObject.Property(type=int, default=0)
     markersize = GObject.Property(type=float, default=7)
     showxerr = GObject.Property(type=bool, default=True)
     showyerr = GObject.Property(type=bool, default=True)
-    errcapsize = GObject.Property(type=float, default=0)
-    errcapthick = GObject.Property(type=float, default=1)
-    errlinewidth = GObject.Property(type=float, default=1)
-    errbarsabove = GObject.Property(type=bool, default=False)
 
     _style_properties = {
+        "errbarsabove": ("errorbar.barsabove", None),
+        "errcapsize": ("errorbar.capsize", None),
+        "errcapthick": ("errorbar.capthick", None),
+        "errlinewidth": ("errorbar.linewidth", None),
         "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
         "linewidth": ("lines.linewidth", None),
         "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
         "markersize": ("lines.markersize", None),
-        "errcapsize": ("errorbar.capsize", None),
-        "errcapthick": ("errorbar.capthick", None),
-        "errlinewidth": ("errorbar.linewidth", None),
-        "errbarsabove": ("errorbar.barsabove", None),
     }
 
     @classmethod
@@ -217,7 +215,7 @@ class GeneratedDataItem(DataItem):
         )
 
 
-class EquationItem(_PythonItem):
+class EquationItem(_PythonItem, Graphs.Item):
     """EquationItem."""
 
     __gtype_name__ = "GraphsEquationItem"
@@ -264,7 +262,7 @@ class EquationItem(_PythonItem):
             self.props.name = "Y = " + equation
 
 
-class TextItem(_PythonItem):
+class TextItem(_PythonItem, Graphs.Item):
     """TextItem."""
 
     __gtype_name__ = "GraphsTextItem"
@@ -300,7 +298,7 @@ class TextItem(_PythonItem):
         )
 
 
-class FillItem(_PythonItem):
+class FillItem(_PythonItem, Graphs.Item):
     """FillItem."""
 
     __gtype_name__ = "GraphsFillItem"

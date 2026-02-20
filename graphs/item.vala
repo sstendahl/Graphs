@@ -15,7 +15,6 @@ namespace Graphs {
         public string ylabel { get; set; default = ""; }
         public int xposition { get; set; default = 0; }
         public int yposition { get; set; default = 0; }
-        public string errcolor { get; set; default = ""; }
 
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);
@@ -27,6 +26,13 @@ namespace Graphs {
             this.color = Tools.rgba_to_hex (rgba);
             this.alpha = rgba.alpha;
         }
+    }
+
+    /**
+     * Base class for data items
+     */
+    public class DataItemBase : Item {
+        public string errcolor { get; set; default = ""; }
 
         public Gdk.RGBA get_errcolor_rgba () {
             return Tools.hex_to_rgba (errcolor);
