@@ -25,8 +25,14 @@ namespace Graphs {
             { null },
         };
 
-        construct {
-            this.version = Config.VERSION;
+        public Application () {
+            Object (
+                application_id: Config.APPLICATION_ID,
+                version: Config.VERSION,
+                flags: ApplicationFlags.HANDLES_COMMAND_LINE | ApplicationFlags.HANDLES_OPEN
+            );
+
+            add_main_option_entries (OPTION_ENTRIES);
         }
 
         /**
@@ -43,8 +49,6 @@ namespace Graphs {
 
             this.main_windows = new Gee.LinkedList<Window> ();
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
-
-            add_main_option_entries (OPTION_ENTRIES);
 
             Gtk.Window.set_default_icon_name (application_id);
 

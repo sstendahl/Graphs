@@ -80,11 +80,7 @@ if __name__ == "__main__":
         StyleManager()
         DataImporter()
 
-    from gi.repository import Gio, Graphs
-    application = Graphs.Application(
-        application_id="@APPLICATION_ID@",
-        flags=Gio.ApplicationFlags.HANDLES_COMMAND_LINE
-        | Gio.ApplicationFlags.HANDLES_OPEN,
-    )
+    from gi.repository import Graphs
+    application = Graphs.Application.new()
     application.connect("startup", on_startup)
     sys.exit(application.run(sys.argv))
