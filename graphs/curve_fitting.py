@@ -173,9 +173,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             f_deriv = sympy.lambdify(sym_vars, deriv, "numpy")
             jacobian[:, i] = f_deriv(x_fit, *params)
 
-        variance = numpy.sum((jacobian @ param_cov)
-                             * jacobian,
-                             axis=1)
+        variance = numpy.sum((jacobian @ param_cov) * jacobian, axis=1)
 
         conf_level = self.get_settings().get_enum("confidence")
         std_dev_y = numpy.sqrt(numpy.abs(variance))
@@ -193,8 +191,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         for collection in ax.collections:
             collection.set_visible(True)
 
-        all_y = [*fitted_y, *y_lower, *y_upper, *y_data]
-        all_y = [y for y in all_y if numpy.isfinite(y)]
+        all_y = [y for y in (*y_lower, *y_upper, *y_data) if numpy.isfinite(y)]
         y_min, y_max = min(all_y), max(all_y)
 
         padding = (y_max - y_min) * 0.025
@@ -202,10 +199,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         cv.queue_draw()
 
         cv = self.get_residuals_canvas()
+        ax = cv.figure.axis
+        ax.lines[0].set_visible(True)
         max_val = abs(residuals).max()
         if max_val > 0:
             y_lim = max_val * 1.1
-            cv.figure.axis.set_ylim(-y_lim, y_lim)
+            ax.set_ylim(-y_lim, y_lim)
+        else:
+            ax.set_ylim(-1, 1)
         cv.queue_draw()
 
         self.set_results(Graphs.CurveFittingError.NONE)
@@ -215,13 +216,18 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         xdata = self.data_curve.get_xdata()
         residuals = numpy.zeros(len(xdata))
         self.residuals_item.props.data = xdata, residuals
-        self.get_residuals_canvas().figure.axis.set_ylim(-1, 1)
+
+        cv = self.get_residuals_canvas()
+        ax = cv.figure.axis
+        ax.lines[0].set_visible(False)
+        ax.set_ylim(-1, 1)
 
         # Hide all lines except the first one (data curve)
         cv = self.get_canvas()
-        for line in cv.figure.axis.lines[1:]:
+        ax = cv.figure.axis
+        for line in ax.lines[1:]:
             line.set_visible(False)
         # Hide all collections (fill)
-        for collection in cv.figure.axis.collections:
+        for collection in ax.collections:
             collection.set_visible(False)
         cv.queue_draw()

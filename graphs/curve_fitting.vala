@@ -327,7 +327,7 @@ namespace Graphs {
         }
 
         private void update_bounds_visibility () {
-            bool visible = settings.get_string ("optimization") != "lm";
+            bool visible =  settings.get_enum ("optimization") > 0;
             var entry = (FittingParameterBox) fitting_params_box.get_first_child ();
             while (entry != null) {
                 entry.set_bounds_visible (visible);
@@ -383,7 +383,7 @@ namespace Graphs {
 
                 var new_map = new HashMap<string, FittingParameter> ();
                 FittingParameter param;
-                bool use_bounds = settings.get_string ("optimization") != "lm";
+                bool use_bounds = settings.get_enum ("optimization") > 0;
                 foreach (string variable in free_vars) {
                     if (fitting_parameters.has_key (variable)) {
                         param = fitting_parameters.get (variable);
