@@ -49,20 +49,20 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
         self.fitted_curve = DataItem.new(
             style,
-            xdata=xdata,
-            ydata=ydata,
+            xdata=[],
+            ydata=[],
             color=FIT_COLOR,
         )
         self.fill = FillItem.new(
             style,
-            (xdata, ydata, ydata),
+            ([], [], []),
             color=FILL_COLOR,
             alpha=FILL_ALPHA,
         )
         self.residuals_item = DataItem.new(
             style,
-            xdata=numpy.zeros(len(xdata)),
-            ydata=numpy.zeros(len(ydata)),
+            xdata=[],
+            ydata=[],
             color=DATA_COLOR,
             linestyle=LINE_STYLE,
             markerstyle=MARKER_STYLE,
@@ -72,6 +72,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         x_min, x_max = min(xdata), max(xdata)
         padding = (x_max - x_min) * 0.025
         self._xlim = (x_min - padding, x_max + padding)
+        self._x_fit = numpy.linspace(*self._xlim, 5000)
 
         self._load_canvas()
         self.setup()
@@ -115,15 +116,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         sym_params_map = dict(zip(variables, sym_vars))
         x_data, y_data = self._data
         equation = self.get_equation_string()
+        settings = self.get_settings()
         try:
             symbolic = sympy.sympify(equation, locals=sym_params_map)
-            func = sympy.lambdify(sym_vars, symbolic)
+            func = sympy.lambdify(sym_vars, symbolic, "numpy")
             params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.get_p0(),
                 bounds=self.get_bounds(),
                 nan_policy="omit",
-                method=self.get_settings().get_string("optimization"),
+                method=settings.get_string("optimization"),
             )
         except (sympy.SympifyError, TypeError, SyntaxError):
             self.set_results(Graphs.CurveFittingError.EQUATION)
@@ -140,17 +142,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return
 
         # Calculate statistics
-        n = len(y_data)
-        fitted_y = func(x_data, *params)
-        ss_res = numpy.sum((y_data - fitted_y)**2)
+        residuals = y_data - func(x_data, *params)
+        ss_res = numpy.sum(residuals**2)
         ss_tot = numpy.sum((y_data - numpy.mean(y_data))**2)
-        r2 = 1 - (ss_res / ss_tot)
-        rmse = numpy.sqrt(ss_res / n)
-
         d_cov = numpy.sqrt(numpy.diagonal(param_cov))
+        r2 = 1 - (ss_res / ss_tot)
+        rmse = numpy.sqrt(ss_res / y_data.size)
         self.props.fit_result = Graphs.FitResult.new(params, d_cov, r2, rmse)
-
-        residuals = y_data - fitted_y
         self.residuals_item.props.data = x_data, residuals
 
         # Substitute each free variables with the calculated value.
@@ -159,25 +157,27 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         fitted_eq = Graphs.prettify_equation(fitted_eq)
         self.props.fitted_equation_string = fitted_eq
 
-        x_fit = numpy.linspace(*self._xlim, 5000)
+        x_fit = self._x_fit
         y_fit = func(x_fit, *params)
+        if numpy.isscalar(y_fit):
+            y_fit = numpy.full_like(x_fit, y_fit, dtype=float)
 
         self.fitted_curve.props.data = x_fit, y_fit
         self.fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
-        jacobian = numpy.zeros((x_fit.size, len(params)))
+        grad_symbolic = [
+            sympy.diff(symbolic, sym_params_map[name]) for name in free_vars
+        ]
+        grad = sympy.lambdify(sym_vars, grad_symbolic, "numpy")(x_fit, *params)
+        jacobian = numpy.column_stack([
+            g if numpy.ndim(g) > 0 else numpy.full(x_fit.size, g)
+            for g in map(numpy.asarray, grad)
+        ])
+        variance = numpy.sum(jacobian * (jacobian @ param_cov), axis=1)
 
-        for i, name in enumerate(free_vars):
-            deriv = sympy.diff(symbolic, sym_params_map[name])
-            f_deriv = sympy.lambdify(sym_vars, deriv, "numpy")
-            jacobian[:, i] = f_deriv(x_fit, *params)
-
-        variance = numpy.sum((jacobian @ param_cov) * jacobian, axis=1)
-
-        conf_level = self.get_settings().get_enum("confidence")
         std_dev_y = numpy.sqrt(numpy.abs(variance))
-        confidence_band = std_dev_y * conf_level
+        confidence_band = std_dev_y * settings.get_enum("confidence")
 
         y_upper = y_fit + confidence_band
         y_lower = y_fit - confidence_band
@@ -191,8 +191,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         for collection in ax.collections:
             collection.set_visible(True)
 
-        all_y = [y for y in (*y_lower, *y_upper, *y_data) if numpy.isfinite(y)]
-        y_min, y_max = min(all_y), max(all_y)
+        all_y = numpy.concatenate((y_lower, y_upper, y_data))
+        all_y = all_y[numpy.isfinite(all_y)]
+        y_min, y_max = all_y.min(), all_y.max()
 
         padding = (y_max - y_min) * 0.025
         ax.set_ylim(y_min - padding, y_max + padding)
