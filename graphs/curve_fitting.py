@@ -213,10 +213,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _clear_fit(self) -> None:
         """Clear all fit-related data by hiding curves."""
-        xdata = self.data_curve.get_xdata()
-        residuals = numpy.zeros(len(xdata))
-        self.residuals_item.props.data = xdata, residuals
-
         cv = self.get_residuals_canvas()
         ax = cv.figure.axis
         ax.lines[0].set_visible(False)

@@ -327,7 +327,7 @@ namespace Graphs {
         }
 
         private void update_bounds_visibility () {
-            bool visible =  settings.get_enum ("optimization") > 0;
+            bool visible = settings.get_enum ("optimization") > 0;
             var entry = (FittingParameterBox) fitting_params_box.get_first_child ();
             while (entry != null) {
                 entry.set_bounds_visible (visible);
