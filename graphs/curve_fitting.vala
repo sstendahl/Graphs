@@ -32,58 +32,13 @@ namespace Graphs {
         }
     }
 
-    public class FittingParameterContainer : Object {
-        private Map<string, FittingParameter> map;
-
-        construct {
-            map = new HashMap<string, FittingParameter> ();
-        }
-
-        public void update (Map<string, FittingParameter> new_map) {
-            map = new_map;
-        }
-
-        public Map<string, FittingParameter> get_map () {
-            return map;
-        }
-
-        public double[] get_p0 () {
-            double[] result = new double[map.size];
-            var iterator = map.map_iterator ();
-            int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                result[idx++] = iterator.get_value ().initial;
-            }
-            return result;
-        }
-
-        public void get_bounds (out double[] lower, out double[] upper) {
-            lower = new double[map.size];
-            upper = new double[map.size];
-            var iterator = map.map_iterator ();
-            int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                var param = iterator.get_value ();
-                lower[idx] = param.get_lower_bound ();
-                upper[idx] = param.get_upper_bound ();
-                idx++;
-            }
-        }
-
-        public string[] get_free_vars () {
-            return map.keys.to_array ();
-        }
-    }
-
     public class FitResult : Object {
         private double[] parameters;
         private double[] diag_covars;
-        private string r2;
-        private string rmse;
+        private double r2;
+        private double rmse;
 
-        public FitResult (double[] parameters, double[] diag_covars, string r2, string rmse) {
+        public FitResult (double[] parameters, double[] diag_covars, double r2, double rmse) {
             this.parameters = parameters;
             this.diag_covars = diag_covars;
             this.r2 = r2;
@@ -98,7 +53,7 @@ namespace Graphs {
             return diag_covars;
         }
 
-        public void get_r2_rmse (out string r2, out string rmse) {
+        public void get_r2_rmse (out double r2, out double rmse) {
             r2 = this.r2;
             rmse = this.rmse;
         }
@@ -173,9 +128,12 @@ namespace Graphs {
 
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; protected set; }
-        protected string equation_string { get; protected set; }
-        protected FittingParameterContainer fitting_parameters { get; private set; }
+        protected string equation_string { get; private set; }
+        protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
+
+        private Map<string, FittingParameter> fitting_parameters;
+        private string[] free_vars = {};
 
         protected Canvas? canvas {
             get { return canvas_container.get_child () as Canvas; }
@@ -188,7 +146,7 @@ namespace Graphs {
         }
 
         protected virtual void setup () {
-            fitting_parameters = new FittingParameterContainer ();
+            fitting_parameters = new HashMap<string, FittingParameter> ();
             fit_result = null;
 
             settings = Application.get_settings_child ("curve-fitting");
@@ -197,9 +155,7 @@ namespace Graphs {
             Action confidence_action = settings.create_action ("confidence");
             confidence_action.notify.connect (() => {
                 if (fit_result == null) return;
-                PythonHelper.run_method (this, "_update_confidence_band");
-                PythonHelper.run_method (this, "_update_canvas_data");
-                set_results (CurveFittingError.NONE);
+                PythonHelper.run_method (this, "_fit_curve");
             });
             action_map.add_action (confidence_action);
 
@@ -241,6 +197,35 @@ namespace Graphs {
             set_equation_from_selection ();
         }
 
+        protected double[] get_p0 () {
+            double[] result = new double[fitting_parameters.size];
+            var iterator = fitting_parameters.map_iterator ();
+            int idx = 0;
+            while (iterator.has_next ()) {
+                iterator.next ();
+                result[idx++] = iterator.get_value ().initial;
+            }
+            return result;
+        }
+
+        protected void get_bounds (out double[] lower, out double[] upper) {
+            lower = new double[fitting_parameters.size];
+            upper = new double[fitting_parameters.size];
+            var iterator = fitting_parameters.map_iterator ();
+            int idx = 0;
+            while (iterator.has_next ()) {
+                iterator.next ();
+                var param = iterator.get_value ();
+                lower[idx] = param.get_lower_bound ();
+                upper[idx] = param.get_upper_bound ();
+                idx++;
+            }
+        }
+
+        protected string[] get_free_vars () {
+            return free_vars;
+        }
+
         protected void set_results (CurveFittingError error) {
             var buffer = text_view.get_buffer ();
             buffer.set_text ("");
@@ -264,7 +249,6 @@ namespace Graphs {
 
             buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
 
-            string[] free_vars = fitting_parameters.get_free_vars ();
             double[] diag_covars = fit_result.get_diag_covars ();
             double[] parameters = fit_result.get_parameters ();
             int conf_level = settings.get_enum ("confidence");
@@ -280,9 +264,9 @@ namespace Graphs {
             }
 
             buffer.insert_with_tags_by_name (ref end_iter, "\n" + _("Statistics") + "\n", -1, "bold");
-            string r2, rmse;
+            double r2, rmse;
             fit_result.get_r2_rmse (out r2, out rmse);
-            string r2_rmse = "%s: %s\n%s: %s".printf (_("R²"), r2, _("RMSE"), rmse);
+            string r2_rmse = "%s: %.3g\n%s: %.3g".printf (_("R²"), r2, _("RMSE"), rmse);
             buffer.insert (ref end_iter, r2_rmse, -1);
         }
 
@@ -389,23 +373,20 @@ namespace Graphs {
             }
 
             try {
-                string processed = preprocess_equation (equation);
-                string[] free_vars = MathTools.get_free_variables (processed);
+                equation_string = preprocess_equation (equation);
+                free_vars = MathTools.get_free_variables (equation_string);
 
                 if (free_vars.length == 0) {
                     set_results (CurveFittingError.EQUATION);
                     return false;
                 }
 
-                equation_string = processed;
-
-                var old_map = fitting_parameters.get_map ();
                 var new_map = new HashMap<string, FittingParameter> ();
                 FittingParameter param;
                 bool use_bounds = settings.get_string ("optimization") != "lm";
                 foreach (string variable in free_vars) {
-                    if (old_map.has_key (variable)) {
-                        param = old_map.get (variable);
+                    if (fitting_parameters.has_key (variable)) {
+                        param = fitting_parameters.get (variable);
                     } else {
                         param = new FittingParameter (variable);
                     }
@@ -420,7 +401,7 @@ namespace Graphs {
                     fitting_params_box.append (p_box);
                     new_map.set (variable, param);
                 }
-                fitting_parameters.update (new_map);
+                fitting_parameters = new_map;
 
                 PythonHelper.run_method (this, "_fit_curve");
                 return true;
@@ -435,7 +416,9 @@ namespace Graphs {
             settings.set_enum ("equation", (int) equation.get_selected ());
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
-            PythonHelper.run_method (this, "_add_fit");
+            Item item = PythonHelper.add_equation (window, fitted_equation_string, "");
+            Item[] items = {item};
+            window.data.add_items (items);
             window.data.optimize_limits ();
             close ();
         }
