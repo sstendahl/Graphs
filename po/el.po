@@ -1538,14 +1538,12 @@ msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% Εμπιστοσύνη"
 
 #: data/ui/curve-fitting.blp:255
-#, fuzzy
-#| msgid "Show Sidebar"
 msgid "Show Residuals"
-msgstr "Εμφάνιση πλευρικής στήλης"
+msgstr "Εμφάνιση υπολοίπων"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
-msgstr "Εξαγωγή γραφήματος"
+msgstr "Εξαγωγή σχήματος"
 
 #: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
 msgid "Export"
@@ -2065,10 +2063,8 @@ msgid "Y Axis Scale"
 msgstr "Κλίμακα άξονα Υ"
 
 #: graphs/sidebar/figure_settings.vala:168
-#, fuzzy
-#| msgid "X Axis Label"
 msgid "Y Axis Label"
-msgstr "Ετικέτα άξονα Χ"
+msgstr "Ετικέτα άξονα Y"
 
 #: graphs/sidebar/figure_settings.vala:229
 msgid "Defaults Updated"
