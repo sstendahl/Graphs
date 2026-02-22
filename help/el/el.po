@@ -1,0 +1,123 @@
+# Greek translation for Graphs.
+# Copyright (C) 2026 Graphs's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Graphs package.
+# Efstathios Iosifidis <eiosifidis@gnome.org>,  2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Graphs main\n"
+"POT-Creation-Date: 2026-02-22 11:10+0000\n"
+"PO-Revision-Date: 2026-02-22 11:10+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Greek <Greek>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: el\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr ""
+"Ελληνική μεταφραστική ομάδα GNOME\n"
+" Ευστάθιος Ιωσηφίδης <iosifidis@opensuse.org>\n"
+"\n"
+"Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
+"https://gr.gnome.org/"
+
+#. (itstool) path: page/title
+#: C/curve_fitting.page:8
+msgid "Curve Fitting"
+msgstr "Προσαρμογή καμπύλης"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:10
+msgid "Fitting data"
+msgstr "Προσαρμογή δεδομένων"
+
+#. (itstool) path: section/p
+#: C/curve_fitting.page:11
+msgid ""
+"Curve fitting allows for a powerful analysis method for your imported data. "
+"To start curve fitting on a data set, press the three vertical dots on the "
+"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
+"Curve Fitting dialog for the selected data set. An extensive list of "
+"predefined equations can be chosen from the dropdown. The corresponding "
+"mathematical formula is shown in the same card."
+msgstr ""
+"Η προσαρμογή καμπύλης προσφέρει μια ισχυρή μέθοδο ανάλυσης για τα εισαγόμενα "
+"δεδομένα σας. Για να ξεκινήσετε, πατήστε τις τρεις κάθετες τελείες στο "
+"στοιχείο που θέλετε και επιλέξτε «Προσαρμογή καμπύλης». Αυτό θα εμφανίσει "
+"τον διάλογο προσαρμογής για το επιλεγμένο σύνολο δεδομένων. Μπορείτε να "
+"επιλέξετε από μια εκτενή λίστα προκαθορισμένων εξισώσεων, ενώ ο αντίστοιχος "
+"μαθηματικός τύπος εμφανίζεται στην ίδια κάρτα."
+
+
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:23
+msgid "Bounds"
+msgstr "Όρια"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:36
+msgid "Results"
+msgstr "Αποτελέσματα"
+
+#. (itstool) path: section/title
+#: C/curve_fitting.page:57
+msgid "Fitting algorithms"
+msgstr "Αλγόριθμοι προσαρμογής"
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:64
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. (itstool) path: item/title
+#: C/curve_fitting.page:68
+msgid "Trust Region"
+msgstr "Trust Region"
+
+#. (itstool) path: page/title
+#: C/import.page:8
+msgid "Importing Data"
+msgstr "Εισαγωγή δεδομένων"
+
+#. (itstool) path: page/p
+#: C/import.page:38
+msgid ""
+"The other way to import data is to generate data directly using an equation. "
+"This can be done using the \"Add Equation\" button found in the top-left "
+"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
+"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
+"quadratic equation could for instance be created using <code>x²+5</code> as "
+"input. Be aware that trigonometric functions are using radians by default. "
+"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
+"function. For instance <code>cosd(x)</code> generates a cosine where the x "
+"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
+"with the x-coordinate in radians."
+msgstr ""
+"Ο άλλος τρόπος εισαγωγής δεδομένων είναι η απευθείας δημιουργία τους μέσω "
+"μιας εξίσωσης. Αυτό γίνεται με το κουμπί «Προσθήκη εξίσωσης» πάνω αριστερά ή "
+"πατώντας <cmd>Ctrl+Alt+N</cmd>. Υποστηρίζεται η συνήθης σύνταξη, όπου το "
+"<code>x</code> συμβολίζει την τετμημένη. Για παράδειγμα, μια τετραγωνική "
+"εξίσωση δημιουργείται ως <code>x²+5</code>. Σημειώστε ότι οι τριγωνομετρικές "
+"συναρτήσεις χρησιμοποιούν ακτίνια (radians) ως προεπιλογή· για μοίρες, "
+"προσθέστε το <code>d</code> (π.χ. <code>cosd(x)</code>)."
+
+#. (itstool) path: page/title
+#: C/manipulate.page:8
+msgid "Manipulating Data"
+msgstr "Χειραγώγηση δεδομένων"
+
+#. (itstool) path: section/title
+#: C/manipulate.page:18
+msgid "Smoothening"
+msgstr "Εξομάλυνση"
+
+#. (itstool) path: section/title
+#: C/manipulate.page:34
+msgid "Custom Transformations"
+msgstr "Προσαρμοσμένοι μετασχηματισμοί"
