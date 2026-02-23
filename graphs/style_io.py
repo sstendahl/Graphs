@@ -5,10 +5,13 @@ Module for parsing and writing styles.
 This module is intended to be used at build time and thus must not depend on
 other graphs modules.
 """
+import contextlib
 import logging
 import typing
 from gettext import gettext as _
 from typing import Tuple
+
+from cycler import cycler
 
 from gi.repository import Gio
 
@@ -43,6 +46,11 @@ FONT_SIZE_KEYS = [
 STYLE_CUSTOM_PARAMS = [
     "name",
     "ticklabels",
+    "errorbar.capsize",
+    "errorbar.capthick",
+    "errorbar.linewidth",
+    "errorbar.barsabove",
+    "errorbar.color_cycle",
 ]
 
 
@@ -145,6 +153,12 @@ def parse(
                         # Convert boolean-strings to boolean:
                         bool_mapping = {"false": False, "true": True}
                         value = bool_mapping.get(value.lower(), value)
+                        if key == "errorbar.color_cycle":
+                            color = ["#" + c.strip() for c in value.split(",")]
+                            value = cycler(color=color)
+                        else:
+                            with contextlib.suppress(ValueError):
+                                value = float(value)
                         graphs_params[key] = value
                     else:
                         style[key] = value
@@ -186,6 +200,8 @@ def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
     for key, value in graphs_params.items():
+        if key == "errorbar.color_cycle":
+            value = ", ".join(c.lstrip("#") for c in value.by_key()["color"])
         stream.put_string(f"#~graphs {key}: {value}\n")
     for key, value in style.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:

@@ -21,6 +21,7 @@ data/ui/sidebar/edit-item/base.blp
 data/ui/sidebar/edit-item/data.blp
 data/ui/sidebar/edit-item/equation.blp
 data/ui/sidebar/edit-item/equation-group.blp
+data/ui/sidebar/edit-item/errorbar-group.blp
 data/ui/sidebar/edit-item/generated-data.blp
 data/ui/sidebar/edit-item/page.blp
 data/ui/sidebar/figure-settings/settings-page.blp
