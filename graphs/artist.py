@@ -100,7 +100,28 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
+    errcapsize = GObject.Property(type=float, default=0)
+    errcapthick = GObject.Property(type=float, default=1)
+    errlinewidth = GObject.Property(type=float, default=1)
+    errbarsabove = GObject.Property(type=bool, default=False)
+    errcolor = GObject.Property(type=str, default="")
     legend = True
+
+    def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
+        return self._errorbar_container
+
+    @GObject.Property(type=str, default="")
+    def name(self) -> str:
+        """Get name/label property."""
+        return self._artist.get_label()
+
+    @name.setter
+    def name(self, name: str) -> None:
+        """Set name/label property."""
+        label = _ellipsize(name)
+        self._artist.set_label(label)
+        self._errorbar_container.set_label(label)
 
     @GObject.Property
     def data(self) -> tuple[list, list]:
@@ -111,6 +132,40 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def data(self, data: tuple[list, list]) -> None:
         """Set data property."""
         self._artist.set_data(data)
+        self._refresh_errorbars()
+
+    @GObject.Property(type=object)
+    def err(self) -> tuple:
+        """Get err property."""
+        return self._err
+
+    @err.setter
+    def err(self, err: tuple[list, list]) -> None:
+        """Set err property."""
+        self._err = err
+        self._refresh_errorbars()
+
+    @GObject.Property(type=bool, default=True)
+    def showxerr(self) -> bool:
+        """Get showxerr property."""
+        return self._show_xerr
+
+    @showxerr.setter
+    def showxerr(self, showxerr: bool) -> None:
+        """Set showxerr property."""
+        self._show_xerr = showxerr
+        self._refresh_errorbars()
+
+    @GObject.Property(type=bool, default=True)
+    def showyerr(self) -> bool:
+        """Get showyerr property."""
+        return self._show_yerr
+
+    @showyerr.setter
+    def showyerr(self, showyerr: bool) -> None:
+        """Set showyerr property."""
+        self._show_yerr = showyerr
+        self._refresh_errorbars()
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -140,21 +195,146 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._artist.set_linewidth(linewidth)
         self._artist.set_markersize(markersize)
 
-    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+    def _set_errorbar_properties(self, _x, _y) -> None:
+        capsize = self.props.errcapsize
+        capthick = self.props.errcapthick
+        elinewidth = self.props.errlinewidth
+        barsabove = self.props.errbarsabove
+        errcolor = self.props.errcolor
+
+        if self._xbar:
+            self._xbar.set_linewidth(elinewidth)
+            if errcolor:
+                self._xbar.set_color(errcolor)
+        if self._ybar:
+            self._ybar.set_linewidth(elinewidth)
+            if errcolor:
+                self._ybar.set_color(errcolor)
+        if self._xcaps:
+            for cap in self._xcaps:
+                cap.set_markersize(capsize * 2)
+                cap.set_markeredgewidth(capthick)
+                if errcolor:
+                    cap.set_color(errcolor)
+                    cap.set_markerfacecolor(errcolor)
+                    cap.set_markeredgecolor(errcolor)
+        if self._ycaps:
+            for cap in self._ycaps:
+                cap.set_markersize(capsize * 2)
+                cap.set_markeredgewidth(capthick)
+                if errcolor:
+                    cap.set_color(errcolor)
+                    cap.set_markerfacecolor(errcolor)
+                    cap.set_markeredgecolor(errcolor)
+
+        zorder = self._artist.get_zorder()
+        offset = 1 if barsabove else -1
+        if self._xbar:
+            self._xbar.set_zorder(zorder + offset)
+        if self._ybar:
+            self._ybar.set_zorder(zorder + offset)
+
+    def _refresh_errorbars(self) -> None:
+        """Sync error bar visibility and positions."""
+        x_data, y_data = self._artist.get_data()
+        x_data = numpy.asarray(x_data)
+        y_data = numpy.asarray(y_data)
+        x_err, y_err = self._err
+        x_err = x_err if self._show_xerr else None
+        y_err = y_err if self._show_yerr else None
+
+        # data and err are set as separate property assignments during cut
+        # and undo/redo. So only refresh if lengths are in sync:
+        if x_err is not None and len(x_err) != len(x_data):
+            return
+        if y_err is not None and len(y_err) != len(y_data):
+            return
+        self._apply_updates(x_data, y_data, x_err, y_err)
+
+    def _apply_updates(
+        self,
+        x_data: numpy.ndarray,
+        y_data: numpy.ndarray,
+        x_err: numpy.ndarray,
+        y_err: numpy.ndarray,
+    ) -> None:
+        """Update the segments and positions of mpl artists."""
+        has_xerr = x_err is not None
+        has_yerr = y_err is not None
+
+        if self._xbar:
+            self._xbar.set_visible(has_xerr)
+            if has_xerr:
+                start = numpy.column_stack((x_data - x_err, y_data))
+                end = numpy.column_stack((x_data + x_err, y_data))
+                self._xbar.set_segments(numpy.stack((start, end), axis=1))
+
+        if self._xcaps:
+            for cap in self._xcaps:
+                cap.set_visible(has_xerr)
+            if has_xerr:
+                self._xcaps[0].set_data(x_data - x_err, y_data)
+                self._xcaps[1].set_data(x_data + x_err, y_data)
+
+        if self._ybar:
+            self._ybar.set_visible(has_yerr)
+            if has_yerr:
+                start = numpy.column_stack((x_data, y_data - y_err))
+                end = numpy.column_stack((x_data, y_data + y_err))
+                self._ybar.set_segments(numpy.stack((start, end), axis=1))
+
+        if self._ycaps:
+            for cap in self._ycaps:
+                cap.set_visible(has_yerr)
+            if has_yerr:
+                self._ycaps[0].set_data(x_data, y_data - y_err)
+                self._ycaps[1].set_data(x_data, y_data + y_err)
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        self._artist = axis.plot(
-            item.get_xdata(),
-            item.get_ydata(),
-            label=_ellipsize(item.get_name()),
-            color=item.get_color(),
-            alpha=item.get_alpha(),
+        self._err = item.props.err
+        self._show_xerr = item.props.showxerr
+        self._show_yerr = item.props.showyerr
+        x_err, y_err = self._err
+        self._errorbar_container = axis.errorbar(
+            item.get_xdata(), item.get_ydata(),
+            xerr=x_err, yerr=y_err,
+            color=item.get_color(), alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
             marker=misc.MARKERSTYLES[item.props.markerstyle],
-        )[0]
+            capsize=item.props.errcapsize,
+            capthick=item.props.errcapthick,
+            elinewidth=item.props.errlinewidth,
+            barsabove=item.props.errbarsabove,
+            ecolor=item.props.errcolor,
+        )
+
+        self._artist, caps, barlines = self._errorbar_container
+
+        # We iterate over bar and caps in assignments to handle all
+        # combinations with error bars on either or both axes.
+        has_xerr, has_yerr = x_err is not None, y_err is not None
+        bar_iter = iter(barlines)
+        self._xbar = next(bar_iter) if has_xerr else None
+        self._ybar = next(bar_iter) if has_yerr else None
+
+        cap_iter = iter(caps)
+        self._xcaps = (next(cap_iter), next(cap_iter)) \
+            if has_xerr and caps else ()
+        self._ycaps = (next(cap_iter), next(cap_iter)) \
+            if has_yerr and caps else ()
+
+        self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
+
+        for prop in ("errcapsize", "errcapthick", "errlinewidth",
+                     "errbarsabove", "errcolor"):
+            self.set_property(prop, item.get_property(prop))
+            self.connect(f"notify::{prop}", self._set_errorbar_properties)
+        self._set_errorbar_properties(None, None)
 
 
 class SingularityHandler:

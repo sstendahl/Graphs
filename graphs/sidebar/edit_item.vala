@@ -22,6 +22,11 @@ namespace Graphs {
             }
             if (typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem") {
                 edit_item_box.append (new EditItemDataItemBox (item));
+                bool has_xerr, has_yerr;
+                PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
+                if (has_xerr || has_yerr) {
+                    edit_item_box.append (new EditItemErrorBarGroup (item));
+                }
             } else if (typename == "GraphsEquationItem") {
                 edit_item_box.append (new EditItemEquationItemBox (item));
             }
@@ -112,6 +117,84 @@ namespace Graphs {
         [GtkCallback]
         private void on_markers () {
             markersize.set_sensitive (markerstyle.get_selected () != 0);
+        }
+    }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/errorbar-group.ui")]
+    public class EditItemErrorBarGroup : Box {
+
+        [GtkChild]
+        private unowned Adw.SwitchRow use_xerr { get; }
+
+        [GtkChild]
+        private unowned Adw.SwitchRow use_yerr { get; }
+
+        [GtkChild]
+        private unowned Adw.SwitchRow errbarsabove { get; }
+
+        [GtkChild]
+        private unowned StyleColorRow errcolor_row { get; }
+
+        [GtkChild]
+        private unowned Scale errcapsize { get; }
+
+        [GtkChild]
+        private unowned Scale errcapthick { get; }
+
+        [GtkChild]
+        private unowned Scale errlinewidth { get; }
+
+        private Item item;
+
+        public EditItemErrorBarGroup (Item item) {
+            this.item = item;
+
+            bool has_xerr, has_yerr;
+            PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
+
+            use_xerr.set_visible (has_xerr);
+            use_yerr.set_visible (has_yerr);
+
+            if (has_xerr) {
+                item.bind_property (
+                    "showxerr",
+                    use_xerr,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            }
+            if (has_yerr) {
+                item.bind_property (
+                    "showyerr",
+                    use_yerr,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            }
+
+            item.bind_property (
+                "errbarsabove", errbarsabove, "active",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "errcapsize", errcapsize.adjustment, "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "errcapthick", errcapthick.adjustment, "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "errlinewidth", errlinewidth.adjustment, "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+
+            string current_errcolor;
+            item.get ("errcolor", out current_errcolor);
+            errcolor_row.color = Tools.hex_to_rgba (current_errcolor);
+            errcolor_row.notify["color"].connect ((obj, pspec) => {
+                item.set ("errcolor", Tools.rgba_to_hex (errcolor_row.color));
+            });
         }
     }
 

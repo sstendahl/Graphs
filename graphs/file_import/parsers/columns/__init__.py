@@ -43,6 +43,10 @@ class ColumnsParser(Parser):
             ylabel = parser.get_header(yindex)
             ydata = parser.get_column(yindex)
 
+            yerr = parser.get_column(item_settings.yerr_index) \
+                if item_settings.use_yerr else None
+            xerr = parser.get_column(item_settings.xerr_index) \
+                if item_settings.use_xerr else None
             if item_settings.single_column:
                 xlabel = ""
                 equation = item_settings.equation
@@ -61,6 +65,8 @@ class ColumnsParser(Parser):
                     style,
                     xdata,
                     ydata,
+                    xerr,
+                    yerr,
                     xlabel=xlabel,
                     ylabel=ylabel,
                     name=settings.get_filename(),

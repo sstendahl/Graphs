@@ -90,6 +90,7 @@ blueprint_files = [
   'ui/sidebar/edit-item/data.blp',
   'ui/sidebar/edit-item/equation.blp',
   'ui/sidebar/edit-item/equation-group.blp',
+  'ui/sidebar/edit-item/errorbar-group.blp',
   'ui/sidebar/edit-item/generated-data.blp',
   'ui/sidebar/edit-item/page.blp',
   'ui/sidebar/figure-settings/settings-page.blp',

@@ -53,6 +53,10 @@ STYLE_DICT = {
     "grid_opacity": ["grid.alpha"],
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
+    "errorbar_capsize": ["errorbar.capsize"],
+    "errorbar_capthick": ["errorbar.capthick"],
+    "errorbar_linewidth": ["errorbar.linewidth"],
+    "errorbar_barsabove": ["errorbar.barsabove"],
 }
 VALUE_DICT = {
     "linestyle": misc.LINESTYLES,
@@ -111,6 +115,10 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         self.props.color_manager.connect(
             "colors-changed",
             self._on_line_colors_changed,
+        )
+        self.props.errbar_color_manager.connect(
+            "colors-changed",
+            self._on_errbar_colors_changed,
         )
 
     def load_style(self, file: Gio.File) -> None:
@@ -172,6 +180,11 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             style_params["axes.prop_cycle"].by_key()["color"],
         )
 
+        # error bar colors
+        self.props.errbar_color_manager.set_colors(
+            graphs_params["errorbar.color_cycle"].by_key()["color"],
+        )
+
         self.params, self.graphs_params = style_params, graphs_params
 
         return stylename
@@ -190,6 +203,17 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         line_colors = color_manager.get_colors()
         self.params["axes.prop_cycle"] = cycler(color=line_colors)
         self.params["patch.facecolor"] = line_colors[0]
+        self.emit("params-changed")
+
+    def _on_errbar_colors_changed(
+        self,
+        color_manager: Graphs.StyleColorManager,
+    ) -> None:
+        """Update errorbar colors in graph-params."""
+        if self.graphs_params is None:
+            return
+        err_colors = color_manager.get_colors()
+        self.graphs_params["errorbar.color_cycle"] = cycler(color=err_colors)
         self.emit("params-changed")
 
     def _on_font_change(self, chooser: Gtk.FontChooser, _param) -> None:

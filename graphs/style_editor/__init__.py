@@ -9,12 +9,12 @@ from graphs.canvas import Canvas
 from graphs.item import DataItem
 from graphs.style_editor.editor_box import StyleEditorBox
 
-from matplotlib import pyplot
-
 import numpy
 
 _PREVIEW_XDATA1 = numpy.linspace(0, 10, 10)
 _PREVIEW_YDATA1 = numpy.linspace(0, numpy.power(numpy.e, 10), 10)
+_PREVIEW_XERR1 = numpy.linspace(0.1, 0.5, 10)
+_PREVIEW_YERR1 = numpy.linspace(500, 2500, 10)
 _PREVIEW_XDATA2 = numpy.linspace(0, 10, 60)
 _PREVIEW_YDATA2 = numpy.power(numpy.e, _PREVIEW_XDATA2)
 CSS_TEMPLATE = """
@@ -51,17 +51,23 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     def _initialize_test_items(self):
         """Initialize example test items with predefined preview data."""
-        preview_data = [(_PREVIEW_XDATA1, _PREVIEW_YDATA1),
-                        (_PREVIEW_XDATA2, _PREVIEW_YDATA2)]
-        test_style = pyplot.rcParams, {}
-        for xdata, ydata in preview_data:
+        preview_data = [
+            (_PREVIEW_XDATA1, _PREVIEW_YDATA1, _PREVIEW_XERR1, _PREVIEW_YERR1),
+            (_PREVIEW_XDATA2, _PREVIEW_YDATA2, None, None),
+        ]
+        style_manager = Graphs.StyleManager.get_instance()
+        test_style = style_manager.get_system_style_params()
+        for xdata, ydata, xerr, yerr in preview_data:
             self._test_items.append(
                 DataItem.new(
                     test_style,
                     xdata=xdata,
                     ydata=ydata,
+                    xerr=xerr,
+                    yerr=yerr,
                     name=_("Example Item"),
                     color="#000000",
+                    errcolor="#000000",
                 ),
             )
 
@@ -84,14 +90,16 @@ class PythonStyleEditor(Graphs.StyleEditor):
         else:
             params = style_editor.params
             graphs_params = style_editor.graphs_params
-            color_cycle = params["axes.prop_cycle"].by_key()["color"]
-            for index, item in enumerate(self._test_items):
-                # Wrap around the color_cycle using the % operator
-                item.set_color(color_cycle[index % len(color_cycle)])
-                item_params = params, graphs_params
-                for prop, value in item._extract_params(item_params).items():
-                    item.set_property(prop, value)
             self.set_stylename(style_editor.graphs_params["name"])
+
+        color_cycle = params["axes.prop_cycle"].by_key()["color"]
+        errbar_cycle = graphs_params["errorbar.color_cycle"].by_key()["color"]
+        for index, item in enumerate(self._test_items):
+            item.set_color(color_cycle[index % len(color_cycle)])
+            item.set_errcolor(errbar_cycle[index % len(errbar_cycle)])
+            item_params = params, graphs_params
+            for prop, value in item._extract_params(item_params).items():
+                item.set_property(prop, value)
 
         all_params = params, graphs_params
         canvas = Canvas(all_params, self._test_items, False)

@@ -78,10 +78,14 @@ namespace Graphs {
             if (columns.length == 0) {
                 settings.set_string ("x-column", "");
                 settings.set_string ("y-column", "");
+                settings.set_string ("xerr-column", "");
+                settings.set_string ("yerr-column", "");
             }
             else {
                 settings.set_string ("x-column", columns[0]);
                 settings.set_string ("y-column", columns[0]);
+                settings.set_string ("xerr-column", columns[0]);
+                settings.set_string ("yerr-column", columns[0]);
             }
         }
 
