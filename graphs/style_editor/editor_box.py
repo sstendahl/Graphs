@@ -180,9 +180,10 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             style_params["axes.prop_cycle"].by_key()["color"],
         )
 
-        errbar_cycle = graphs_params["errorbar.color_cycle"]
-        errbar_colors = errbar_cycle.by_key()["color"]
-        self.props.errbar_color_manager.set_colors(errbar_colors)
+        # error bar colors
+        self.props.errbar_color_manager.set_colors(
+            graphs_params["errorbar.color_cycle"].by_key()["color"],
+        )
 
         self.params, self.graphs_params = style_params, graphs_params
 
