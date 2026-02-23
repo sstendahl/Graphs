@@ -4,6 +4,7 @@ namespace Config {
     public const string GETTEXT_PACKAGE;
     public const string LOCALEDIR;
 
+    public const string APPLICATION_ID;
     public const string VERSION;
     public const string HOMEPAGE_URL;
     public const string ISSUE_URL;
