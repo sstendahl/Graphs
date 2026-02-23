@@ -96,7 +96,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         errbar_cycle = graphs_params["errorbar.color_cycle"].by_key()["color"]
         for index, item in enumerate(self._test_items):
             item.set_color(color_cycle[index % len(color_cycle)])
-            item.set_errcolor(errbar_cycle[index % len(errbar_cycle)])
+            item.props.errcolor = errbar_cycle[index % len(errbar_cycle)]
             item_params = params, graphs_params
             for prop, value in item._extract_params(item_params).items():
                 item.set_property(prop, value)
