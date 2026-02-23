@@ -452,7 +452,7 @@ namespace Graphs {
         }
 
         protected void set_errbar_color_cycle (string[] color_cycle) {
-                    this._errbar_color_cycle = color_cycle;
+            this._errbar_color_cycle = color_cycle;
         }
 
         // End section style

@@ -213,7 +213,6 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             return
         err_colors = color_manager.get_colors()
         self.graphs_params["errorbar.color_cycle"] = cycler(color=err_colors)
-        self.graphs_params["errorbar.ecolor"] = err_colors[0]
         self.emit("params-changed")
 
     def _on_font_change(self, chooser: Gtk.FontChooser, _param) -> None:
