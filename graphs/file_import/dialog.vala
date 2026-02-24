@@ -17,6 +17,9 @@ namespace Graphs {
         private unowned Adw.ComboRow mode { get; }
 
         [GtkChild]
+        private unowned Adw.ToastOverlay toast_overlay { get; }
+
+        [GtkChild]
         private unowned ListBox file_list { get; }
 
         [GtkChild]
@@ -129,6 +132,8 @@ namespace Graphs {
         [GtkCallback]
         private void set_as_default () {
             DataImporter.set_as_default (current_settings);
+            var toast = new Adw.Toast (_("Defaults updated"));
+            toast_overlay.add_toast (toast);
         }
 
         [GtkCallback]
