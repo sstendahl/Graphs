@@ -86,50 +86,52 @@ template $GraphsImportDialog: Adw.Dialog {
           }
         }
 
-        content: ScrolledWindow {
-          propagate-natural-height: true;
+        content: Adw.ToastOverlay toast_overlay {
+          child: ScrolledWindow {
+            propagate-natural-height: true;
 
-          child: Viewport {
-            child: Adw.Clamp {
-              margin-start: 12;
-              margin-end: 12;
-              margin-top: 12;
-              margin-bottom: 12;
+            child: Viewport {
+              child: Adw.Clamp {
+                margin-start: 12;
+                margin-end: 12;
+                margin-top: 12;
+                margin-bottom: 12;
 
-              Box {
-                orientation: vertical;
-                spacing: 10;
-
-                Adw.PreferencesGroup {
-                  Adw.ComboRow mode {
-                    title: _("Import Mode");
-                    notify::selected => $on_mode();
-                  }
-                }
-
-                Box file_settings_box {
+                Box {
                   orientation: vertical;
                   spacing: 10;
-                }
 
-                Adw.PreferencesGroup default_group {
-                  Adw.ButtonRow {
-                    title: _("Set as Default");
-                    activated => $set_as_default();
+                  Adw.PreferencesGroup {
+                    Adw.ComboRow mode {
+                      title: _("Import Mode");
+                      notify::selected => $on_mode();
+                    }
+                  }
+
+                  Box file_settings_box {
+                    orientation: vertical;
+                    spacing: 10;
+                  }
+
+                  Adw.PreferencesGroup default_group {
+                    Adw.ButtonRow {
+                      title: _("Set as Default");
+                      activated => $set_as_default();
+                    }
+                  }
+
+                  Adw.PreferencesGroup remove_group {
+                    Adw.ButtonRow {
+                      title: _("Remove");
+                      activated => $remove();
+
+                      styles [
+                        "destructive-action",
+                      ]
+                    }
                   }
                 }
-
-                Adw.PreferencesGroup remove_group {
-                  Adw.ButtonRow {
-                    title: _("Remove");
-                    activated => $remove();
-
-                    styles [
-                      "destructive-action",
-                    ]
-                  }
-                }
-              }
+              };
             };
           };
         };
