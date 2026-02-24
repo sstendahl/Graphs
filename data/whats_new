@@ -14,6 +14,7 @@
   <li>Styles can now be exported</li>
   <li>New styles can now be imported from matplotlib-style files</li>
   <li>Added the ability to draw tick labels (values) on all axes</li>
+  <li>The style editor now contains options to style the error bars</li>
 </ul>
 <p>Reworked Curve fitting:</p>
 <ul>
@@ -31,6 +32,7 @@
   <li>Added support for spreadsheets files (both .xlsx and .ods)</li>
   <li>Added proper support for single-column imports, x-data can be generated using your own equation</li>
   <li>Multiple items can now easily be imported from the same file at once</li>
+  <li>Imported data now supports error bars, with styling configurable per item or globally via the style editor</li>
 </ul>
 <p>Quality of life changes:</p>
 <ul>
