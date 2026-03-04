@@ -462,9 +462,11 @@ class Data(Graphs.Data):
                     axis[1] = True
 
         x = sympy.Symbol("x")
+        xdatas = {}
 
         for item_ in equation_items:
-            xaxis = axes[item_.get_xposition() * 2]
+            xindex = item_.get_xposition() * 2
+            xaxis = axes[xindex]
             yaxis = axes[1 + item_.get_yposition() * 2]
             x_limits = [xaxis[2], xaxis[3]]
             yscale = yaxis[4]
@@ -473,7 +475,12 @@ class Data(Graphs.Data):
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
 
-            xdata = utilities.create_equidistant_xdata(x_limits, yscale)
+            key = (xindex, yscale)
+            try:
+                xdata = xdatas[key]
+            except KeyError:
+                xdata = utilities.create_equidistant_xdata(x_limits, yscale)
+                xdatas[key] = xdata
             func = sympy.lambdify(x, expr, "numpy")
             ydata = numpy.asarray(func(xdata))
 
