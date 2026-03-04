@@ -16,8 +16,6 @@ from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
-import numexpr
-
 import numpy
 
 import sympy
