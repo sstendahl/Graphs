@@ -246,7 +246,11 @@ class EquationItem(_PythonItem):
 
     def __init__(self, **kwargs):
         self._equation = ""
+        self._preprocessed_equation = ""
         super().__init__(**kwargs)
+
+    def get_preprocessed_equation(self) -> str:
+        return self._preprocessed_equation
 
     @GObject.Property(type=str)
     def equation(self) -> str:
@@ -259,6 +263,7 @@ class EquationItem(_PythonItem):
         if old_equation == equation:
             return
         self._equation = equation
+        self._preprocessed_equation = Graphs.preprocess_equation(equation)
         self.notify("equation")
 
         if "Y = " + old_equation == self.props.name:

@@ -480,7 +480,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        self._equation = Graphs.preprocess_equation(item.props.equation)
+        self._equation = item.get_preprocessed_equation()
         self._axis = axis
         self._view_change_timeout_id = None
         if self._axis.figure.parent is not None:
