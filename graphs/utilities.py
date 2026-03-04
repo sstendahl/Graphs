@@ -103,13 +103,13 @@ def create_equidistant_xdata(
     limits: tuple,
     scale: int = 1,
     steps: int = 5000,
-) -> list:
+) -> numpy.array:
     """Generate evenly-spaced x-values on the given scale."""
     x_start, x_stop = limits
     scale = scales.Scale(scale)
     match scale:
         case scales.Scale.LINEAR | scales.Scale.RADIANS:
-            xdata = numpy.linspace(x_start, x_stop, steps).tolist()
+            xdata = numpy.linspace(x_start, x_stop, steps)
         case scales.Scale.LOG:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
@@ -117,7 +117,7 @@ def create_equidistant_xdata(
                 numpy.log10(x_start),
                 numpy.log10(x_stop),
                 steps,
-            ).tolist()
+            )
         case scales.Scale.LOG2:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
@@ -126,7 +126,7 @@ def create_equidistant_xdata(
                 numpy.log2(x_stop),
                 steps,
                 base=2,
-            ).tolist()
+            )
         case scales.Scale.SQUAREROOT:
             x_start = max(x_start, 1e-300)
             xdata = numpy.linspace(
@@ -134,10 +134,9 @@ def create_equidistant_xdata(
                 numpy.sqrt(x_stop),
                 steps,
             )
-            xdata = (xdata**2).tolist()
+            xdata = xdata**2
         case scales.Scale.INVERSE:
-            xdata = \
-                (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps)).tolist()
+            xdata = (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps))
         case _:
             raise ValueError
     return xdata
@@ -158,7 +157,7 @@ def equation_to_data(
 
         # Remove invalid values
         mask = numpy.isfinite(ydata)
-        xdata = numpy.asarray(xdata)[mask]
+        xdata = xdata[mask]
         ydata = ydata[mask]
     except (KeyError, SyntaxError, ValueError, TypeError):
         return None, None

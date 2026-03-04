@@ -16,6 +16,8 @@ from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
+import numexpr
+
 import numpy
 
 import sympy
@@ -447,40 +449,43 @@ class Data(Graphs.Data):
             xaxis = axes[item_.get_xposition() * 2]
             yaxis = axes[1 + item_.get_yposition() * 2]
             x_limits = [xaxis[2], xaxis[3]]
+            yscale = yaxis[4]
 
             x = sympy.Symbol("x")
             equation = Graphs.preprocess_equation(item_.props.equation)
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
-            ydata = utilities.equation_to_data(equation, x_limits)[1]
+            xdata = utilities.create_equidistant_xdata(x_limits, yscale)
+            func = sympy.lambdify(x, expr, "numpy")
+            ydata = numpy.asarray(func(xdata))
 
-            ydata_arr = numpy.asarray(ydata)
+            mask = numpy.isfinite(ydata)
             if has_singularities:
                 # Don't take negative values into account for log scaling
-                if yaxis[4] in (1, 2):
-                    ydata_arr = ydata_arr[ydata_arr > 0]
+                if yscale in (1, 2):
+                    mask &= ydata > 0
 
-                y_min, y_max = ydata_arr.min(), ydata_arr.max()
+                y_min, y_max = ydata.min(), ydata.max()
                 lower_bound = utilities.get_value_at_fraction(
                     0.05,
                     y_min,
                     y_max,
-                    yaxis[4],
+                    yscale,
                 )
                 upper_bound = utilities.get_value_at_fraction(
                     0.95,
                     y_min,
                     y_max,
-                    yaxis[4],
+                    yscale,
                 )
-                ydata_arr = ydata_arr[(ydata_arr >= lower_bound)
-                                      & (ydata_arr <= upper_bound)]
+                mask &= (ydata >= lower_bound) & (ydata <= upper_bound)
 
-            nonzero_data = ydata_arr[ydata_arr != 0]
-            min_value = nonzero_data.min() if yaxis[4] in (1, 2, 4) \
-                and len(nonzero_data) > 0 else ydata_arr.min()
-            max_value = ydata_arr.max()
+            ydata = ydata[mask]
+            nonzero_data = ydata[ydata != 0]
+            min_value = nonzero_data.min() if yscale in (1, 2, 4) \
+                and len(nonzero_data) > 0 else ydata.min()
+            max_value = ydata.max()
             if yaxis[1]:
                 yaxis[2] = min(yaxis[2], min_value)
                 yaxis[3] = max(yaxis[3], max_value)
