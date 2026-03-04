@@ -409,6 +409,10 @@ class Data(Graphs.Data):
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
+
+        LOG_SCALES = {1, 2}
+        NONZERO_SCALES = {1, 2, 4}
+
         axes = [[
             direction,
             False,
@@ -416,23 +420,32 @@ class Data(Graphs.Data):
             figure_settings.get_property(f"max_{direction}"),
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
+
         equation_items = []
+        hide_unselected = figure_settings.get_hide_unselected()
+
         for item_ in self:
-            if not isinstance(item_, (item.DataItem, item.EquationItem)) or (
-                not item_.get_selected()
-                and figure_settings.get_hide_unselected()
-            ):
+            if not isinstance(item_, (item.DataItem, item.EquationItem)):
                 continue
+
+            if not item_.get_selected() and hide_unselected:
+                continue
+
             if isinstance(item_, item.EquationItem):
                 equation_items.append(item_)
                 continue
-            xdata, ydata = copy.deepcopy(item_.props.data)
-            for index in \
-                    item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
+
+            indices = \
+                (item_.get_xposition() * 2, 1 + item_.get_yposition() * 2)
+            for index, xydata in zip(indices, item_.props.data):
                 axis = axes[index]
 
-                xydata = numpy.asarray(ydata if index % 2 else xdata)
+                xydata = numpy.asarray(xydata)
                 xydata = xydata[numpy.isfinite(xydata)]
+
+                if xydata.size == 0:
+                    continue
+
                 nonzero_data = xydata[xydata != 0]
                 min_value = nonzero_data.min() if axis[4] in (1, 2, 4) \
                     and len(nonzero_data) > 0 else xydata.min()
