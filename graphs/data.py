@@ -404,18 +404,6 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
-    @staticmethod
-    def _get_min_max_from_array(xydata: list, scale: int) -> (float, float):
-        try:
-            xydata = xydata[numpy.isfinite(xydata)]
-        except TypeError:
-            return None
-        nonzero_data = numpy.array([value for value in xydata if value != 0])
-        min_value = nonzero_data.min() if scale in (1, 2, 4) \
-            and len(nonzero_data) > 0 else xydata.min()
-        max_value = xydata.max()
-        return min_value, max_value
-
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
@@ -436,18 +424,17 @@ class Data(Graphs.Data):
             if isinstance(item_, item.EquationItem):
                 equation_items.append(item_)
                 continue
+            xdata, ydata = copy.deepcopy(item_.props.data)
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
                 axis = axes[index]
 
-                xdata, ydata = copy.deepcopy(item_.props.data)
-                min_max = self._get_min_max_from_array(
-                    numpy.asarray(ydata if index % 2 else xdata),
-                    axis[4],
-                )
-                if min_max is None:
-                    return
-                min_value, max_value = min_max
+                xydata = numpy.asarray(ydata if index % 2 else xdata)
+                xydata = xydata[numpy.isfinite(xydata)]
+                nonzero_data = xydata[xydata != 0]
+                min_value = nonzero_data.min() if axis[4] in (1, 2, 4) \
+                    and len(nonzero_data) > 0 else xydata.min()
+                max_value = xydata.max()
                 if axis[1]:
                     axis[2] = min(axis[2], min_value)
                     axis[3] = max(axis[3], max_value)
@@ -490,13 +477,10 @@ class Data(Graphs.Data):
                 ydata_arr = ydata_arr[(ydata_arr >= lower_bound)
                                       & (ydata_arr <= upper_bound)]
 
-            min_max = self._get_min_max_from_array(
-                ydata_arr,
-                yaxis[4],
-            )
-            if min_max is None:
-                return
-            min_value, max_value = min_max
+            nonzero_data = ydata_arr[ydata_arr != 0]
+            min_value = nonzero_data.min() if yaxis[4] in (1, 2, 4) \
+                and len(nonzero_data) > 0 else ydata_arr.min()
+            max_value = ydata_arr.max()
             if yaxis[1]:
                 yaxis[2] = min(yaxis[2], min_value)
                 yaxis[3] = max(yaxis[3], max_value)
