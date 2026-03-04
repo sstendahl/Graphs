@@ -417,6 +417,7 @@ class Data(Graphs.Data):
             figure_settings.get_property(f"min_{direction}"),
             figure_settings.get_property(f"max_{direction}"),
             figure_settings.get_property(f"{direction}_scale"),
+            None,
         ] for direction in ("bottom", "left", "top", "right")]
 
         equation_items = []
@@ -460,7 +461,6 @@ class Data(Graphs.Data):
                     axis[1] = True
 
         x = sympy.Symbol("x")
-        xdatas = {}
 
         for item_ in equation_items:
             xindex = item_.get_xposition() * 2
@@ -473,14 +473,10 @@ class Data(Graphs.Data):
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
 
-            key = (xindex, yscale)
-            try:
-                xdata = xdatas[key]
-            except KeyError:
-                xdata = utilities.create_equidistant_xdata(x_limits, yscale)
-                xdatas[key] = xdata
+            if xaxis[5] is None:
+                xaxis[5] = utilities.create_equidistant_xdata(x_limits, yscale)
             func = sympy.lambdify(x, expr, "numpy")
-            ydata = numpy.asarray(func(xdata))
+            ydata = numpy.asarray(func(xaxis[5]))
 
             mask = numpy.isfinite(ydata)
             if has_singularities:
@@ -523,7 +519,7 @@ class Data(Graphs.Data):
                 yaxis[3] = max_value
                 yaxis[1] = True
 
-        for count, (direction, used, min_all, max_all, scale) in \
+        for count, (direction, used, min_all, max_all, scale, _x) in \
                 enumerate(axes):
             if not used:
                 continue
