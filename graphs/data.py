@@ -422,8 +422,8 @@ class Data(Graphs.Data):
         axes = [[
             direction,
             False,
-            [],
-            [],
+            figure_settings.get_property(f"min_{direction}"),
+            figure_settings.get_property(f"max_{direction}"),
             figure_settings.get_property(f"{direction}_scale"),
         ] for direction in ("bottom", "left", "top", "right")]
         equation_items = []
@@ -439,7 +439,6 @@ class Data(Graphs.Data):
             for index in \
                     item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
                 axis = axes[index]
-                axis[1] = True
 
                 xdata, ydata = copy.deepcopy(item_.props.data)
                 min_max = self._get_min_max_from_array(
@@ -449,27 +448,24 @@ class Data(Graphs.Data):
                 if min_max is None:
                     return
                 min_value, max_value = min_max
-                axis[2].append(min_value)
-                axis[3].append(max_value)
+                if axis[1]:
+                    axis[2] = min(axis[2], min_value)
+                    axis[3] = max(axis[3], max_value)
+                else:
+                    axis[2] = min_value
+                    axis[3] = max_value
+                    axis[1] = True
 
         for item_ in equation_items:
             xaxis = axes[item_.get_xposition() * 2]
             yaxis = axes[1 + item_.get_yposition() * 2]
-            if xaxis[1]:
-                x_limits = [min(xaxis[2]), max(xaxis[3])]
-            else:
-                direction = xaxis[0]
-                x_limits = [
-                    figure_settings.get_property(f"min_{direction}"),
-                    figure_settings.get_property(f"max_{direction}"),
-                ]
+            x_limits = [xaxis[2], xaxis[3]]
 
             x = sympy.Symbol("x")
             equation = Graphs.preprocess_equation(item_.props.equation)
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
-            yaxis[1] = True
             ydata = utilities.equation_to_data(equation, x_limits)[1]
 
             ydata_arr = numpy.asarray(ydata)
@@ -501,15 +497,18 @@ class Data(Graphs.Data):
             if min_max is None:
                 return
             min_value, max_value = min_max
-            yaxis[2].append(min_value)
-            yaxis[3].append(max_value)
+            if yaxis[1]:
+                yaxis[2] = min(yaxis[2], min_value)
+                yaxis[3] = max(yaxis[3], max_value)
+            else:
+                yaxis[2] = min_value
+                yaxis[3] = max_value
+                yaxis[1] = True
 
         for count, (direction, used, min_all, max_all, scale) in \
                 enumerate(axes):
             if not used:
                 continue
-            min_all = min(min_all)
-            max_all = max(max_all)
             if scale not in (1, 2):  # For non-logarithmic scales
                 span = max_all - min_all
                 # 0.05 padding on y-axis, 0.015 padding on x-axis
