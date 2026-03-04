@@ -26,6 +26,9 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "max-selected",
 ]
 
+LOG_SCALES = {1, 2}
+NONZERO_SCALES = {1, 2, 4}
+
 
 class Data(Graphs.Data):
     """Class for managing data."""
@@ -408,9 +411,6 @@ class Data(Graphs.Data):
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
 
-        LOG_SCALES = {1, 2}
-        NONZERO_SCALES = {1, 2, 4}
-
         axes = [[
             direction,
             False,
@@ -509,7 +509,7 @@ class Data(Graphs.Data):
                 continue
 
             if yscale in NONZERO_SCALES:
-                nonzero_data = ydata[ydata != 0]
+                nonzero = ydata[ydata != 0]
                 min_value = nonzero.min() if nonzero.size else ydata.min()
             else:
                 min_value = ydata.min()

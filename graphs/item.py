@@ -250,6 +250,7 @@ class EquationItem(_PythonItem):
         super().__init__(**kwargs)
 
     def get_preprocessed_equation(self) -> str:
+        """Get the equation in preprocessed form."""
         return self._preprocessed_equation
 
     @GObject.Property(type=str)
