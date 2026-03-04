@@ -446,10 +446,13 @@ class Data(Graphs.Data):
                 if xydata.size == 0:
                     continue
 
-                nonzero_data = xydata[xydata != 0]
-                min_value = nonzero_data.min() if axis[4] in (1, 2, 4) \
-                    and len(nonzero_data) > 0 else xydata.min()
+                if axis[4] in NONZERO_SCALES:
+                    nonzero = xydata[xydata != 0]
+                    min_value = nonzero.min() if nonzero.size else xydata.min()
+                else:
+                    min_value = xydata.min()
                 max_value = xydata.max()
+
                 if axis[1]:
                     axis[2] = min(axis[2], min_value)
                     axis[3] = max(axis[3], max_value)
@@ -458,17 +461,18 @@ class Data(Graphs.Data):
                     axis[3] = max_value
                     axis[1] = True
 
+        x = sympy.Symbol("x")
+
         for item_ in equation_items:
             xaxis = axes[item_.get_xposition() * 2]
             yaxis = axes[1 + item_.get_yposition() * 2]
             x_limits = [xaxis[2], xaxis[3]]
             yscale = yaxis[4]
 
-            x = sympy.Symbol("x")
-            equation = item_.get_preprocessed_equation()
-            expr = sympy.sympify(equation)
+            expr = sympy.sympify(item_.get_preprocessed_equation())
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
+
             xdata = utilities.create_equidistant_xdata(x_limits, yscale)
             func = sympy.lambdify(x, expr, "numpy")
             ydata = numpy.asarray(func(xdata))
@@ -476,7 +480,7 @@ class Data(Graphs.Data):
             mask = numpy.isfinite(ydata)
             if has_singularities:
                 # Don't take negative values into account for log scaling
-                if yscale in (1, 2):
+                if yscale in LOG_SCALES:
                     mask &= ydata > 0
 
                 y_min, y_max = ydata.min(), ydata.max()
@@ -495,10 +499,17 @@ class Data(Graphs.Data):
                 mask &= (ydata >= lower_bound) & (ydata <= upper_bound)
 
             ydata = ydata[mask]
-            nonzero_data = ydata[ydata != 0]
-            min_value = nonzero_data.min() if yscale in (1, 2, 4) \
-                and len(nonzero_data) > 0 else ydata.min()
+
+            if ydata.size == 0:
+                continue
+
+            if yscale in NONZERO_SCALES:
+                nonzero_data = ydata[ydata != 0]
+                min_value = nonzero.min() if nonzero.size else ydata.min()
+            else:
+                min_value = ydata.min()
             max_value = ydata.max()
+
             if yaxis[1]:
                 yaxis[2] = min(yaxis[2], min_value)
                 yaxis[3] = max(yaxis[3], max_value)
@@ -511,23 +522,24 @@ class Data(Graphs.Data):
                 enumerate(axes):
             if not used:
                 continue
-            if scale not in (1, 2):  # For non-logarithmic scales
+
+            # 0.05 padding on y-axis, 0.015 padding on x-axis
+            padding_factor = 0.05 if count % 2 else 0.015
+
+            if scale not in LOG_SCALES:  # For non-logarithmic scales
                 span = max_all - min_all
-                # 0.05 padding on y-axis, 0.015 padding on x-axis
-                padding_factor = 0.05 if count % 2 else 0.015
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor
-                min_all = (
-                    min_all - padding_factor * span if scale != 4 else min_all
-                    * 0.99
-                )
+                if scale == 4:
+                    min_all *= 0.99
+                else:
+                    min_all -= padding_factor * span
             else:  # Use different scaling type for logarithmic scale
                 log_min = numpy.log10(min_all) if min_all > 0 else 0
                 log_max = numpy.log10(max_all) if max_all > 0 else 0
                 log_span = log_max - log_min
 
-                padding_factor = 0.05 if count % 2 else 0.015
                 log_min -= padding_factor * log_span
                 log_max += padding_factor * log_span
                 min_all = 10**log_min
