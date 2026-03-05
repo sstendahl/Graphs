@@ -1,15 +1,15 @@
 # Hungarian translation for Graphs.
-# Copyright (C) 2024, 2025 Free Software Foundation, Inc.
+# Copyright (C) 2024, 2025, 2026 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Graphs package.
 #
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2024, 2025.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2024, 2025.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2025-08-12 10:22+0000\n"
-"PO-Revision-Date: 2025-08-27 23:40+0200\n"
+"POT-Creation-Date: 2026-02-24 12:40+0000\n"
+"PO-Revision-Date: 2026-03-05 21:59+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 24.12.3\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
@@ -104,7 +104,6 @@ msgstr ""
 "küldjön hibajelentést a GitLab oldalon."
 
 #: data/se.sjoerd.Graphs.desktop.in:11
-#| msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
 msgid ""
 "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
 "tion;Fitting;xrdml;"
@@ -112,30 +111,76 @@ msgstr ""
 "Ábrázolás;Grafikon;Grafikonrajzolás;Tudomány;Matematika;Matek;Egyenletek;Adat;"
 "Adatok;Ábra;Vizualizáció;Vizualizálás;Illesztés;xrdml;"
 
-#: data/se.sjoerd.Graphs.desktop.in:16
+#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
+#: data/ui/style-editor/window.blp:299
 msgid "New Window"
 msgstr "Új ablak"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:139
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
 msgid "Style Editor"
 msgstr "Stílusszerkesztő"
+
+#: data/ui/dialogs/beta-disallowed.blp:5
+#| msgid "New Project"
+msgid "Beta Project"
+msgstr "Béta projekt"
+
+#: data/ui/dialogs/beta-disallowed.blp:6
+msgid ""
+"The project you are trying to import is from a beta version of Graphs. It "
+"may contain invalid data."
+msgstr ""
+"Az importálni próbált projekt a Graphs béta verziójából származik. Lehet, hogy"
+" érvénytelen adatokat tartalmaz."
+
+#: data/ui/dialogs/beta-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+msgid "Continue"
+msgstr "Folytatás"
+
+#: data/ui/dialogs/beta-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+msgid "Abort"
+msgstr "Megszakítás"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
 msgstr "Törli a stílust?"
 
-#: data/ui/dialogs/delete-style.blp:7
-#: data/ui/dialogs/reset-import-settings.blp:8
-#: data/ui/dialogs/save-project-changes.blp:8
-#: data/ui/dialogs/save-style-changes.blp:8 data/ui/add-equation.blp:17
-#: data/ui/add-style.blp:16 data/ui/export-figure.blp:16
-#: data/ui/generate-data.blp:17 data/ui/import.blp:16 data/ui/transform.blp:17
+#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/save-project-changes.blp:9
+#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/style-editor/add-style.blp:16 data/ui/add-equation.blp:17
+#: data/ui/export-figure.blp:16 data/ui/generate-data.blp:17
+#: data/ui/transform.blp:17
 msgid "Cancel"
 msgstr "Mégse"
 
-#: data/ui/dialogs/delete-style.blp:8
+#: data/ui/dialogs/delete-style.blp:9
 msgid "Delete"
 msgstr "Törlés"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:5
+#| msgid "New Project"
+msgid "Legacy Project"
+msgstr "Örökölt projekt"
+
+#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+msgid ""
+"You are trying to open a legacy project.\n"
+"\n"
+"The legacy project format may contain dangerous code and may cause harm to "
+"your system.\n"
+"\n"
+"Only proceed if you trust the author of this file."
+msgstr ""
+"Egy örökölt projektet próbál megnyitni.\n"
+"\n"
+"Az örökölt projektformátum veszélyes kódot tartalmazhat, és kárt okozhat a ren"
+"dszerében.\n"
+"\n"
+"Csak akkor folytassa, ha megbízik a fájl szerzőjében."
 
 #: data/ui/dialogs/reset-import-settings.blp:5
 msgid "Reset to Defaults?"
@@ -145,7 +190,7 @@ msgstr "Visszaállítja az alapértékeket?"
 msgid "Are you sure you want to reset the import settings?"
 msgstr "Biztosan vissza szeretné állítani az importálási beállításokat?"
 
-#: data/ui/dialogs/reset-import-settings.blp:9
+#: data/ui/dialogs/reset-import-settings.blp:10
 msgid "Reset"
 msgstr "Visszaállítás"
 
@@ -162,13 +207,13 @@ msgstr ""
 "A jelenlegi projekt mentetlen változtatásokat tartalmaz, a nem mentett "
 "változtatások véglegesen elvesznek."
 
-#: data/ui/dialogs/save-project-changes.blp:9
-#: data/ui/dialogs/save-style-changes.blp:9
+#: data/ui/dialogs/save-project-changes.blp:10
+#: data/ui/dialogs/save-style-changes.blp:10
 msgid "Discard"
 msgstr "Elvetés"
 
-#: data/ui/dialogs/save-project-changes.blp:10
-#: data/ui/dialogs/save-style-changes.blp:10
+#: data/ui/dialogs/save-project-changes.blp:11
+#: data/ui/dialogs/save-style-changes.blp:11
 msgid "Save"
 msgstr "Mentés"
 
@@ -180,302 +225,611 @@ msgstr ""
 "A jelenlegi stílus mentetlen változtatásokat tartalmaz, a nem mentett "
 "változtatások véglegesen elvesznek."
 
-#: data/ui/edit-item/base.blp:6
+#: data/ui/import/columns/box.blp:16 data/ui/import/spreadsheet/box.blp:16
+#| msgid "Edit Item"
+msgid "Add Item"
+msgstr "Elem hozzáadása"
+
+#: data/ui/import/columns/item-group.blp:9
+#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
+#: data/ui/style-editor/item-color-row.blp:36
+msgid "Remove"
+msgstr "Eltávolítás"
+
+#: data/ui/import/columns/item-group.blp:26
+#: data/ui/import/spreadsheet/item-group.blp:26
+#| msgid "Column X"
+msgid "X Column"
+msgstr "X-oszlop"
+
+#: data/ui/import/columns/item-group.blp:38
+#: data/ui/import/spreadsheet/item-group.blp:38
+#| msgid "Column X"
+msgid "Y Column"
+msgstr "Y-oszlop"
+
+#: data/ui/import/columns/item-group.blp:51
+msgid "Y Values Only"
+msgstr "Csak Y-értékek"
+
+#: data/ui/import/columns/item-group.blp:52
+#: data/ui/import/spreadsheet/item-group.blp:52
+msgid "Import only Y values, X values will be generated"
+msgstr "Csak Y-értékek importálása, az X-értékek elő lesznek állítva"
+
+#: data/ui/import/columns/item-group.blp:57
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
+#: graphs/item.py:225
+msgid "Equation"
+msgstr "Egyenlet"
+
+#: data/ui/import/columns/item-group.blp:64
+#: data/ui/import/columns/main-group.blp:32
+#: data/ui/import/spreadsheet/item-group.blp:64 data/ui/transform.blp:35
+msgid "More info"
+msgstr "További információk"
+
+#: data/ui/import/columns/item-group.blp:72
+#: data/ui/import/spreadsheet/item-group.blp:72
+msgid ""
+"<b>X Value Calculation</b>\n"
+"\n"
+"Enter an equation to calculate X values.\n"
+"Use 'n' for the row index (starting from 0).\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4...\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130..."
+msgstr ""
+"<b>X-érték kiszámítása</b>\n"
+"\n"
+"Adjon meg egy egyenletet az X-értékek kiszámításához.\n"
+"Használja az „n” változót a sor indexéhez (0-tól kezdve).\n"
+"\n"
+"<b>Példák:</b>\n"
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
+
+#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/sql/main-group.blp:28
+#: data/ui/import/spreadsheet/item-group.blp:91
+msgid "X Error Bars"
+msgstr "X-hibasávok"
+
+#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/sql/main-group.blp:33
+#: data/ui/import/spreadsheet/item-group.blp:95
+msgid "Y Error Bars"
+msgstr "Y-hibasávok"
+
+#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/sql/main-group.blp:40
+#: data/ui/import/spreadsheet/item-group.blp:108
+msgid "X Error Column"
+msgstr "X-hibaoszlop"
+
+#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/sql/main-group.blp:46
+#: data/ui/import/spreadsheet/item-group.blp:120
+msgid "Y Error Column"
+msgstr "Y-hibaoszlop"
+
+#: data/ui/import/columns/main-group.blp:5
+#| msgid "File Format"
+msgid "Format"
+msgstr "Formátum"
+
+#: data/ui/import/columns/main-group.blp:8
+msgid "Delimiter"
+msgstr "Elválasztó"
+
+#: data/ui/import/columns/main-group.blp:9
+#| msgid "Character sequence used to split values"
+msgid "Character used to separate columns"
+msgstr "Az oszlopok elválasztásához használt karakter"
+
+#: data/ui/import/columns/main-group.blp:13
+msgctxt "delimiter"
+msgid "Whitespace"
+msgstr "Üres karakterek"
+
+#: data/ui/import/columns/main-group.blp:14
+msgctxt "delimiter"
+msgid "Tab"
+msgstr "Tabulátor"
+
+#: data/ui/import/columns/main-group.blp:15
+msgctxt "delimiter"
+msgid "Colon (:)"
+msgstr "Kettőspont (:)"
+
+#: data/ui/import/columns/main-group.blp:16
+msgctxt "delimiter"
+msgid "Semicolon (;)"
+msgstr "Pontosvessző (;)"
+
+#: data/ui/import/columns/main-group.blp:17
+#| msgctxt "delimiter"
+#| msgid "Decimal comma (,)"
+msgctxt "delimiter"
+msgid "Comma (,)"
+msgstr "Vessző (,)"
+
+#: data/ui/import/columns/main-group.blp:18
+msgctxt "delimiter"
+msgid "Period (.)"
+msgstr "Pont (.)"
+
+#: data/ui/import/columns/main-group.blp:19
+msgctxt "delimiter"
+msgid "Custom"
+msgstr "Egyéni"
+
+#: data/ui/import/columns/main-group.blp:26
+msgid "Custom Delimiter"
+msgstr "Egyéni elválasztó"
+
+#: data/ui/import/columns/main-group.blp:54
+msgid "Decimal Separator"
+msgstr "Tizedes elválasztó"
+
+#: data/ui/import/columns/main-group.blp:58
+msgctxt "separator"
+msgid "Decimal comma (,)"
+msgstr "Tizedesvessző (,)"
+
+#: data/ui/import/columns/main-group.blp:59
+msgctxt "separator"
+msgid "Decimal point (.)"
+msgstr "Tizedespont (.)"
+
+#: data/ui/import/columns/main-group.blp:65
+msgid "Skip Rows"
+msgstr "Sorok kihagyása"
+
+#: data/ui/import/columns/main-group.blp:66
+msgid "Number of rows to skip at the beginning"
+msgstr "Az elején kihagyandó sorok száma"
+
+#: data/ui/import/sql/main-group.blp:6
+msgid "Database Table"
+msgstr "Adatbázistábla"
+
+#: data/ui/import/sql/main-group.blp:11
+msgid "Column X"
+msgstr "X-oszlop"
+
+#: data/ui/import/sql/main-group.blp:16
+msgid "Column Y"
+msgstr "Y-oszlop"
+
+#: data/ui/import/sql/main-group.blp:54
+msgid "This table contains no numeric columns"
+msgstr "Ez a tábla nem tartalmaz numerikus oszlopokat"
+
+#: data/ui/import/spreadsheet/main-group.blp:5
+msgid "Spreadsheet"
+msgstr "Munkafüzet"
+
+#: data/ui/import/spreadsheet/main-group.blp:8
+msgid "Sheet"
+msgstr "Munkalap"
+
+#: data/ui/import/spreadsheet/main-group.blp:9
+msgid "Select which sheet to import"
+msgstr "Az importálandó munkalap kiválasztása"
+
+#: data/ui/import/spreadsheet/item-group.blp:51
+#| msgctxt "markerstyle"
+#| msgid "Triangle Down"
+msgid "Single Column"
+msgstr "Önálló oszlop"
+
+#: data/ui/import/spreadsheet/item-group.blp:57
+#| msgid "Equation"
+msgid "X Value Equation"
+msgstr "X-érték egyenlete"
+
+#: data/ui/import/dialog.blp:21
+msgid "Import Parameters"
+msgstr "Importálási paraméterek"
+
+#: data/ui/import/dialog.blp:30
+#| msgid "All Files"
+msgid "Add File"
+msgstr "Fájl hozzáadása"
+
+#: data/ui/import/dialog.blp:56
+msgid "Import"
+msgstr "Importálás"
+
+#: data/ui/import/dialog.blp:84
+#| msgid "Reset to Defaults?"
+msgid "Reset to guessed values"
+msgstr "Visszaállítás a becsült értékekre"
+
+#: data/ui/import/dialog.blp:106
+#| msgid "Import"
+msgid "Import Mode"
+msgstr "Importálási mód"
+
+#: data/ui/import/dialog.blp:118
+#: data/ui/sidebar/figure-settings/settings-page.blp:265
+msgid "Set as Default"
+msgstr "Beállítás alapértelmezettként"
+
+#: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
 msgstr "Név és helyzet"
 
-#: data/ui/edit-item/base.blp:9 data/ui/add-style.blp:44
+#: data/ui/sidebar/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
 msgstr "Név"
 
-#: data/ui/edit-item/base.blp:14
+#: data/ui/sidebar/edit-item/base.blp:14
 msgid "X-Axis Position"
 msgstr "X-tengely helyzete"
 
-#: data/ui/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:18
 msgid "Bottom"
 msgstr "Lent"
 
-#: data/ui/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "Top"
 msgstr "Fent"
 
-#: data/ui/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:25
 msgid "Y-Axis Position"
 msgstr "Y-tengely helyzete"
 
-#: data/ui/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:29
 msgid "Left"
 msgstr "Balra"
 
-#: data/ui/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Right"
 msgstr "Jobbra"
 
-#: data/ui/edit-item/data.blp:8
+#: data/ui/sidebar/edit-item/data.blp:9
 msgid "Line and Markers"
 msgstr "Vonal és jelölők"
 
-#: data/ui/edit-item/data.blp:11 data/ui/edit-item/equation.blp:25
-#: data/ui/style-editor-box.blp:62
+#: data/ui/sidebar/edit-item/data.blp:12
+#: data/ui/sidebar/edit-item/equation.blp:14
+#: data/ui/style-editor/editor-box.blp:62
 msgid "Linestyle"
 msgstr "Vonal stílusa"
 
-#: data/ui/edit-item/data.blp:16 data/ui/style-editor-box.blp:67
+#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/edit-item/data.blp:17 data/ui/edit-item/equation.blp:29
-#: data/ui/style-editor-box.blp:68
+#: data/ui/sidebar/edit-item/data.blp:18
+#: data/ui/sidebar/edit-item/equation.blp:18
+#: data/ui/style-editor/editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Tömör"
 
-#: data/ui/edit-item/data.blp:18 data/ui/edit-item/equation.blp:30
-#: data/ui/style-editor-box.blp:69
+#: data/ui/sidebar/edit-item/data.blp:19
+#: data/ui/sidebar/edit-item/equation.blp:19
+#: data/ui/style-editor/editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Pontozott"
 
-#: data/ui/edit-item/data.blp:19 data/ui/edit-item/equation.blp:31
-#: data/ui/style-editor-box.blp:70
+#: data/ui/sidebar/edit-item/data.blp:20
+#: data/ui/sidebar/edit-item/equation.blp:20
+#: data/ui/style-editor/editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Szaggatott"
 
-#: data/ui/edit-item/data.blp:20 data/ui/edit-item/equation.blp:32
-#: data/ui/style-editor-box.blp:71
+#: data/ui/sidebar/edit-item/data.blp:21
+#: data/ui/sidebar/edit-item/equation.blp:21
+#: data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Pont-vonal"
 
-#: data/ui/edit-item/data.blp:26 data/ui/edit-item/equation.blp:38
-#: data/ui/style-editor-box.blp:77
+#: data/ui/sidebar/edit-item/data.blp:27
+#: data/ui/sidebar/edit-item/equation.blp:27
 msgid "Linewidth"
 msgstr "Vonal vastagsága"
 
-#: data/ui/edit-item/data.blp:41 data/ui/style-editor-box.blp:94
+#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:94
 msgid "Markers"
 msgstr "Jelölők"
 
-#: data/ui/edit-item/data.blp:46 data/ui/style-editor-box.blp:99
+#: data/ui/sidebar/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/edit-item/data.blp:47 data/ui/style-editor-box.blp:100
+#: data/ui/sidebar/edit-item/data.blp:48
+#: data/ui/style-editor/editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Pont"
 
-#: data/ui/edit-item/data.blp:48 data/ui/style-editor-box.blp:101
+#: data/ui/sidebar/edit-item/data.blp:49
+#: data/ui/style-editor/editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Képpont"
 
-#: data/ui/edit-item/data.blp:49 data/ui/style-editor-box.blp:102
+#: data/ui/sidebar/edit-item/data.blp:50
+#: data/ui/style-editor/editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Kör"
 
-#: data/ui/edit-item/data.blp:50 data/ui/style-editor-box.blp:103
+#: data/ui/sidebar/edit-item/data.blp:51
+#: data/ui/style-editor/editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Háromszög lefelé"
 
-#: data/ui/edit-item/data.blp:51 data/ui/style-editor-box.blp:104
+#: data/ui/sidebar/edit-item/data.blp:52
+#: data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Háromszög felfelé"
 
-#: data/ui/edit-item/data.blp:52 data/ui/style-editor-box.blp:105
+#: data/ui/sidebar/edit-item/data.blp:53
+#: data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Háromszög balra"
 
-#: data/ui/edit-item/data.blp:53 data/ui/style-editor-box.blp:106
+#: data/ui/sidebar/edit-item/data.blp:54
+#: data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Háromszög jobbra"
 
-#: data/ui/edit-item/data.blp:54 data/ui/style-editor-box.blp:107
+#: data/ui/sidebar/edit-item/data.blp:55
+#: data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Nyolcszög"
 
-#: data/ui/edit-item/data.blp:55 data/ui/style-editor-box.blp:108
+#: data/ui/sidebar/edit-item/data.blp:56
+#: data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Négyzet"
 
-#: data/ui/edit-item/data.blp:56 data/ui/style-editor-box.blp:109
+#: data/ui/sidebar/edit-item/data.blp:57
+#: data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Ötszög"
 
-#: data/ui/edit-item/data.blp:57 data/ui/style-editor-box.blp:110
+#: data/ui/sidebar/edit-item/data.blp:58
+#: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Csillag"
 
-#: data/ui/edit-item/data.blp:58 data/ui/style-editor-box.blp:111
+#: data/ui/sidebar/edit-item/data.blp:59
+#: data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hatszög 1"
 
-#: data/ui/edit-item/data.blp:59 data/ui/style-editor-box.blp:112
+#: data/ui/sidebar/edit-item/data.blp:60
+#: data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hatszög 2"
 
-#: data/ui/edit-item/data.blp:60 data/ui/style-editor-box.blp:113
+#: data/ui/sidebar/edit-item/data.blp:61
+#: data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Plusz"
 
-#: data/ui/edit-item/data.blp:61 data/ui/style-editor-box.blp:114
+#: data/ui/sidebar/edit-item/data.blp:62
+#: data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item/data.blp:63 data/ui/style-editor-box.blp:116
+#: data/ui/sidebar/edit-item/data.blp:64
+#: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Gyémánt"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/edit-item/data.blp:65 data/ui/style-editor-box.blp:118
+#: data/ui/sidebar/edit-item/data.blp:66
+#: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Vékony gyémánt"
 
-#: data/ui/edit-item/data.blp:66 data/ui/style-editor-box.blp:119
+#: data/ui/sidebar/edit-item/data.blp:67
+#: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Függőleges vonal"
 
-#: data/ui/edit-item/data.blp:67 data/ui/style-editor-box.blp:120
+#: data/ui/sidebar/edit-item/data.blp:68
+#: data/ui/style-editor/editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Vízszintes vonal"
 
-#: data/ui/edit-item/data.blp:68 data/ui/style-editor-box.blp:121
+#: data/ui/sidebar/edit-item/data.blp:69
+#: data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Kitöltött plusz"
 
-#: data/ui/edit-item/data.blp:69 data/ui/style-editor-box.blp:122
+#: data/ui/sidebar/edit-item/data.blp:70
+#: data/ui/style-editor/editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Kitöltött X"
 
-#: data/ui/edit-item/data.blp:75 data/ui/style-editor-box.blp:128
+#: data/ui/sidebar/edit-item/data.blp:76
+#: data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "Jelölő mérete"
 
-#: data/ui/edit-item/equation.blp:9 data/ui/edit-item/generated-data.blp:9
-#: data/ui/curve-fitting.blp:65 graphs/item.py:176
-msgid "Equation"
-msgstr "Egyenlet"
-
-#: data/ui/edit-item/equation.blp:13 data/ui/edit-item/generated-data.blp:13
-#: data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:83
-#: data/ui/generate-data.blp:52 data/ui/transform.blp:68
-msgid "Y ="
-msgstr "Y ="
-
-#: data/ui/edit-item/equation.blp:17 data/ui/edit-item/generated-data.blp:17
-msgid "Simplify"
-msgstr "Egyszerűsítés"
-
-#: data/ui/edit-item/equation.blp:22
+#: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Vonal"
 
-#: data/ui/edit-item/generated-data.blp:29 data/ui/generate-data.blp:72
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
+#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:69
+msgid "Y ="
+msgstr "Y ="
+
+#: data/ui/sidebar/edit-item/equation-group.blp:15
+msgid "Simplify"
+msgstr "Egyszerűsítés"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:9
+#: data/ui/style-editor/editor-box.blp:146
+msgid "Error Bars"
+msgstr "Hibasávok"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:12
+#| msgctxt "markerstyle"
+#| msgid "Horizontal Line"
+msgid "Show Horizontal"
+msgstr "Megjelenítés vízszintesen"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#| msgid "Show Grid"
+msgid "Show Vertical"
+msgstr "Megjelenítés függőlegesen"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/style-editor/editor-box.blp:194
+msgid "Draw Above Data"
+msgstr "Rajzolás az adatok fölött"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#| msgid "Colors"
+msgid "Color"
+msgstr "Szín"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/style-editor/editor-box.blp:149
+msgid "Cap Length"
+msgstr "Vonalvég hossza"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/style-editor/editor-box.blp:164
+msgid "Cap Thickness"
+msgstr "Vonalvég vastagsága"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/style-editor/editor-box.blp:179
+#| msgid "Linewidth"
+msgid "Line Width"
+msgstr "Vonal vastagsága"
+
+#: data/ui/sidebar/edit-item/generated-data.blp:18 data/ui/generate-data.blp:72
 msgid "X Start"
 msgstr "X kezdés"
 
-#: data/ui/edit-item/generated-data.blp:35 data/ui/generate-data.blp:79
+#: data/ui/sidebar/edit-item/generated-data.blp:26 data/ui/generate-data.blp:79
 msgid "X Stop"
 msgstr "X befejezés"
 
-#: data/ui/edit-item/generated-data.blp:43 data/ui/generate-data.blp:88
+#: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/generate-data.blp:88
 msgid "Steps"
 msgstr "Lépések"
 
-#: data/ui/edit-item/generated-data.blp:53 data/ui/generate-data.blp:98
+#: data/ui/sidebar/edit-item/generated-data.blp:48
+#: data/ui/generate-data.blp:100
 msgid "Scale"
 msgstr "Skála"
 
-#: data/ui/edit-item/generated-data.blp:54 data/ui/generate-data.blp:99
+#: data/ui/sidebar/edit-item/generated-data.blp:49
+#: data/ui/generate-data.blp:101
 msgid "Determines the spacing between data points"
 msgstr "Meghatározza az adatpontok közötti térközöket"
 
-#: data/ui/edit-item/generated-data.blp:58
-#: data/ui/sidebar/figure-settings/settings-page.blp:163
-#: data/ui/sidebar/figure-settings/settings-page.blp:179
-#: data/ui/sidebar/figure-settings/settings-page.blp:195
-#: data/ui/sidebar/figure-settings/settings-page.blp:211
-#: data/ui/generate-data.blp:103
+#: data/ui/sidebar/edit-item/generated-data.blp:53
+#: data/ui/sidebar/figure-settings/settings-page.blp:155
+#: data/ui/sidebar/figure-settings/settings-page.blp:171
+#: data/ui/sidebar/figure-settings/settings-page.blp:187
+#: data/ui/sidebar/figure-settings/settings-page.blp:203
+#: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Lineáris"
 
-#: data/ui/edit-item/generated-data.blp:59
-#: data/ui/sidebar/figure-settings/settings-page.blp:164
-#: data/ui/sidebar/figure-settings/settings-page.blp:180
-#: data/ui/sidebar/figure-settings/settings-page.blp:196
-#: data/ui/sidebar/figure-settings/settings-page.blp:212
-#: data/ui/generate-data.blp:104
+#: data/ui/sidebar/edit-item/generated-data.blp:54
+#: data/ui/sidebar/figure-settings/settings-page.blp:156
+#: data/ui/sidebar/figure-settings/settings-page.blp:172
+#: data/ui/sidebar/figure-settings/settings-page.blp:188
+#: data/ui/sidebar/figure-settings/settings-page.blp:204
+#: data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Logaritmikus (10-es alapú)"
 
-#: data/ui/edit-item/generated-data.blp:60
-#: data/ui/sidebar/figure-settings/settings-page.blp:165
-#: data/ui/sidebar/figure-settings/settings-page.blp:181
-#: data/ui/sidebar/figure-settings/settings-page.blp:197
-#: data/ui/sidebar/figure-settings/settings-page.blp:213
-#: data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/generated-data.blp:55
+#: data/ui/sidebar/figure-settings/settings-page.blp:157
+#: data/ui/sidebar/figure-settings/settings-page.blp:173
+#: data/ui/sidebar/figure-settings/settings-page.blp:189
+#: data/ui/sidebar/figure-settings/settings-page.blp:205
+#: data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Logaritmikus (2-es alapú)"
 
-#: data/ui/edit-item/generated-data.blp:61
-#: data/ui/sidebar/figure-settings/settings-page.blp:166
-#: data/ui/sidebar/figure-settings/settings-page.blp:182
-#: data/ui/sidebar/figure-settings/settings-page.blp:198
-#: data/ui/sidebar/figure-settings/settings-page.blp:214
-#: data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/generated-data.blp:56
+#: data/ui/sidebar/figure-settings/settings-page.blp:158
+#: data/ui/sidebar/figure-settings/settings-page.blp:174
+#: data/ui/sidebar/figure-settings/settings-page.blp:190
+#: data/ui/sidebar/figure-settings/settings-page.blp:206
+#: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radián"
 
-#: data/ui/edit-item/generated-data.blp:62
-#: data/ui/sidebar/figure-settings/settings-page.blp:167
-#: data/ui/sidebar/figure-settings/settings-page.blp:183
-#: data/ui/sidebar/figure-settings/settings-page.blp:199
-#: data/ui/sidebar/figure-settings/settings-page.blp:215
-#: data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/generated-data.blp:57
+#: data/ui/sidebar/figure-settings/settings-page.blp:159
+#: data/ui/sidebar/figure-settings/settings-page.blp:175
+#: data/ui/sidebar/figure-settings/settings-page.blp:191
+#: data/ui/sidebar/figure-settings/settings-page.blp:207
+#: data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Négyzetgyök"
 
-#: data/ui/edit-item/generated-data.blp:63
-#: data/ui/sidebar/figure-settings/settings-page.blp:168
-#: data/ui/sidebar/figure-settings/settings-page.blp:184
-#: data/ui/sidebar/figure-settings/settings-page.blp:200
-#: data/ui/sidebar/figure-settings/settings-page.blp:216
-#: data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/generated-data.blp:58
+#: data/ui/sidebar/figure-settings/settings-page.blp:160
+#: data/ui/sidebar/figure-settings/settings-page.blp:176
+#: data/ui/sidebar/figure-settings/settings-page.blp:192
+#: data/ui/sidebar/figure-settings/settings-page.blp:208
+#: data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Inverz"
 
+#: data/ui/sidebar/edit-item/page.blp:5
+msgid "Edit Item"
+msgstr "Elem szerkesztése"
+
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
-#: data/ui/sidebar/main.blp:29
+#: data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
 msgstr "Ábra beállításai"
 
@@ -484,7 +838,7 @@ msgid "Labels"
 msgstr "Címkék"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor.py:476
+#: graphs/style_editor/__init__.py:106
 msgid "Title"
 msgstr "Cím"
 
@@ -512,238 +866,662 @@ msgstr "Tengely korlátjai"
 msgid "Bottom X Axis Minimum"
 msgstr "Alsó X-tengely legkisebb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:76
+#: data/ui/sidebar/figure-settings/settings-page.blp:75
 msgid "Bottom X Axis Maximum"
 msgstr "Alsó X-tengely legnagyobb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:91
+#: data/ui/sidebar/figure-settings/settings-page.blp:89
 msgid "Top X Axis Minimum"
 msgstr "Felső X-tengely legkisebb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:99
+#: data/ui/sidebar/figure-settings/settings-page.blp:96
 msgid "Top X Axis Maximum"
 msgstr "Felső X-tengely legnagyobb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:114
+#: data/ui/sidebar/figure-settings/settings-page.blp:110
 msgid "Left Y Axis Minimum"
 msgstr "Bal Y-tengely legkisebb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:122
+#: data/ui/sidebar/figure-settings/settings-page.blp:117
 msgid "Left Y Axis Maximum"
 msgstr "Bal Y-tengely legnagyobb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:137
+#: data/ui/sidebar/figure-settings/settings-page.blp:131
 msgid "Right Y Axis Minimum"
 msgstr "Jobb Y-tengely legkisebb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:145
+#: data/ui/sidebar/figure-settings/settings-page.blp:138
 msgid "Right Y Axis Maximum"
 msgstr "Jobb Y-tengely legnagyobb értéke"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:155
+#: data/ui/sidebar/figure-settings/settings-page.blp:147
 msgid "Scaling"
 msgstr "Méretezés"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:159
+#: data/ui/sidebar/figure-settings/settings-page.blp:151
 msgid "Bottom X Axis Scale"
 msgstr "Alsó X-tengely méretezése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:175
+#: data/ui/sidebar/figure-settings/settings-page.blp:167
 msgid "Top X Axis Scale"
 msgstr "Felső X-tengely méretezése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:191
+#: data/ui/sidebar/figure-settings/settings-page.blp:183
 msgid "Left Y Axis Scale"
 msgstr "Bal Y-tengely méretezése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:207
+#: data/ui/sidebar/figure-settings/settings-page.blp:199
 msgid "Right Y Axis Scale"
 msgstr "Jobb Y-tengely méretezése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:223
+#: data/ui/sidebar/figure-settings/settings-page.blp:215
 msgid "Appearance"
 msgstr "Megjelenés"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:226
+#: data/ui/sidebar/figure-settings/settings-page.blp:218
 msgid "Show Legend"
 msgstr "Jelmagyarázat megjelenítése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:230
+#: data/ui/sidebar/figure-settings/settings-page.blp:222
 msgid "Legend Position"
 msgstr "Jelmagyarázat helyzete"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:235
+#: data/ui/sidebar/figure-settings/settings-page.blp:227
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Automatikus"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:236
+#: data/ui/sidebar/figure-settings/settings-page.blp:228
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Jobb felső"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:237
+#: data/ui/sidebar/figure-settings/settings-page.blp:229
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Bal felső"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:238
+#: data/ui/sidebar/figure-settings/settings-page.blp:230
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Bal alsó"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:239
+#: data/ui/sidebar/figure-settings/settings-page.blp:231
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Jobb alsó"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:240
+#: data/ui/sidebar/figure-settings/settings-page.blp:232
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Balra középen"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:241
+#: data/ui/sidebar/figure-settings/settings-page.blp:233
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Jobbra középen"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:242
+#: data/ui/sidebar/figure-settings/settings-page.blp:234
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Alul középen"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:243
+#: data/ui/sidebar/figure-settings/settings-page.blp:235
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Felül középen"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:244
+#: data/ui/sidebar/figure-settings/settings-page.blp:236
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Középen"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:250
+#: data/ui/sidebar/figure-settings/settings-page.blp:242
 msgid "Hide Unselected Items"
 msgstr "Nem kiválasztott elemek elrejtése"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:254
-#: data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor.vala:80
+#: data/ui/sidebar/figure-settings/settings-page.blp:246
+#: data/ui/sidebar/figure-settings/style-page.blp:5
+#: graphs/style_editor/window.vala:82
 msgid "Style"
 msgstr "Stílus"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:273
-msgid "Set as Default"
-msgstr "Beállítás alapértelmezettként"
+#: data/ui/sidebar/figure-settings/style-page.blp:12
+msgid "Manage"
+msgstr "Kezelés"
 
-#: data/ui/sidebar/figure-settings/style-page.blp:13 data/ui/add-style.blp:6
-msgid "Add New Style"
-msgstr "Új stílus hozzáadása"
-
-#: data/ui/sidebar/figure-settings/style-page.blp:51
-msgid "Import Style…"
-msgstr "Stílus importálása…"
-
-#: data/ui/sidebar/figure-settings/style-page.blp:56
-msgid "Create Style…"
-msgstr "Stílus létrehozása…"
-
-#: data/ui/sidebar/edit-item.blp:5
-#| msgid "Edit"
-msgid "Edit Item"
-msgstr "Elem szerkesztése"
-
-#: data/ui/sidebar/main.blp:12
+#: data/ui/sidebar/main.blp:13
 msgid "Add New Data"
 msgstr "Új adatok hozzáadása"
 
-#: data/ui/sidebar/main.blp:21 data/ui/style-editor-window.blp:65
-#: data/ui/style-editor-window.blp:175
+#: data/ui/sidebar/main.blp:22 data/ui/style-editor/window.blp:74
+#: data/ui/style-editor/window.blp:245
 msgid "Open Application Menu"
 msgstr "Alkalmazásmenü megnyitása"
 
-#: data/ui/sidebar/main.blp:42
+#: data/ui/sidebar/main.blp:43
 msgid "No Data"
 msgstr "Nincsenek adatok"
 
-#: data/ui/sidebar/main.blp:43
+#: data/ui/sidebar/main.blp:44
 msgid "Add data from a file or manually as an equation"
 msgstr "Adatok hozzáadása fájlból vagy kézileg egyenletként"
 
-#: data/ui/sidebar/main.blp:92
+#: data/ui/sidebar/main.blp:93
 msgid "Pan Mode. Click and drag to pan"
 msgstr "Pásztázási mód. Kattintson és húzzon a pásztázáshoz."
 
-#: data/ui/sidebar/main.blp:99
+#: data/ui/sidebar/main.blp:100
 msgid "Zoom Mode. Select an area on the figure to zoom in"
 msgstr "Nagyítási mód. Válasszon egy területet az ábrán a nagyításhoz."
 
-#: data/ui/sidebar/main.blp:106
+#: data/ui/sidebar/main.blp:107
 msgid "Select Mode. Click and drag to make a selection of data"
 msgstr "Kijelölési mód. Kattintson és húzzon az adatok kijelöléséhez."
 
-#: data/ui/sidebar/main.blp:123
+#: data/ui/sidebar/main.blp:124
 msgid "New Project"
 msgstr "Új projekt"
 
-#: data/ui/sidebar/main.blp:127
+#: data/ui/sidebar/main.blp:128
 msgid "Save Project…"
 msgstr "Projekt mentése…"
 
-#: data/ui/sidebar/main.blp:128
+#: data/ui/sidebar/main.blp:129
 msgid "Save Project as…"
 msgstr "Projekt mentése másként…"
 
-#: data/ui/sidebar/main.blp:129
+#: data/ui/sidebar/main.blp:130
 msgid "Open Project…"
 msgstr "Projekt megnyitása…"
 
-#: data/ui/sidebar/main.blp:130
-#| msgid "New Project"
+#: data/ui/sidebar/main.blp:131
 msgid "Close Project"
 msgstr "Projekt bezárása"
 
-#: data/ui/sidebar/main.blp:134
+#: data/ui/sidebar/main.blp:135
 msgid "Export Data…"
 msgstr "Adatok exportálása…"
 
-#: data/ui/sidebar/main.blp:135
+#: data/ui/sidebar/main.blp:136
 msgid "Export Figure…"
 msgstr "Ábra exportálása…"
 
-#: data/ui/sidebar/main.blp:143 data/ui/style-editor-window.blp:216
-#: data/ui/style-editor-window.blp:228
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:291
+#: data/ui/style-editor/window.blp:303
 msgid "Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor-window.blp:217
-#: data/ui/style-editor-window.blp:229
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:292
+#: data/ui/style-editor/window.blp:304
 msgid "Help"
 msgstr "Súgó"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor-window.blp:218
-#: data/ui/style-editor-window.blp:230
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:293
+#: data/ui/style-editor/window.blp:305
 msgid "About Graphs"
 msgstr "A Grafikonok névjegye"
 
-#: data/ui/sidebar/main.blp:151
+#: data/ui/sidebar/main.blp:152
 msgid "Add Data from File…"
 msgstr "Adatok hozzáadása fájlból…"
 
-#: data/ui/sidebar/main.blp:152
+#: data/ui/sidebar/main.blp:153
 msgid "Add Equation…"
 msgstr "Egyenlet hozzáadása…"
 
-#: data/ui/sidebar/main.blp:153
+#: data/ui/sidebar/main.blp:154
 msgid "Generate Data…"
 msgstr "Adatok előállítása…"
+
+#: data/ui/sidebar/operations.blp:20
+msgid "Adjust"
+msgstr "Igazítás"
+
+#: data/ui/sidebar/operations.blp:30
+msgid "Combine all selected data"
+msgstr "Az összes kijelölt adat kombinálása"
+
+#: data/ui/sidebar/operations.blp:41
+msgid "Combine"
+msgstr "Kombinálás"
+
+#: data/ui/sidebar/operations.blp:46
+msgid "Cut selected data"
+msgstr "Kijelölt adatok kivágása"
+
+#: data/ui/sidebar/operations.blp:57
+msgid "Cut"
+msgstr "Kivágás"
+
+#: data/ui/sidebar/operations.blp:62
+msgid "Shift all data vertically with respect to each other"
+msgstr ""
+"Az összes adat eltolása függőlegesen az egymáshoz képesti távolság tartásával"
+
+#: data/ui/sidebar/operations.blp:73
+msgid "Shift"
+msgstr "Eltolás"
+
+#: data/ui/sidebar/operations.blp:79
+msgid "Normalize data"
+msgstr "Adatok normalizálása"
+
+#: data/ui/sidebar/operations.blp:90
+msgid "Normalize"
+msgstr "Normalizálás"
+
+#: data/ui/sidebar/operations.blp:96
+msgid "Smoothen data"
+msgstr "Adatok simítása"
+
+#: data/ui/sidebar/operations.blp:110
+msgid "Smoothen"
+msgstr "Simítás"
+
+#: data/ui/sidebar/operations.blp:116
+msgid "Center data"
+msgstr "Adatok középre igazítása"
+
+#: data/ui/sidebar/operations.blp:129
+msgid "Center"
+msgstr "Középre igazítás"
+
+#: data/ui/sidebar/operations.blp:137 data/ui/transform.blp:23
+msgid "Transform"
+msgstr "Transzformálás"
+
+#: data/ui/sidebar/operations.blp:147
+msgid "Get the derivative of the data"
+msgstr "Az adatok deriváltjának lekérése"
+
+#: data/ui/sidebar/operations.blp:158
+msgid "Derivative"
+msgstr "Deriválás"
+
+#: data/ui/sidebar/operations.blp:164
+msgid "Get the indefinite integral of the data"
+msgstr "Az adatok határozatlan integráltjának lekérése"
+
+#: data/ui/sidebar/operations.blp:175
+msgid "Integral"
+msgstr "Integrálás"
+
+#: data/ui/sidebar/operations.blp:181
+msgid "Get the Fast Fourier Transform of the data"
+msgstr "Az adatok gyors Fourier-transzformációjának lekérése"
+
+#: data/ui/sidebar/operations.blp:193
+msgid "FFT"
+msgstr "FFT"
+
+#: data/ui/sidebar/operations.blp:199
+msgid "Get the Inverse Fast Fourier Transform of the data"
+msgstr "Az adatok inverz gyors Fourier-transzformációjának lekérése"
+
+#: data/ui/sidebar/operations.blp:211
+msgid "Inverse FFT"
+msgstr "Inverz FFT"
+
+#: data/ui/sidebar/operations.blp:217
+msgid "Perform custom transformations on the data"
+msgstr "Egyéni transzformációk végrehajtása az adatokon"
+
+#: data/ui/sidebar/operations.blp:229
+msgid "Custom Transformation"
+msgstr "Egyéni transzformáció"
+
+#: data/ui/sidebar/operations.blp:237
+msgid "Modify"
+msgstr "Módosítás"
+
+#: data/ui/sidebar/operations.blp:267
+msgid "Translate X"
+msgstr "X-eltolás"
+
+#: data/ui/sidebar/operations.blp:294
+msgid "Translate Y"
+msgstr "Y-eltolás"
+
+#: data/ui/sidebar/operations.blp:321
+msgid "Multiply X"
+msgstr "X-szorzás"
+
+#: data/ui/sidebar/operations.blp:348
+msgid "Multiply Y"
+msgstr "Y-szorzás"
+
+#: data/ui/sidebar/operations.blp:359
+msgid "At Maximum Y Value"
+msgstr "A legnagyobb Y-értéknél"
+
+#: data/ui/sidebar/operations.blp:365
+msgid "At Middle X Value"
+msgstr "A középső X-értéknél"
+
+#: data/ui/sidebar/operations.blp:374 data/ui/smoothen-settings.blp:35
+msgid "Savitzky–Golay Filter"
+msgstr "Savitzky–Golay szűrő"
+
+#: data/ui/sidebar/operations.blp:380 data/ui/smoothen-settings.blp:58
+msgid "Moving Average"
+msgstr "Mozgóátlag"
+
+#: data/ui/sidebar/operations.blp:388
+msgid "Advanced Settings"
+msgstr "Speciális beállítások"
+
+#: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
+msgid "Add New Style"
+msgstr "Új stílus hozzáadása"
+
+#: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: data/ui/style-editor/add-style.blp:39
+msgid "Template"
+msgstr "Sablon"
+
+#: data/ui/style-editor/color-row.blp:5
+msgid "Change Color"
+msgstr "Szín megváltoztatása"
+
+#: data/ui/style-editor/editor-box.blp:10
+msgid "Style Name"
+msgstr "Stílus neve"
+
+#: data/ui/style-editor/editor-box.blp:14
+msgid "Font"
+msgstr "Betűkészlet"
+
+#: data/ui/style-editor/editor-box.blp:26
+msgid "Title Size"
+msgstr "Cím mérete"
+
+#: data/ui/style-editor/editor-box.blp:27
+msgid "Title size in relation to text size"
+msgstr "A cím mérete a szöveg méretéhez viszonyítva"
+
+#: data/ui/style-editor/editor-box.blp:42
+msgid "Label Size"
+msgstr "Címke mérete"
+
+#: data/ui/style-editor/editor-box.blp:43
+msgid "Label size in relation to text size"
+msgstr "A címke mérete a szöveg méretéhez viszonyítva"
+
+#: data/ui/style-editor/editor-box.blp:59
+msgid "Lines"
+msgstr "Vonalak"
+
+#: data/ui/style-editor/editor-box.blp:77
+#| msgid "Linewidth"
+msgid "Line width"
+msgstr "Vonal vastagsága"
+
+#: data/ui/style-editor/editor-box.blp:199
+msgid "Axes"
+msgstr "Tengelyek"
+
+#: data/ui/style-editor/editor-box.blp:202
+msgid "Axis Width"
+msgstr "Tengely vastagsága"
+
+#: data/ui/style-editor/editor-box.blp:216
+msgid "Draw Frame"
+msgstr "Keret rajzolása"
+
+#: data/ui/style-editor/editor-box.blp:221
+msgid "Ticks"
+msgstr "Beosztások"
+
+#: data/ui/style-editor/editor-box.blp:224
+msgid "Tick Directions"
+msgstr "Beosztás irányai"
+
+#: data/ui/style-editor/editor-box.blp:228
+msgid "Inwards"
+msgstr "Befelé"
+
+#: data/ui/style-editor/editor-box.blp:229
+msgid "Outwards"
+msgstr "Kifelé"
+
+#: data/ui/style-editor/editor-box.blp:235
+msgid "Minor Ticks"
+msgstr "Másodlagos beosztások"
+
+#: data/ui/style-editor/editor-box.blp:239
+msgid "Major Tick Width"
+msgstr "Fő beosztás szélessége"
+
+#: data/ui/style-editor/editor-box.blp:254
+msgid "Minor Tick Width"
+msgstr "Másodlagos beosztás szélessége"
+
+#: data/ui/style-editor/editor-box.blp:270
+msgid "Major Tick Length"
+msgstr "Fő beosztás hossza"
+
+#: data/ui/style-editor/editor-box.blp:285
+msgid "Minor Tick Length"
+msgstr "Másodlagos beosztás hossza"
+
+#: data/ui/style-editor/editor-box.blp:301
+msgid "Show Tick Labels on all Axes"
+msgstr "Beosztáscímkék megjelenítése az összes tengelyen"
+
+#: data/ui/style-editor/editor-box.blp:305
+msgid "Ticks on Bottom Axis"
+msgstr "Beosztások az alsó tengelyen"
+
+#: data/ui/style-editor/editor-box.blp:309
+msgid "Ticks on Left Axis"
+msgstr "Beosztások a bal tengelyen"
+
+#: data/ui/style-editor/editor-box.blp:313
+msgid "Ticks on Right Axis"
+msgstr "Beosztások a jobb tengelyen"
+
+#: data/ui/style-editor/editor-box.blp:317
+msgid "Ticks on Top Axis"
+msgstr "Beosztások a felső tengelyen"
+
+#: data/ui/style-editor/editor-box.blp:322
+msgid "Grid"
+msgstr "Rács"
+
+#: data/ui/style-editor/editor-box.blp:325
+msgid "Show Grid"
+msgstr "Rács megjelenítése"
+
+#: data/ui/style-editor/editor-box.blp:329
+msgid "Grid Width"
+msgstr "Rács vastagsága"
+
+#: data/ui/style-editor/editor-box.blp:345
+msgid "Grid Opacity"
+msgstr "Rács átlátszatlansága"
+
+#: data/ui/style-editor/editor-box.blp:362
+msgid "Padding"
+msgstr "Térköz"
+
+#: data/ui/style-editor/editor-box.blp:363
+msgid "Padding for different parts of the figure"
+msgstr "Térköz az ábra különböző részeihez"
+
+#: data/ui/style-editor/editor-box.blp:366
+msgid "Value Padding"
+msgstr "Érték térköze"
+
+#: data/ui/style-editor/editor-box.blp:367
+msgid "Padding between axes and values"
+msgstr "A tengelyek és az értékek közötti térköz"
+
+#: data/ui/style-editor/editor-box.blp:382
+msgid "Label Padding"
+msgstr "Címke térköze"
+
+#: data/ui/style-editor/editor-box.blp:383
+msgid "Padding between axes and labels"
+msgstr "A tengelyek és a címkék közötti térköz"
+
+#: data/ui/style-editor/editor-box.blp:398
+msgid "Title Padding"
+msgstr "Cím térköze"
+
+#: data/ui/style-editor/editor-box.blp:399
+msgid "Padding between axes and the title"
+msgstr "A tengelyek és a cím közötti térköz"
+
+#: data/ui/style-editor/editor-box.blp:415
+msgid "Colors"
+msgstr "Színek"
+
+#: data/ui/style-editor/editor-box.blp:419
+msgid "Label text might be hard to read"
+msgstr "A címke szövege nehezen olvasható lehet"
+
+#: data/ui/style-editor/editor-box.blp:431
+msgid "Poor Contrast"
+msgstr "Gyenge kontraszt"
+
+#: data/ui/style-editor/editor-box.blp:447
+msgid "Text Color"
+msgstr "Szöveg színe"
+
+#: data/ui/style-editor/editor-box.blp:458
+msgid "Tick Color"
+msgstr "Beosztás színe"
+
+#: data/ui/style-editor/editor-box.blp:469
+msgid "Axis Color"
+msgstr "Tengely színe"
+
+#: data/ui/style-editor/editor-box.blp:480
+msgid "Grid Color"
+msgstr "Rács színe"
+
+#: data/ui/style-editor/editor-box.blp:491
+msgid "Background Color"
+msgstr "Háttér színe"
+
+#: data/ui/style-editor/editor-box.blp:502
+msgid "Outline Color"
+msgstr "Körvonal színe"
+
+#: data/ui/style-editor/editor-box.blp:509
+msgid "Line Colors"
+msgstr "Vonalak színei"
+
+#: data/ui/style-editor/editor-box.blp:521
+#: data/ui/style-editor/editor-box.blp:550
+msgid "Add Color"
+msgstr "Szín hozzáadása"
+
+#: data/ui/style-editor/editor-box.blp:538
+msgid "Error Bar Colors"
+msgstr "Hibasáv színei"
+
+#: data/ui/style-editor/item-color-row.blp:18
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
+msgctxt "shortcut window"
+msgid "General"
+msgstr "Általános"
+
+#: data/ui/style-editor/shortcuts.blp:9 data/ui/window-shortcuts.blp:9
+msgctxt "shortcut window"
+msgid "Show Shortcuts"
+msgstr "Gyorsbillentyűk megjelenítése"
+
+#: data/ui/style-editor/shortcuts.blp:14 data/ui/window-shortcuts.blp:14
+msgctxt "shortcut window"
+msgid "Open Help"
+msgstr "Súgó megnyitása"
+
+#: data/ui/style-editor/shortcuts.blp:19 data/ui/window-shortcuts.blp:24
+msgctxt "shortcut window"
+msgid "Close Application"
+msgstr "Alkalmazás bezárása"
+
+#: data/ui/style-editor/shortcuts.blp:24 data/ui/window-shortcuts.blp:29
+msgctxt "shortcut window"
+msgid "Close Application Window"
+msgstr "Alkalmazás ablakának bezárása"
+
+#: data/ui/style-editor/shortcuts.blp:30
+msgctxt "shortcut window"
+msgid "Save"
+msgstr "Mentés"
+
+#: data/ui/style-editor/shortcuts.blp:33
+msgctxt "shortcut window"
+msgid "Save Style"
+msgstr "Stílus mentése"
+
+#: data/ui/style-editor/shortcuts.blp:38
+msgctxt "shortcut window"
+msgid "Save Style As"
+msgstr "Stílus mentése másként"
+
+#: data/ui/style-editor/shortcuts.blp:43
+msgctxt "shortcut window"
+msgid "Open Style"
+msgstr "Stílus megnyitása"
+
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
+msgid "Graphs Style Editor"
+msgstr "Grafikonok stílusszerkesztő"
+
+#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
+#| msgid "Import Style…"
+msgid "Import File…"
+msgstr "Fájl importálása…"
+
+#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:311
+msgid "Create Style…"
+msgstr "Stílus létrehozása…"
+
+#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
+#| msgid "Open Style…"
+msgid "Open File…"
+msgstr "Fájl megnyitása…"
+
+#: data/ui/style-editor/window.blp:211
+msgid "Open Preview"
+msgstr "Előnézet megnyitása"
+
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:179
+#: data/ui/window.blp:349
+msgid "Canvas Failed to Load"
+msgstr "Nem sikerült betölteni a vásznat"
+
+#: data/ui/style-editor/window.blp:280
+msgid "Open Style…"
+msgstr "Stílus megnyitása…"
+
+#: data/ui/style-editor/window.blp:281
+msgid "Save Style…"
+msgstr "Stílus mentése…"
+
+#: data/ui/style-editor/window.blp:282
+msgid "Save Style as…"
+msgstr "Stílus mentése másként…"
+
+#: data/ui/style-editor/window.blp:283
+#| msgid "Create Style…"
+msgid "Close Style…"
+msgstr "Stílus kiválasztása…"
 
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
 msgstr "Egyenlet hozzáadása"
-
-#: data/ui/add-equation.blp:23 data/ui/add-style.blp:22
-msgid "Add"
-msgstr "Hozzáadás"
 
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
@@ -753,174 +1531,188 @@ msgstr "Adjon meg egy matematikai kifejezést"
 msgid "Name (optional)"
 msgstr "Név (nem kötelező)"
 
-#: data/ui/add-style.blp:39
-msgid "Template"
-msgstr "Sablon"
-
-#: data/ui/curve-fitting.blp:37 data/ui/item-box.blp:70
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
 msgstr "Görbeillesztés"
 
-#: data/ui/curve-fitting.blp:43
+#: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
 msgstr "Görbeillesztés menü megnyitása"
 
-#: data/ui/curve-fitting.blp:69
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Lineáris"
 
-#: data/ui/curve-fitting.blp:70
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Másodfokú"
 
-#: data/ui/curve-fitting.blp:71
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Exponenciális"
 
-#: data/ui/curve-fitting.blp:72
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Hatványtörvény"
 
-#: data/ui/curve-fitting.blp:73
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Logaritmikus"
 
-#: data/ui/curve-fitting.blp:74
+#: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Szigmoid logisztikus"
 
-#: data/ui/curve-fitting.blp:75
+#: data/ui/curve-fitting.blp:85
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Gauss"
 
-#: data/ui/curve-fitting.blp:76
+#: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Egyéni"
 
-#: data/ui/curve-fitting.blp:115
+#: data/ui/curve-fitting.blp:138
 msgid "Add Fit to Data"
 msgstr "Illesztés hozzáadása az adatokhoz"
 
-#: data/ui/curve-fitting.blp:134
+#: data/ui/curve-fitting.blp:157
 msgid "Toggle Sidebar"
 msgstr "Oldalsáv be- vagy kikapcsolása"
 
-#: data/ui/curve-fitting.blp:146 data/ui/style-editor-window.blp:200
-#: data/ui/window.blp:324
-msgid "Canvas Failed to Load"
-msgstr "Nem sikerült betölteni a vásznat"
-
-#: data/ui/curve-fitting.blp:156
+#: data/ui/curve-fitting.blp:198
 msgid "Optimization Method"
 msgstr "Optimalizálási módszer"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:160
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:202
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg–Marquardt"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:167
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
+#: data/ui/curve-fitting.blp:209
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Megbízhatósági tartomány visszaverő"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:174
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
+#: data/ui/curve-fitting.blp:216
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:181
+#: data/ui/curve-fitting.blp:223
 msgid "Confidence Bounds"
 msgstr "Konfidenciahatárok"
 
-#: data/ui/curve-fitting.blp:184
+#: data/ui/curve-fitting.blp:226
 msgctxt "confidence"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/curve-fitting.blp:191
+#: data/ui/curve-fitting.blp:233
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68%-os konfidencia"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:240
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95%-os konfidencia"
 
-#: data/ui/curve-fitting.blp:205
+#: data/ui/curve-fitting.blp:247
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99,7%-os konfidencia"
 
+#: data/ui/curve-fitting.blp:255
+#| msgid "Show Sidebar"
+msgid "Show Residuals"
+msgstr "Maradékok megjelenítése"
+
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
 msgstr "Ábra exportálása"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:50
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
 msgid "Export"
 msgstr "Exportálás"
 
-#: data/ui/export-figure.blp:41
+#: data/ui/export-figure.blp:43
+#| msgid "Smoothen Settings"
+msgid "Export Settings"
+msgstr "Exportálási beállítások"
+
+#: data/ui/export-figure.blp:46
 msgid "File Format"
 msgstr "Fájlformátum"
 
-#: data/ui/export-figure.blp:46
+#: data/ui/export-figure.blp:50
 msgctxt "file-format"
 msgid "Encapsulated PostScript"
 msgstr "Beágyazott PostScript"
 
-#: data/ui/export-figure.blp:47
+#: data/ui/export-figure.blp:51
 msgctxt "file-format"
 msgid "JPEG"
 msgstr "JPEG"
 
-#: data/ui/export-figure.blp:48
+#: data/ui/export-figure.blp:52
 msgctxt "file-format"
 msgid "PDF"
 msgstr "PDF"
 
-#: data/ui/export-figure.blp:49
+#: data/ui/export-figure.blp:53
 msgctxt "file-format"
 msgid "PNG"
 msgstr "PNG"
 
-#: data/ui/export-figure.blp:50
+#: data/ui/export-figure.blp:54
 msgctxt "file-format"
 msgid "PostScript"
 msgstr "PostScript"
 
-#: data/ui/export-figure.blp:51
+#: data/ui/export-figure.blp:55
 msgctxt "file-format"
 msgid "SVG"
 msgstr "SVG"
 
-#: data/ui/export-figure.blp:52
+#: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
 msgstr "WebP"
 
-#: data/ui/export-figure.blp:58
-msgid "Resolution (dpi)"
-msgstr "Felbontás (dpi)"
-
-#: data/ui/export-figure.blp:67
+#: data/ui/export-figure.blp:62
 msgid "Transparent Background"
 msgstr "Átlátszó háttér"
+
+#: data/ui/export-figure.blp:67
+#| msgid "Export Figure"
+msgid "Export Size"
+msgstr "Exportálási méret"
+
+#: data/ui/export-figure.blp:70
+msgid "Width (pixels)"
+msgstr "Szélesség (képpontban)"
+
+#: data/ui/export-figure.blp:80
+msgid "Height (pixels)"
+msgstr "Magasság (képpontban)"
+
+#: data/ui/export-figure.blp:90
+msgid "Use Same Size as App"
+msgstr "Az alkalmazáséval megegyező méret használata"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
@@ -942,103 +1734,6 @@ msgstr "Adatok előállítása"
 msgid "Generate"
 msgstr "Előállítás"
 
-#: data/ui/import.blp:6
-msgid "Import Parameters"
-msgstr "Importálási paraméterek"
-
-#: data/ui/import.blp:27
-msgid "Reset to Defaults…"
-msgstr "Visszaállítás az alapértékekre…"
-
-#: data/ui/import.blp:32
-msgid "Import"
-msgstr "Importálás"
-
-#: data/ui/import-columns.blp:6
-msgid "Delimiter"
-msgstr "Elválasztó"
-
-#: data/ui/import-columns.blp:7
-msgid "Character sequence used to split values"
-msgstr "Az értékek felosztásához használt karaktersorozat"
-
-#: data/ui/import-columns.blp:12
-msgctxt "delimiter"
-msgid "Whitespace"
-msgstr "Üres karakterek"
-
-#: data/ui/import-columns.blp:13
-msgctxt "delimiter"
-msgid "Tab"
-msgstr "Tabulátor"
-
-#: data/ui/import-columns.blp:14
-msgctxt "delimiter"
-msgid "Colon (:)"
-msgstr "Kettőspont (:)"
-
-#: data/ui/import-columns.blp:15
-msgctxt "delimiter"
-msgid "Semicolon (;)"
-msgstr "Pontosvessző (;)"
-
-#: data/ui/import-columns.blp:16
-msgctxt "delimiter"
-msgid "Decimal comma (,)"
-msgstr "Tizedesvessző (,)"
-
-#: data/ui/import-columns.blp:17
-msgctxt "delimiter"
-msgid "Decimal point (.)"
-msgstr "Tizedespont (.)"
-
-#: data/ui/import-columns.blp:18
-msgctxt "delimiter"
-msgid "Custom"
-msgstr "Egyéni"
-
-#: data/ui/import-columns.blp:26
-msgid "Custom Delimiter"
-msgstr "Egyéni elválasztó"
-
-#: data/ui/import-columns.blp:30
-msgid "Decimal Separator"
-msgstr "Tizedes elválasztó"
-
-#: data/ui/import-columns.blp:34
-msgctxt "separator"
-msgid "Decimal comma (,)"
-msgstr "Tizedesvessző (,)"
-
-#: data/ui/import-columns.blp:35
-msgctxt "separator"
-msgid "Decimal point (.)"
-msgstr "Tizedespont (.)"
-
-#: data/ui/import-columns.blp:41
-msgid "Column X"
-msgstr "X-oszlop"
-
-#: data/ui/import-columns.blp:42
-msgid "X-data column index"
-msgstr "X-adatoszlop indexe"
-
-#: data/ui/import-columns.blp:52
-msgid "Column Y"
-msgstr "Y-oszlop"
-
-#: data/ui/import-columns.blp:54
-msgid "Y-data column index"
-msgstr "Y-adatoszlop indexe"
-
-#: data/ui/import-columns.blp:63
-msgid "Skip Rows"
-msgstr "Sorok kihagyása"
-
-#: data/ui/import-columns.blp:64
-msgid "Ignored row indices"
-msgstr "Sorindexek mellőzve"
-
 #: data/ui/item-box.blp:20
 msgid "Pick Color"
 msgstr "Szín kiválasztása"
@@ -1050,143 +1745,6 @@ msgstr "Elem áthelyezése"
 #: data/ui/item-box.blp:75
 msgid "Remove Item"
 msgstr "Elem eltávolítása"
-
-#: data/ui/operations.blp:20
-msgid "Adjust"
-msgstr "Igazítás"
-
-#: data/ui/operations.blp:30
-msgid "Combine all selected data"
-msgstr "Az összes kijelölt adat kombinálása"
-
-#: data/ui/operations.blp:41
-msgid "Combine"
-msgstr "Kombinálás"
-
-#: data/ui/operations.blp:46
-msgid "Cut selected data"
-msgstr "Kijelölt adatok kivágása"
-
-#: data/ui/operations.blp:57
-msgid "Cut"
-msgstr "Kivágás"
-
-#: data/ui/operations.blp:62
-msgid "Shift all data vertically with respect to each other"
-msgstr ""
-"Az összes adat eltolása függőlegesen az egymáshoz képesti távolság tartásával"
-
-#: data/ui/operations.blp:73
-msgid "Shift"
-msgstr "Eltolás"
-
-#: data/ui/operations.blp:79
-msgid "Normalize data"
-msgstr "Adatok normalizálása"
-
-#: data/ui/operations.blp:90
-msgid "Normalize"
-msgstr "Normalizálás"
-
-#: data/ui/operations.blp:96
-msgid "Smoothen data"
-msgstr "Adatok simítása"
-
-#: data/ui/operations.blp:110
-msgid "Smoothen"
-msgstr "Simítás"
-
-#: data/ui/operations.blp:116
-msgid "Center data"
-msgstr "Adatok középre igazítása"
-
-#: data/ui/operations.blp:129
-msgid "Center"
-msgstr "Középre igazítás"
-
-#: data/ui/operations.blp:137 data/ui/transform.blp:23
-msgid "Transform"
-msgstr "Transzformálás"
-
-#: data/ui/operations.blp:147
-msgid "Get the derivative of the data"
-msgstr "Az adatok deriváltjának lekérése"
-
-#: data/ui/operations.blp:158
-msgid "Derivative"
-msgstr "Deriválás"
-
-#: data/ui/operations.blp:164
-msgid "Get the indefinite integral of the data"
-msgstr "Az adatok határozatlan integráltjának lekérése"
-
-#: data/ui/operations.blp:175
-msgid "Integral"
-msgstr "Integrálás"
-
-#: data/ui/operations.blp:181
-msgid "Get the Fast Fourier Transform of the data"
-msgstr "Az adatok gyors Fourier-transzformációjának lekérése"
-
-#: data/ui/operations.blp:193
-msgid "FFT"
-msgstr "FFT"
-
-#: data/ui/operations.blp:199
-msgid "Get the Inverse Fast Fourier Transform of the data"
-msgstr "Az adatok inverz gyors Fourier-transzformációjának lekérése"
-
-#: data/ui/operations.blp:211
-msgid "Inverse FFT"
-msgstr "Inverz FFT"
-
-#: data/ui/operations.blp:217
-msgid "Perform custom transformations on the data"
-msgstr "Egyéni transzformációk végrehajtása az adatokon"
-
-#: data/ui/operations.blp:229
-msgid "Custom Transformation"
-msgstr "Egyéni transzformáció"
-
-#: data/ui/operations.blp:237
-msgid "Modify"
-msgstr "Módosítás"
-
-#: data/ui/operations.blp:267
-msgid "Translate X"
-msgstr "X-eltolás"
-
-#: data/ui/operations.blp:294
-msgid "Translate Y"
-msgstr "Y-eltolás"
-
-#: data/ui/operations.blp:321
-msgid "Multiply X"
-msgstr "X-szorzás"
-
-#: data/ui/operations.blp:348
-msgid "Multiply Y"
-msgstr "Y-szorzás"
-
-#: data/ui/operations.blp:359
-msgid "At Maximum Y Value"
-msgstr "A legnagyobb Y-értéknél"
-
-#: data/ui/operations.blp:365
-msgid "At Middle X Value"
-msgstr "A középső X-értéknél"
-
-#: data/ui/operations.blp:374 data/ui/smoothen-settings.blp:35
-msgid "Savitzky–Golay Filter"
-msgstr "Savitzky–Golay szűrő"
-
-#: data/ui/operations.blp:380 data/ui/smoothen-settings.blp:58
-msgid "Moving Average"
-msgstr "Mozgóátlag"
-
-#: data/ui/operations.blp:388
-msgid "Advanced Settings"
-msgstr "Speciális beállítások"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
@@ -1212,277 +1770,6 @@ msgstr "Dobozpontok"
 msgid "Amount of points to use when calculating a moving average"
 msgstr "A mozgóátlag számításakor használandó pontok száma"
 
-#: data/ui/style-color-box.blp:18
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#: data/ui/style-color-box.blp:36
-msgid "Remove"
-msgstr "Eltávolítás"
-
-#: data/ui/style-editor-box.blp:10
-msgid "Style Name"
-msgstr "Stílus neve"
-
-#: data/ui/style-editor-box.blp:14
-msgid "Font"
-msgstr "Betűkészlet"
-
-#: data/ui/style-editor-box.blp:26
-msgid "Title Size"
-msgstr "Cím mérete"
-
-#: data/ui/style-editor-box.blp:27
-msgid "Title size in relation to text size"
-msgstr "A cím mérete a szöveg méretéhez viszonyítva"
-
-#: data/ui/style-editor-box.blp:42
-msgid "Label Size"
-msgstr "Címke mérete"
-
-#: data/ui/style-editor-box.blp:43
-msgid "Label size in relation to text size"
-msgstr "A címke mérete a szöveg méretéhez viszonyítva"
-
-#: data/ui/style-editor-box.blp:59
-msgid "Lines"
-msgstr "Vonalak"
-
-#: data/ui/style-editor-box.blp:146
-msgid "Axes"
-msgstr "Tengelyek"
-
-#: data/ui/style-editor-box.blp:149
-msgid "Axis Width"
-msgstr "Tengely vastagsága"
-
-#: data/ui/style-editor-box.blp:163
-msgid "Draw Frame"
-msgstr "Keret rajzolása"
-
-#: data/ui/style-editor-box.blp:168
-msgid "Ticks"
-msgstr "Beosztások"
-
-#: data/ui/style-editor-box.blp:171
-msgid "Tick Directions"
-msgstr "Beosztás irányai"
-
-#: data/ui/style-editor-box.blp:175
-msgid "Inwards"
-msgstr "Befelé"
-
-#: data/ui/style-editor-box.blp:176
-msgid "Outwards"
-msgstr "Kifelé"
-
-#: data/ui/style-editor-box.blp:182
-msgid "Minor Ticks"
-msgstr "Másodlagos beosztások"
-
-#: data/ui/style-editor-box.blp:186
-msgid "Major Tick Width"
-msgstr "Fő beosztás szélessége"
-
-#: data/ui/style-editor-box.blp:201
-msgid "Minor Tick Width"
-msgstr "Másodlagos beosztás szélessége"
-
-#: data/ui/style-editor-box.blp:217
-msgid "Major Tick Length"
-msgstr "Fő beosztás hossza"
-
-#: data/ui/style-editor-box.blp:232
-msgid "Minor Tick Length"
-msgstr "Másodlagos beosztás hossza"
-
-#: data/ui/style-editor-box.blp:248
-msgid "Ticks on Bottom Axis"
-msgstr "Beosztások az alsó tengelyen"
-
-#: data/ui/style-editor-box.blp:252
-msgid "Ticks on Left Axis"
-msgstr "Beosztások a bal tengelyen"
-
-#: data/ui/style-editor-box.blp:256
-msgid "Ticks on Right Axis"
-msgstr "Beosztások a jobb tengelyen"
-
-#: data/ui/style-editor-box.blp:260
-msgid "Ticks on Top Axis"
-msgstr "Beosztások a felső tengelyen"
-
-#: data/ui/style-editor-box.blp:265
-msgid "Grid"
-msgstr "Rács"
-
-#: data/ui/style-editor-box.blp:268
-msgid "Show Grid"
-msgstr "Rács megjelenítése"
-
-#: data/ui/style-editor-box.blp:272
-msgid "Grid Width"
-msgstr "Rács vastagsága"
-
-#: data/ui/style-editor-box.blp:288
-msgid "Grid Opacity"
-msgstr "Rács átlátszatlansága"
-
-#: data/ui/style-editor-box.blp:305
-msgid "Padding"
-msgstr "Térköz"
-
-#: data/ui/style-editor-box.blp:306
-msgid "Padding for different parts of the figure"
-msgstr "Térköz az ábra különböző részeihez"
-
-#: data/ui/style-editor-box.blp:309
-msgid "Value Padding"
-msgstr "Érték térköze"
-
-#: data/ui/style-editor-box.blp:310
-msgid "Padding between axes and values"
-msgstr "A tengelyek és az értékek közötti térköz"
-
-#: data/ui/style-editor-box.blp:325
-msgid "Label Padding"
-msgstr "Címke térköze"
-
-#: data/ui/style-editor-box.blp:326
-msgid "Padding between axes and labels"
-msgstr "A tengelyek és a címkék közötti térköz"
-
-#: data/ui/style-editor-box.blp:341
-msgid "Title Padding"
-msgstr "Cím térköze"
-
-#: data/ui/style-editor-box.blp:342
-msgid "Padding between axes and the title"
-msgstr "A tengelyek és a cím közötti térköz"
-
-#: data/ui/style-editor-box.blp:358
-msgid "Colors"
-msgstr "Színek"
-
-#: data/ui/style-editor-box.blp:362
-msgid "Label text might be hard to read"
-msgstr "A címke szövege nehezen olvasható lehet"
-
-#: data/ui/style-editor-box.blp:374
-msgid "Poor Contrast"
-msgstr "Gyenge kontraszt"
-
-#: data/ui/style-editor-box.blp:389
-msgid "Text Color"
-msgstr "Szöveg színe"
-
-#: data/ui/style-editor-box.blp:394 data/ui/style-editor-box.blp:421
-#: data/ui/style-editor-box.blp:448 data/ui/style-editor-box.blp:475
-#: data/ui/style-editor-box.blp:502 data/ui/style-editor-box.blp:529
-msgid "Change Color"
-msgstr "Szín megváltoztatása"
-
-#: data/ui/style-editor-box.blp:416
-msgid "Tick Color"
-msgstr "Beosztás színe"
-
-#: data/ui/style-editor-box.blp:443
-msgid "Axis Color"
-msgstr "Tengely színe"
-
-#: data/ui/style-editor-box.blp:470
-msgid "Grid Color"
-msgstr "Rács színe"
-
-#: data/ui/style-editor-box.blp:497
-msgid "Background Color"
-msgstr "Háttér színe"
-
-#: data/ui/style-editor-box.blp:524
-msgid "Outline Color"
-msgstr "Körvonal színe"
-
-#: data/ui/style-editor-box.blp:547
-msgid "Line Colors"
-msgstr "Vonalak színei"
-
-#: data/ui/style-editor-box.blp:559
-msgid "Add Color"
-msgstr "Szín hozzáadása"
-
-#: data/ui/style-editor-shortcuts.blp:11 data/ui/window-shortcuts.blp:11
-msgctxt "shortcut window"
-msgid "General"
-msgstr "Általános"
-
-#: data/ui/style-editor-shortcuts.blp:14 data/ui/window-shortcuts.blp:14
-msgctxt "shortcut window"
-msgid "Show Shortcuts"
-msgstr "Gyorsbillentyűk megjelenítése"
-
-#: data/ui/style-editor-shortcuts.blp:19 data/ui/window-shortcuts.blp:19
-msgctxt "shortcut window"
-msgid "Open Help"
-msgstr "Súgó megnyitása"
-
-#: data/ui/style-editor-shortcuts.blp:24 data/ui/window-shortcuts.blp:29
-msgctxt "shortcut window"
-msgid "Close Application"
-msgstr "Alkalmazás bezárása"
-
-#: data/ui/style-editor-shortcuts.blp:29 data/ui/window-shortcuts.blp:34
-msgctxt "shortcut window"
-msgid "Close Application Window"
-msgstr "Alkalmazás ablakának bezárása"
-
-#: data/ui/style-editor-shortcuts.blp:35
-msgctxt "shortcut window"
-msgid "Save"
-msgstr "Mentés"
-
-#: data/ui/style-editor-shortcuts.blp:38
-msgctxt "shortcut window"
-msgid "Save Style"
-msgstr "Stílus mentése"
-
-#: data/ui/style-editor-shortcuts.blp:43
-msgctxt "shortcut window"
-msgid "Save Style As"
-msgstr "Stílus mentése másként"
-
-#: data/ui/style-editor-shortcuts.blp:48
-msgctxt "shortcut window"
-msgid "Open Style"
-msgstr "Stílus megnyitása"
-
-#: data/ui/style-editor-window.blp:5 data/ui/style-editor-window.blp:168
-msgid "Graphs Style Editor"
-msgstr "Grafikonok stílusszerkesztő"
-
-#: data/ui/style-editor-window.blp:71
-msgid "Open a Style"
-msgstr "Stílus megnyitása"
-
-#: data/ui/style-editor-window.blp:74
-msgid "Open…"
-msgstr "Megnyitás…"
-
-#: data/ui/style-editor-window.blp:141
-msgid "Open Preview"
-msgstr "Előnézet megnyitása"
-
-#: data/ui/style-editor-window.blp:210 data/ui/style-editor-window.blp:224
-msgid "Open Style…"
-msgstr "Stílus megnyitása…"
-
-#: data/ui/style-editor-window.blp:211
-msgid "Save Style…"
-msgstr "Stílus mentése…"
-
-#: data/ui/style-editor-window.blp:212
-msgid "Save Style as…"
-msgstr "Stílus mentése másként…"
-
 #: data/ui/style-preview.blp:52
 msgid "Open"
 msgstr "Megnyitás"
@@ -1499,253 +1786,424 @@ msgstr "Törlés…"
 msgid "Transform Data"
 msgstr "Adatok transzformálása"
 
-#: data/ui/transform.blp:34
-msgid "More info"
-msgstr "További információk"
-
-#: data/ui/transform.blp:44
+#: data/ui/transform.blp:41
 msgid ""
-"Additional variables:\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Available variables</b>\n"
+"General:\n"
+" counts - number of data points\n"
 "\n"
-"Trigonometric functions use radians\n"
-"by default, append d to the function\n"
-"to use degrees, e.g. sind(x) or cosd(x)."
+"X-Axis:\n"
+" x_min, x_max - minimum and maximum values,\n"
+" x_mean, x_median - average and median,\n"
+" x_std, x_sum — standard deviation and sum\n"
+"\n"
+"Y-Axis:\n"
+" y_min, y_max - minimum and maximum,\n"
+" y_mean, y_median — average and median,\n"
+" y_std, y_sum - standard deviation and sum\n"
+"\n"
+"Trigonometric functions use radians by default.\n"
+"Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
-"További változók:\n"
-"x_min, y_min\n"
-"x_max, y_max \n"
+"<b>Elérhető változók</b>\n"
+"Általános:\n"
+" counts – adatpontok száma\n"
 "\n"
-"A trigonometriai függvények radiánt\n"
-"használnak alapértelmezetten, írjon\n"
-"„d” betűt a függvény neve után a fok\n"
-"használatához, például sind(x) vagy cosd(x)."
+"X-tengely:\n"
+" x_min, x_max – legkisebb és legnagyobb értékek,\n"
+" x_mean, x_median – átlag és medián,\n"
+" x_std, x_sum – szórás és összeg\n"
+"\n"
+"Y-tengely:\n"
+" y_min, y_max – legkisebb és legnagyobb értékek,\n"
+" y_mean, y_median – átlag és medián,\n"
+" y_std, y_sum – szórás és összeg\n"
+"\n"
+"A trigonometrikus függvények alapértelmezetten radiánt használnak.\n"
+"Fűzzön hozzá d betűt a fok használatához, például sind(x) vagy cosd(x)."
 
-#: data/ui/transform.blp:63
+#: data/ui/transform.blp:64
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:73
+#: data/ui/transform.blp:74
 msgid "Discard Unselected Data"
 msgstr "Nem kiválasztott adatok elvetése"
 
-#: data/ui/window.blp:195
+#: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "Húzza ide az importáláshoz"
 
-#: data/ui/window.blp:228
+#: data/ui/window.blp:253
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: data/ui/window.blp:237 data/ui/window.blp:283 graphs/window.vala:412
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:401
 msgid "Undo"
 msgstr "Visszavonás"
 
-#: data/ui/window.blp:244 data/ui/window.blp:291
+#: data/ui/window.blp:269 data/ui/window.blp:316
 msgid "Redo"
 msgstr "Ismétlés"
 
-#: data/ui/window.blp:252 data/ui/window.blp:299
-#| msgid "Optimize Limits"
+#: data/ui/window.blp:277 data/ui/window.blp:324
 msgid "Optimize View Limits"
 msgstr "Nézetkorlátok optimalizálása"
 
-#: data/ui/window.blp:260 data/ui/window.blp:306
+#: data/ui/window.blp:285 data/ui/window.blp:331
 msgid "Next View"
 msgstr "Következő nézet"
 
-#: data/ui/window.blp:268 data/ui/window.blp:314
+#: data/ui/window.blp:293 data/ui/window.blp:339
 msgid "Previous View"
 msgstr "Előző nézet"
 
-#: data/ui/window-shortcuts.blp:24
+#: data/ui/window-shortcuts.blp:19
 msgctxt "shortcut window"
 msgid "Open Figure Settings"
 msgstr "Ábra beállításainak megnyitása"
 
-#: data/ui/window-shortcuts.blp:40
+#: data/ui/window-shortcuts.blp:35
 msgctxt "shortcut window"
 msgid "Mode Switching"
 msgstr "Módváltás"
 
-#: data/ui/window-shortcuts.blp:43
+#: data/ui/window-shortcuts.blp:38
 msgctxt "shortcut window"
 msgid "Pan Mode"
 msgstr "Pásztázási mód"
 
-#: data/ui/window-shortcuts.blp:48
+#: data/ui/window-shortcuts.blp:43
 msgctxt "shortcut window"
 msgid "Zoom Mode"
 msgstr "Nagyítási mód"
 
-#: data/ui/window-shortcuts.blp:53
+#: data/ui/window-shortcuts.blp:48
 msgctxt "shortcut window"
 msgid "Select Mode"
 msgstr "Kiválasztási mód"
 
-#: data/ui/window-shortcuts.blp:59
+#: data/ui/window-shortcuts.blp:54
 msgctxt "shortcut window"
 msgid "New Data"
 msgstr "Új adatok"
 
-#: data/ui/window-shortcuts.blp:62
+#: data/ui/window-shortcuts.blp:57
 msgctxt "shortcut window"
 msgid "Add Data from File"
 msgstr "Adatok hozzáadása fájlból"
 
-#: data/ui/window-shortcuts.blp:67
+#: data/ui/window-shortcuts.blp:62
 msgctxt "shortcut window"
 msgid "Add Data from Equation"
 msgstr "Adatok hozzáadása egyenletből"
 
-#: data/ui/window-shortcuts.blp:72
+#: data/ui/window-shortcuts.blp:67
 msgctxt "shortcut window"
 msgid "Generate Data"
 msgstr "Adatok előállítása"
 
-#: data/ui/window-shortcuts.blp:77
+#: data/ui/window-shortcuts.blp:72
 msgctxt "shortcut window"
 msgid "New Project"
 msgstr "Új projekt"
 
-#: data/ui/window-shortcuts.blp:82
+#: data/ui/window-shortcuts.blp:77
 msgctxt "shortcut window"
 msgid "Open Project"
 msgstr "Projekt megnyitása"
 
-#: data/ui/window-shortcuts.blp:87
+#: data/ui/window-shortcuts.blp:82
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
 msgstr "Kiválasztott adatok törlése"
 
-#: data/ui/window-shortcuts.blp:93
+#: data/ui/window-shortcuts.blp:88
 msgctxt "shortcut window"
 msgid "Save and Export"
 msgstr "Mentés és exportálás"
 
-#: data/ui/window-shortcuts.blp:96
+#: data/ui/window-shortcuts.blp:91
 msgctxt "shortcut window"
 msgid "Export Data"
 msgstr "Adatok exportálása"
 
-#: data/ui/window-shortcuts.blp:101
+#: data/ui/window-shortcuts.blp:96
 msgctxt "shortcut window"
 msgid "Export Figure"
 msgstr "Ábra exportálása"
 
-#: data/ui/window-shortcuts.blp:106
+#: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
 msgid "Save Project"
 msgstr "Projekt mentése"
 
-#: data/ui/window-shortcuts.blp:111
+#: data/ui/window-shortcuts.blp:106
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr "Projekt mentése másként"
 
-#: data/ui/window-shortcuts.blp:117
+#: data/ui/window-shortcuts.blp:112
 msgctxt "shortcut window"
 msgid "View"
 msgstr "Nézet"
 
-#: data/ui/window-shortcuts.blp:120
+#: data/ui/window-shortcuts.blp:115
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "Előző nézet"
 
-#: data/ui/window-shortcuts.blp:125
+#: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "Következő nézet"
 
-#: data/ui/window-shortcuts.blp:130
+#: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "Korlátok optimalizálása"
 
-#: data/ui/window-shortcuts.blp:135
+#: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "Nagyítás"
 
-#: data/ui/window-shortcuts.blp:140
+#: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "Kicsinyítés"
 
-#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
+#: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:159
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr "Kijelölés megszüntetése"
 
-#: data/ui/window-shortcuts.blp:150
+#: data/ui/window-shortcuts.blp:145
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr "Oldalsáv be- vagy kikapcsolása"
 
-#: data/ui/window-shortcuts.blp:156
+#: data/ui/window-shortcuts.blp:151
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "Műveletek"
 
-#: data/ui/window-shortcuts.blp:159
+#: data/ui/window-shortcuts.blp:154
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr "Összes kijelölése"
 
-#: data/ui/window-shortcuts.blp:169
+#: data/ui/window-shortcuts.blp:164
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr "Művelet visszavonása"
 
-#: data/ui/window-shortcuts.blp:174
+#: data/ui/window-shortcuts.blp:169
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Művelet ismétlése"
 
+#: graphs/file_import/parsers/columns/__init__.py:22
+#| msgid "Column X"
+msgctxt "import-mode"
+msgid "Columns"
+msgstr "Oszlopok"
+
+#: graphs/file_import/parsers/columns/main.vala:46
+#| msgid "Custom Delimiter"
+msgid "Custom delimiter cannot be empty"
+msgstr "Az egyéni elválasztó nem lehet üres"
+
+#: graphs/file_import/parsers/columns/parser.vala:106
+#, c-format
+msgid ""
+"Index error in %s, cannot access index %d on line %d, only %d columns were "
+"found"
+msgstr ""
+"Indexelési hiba ebben: %s, nem lehet elérni a(z) %d. indexet a(z) %d. sorban, "
+"csak %d oszlop található"
+
+#: graphs/file_import/parsers/columns/parser.vala:132
+#, c-format
+msgid "Cannot import from file, bad value on line %d"
+msgstr "Nem lehet importálni a fájlból, hibás érték van a(z) %d. sorban"
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#, c-format
+msgid "Item %d"
+msgstr "%d. elem"
+
+#: graphs/file_import/parsers/project/__init__.py:19
+#| msgid "Project"
+msgctxt "import-mode"
+msgid "Project"
+msgstr "Projekt"
+
+#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+msgctxt "file-filter"
+msgid "Graphs Project File"
+msgstr "Grafikonok projektfájl"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+msgctxt "import-mode"
+msgid "Spreadsheet"
+msgstr "Munkafüzet"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+msgctxt "file-filter"
+msgid "Spreadsheet"
+msgstr "Munkafüzet"
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:276
+msgid "No numeric data found in column."
+msgstr "Nem található numerikus adat az oszlopban."
+
+#: graphs/file_import/parsers/spreadsheet/__init__.py:291
+msgid "Columns do not have the same length."
+msgstr "Az oszlopok nem azonos hosszúságúak."
+
+#: graphs/file_import/parsers/sql/__init__.py:24
+#| msgid "Dataset"
+msgctxt "import-mode"
+msgid "Database"
+msgstr "Adatbázis"
+
+#: graphs/file_import/parsers/sql/__init__.py:25
+msgctxt "file-filter"
+msgid "SQLite Database"
+msgstr "SQLite adatbázis"
+
+#: graphs/file_import/parsers/sql/__init__.py:42
+#, python-brace-format
+msgid ""
+"Could not import data from table \"{table_name}\", no numeric columns were "
+"found"
+msgstr ""
+"Nem sikerült importálni az adatokat a(z) „{table_name}” táblából, nem találhat"
+"ók numerikus oszlopok"
+
+#: graphs/file_import/parsers/sql/__init__.py:52
+#| msgid "No data found within the highlighted area"
+msgid "No data found in table column"
+msgstr "Nem találhatók adatok a tábla oszlopában"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:20
+msgctxt "import-mode"
+msgid "xrdml"
+msgstr "xrdml"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:21
+msgctxt "file-filter"
+msgid "PANalytical XRDML"
+msgstr "PANalytical XRDML"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:60
+msgid "Intensity (cps)"
+msgstr "Intenzitás (cps)"
+
+#: graphs/file_import/parsers/xry/__init__.py:20
+msgctxt "import-mode"
+msgid "xry"
+msgstr "xry"
+
+#: graphs/file_import/parsers/xry/__init__.py:21
+msgctxt "file-filter"
+msgid "Leybold xry"
+msgstr "Leybold xry"
+
+#: graphs/file_import/parsers/xry/__init__.py:43
+msgid "β (°)"
+msgstr "β (°)"
+
+#: graphs/file_import/parsers/xry/__init__.py:44
+msgid "R (1/s)"
+msgstr "R (1/s)"
+
+#: graphs/file_import/__init__.py:120
+#| msgid "Import Style…"
+msgid "Import failed"
+msgstr "Az importálás nem sikerült"
+
+#: graphs/file_import/file_import.vala:51
+msgctxt "file-filter"
+msgid "Supported files"
+msgstr "Támogatott fájlok"
+
+#. columns
+#: graphs/file_import/file_import.vala:55
+msgctxt "file-filter"
+msgid "ASCII files"
+msgstr "ASCII-fájlok"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:139
 msgid "X Axis Minimum"
 msgstr "X-tengely legkisebb értéke"
 
-#: graphs/sidebar/figure_settings.vala:141
+#: graphs/sidebar/figure_settings.vala:140
 msgid "Y Axis Minimum"
 msgstr "Y-tengely legkisebb értéke"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:142
 msgid "X Axis Maximum"
 msgstr "X-tengely legnagyobb értéke"
 
-#: graphs/sidebar/figure_settings.vala:144
+#: graphs/sidebar/figure_settings.vala:143
 msgid "Y Axis Maximum"
 msgstr "Y-tengely legnagyobb értéke"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:163
 msgid "X Axis Scale"
 msgstr "X-tengely méretezése"
 
-#: graphs/sidebar/figure_settings.vala:165
-#: graphs/sidebar/figure_settings.vala:169
+#: graphs/sidebar/figure_settings.vala:164
 msgid "X Axis Label"
 msgstr "X-tengely címkéje"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:167
 msgid "Y Axis Scale"
 msgstr "Y-tengely méretezése"
 
-#: graphs/sidebar/figure_settings.vala:228
+#: graphs/sidebar/figure_settings.vala:168
+#| msgid "X Axis Label"
+msgid "Y Axis Label"
+msgstr "Y-tengely címkéje"
+
+#: graphs/sidebar/figure_settings.vala:229
 msgid "Defaults Updated"
 msgstr "Alapértelmezések frissítve"
 
-#: graphs/sidebar/figure_settings.vala:322
+#: graphs/style_editor/__init__.py:68
+msgid "Example Item"
+msgstr "Példa elem"
+
+#: graphs/style_editor/__init__.py:107 graphs/style_io.py:248
+msgid "X Label"
+msgstr "X-címke"
+
+#: graphs/style_editor/__init__.py:108 graphs/style_io.py:249
+msgid "Y Label"
+msgstr "Y-címke"
+
+#: graphs/style_editor/item_color_row.vala:31
+#, c-format
+msgid "Color %d"
+msgstr "%d. szín"
+
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor/window.vala:40
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Grafikonok stílusszerkesztő – %s"
+
+#: graphs/style_editor/window.vala:234
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Biztosan a(z) %s törlését szeretné?"
 
 #: graphs/actions.vala:28
-#| msgid "Graphs (Development)"
 msgid "The Graphs Developers"
 msgstr "A Grafikonok fejlesztői"
 
@@ -1755,121 +2213,151 @@ msgstr ""
 "Meskó Balázs <mesko dot balazs at fsf dot hu>, 2025.\n"
 "Úr Balázs <ur dot balazs at fsf dot hu>, 2024, 2025."
 
-#: graphs/actions.vala:183 graphs/item_box.vala:56
+#: graphs/actions.vala:182 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "„%s” törölve"
 
-#: graphs/actions.vala:218
-msgctxt "file-filter"
-msgid "Supported files"
-msgstr "Támogatott fájlok"
+#: graphs/curve_fitting.py:103
+msgid "Residuals"
+msgstr "Maradékok"
 
-#: graphs/actions.vala:222
-msgctxt "file-filter"
-msgid "ASCII files"
-msgstr "ASCII-fájlok"
-
-#: graphs/actions.vala:226
-msgctxt "file-filter"
-msgid "PANalytical XRDML"
-msgstr "PANalytical XRDML"
-
-#: graphs/actions.vala:229
-msgctxt "file-filter"
-msgid "Leybold xry"
-msgstr "Leybold xry"
-
-#: graphs/application.py:29
-#, python-brace-format
-msgid "Could not load {font}"
-msgstr "Nem sikerült betölteni a(z) {font} betűkészletet"
-
-#: graphs/curve_fitting.py:181
-msgid "Results:"
-msgstr "Eredmények:"
-
-#: graphs/curve_fitting.py:185
+#: graphs/curve_fitting.vala:74
+#| msgid ""
+#| "Please enter valid fitting \n"
+#| "parameters to start the fit"
 msgid ""
-"Please enter valid fitting \n"
-"parameters to start the fit"
+"Please enter valid \n"
+"numeric parameters."
 msgstr ""
-"Adjon meg érvényes illesztési\n"
-"paramétereket az illesztés elkezdéséhez"
+"Adjon meg érvényes \n"
+"numerikus paramétereket."
 
-#: graphs/curve_fitting.py:189
+#: graphs/curve_fitting.vala:75
 msgid ""
-"Please enter a valid equation \n"
-"to start the fit"
+"Constraint error: ensure \n"
+"Lower < Initial < Upper."
 msgstr ""
-"Adjon meg egy érvényes egyenletet\n"
-"az illesztés elkezdéséhez"
+"Kényszerhiba: győződjön meg arról, \n"
+"hogy Alsó < Kezdeti < Felső legyen."
 
-#: graphs/curve_fitting.py:193
+#: graphs/curve_fitting.vala:76
 msgid ""
-"Please enter valid fitting bounds \n"
-"to start the fit"
+"Matrix error: Data is \n"
+"insufficient for this model."
 msgstr ""
-"Adjon meg érvényes illesztési határokat\n"
-"az illesztés elkezdéséhez"
+"Mátrixhiba: az adatok nem \n"
+"elegendőek ehhez a modellhez."
 
-#: graphs/curve_fitting.py:206
-#, python-brace-format
-msgid "Sum of R²: {R2}"
-msgstr "R² összege: {R2}"
+#: graphs/curve_fitting.vala:77
+msgid ""
+"Fit failed: Max iterations \n"
+"reached without converging."
+msgstr ""
+"Illesztés sikertelen: legnagyobb \n"
+"iteráció elérve konvergencia nélkül."
 
-#: graphs/curve_fitting.vala:150
+#: graphs/curve_fitting.vala:78
+msgid ""
+"Domain error: Equation not \n"
+"valid for this data range."
+msgstr ""
+"Tartományhiba: az egyenlet nem \n"
+"érvényes erre az adattartományra."
+
+#: graphs/curve_fitting.vala:79
+msgid ""
+"Invalid equation: Check \n"
+"syntax and variables."
+msgstr ""
+"Érvénytelen egyenlet: ellenőrizze \n"
+"a szintaxist és a változókat."
+
+#: graphs/curve_fitting.vala:80
+msgid ""
+"Confidence band error: \n"
+"Covariance matrix is unstable."
+msgstr ""
+"Konfidenciasáv-hiba: a \n"
+"kovariancia mátrix nem stabil."
+
+#: graphs/curve_fitting.vala:250
+#| msgid "Import Parameters"
+msgid "Parameters"
+msgstr "Paraméterek"
+
+#: graphs/curve_fitting.vala:266
+msgid "Statistics"
+msgstr "Statisztikák"
+
+#: graphs/curve_fitting.vala:269
+msgid "R²"
+msgstr "R²"
+
+#: graphs/curve_fitting.vala:269
+msgid "RMSE"
+msgstr "RMSE"
+
+#: graphs/curve_fitting.vala:446
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s illesztési paraméterei"
 
-#: graphs/data.py:96
+#: graphs/data.py:108
 #, python-brace-format
-#| msgid "Could not parse {stylename}, loading system preferred style"
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
-"Nem sikerült feldolgozni a(z) {stylename} stílust, a rendszer által előnyben r"
-"észesített stílus betöltése"
+"Nem sikerült feldolgozni a(z) {stylename} stílust, a rendszer által előnyben "
+"részesített stílus betöltése"
 
-#: graphs/data.py:101
+#: graphs/data.py:113
 #, python-brace-format
-#| msgid "Plot style {stylename} does not exist loading system preferred"
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
-"A(z) {stylename} stílus nem létezik, a rendszer által előnyben részesített stí"
-"lus betöltése"
+"A(z) {stylename} stílus nem létezik, a rendszer által előnyben részesített "
+"stílus betöltése"
 
-#: graphs/data.py:491
+#: graphs/data.py:601
 msgid "Failed to load project"
 msgstr "Nem sikerült betölteni a projektet"
 
-#: graphs/export_figure.vala:44
+#: graphs/export_figure.vala:48
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Exportált ábra"
 
-#: graphs/export_items.vala:10
+#: graphs/export_figure.vala:74
+#| msgctxt "filename"
+#| msgid "Exported Figure"
+msgid "Exported Figure"
+msgstr "Exportált ábra"
+
+#: graphs/export_items.vala:9
 msgid "No data to export"
 msgstr "Nincsenek exportálandó adatok"
 
-#: graphs/export_items.vala:32
+#: graphs/export_items.vala:31
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Szövegfájlok"
 
-#: graphs/item.py:69
+#: graphs/graphs.in:74
+msgid "Could not load {font}"
+msgstr "Nem sikerült betölteni a(z) {font} betűkészletet"
+
+#: graphs/item.py:83
 msgid "Dataset"
 msgstr "Adathalmaz"
 
-#: graphs/item.py:106
+#: graphs/item.py:156
 msgid "Generated Dataset"
 msgstr "Előállított adatkészlet"
 
-#: graphs/item.py:224
+#: graphs/item.py:272
 msgid "Label"
 msgstr "Címke"
 
-#: graphs/item.py:253
+#: graphs/item.py:308
 msgid "Fill"
 msgstr "Kitöltés"
 
@@ -1878,196 +2366,166 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib stílusfájl"
 
-#: graphs/operations.py:253
+#: graphs/operations.py:251
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Nem lehet végrehajtani a transzformációt, győződön meg arról, hogy a "
 "szintaxis helyes-e"
 
-#: graphs/operations.py:296 graphs/operations.py:604
-msgid "No data found within the highlighted area"
-msgstr "Nem találhatók adatok a kijelölt területen belül"
+#: graphs/operations.py:302
+#| msgid "No data found within the highlighted area"
+msgid "No data found in highlighted area"
+msgstr "Nem találhatók adatok a kiemelt területen"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:306
+msgid "Some items lack error bars; they will be discarded"
+msgstr "Egyes elemeknél hiányoznak a hibasávok, ezek elvetésre kerülnek."
+
+#: graphs/operations.py:314
 msgid "Combined Data"
 msgstr "Kombinált adatok"
 
-#: graphs/operations.py:441
+#: graphs/operations.py:450
 #, python-brace-format
-#| msgid ""
-#| "The operation on {item.props.name} did not result in a plottable equation"
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "A(z) {name} elemen végzett művelet nem eredményezett kirajzolható egyenletet"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:459
 msgid "Operation not supported for equations."
 msgstr "A művelet nem támogatott az egyenletek esetén."
 
-#: graphs/operations.py:610
+#: graphs/operations.py:616
+msgid "No data found within the highlighted area"
+msgstr "Nem találhatók adatok a kijelölt területen belül"
+
+#: graphs/operations.py:622
 msgid "Operation not supported for data items"
 msgstr "A művelet nem támogatott az adatelemek esetén."
 
-#: graphs/operations.py:613
+#: graphs/operations.py:625
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: hiba a művelet végrehajtásakor"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:631
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "A kiemelt területen kívül eső adatok elvetésre kerültek"
 
-#: graphs/parse_file.py:56
-msgid "Intensity (cps)"
-msgstr "Intenzitás (cps)"
-
-#: graphs/parse_file.py:70
-msgid "Invalid .xry format"
-msgstr "Érvénytelen .xry formátum"
-
-#: graphs/parse_file.py:85
-msgid "β (°)"
-msgstr "β (°)"
-
-#: graphs/parse_file.py:86
-msgid "R (1/s)"
-msgstr "R (1/s)"
-
-#: graphs/parse_file.py:153
-msgid "Import failed, column index out of range"
-msgstr "Az importálás sikertelen, az oszlop indexe kívül esik a tartományon"
-
-#: graphs/parse_file.py:172
-msgid "Unable to import from file"
-msgstr "Nem lehet importálni a fájlból"
-
-#: graphs/project.py:50
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "A projektfájlból adatok hiányoznak"
 
-#: graphs/project.py:64
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr ""
 "A projekt a Grafikonok egy újabb, nem kompatibilis változatából származik"
 
-#: graphs/project.py:237
+#: graphs/project.py:287
 msgid "Failed to do legacy migration"
 msgstr "Nem sikerült elvégezni az örökölt költöztetést"
 
-#: graphs/project.py:239
+#: graphs/project.py:289
 msgid "Failed to parse project file"
 msgstr "Nem sikerült feldolgozni a projektfájlt"
 
-#: graphs/project.py:243
+#: graphs/project.py:295
 msgid "Failed to migrate project"
 msgstr "Nem sikerült költöztetni a projektet"
 
-#: graphs/project.py:247
+#: graphs/project.py:301
 msgid "Failed to validate project"
 msgstr "Nem sikerült ellenőrizni a projektet"
 
-#: graphs/project.vala:15
-msgctxt "file-filter"
-msgid "Graphs Project File"
-msgstr "Grafikonok projektfájl"
-
-#: graphs/project.vala:22
+#: graphs/project.vala:31
 msgid "Saved Project"
 msgstr "Mentett projekt"
 
-#: graphs/project.vala:37
+#: graphs/project.vala:46
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/style_editor.py:444
-msgid "Example Item"
-msgstr "Példa elem"
+#: graphs/python_helper.vala:38
+#| msgctxt "shortcut window"
+#| msgid "Export Data"
+msgid "Exported Data"
+msgstr "Exportált adatok"
 
-#: graphs/style_editor.py:477 graphs/style_io.py:181
-msgid "X Label"
-msgstr "X-címke"
-
-#: graphs/style_editor.py:478 graphs/style_io.py:182
-msgid "Y Label"
-msgstr "Y-címke"
-
-#. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor.vala:38
-#, c-format
-msgid "Graphs Style Editor — %s"
-msgstr "Grafikonok stílusszerkesztő – %s"
-
-#: graphs/style_editor.vala:202
-#, c-format
-#| msgid "Colors"
-msgid "Color %d"
-msgstr "%d. szín"
-
-#: graphs/style_io.py:76
+#: graphs/style_io.py:109
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Hiányzó kettőspont a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:84
+#: graphs/style_io.py:117
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Nem stílussal kapcsolatos {param} paraméter a(z) {file} fájlban"
 
-#: graphs/style_io.py:87
+#: graphs/style_io.py:120
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "A(z) {param} paraméter mellőzése a(z) {file} fájlban"
 
-#: graphs/style_io.py:91
+#: graphs/style_io.py:124
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Kettőzött kulcs a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:111
+#: graphs/style_io.py:142
+#, python-brace-format
+#| msgid "Bad value in file {file} on line {line}"
+msgid ""
+"Bad value in file {file} on line {line}, custom parameter {key} is not "
+"supported"
+msgstr ""
+"Hibás érték a(z) {file} fájl {line}. sorában, az egyéni {key} paraméter nem tá"
+"mogatott"
+
+#: graphs/style_io.py:166
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Hibás érték a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:116
+#: graphs/style_io.py:171
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Nem sikerült feldolgozni a(z) {filename} fájlt"
 
-#: graphs/style_io.py:125
+#: graphs/style_io.py:181
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "A(z) {file} fájl nem tartalmaz név címkét"
 
-#: graphs/styles.vala:70
+#: graphs/styles.vala:58
 msgid "System"
 msgstr "Rendszer"
 
-#: graphs/utilities.vala:198
+#: graphs/utilities.vala:148
 msgid "All Files"
 msgstr "Összes fájl"
 
-#: graphs/utilities.vala:236
+#: graphs/utilities.vala:189
 msgid "Document Portal"
 msgstr "Dokumentumportál"
 
-#: graphs/window.vala:148
+#: graphs/window.vala:142
 msgid "Graphs (Development)"
 msgstr "Grafikonok (fejlesztői)"
 
-#: graphs/window.vala:200
+#: graphs/window.vala:194
 msgid "Untitled Project"
 msgstr "Névtelen projekt"
 
-#: graphs/window.vala:201
+#: graphs/window.vala:195
 msgid "Draft"
 msgstr "Piszkozat"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:207
+#: graphs/window.vala:201
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafikonok – %s"
 
-#: graphs/window.vala:402
+#: graphs/window.vala:391
 msgid "Open Location"
 msgstr "Hely megnyitása"
