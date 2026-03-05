@@ -1,13 +1,13 @@
 # Hungarian translation for Graphs.
-# Copyright (C) 2024 Free Software Foundation, Inc.
+# Copyright (C) 2024, 2026 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Graphs package.
 #
-# Balázs Úr <ur.balazs at fsf dot hu>, 2024.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2024, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
-"POT-Creation-Date: 2024-08-22 13:23+0000\n"
-"PO-Revision-Date: 2024-08-23 10:22+0200\n"
+"POT-Creation-Date: 2026-02-13 21:07+0000\n"
+"PO-Revision-Date: 2026-03-05 02:37+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 23.08.4\n"
+"X-Generator: Lokalize 25.08.1\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
@@ -302,18 +302,23 @@ msgstr ""
 "míg a <code>cos(x)</code> olyan koszinuszt állít elő, ahol az x-koordináta "
 "radiánban van megadva."
 
+#. (itstool) path: info/desc
+#: C/index.page:8
+msgid "Plot and manipulate data"
+msgstr "Adatok ábrázolása és manipulálása"
+
 #. (itstool) path: page/title
-#: C/index.page:10
+#: C/index.page:11
 msgid "<_:media-1/> Graphs"
 msgstr "<_:media-1/> Grafikonok"
 
 #. (itstool) path: section/title
-#: C/index.page:16
+#: C/index.page:17
 msgid "How to"
 msgstr "Hogyan"
 
 #. (itstool) path: section/p
-#: C/index.page:17
+#: C/index.page:18
 msgid ""
 "There's multiple how-to guides available for Graphs. These can be found here."
 msgstr ""
