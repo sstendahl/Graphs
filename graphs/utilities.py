@@ -145,13 +145,11 @@ def create_equidistant_xdata(
 
 def equation_to_data(
     equation: str,
-    limits: tuple = None,
+    limits: tuple,
     steps: int = 5000,
     scale: int = 0,
 ) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
-    if limits is None:
-        limits = (0, 10)
     xdata = create_equidistant_xdata(limits, scale, steps)
     try:
         ydata = numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata})
