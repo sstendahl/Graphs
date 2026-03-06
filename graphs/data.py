@@ -474,15 +474,16 @@ class Data(Graphs.Data):
             has_singularities = singularities(expr, x, domain)
 
             if xaxis[5] is None:
-                xaxis[5] = utilities.create_equidistant_xdata(x_limits, yscale)
+                xscale = xaxis[4]
+                xaxis[5] = utilities.create_equidistant_xdata(x_limits, xscale)
             func = sympy.lambdify(x, expr, "numpy")
             ydata = numpy.asarray(func(xaxis[5]))
+            ydata = ydata[numpy.isfinite(ydata)]
 
-            mask = numpy.isfinite(ydata)
             if has_singularities:
                 # Don't take negative values into account for log scaling
                 if yscale in LOG_SCALES:
-                    mask &= ydata > 0
+                    ydata = ydata[ydata > 0]
 
                 y_min, y_max = ydata.min(), ydata.max()
                 lower_bound = utilities.get_value_at_fraction(
@@ -497,9 +498,7 @@ class Data(Graphs.Data):
                     y_max,
                     yscale,
                 )
-                mask &= (ydata >= lower_bound) & (ydata <= upper_bound)
-
-            ydata = ydata[mask]
+                ydata = ydata.clip(lower_bound, upper_bound)
 
             if ydata.size == 0:
                 continue

@@ -103,11 +103,10 @@ def create_equidistant_xdata(
     limits: tuple,
     scale: int = 1,
     steps: int = 5000,
-) -> numpy.array:
+) -> numpy.ndarray:
     """Generate evenly-spaced x-values on the given scale."""
     x_start, x_stop = limits
-    scale = scales.Scale(scale)
-    match scale:
+    match scales.Scale(scale):
         case scales.Scale.LINEAR | scales.Scale.RADIANS:
             xdata = numpy.linspace(x_start, x_stop, steps)
         case scales.Scale.LOG:
