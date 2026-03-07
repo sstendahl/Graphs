@@ -6,16 +6,16 @@
 msgid ""
 msgstr "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2024-07-26 12:50+0000\n"
-"PO-Revision-Date: 2024-09-14 10:00+0000\n"
-"Last-Translator: Asier Sarasua Garmendia <asiersarasua@ni.eus>\n"
+"POT-Creation-Date: 2026-01-06 09:15+0000\n"
+"PO-Revision-Date: 2026-03-07 10:00+0000\n"
+"Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:3
+#: data/se.sjoerd.Graphs.appdata.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/window.blp:9 graphs/about.vala:23
 msgid "Graphs"
 msgstr "Grafikoak"
@@ -79,9 +79,7 @@ msgid "5 - Manipulate imported data with ease"
 msgstr "5 - Inportatu eta manipulatu datuak erraz"
 
 #: data/se.sjoerd.Graphs.desktop.in:10
-msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;"
-"Visualisation;Visualization;Fitting;xrdml;"
+msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Visualization;Fitting;xrdml;"
 msgstr "Marraztea;Grafikoa;Grafikoak;Zientzia;Matematikak;Mateak;Ekuazioak;Datuak;Diagrama;Bisualizazioa;Bistaratzea;Doitzea;xrdml;"
 
 #: data/ui/add-equation.blp:6
@@ -203,19 +201,19 @@ msgstr "Oihalaren kargak huts egin du"
 msgid "Optimization Method"
 msgstr "Optimizazio-metodoa"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:134
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:140
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Kofiantza-eskualde islatzailea"
 
-#. Translators: see https://world.pages.gitlab.gnome.org/Graphs/help/C/curve_fitting.html#algorithms
+#. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
 #: data/ui/curve-fitting.blp:146
 msgctxt "optimization"
 msgid "Dogbox"
@@ -1699,15 +1697,13 @@ msgstr "X etiketa"
 msgid "Y Label"
 msgstr "Y etiketa"
 
-#: graphs/styles.py:305
-#, python-brace-format
-msgid "Could not parse {stylename}, loading system preferred style"
-msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
+#: graphs/styles.py:306
+msgid "system preferred style"
+msgstr "sistemak hobetsitako estiloa"
 
-#: graphs/styles.py:313
-#, python-brace-format
-msgid "Plot style {stylename} does not exist loading system preferred"
-msgstr "{stylename} diagrama-estiloa ez da existitzen, sistemaren lehenetsia kargatuko da"
+#: graphs/styles.py:314
+msgid "loading system preferred"
+msgstr "sistemak hobetsitakoa kargatzen"
 
 #: graphs/styles.py:726
 #, python-brace-format
@@ -1756,7 +1752,7 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Testu-fitxategiak"
 
-#: graphs/utilities.py:122
+#: graphs/utilities.py:123
 msgid "All Files"
 msgstr "Fitxategi guztiak"
 
@@ -1776,6 +1772,17 @@ msgstr "Optimizatu mugak"
 msgctxt "scale"
 msgid "Inverse Root"
 msgstr "Alderantzizko erroa"
+
+#, python-brace-format
+#~ msgid "Could not parse {stylename}, loading system preferred style"
+#~ msgstr ""
+#~ "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
+
+#, python-brace-format
+#~ msgid "Plot style {stylename} does not exist loading system preferred"
+#~ msgstr ""
+#~ "{stylename} diagrama-estiloa ez da existitzen, sistemaren lehenetsia "
+#~ "kargatuko da"
 
 #~ msgid "Y = "
 #~ msgstr "Y = "
