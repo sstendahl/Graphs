@@ -60,7 +60,7 @@ def _save_item(
             limits = [limits[0], limits[1]]
         elif item.get_xposition() == 1:
             limits = [limits[2], limits[3]]
-        equation = Graphs.preprocess_equation(item.props.equation)
+        equation = item.get_preprocessed_equation()
         xdata, ydata = utilities.equation_to_data(equation, limits)
 
     n_cols = 2 + (xerr is not None) + (yerr is not None)

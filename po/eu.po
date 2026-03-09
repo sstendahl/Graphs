@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-02-20 16:56+0000\n"
-"PO-Revision-Date: 2026-02-21 10:00+0000\n"
+"POT-Creation-Date: 2026-02-24 12:40+0000\n"
+"PO-Revision-Date: 2026-03-07 10:00+0000\n"
 "Last-Translator: Asier Saratsua Garmendia <asiersarasua@ni.eus>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "Language: eu\n"
@@ -191,7 +191,7 @@ msgid "Add Item"
 msgstr "Gehitu elementua"
 
 #: data/ui/import/columns/item-group.blp:9
-#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:124
+#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
 #: data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "Kendu"
@@ -207,9 +207,8 @@ msgid "Y Column"
 msgstr "Y zutabea"
 
 #: data/ui/import/columns/item-group.blp:51
-#: data/ui/import/spreadsheet/item-group.blp:51
-msgid "Single Column"
-msgstr "Zutabe bakarra"
+msgid "Y Values Only"
+msgstr "Y balioak soilik"
 
 #: data/ui/import/columns/item-group.blp:52
 #: data/ui/import/spreadsheet/item-group.blp:52
@@ -217,9 +216,10 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Inportatu Y balioak soilik, X balioak berez sortuko dira"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/import/spreadsheet/item-group.blp:57
-msgid "X Value Equation"
-msgstr "X balioaren ekuazioa"
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
+#: graphs/item.py:225
+msgid "Equation"
+msgstr "Ekuazioa"
 
 #: data/ui/import/columns/item-group.blp:64
 #: data/ui/import/columns/main-group.blp:32
@@ -252,6 +252,30 @@ msgstr "<b>X balioaren kalkulua</b>\n"
 "• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
 "• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/sql/main-group.blp:28
+#: data/ui/import/spreadsheet/item-group.blp:91
+msgid "X Error Bars"
+msgstr "X errore-barrak"
+
+#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/sql/main-group.blp:33
+#: data/ui/import/spreadsheet/item-group.blp:95
+msgid "Y Error Bars"
+msgstr "Y errore-barrak"
+
+#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/sql/main-group.blp:40
+#: data/ui/import/spreadsheet/item-group.blp:108
+msgid "X Error Column"
+msgstr "X errore-zutabeak"
+
+#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/sql/main-group.blp:46
+#: data/ui/import/spreadsheet/item-group.blp:120
+msgid "Y Error Column"
+msgstr "Y errore-zutabeak"
 
 #: data/ui/import/columns/main-group.blp:5
 msgid "Format"
@@ -338,7 +362,7 @@ msgstr "X zutabea"
 msgid "Column Y"
 msgstr "Y zutabea"
 
-#: data/ui/import/sql/main-group.blp:23
+#: data/ui/import/sql/main-group.blp:54
 msgid "This table contains no numeric columns"
 msgstr "Taula honek zenbakizkoak ez diren zutabeak ditu"
 
@@ -353,6 +377,14 @@ msgstr "Orria"
 #: data/ui/import/spreadsheet/main-group.blp:9
 msgid "Select which sheet to import"
 msgstr "Hautatu inportatuko den orria"
+
+#: data/ui/import/spreadsheet/item-group.blp:51
+msgid "Single Column"
+msgstr "Zutabe bakarra"
+
+#: data/ui/import/spreadsheet/item-group.blp:57
+msgid "X Value Equation"
+msgstr "X balioaren ekuazioa"
 
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
@@ -370,11 +402,11 @@ msgstr "Inportatu"
 msgid "Reset to guessed values"
 msgstr "Berrezarri balio estimatuetara"
 
-#: data/ui/import/dialog.blp:105
+#: data/ui/import/dialog.blp:106
 msgid "Import Mode"
 msgstr "Inportatze modua"
 
-#: data/ui/import/dialog.blp:117
+#: data/ui/import/dialog.blp:118
 #: data/ui/sidebar/figure-settings/settings-page.blp:265
 msgid "Set as Default"
 msgstr "Ezarri lehenetsi gisa"
@@ -411,193 +443,192 @@ msgstr "Ezkerrera"
 msgid "Right"
 msgstr "Eskuinera"
 
-#: data/ui/sidebar/edit-item/data.blp:8
+#: data/ui/sidebar/edit-item/data.blp:9
 msgid "Line and Markers"
 msgstr "Marra eta markatzaileak"
 
-#: data/ui/sidebar/edit-item/data.blp:11
+#: data/ui/sidebar/edit-item/data.blp:12
 #: data/ui/sidebar/edit-item/equation.blp:14
 #: data/ui/style-editor/editor-box.blp:62
 msgid "Linestyle"
 msgstr "Marra-estiloa"
 
-#: data/ui/sidebar/edit-item/data.blp:16 data/ui/style-editor/editor-box.blp:67
+#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: data/ui/sidebar/edit-item/data.blp:17
+#: data/ui/sidebar/edit-item/data.blp:18
 #: data/ui/sidebar/edit-item/equation.blp:18
 #: data/ui/style-editor/editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Solidoa"
 
-#: data/ui/sidebar/edit-item/data.blp:18
+#: data/ui/sidebar/edit-item/data.blp:19
 #: data/ui/sidebar/edit-item/equation.blp:19
 #: data/ui/style-editor/editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Puntuak"
 
-#: data/ui/sidebar/edit-item/data.blp:19
+#: data/ui/sidebar/edit-item/data.blp:20
 #: data/ui/sidebar/edit-item/equation.blp:20
 #: data/ui/style-editor/editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Marratxoduna"
 
-#: data/ui/sidebar/edit-item/data.blp:20
+#: data/ui/sidebar/edit-item/data.blp:21
 #: data/ui/sidebar/edit-item/equation.blp:21
 #: data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Marratxoak eta puntuak"
 
-#: data/ui/sidebar/edit-item/data.blp:26
+#: data/ui/sidebar/edit-item/data.blp:27
 #: data/ui/sidebar/edit-item/equation.blp:27
-#: data/ui/style-editor/editor-box.blp:77
 msgid "Linewidth"
-msgstr "Marra-zabalera"
+msgstr "Lerro-zabalera"
 
-#: data/ui/sidebar/edit-item/data.blp:41 data/ui/style-editor/editor-box.blp:94
+#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:94
 msgid "Markers"
 msgstr "Markatzaileak"
 
-#: data/ui/sidebar/edit-item/data.blp:46 data/ui/style-editor/editor-box.blp:99
+#: data/ui/sidebar/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Bat ere ez"
 
-#: data/ui/sidebar/edit-item/data.blp:47
+#: data/ui/sidebar/edit-item/data.blp:48
 #: data/ui/style-editor/editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Puntua"
 
-#: data/ui/sidebar/edit-item/data.blp:48
+#: data/ui/sidebar/edit-item/data.blp:49
 #: data/ui/style-editor/editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Pixel"
 
-#: data/ui/sidebar/edit-item/data.blp:49
+#: data/ui/sidebar/edit-item/data.blp:50
 #: data/ui/style-editor/editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Zirkulua"
 
-#: data/ui/sidebar/edit-item/data.blp:50
+#: data/ui/sidebar/edit-item/data.blp:51
 #: data/ui/style-editor/editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Beheranzko triangelua"
 
-#: data/ui/sidebar/edit-item/data.blp:51
+#: data/ui/sidebar/edit-item/data.blp:52
 #: data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Goranzko triangelua"
 
-#: data/ui/sidebar/edit-item/data.blp:52
+#: data/ui/sidebar/edit-item/data.blp:53
 #: data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Ezkerreranzko triangelua"
 
-#: data/ui/sidebar/edit-item/data.blp:53
+#: data/ui/sidebar/edit-item/data.blp:54
 #: data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Eskuineranzko triangelua"
 
-#: data/ui/sidebar/edit-item/data.blp:54
+#: data/ui/sidebar/edit-item/data.blp:55
 #: data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Oktogonoa"
 
-#: data/ui/sidebar/edit-item/data.blp:55
+#: data/ui/sidebar/edit-item/data.blp:56
 #: data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Karratua"
 
-#: data/ui/sidebar/edit-item/data.blp:56
+#: data/ui/sidebar/edit-item/data.blp:57
 #: data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Pentagonoa"
 
-#: data/ui/sidebar/edit-item/data.blp:57
+#: data/ui/sidebar/edit-item/data.blp:58
 #: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Eman izarra"
 
-#: data/ui/sidebar/edit-item/data.blp:58
+#: data/ui/sidebar/edit-item/data.blp:59
 #: data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hexagonoa 1"
 
-#: data/ui/sidebar/edit-item/data.blp:59
+#: data/ui/sidebar/edit-item/data.blp:60
 #: data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hexagonoa 2"
 
-#: data/ui/sidebar/edit-item/data.blp:60
+#: data/ui/sidebar/edit-item/data.blp:61
 #: data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Plus"
 
-#: data/ui/sidebar/edit-item/data.blp:61
+#: data/ui/sidebar/edit-item/data.blp:62
 #: data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/sidebar/edit-item/data.blp:63
+#: data/ui/sidebar/edit-item/data.blp:64
 #: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Diamantea"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/sidebar/edit-item/data.blp:65
+#: data/ui/sidebar/edit-item/data.blp:66
 #: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Diamante mehea"
 
-#: data/ui/sidebar/edit-item/data.blp:66
+#: data/ui/sidebar/edit-item/data.blp:67
 #: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Marra bertikala"
 
-#: data/ui/sidebar/edit-item/data.blp:67
+#: data/ui/sidebar/edit-item/data.blp:68
 #: data/ui/style-editor/editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Marra horizontala"
 
-#: data/ui/sidebar/edit-item/data.blp:68
+#: data/ui/sidebar/edit-item/data.blp:69
 #: data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Plus betea"
 
-#: data/ui/sidebar/edit-item/data.blp:69
+#: data/ui/sidebar/edit-item/data.blp:70
 #: data/ui/style-editor/editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X betea"
 
-#: data/ui/sidebar/edit-item/data.blp:75
+#: data/ui/sidebar/edit-item/data.blp:76
 #: data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "Markatzaile-tamaina"
@@ -605,11 +636,6 @@ msgstr "Markatzaile-tamaina"
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Lerroa"
-
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.py:200
-msgid "Equation"
-msgstr "Ekuazioa"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
 #: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
@@ -620,6 +646,43 @@ msgstr "Y ="
 #: data/ui/sidebar/edit-item/equation-group.blp:15
 msgid "Simplify"
 msgstr "Sinplifikatu"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:9
+#: data/ui/style-editor/editor-box.blp:146
+msgid "Error Bars"
+msgstr "Errore-barrak"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:12
+msgid "Show Horizontal"
+msgstr "Erakutsi horizontala"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+msgid "Show Vertical"
+msgstr "Erakutsi bertikala"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/style-editor/editor-box.blp:194
+msgid "Draw Above Data"
+msgstr "Marraztu datuen gainean"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+msgid "Color"
+msgstr "Kolorea"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/style-editor/editor-box.blp:149
+msgid "Cap Length"
+msgstr "Estalki-luzera"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/style-editor/editor-box.blp:164
+msgid "Cap Thickness"
+msgstr "Estalki-lodiera"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/style-editor/editor-box.blp:179
+msgid "Line Width"
+msgstr "Marra-zabalera"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:18 data/ui/generate-data.blp:72
 msgid "X Start"
@@ -717,7 +780,7 @@ msgid "Labels"
 msgstr "Etiketak"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:98
+#: graphs/style_editor/__init__.py:106
 msgid "Title"
 msgstr "Titulua"
 
@@ -1133,165 +1196,174 @@ msgstr "Etiketa-tamaina testu-tamainarekiko"
 msgid "Lines"
 msgstr "Lerroak"
 
-#: data/ui/style-editor/editor-box.blp:146
+#: data/ui/style-editor/editor-box.blp:77
+msgid "Line width"
+msgstr "Lerro-zabalera"
+
+#: data/ui/style-editor/editor-box.blp:199
 msgid "Axes"
 msgstr "Ardatzak"
 
-#: data/ui/style-editor/editor-box.blp:149
+#: data/ui/style-editor/editor-box.blp:202
 msgid "Axis Width"
 msgstr "Ardatz-zabalera"
 
-#: data/ui/style-editor/editor-box.blp:163
+#: data/ui/style-editor/editor-box.blp:216
 msgid "Draw Frame"
 msgstr "Marraztu markoa"
 
-#: data/ui/style-editor/editor-box.blp:168
+#: data/ui/style-editor/editor-box.blp:221
 msgid "Ticks"
 msgstr "Markak"
 
-#: data/ui/style-editor/editor-box.blp:171
+#: data/ui/style-editor/editor-box.blp:224
 msgid "Tick Directions"
 msgstr "Marken norabidea"
 
-#: data/ui/style-editor/editor-box.blp:175
+#: data/ui/style-editor/editor-box.blp:228
 msgid "Inwards"
 msgstr "Barrurantz"
 
-#: data/ui/style-editor/editor-box.blp:176
+#: data/ui/style-editor/editor-box.blp:229
 msgid "Outwards"
 msgstr "Kanporantz"
 
-#: data/ui/style-editor/editor-box.blp:182
+#: data/ui/style-editor/editor-box.blp:235
 msgid "Minor Ticks"
 msgstr "Bigarren mailako markak"
 
-#: data/ui/style-editor/editor-box.blp:186
+#: data/ui/style-editor/editor-box.blp:239
 msgid "Major Tick Width"
 msgstr "Marka nagusien zabalera"
 
-#: data/ui/style-editor/editor-box.blp:201
+#: data/ui/style-editor/editor-box.blp:254
 msgid "Minor Tick Width"
 msgstr "Bigarren mailako marken zabalera"
 
-#: data/ui/style-editor/editor-box.blp:217
+#: data/ui/style-editor/editor-box.blp:270
 msgid "Major Tick Length"
 msgstr "Marka nagusien luzera"
 
-#: data/ui/style-editor/editor-box.blp:232
+#: data/ui/style-editor/editor-box.blp:285
 msgid "Minor Tick Length"
 msgstr "Bigarren mailako marken luzera"
 
-#: data/ui/style-editor/editor-box.blp:248
+#: data/ui/style-editor/editor-box.blp:301
 msgid "Show Tick Labels on all Axes"
 msgstr "Erakutsi marken etiketak ardatz guztietan"
 
-#: data/ui/style-editor/editor-box.blp:252
+#: data/ui/style-editor/editor-box.blp:305
 msgid "Ticks on Bottom Axis"
 msgstr "Markak beheko ardatzean"
 
-#: data/ui/style-editor/editor-box.blp:256
+#: data/ui/style-editor/editor-box.blp:309
 msgid "Ticks on Left Axis"
 msgstr "Markak ezkerreko ardatzean"
 
-#: data/ui/style-editor/editor-box.blp:260
+#: data/ui/style-editor/editor-box.blp:313
 msgid "Ticks on Right Axis"
 msgstr "Markak eskuineko ardatzean"
 
-#: data/ui/style-editor/editor-box.blp:264
+#: data/ui/style-editor/editor-box.blp:317
 msgid "Ticks on Top Axis"
 msgstr "Markak goiko ardatzean"
 
-#: data/ui/style-editor/editor-box.blp:269
+#: data/ui/style-editor/editor-box.blp:322
 msgid "Grid"
 msgstr "Sareta"
 
-#: data/ui/style-editor/editor-box.blp:272
+#: data/ui/style-editor/editor-box.blp:325
 msgid "Show Grid"
 msgstr "Erakutsi sareta"
 
-#: data/ui/style-editor/editor-box.blp:276
+#: data/ui/style-editor/editor-box.blp:329
 msgid "Grid Width"
 msgstr "Saretaren zabalera"
 
-#: data/ui/style-editor/editor-box.blp:292
+#: data/ui/style-editor/editor-box.blp:345
 msgid "Grid Opacity"
 msgstr "Saretaren opakutasuna"
 
-#: data/ui/style-editor/editor-box.blp:309
+#: data/ui/style-editor/editor-box.blp:362
 msgid "Padding"
 msgstr "Tarte betegarria"
 
-#: data/ui/style-editor/editor-box.blp:310
+#: data/ui/style-editor/editor-box.blp:363
 msgid "Padding for different parts of the figure"
 msgstr "Irudiaren atal bakoitzaren betegarriak"
 
-#: data/ui/style-editor/editor-box.blp:313
+#: data/ui/style-editor/editor-box.blp:366
 msgid "Value Padding"
 msgstr "Balioen betegarria"
 
-#: data/ui/style-editor/editor-box.blp:314
+#: data/ui/style-editor/editor-box.blp:367
 msgid "Padding between axes and values"
 msgstr "Ardatzen eta balioen arteko betegarria"
 
-#: data/ui/style-editor/editor-box.blp:329
+#: data/ui/style-editor/editor-box.blp:382
 msgid "Label Padding"
 msgstr "Etiketen betegarria"
 
-#: data/ui/style-editor/editor-box.blp:330
+#: data/ui/style-editor/editor-box.blp:383
 msgid "Padding between axes and labels"
 msgstr "Ardatzen eta etiketen arteko betegarria"
 
-#: data/ui/style-editor/editor-box.blp:345
+#: data/ui/style-editor/editor-box.blp:398
 msgid "Title Padding"
 msgstr "Tituluaren betegarria"
 
-#: data/ui/style-editor/editor-box.blp:346
+#: data/ui/style-editor/editor-box.blp:399
 msgid "Padding between axes and the title"
 msgstr "Ardatzen eta tituluaren arteko betegarria"
 
-#: data/ui/style-editor/editor-box.blp:362
+#: data/ui/style-editor/editor-box.blp:415
 msgid "Colors"
 msgstr "Koloreak"
 
-#: data/ui/style-editor/editor-box.blp:366
+#: data/ui/style-editor/editor-box.blp:419
 msgid "Label text might be hard to read"
 msgstr "Etiketaren testua irakurtzeko zaila izan daiteke"
 
-#: data/ui/style-editor/editor-box.blp:378
+#: data/ui/style-editor/editor-box.blp:431
 msgid "Poor Contrast"
 msgstr "Kontraste gutxi"
 
-#: data/ui/style-editor/editor-box.blp:394
+#: data/ui/style-editor/editor-box.blp:447
 msgid "Text Color"
 msgstr "Testuaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:405
+#: data/ui/style-editor/editor-box.blp:458
 msgid "Tick Color"
 msgstr "Marken kolorea"
 
-#: data/ui/style-editor/editor-box.blp:416
+#: data/ui/style-editor/editor-box.blp:469
 msgid "Axis Color"
 msgstr "Ardatzen kolorea"
 
-#: data/ui/style-editor/editor-box.blp:427
+#: data/ui/style-editor/editor-box.blp:480
 msgid "Grid Color"
 msgstr "Saretaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:438
+#: data/ui/style-editor/editor-box.blp:491
 msgid "Background Color"
 msgstr "Atzeko planoaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:449
+#: data/ui/style-editor/editor-box.blp:502
 msgid "Outline Color"
 msgstr "Ingeradaren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:456
+#: data/ui/style-editor/editor-box.blp:509
 msgid "Line Colors"
 msgstr "Marren kolorea"
 
-#: data/ui/style-editor/editor-box.blp:468
+#: data/ui/style-editor/editor-box.blp:521
+#: data/ui/style-editor/editor-box.blp:550
 msgid "Add Color"
 msgstr "Gehitu kolorea"
+
+#: data/ui/style-editor/editor-box.blp:538
+msgid "Error Bar Colors"
+msgstr "Errore-barraren koloreak"
 
 #: data/ui/style-editor/item-color-row.blp:18
 msgid "Edit"
@@ -1873,20 +1945,20 @@ msgstr "Zutabeak"
 msgid "Custom delimiter cannot be empty"
 msgstr "Mugatzaile pertsonalizatuak ezin du hutsik egon"
 
-#: graphs/file_import/parsers/columns/parser.vala:94
+#: graphs/file_import/parsers/columns/parser.vala:106
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr "Indize-errorea hemen: %s. Ezin da atzitu %d indizea %d lerroan, %d zutabe soilik aurkitu da"
 
-#: graphs/file_import/parsers/columns/parser.vala:120
+#: graphs/file_import/parsers/columns/parser.vala:132
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Ezin da inportatu fitxategitik, balio okerra %d lerroan"
 
 #: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:117
+#: graphs/file_import/parsers/spreadsheet/ui.vala:141
 #, c-format
 msgid "Item %d"
 msgstr "%d. elementua"
@@ -1911,11 +1983,11 @@ msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Kalkulu-orria"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:272
+#: graphs/file_import/parsers/spreadsheet/__init__.py:276
 msgid "No numeric data found in column."
 msgstr "Ez da zenbakizko daturik aurkitu zutabean."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:287
+#: graphs/file_import/parsers/spreadsheet/__init__.py:291
 msgid "Columns do not have the same length."
 msgstr "Zutabeek ez dute luzera bera."
 
@@ -2025,15 +2097,15 @@ msgstr "Y ardatzaren etiketa"
 msgid "Defaults Updated"
 msgstr "Lehenespenak eguneratu dira"
 
-#: graphs/style_editor/__init__.py:63
+#: graphs/style_editor/__init__.py:68
 msgid "Example Item"
 msgstr "Adibideko elementua"
 
-#: graphs/style_editor/__init__.py:99 graphs/style_io.py:232
+#: graphs/style_editor/__init__.py:107 graphs/style_io.py:248
 msgid "X Label"
 msgstr "X etiketa"
 
-#: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
+#: graphs/style_editor/__init__.py:108 graphs/style_io.py:249
 msgid "Y Label"
 msgstr "Y etiketa"
 
@@ -2070,87 +2142,87 @@ msgstr "%s ezabatu da"
 msgid "Residuals"
 msgstr "Hondarrak"
 
-#: graphs/curve_fitting.vala:119
+#: graphs/curve_fitting.vala:74
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
 msgstr "Sartu baliozko\n"
 "zenbakizko parametroak."
 
-#: graphs/curve_fitting.vala:120
+#: graphs/curve_fitting.vala:75
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
 msgstr "Murriztapen-errorea: ziurtatu\n"
 "Baxuena < Hasierakoa < Altuena."
 
-#: graphs/curve_fitting.vala:121
+#: graphs/curve_fitting.vala:76
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
 msgstr "Matrize-errorea: Datuak ez\n"
 "dira aski eredu honetarako."
 
-#: graphs/curve_fitting.vala:122
+#: graphs/curve_fitting.vala:77
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
 msgstr "Bat etortzeak huts egin du: Iterazio kopuru\n"
 "maximora iritsi da bat etorri gabe."
 
-#: graphs/curve_fitting.vala:123
+#: graphs/curve_fitting.vala:78
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
 msgstr "Domeinu-errorea: Ekuazioa ez\n"
 "da baliozkoa datu-barruti honetarako."
 
-#: graphs/curve_fitting.vala:124
+#: graphs/curve_fitting.vala:79
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
 msgstr "Ekuazio baliogabea: Egiaztatu\n"
 "sintaxia eta aldagaiak."
 
-#: graphs/curve_fitting.vala:125
+#: graphs/curve_fitting.vala:80
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
 msgstr "Errorea konfiantza-bandan:\n"
 "Kobariantza-matrizea desegonkorra da."
 
-#: graphs/curve_fitting.vala:265
+#: graphs/curve_fitting.vala:250
 msgid "Parameters"
 msgstr "Parametroak"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:266
 msgid "Statistics"
 msgstr "Estatistikak"
 
-#: graphs/curve_fitting.vala:285
+#: graphs/curve_fitting.vala:269
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:285
+#: graphs/curve_fitting.vala:269
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:463
+#: graphs/curve_fitting.vala:446
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Doitze-parametroak %s(e)rako"
 
-#: graphs/data.py:104
+#: graphs/data.py:108
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "Ezin da {stylename} analizatu, sistemaren estilo lehenetsia kargatuko da"
 
-#: graphs/data.py:109
+#: graphs/data.py:113
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "{stylename} estiloa ez da existitzen, sistemaren estilo lehenetsia kargatuko da"
 
-#: graphs/data.py:593
+#: graphs/data.py:601
 msgid "Failed to load project"
 msgstr "Huts egin du proiektua kargatzeak"
 
@@ -2180,15 +2252,15 @@ msgstr "Ezin da {font} kargatu"
 msgid "Dataset"
 msgstr "Datu multzoa"
 
-#: graphs/item.py:131
+#: graphs/item.py:156
 msgid "Generated Dataset"
 msgstr "Sortu datu multzoa"
 
-#: graphs/item.py:247
+#: graphs/item.py:272
 msgid "Label"
 msgstr "Etiketa"
 
-#: graphs/item.py:283
+#: graphs/item.py:308
 msgid "Fill"
 msgstr "Bete"
 
@@ -2201,33 +2273,41 @@ msgstr "Matplotlib estilo-fitxategia"
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Ezin da transformazioa gauzatu, ziurtatu sintaxia zuzena dela"
 
-#: graphs/operations.py:295 graphs/operations.py:609
-msgid "No data found within the highlighted area"
+#: graphs/operations.py:302
+msgid "No data found in highlighted area"
 msgstr "Ez da daturik aurkitu nabarmendutako arean"
 
 #: graphs/operations.py:306
+msgid "Some items lack error bars; they will be discarded"
+msgstr "Elementu batzuek ez dituzte errore-barrak: baztertu egingo dira"
+
+#: graphs/operations.py:314
 msgid "Combined Data"
 msgstr "Konbinatutako datuak"
 
-#: graphs/operations.py:443
+#: graphs/operations.py:450
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name} elementuaren eragiketak ez du eman marraztu daitekeen ekuaziorik"
 
-#: graphs/operations.py:452
+#: graphs/operations.py:459
 msgid "Operation not supported for equations."
 msgstr "Eragiketa ez da onartzen ekuazioetarako."
 
-#: graphs/operations.py:615
+#: graphs/operations.py:616
+msgid "No data found within the highlighted area"
+msgstr "Ez da daturik aurkitu nabarmendutako arean"
+
+#: graphs/operations.py:622
 msgid "Operation not supported for data items"
 msgstr "Eragiketa ez da onartzen datu-elementuetarako"
 
-#: graphs/operations.py:618
+#: graphs/operations.py:625
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Errorea eragiketa gauzatzean"
 
-#: graphs/operations.py:624
+#: graphs/operations.py:631
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Nabarmendutako areatik kanpo dauden datuak baztertu dira"
 
@@ -2267,44 +2347,44 @@ msgstr "Proiektua"
 msgid "Exported Data"
 msgstr "Esportatutako datuak"
 
-#: graphs/style_io.py:101
+#: graphs/style_io.py:109
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Bi puntu falta dira {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:109
+#: graphs/style_io.py:117
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "{file} fitxategiko {param} parametroak ez du zerikusirik estiloarekin"
 
-#: graphs/style_io.py:112
+#: graphs/style_io.py:120
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "{file} fitxategiko {param} parametroari ez ikusiarena egingo zaio"
 
-#: graphs/style_io.py:116
+#: graphs/style_io.py:124
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Gako bikoiztua {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:134
+#: graphs/style_io.py:142
 #, python-brace-format
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
 "supported"
 msgstr "Balio okerra {file} fitxategiko {line} lerroan, {key} parametro pertsonalizatua ez da onartzen"
 
-#: graphs/style_io.py:152
+#: graphs/style_io.py:166
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Balio okerra {file} fitxategiko {line} lerroan"
 
-#: graphs/style_io.py:157
+#: graphs/style_io.py:171
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Ezin da {filename} analizatu"
 
-#: graphs/style_io.py:167
+#: graphs/style_io.py:181
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "{file} fitxategiak ez du izen-etiketarik"

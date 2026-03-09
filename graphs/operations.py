@@ -285,7 +285,7 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, EquationItem):
-                eq = Graphs.preprocess_equation(item.props.equation)
+                eq = item.get_preprocessed_equation()
                 xdata, ydata = utilities.equation_to_data(eq, lims)
             elif isinstance(item, DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)
@@ -340,7 +340,7 @@ class CommonOperations():
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, EquationItem):
                 xdata, ydata = utilities.equation_to_data(
-                    Graphs.preprocess_equation(item.props.equation),
+                    item.get_preprocessed_equation(),
                     selected_limits,
                 )
             elif isinstance(item, DataItem):
@@ -360,8 +360,7 @@ class CommonOperations():
 
                 if isinstance(previous_item, EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
-                        Graphs.preprocess_equation(
-                            previous_item.props.equation),
+                        previous_item.get_preprocessed_equation(),
                         selected_limits,
                     )
                 else:
@@ -390,13 +389,13 @@ class CommonOperations():
                 continue
             shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
             if isinstance(item, EquationItem):
+                equation = item.get_preprocessed_equation()
                 if scale == scales.Scale.LOG:
-                    equation = f"({item.props.equation})*10**{shift_value}"
+                    equation = f"({equation})*10**{shift_value}"
                 elif scale == scales.Scale.LOG2:
-                    equation = f"({item.props.equation})*2**{shift_value}"
+                    equation = f"({equation})*2**{shift_value}"
                 else:
-                    equation = f"{item.equation}+{shift_value}"
-                equation = Graphs.preprocess_equation(equation)
+                    equation = f"{equation}+{shift_value}"
                 equation = str(sympy.simplify(equation))
                 item.props.equation = Graphs.prettify_equation(equation)
                 continue
@@ -445,7 +444,7 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            equation = Graphs.preprocess_equation(item.props.equation)
+            equation = item.get_preprocessed_equation()
             equation = str(sympy.simplify(callback(equation, *args)))
             try:
                 numexpr.evaluate(equation + " + x*0", local_dict={"x": XDATA})
