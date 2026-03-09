@@ -26,6 +26,9 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "max-selected",
 ]
 
+LOG_SCALES = {1, 2}
+NONZERO_SCALES = {1, 2, 4}
+
 
 class Data(Graphs.Data):
     """Class for managing data."""
@@ -404,129 +407,139 @@ class Data(Graphs.Data):
         self.props.can_view_back = True
         self.props.can_view_forward = self._view_history_pos < -1
 
-    @staticmethod
-    def _get_min_max_from_array(xydata: list, scale: int) -> (float, float):
-        try:
-            xydata = xydata[numpy.isfinite(xydata)]
-        except TypeError:
-            return None
-        nonzero_data = numpy.array([value for value in xydata if value != 0])
-        min_value = nonzero_data.min() if scale in (1, 2, 4) \
-            and len(nonzero_data) > 0 else xydata.min()
-        max_value = xydata.max()
-        return min_value, max_value
-
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
+
         axes = [[
             direction,
             False,
-            [],
-            [],
+            figure_settings.get_property(f"min_{direction}"),
+            figure_settings.get_property(f"max_{direction}"),
             figure_settings.get_property(f"{direction}_scale"),
+            None,
         ] for direction in ("bottom", "left", "top", "right")]
+
         equation_items = []
+        hide_unselected = figure_settings.get_hide_unselected()
+
         for item_ in self:
-            if not isinstance(item_, (item.DataItem, item.EquationItem)) or (
-                not item_.get_selected()
-                and figure_settings.get_hide_unselected()
-            ):
+            if not isinstance(item_, (item.DataItem, item.EquationItem)):
                 continue
+
+            if not item_.get_selected() and hide_unselected:
+                continue
+
             if isinstance(item_, item.EquationItem):
                 equation_items.append(item_)
                 continue
-            for index in \
-                    item_.get_xposition() * 2, 1 + item_.get_yposition() * 2:
-                axis = axes[index]
-                axis[1] = True
 
-                xdata, ydata = copy.deepcopy(item_.props.data)
-                min_max = self._get_min_max_from_array(
-                    numpy.asarray(ydata if index % 2 else xdata),
-                    axis[4],
-                )
-                if min_max is None:
-                    return
-                min_value, max_value = min_max
-                axis[2].append(min_value)
-                axis[3].append(max_value)
+            indices = \
+                (item_.get_xposition() * 2, 1 + item_.get_yposition() * 2)
+            for index, xydata in zip(indices, item_.props.data):
+                axis = axes[index]
+
+                xydata = numpy.asarray(xydata)
+                xydata = xydata[numpy.isfinite(xydata)]
+
+                if xydata.size == 0:
+                    continue
+
+                if axis[4] in NONZERO_SCALES:
+                    nonzero = xydata[xydata != 0]
+                    min_value = nonzero.min() if nonzero.size else xydata.min()
+                else:
+                    min_value = xydata.min()
+                max_value = xydata.max()
+
+                if axis[1]:
+                    axis[2] = min(axis[2], min_value)
+                    axis[3] = max(axis[3], max_value)
+                else:
+                    axis[2] = min_value
+                    axis[3] = max_value
+                    axis[1] = True
+
+        x = sympy.Symbol("x")
 
         for item_ in equation_items:
-            xaxis = axes[item_.get_xposition() * 2]
+            xindex = item_.get_xposition() * 2
+            xaxis = axes[xindex]
             yaxis = axes[1 + item_.get_yposition() * 2]
-            if xaxis[1]:
-                x_limits = [min(xaxis[2]), max(xaxis[3])]
-            else:
-                direction = xaxis[0]
-                x_limits = [
-                    figure_settings.get_property(f"min_{direction}"),
-                    figure_settings.get_property(f"max_{direction}"),
-                ]
+            x_limits = [xaxis[2], xaxis[3]]
+            yscale = yaxis[4]
 
-            x = sympy.Symbol("x")
-            equation = Graphs.preprocess_equation(item_.props.equation)
-            expr = sympy.sympify(equation)
+            expr = sympy.sympify(item_.get_preprocessed_equation())
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
-            yaxis[1] = True
-            ydata = utilities.equation_to_data(equation, x_limits)[1]
 
-            ydata_arr = numpy.asarray(ydata)
+            if xaxis[5] is None:
+                xscale = xaxis[4]
+                xaxis[5] = utilities.create_equidistant_xdata(x_limits, xscale)
+            func = sympy.lambdify(x, expr, "numpy")
+            ydata = numpy.asarray(func(xaxis[5]))
+            ydata = ydata[numpy.isfinite(ydata)]
+
             if has_singularities:
                 # Don't take negative values into account for log scaling
-                if yaxis[4] in (1, 2):
-                    ydata_arr = ydata_arr[ydata_arr > 0]
+                if yscale in LOG_SCALES:
+                    ydata = ydata[ydata > 0]
 
-                y_min, y_max = ydata_arr.min(), ydata_arr.max()
+                y_min, y_max = ydata.min(), ydata.max()
                 lower_bound = utilities.get_value_at_fraction(
                     0.05,
                     y_min,
                     y_max,
-                    yaxis[4],
+                    yscale,
                 )
                 upper_bound = utilities.get_value_at_fraction(
                     0.95,
                     y_min,
                     y_max,
-                    yaxis[4],
+                    yscale,
                 )
-                ydata_arr = ydata_arr[(ydata_arr >= lower_bound)
-                                      & (ydata_arr <= upper_bound)]
+                ydata = ydata.clip(lower_bound, upper_bound)
 
-            min_max = self._get_min_max_from_array(
-                ydata_arr,
-                yaxis[4],
-            )
-            if min_max is None:
-                return
-            min_value, max_value = min_max
-            yaxis[2].append(min_value)
-            yaxis[3].append(max_value)
+            if ydata.size == 0:
+                continue
 
-        for count, (direction, used, min_all, max_all, scale) in \
+            if yscale in NONZERO_SCALES:
+                nonzero = ydata[ydata != 0]
+                min_value = nonzero.min() if nonzero.size else ydata.min()
+            else:
+                min_value = ydata.min()
+            max_value = ydata.max()
+
+            if yaxis[1]:
+                yaxis[2] = min(yaxis[2], min_value)
+                yaxis[3] = max(yaxis[3], max_value)
+            else:
+                yaxis[2] = min_value
+                yaxis[3] = max_value
+                yaxis[1] = True
+
+        for count, (direction, used, min_all, max_all, scale, _x) in \
                 enumerate(axes):
             if not used:
                 continue
-            min_all = min(min_all)
-            max_all = max(max_all)
-            if scale not in (1, 2):  # For non-logarithmic scales
+
+            # 0.05 padding on y-axis, 0.015 padding on x-axis
+            padding_factor = 0.05 if count % 2 else 0.015
+
+            if scale not in LOG_SCALES:  # For non-logarithmic scales
                 span = max_all - min_all
-                # 0.05 padding on y-axis, 0.015 padding on x-axis
-                padding_factor = 0.05 if count % 2 else 0.015
                 max_all += padding_factor * span
 
                 # For inverse scale, calculate padding using a factor
-                min_all = (
-                    min_all - padding_factor * span if scale != 4 else min_all
-                    * 0.99
-                )
+                if scale == 4:
+                    min_all *= 0.99
+                else:
+                    min_all -= padding_factor * span
             else:  # Use different scaling type for logarithmic scale
                 log_min = numpy.log10(min_all) if min_all > 0 else 0
                 log_max = numpy.log10(max_all) if max_all > 0 else 0
                 log_span = log_max - log_min
 
-                padding_factor = 0.05 if count % 2 else 0.015
                 log_min -= padding_factor * log_span
                 log_max += padding_factor * log_span
                 min_all = 10**log_min
