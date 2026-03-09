@@ -2,17 +2,15 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs
 
-from graphs import (
-    curve_fitting,
-    export_items,
-    file_io,
-    operations,
-    utilities,
-)
+from graphs import curve_fitting, export_items, file_io, operations
 from graphs.figure import Figure
 from graphs.item import EquationItem, GeneratedDataItem
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
+
+import numexpr
+
+import numpy
 
 import sympy
 
@@ -30,6 +28,8 @@ _REQUESTS = (
     "simplify-equation",
     "validate-equation",
 )
+
+XDATA = numpy.linspace(0, 10, 10)
 
 
 class PythonHelper(Graphs.PythonHelper):
@@ -157,4 +157,8 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_validate_equation_request(self, equation: str) -> bool:
-        return utilities.equation_to_data(equation, steps=10)[0] is not None
+        try:
+            ydata = numexpr.evaluate(equation, local_dict={"x": XDATA})
+            return numpy.isfinite(ydata).any()
+        except (KeyError, SyntaxError, ValueError, TypeError):
+            return False

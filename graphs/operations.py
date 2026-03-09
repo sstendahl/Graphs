@@ -421,6 +421,9 @@ class CommonOperations():
         return True
 
 
+XDATA = numpy.linspace(0, 10, 10)
+
+
 class EquationOperations():
     """Operations to be performed on equation items."""
 
@@ -442,15 +445,16 @@ class EquationOperations():
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
             equation = item.get_preprocessed_equation()
-            equation = str(callback(equation, *args))
-            if utilities.equation_to_data(equation, steps=10)[0] is None:
+            equation = str(sympy.simplify(callback(equation, *args)))
+            try:
+                numexpr.evaluate(equation + " + x*0", local_dict={"x": XDATA})
+            except (KeyError, SyntaxError, ValueError, TypeError) as e:
                 raise misc.InvalidEquationError(
                     _(
                         "The operation on {name} "
                         "did not result in a plottable equation",
                     ).format(name=item.props.name),
-                )
-            equation = str(sympy.simplify(equation))
+                ) from e
             item.props.equation = Graphs.prettify_equation(equation)
         except misc.InvalidEquationError as error:
             return False, error.message

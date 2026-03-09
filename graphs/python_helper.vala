@@ -74,7 +74,7 @@ namespace Graphs {
         protected signal bool validate_equation_request (string input);
         public static bool validate_equation (string input) {
             try {
-                string preprocessed = preprocess_equation (input);
+                string preprocessed = preprocess_equation (input) + " + x*0";
                 return instance.validate_equation_request.emit (preprocessed);
             } catch (MathError e) {
                 return false;
