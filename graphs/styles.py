@@ -10,6 +10,13 @@ from graphs import style_io
 
 from matplotlib import RcParams
 
+CSS_TEMPLATE = """
+.system-canvas-view {{
+    background-color: {background_color};
+    color: {color};
+}}
+"""
+
 
 def _is_style_bright(params: RcParams):
     return Graphs.tools_get_luminance_from_hex(params["axes.facecolor"]) < 0.4
@@ -47,7 +54,7 @@ class StyleManager(Graphs.StyleManager):
         )
 
         self._update_system_style()
-        self.setup(self._system_style_name.lower(), self)
+        self.setup(self._system_style_name.lower())
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
@@ -86,6 +93,11 @@ class StyleManager(Graphs.StyleManager):
                 "resource:///se/sjoerd/Graphs/styles/" + filename,
             ),
         )
+        css = CSS_TEMPLATE.format(
+            background_color=self._system_style_params[0]["figure.facecolor"],
+            color=self._system_style_params[0]["text.color"],
+        )
+        self.props.css_provider.load_from_string(css)
 
     @staticmethod
     def _on_create_style_request(

@@ -32,14 +32,22 @@ namespace Graphs {
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
+        protected CssProvider css_provider { get; private set; }
 
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
 
         public static StyleManager instance { get; private set; }
 
-        protected void setup (string system_style, StyleManager instance) {
-            StyleManager.instance = instance;
+        construct {
+            this.css_provider = new CssProvider ();
+            StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            );
+        }
+
+        protected void setup (string system_style) {
+            StyleManager.instance = this;
             style_model = new GLib.ListStore (typeof (Style));
             filtered_style_model = new FilterListModel (
                 style_model, new CustomFilter (filter_system_style)
