@@ -13,15 +13,15 @@ from matplotlib import RcParams
 def new_from_dict(dictionary: dict) -> Graphs.Item:
     """Instanciate item from dict."""
     match dictionary["type"]:
-        case "GraphsPythonDataItem":
+        case "DataItem":
             cls = DataItem
-        case "GraphsPythonGeneratedDataItem":
+        case "GeneratedDataItem":
             cls = GeneratedDataItem
-        case "GraphsPythonEquationItem":
+        case "EquationItem":
             cls = EquationItem
-        case "GraphsPythonTextItem":
+        case "TextItem":
             cls = TextItem
-        case "GraphsPythonFillItem":
+        case "FillItem":
             cls = FillItem
         case _:
             raise ValueError(f"could not find type {dictionary['type']}")
@@ -66,7 +66,7 @@ class _PythonItemMixin:
             key: self.get_property(key)
             for key in dir(self.props) if key != "typename"
         }
-        dictionary["type"] = self.__gtype_name__
+        dictionary["type"] = self.__gtype_name__[12:]
         return dictionary
 
 

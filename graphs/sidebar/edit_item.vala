@@ -143,10 +143,10 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale errlinewidth { get; }
 
-        private Item item;
+        private DataItem item;
 
         public EditItemErrorBarGroup (Item item) {
-            this.item = item;
+            this.item = (DataItem) item;
 
             bool has_xerr, has_yerr;
             PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
@@ -188,11 +188,9 @@ namespace Graphs {
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
 
-            string current_errcolor;
-            item.get ("errcolor", out current_errcolor);
-            errcolor_row.color = Tools.hex_to_rgba (current_errcolor);
+            errcolor_row.color = Tools.hex_to_rgba (this.item.errcolor);
             errcolor_row.notify["color"].connect ((obj, pspec) => {
-                item.set ("errcolor", Tools.rgba_to_hex (errcolor_row.color));
+                this.item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
             });
         }
     }
@@ -210,10 +208,9 @@ namespace Graphs {
 
         public void setup (Item item) {
             this.item = item;
-
-            string text;
-            item.get ("equation", out text);
-            equation.set_text (text);
+            string equation_str;
+            item.get ("equation", out equation_str);
+            equation.set_text (equation_str);
         }
 
         [GtkCallback]
@@ -293,17 +290,14 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow scale { get; }
 
-        private Item item;
+        private GeneratedDataItem item;
 
         public EditItemGeneratedDataItemBox (Item item) {
-            this.item = item;
+            this.item = (GeneratedDataItem) item;
             equation_group.setup (item);
 
-            string text;
-            item.get ("xstart", out text);
-            xstart.set_text (text);
-            item.get ("xstop", out text);
-            xstop.set_text (text);
+            xstart.set_text (this.item.xstart);
+            xstop.set_text (this.item.xstop);
 
             item.bind_property (
                 "steps",

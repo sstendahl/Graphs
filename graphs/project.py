@@ -100,7 +100,8 @@ class ProjectMigrator:
         self._migrate_inserted_scale(2)  # log2 scale added
 
         # Handle items no longer making use of uuid as well as xdata and ydata
-        # being stored in a tuple as data
+        # being stored in a tuple as data. Also truncate the Graphs prefix
+        # before the typename
         def _item_dict(item_):
             return_item = {
                 key: value
@@ -108,6 +109,7 @@ class ProjectMigrator:
                 if key not in ("uuid", "xdata", "ydata")
             }
             return_item["data"] = (item_["xdata"], item_["ydata"])
+            return_item["type"] = return_item["type"][6:]
             return return_item
 
         item_positions = []
