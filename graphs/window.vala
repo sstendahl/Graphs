@@ -242,7 +242,6 @@ namespace Graphs {
             bool data_items_selected = false;
             uint index = 0;
             foreach (Item item in data) {
-                string typename = item.get_type ().name ();
                 bool data_item = item is DataItem;
                 append_item_row (item, index, data_item);
 
@@ -271,7 +270,6 @@ namespace Graphs {
             bool items_selected = false;
             bool data_items_selected = false;
             foreach (Item item in data) {
-                string typename = item.get_type ().name ();
                 bool data_item = item is DataItem;
 
                 items_selected = items_selected || item.selected;

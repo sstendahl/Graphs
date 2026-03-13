@@ -47,11 +47,55 @@ namespace Graphs {
         public string xstop { get; set; default = "10"; }
         public int steps { get; set; default = 100; }
         public int scale { get; set; default = 0; }
+
+        private string _equation = "";
+        private string _preprocessed_equation = "";
+        public string equation {
+            get { return _equation; }
+            set {
+                string old_equation = _equation;
+                if (old_equation == value) return;
+
+                _equation = value;
+                try {
+                    _preprocessed_equation = preprocess_equation (value);
+                } catch (MathError e) { assert_not_reached (); }
+
+                if ("Y =" + old_equation == name)
+                    name = "Y = " + value;
+            }
+        }
+
+        public string get_preprocessed_equation () {
+            return _preprocessed_equation;
+        }
     }
 
     public class EquationItem : Item {
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
+
+        private string _equation = "";
+        private string _preprocessed_equation = "";
+        public string equation {
+            get { return _equation; }
+            set {
+                string old_equation = _equation;
+                if (old_equation == value) return;
+
+                _equation = value;
+                try {
+                    _preprocessed_equation = preprocess_equation (value);
+                } catch (MathError e) { assert_not_reached (); }
+
+                if ("Y =" + old_equation == name)
+                    name = "Y = " + value;
+            }
+        }
+
+        public string get_preprocessed_equation () {
+            return _preprocessed_equation;
+        }
     }
 
     public class TextItem : Item {

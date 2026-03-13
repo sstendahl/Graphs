@@ -171,26 +171,10 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
         for prop in ("equation", "xstart", "xstop", "steps", "scale"):
             self.connect("notify::" + prop, self._regenerate)
 
-    @GObject.Property(type=str)
-    def equation(self) -> str:
-        """Equation."""
-        return self._equation
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
-        old_equation = self._equation
-        if old_equation == equation:
-            return
-        self._equation = equation
-        self.notify("equation")
-
-        if "Y = " + old_equation == self.props.name:
-            self.props.name = "Y = " + equation
-
     def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
         self.props.data = utilities.equation_to_data(
-            Graphs.preprocess_equation(self._equation),
+            self.get_preprocessed_equation(),
             [
                 Graphs.evaluate_string(self.props.xstart),
                 Graphs.evaluate_string(self.props.xstop),
@@ -223,31 +207,8 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
         )
 
     def __init__(self, **kwargs):
-        self._equation = ""
-        self._preprocessed_equation = ""
         super().__init__(**kwargs)
         self.props.typename = _("Equation")
-
-    def get_preprocessed_equation(self) -> str:
-        """Get the equation in preprocessed form."""
-        return self._preprocessed_equation
-
-    @GObject.Property(type=str)
-    def equation(self) -> str:
-        """Equation."""
-        return self._equation
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
-        old_equation = self._equation
-        if old_equation == equation:
-            return
-        self._equation = equation
-        self._preprocessed_equation = Graphs.preprocess_equation(equation)
-        self.notify("equation")
-
-        if "Y = " + old_equation == self.props.name:
-            self.props.name = "Y = " + equation
 
 
 class TextItem(Graphs.TextItem, _PythonItemMixin):

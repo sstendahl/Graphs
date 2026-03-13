@@ -336,7 +336,6 @@ namespace Graphs {
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
-                string typename = item.get_type ().name ();
                 if (item.color == "") {
                     foreach (string color in _color_cycle) {
                         if (!(color in _used_colors)) {
