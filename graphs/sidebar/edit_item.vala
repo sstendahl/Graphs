@@ -15,19 +15,18 @@ namespace Graphs {
             }
 
             edit_item_box.append (new EditItemBaseBox (item));
-            string typename = item.get_type ().name ();
 
-            if (typename == "GraphsGeneratedDataItem") {
+            if (item is GeneratedDataItem) {
                 edit_item_box.append (new EditItemGeneratedDataItemBox (item));
             }
-            if (typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem") {
+            if (item is DataItem) {
                 edit_item_box.append (new EditItemDataItemBox (item));
                 bool has_xerr, has_yerr;
                 PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
                 if (has_xerr || has_yerr) {
                     edit_item_box.append (new EditItemErrorBarGroup (item));
                 }
-            } else if (typename == "GraphsEquationItem") {
+            } else if (item is EquationItem) {
                 edit_item_box.append (new EditItemEquationItemBox (item));
             }
         }
