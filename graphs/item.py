@@ -174,7 +174,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
         self.props.data = utilities.equation_to_data(
-            self.get_preprocessed_equation(),
+            Graphs.preprocess_equation(self.props.equation),
             [
                 Graphs.evaluate_string(self.props.xstart),
                 Graphs.evaluate_string(self.props.xstop),

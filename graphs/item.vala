@@ -49,7 +49,6 @@ namespace Graphs {
         public int scale { get; set; default = 0; }
 
         private string _equation = "";
-        private string _preprocessed_equation = "";
         public string equation {
             get { return _equation; }
             set {
@@ -57,17 +56,10 @@ namespace Graphs {
                 if (old_equation == value) return;
 
                 _equation = value;
-                try {
-                    _preprocessed_equation = preprocess_equation (value);
-                } catch (MathError e) { assert_not_reached (); }
 
                 if ("Y =" + old_equation == name)
                     name = "Y = " + value;
             }
-        }
-
-        public string get_preprocessed_equation () {
-            return _preprocessed_equation;
         }
     }
 
