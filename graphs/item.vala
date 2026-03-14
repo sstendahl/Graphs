@@ -28,6 +28,10 @@ namespace Graphs {
         }
     }
 
+    public interface EquationBasedItem : Item {
+        public abstract string equation { get; set; }
+    }
+
     public class DataItem : Item {
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
@@ -42,7 +46,7 @@ namespace Graphs {
         public bool showyerr { get; set; default = true; }
     }
 
-    public class GeneratedDataItem : DataItem {
+    public class GeneratedDataItem : DataItem, EquationBasedItem {
         public string xstart { get; set; default = "0"; }
         public string xstop { get; set; default = "10"; }
         public int steps { get; set; default = 100; }
@@ -63,7 +67,7 @@ namespace Graphs {
         }
     }
 
-    public class EquationItem : Item {
+    public class EquationItem : Item, EquationBasedItem {
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 

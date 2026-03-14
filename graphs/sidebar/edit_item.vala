@@ -204,13 +204,11 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ButtonRow simplify { get; }
 
-        private Item item;
+        private EquationBasedItem item;
 
         public void setup (Item item) {
-            this.item = item;
-            string equation_str;
-            item.get ("equation", out equation_str);
-            equation.set_text (equation_str);
+            this.item = (EquationBasedItem) item;
+            equation.set_text (this.item.equation);
         }
 
         [GtkCallback]
@@ -226,7 +224,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_apply () {
-            item.set ("equation", equation.get_text ());
+            item.equation = equation.get_text ();
         }
 
         [GtkCallback]
@@ -238,7 +236,7 @@ namespace Graphs {
                 equation_str = prettify_equation (equation_str);
 
                 equation.set_text (equation_str);
-                item.set ("equation", equation_str);
+                item.equation = equation_str;
             } catch (MathError e) {}
         }
     }
