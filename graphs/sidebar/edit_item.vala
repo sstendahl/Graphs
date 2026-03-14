@@ -17,17 +17,17 @@ namespace Graphs {
             edit_item_box.append (new EditItemBaseBox (item));
 
             if (item is GeneratedDataItem) {
-                edit_item_box.append (new EditItemGeneratedDataItemBox (item));
+                edit_item_box.append (new EditItemGeneratedDataItemBox ((GeneratedDataItem) item));
             }
             if (item is DataItem) {
-                edit_item_box.append (new EditItemDataItemBox (item));
+                edit_item_box.append (new EditItemDataItemBox ((DataItem) item));
                 bool has_xerr, has_yerr;
                 PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
                 if (has_xerr || has_yerr) {
-                    edit_item_box.append (new EditItemErrorBarGroup (item));
+                    edit_item_box.append (new EditItemErrorBarGroup ((DataItem) item));
                 }
             } else if (item is EquationItem) {
-                edit_item_box.append (new EditItemEquationItemBox (item));
+                edit_item_box.append (new EditItemEquationItemBox ((EquationItem) item));
             }
         }
     }
@@ -81,7 +81,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale markersize { get; }
 
-        public EditItemDataItemBox (Item item) {
+        public EditItemDataItemBox (DataItem item) {
             item.bind_property (
                 "linestyle",
                 linestyle,
@@ -143,11 +143,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale errlinewidth { get; }
 
-        private DataItem item;
-
-        public EditItemErrorBarGroup (Item item) {
-            this.item = (DataItem) item;
-
+        public EditItemErrorBarGroup (DataItem item) {
             bool has_xerr, has_yerr;
             PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
 
@@ -188,9 +184,9 @@ namespace Graphs {
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
 
-            errcolor_row.color = Tools.hex_to_rgba (this.item.errcolor);
+            errcolor_row.color = Tools.hex_to_rgba (item.errcolor);
             errcolor_row.notify["color"].connect ((obj, pspec) => {
-                this.item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
+                item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
             });
         }
     }
@@ -206,9 +202,9 @@ namespace Graphs {
 
         private EquationBasedItem item;
 
-        public void setup (Item item) {
-            this.item = (EquationBasedItem) item;
-            equation.set_text (this.item.equation);
+        public void setup (EquationBasedItem item) {
+            this.item = item;
+            equation.set_text (item.equation);
         }
 
         [GtkCallback]
@@ -253,7 +249,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale linewidth { get; }
 
-        public EditItemEquationItemBox (Item item) {
+        public EditItemEquationItemBox (EquationItem item) {
             equation_group.setup (item);
             item.bind_property (
                 "linestyle",
@@ -290,12 +286,12 @@ namespace Graphs {
 
         private GeneratedDataItem item;
 
-        public EditItemGeneratedDataItemBox (Item item) {
-            this.item = (GeneratedDataItem) item;
+        public EditItemGeneratedDataItemBox (GeneratedDataItem item) {
+            this.item = item;
             equation_group.setup (item);
 
-            xstart.set_text (this.item.xstart);
-            xstop.set_text (this.item.xstop);
+            xstart.set_text (item.xstart);
+            xstop.set_text (item.xstop);
 
             item.bind_property (
                 "steps",
