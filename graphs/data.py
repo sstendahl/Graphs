@@ -16,6 +16,8 @@ from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
+import numexpr
+
 import numpy
 
 import sympy
@@ -469,15 +471,15 @@ class Data(Graphs.Data):
             x_limits = [xaxis[2], xaxis[3]]
             yscale = yaxis[4]
 
-            expr = sympy.sympify(item_.get_preprocessed_equation())
+            equation = item_.get_preprocessed_equation()
+            expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, x, domain)
 
             if xaxis[5] is None:
                 xscale = xaxis[4]
                 xaxis[5] = utilities.create_equidistant_xdata(x_limits, xscale)
-            func = sympy.lambdify(x, expr, "numpy")
-            ydata = numpy.asarray(func(xaxis[5]))
+            ydata = numexpr.evaluate(equation, local_dict={"x": xaxis[5]})
             ydata = ydata[numpy.isfinite(ydata)]
 
             if has_singularities:
