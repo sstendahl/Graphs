@@ -447,7 +447,7 @@ class EquationOperations():
             equation = item.get_preprocessed_equation()
             equation = str(sympy.simplify(callback(equation, *args)))
             try:
-                numexpr.evaluate(equation + " + x*0", local_dict={"x": XDATA})
+                numexpr.evaluate(equation, local_dict={"x": XDATA})
             except (KeyError, SyntaxError, ValueError, TypeError) as e:
                 raise misc.InvalidEquationError(
                     _(
