@@ -276,6 +276,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             item.get_ydata(),
             xerr=x_err,
             yerr=y_err,
+            label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.props.linestyle],
@@ -291,18 +292,23 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
-        has_xerr, has_yerr = x_err is not None, y_err is not None
         bar_iter = iter(self._bars)
-        self._xbar = next(bar_iter) if has_xerr else None
-        self._ybar = next(bar_iter) if has_yerr else None
-
         cap_iter = iter(self._caps)
-        self._xcaps = (next(cap_iter), next(cap_iter)) \
-            if has_xerr and self._caps else ()
-        self._ycaps = (next(cap_iter), next(cap_iter)) \
-            if has_yerr and self._caps else ()
+        if x_err is not None:
+            self._xbar = next(bar_iter)
+            self._xcaps = (next(cap_iter), next(cap_iter))
+            if not item.props.showxerr:
+                self._xbar.set_visible(False)
+                for cap in self._xcaps:
+                    cap.set_visible(False)
+        if y_err is not None:
+            self._ybar = next(bar_iter)
+            self._ycaps = (next(cap_iter), next(cap_iter))
+            if not item.props.showyerr:
+                self._ybar.set_visible(False)
+                for cap in self._ycaps:
+                    cap.set_visible(False)
 
-        self.name = item.get_name()
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
