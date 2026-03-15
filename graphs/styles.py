@@ -28,6 +28,12 @@ def _generate_preview(params: Tuple[RcParams, dict]) -> Gdk.Texture:
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
+def _params_for_bundled_style(name: str) -> tuple[RcParams, dict]:
+    filename = Graphs.filename_from_stylename(name)
+    uri = "resource:///se/sjoerd/Graphs/styles/" + filename
+    return style_io.parse(Gio.File.new_for_uri(uri))
+
+
 class StyleManager(Graphs.StyleManager):
     """
     Main Style Manager.
@@ -50,18 +56,10 @@ class StyleManager(Graphs.StyleManager):
         self.connect("create-style-request", self._on_create_style_request)
         Adw.StyleManager.get_default().connect("notify", self._on_system_style)
 
-        light = Graphs.filename_from_stylename(system_style_name)
-        self._system_style_light_params = style_io.parse(
-            Gio.File.new_for_uri(
-                "resource:///se/sjoerd/Graphs/styles/" + light,
-            ),
-        )
-        dark = Graphs.filename_from_stylename(system_style_name + " Dark")
-        self._system_style_dark_params = style_io.parse(
-            Gio.File.new_for_uri(
-                "resource:///se/sjoerd/Graphs/styles/" + dark,
-            ),
-        )
+        self._system_style_light_params = \
+            _params_for_bundled_style(system_style_name)
+        self._system_style_dark_params = \
+            _params_for_bundled_style(system_style_name + " Dark")
 
         self._on_system_style()
         self.setup(system_style_name.lower())
