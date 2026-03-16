@@ -27,4 +27,81 @@ namespace Graphs {
             this.alpha = rgba.alpha;
         }
     }
+
+    public interface EquationBasedItem : Item {
+        public abstract string equation { get; set; }
+    }
+
+    public class DataItem : Item {
+        public bool errbarsabove { get; set; default = false; }
+        public double errcapsize { get; set; default = 0; }
+        public double errcapthick { get; set; default = 1; }
+        public string errcolor { get; set; default = ""; }
+        public double errlinewidth { get; set; default = 1; }
+        public int linestyle { get; set; default = 1; }
+        public double linewidth { get; set; default = 3; }
+        public int markerstyle { get; set; default = 0; }
+        public double markersize { get; set; default = 7; }
+        public bool showxerr { get; set; default = true; }
+        public bool showyerr { get; set; default = true; }
+    }
+
+    public class GeneratedDataItem : DataItem, EquationBasedItem {
+        public string xstart { get; set; default = "0"; }
+        public string xstop { get; set; default = "10"; }
+        public int steps { get; set; default = 100; }
+        public int scale { get; set; default = 0; }
+
+        private string _equation = "";
+        public string equation {
+            get { return _equation; }
+            set {
+                string old_equation = _equation;
+                if (old_equation == value) return;
+
+                _equation = value;
+
+                if ("Y =" + old_equation == name)
+                    name = "Y = " + value;
+            }
+        }
+    }
+
+    public class EquationItem : Item, EquationBasedItem {
+        public int linestyle { get; set; default = 1; }
+        public double linewidth { get; set; default = 3; }
+
+        private string _equation = "";
+        private string _preprocessed_equation = "";
+        public string equation {
+            get { return _equation; }
+            set {
+                string old_equation = _equation;
+                if (old_equation == value) return;
+
+                _equation = value;
+                try {
+                    _preprocessed_equation = preprocess_equation (value);
+                } catch (MathError e) { assert_not_reached (); }
+
+                if ("Y =" + old_equation == name)
+                    name = "Y = " + value;
+            }
+        }
+
+        public string get_preprocessed_equation () {
+            return _preprocessed_equation;
+        }
+    }
+
+    public class TextItem : Item {
+        public double xanchor { get; set; default = 0; }
+        public double yanchor { get; set; default = 0; }
+        public string text { get; set; default = ""; }
+        public double size { get; set; default = 12; }
+        public int rotation { get; set; default = 0; }
+    }
+
+    public class FillItem : Item {
+    }
 }
