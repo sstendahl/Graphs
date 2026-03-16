@@ -49,11 +49,12 @@ class ColumnsParser(Parser):
                 if item_settings.use_xerr else None
             if item_settings.single_column:
                 xlabel = ""
-                equation = item_settings.equation
                 xdata = numexpr.evaluate(
-                    Graphs.preprocess_equation(equation) + " + n*0",
+                    Graphs.preprocess_equation(item_settings.equation),
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
+                if xdata.ndim == 0:
+                    xdata = numpy.full(len(ydata), xdata)
                 xdata = numpy.ndarray.tolist(xdata)
             else:
                 xindex = item_settings.column_x
