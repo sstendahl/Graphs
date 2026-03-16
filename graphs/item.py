@@ -13,15 +13,15 @@ from matplotlib import RcParams
 def new_from_dict(dictionary: dict) -> Graphs.Item:
     """Instanciate item from dict."""
     match dictionary["type"]:
-        case "GraphsDataItem":
+        case "DataItem":
             cls = DataItem
-        case "GraphsGeneratedDataItem":
+        case "GeneratedDataItem":
             cls = GeneratedDataItem
-        case "GraphsEquationItem":
+        case "EquationItem":
             cls = EquationItem
-        case "GraphsTextItem":
+        case "TextItem":
             cls = TextItem
-        case "GraphsFillItem":
+        case "FillItem":
             cls = FillItem
         case _:
             raise ValueError(f"could not find type {dictionary['type']}")
@@ -29,13 +29,7 @@ def new_from_dict(dictionary: dict) -> Graphs.Item:
     return cls(**dictionary)
 
 
-class _PythonItem(Graphs.Item):
-
-    __gtype_name__ = "GraphsPythonItem"
-
-    def __init__(self, **kwargs):
-        super().__init__(typename=self._typename, **kwargs)
-
+class _PythonItemMixin:
     def reset(
         self,
         old_style: Tuple[RcParams, dict],
@@ -72,29 +66,17 @@ class _PythonItem(Graphs.Item):
             key: self.get_property(key)
             for key in dir(self.props) if key != "typename"
         }
-        dictionary["type"] = self.__gtype_name__
+        dictionary["type"] = self.__gtype_name__[12:]
         return dictionary
 
 
-class DataItem(_PythonItem):
+class DataItem(Graphs.DataItem, _PythonItemMixin):
     """DataItem."""
 
-    __gtype_name__ = "GraphsDataItem"
-    _typename = _("Dataset")
+    __gtype_name__ = "GraphsPythonDataItem"
 
     data = GObject.Property(type=object)
     err = GObject.Property(type=object)
-    errbarsabove = GObject.Property(type=bool, default=False)
-    errcapsize = GObject.Property(type=float, default=0)
-    errcapthick = GObject.Property(type=float, default=1)
-    errcolor = GObject.Property(type=str, default="")
-    errlinewidth = GObject.Property(type=float, default=1)
-    linestyle = GObject.Property(type=int, default=1)
-    linewidth = GObject.Property(type=float, default=3)
-    markerstyle = GObject.Property(type=int, default=0)
-    markersize = GObject.Property(type=float, default=7)
-    showxerr = GObject.Property(type=bool, default=True)
-    showyerr = GObject.Property(type=bool, default=True)
 
     _style_properties = {
         "errbarsabove": ("errorbar.barsabove", None),
@@ -127,6 +109,7 @@ class DataItem(_PythonItem):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.props.typename = _("Dataset")
         if self.props.data is None:
             self.props.data = ([], [])
         if self.props.err is None:
@@ -149,16 +132,14 @@ class DataItem(_PythonItem):
         return self.props.err[1]
 
 
-class GeneratedDataItem(DataItem):
+class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     """Generated Dataitem."""
 
-    __gtype_name__ = "GraphsGeneratedDataItem"
-    _typename = _("Generated Dataset")
+    __gtype_name__ = "GraphsPythonGeneratedDataItem"
 
-    xstart = GObject.Property(type=str, default="0")
-    xstop = GObject.Property(type=str, default="10")
-    steps = GObject.Property(type=int, default=100)
-    scale = GObject.Property(type=int, default=0)
+    # we cannot inherit properties from a mixin
+    data = GObject.Property(type=object)
+    err = GObject.Property(type=object)
 
     @classmethod
     def new(
@@ -185,30 +166,15 @@ class GeneratedDataItem(DataItem):
     def __init__(self, **kwargs):
         self._equation = ""
         super().__init__(**kwargs)
+        self.props.typename = _("Generated Dataset")
         self._regenerate()
         for prop in ("equation", "xstart", "xstop", "steps", "scale"):
             self.connect("notify::" + prop, self._regenerate)
 
-    @GObject.Property(type=str)
-    def equation(self) -> str:
-        """Equation."""
-        return self._equation
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
-        old_equation = self._equation
-        if old_equation == equation:
-            return
-        self._equation = equation
-        self.notify("equation")
-
-        if "Y = " + old_equation == self.props.name:
-            self.props.name = "Y = " + equation
-
     def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
         self.props.data = utilities.equation_to_data(
-            Graphs.preprocess_equation(self._equation),
+            Graphs.preprocess_equation(self.props.equation),
             [
                 Graphs.evaluate_string(self.props.xstart),
                 Graphs.evaluate_string(self.props.xstop),
@@ -218,14 +184,10 @@ class GeneratedDataItem(DataItem):
         )
 
 
-class EquationItem(_PythonItem):
+class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     """EquationItem."""
 
-    __gtype_name__ = "GraphsEquationItem"
-    _typename = _("Equation")
-
-    linestyle = GObject.Property(type=int, default=1)
-    linewidth = GObject.Property(type=float, default=3)
+    __gtype_name__ = "GraphsPythonEquationItem"
 
     _style_properties = {
         "linestyle": (
@@ -245,43 +207,14 @@ class EquationItem(_PythonItem):
         )
 
     def __init__(self, **kwargs):
-        self._equation = ""
-        self._preprocessed_equation = ""
         super().__init__(**kwargs)
-
-    def get_preprocessed_equation(self) -> str:
-        """Get the equation in preprocessed form."""
-        return self._preprocessed_equation
-
-    @GObject.Property(type=str)
-    def equation(self) -> str:
-        """Equation."""
-        return self._equation
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
-        old_equation = self._equation
-        if old_equation == equation:
-            return
-        self._equation = equation
-        self._preprocessed_equation = Graphs.preprocess_equation(equation)
-        self.notify("equation")
-
-        if "Y = " + old_equation == self.props.name:
-            self.props.name = "Y = " + equation
+        self.props.typename = _("Equation")
 
 
-class TextItem(_PythonItem):
+class TextItem(Graphs.TextItem, _PythonItemMixin):
     """TextItem."""
 
-    __gtype_name__ = "GraphsTextItem"
-    _typename = _("Label")
-
-    xanchor = GObject.Property(type=float, default=0)
-    yanchor = GObject.Property(type=float, default=0)
-    text = GObject.Property(type=str, default="")
-    size = GObject.Property(type=float, default=12)
-    rotation = GObject.Property(type=int, default=0, minimum=0, maximum=360)
+    __gtype_name__ = "GraphsPythonTextItem"
 
     _style_properties = {
         "size": ("font.size", None),
@@ -306,12 +239,15 @@ class TextItem(_PythonItem):
             **kwargs,
         )
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.props.typename = _("Label")
 
-class FillItem(_PythonItem):
+
+class FillItem(Graphs.FillItem, _PythonItemMixin):
     """FillItem."""
 
-    __gtype_name__ = "GraphsFillItem"
-    _typename = _("Fill")
+    __gtype_name__ = "GraphsPythonFillItem"
 
     data = GObject.Property(type=object)
 
@@ -327,6 +263,7 @@ class FillItem(_PythonItem):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.props.typename = _("Fill")
         if self.props.data is None:
             self.props.data = (None, None, None)
 

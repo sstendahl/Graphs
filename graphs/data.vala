@@ -325,10 +325,8 @@ namespace Graphs {
             _used_errbar_colors = {};
             foreach (Item item in _items) {
                 if (item.color in _color_cycle) append_used_color (item.color);
-                string typename = item.get_type ().name ();
-                if (typename == "GraphsDataItem") {
-                    string errcolor;
-                    item.get ("errcolor", out errcolor);
+                if (item is DataItem) {
+                    string errcolor = ((DataItem) item).errcolor;
                     if (errcolor in _errbar_color_cycle) append_used_errbar_color (errcolor);
                 }
             }
@@ -338,7 +336,6 @@ namespace Graphs {
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
-                string typename = item.get_type ().name ();
                 if (item.color == "") {
                     foreach (string color in _color_cycle) {
                         if (!(color in _used_colors)) {
@@ -348,9 +345,8 @@ namespace Graphs {
                         }
                     }
                 }
-                if (typename == "GraphsDataItem") {
-                    string errcolor;
-                    item.get ("errcolor", out errcolor);
+                if (item is DataItem) {
+                    string errcolor = ((DataItem) item).errcolor;
                     if (errcolor == "") {
                         foreach (string color in _errbar_color_cycle) {
                             if (!(color in _used_errbar_colors)) {

@@ -15,20 +15,19 @@ namespace Graphs {
             }
 
             edit_item_box.append (new EditItemBaseBox (item));
-            string typename = item.get_type ().name ();
 
-            if (typename == "GraphsGeneratedDataItem") {
-                edit_item_box.append (new EditItemGeneratedDataItemBox (item));
+            if (item is GeneratedDataItem) {
+                edit_item_box.append (new EditItemGeneratedDataItemBox ((GeneratedDataItem) item));
             }
-            if (typename == "GraphsDataItem" || typename == "GraphsGeneratedDataItem") {
-                edit_item_box.append (new EditItemDataItemBox (item));
+            if (item is DataItem) {
+                edit_item_box.append (new EditItemDataItemBox ((DataItem) item));
                 bool has_xerr, has_yerr;
                 PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
                 if (has_xerr || has_yerr) {
-                    edit_item_box.append (new EditItemErrorBarGroup (item));
+                    edit_item_box.append (new EditItemErrorBarGroup ((DataItem) item));
                 }
-            } else if (typename == "GraphsEquationItem") {
-                edit_item_box.append (new EditItemEquationItemBox (item));
+            } else if (item is EquationItem) {
+                edit_item_box.append (new EditItemEquationItemBox ((EquationItem) item));
             }
         }
     }
@@ -82,7 +81,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale markersize { get; }
 
-        public EditItemDataItemBox (Item item) {
+        public EditItemDataItemBox (DataItem item) {
             item.bind_property (
                 "linestyle",
                 linestyle,
@@ -144,11 +143,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale errlinewidth { get; }
 
-        private Item item;
-
-        public EditItemErrorBarGroup (Item item) {
-            this.item = item;
-
+        public EditItemErrorBarGroup (DataItem item) {
             bool has_xerr, has_yerr;
             PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
 
@@ -189,11 +184,9 @@ namespace Graphs {
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
 
-            string current_errcolor;
-            item.get ("errcolor", out current_errcolor);
-            errcolor_row.color = Tools.hex_to_rgba (current_errcolor);
+            errcolor_row.color = Tools.hex_to_rgba (item.errcolor);
             errcolor_row.notify["color"].connect ((obj, pspec) => {
-                item.set ("errcolor", Tools.rgba_to_hex (errcolor_row.color));
+                item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
             });
         }
     }
@@ -207,14 +200,11 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ButtonRow simplify { get; }
 
-        private Item item;
+        private EquationBasedItem item;
 
-        public void setup (Item item) {
+        public void setup (EquationBasedItem item) {
             this.item = item;
-
-            string text;
-            item.get ("equation", out text);
-            equation.set_text (text);
+            equation.set_text (item.equation);
         }
 
         [GtkCallback]
@@ -230,7 +220,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_apply () {
-            item.set ("equation", equation.get_text ());
+            item.equation = equation.get_text ();
         }
 
         [GtkCallback]
@@ -242,7 +232,7 @@ namespace Graphs {
                 equation_str = prettify_equation (equation_str);
 
                 equation.set_text (equation_str);
-                item.set ("equation", equation_str);
+                item.equation = equation_str;
             } catch (MathError e) {}
         }
     }
@@ -259,7 +249,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Scale linewidth { get; }
 
-        public EditItemEquationItemBox (Item item) {
+        public EditItemEquationItemBox (EquationItem item) {
             equation_group.setup (item);
             item.bind_property (
                 "linestyle",
@@ -294,17 +284,14 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow scale { get; }
 
-        private Item item;
+        private GeneratedDataItem item;
 
-        public EditItemGeneratedDataItemBox (Item item) {
+        public EditItemGeneratedDataItemBox (GeneratedDataItem item) {
             this.item = item;
             equation_group.setup (item);
 
-            string text;
-            item.get ("xstart", out text);
-            xstart.set_text (text);
-            item.get ("xstop", out text);
-            xstop.set_text (text);
+            xstart.set_text (item.xstart);
+            xstop.set_text (item.xstop);
 
             item.bind_property (
                 "steps",
