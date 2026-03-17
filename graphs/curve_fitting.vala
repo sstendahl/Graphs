@@ -416,7 +416,7 @@ namespace Graphs {
             settings.set_enum ("equation", (int) equation.get_selected ());
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
-            Item item = PythonHelper.add_equation (window, fitted_equation_string, "");
+            Item item = PythonHelper.add_equation (window.data, fitted_equation_string, "");
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();
