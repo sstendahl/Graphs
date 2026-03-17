@@ -6,7 +6,7 @@ namespace Graphs {
      * Base item class
      */
     public class Item : Object {
-        public string typename { get; set; default = ""; }
+        public string typename { get; construct set; }
         public string name { get; set; default = ""; }
         public string color { get; set; default = ""; }
         public float alpha { get; set; default = 1; }
@@ -44,6 +44,10 @@ namespace Graphs {
         public double markersize { get; set; default = 7; }
         public bool showxerr { get; set; default = true; }
         public bool showyerr { get; set; default = true; }
+
+        construct {
+            typename = _("Dataset");
+        }
     }
 
     public class GeneratedDataItem : DataItem, EquationBasedItem {
@@ -64,6 +68,10 @@ namespace Graphs {
                 if ("Y =" + old_equation == name)
                     name = "Y = " + value;
             }
+        }
+
+        construct {
+            typename = _("Generated Dataset");
         }
     }
 
@@ -89,6 +97,10 @@ namespace Graphs {
             }
         }
 
+        construct {
+            typename = _("Equation");
+        }
+
         public string get_preprocessed_equation () {
             return _preprocessed_equation;
         }
@@ -100,8 +112,15 @@ namespace Graphs {
         public string text { get; set; default = ""; }
         public double size { get; set; default = 12; }
         public int rotation { get; set; default = 0; }
+
+        construct {
+            typename = _("Label");
+        }
     }
 
     public class FillItem : Item {
+        construct {
+            typename = _("Fill");
+        }
     }
 }
