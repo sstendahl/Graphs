@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from gettext import gettext as _
 from typing import Tuple
 
 from gi.repository import GObject, Graphs
