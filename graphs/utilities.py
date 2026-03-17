@@ -150,7 +150,9 @@ def equation_to_data(
     """Convert an equation into data over a specified range of x-values."""
     xdata = create_equidistant_xdata(limits, scale, steps)
     try:
-        ydata = numexpr.evaluate(equation + " + x*0", local_dict={"x": xdata})
+        ydata = numexpr.evaluate(equation, local_dict={"x": xdata})
+        if ydata.ndim == 0:
+            ydata = numpy.full(steps, ydata)
 
         # Remove invalid values
         mask = numpy.isfinite(ydata)

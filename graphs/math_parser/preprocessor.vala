@@ -36,7 +36,9 @@ namespace Graphs.MathParser {
             while (true) {
                 t = lexer.current_type;
                 if (!(t == TokenType.PLUS || t == TokenType.MINUS)) break;
+                if (prettify) builder.append_c (' ');
                 builder.append_c ((t == TokenType.PLUS) ? '+' : '-');
+                if (prettify) builder.append_c (' ');
                 lexer.next ();
                 term ();
             }
@@ -49,7 +51,9 @@ namespace Graphs.MathParser {
                 TokenType t = lexer.current_type;
                 // explicit * or /
                 if (t == TokenType.STAR || t == TokenType.SLASH) {
+                    if (prettify) builder.append_c (' ');
                     builder.append_c ((t == TokenType.STAR) ? '*' : '/');
+                    if (prettify) builder.append_c (' ');
                     lexer.next ();
                     power ();
                     continue;

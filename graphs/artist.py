@@ -29,15 +29,15 @@ def new_for_item(fig: Figure, item: Graphs.Item):
     automatically.
     """
     match item.__gtype_name__:
-        case "GraphsDataItem":
+        case "GraphsPythonDataItem":
             cls = DataItemArtistWrapper
-        case "GraphsGeneratedDataItem":
+        case "GraphsPythonGeneratedDataItem":
             cls = GeneratedDataItemArtistWrapper
-        case "GraphsEquationItem":
+        case "GraphsPythonEquationItem":
             cls = EquationItemArtistWrapper
-        case "GraphsFillItem":
+        case "GraphsPythonFillItem":
             cls = FillItemArtistWrapper
-        case "GraphsTextItem":
+        case "GraphsPythonTextItem":
             cls = TextItemArtistWrapper
         case _:
             pass
