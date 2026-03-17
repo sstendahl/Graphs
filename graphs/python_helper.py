@@ -135,8 +135,8 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_has_err_request(self, item: Graphs.Item) -> int:
-        xerr = item.props.err[0] is not None
-        yerr = item.props.err[1] is not None
+        xerr = item.get_xerr() is not None
+        yerr = item.get_yerr() is not None
         return xerr | (yerr << 1)  # 0=none, 1=xerr only, 2=yerr only, 3=both
 
     @staticmethod

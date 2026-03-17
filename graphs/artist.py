@@ -103,26 +103,31 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     legend = True
 
     @GObject.Property
-    def data(self) -> tuple[list, list]:
+    def data(self) -> tuple[list, list, list, list]:
         """Get data property."""
-        return self._data.get_data()
+        raise NotImplementedError
 
     @data.setter
-    def data(self, data: tuple[list, list]) -> None:
+    def data(self, data: tuple[list, list, list, list]) -> None:
         """Set data property."""
-        self._data.set_data(data)
-        self._refresh_errorbars()
+        xdata, ydata, xerr, yerr = data
+        self._data.set_data((xdata, ydata))
 
-    @GObject.Property(type=object)
-    def err(self) -> tuple:
-        """Get err property."""
-        return self._err
+        if xerr is not None:
+            xdata = numpy.asarray(xdata)
+            start = numpy.column_stack((xdata - xerr, ydata))
+            end = numpy.column_stack((xdata + xerr, ydata))
+            self._xbar.set_segments(numpy.stack((start, end), axis=1))
+            self._xcaps[0].set_data(xdata - xerr, ydata)
+            self._xcaps[1].set_data(xdata + xerr, ydata)
 
-    @err.setter
-    def err(self, err: tuple[list, list]) -> None:
-        """Set err property."""
-        self._err = err
-        self._refresh_errorbars()
+        if yerr is not None:
+            ydata = numpy.asarray(ydata)
+            start = numpy.column_stack((xdata, ydata - yerr))
+            end = numpy.column_stack((xdata, ydata + yerr))
+            self._ybar.set_segments(numpy.stack((start, end), axis=1))
+            self._ycaps[0].set_data(xdata, ydata - yerr)
+            self._ycaps[1].set_data(xdata, ydata + yerr)
 
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
@@ -240,52 +245,24 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._data.set_linewidth(linewidth)
         self._data.set_markersize(markersize)
 
-    def _refresh_errorbars(self) -> None:
-        """Sync error bar visibility and positions."""
-        x_err, y_err = self._err
-        x_data, y_data = self._data.get_data()
-        x_data = numpy.asarray(x_data)
-        y_data = numpy.asarray(y_data)
-
-        # data and err are set as separate property assignments during cut
-        # and undo/redo. So only refresh if lengths are in sync:
-        if x_err is not None:
-            if len(x_err) != len(x_data):
-                return
-            start = numpy.column_stack((x_data - x_err, y_data))
-            end = numpy.column_stack((x_data + x_err, y_data))
-            self._xbar.set_segments(numpy.stack((start, end), axis=1))
-            self._xcaps[0].set_data(x_data - x_err, y_data)
-            self._xcaps[1].set_data(x_data + x_err, y_data)
-
-        if y_err is not None:
-            if len(y_err) != len(y_data):
-                return
-            start = numpy.column_stack((x_data, y_data - y_err))
-            end = numpy.column_stack((x_data, y_data + y_err))
-            self._ybar.set_segments(numpy.stack((start, end), axis=1))
-            self._ycaps[0].set_data(x_data, y_data - y_err)
-            self._ycaps[1].set_data(x_data, y_data + y_err)
-
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        self._err = item.props.err
-        x_err, y_err = self._err
+        xdata, ydata, xerr, yerr = item.props.data
         self._artist = axis.errorbar(
-            item.get_xdata(),
-            item.get_ydata(),
-            xerr=x_err,
-            yerr=y_err,
+            xdata,
+            ydata,
+            xerr=xerr,
+            yerr=yerr,
             label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.props.linestyle],
-            marker=misc.MARKERSTYLES[item.props.markerstyle],
-            capsize=item.props.errcapsize,
-            capthick=item.props.errcapthick,
-            elinewidth=item.props.errlinewidth,
-            barsabove=item.props.errbarsabove,
-            ecolor=item.props.errcolor,
+            linestyle=misc.LINESTYLES[item.get_linestyle()],
+            marker=misc.MARKERSTYLES[item.get_markerstyle()],
+            capsize=item.get_errcapsize(),
+            capthick=item.get_errcapthick(),
+            elinewidth=item.get_errlinewidth(),
+            barsabove=item.get_errbarsabove(),
+            ecolor=item.get_errcolor(),
         )
 
         self._data, self._caps, self._bars = self._artist
@@ -294,17 +271,17 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         # combinations with error bars on either or both axes.
         bar_iter = iter(self._bars)
         cap_iter = iter(self._caps)
-        if x_err is not None:
+        if xerr is not None:
             self._xbar = next(bar_iter)
             self._xcaps = (next(cap_iter), next(cap_iter))
-            if not item.props.showxerr:
+            if not item.get_showxerr():
                 self._xbar.set_visible(False)
                 for cap in self._xcaps:
                     cap.set_visible(False)
-        if y_err is not None:
+        if yerr is not None:
             self._ybar = next(bar_iter)
             self._ycaps = (next(cap_iter), next(cap_iter))
-            if not item.props.showyerr:
+            if not item.get_showyerr():
                 self._ybar.set_visible(False)
                 for cap in self._ycaps:
                     cap.set_visible(False)

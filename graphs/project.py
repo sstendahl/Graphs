@@ -108,7 +108,7 @@ class ProjectMigrator:
                 for (key, value) in item_.items()
                 if key not in ("uuid", "xdata", "ydata")
             }
-            return_item["data"] = (item_["xdata"], item_["ydata"])
+            return_item["data"] = (item_["xdata"], item_["ydata"], None, None)
             return_item["type"] = return_item["type"][6:]
             return return_item
 
@@ -161,8 +161,18 @@ class ProjectMigrator:
                                 change = [
                                     ChangeType.ITEM_PROPERTY_CHANGED.value,
                                     "data",
-                                    (data_change[0][0], data_change[1][0]),
-                                    (data_change[0][1], data_change[1][1]),
+                                    (
+                                        data_change[0][0],
+                                        data_change[1][0],
+                                        None,
+                                        None,
+                                    ),
+                                    (
+                                        data_change[0][1],
+                                        data_change[1][1],
+                                        None,
+                                        None,
+                                    ),
                                 ]
                             except KeyError:
                                 if change[1] == "xdata":

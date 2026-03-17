@@ -51,9 +51,7 @@ def _save_item(
 
     xerr, yerr = None, None
     if isinstance(item, (DataItem, GeneratedDataItem)):
-        xdata, ydata = item.props.data
-        if isinstance(item, DataItem):
-            xerr, yerr = item.props.err
+        xdata, ydata, xerr, yerr = item.props.data
     elif isinstance(item, EquationItem):
         limits = figure_settings.get_limits()
         if item.get_xposition() == 0:
