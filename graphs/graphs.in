@@ -65,13 +65,12 @@ if __name__ == "__main__":
         gettext.textdomain("@GETTEXT_PACKAGE@")
 
         from matplotlib import font_manager
-        font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
         _ = gettext.gettext
-        for font in font_list:
+        for f in font_manager.findSystemFonts(fontpaths=None, fontext="ttf"):
             try:
-                font_manager.fontManager.addfont(font)
+                font_manager.fontManager.addfont(f)
             except RuntimeError:
-                logging.warning(_("Could not load {font}").format(font=font))
+                logging.warning(_("Could not load {font}").format(font=f))
 
         from graphs.file_import import DataImporter
         from graphs.python_helper import PythonHelper
