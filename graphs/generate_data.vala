@@ -61,7 +61,7 @@ namespace Graphs {
             this.settings.set_string ("xstop", xstop.get_text ());
             this.settings.set_int ("steps", (int) this.steps.get_value ());
             this.settings.set_int ("scale", (int) this.scale.get_selected ());
-            Item item = PythonHelper.generate_data (window, item_name.get_text ());
+            Item item = PythonHelper.generate_data (window.data, item_name.get_text ());
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();

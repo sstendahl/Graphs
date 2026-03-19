@@ -33,7 +33,7 @@ namespace Graphs {
         private void on_accept () {
             string equation_str = this.equation.get_text ();
             this.settings.set_string ("equation", equation_str);
-            Item item = PythonHelper.add_equation (window, equation_str, item_name.get_text ());
+            Item item = PythonHelper.add_equation (window.data, equation_str, item_name.get_text ());
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();
