@@ -79,6 +79,8 @@ namespace Graphs {
         private FigureSettingsPage figure_settings_page;
 
         construct {
+            application = Application.instance ();
+
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -137,6 +139,12 @@ namespace Graphs {
                 update_close_project_action ();
             });
 
+            content_view.set_name ("view" + Application.instance().get_next_css_counter ().to_string ());
+
+            Actions.setup_local (this);
+
+            this.operations = new Operations (this);
+
 #if DEBUG
             add_css_class ("devel");
             main_page.set_title (_("Graphs (Development)"));
@@ -144,14 +152,6 @@ namespace Graphs {
         }
 
         protected void setup () {
-            var application = (Application) application;
-
-            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
-
-            Actions.setup_local (this);
-
-            this.operations = new Operations (this);
-
             data.notify["can-undo"].connect (update_history_actions);
             data.notify["can-redo"].connect (update_history_actions);
             update_history_actions ();

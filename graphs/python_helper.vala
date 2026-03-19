@@ -4,11 +4,10 @@ using Gtk;
 
 namespace Graphs {
     public class PythonHelper : Object {
-        public Application application { protected get; construct set; }
-
         private static PythonHelper instance;
-        protected static void set_instance (PythonHelper instance) {
-            PythonHelper.instance = instance;
+
+        construct {
+            instance = this;
         }
 
         protected signal EquationItem add_equation_request (Data data, string equation, string name);

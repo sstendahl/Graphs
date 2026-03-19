@@ -21,8 +21,8 @@ class PythonWindow(Graphs.Window):
 
     __gtype_name__ = "GraphsPythonWindow"
 
-    def __init__(self, application: Graphs.Application):
-        super().__init__(application=application, data=Data())
+    def __init__(self):
+        super().__init__(data=Data())
         self.setup()
         self.props.data.connect(
             "style-changed",

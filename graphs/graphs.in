@@ -44,7 +44,7 @@ if __name__ == "__main__":
     sys.path.insert(1, graph_path_dir)
     signal.signal(signal.SIGINT, signal.SIG_DFL)
 
-    def on_startup(application):
+    def on_startup(_application):
         """Handle Application setup."""
         import logging
         logging.basicConfig(
@@ -76,11 +76,11 @@ if __name__ == "__main__":
         from graphs.file_import import DataImporter
         from graphs.python_helper import PythonHelper
         from graphs.styles import StyleManager
-        PythonHelper(application)
+        PythonHelper()
         StyleManager()
         DataImporter()
 
     from gi.repository import Graphs
-    application = Graphs.Application.new()
+    application = Graphs.Application.instance()
     application.connect("startup", on_startup)
     sys.exit(application.run(sys.argv))

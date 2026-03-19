@@ -61,6 +61,8 @@ namespace Graphs {
         protected signal void save_request (File file);
 
         construct {
+            application = Application.instance ();
+
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -178,11 +180,7 @@ namespace Graphs {
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-        }
-
-        protected void setup () {
-            var model = new NoSelection (StyleManager.filtered_style_model);
-            style_grid.set_model (model);
+            style_grid.set_model (new NoSelection (StyleManager.filtered_style_model));
         }
 
         public void load (File file) {

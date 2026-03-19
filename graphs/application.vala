@@ -14,6 +14,7 @@ namespace Graphs {
     public class Application : Adw.Application {
         public static GLib.Settings settings { get; private set; }
 
+        private static Once<Application> _instance;
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
         private uint _css_counter = 0;
@@ -24,6 +25,10 @@ namespace Graphs {
             { "style-editor", 's', 0, OptionArg.NONE, null, "Style Editor", null },
             { null },
         };
+
+        public static Application instance () {
+            return _instance.once (() => { return new Application (); });
+        }
 
         public Application () {
             Object (
