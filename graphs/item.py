@@ -101,8 +101,7 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     ):
         """Create new DataItem."""
         return cls(
-            data=(xdata, ydata),
-            err=(xerr, yerr),
+            data=(xdata, ydata, xerr, yerr),
             **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
@@ -111,9 +110,15 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         super().__init__(**kwargs)
         self.props.typename = _("Dataset")
         if self.props.data is None:
-            self.props.data = ([], [])
-        if self.props.err is None:
-            self.props.err = (None, None)
+            self.props.data = ([], [], None, None)
+
+    def get_xydata(self) -> tuple[list, list]:
+        """Get x- and y-data."""
+        return self.props.data[:2]
+
+    def set_xydata(self, xydata: tuple[list, list]) -> None:
+        """Set x- and y-data."""
+        self.props.data = xydata + self.props.data[2:]
 
     def get_xdata(self) -> list:
         """Get xdata."""
@@ -125,11 +130,11 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     def get_xerr(self) -> list:
         """Get xerr."""
-        return self.props.err[0]
+        return self.props.data[2]
 
     def get_yerr(self) -> list:
         """Get yerr."""
-        return self.props.err[1]
+        return self.props.data[3]
 
 
 class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
@@ -139,7 +144,6 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
 
     # we cannot inherit properties from a mixin
     data = GObject.Property(type=object)
-    err = GObject.Property(type=object)
 
     @classmethod
     def new(
@@ -164,7 +168,6 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
         )
 
     def __init__(self, **kwargs):
-        self._equation = ""
         super().__init__(**kwargs)
         self.props.typename = _("Generated Dataset")
         self._regenerate()
@@ -181,7 +184,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
             ],
             self.props.steps,
             self.props.scale,
-        )
+        ) + (None, None)
 
 
 class EquationItem(Graphs.EquationItem, _PythonItemMixin):

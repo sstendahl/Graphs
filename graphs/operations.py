@@ -83,7 +83,7 @@ class DataHelper():
         item: DataItem,
     ) -> tuple[list[float], list[float]]:
         """Get the X and Y data of a DataItem."""
-        xdata, ydata = item.props.data
+        xdata, ydata = item.get_xydata()
         if interaction_mode == 2:
             startx, stopx = selected_limits
             # If startx and stopx are not out of range, that is,
@@ -364,7 +364,7 @@ class CommonOperations():
                         selected_limits,
                     )
                 else:
-                    prev_xdata, prev_ydata = previous_item.props.data
+                    prev_xdata, prev_ydata = previous_item.get_xydata()
 
                 new_ydata = DataHelper.filter_range(
                     xdata,
@@ -407,7 +407,7 @@ class CommonOperations():
                 else:  # Apply linear scaling
                     new_ydata = [value + shift_value for value in ydata]
                 i = 0
-                item_xdata, item_ydata = item.props.data
+                item_xdata, item_ydata = item.get_xydata()
                 for index, masked in enumerate(DataHelper.create_data_mask(
                     item_xdata, item_ydata, xdata, ydata,
                 )):
@@ -416,7 +416,7 @@ class CommonOperations():
                         item_xdata[index] = xdata[i]
                         item_ydata[index] = new_ydata[i]
                         i += 1
-                item.props.data = item_xdata, item_ydata
+                item.set_xydata((item_xdata, item_ydata))
                 continue
         return True
 
@@ -644,8 +644,7 @@ class DataOperations():
             )
 
             xdata, ydata = new_xdata, new_ydata
-            new_xdata, new_ydata = item.props.data
-            xerr, yerr = item.props.err
+            new_xdata, new_ydata, xerr, yerr = item.props.data
             if xdata == []:  # If cut action was performed
                 remove_list = \
                     [index for index, masked in enumerate(mask) if masked]
@@ -668,8 +667,7 @@ class DataOperations():
                 logging.debug("Sorting data")
                 new_xdata, new_ydata = \
                     DataHelper.sort_data(new_xdata, new_ydata)
-            item.props.data = new_xdata, new_ydata
-            item.props.err = xerr, yerr
+            item.props.data = new_xdata, new_ydata, xerr, yerr
             return True, message
 
     @staticmethod
