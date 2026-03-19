@@ -50,14 +50,14 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_add_equation_request(
         self,
-        window: Graphs.Window,
+        data: Graphs.Data,
         equation: str,
         name: str,
     ) -> EquationItem:
         if name == "":
             name = f"Y = {equation}"
         return EquationItem.new(
-            window.get_data().get_selected_style_params(),
+            data.get_selected_style_params(),
             equation,
             name=name,
         )
@@ -116,15 +116,15 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_generate_data_request(
         self,
-        window: Graphs.Window,
+        data: Graphs.Data,
         name: str,
     ) -> GeneratedDataItem:
         settings = Graphs.Application.get_settings_child("generate-data")
         equation = settings.get_string("equation")
         if name == "":
-            name = f"Y = {settings.get_string('equation')}"
+            name = f"Y = {equation}"
         return GeneratedDataItem.new(
-            window.get_data().get_selected_style_params(),
+            data.get_selected_style_params(),
             equation,
             settings.get_string("xstart"),
             settings.get_string("xstop"),
