@@ -438,7 +438,7 @@ class Data(Graphs.Data):
 
             indices = \
                 (item_.get_xposition() * 2, 1 + item_.get_yposition() * 2)
-            for index, xydata in zip(indices, item_.props.data):
+            for index, xydata in zip(indices, item_.get_xydata()):
                 axis = axes[index]
 
                 xydata = numpy.asarray(xydata)
