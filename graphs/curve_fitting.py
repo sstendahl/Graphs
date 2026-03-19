@@ -7,6 +7,8 @@ from gi.repository import Adw, Gio, Graphs
 from graphs import canvas
 from graphs.item import DataItem, FillItem
 
+import numexpr
+
 import numpy
 
 from scipy.optimize import _minpack, curve_fit
@@ -112,14 +114,16 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Handle fit curve request."""
         free_vars = self.get_free_vars()
         variables = ["x"] + free_vars
-        sym_vars = sympy.symbols(variables)
-        sym_params_map = dict(zip(variables, sym_vars))
+        sym_params_map = dict(zip(variables, sympy.symbols(variables)))
         x_data, y_data = self._data
         equation = self.get_equation_string()
         settings = self.get_settings()
+
+        def func(*params) -> numpy.ndarray:
+            return numexpr.evaluate(equation, dict(zip(variables, params)))
+
         try:
             symbolic = sympy.sympify(equation, locals=sym_params_map)
-            func = sympy.lambdify(sym_vars, symbolic, "numpy")
             params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.get_p0(),
@@ -159,20 +163,21 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         x_fit = self._x_fit
         y_fit = func(x_fit, *params)
-        if numpy.isscalar(y_fit):
-            y_fit = numpy.full_like(x_fit, y_fit, dtype=float)
+        if numpy.ndim(y_fit) == 0:
+            y_fit = numpy.full(x_fit.size, y_fit.item())
 
         self.fitted_curve.props.data = x_fit, y_fit
         self.fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
-        grad_symbolic = [
-            sympy.diff(symbolic, sym_params_map[name]) for name in free_vars
-        ]
-        grad = sympy.lambdify(sym_vars, grad_symbolic, "numpy")(x_fit, *params)
+        local_dict = {"x": x_fit} | values
         jacobian = numpy.column_stack([
-            g if numpy.ndim(g) > 0 else numpy.full(x_fit.size, g)
-            for g in map(numpy.asarray, grad)
+            numpy.full(x_fit.size, g) if numpy.ndim(
+                g := numexpr.evaluate(
+                    str(sympy.diff(symbolic, sym_params_map[name])),
+                    local_dict,
+                ),
+            ) == 0 else g for name in free_vars
         ])
         variance = numpy.sum(jacobian * (jacobian @ param_cov), axis=1)
 
