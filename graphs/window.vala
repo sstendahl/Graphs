@@ -85,6 +85,7 @@ namespace Graphs {
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
 
             this.key_controller = new EventControllerKey ();
             ((Widget) this).add_controller (key_controller);
@@ -138,8 +139,6 @@ namespace Graphs {
                 update_history_actions ();
                 update_close_project_action ();
             });
-
-            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
 
             Actions.setup_local (this);
 

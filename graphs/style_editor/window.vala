@@ -67,6 +67,7 @@ namespace Graphs {
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
