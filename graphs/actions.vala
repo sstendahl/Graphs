@@ -5,7 +5,9 @@ using Gtk;
 
 namespace Graphs {
     namespace Actions {
-        public void setup_global (Application application) {
+        public void setup_global () {
+            var application = Application.instance ();
+
             var quit_action = new SimpleAction ("quit", null);
             quit_action.activate.connect (application.quit_action);
             application.add_action (quit_action);

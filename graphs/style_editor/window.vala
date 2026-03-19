@@ -101,7 +101,7 @@ namespace Graphs {
                         if (_file == null || !unsaved) {
                             load (file);
                         } else {
-                            var new_window = ((Application) application).create_style_editor ();
+                            var new_window = Application.instance ().create_style_editor ();
                             new_window.load (file);
                             new_window.present ();
                         }

@@ -57,7 +57,7 @@ namespace Graphs {
 
             Gtk.Window.set_default_icon_name (application_id);
 
-            Actions.setup_global (this);
+            Actions.setup_global ();
         }
 
         /**
