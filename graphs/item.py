@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from gettext import gettext as _
 from typing import Tuple
 
 from gi.repository import GObject, Graphs
@@ -108,7 +107,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.props.typename = _("Dataset")
         if self.props.data is None:
             self.props.data = ([], [], None, None)
 
@@ -169,7 +167,6 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.props.typename = _("Generated Dataset")
         self._regenerate()
         for prop in ("equation", "xstart", "xstop", "steps", "scale"):
             self.connect("notify::" + prop, self._regenerate)
@@ -209,10 +206,6 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
             **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.props.typename = _("Equation")
-
 
 class TextItem(Graphs.TextItem, _PythonItemMixin):
     """TextItem."""
@@ -242,10 +235,6 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
             **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.props.typename = _("Label")
-
 
 class FillItem(Graphs.FillItem, _PythonItemMixin):
     """FillItem."""
@@ -266,7 +255,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.props.typename = _("Fill")
         if self.props.data is None:
             self.props.data = (None, None, None)
 
