@@ -139,7 +139,7 @@ namespace Graphs {
                 update_close_project_action ();
             });
 
-            content_view.set_name ("view" + Application.instance().get_next_css_counter ().to_string ());
+            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
 
             Actions.setup_local (this);
 
