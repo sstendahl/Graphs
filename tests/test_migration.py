@@ -25,7 +25,7 @@ def migrated_project_dict(v1_project_dict):
     """Return the migrated dict from the v1 fixture."""
     return ProjectMigrator(
         copy.deepcopy(v1_project_dict),
-        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+        Graphs.ProjectParseFlags.NONE,
     ).migrate()
 
 
@@ -34,7 +34,7 @@ def validated_project(migrated_project_dict):
     """Return a ProjectValidator after validating the migrated dict."""
     validator = ProjectValidator(
         migrated_project_dict,
-        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+        Graphs.ProjectParseFlags.NONE,
     )
     validator.validate()
     return validator
@@ -44,7 +44,7 @@ def test_read_old_project_file():
     """Test if read_project_file parses the v1 file without errors."""
     file = Gio.File.new_for_path(PROJECTFILE_V1)
     result = read_project_file(
-        file, Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+        file, Graphs.ProjectParseFlags.NONE,
     )
     assert "data" in result
     assert "figure-settings" in result
@@ -94,7 +94,7 @@ def test_migration_result_passes_validation(migrated_project_dict):
     """Test if the migrated dict passes ProjectValidator without errors."""
     ProjectValidator(
         migrated_project_dict,
-        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+        Graphs.ProjectParseFlags.NONE,
     ).validate()
 
 
