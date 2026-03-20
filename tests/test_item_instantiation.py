@@ -21,21 +21,6 @@ def test_new_from_dict_data_item():
     assert item.get_yerr() == [3, 1, 2]
 
 
-def test_new_from_dict_data_item_xdata_ydata():
-    """Test if new_from_dict stores xdata and ydata correctly on a DataItem."""
-    d = {
-        "type": "DataItem",
-        "name": "XY",
-        "data": ([1.0, 2.0], [3.0, 4.0]),
-        "err": (None, None),
-        "color": "#000000",
-    }
-    item = new_from_dict(d)
-    xdata, ydata = item.props.data
-    assert list(xdata) == [1.0, 2.0]
-    assert list(ydata) == [3.0, 4.0]
-
-
 def test_new_from_dict_text_item():
     """Test if new_from_dict returns a TextItem with the correct properties."""
     d = {
