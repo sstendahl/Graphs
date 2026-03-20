@@ -145,7 +145,7 @@ namespace Graphs {
             set { residuals_container.set_child (value); }
         }
 
-        protected virtual void setup () {
+        construct {
             fitting_parameters = new HashMap<string, FittingParameter> ();
             fit_result = null;
 
@@ -194,6 +194,8 @@ namespace Graphs {
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
 
+            PythonHelper.run_method (this, "_load_canvas");
+            Adw.StyleManager.get_default ().notify.connect (() => PythonHelper.run_method (this, "_load_canvas"));
             set_equation_from_selection ();
         }
 
