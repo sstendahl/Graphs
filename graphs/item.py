@@ -75,7 +75,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     __gtype_name__ = "GraphsPythonDataItem"
 
     data = GObject.Property(type=object)
-    err = GObject.Property(type=object)
 
     _style_properties = {
         "errbarsabove": ("errorbar.barsabove", None),
