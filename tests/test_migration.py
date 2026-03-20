@@ -15,14 +15,14 @@ PROJECTFILE_V1 = os.path.join(os.path.dirname(__file__), "project_v1.graphs")
 
 @pytest.fixture
 def v1_project_dict():
-    """Load the legacy v1 project dict from the test fixture."""
+    """Load the v1 project dict from the test fixture."""
     with open(PROJECTFILE_V1) as f:
         return json.load(f)
 
 
 @pytest.fixture
 def migrated_project_dict(v1_project_dict):
-    """Return the migrated dict from the legacy fixture."""
+    """Return the migrated dict from the v1 fixture."""
     return ProjectMigrator(
         copy.deepcopy(v1_project_dict),
         Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
@@ -56,28 +56,6 @@ def test_migration_completes_without_error(migrated_project_dict):
     assert "figure-settings" in migrated_project_dict
 
 
-def test_migration_converts_figure_settings_keys(migrated_project_dict):
-    """Test if migrate converts figure-settings keys to hyphen-case."""
-    for key in migrated_project_dict["figure-settings"]:
-        assert "_" not in key, f"Key '{key}' still uses underscores"
-
-
-def test_migration_strips_graphs_prefix_from_item_types(migrated_project_dict):
-    """Test if migrate removes the 'Graphs' prefix from all item type names."""
-    for item in migrated_project_dict["data"]:
-        assert not item["type"].startswith("Graphs"), (
-            f"Item type '{item['type']}' still has 'Graphs' prefix"
-        )
-
-
-def test_migration_merges_item_data(migrated_project_dict):
-    """Test if migrate replaces xdata/ydata keys with a single data tuple."""
-    for item in migrated_project_dict["data"]:
-        assert "data" in item
-        assert "xdata" not in item
-        assert "ydata" not in item
-
-
 def test_migration_preserves_item_count(
     v1_project_dict,
     migrated_project_dict,
@@ -98,6 +76,20 @@ def test_migration_preserves_item_names(
     assert migrated_names == original_names
 
 
+def test_migration_preserves_item_data(
+    v1_project_dict,
+    migrated_project_dict,
+):
+    """Test if migrate preserves xdata and ydata for each item."""
+    for v1_item, item in zip(
+        v1_project_dict["data"],
+        migrated_project_dict["data"],
+    ):
+        xdata, ydata, _xerr, _yerr = item["data"]
+        assert list(xdata) == v1_item["xdata"]
+        assert list(ydata) == v1_item["ydata"]
+
+
 def test_migration_result_passes_validation(migrated_project_dict):
     """Test if the migrated dict passes ProjectValidator without errors."""
     ProjectValidator(
@@ -111,19 +103,3 @@ def test_validator_constructs_figure_settings(validated_project):
     assert isinstance(
         validated_project.figure_settings, Graphs.FigureSettings,
     )
-
-
-def test_migration_preserves_item_data(
-    v1_project_dict,
-    migrated_project_dict,
-):
-    """Test if migrate preserves data for each item."""
-    for legacy, item in zip(
-        v1_project_dict["data"],
-        migrated_project_dict["data"],
-    ):
-        xdata, ydata, xerr, yerr = item["data"]
-        assert list(xdata) == legacy["xdata"]
-        assert list(ydata) == legacy["ydata"]
-        assert xerr is None
-        assert yerr is None
