@@ -307,12 +307,16 @@ class CommonOperations():
             window.add_toast_string(msg)
 
         new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
-        data.add_items([DataItem.new(
-            data.get_selected_style_params(), new_xdata, new_ydata,
-            xerr=new_xerr if all_x else None,
-            yerr=new_yerr if all_y else None,
-            name=_("Combined Data"),
-        )])
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                new_xdata,
+                new_ydata,
+                xerr=new_xerr if all_x else None,
+                yerr=new_yerr if all_y else None,
+                name=_("Combined Data"),
+            ),
+        ])
         return True
 
     @staticmethod

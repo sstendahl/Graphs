@@ -55,11 +55,13 @@ class SqlParser(Parser):
         yerr = None
         if settings.get_boolean("use-xerr"):
             xerr = db_reader.get_column_data(
-                table_name, settings.get_string("xerr-column"),
+                table_name,
+                settings.get_string("xerr-column"),
             )
         if settings.get_boolean("use-yerr"):
             yerr = db_reader.get_column_data(
-                table_name, settings.get_string("yerr-column"),
+                table_name,
+                settings.get_string("yerr-column"),
             )
 
         return [

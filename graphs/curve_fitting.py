@@ -2,7 +2,7 @@
 """Curve fitting module."""
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import canvas
 from graphs.item import DataItem, FillItem

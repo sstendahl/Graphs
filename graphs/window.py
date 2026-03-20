@@ -61,8 +61,10 @@ class PythonWindow(Graphs.Window):
             count = 0
             errbar_count = 0
             for item_ in data:
-                if (isinstance(item_, (item.DataItem, item.EquationItem))
-                        and item_.get_color() in old_cycle):
+                if (
+                    isinstance(item_, (item.DataItem, item.EquationItem))
+                    and item_.get_color() in old_cycle
+                ):
                     count %= len(new_cycle)
                     item_.set_color(new_cycle[count])
                     count += 1
