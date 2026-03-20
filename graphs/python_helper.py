@@ -35,11 +35,8 @@ XDATA = numpy.linspace(0, 10, 10)
 class PythonHelper(Graphs.PythonHelper):
     """Python helper for python only calls."""
 
-    def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
-
-        self.set_instance(self)
-
+    def __init__(self):
+        super().__init__()
         for request in _REQUESTS:
             request = request + "-request"
             self.connect(
@@ -64,11 +61,11 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
-        return PythonStyleEditor(self.props.application)
+        return PythonStyleEditor()
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:
-        return PythonWindow(self.props.application)
+        return PythonWindow()
 
     @staticmethod
     def _on_curve_fitting_dialog_request(
