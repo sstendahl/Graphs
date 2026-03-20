@@ -103,16 +103,16 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
-        protected unowned Button confirm_button { get; }
+        private unowned Button confirm_button { get; }
 
         [GtkChild]
-        protected unowned Adw.EntryRow custom_equation { get; }
+        private unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
-        protected unowned Box fitting_params_box { get; }
+        private unowned Box fitting_params_box { get; }
 
         [GtkChild]
-        protected unowned TextView text_view { get; }
+        private unowned TextView text_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
