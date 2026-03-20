@@ -10,13 +10,15 @@ def test_new_from_dict_data_item():
     d = {
         "type": "DataItem",
         "name": "My Dataset",
-        "data": ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0], None, None),
+        "data": ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0], [1, 3, 2], [3, 1, 2]),
         "color": "#1A5FB4",
     }
     item = new_from_dict(d)
     assert isinstance(item, DataItem)
     assert item.get_name() == "My Dataset"
-    assert item.get_data() == ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0], None, None)
+    assert item.get_xydata() == ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0])
+    assert item.get_xerr() == [1, 3, 2]
+    assert item.get_yerr() == [3, 1, 2]
 
 
 def test_new_from_dict_data_item_xdata_ydata():
@@ -82,5 +84,5 @@ def test_data_item_default_data():
 def test_data_item_default_err():
     """Test if DataItem defaults err None when not provided."""
     item = DataItem(name="NoErr")
-    assert item.get_xerr() == None
-    assert item.get_yerr() == None
+    assert item.get_xerr() is None
+    assert item.get_yerr() is None

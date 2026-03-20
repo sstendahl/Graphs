@@ -1,99 +1,129 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for project migration."""
+import copy
 import json
 import os
 
 from gi.repository import Gio, Graphs
 
-from graphs.project import ProjectMigrator, read_project_file
+from graphs.project import ProjectMigrator, ProjectValidator, read_project_file
 
-PROJECTFILE_V1 = "project_v1.graphs"
+import pytest
+
+PROJECTFILE_V1 = os.path.join(os.path.dirname(__file__), "project_v1.graphs")
 
 
-def _load_legacy():
+@pytest.fixture
+def v1_project_dict():
     """Load the legacy v1 project dict from the test fixture."""
     with open(PROJECTFILE_V1) as f:
         return json.load(f)
 
 
-def test_migration_completes_without_error():
-    """Test if migrate returns a dict with the expected top-level keys."""
-    result = ProjectMigrator(
-        _load_legacy(), Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+@pytest.fixture
+def migrated_project_dict(v1_project_dict):
+    """Return the migrated dict from the legacy fixture."""
+    return ProjectMigrator(
+        copy.deepcopy(v1_project_dict),
+        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
     ).migrate()
+
+
+@pytest.fixture
+def validated_project(migrated_project_dict):
+    """Return a ProjectValidator after validating the migrated dict."""
+    validator = ProjectValidator(
+        migrated_project_dict,
+        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+    )
+    validator.validate()
+    return validator
+
+
+def test_read_old_project_file():
+    """Test if read_project_file parses the v1 file without errors."""
+    file = Gio.File.new_for_path(PROJECTFILE_V1)
+    result = read_project_file(
+        file, Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+    )
     assert "data" in result
     assert "figure-settings" in result
 
 
-def test_migration_converts_figure_settings_keys():
+def test_migration_completes_without_error(migrated_project_dict):
+    """Test if migrate returns a dict with the expected top-level keys."""
+    assert "data" in migrated_project_dict
+    assert "figure-settings" in migrated_project_dict
+
+
+def test_migration_converts_figure_settings_keys(migrated_project_dict):
     """Test if migrate converts figure-settings keys to hyphen-case."""
-    result = ProjectMigrator(
-        _load_legacy(), Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    ).migrate()
-    for key in result["figure-settings"]:
+    for key in migrated_project_dict["figure-settings"]:
         assert "_" not in key, f"Key '{key}' still uses underscores"
 
 
-def test_migration_strips_graphs_prefix_from_item_types():
+def test_migration_strips_graphs_prefix_from_item_types(migrated_project_dict):
     """Test if migrate removes the 'Graphs' prefix from all item type names."""
-    result = ProjectMigrator(
-        _load_legacy(), Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    ).migrate()
-    for item in result["data"]:
+    for item in migrated_project_dict["data"]:
         assert not item["type"].startswith("Graphs"), (
             f"Item type '{item['type']}' still has 'Graphs' prefix"
         )
 
 
-def test_migration_merges_item_data():
+def test_migration_merges_item_data(migrated_project_dict):
     """Test if migrate replaces xdata/ydata keys with a single data tuple."""
-    result = ProjectMigrator(
-        _load_legacy(), Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    ).migrate()
-    for item in result["data"]:
+    for item in migrated_project_dict["data"]:
         assert "data" in item
         assert "xdata" not in item
         assert "ydata" not in item
 
 
-def test_migration_preserves_item_names():
+def test_migration_preserves_item_count(
+    v1_project_dict,
+    migrated_project_dict,
+):
+    """Test if migrate keeps the same number of items as the original."""
+    assert (
+        len(migrated_project_dict["data"]) == len(v1_project_dict["data"])
+    )
+
+
+def test_migration_preserves_item_names(
+    v1_project_dict,
+    migrated_project_dict,
+):
     """Test if migrate keeps all item names unchanged."""
-    original_names = {i["name"] for i in _load_legacy()["data"]}
-    result = ProjectMigrator(
-        _load_legacy(), Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    ).migrate()
-    migrated_names = {i["name"] for i in result["data"]}
+    original_names = {i["name"] for i in v1_project_dict["data"]}
+    migrated_names = {i["name"] for i in migrated_project_dict["data"]}
     assert migrated_names == original_names
 
 
-def test_migration_preserves_item_count():
-    """Test if migrate keeps the same number of items as the original."""
-    legacy = _load_legacy()
-    result = ProjectMigrator(
-        legacy, Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    ).migrate()
-    assert len(result["data"]) == len(legacy["data"])
+def test_migration_result_passes_validation(migrated_project_dict):
+    """Test if the migrated dict passes ProjectValidator without errors."""
+    ProjectValidator(
+        migrated_project_dict,
+        Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+    ).validate()
 
 
-def test_read_legacy_project_file():
-    """Test if read_project_file reads the legacy.graphs fixture."""
-    file = Gio.File.new_for_path(PROJECTFILE_V1)
-    result = read_project_file(
-        file, Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
+def test_validator_constructs_figure_settings(validated_project):
+    """Test if validate correctly constructs a FigureSettings object."""
+    assert isinstance(
+        validated_project.figure_settings, Graphs.FigureSettings,
     )
-    assert "data" in result
-    assert "figure-settings" in result
 
 
-def test_read_legacy_project_figure_settings():
-    """Test if read_project_file preserves figure-settings from legacy file."""
-    file = Gio.File.new_for_path(PROJECTFILE_V1)
-    result = read_project_file(
-        file, Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION,
-    )
-    fs = result["figure-settings"]
-    assert fs["bottom-label"] == "bottomx"
-    assert fs["left-label"] == "lefty"
-    assert fs["right-label"] == "righty"
-    assert fs["top-label"] == "topx"
-    assert fs["title"] == "title"
+def test_migration_preserves_item_data(
+    v1_project_dict,
+    migrated_project_dict,
+):
+    """Test if migrate preserves data for each item."""
+    for legacy, item in zip(
+        v1_project_dict["data"],
+        migrated_project_dict["data"],
+    ):
+        xdata, ydata, xerr, yerr = item["data"]
+        assert list(xdata) == legacy["xdata"]
+        assert list(ydata) == legacy["ydata"]
+        assert xerr is None
+        assert yerr is None
