@@ -61,10 +61,13 @@ namespace Graphs {
         protected signal void save_request (File file);
 
         construct {
+            application = Application.instance ();
+
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
+            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
@@ -99,7 +102,7 @@ namespace Graphs {
                         if (_file == null || !unsaved) {
                             load (file);
                         } else {
-                            var new_window = ((Application) application).create_style_editor ();
+                            var new_window = Application.instance ().create_style_editor ();
                             new_window.load (file);
                             new_window.present ();
                         }
@@ -178,11 +181,7 @@ namespace Graphs {
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-        }
-
-        protected void setup () {
-            var model = new NoSelection (StyleManager.filtered_style_model);
-            style_grid.set_model (model);
+            style_grid.set_model (new NoSelection (StyleManager.filtered_style_model));
         }
 
         public void load (File file) {

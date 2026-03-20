@@ -30,12 +30,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
 
     __gtype_name__ = "GraphsPythonStyleEditor"
 
-    def __init__(self, application: Graphs.Application):
-        super().__init__(application=application)
-        self.setup()
-        self.props.content_view.set_name(
-            "view" + str(application.get_next_css_counter()),
-        )
+    def __init__(self):
+        super().__init__()
 
         style_editor = StyleEditorBox(self)
         style_editor.connect("params-changed", self._on_params_changed)
