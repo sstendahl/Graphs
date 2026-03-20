@@ -23,7 +23,6 @@ class PythonWindow(Graphs.Window):
 
     def __init__(self):
         super().__init__(data=Data())
-        self.setup()
         self.props.data.connect(
             "style-changed",
             self._on_style_changed,

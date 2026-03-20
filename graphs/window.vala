@@ -144,13 +144,6 @@ namespace Graphs {
 
             this.operations = new Operations (this);
 
-#if DEBUG
-            add_css_class ("devel");
-            main_page.set_title (_("Graphs (Development)"));
-#endif
-        }
-
-        protected void setup () {
             data.notify["can-undo"].connect (update_history_actions);
             data.notify["can-redo"].connect (update_history_actions);
             update_history_actions ();
@@ -165,6 +158,11 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
+
+#if DEBUG
+            add_css_class ("devel");
+            main_page.set_title (_("Graphs (Development)"));
+#endif
         }
 
         private void update_history_actions () {
