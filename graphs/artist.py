@@ -27,7 +27,7 @@ def _adjust_for_singularities(data: tuple) -> tuple:
     xerr, yerr = map(lambda x: x if x is None else numpy.asarray(x), data[2:])
 
     grad = numpy.abs(numpy.gradient(ydata, xdata))
-    mask = grad[:-1] > numpy.percentile(numpy.abs(grad), 98)
+    mask = grad[:-1] > numpy.percentile(grad, 98)
     mask &= numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
 
     edges = numpy.diff(mask.astype(int))
