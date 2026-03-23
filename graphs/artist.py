@@ -21,6 +21,49 @@ def _ellipsize(name: str) -> str:
     return name[:40] + "…" if len(name) > 40 else name
 
 
+def _adjust_for_singularities(data: tuple) -> tuple:
+    """Adjust data to handle singularity jumps."""
+    xdata, ydata = map(numpy.asarray, data[:2])
+    xerr, yerr = map(lambda x: x if x is None else numpy.asarray(x), data[2:])
+
+    grad = numpy.abs(numpy.gradient(ydata, xdata))
+    grad_threshold = numpy.percentile(numpy.abs(grad), 95)
+    grad_mask = grad[:-1] > grad_threshold
+    sign_mask = numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
+
+    mask = grad_mask | sign_mask
+
+    edges = numpy.diff(mask.astype(int))
+    starts = numpy.where(edges == 1)[0] + 1
+    ends = numpy.where(edges == -1)[0] + 1
+
+    if mask[0]:
+        starts = numpy.r_[0, starts]
+    if mask[-1]:
+        ends = numpy.r_[ends, len(mask)]
+
+    singular = numpy.zeros_like(mask, dtype=bool)
+    singular[(starts + ends) // 2] = True
+
+    bad_points = numpy.zeros(len(xdata), dtype=bool)
+    left = numpy.abs(ydata[:-1]) > numpy.abs(ydata[1:])
+    bad_points[:-1] |= singular & left
+    bad_points[1:] |= singular & ~left
+
+    n_bad_points = numpy.count_nonzero(bad_points)
+    nan = numpy.full(n_bad_points, numpy.nan, dtype=numpy.float64)
+    xdata[bad_points] = nan
+    ydata[bad_points] = nan
+
+    if xerr is not None:
+        xerr[bad_points] = nan
+
+    if yerr is not None:
+        yerr[bad_points] = nan
+
+    return (xdata, ydata, xerr, yerr)
+
+
 def new_for_item(fig: Figure, item: Graphs.Item):
     """
     Create a new artist for an item.
@@ -32,7 +75,7 @@ def new_for_item(fig: Figure, item: Graphs.Item):
         case "GraphsPythonDataItem":
             cls = DataItemArtistWrapper
         case "GraphsPythonGeneratedDataItem":
-            cls = GeneratedDataItemArtistWrapper
+            cls = DataItemArtistWrapper
         case "GraphsPythonEquationItem":
             cls = EquationItemArtistWrapper
         case "GraphsPythonFillItem":
@@ -110,11 +153,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @data.setter
     def data(self, data: tuple[list, list, list, list]) -> None:
         """Set data property."""
-        xdata, ydata, xerr, yerr = data
+        xdata, ydata, xerr, yerr = _adjust_for_singularities(data)
         self._data.set_data((xdata, ydata))
 
         if xerr is not None:
-            xdata = numpy.asarray(xdata)
             start = numpy.column_stack((xdata - xerr, ydata))
             end = numpy.column_stack((xdata + xerr, ydata))
             self._xbar.set_segments(numpy.stack((start, end), axis=1))
@@ -122,7 +164,6 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._xcaps[1].set_data(xdata + xerr, ydata)
 
         if yerr is not None:
-            ydata = numpy.asarray(ydata)
             start = numpy.column_stack((xdata, ydata - yerr))
             end = numpy.column_stack((xdata, ydata + yerr))
             self._ybar.set_segments(numpy.stack((start, end), axis=1))
@@ -247,7 +288,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        xdata, ydata, xerr, yerr = item.props.data
+        xdata, ydata, xerr, yerr = _adjust_for_singularities(item.props.data)
         self._artist = axis.errorbar(
             xdata,
             ydata,
@@ -398,30 +439,6 @@ class SingularityHandler:
         right = -numpy.sign(ydata[insert_idx + 1] - ydata[insert_idx])
         inf_value += ydata[insert_idx]
         return numpy.array([left * inf_value, numpy.nan, right * inf_value])
-
-
-class GeneratedDataItemArtistWrapper(
-    DataItemArtistWrapper,
-    SingularityHandler,
-):
-    """Wrapper for GeneratedDataItemArtist."""
-
-    __gtype_name__ = "GraphsGeneratedDataItemArtistWrapper"
-
-    @GObject.Property(type=str, flags=2)
-    def equation(self) -> None:
-        """Write-only property, ignored."""
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
-        self._singularities_cache.clear()
-        self._equation = Graphs.preprocess_equation(equation)
-        self._handle_singularities(self._artist.get_data(), False)
-
-    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
-        self._axis = axis
-        super().__init__(self._axis, item)
-        self._equation = Graphs.preprocess_equation(item.props.equation)
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
