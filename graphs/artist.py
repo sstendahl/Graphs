@@ -459,33 +459,32 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         n = len(xdata)
 
-        insert_sizes = numpy.where((indices > 1) & (indices < n - 1), 3, 1)
+        triple_mask = (indices > 1) & (indices < n - 1)
+        insert_sizes = numpy.where(triple_mask, 3, 1)
         new_size = n + insert_sizes.sum()
-
-        x_new = numpy.empty(new_size, dtype=float)
-        y_new = numpy.empty(new_size, dtype=float)
 
         ylim = self._axis.get_ylim()
         ylim_range = abs(ylim[1] - ylim[0])
         ydata_range = numpy.nanmax(ydata) - numpy.nanmin(ydata)
-
         inf_value = max(ylim_range * 1.5, ydata_range * 1.5) * 2
         epsilon = (xdata[1] - xdata[0]) * 0.01
 
         # shift indices due to previous insertions
         target_indices = indices + numpy.cumsum(insert_sizes) - insert_sizes
 
-        mask = numpy.ones(new_size, dtype=bool)
-        for idx, size in zip(target_indices, insert_sizes):
-            mask[idx:idx + size] = False
-
-        x_new[mask] = xdata
-        y_new[mask] = ydata
-
-        triple_mask = insert_sizes == 3
         triple_idxs = indices[triple_mask]
         triple_targets = target_indices[triple_mask]
         triple_values = singularities_arr[triple_mask]
+
+        data_mask = numpy.ones(new_size, dtype=bool)
+        data_mask[target_indices] = False
+        data_mask[triple_targets + 1] = False
+        data_mask[triple_targets + 2] = False
+
+        x_new = numpy.empty(new_size, dtype=float)
+        y_new = numpy.empty(new_size, dtype=float)
+        x_new[data_mask] = xdata
+        y_new[data_mask] = ydata
 
         left = numpy.sign(ydata[triple_idxs - 1] - ydata[triple_idxs - 2])
         right = -numpy.sign(ydata[triple_idxs + 1] - ydata[triple_idxs])
