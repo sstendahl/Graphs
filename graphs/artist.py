@@ -482,24 +482,26 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         x_new[mask] = xdata
         y_new[mask] = ydata
 
-        for value, src_idx, dst_idx, size in zip(
-            singularities_arr, indices, target_indices, insert_sizes,
-        ):
-            if size == 3:
-                left = numpy.sign(ydata[src_idx - 1] - ydata[src_idx - 2])
-                right = -numpy.sign(ydata[src_idx + 1] - ydata[src_idx])
-                inf = inf_value + ydata[src_idx]
+        triple_mask = insert_sizes == 3
+        triple_idxs = indices[triple_mask]
+        triple_targets = target_indices[triple_mask]
+        triple_values = singularities_arr[triple_mask]
 
-                x_new[dst_idx] = value - epsilon
-                x_new[dst_idx + 1] = value
-                x_new[dst_idx + 2] = value + epsilon
+        left = numpy.sign(ydata[triple_idxs - 1] - ydata[triple_idxs - 2])
+        right = -numpy.sign(ydata[triple_idxs + 1] - ydata[triple_idxs])
+        inf_values = inf_value + ydata[triple_idxs]
 
-                y_new[dst_idx] = left * inf
-                y_new[dst_idx + 1] = numpy.nan
-                y_new[dst_idx + 2] = right * inf
-            else:
-                x_new[dst_idx] = value
-                y_new[dst_idx] = numpy.nan
+        x_new[triple_targets] = triple_values - epsilon
+        x_new[triple_targets + 1] = numpy.nan
+        x_new[triple_targets + 2] = triple_values + epsilon
+
+        y_new[triple_targets] = left * inf_values
+        y_new[triple_targets + 1] = numpy.nan
+        y_new[triple_targets + 2] = right * inf_values
+
+        single_targets = target_indices[~triple_mask]
+        x_new[single_targets] = numpy.nan
+        y_new[single_targets] = numpy.nan
 
         return x_new, y_new
 
