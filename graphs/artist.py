@@ -558,6 +558,20 @@ class TextItemArtistWrapper(ItemArtistWrapper):
         """Set yanchor property."""
         self._artist.set_position((self.props.xanchor, yanchor))
 
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+        super().__init__()
+        self._artist = axis.text(
+            item.props.xanchor,
+            item.props.yanchor,
+            item.props.text,
+            label=_ellipsize(item.get_name()),
+            color=item.get_color(),
+            alpha=item.get_alpha(),
+            clip_on=True,
+            fontsize=item.props.size,
+            rotation=item.props.rotation,
+        )
+
 
 class FillItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for FillItem."""
