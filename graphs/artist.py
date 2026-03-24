@@ -14,7 +14,7 @@ from matplotlib.figure import Figure
 import numpy
 
 import sympy
-from sympy.calculus.singularities import singularities
+from sympy.calculus.singularities import singularities as find_singularities
 
 
 def _ellipsize(name: str) -> str:
@@ -328,126 +328,22 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._set_properties()
 
 
-class SingularityHandler:
-    """Mix-in class for handling singularities in equation-based plots."""
-
-    _singularities_cache = {}
-
-    def _handle_singularities(
-        self,
-        data: tuple[list, list],
-        insert_y_points: bool,
-    ) -> None:
-        """Handle singularities and update artist data."""
-        xdata, ydata = numpy.asarray(data[0]), numpy.asarray(data[1])
-        x_min, x_max = float(numpy.min(xdata)), float(numpy.max(xdata))
-
-        singularities = self._find_singularities((x_min, x_max))
-        if singularities:
-            xdata, ydata = self._insert_singularity_points(
-                xdata, ydata, singularities, self._axis.get_ylim(),
-                insert_y_points,
-            )
-
-        self._artist.set_data(xdata, ydata)
-
-    def _find_singularities(self, limits: tuple[float, float]) -> set:
-        """Find singularities within the given limits."""
-        x_min, x_max = limits
-
-        if self._equation in self._singularities_cache:
-            cached = self._singularities_cache[self._equation]
-            cached_min, cached_max = cached["limits"]
-
-            if x_min >= cached_min and x_max <= cached_max:
-                return {
-                    s
-                    for s in cached["singularities"] if x_min <= s <= x_max
-                }
-
-            x_min, x_max = min(x_min, cached_min), max(x_max, cached_max)
-
-        x = sympy.Symbol("x")
-        expr = sympy.sympify(self._equation)
-        domain = sympy.Interval(x_min, x_max)
-        all_singularities = singularities(expr, x, domain)
-
-        self._singularities_cache[self._equation] = {
-            "limits": (x_min, x_max),
-            "singularities": all_singularities,
-        }
-
-        return {s for s in all_singularities if limits[0] <= s <= limits[1]}
-
-    def _insert_singularity_points(
-        self,
-        xdata,
-        ydata,
-        singularities,
-        ylim,
-        insert_y_points=True,
-    ) -> tuple:
-        """Insert NaN and optionally infinite value points at singularities."""
-        if not singularities:
-            return xdata, ydata
-
-        xdata = numpy.asarray(xdata, dtype=float)
-        ydata = numpy.asarray(ydata, dtype=float)
-        singularities_arr = numpy.array(sorted(singularities), dtype=float)
-        sing_indices = numpy.searchsorted(xdata, singularities_arr)
-
-        ylim_range = abs(ylim[1] - ylim[0])
-        ylim_m = ylim_range / 2
-        ydata_range = numpy.nanmax(ydata) - numpy.nanmin(ydata)
-        yrange_m = ydata_range / 2
-        inf_value = max(ylim_range + ylim_m, ydata_range + yrange_m) * 2
-        epsilon = abs(xdata[1] - xdata[0]) / 100
-
-        x_parts, y_parts = [], []
-        prev_idx = 0
-        for value, insert_idx in zip(singularities_arr, sing_indices):
-            x_parts.append(xdata[prev_idx:insert_idx])
-            y_parts.append(ydata[prev_idx:insert_idx])
-
-            if insert_y_points and 1 < insert_idx < len(ydata) - 1:
-                x_parts.append(self._make_singularity_x(value, epsilon))
-                y_parts.append(
-                    self._make_singularity_y(ydata, insert_idx, inf_value),
-                )
-            else:
-                x_parts.append(numpy.array([value]))
-                y_parts.append(numpy.array([numpy.nan]))
-
-            prev_idx = insert_idx
-
-        x_parts.append(xdata[prev_idx:])
-        y_parts.append(ydata[prev_idx:])
-        return numpy.concatenate(x_parts), numpy.concatenate(y_parts)
-
-    def _make_singularity_x(self, value, epsilon):
-        """Create x-coordinates around singularity."""
-        return numpy.array([value - epsilon, value, value + epsilon])
-
-    def _make_singularity_y(self, ydata, insert_idx, inf_value):
-        """Create y-coordinates around singularity."""
-        left = numpy.sign(ydata[insert_idx - 1] - ydata[insert_idx - 2])
-        right = -numpy.sign(ydata[insert_idx + 1] - ydata[insert_idx])
-        inf_value += ydata[insert_idx]
-        return numpy.array([left * inf_value, numpy.nan, right * inf_value])
-
-
-class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
+class EquationItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for EquationItem."""
 
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     legend = True
+    _singularities_cache = {}
+    _x = sympy.Symbol("x")
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        self._equation = item.get_preprocessed_equation()
+        equation = item.get_preprocessed_equation()
+        self._equation = equation
+        self._expr = sympy.sympify(equation)
         self._axis = axis
         self._view_change_timeout_id = None
         if self._axis.figure.parent is not None:
@@ -491,6 +387,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
         self._equation = Graphs.preprocess_equation(equation)
+        self._expr = sympy.sympify(equation)
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
@@ -514,18 +411,86 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
         x_start, x_stop = self._axis.get_xlim()
         scale = scales.Scale.from_string(self._axis.get_xscale())
 
-        limits = (
-            utilities.get_value_at_fraction(-1, x_start, x_stop, scale),
-            utilities.get_value_at_fraction(2, x_start, x_stop, scale),
-        )
+        lower = utilities.get_value_at_fraction(-1, x_start, x_stop, scale)
+        upper = utilities.get_value_at_fraction(2, x_start, x_stop, scale)
+        limits = (lower, upper)
 
-        xdata, ydata = utilities.equation_to_data(
-            self._equation, limits, scale=scale,
-        )
+        data = utilities.equation_to_data(self._equation, limits, scale=scale)
+        singularities = self._find_singularities(limits)
+        data = self._insert_singularity_points(data, singularities)
 
-        self._artist.set_data(xdata, ydata)
-        self._handle_singularities(self._artist.get_data(), True)
+        self._artist.set_data(*data)
         self._axis.figure.parent.queue_draw()
+
+    def _find_singularities(self, limits):
+        lower, upper = limits
+
+        cached = self._singularities_cache.get(self._equation)
+        if cached:
+            cached_min, cached_max = cached["limits"]
+
+            if lower >= cached_min and upper <= cached_max:
+                return {
+                    s
+                    for s in cached["singularities"]
+                    if lower <= s <= upper
+                }
+
+            x_min, x_max = min(lower, cached_min), max(upper, cached_max)
+        else:
+            x_min, x_max = lower, upper
+
+        domain = sympy.Interval(x_min, x_max)
+        all_singularities = find_singularities(self._expr, self._x, domain)
+
+        self._singularities_cache[self._equation] = {
+            "limits": (x_min, x_max),
+            "singularities": all_singularities,
+        }
+
+        return {s for s in all_singularities if lower <= s <= upper}
+
+    def _insert_singularity_points(self, data, singularities) -> tuple:
+        """Insert NaN and infinite value points at singularities."""
+        if not singularities:
+            return data
+
+        xdata, ydata = map(numpy.asarray, data)
+
+        singularities_arr = numpy.fromiter(sorted(singularities), dtype=float)
+        sing_indices = numpy.searchsorted(xdata, singularities_arr)
+
+        ylim = self._axis.get_ylim()
+        ylim_range = abs(ylim[1] - ylim[0])
+        ydata_range = numpy.nanmax(ydata) - numpy.nanmin(ydata)
+
+        inf_value = max(ylim_range * 1.5, ydata_range * 1.5) * 2
+        epsilon = abs(xdata[1] - xdata[0]) / 100
+
+        x_parts, y_parts = [], []
+
+        prev_idx = 0
+        n = len(ydata)
+        for value, idx in zip(singularities_arr, sing_indices):
+            x_parts.append(xdata[prev_idx:idx])
+            y_parts.append(ydata[prev_idx:idx])
+
+            if 1 < idx < n - 1:
+                left = numpy.sign(ydata[idx - 1] - ydata[idx - 2])
+                right = -numpy.sign(ydata[idx + 1] - ydata[idx])
+                inf = inf_value + ydata[idx]
+
+                x_parts.append([value - epsilon, value, value + epsilon])
+                y_parts.append([left * inf, numpy.nan, right * inf])
+            else:
+                x_parts.append([value])
+                y_parts.append([numpy.nan])
+
+            prev_idx = idx
+
+        x_parts.append(xdata[prev_idx:])
+        y_parts.append(ydata[prev_idx:])
+        return numpy.concatenate(x_parts), numpy.concatenate(y_parts)
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):
@@ -582,20 +547,6 @@ class TextItemArtistWrapper(ItemArtistWrapper):
     def yanchor(self, yanchor: float) -> None:
         """Set yanchor property."""
         self._artist.set_position((self.props.xanchor, yanchor))
-
-    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
-        super().__init__()
-        self._artist = axis.text(
-            item.props.xanchor,
-            item.props.yanchor,
-            item.props.text,
-            label=_ellipsize(item.get_name()),
-            color=item.get_color(),
-            alpha=item.get_alpha(),
-            clip_on=True,
-            fontsize=item.props.size,
-            rotation=item.props.rotation,
-        )
 
 
 class FillItemArtistWrapper(ItemArtistWrapper):
