@@ -417,7 +417,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         data = utilities.equation_to_data(self._equation, limits, scale=scale)
         singularities = self._find_singularities(limits)
-        data = self._insert_singularity_points(data, singularities)
+        if singularities:
+            data = self._insert_singularity_points(data, singularities)
 
         self._artist.set_data(*data)
         self._axis.figure.parent.queue_draw()
@@ -451,45 +452,56 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     def _insert_singularity_points(self, data, singularities) -> tuple:
         """Insert NaN and infinite value points at singularities."""
-        if not singularities:
-            return data
-
         xdata, ydata = map(numpy.asarray, data)
 
         singularities_arr = numpy.fromiter(sorted(singularities), dtype=float)
-        sing_indices = numpy.searchsorted(xdata, singularities_arr)
+        indices = numpy.searchsorted(xdata, singularities_arr)
+
+        n = len(xdata)
+
+        insert_sizes = numpy.where((indices > 1) & (indices < n - 1), 3, 1)
+        new_size = n + insert_sizes.sum()
+
+        x_new = numpy.empty(new_size, dtype=float)
+        y_new = numpy.empty(new_size, dtype=float)
 
         ylim = self._axis.get_ylim()
         ylim_range = abs(ylim[1] - ylim[0])
         ydata_range = numpy.nanmax(ydata) - numpy.nanmin(ydata)
 
         inf_value = max(ylim_range * 1.5, ydata_range * 1.5) * 2
-        epsilon = abs(xdata[1] - xdata[0]) / 100
+        epsilon = (xdata[1] - xdata[0]) * 0.01
 
-        x_parts, y_parts = [], []
+        # shift indices due to previous insertions
+        target_indices = indices + numpy.cumsum(insert_sizes) - insert_sizes
 
-        prev_idx = 0
-        n = len(ydata)
-        for value, idx in zip(singularities_arr, sing_indices):
-            x_parts.append(xdata[prev_idx:idx])
-            y_parts.append(ydata[prev_idx:idx])
+        mask = numpy.ones(new_size, dtype=bool)
+        for idx, size in zip(target_indices, insert_sizes):
+            mask[idx:idx + size] = False
 
-            if 1 < idx < n - 1:
-                left = numpy.sign(ydata[idx - 1] - ydata[idx - 2])
-                right = -numpy.sign(ydata[idx + 1] - ydata[idx])
-                inf = inf_value + ydata[idx]
+        x_new[mask] = xdata
+        y_new[mask] = ydata
 
-                x_parts.append([value - epsilon, value, value + epsilon])
-                y_parts.append([left * inf, numpy.nan, right * inf])
+        for value, src_idx, dst_idx, size in zip(
+            singularities_arr, indices, target_indices, insert_sizes,
+        ):
+            if size == 3:
+                left = numpy.sign(ydata[src_idx - 1] - ydata[src_idx - 2])
+                right = -numpy.sign(ydata[src_idx + 1] - ydata[src_idx])
+                inf = inf_value + ydata[src_idx]
+
+                x_new[dst_idx] = value - epsilon
+                x_new[dst_idx + 1] = value
+                x_new[dst_idx + 2] = value + epsilon
+
+                y_new[dst_idx] = left * inf
+                y_new[dst_idx + 1] = numpy.nan
+                y_new[dst_idx + 2] = right * inf
             else:
-                x_parts.append([value])
-                y_parts.append([numpy.nan])
+                x_new[dst_idx] = value
+                y_new[dst_idx] = numpy.nan
 
-            prev_idx = idx
-
-        x_parts.append(xdata[prev_idx:])
-        y_parts.append(ydata[prev_idx:])
-        return numpy.concatenate(x_parts), numpy.concatenate(y_parts)
+        return x_new, y_new
 
 
 class TextItemArtistWrapper(ItemArtistWrapper):
