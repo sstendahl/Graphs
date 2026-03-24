@@ -21,46 +21,6 @@ def _ellipsize(name: str) -> str:
     return name[:40] + "…" if len(name) > 40 else name
 
 
-def _adjust_for_singularities(data: tuple) -> tuple:
-    """Adjust data to handle singularity jumps."""
-    xdata, ydata = map(numpy.asarray, data[:2])
-    xerr, yerr = map(lambda x: x if x is None else numpy.asarray(x), data[2:])
-
-    grad = numpy.abs(numpy.gradient(ydata, xdata))
-    mask = grad[:-1] > 20
-    mask &= numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
-
-    edges = numpy.diff(mask.astype(int))
-    starts = numpy.where(edges == 1)[0] + 1
-    ends = numpy.where(edges == -1)[0] + 1
-
-    if mask[0]:
-        starts = numpy.r_[0, starts]
-    if mask[-1]:
-        ends = numpy.r_[ends, len(mask)]
-
-    singular = numpy.zeros_like(mask, dtype=bool)
-    singular[(starts + ends) // 2] = True
-
-    bad_points = numpy.zeros(len(xdata), dtype=bool)
-    left = numpy.abs(ydata[:-1]) > numpy.abs(ydata[1:])
-    bad_points[:-1] |= singular & left
-    bad_points[1:] |= singular & ~left
-
-    n_bad_points = numpy.count_nonzero(bad_points)
-    nan = numpy.full(n_bad_points, numpy.nan, dtype=numpy.float64)
-    xdata[bad_points] = nan
-    ydata[bad_points] = nan
-
-    if xerr is not None:
-        xerr[bad_points] = nan
-
-    if yerr is not None:
-        yerr[bad_points] = nan
-
-    return (xdata, ydata, xerr, yerr)
-
-
 def new_for_item(fig: Figure, item: Graphs.Item):
     """
     Create a new artist for an item.
@@ -150,7 +110,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @data.setter
     def data(self, data: tuple[list, list, list, list]) -> None:
         """Set data property."""
-        xdata, ydata, xerr, yerr = _adjust_for_singularities(data)
+        xdata, ydata, xerr, yerr = self._handle_singularities(data)
         self._data.set_data((xdata, ydata))
 
         if xerr is not None:
@@ -283,9 +243,47 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._data.set_linewidth(linewidth)
         self._data.set_markersize(markersize)
 
+    @staticmethod
+    def _handle_singularities(data: tuple) -> tuple:
+        """Adjust data to handle singularity jumps."""
+        xdata, ydata = map(numpy.asarray, data[:2])
+        xerr = None if data[2] is None else numpy.asarray(data[2])
+        yerr = None if data[3] is None else numpy.asarray(data[3])
+
+        mask = numpy.abs(numpy.gradient(ydata, xdata))[:-1] > 20
+        mask &= numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
+
+        edges = numpy.diff(mask.astype(int))
+        starts = numpy.where(edges == 1)[0] + 1
+        ends = numpy.where(edges == -1)[0] + 1
+
+        if mask[0]:
+            starts = numpy.r_[0, starts]
+        if mask[-1]:
+            ends = numpy.r_[ends, len(mask)]
+
+        mask = numpy.zeros_like(mask, dtype=bool)
+        mask[(starts + ends) // 2] = True
+
+        bad_points = numpy.zeros(len(xdata), dtype=bool)
+        left = numpy.abs(ydata[:-1]) > numpy.abs(ydata[1:])
+        bad_points[:-1] |= mask & left
+        bad_points[1:] |= mask & ~left
+
+        xdata[bad_points] = numpy.nan
+        ydata[bad_points] = numpy.nan
+
+        if xerr is not None:
+            xerr[bad_points] = numpy.nan
+
+        if yerr is not None:
+            yerr[bad_points] = numpy.nan
+
+        return xdata, ydata, xerr, yerr
+
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        xdata, ydata, xerr, yerr = _adjust_for_singularities(item.props.data)
+        xdata, ydata, xerr, yerr = self._handle_singularities(item.props.data)
         self._artist = axis.errorbar(
             xdata,
             ydata,
