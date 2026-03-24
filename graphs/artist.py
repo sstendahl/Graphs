@@ -336,7 +336,6 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     legend = True
     _singularities_cache = {}
-    _x = sympy.Symbol("x")
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
@@ -441,7 +440,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             x_min, x_max = lower, upper
 
         domain = sympy.Interval(x_min, x_max)
-        all_singularities = find_singularities(self._expr, self._x, domain)
+        all_singularities = find_singularities(self._expr, misc.X, domain)
 
         self._singularities_cache[self._equation] = {
             "limits": (x_min, x_max),

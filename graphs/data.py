@@ -462,8 +462,6 @@ class Data(Graphs.Data):
                     axis[3] = max_value
                     axis[1] = True
 
-        x = sympy.Symbol("x")
-
         for item_ in equation_items:
             xindex = item_.get_xposition() * 2
             xaxis = axes[xindex]
@@ -474,7 +472,7 @@ class Data(Graphs.Data):
             equation = item_.get_preprocessed_equation()
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
-            has_singularities = singularities(expr, x, domain)
+            has_singularities = singularities(expr, misc.X, domain)
 
             if xaxis[5] is None:
                 xscale = xaxis[4]
