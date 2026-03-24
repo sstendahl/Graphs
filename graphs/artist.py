@@ -432,8 +432,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             if lower >= cached_min and upper <= cached_max:
                 return {
                     s
-                    for s in cached["singularities"]
-                    if lower <= s <= upper
+                    for s in cached["singularities"] if lower <= s <= upper
                 }
 
             x_min, x_max = min(lower, cached_min), max(upper, cached_max)
