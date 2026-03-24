@@ -460,8 +460,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         n = len(xdata)
 
         triple_mask = (indices > 1) & (indices < n - 1)
-        insert_sizes = numpy.where(triple_mask, 3, 1)
-        new_size = n + insert_sizes.sum()
+        new_size = n + len(indices) + 2 * triple_mask.sum()
 
         ylim = self._axis.get_ylim()
         ylim_range = abs(ylim[1] - ylim[0])
@@ -470,7 +469,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         epsilon = (xdata[1] - xdata[0]) * 0.01
 
         # shift indices due to previous insertions
-        target_indices = indices + numpy.cumsum(insert_sizes) - insert_sizes
+        shifts = numpy.cumsum(1 + 2 * triple_mask) - (1 + 2 * triple_mask)
+        target_indices = indices + shifts
 
         triple_idxs = indices[triple_mask]
         triple_targets = target_indices[triple_mask]
