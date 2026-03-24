@@ -458,7 +458,6 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         indices = numpy.searchsorted(xdata, singularities_arr)
 
         n = len(xdata)
-
         triple_mask = (indices > 1) & (indices < n - 1)
         new_size = n + len(indices) + 2 * triple_mask.sum()
 
