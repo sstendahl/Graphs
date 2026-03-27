@@ -1,0 +1,35 @@
+{
+    "id": "se.sjoerd.Graphs",
+    "runtime": "org.gnome.Platform",
+    "runtime-version": "50",
+    "sdk": "org.gnome.Sdk",
+    "command": "graphs",
+    "finish-args": [
+        "--share=ipc",
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--device=dri",
+        "--env=NUMEXPR_MAX_THREADS=16"
+    ],
+    "cleanup": [
+        "*.la",
+        "*.a"
+    ],
+    "modules": [
+        "python-dependencies.json",
+        "python-tests.json",
+        {
+            "name": "graphs",
+            "buildsystem": "meson",
+            "sources": [
+                {
+                    "type": "dir",
+                    "path": "../.."
+                }
+            ],
+            "config-opts": [
+                "--buildtype=debug"
+            ]
+        }
+    ]
+}
