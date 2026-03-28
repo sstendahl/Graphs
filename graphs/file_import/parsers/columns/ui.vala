@@ -10,15 +10,21 @@ namespace Graphs {
         public unowned Box items_box { get; }
 
         private ImportSettings settings;
-        private Gee.List<string> item_strings;
+        private Gee.List<ColumnsItemSettings?> items;
 
         public ColumnsBox (ImportSettings settings) {
             this.settings = settings;
 
             prepend (new ColumnsGroup (settings));
 
-            string[] item_string_array = settings.get_string ("items").split (";;");
-            item_strings = new Gee.ArrayList<string>.wrap (item_string_array);
+            var iter = settings.get_value ("items").iterator ();
+            size_t n_items = iter.n_children ();
+            ColumnsItemSettings?[] item_settings_list = new ColumnsItemSettings?[n_items];
+            for (int i = 0; i < n_items; i++) {
+                item_settings_list[i] = ColumnsItemSettings ();
+                item_settings_list[i].load_from_variant (iter.next_value ());
+            }
+            items = new ArrayList<ColumnsItemSettings?>.wrap (item_settings_list);
 
             reload_item_groups ();
         }
@@ -29,19 +35,16 @@ namespace Graphs {
                 items_box.remove (widget);
             }
 
-            for (int i = 0; i < item_strings.size; i++) {
+            for (int i = 0; i < items.size; i++) {
                 int index = i;
-                var item_settings = ColumnsItemSettings ();
-                item_settings.load_from_item_string (item_strings[i]);
-
-                var item_group = new ColumnsItemGroup (item_settings, i > 0);
+                var item_group = new ColumnsItemGroup (items[i], i > 0);
                 item_group.set_title (_("Item %d").printf (i + 1));
                 item_group.settings_changed.connect ((new_settings) => {
-                    item_strings[index] = new_settings.to_item_string ();
+                    items[index] = new_settings;
                     update_settings ();
                 });
                 item_group.remove_request.connect (() => {
-                    item_strings.remove_at (index);
+                    items.remove_at (index);
                     update_settings ();
                     reload_item_groups ();
                 });
@@ -51,13 +54,19 @@ namespace Graphs {
 
         [GtkCallback]
         private void add () {
-            item_strings.add (item_strings[0]);
+            var new_settings = ColumnsItemSettings ();
+            new_settings.load_from_variant (items[0].to_variant ());
+            items.add (new_settings);
             update_settings ();
             reload_item_groups ();
         }
 
         private void update_settings () {
-            settings.set_string ("items", string.joinv (";;", item_strings.to_array ()));
+            var builder = new VariantBuilder (new VariantType ("a(iiiibbbs)"));
+            foreach (var item_settings in items) {
+                builder.add_value (item_settings.to_variant ());
+            }
+            settings.set_value ("items", builder.end ());
         }
     }
 
