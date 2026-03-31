@@ -488,13 +488,13 @@ class Data(Graphs.Data):
                     ydata = ydata[ydata > 0]
 
                 y_min, y_max = ydata.min(), ydata.max()
-                lower_bound = utilities.get_value_at_fraction(
+                lower_bound = Graphs.get_value_at_fraction(
                     0.05,
                     y_min,
                     y_max,
                     yscale,
                 )
-                upper_bound = utilities.get_value_at_fraction(
+                upper_bound = Graphs.get_value_at_fraction(
                     0.95,
                     y_min,
                     y_max,

@@ -113,13 +113,13 @@ class DataHelper():
             max_bottom = figure_settings.get_max_bottom()
             if interaction_mode == 2:
                 scale = figure_settings.get_bottom_scale()
-                min_x = utilities.get_value_at_fraction(
+                min_x = Graphs.get_value_at_fraction(
                     figure_settings.get_min_selected(),
                     min_bottom,
                     max_bottom,
                     scale,
                 )
-                max_x = utilities.get_value_at_fraction(
+                max_x = Graphs.get_value_at_fraction(
                     figure_settings.get_max_selected(),
                     min_bottom,
                     max_bottom,
@@ -132,13 +132,13 @@ class DataHelper():
             max_top = figure_settings.get_max_top()
             if interaction_mode == 2:
                 scale = figure_settings.get_top_scale()
-                min_x = utilities.get_value_at_fraction(
+                min_x = Graphs.get_value_at_fraction(
                     figure_settings.get_min_selected(),
                     min_top,
                     max_top,
                     scale,
                 )
-                max_x = utilities.get_value_at_fraction(
+                max_x = Graphs.get_value_at_fraction(
                     figure_settings.get_max_selected(),
                     min_top,
                     max_top,

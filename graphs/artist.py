@@ -503,8 +503,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper, SingularityHandler):
         scale = Graphs.scale_from_string(self._axis.get_xscale())
 
         limits = (
-            utilities.get_value_at_fraction(-1, x_start, x_stop, scale),
-            utilities.get_value_at_fraction(2, x_start, x_stop, scale),
+            Graphs.get_value_at_fraction(-1, x_start, x_stop, scale),
+            Graphs.get_value_at_fraction(2, x_start, x_stop, scale),
         )
 
         xdata, ydata = utilities.equation_to_data(
