@@ -7,7 +7,6 @@ implementation of a `SpanSelector` as well as a dummy toolbar used for
 interactive navigation in conjunction with graphs-specific structures.
 """
 import math
-from typing import Tuple
 
 from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
@@ -33,7 +32,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def __init__(
         self,
-        style_params: Tuple[RcParams, dict],
+        style_params: tuple[RcParams, dict],
         items: Gio.ListModel,
         interactive: bool = True,
     ):

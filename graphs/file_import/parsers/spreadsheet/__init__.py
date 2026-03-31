@@ -4,7 +4,6 @@ import xml.etree.ElementTree
 import zipfile
 from gettext import gettext as _
 from gettext import pgettext as C_
-from typing import List, Tuple
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
@@ -27,7 +26,7 @@ XLSX_MAIN_NAMESPACE = \
 class OdsParser:
     """ODS file parser."""
 
-    def get_sheet_names(self, file: Gio.File) -> List[str]:
+    def get_sheet_names(self, file: Gio.File) -> list[str]:
         """Get sheet names from ODS file."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -43,7 +42,7 @@ class OdsParser:
         file: Gio.File,
         columns: set[int],
         sheet_index: int,
-    ) -> List[Tuple[str, List[float]]]:
+    ) -> list[tuple[str, list[float]]]:
         """Parse ODS file and return list of requested columns."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -87,7 +86,7 @@ class OdsParser:
 class XlsxParser:
     """XLSX file parser."""
 
-    def get_sheet_names(self, file: Gio.File) -> List[str]:
+    def get_sheet_names(self, file: Gio.File) -> list[str]:
         """Get sheet names from XLSX file."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file, \
@@ -102,7 +101,7 @@ class XlsxParser:
         file: Gio.File,
         columns: set[int],
         sheet_index: int,
-    ) -> List[Tuple[str, List[float]]]:
+    ) -> list[tuple[str, list[float]]]:
         """Parse XLSX file and return 2D array of cell values."""
         with file_io.open(file, "rb") as file_obj, \
              zipfile.ZipFile(file_obj) as zip_file:
@@ -114,7 +113,7 @@ class XlsxParser:
                 shared_strings,
             )
 
-    def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> List[str]:
+    def _load_shared_strings(self, zip_file: zipfile.ZipFile) -> list[str]:
         """Load shared strings from XLSX file."""
         try:
             with zip_file.open("xl/sharedStrings.xml") as strings_file:
@@ -130,8 +129,8 @@ class XlsxParser:
         zip_file: zipfile.ZipFile,
         columns: set[int],
         sheet_index: int,
-        shared_strings: List[str],
-    ) -> List[List[str]]:
+        shared_strings: list[str],
+    ) -> list[list[str]]:
         """Parse worksheet and return requested columns."""
         sheet_file = f"xl/worksheets/sheet{sheet_index + 1}.xml"
         with zip_file.open(sheet_file) as worksheet_file:
@@ -161,7 +160,7 @@ class XlsxParser:
         self,
         row_element,
         namespaces: dict,
-        shared_strings: List[str],
+        shared_strings: list[str],
         columns: set,
     ) -> dict:
         """Parse a single row element, returning only requested columns."""
@@ -185,7 +184,7 @@ class XlsxParser:
         self,
         cell_element,
         namespaces: dict,
-        shared_strings: List[str],
+        shared_strings: list[str],
     ) -> str:
         """Extract cell value, handling shared strings."""
         value = cell_element.find("main:v", namespaces)
@@ -238,7 +237,7 @@ class SpreadsheetParser(Parser):
     @staticmethod
     def parse(
         settings: Graphs.ImportSettings,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
     ) -> list:
         """Import data from ODS or XLSX file."""
         file = settings.get_file()
