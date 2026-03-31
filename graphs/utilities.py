@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Various utility functions."""
-from graphs import scales
+from gi.repository import Graphs
 
 import numexpr
 
@@ -11,7 +11,7 @@ def get_value_at_fraction(
     fraction: float,
     start: float,
     end: float,
-    scale: int,
+    scale: Graphs.Scale,
 ) -> float:
     """
     Get value at axis fraction.
@@ -20,22 +20,22 @@ def get_value_at_fraction(
     fraction) of the length this axis is selected given the start and end range
     of this axis.
     """
-    match scales.Scale(scale):
-        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+    match scale:
+        case Graphs.Scale.LINEAR | Graphs.Scale.RADIANS:
             return start + fraction * (end - start)
-        case scales.Scale.LOG:
+        case Graphs.Scale.LOG:
             log_start = numpy.log10(start)
             log_end = numpy.log10(end)
             log_range = log_end - log_start
             log_value = log_start + log_range * fraction
             return pow(10, log_value)
-        case scales.Scale.LOG2:
+        case Graphs.Scale.LOG2:
             log_start = numpy.log2(start)
             log_end = numpy.log2(end)
             log_range = log_end - log_start
             log_value = log_start + log_range * fraction
             return pow(2, log_value)
-        case scales.Scale.SQUAREROOT:
+        case Graphs.Scale.SQUAREROOT:
             # Use min limit as defined by scales.py
             sqrt_start = max(0, numpy.sqrt(start))
             sqrt_end = numpy.sqrt(end)
@@ -43,7 +43,7 @@ def get_value_at_fraction(
             # Square root value does not really work for negative fractions
             sqrt_value = sqrt_start + sqrt_range * max(0, fraction)
             return sqrt_value * sqrt_value
-        case scales.Scale.INVERSE:
+        case Graphs.Scale.INVERSE:
             # Use min limit as defined by scales.py if min equals zero
             start = end / 10 if start <= 0 < end else start
             scaled_range = 1 / start - 1 / end
@@ -56,7 +56,7 @@ def get_fraction_at_value(
     value: float,
     start: float,
     end: float,
-    scale: int,
+    scale: Graphs.Scale,
 ) -> float:
     """
     Get fraction of axis at absolute value.
@@ -64,22 +64,22 @@ def get_fraction_at_value(
     Obtain the fraction of the total length of the selected axis a specific
     value corresponds to given the start and end range of the axis.
     """
-    match scales.Scale(scale):
-        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+    match scale:
+        case Graphs.Scale.LINEAR | Graphs.Scale.RADIANS:
             return (value - start) / (end - start)
-        case scales.Scale.LOG:
+        case Graphs.Scale.LOG:
             log_start = numpy.log10(start)
             log_end = numpy.log10(end)
             log_value = numpy.log10(value)
             log_range = log_end - log_start
             return (log_value - log_start) / log_range
-        case scales.Scale.LOG2:
+        case Graphs.Scale.LOG2:
             log_start = numpy.log2(start)
             log_end = numpy.log2(end)
             log_value = numpy.log2(value)
             log_range = log_end - log_start
             return (log_value - log_start) / log_range
-        case scales.Scale.SQUAREROOT:
+        case Graphs.Scale.SQUAREROOT:
             # Use min limit as defined by scales.py
             start = max(0, start)
             sqrt_start = numpy.sqrt(start)
@@ -87,7 +87,7 @@ def get_fraction_at_value(
             sqrt_value = numpy.sqrt(value)
             sqrt_range = sqrt_end - sqrt_start
             return (sqrt_value - sqrt_start) / sqrt_range
-        case scales.Scale.INVERSE:
+        case Graphs.Scale.INVERSE:
             # Use min limit as defined by scales.py if min equals zero
             start = end / 10 if start <= 0 < end else start
             scaled_range = 1 / start - 1 / end
@@ -101,15 +101,15 @@ def get_fraction_at_value(
 
 def create_equidistant_xdata(
     limits: tuple,
-    scale: int = 1,
+    scale: Graphs.Scale = Graphs.Scale.LINEAR,
     steps: int = 5000,
 ) -> numpy.ndarray:
     """Generate evenly-spaced x-values on the given scale."""
     x_start, x_stop = limits
-    match scales.Scale(scale):
-        case scales.Scale.LINEAR | scales.Scale.RADIANS:
+    match scale:
+        case Graphs.Scale.LINEAR | Graphs.Scale.RADIANS:
             xdata = numpy.linspace(x_start, x_stop, steps)
-        case scales.Scale.LOG:
+        case Graphs.Scale.LOG:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
             xdata = numpy.logspace(
@@ -117,7 +117,7 @@ def create_equidistant_xdata(
                 numpy.log10(x_stop),
                 steps,
             )
-        case scales.Scale.LOG2:
+        case Graphs.Scale.LOG2:
             x_start = max(x_start, 1e-300)
             x_stop = x_stop if numpy.isfinite(x_stop) else 1e300
             xdata = numpy.logspace(
@@ -126,7 +126,7 @@ def create_equidistant_xdata(
                 steps,
                 base=2,
             )
-        case scales.Scale.SQUAREROOT:
+        case Graphs.Scale.SQUAREROOT:
             x_start = max(x_start, 1e-300)
             xdata = numpy.linspace(
                 numpy.sqrt(x_start),
@@ -134,7 +134,7 @@ def create_equidistant_xdata(
                 steps,
             )
             xdata = xdata**2
-        case scales.Scale.INVERSE:
+        case Graphs.Scale.INVERSE:
             xdata = (1 / numpy.linspace(1 / x_start, 1 / x_stop, steps))
         case _:
             raise ValueError
@@ -145,7 +145,7 @@ def equation_to_data(
     equation: str,
     limits: tuple,
     steps: int = 5000,
-    scale: int = 0,
+    scale: Graphs.Scale = Graphs.Scale.LINEAR,
 ) -> tuple:
     """Convert an equation into data over a specified range of x-values."""
     xdata = create_equidistant_xdata(limits, scale, steps)

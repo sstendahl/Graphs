@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import misc, scales, utilities
+from graphs import misc, utilities
 from graphs.item import DataItem, EquationItem
 
 import numexpr
@@ -329,8 +329,8 @@ class CommonOperations():
             figure_settings.get_max_left() - figure_settings.get_min_left(),
             figure_settings.get_max_right() - figure_settings.get_min_right(),
         ]
-        left_scale = scales.Scale(figure_settings.get_left_scale())
-        right_scale = scales.Scale(figure_settings.get_right_scale())
+        left_scale = figure_settings.get_left_scale()
+        right_scale = figure_settings.get_right_scale()
         for index, item in enumerate(data_list):
             selected_limits = DataHelper.get_selected_limits(
                 figure_settings,
@@ -375,11 +375,11 @@ class CommonOperations():
                 ymin = min(x for x in new_ydata if x != 0)
                 ymax = max(x for x in new_ydata if x != 0)
 
-                if scale == scales.Scale.LOG:
+                if scale == Graphs.Scale.LOG:
                     shift_value += \
                         numpy.log10(abs(ymax / ymin)) \
                         + 0.1 * numpy.log10(y_range)
-                elif scale == scales.Scale.LOG2:
+                elif scale == Graphs.Scale.LOG2:
                     shift_value += \
                         numpy.log2(abs(ymax / ymin)) \
                         + 0.1 * numpy.log2(y_range)
@@ -390,9 +390,9 @@ class CommonOperations():
             shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
             if isinstance(item, EquationItem):
                 equation = item.get_preprocessed_equation()
-                if scale == scales.Scale.LOG:
+                if scale == Graphs.Scale.LOG:
                     equation = f"({equation})*10**{shift_value}"
-                elif scale == scales.Scale.LOG2:
+                elif scale == Graphs.Scale.LOG2:
                     equation = f"({equation})*2**{shift_value}"
                 else:
                     equation = f"{equation}+{shift_value}"
@@ -400,9 +400,9 @@ class CommonOperations():
                 item.props.equation = Graphs.prettify_equation(equation)
                 continue
             if isinstance(item, DataItem):
-                if scale == scales.Scale.LOG:
+                if scale == Graphs.Scale.LOG:
                     new_ydata = [value * 10**shift_value for value in ydata]
-                elif scale == scales.Scale.LOG2:
+                elif scale == Graphs.Scale.LOG2:
                     new_ydata = [value * 2**shift_value for value in ydata]
                 else:  # Apply linear scaling
                     new_ydata = [value + shift_value for value in ydata]

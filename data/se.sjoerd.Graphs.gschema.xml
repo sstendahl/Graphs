@@ -195,8 +195,8 @@
     <key name="steps" type="i">
       <default>100</default>
     </key>
-    <key name="scale" type="i">
-      <default>0</default>
+    <key name="scale" enum="se.sjoerd.Graphs.figure.scales">
+      <default>"Linear"</default>
     </key>
   </schema>
 
