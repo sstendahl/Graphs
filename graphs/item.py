@@ -29,6 +29,7 @@ def new_from_dict(dictionary: dict) -> Graphs.Item:
 
 
 class _PythonItemMixin:
+
     def reset(
         self,
         old_style: Tuple[RcParams, dict],

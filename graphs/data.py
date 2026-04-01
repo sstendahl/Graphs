@@ -104,8 +104,8 @@ class Data(Graphs.Data):
                             style_params["axes.prop_cycle"].by_key()["color"],
                         )
                         self.set_errbar_color_cycle(
-                            graphs_params[
-                                "errorbar.color_cycle"].by_key()["color"],
+                            graphs_params["errorbar.color_cycle"].by_key()
+                            ["color"],
                         )
                         return
                     except (ValueError, SyntaxError, AttributeError):

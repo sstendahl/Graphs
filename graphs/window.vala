@@ -65,11 +65,6 @@ namespace Graphs {
             }
         }
 
-        public Operations operations {
-            get { return main_page.operations; }
-            set { main_page.operations = value; }
-        }
-
         public bool is_main_view {
             get { return sidebar_navigation_view.get_visible_page () == main_page; }
         }
@@ -142,15 +137,8 @@ namespace Graphs {
 
             Actions.setup_local (this);
 
-            this.operations = new Operations (this);
+            main_page.operations = new Operations (this);
 
-#if DEBUG
-            add_css_class ("devel");
-            main_page.set_title (_("Graphs (Development)"));
-#endif
-        }
-
-        protected void setup () {
             data.notify["can-undo"].connect (update_history_actions);
             data.notify["can-redo"].connect (update_history_actions);
             update_history_actions ();
@@ -165,6 +153,11 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
+
+#if DEBUG
+            add_css_class ("devel");
+            main_page.set_title (_("Graphs (Development)"));
+#endif
         }
 
         private void update_history_actions () {
@@ -228,10 +221,10 @@ namespace Graphs {
             var optimize_limits_action = (SimpleAction) lookup_action ("optimize-limits");
             if (data.is_empty ()) {
                 main_page.set_show_empty_data_page (true);
-                operations.shift_button.set_sensitive (false);
-                operations.smoothen_button.set_sensitive (false);
-                operations.set_cut_sensitivity (false);
-                operations.set_entry_sensitivity (false);
+                main_page.operations.shift_button.set_sensitive (false);
+                main_page.operations.smoothen_button.set_sensitive (false);
+                main_page.operations.set_cut_sensitivity (false);
+                main_page.operations.set_entry_sensitivity (false);
                 export_data_action.set_enabled (false);
                 optimize_limits_action.set_enabled (false);
                 return;
@@ -248,10 +241,10 @@ namespace Graphs {
                 data_items_selected = data_items_selected || (item.selected && data_item);
                 index++;
             }
-            operations.shift_button.set_sensitive (items_selected);
-            operations.smoothen_button.set_sensitive (data_items_selected);
-            operations.set_cut_sensitivity (data_items_selected && mode == 2);
-            operations.set_entry_sensitivity (items_selected);
+            main_page.operations.shift_button.set_sensitive (items_selected);
+            main_page.operations.smoothen_button.set_sensitive (data_items_selected);
+            main_page.operations.set_cut_sensitivity (data_items_selected && mode == 2);
+            main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
             optimize_limits_action.set_enabled (true);
         }
@@ -259,10 +252,10 @@ namespace Graphs {
         public void on_selection_changed () {
             var export_data_action = (SimpleAction) lookup_action ("export-data");
             if (data.is_empty ()) {
-                operations.shift_button.set_sensitive (false);
-                operations.smoothen_button.set_sensitive (false);
-                operations.set_cut_sensitivity (false);
-                operations.set_entry_sensitivity (false);
+                main_page.operations.shift_button.set_sensitive (false);
+                main_page.operations.smoothen_button.set_sensitive (false);
+                main_page.operations.set_cut_sensitivity (false);
+                main_page.operations.set_entry_sensitivity (false);
                 export_data_action.set_enabled (false);
                 return;
             }
@@ -275,10 +268,10 @@ namespace Graphs {
                 data_items_selected = data_items_selected || (item.selected && data_item);
                 if (items_selected && data_items_selected) break;
             }
-            operations.shift_button.set_sensitive (items_selected);
-            operations.smoothen_button.set_sensitive (data_items_selected);
-            operations.set_cut_sensitivity (data_items_selected && mode == 2);
-            operations.set_entry_sensitivity (items_selected);
+            main_page.operations.shift_button.set_sensitive (items_selected);
+            main_page.operations.smoothen_button.set_sensitive (data_items_selected);
+            main_page.operations.set_cut_sensitivity (data_items_selected && mode == 2);
+            main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
         }
 
