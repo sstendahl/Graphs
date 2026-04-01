@@ -2,7 +2,7 @@
 """Curve fitting module."""
 from gettext import gettext as _
 
-from gi.repository import Adw, Gio, Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import canvas
 from graphs.item import DataItem, FillItem
@@ -31,14 +31,14 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
-        super().__init__(window=window)
-        Adw.StyleManager.get_default().connect("notify", self._load_canvas)
-
-        style = Graphs.StyleManager.get_instance().get_system_style_params()
-
         xdata, ydata = item.get_xydata()
         self._data = numpy.asarray(xdata), numpy.asarray(ydata)
+        x_min, x_max = min(xdata), max(xdata)
+        padding = (x_max - x_min) * 0.025
+        self._xlim = (x_min - padding, x_max + padding)
+        self._x_fit = numpy.linspace(*self._xlim, 5000)
 
+        style = Graphs.StyleManager.get_instance().get_system_style_params()
         self.data_curve = DataItem.new(
             style,
             xdata=xdata,
@@ -71,16 +71,10 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             markersize=MARKER_SIZE,
         )
 
-        x_min, x_max = min(xdata), max(xdata)
-        padding = (x_max - x_min) * 0.025
-        self._xlim = (x_min - padding, x_max + padding)
-        self._x_fit = numpy.linspace(*self._xlim, 5000)
-
-        self._load_canvas()
-        self.setup()
+        super().__init__(window=window)
         self.present(window)
 
-    def _load_canvas(self, *_args) -> None:
+    def _load_canvas(self) -> None:
         """Initialize and set main canvas."""
         settings = self.props.window.get_data().get_figure_settings()
         style = Graphs.StyleManager.get_instance().get_system_style_params()
@@ -153,7 +147,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         r2 = 1 - (ss_res / ss_tot)
         rmse = numpy.sqrt(ss_res / y_data.size)
         self.props.fit_result = Graphs.FitResult.new(params, d_cov, r2, rmse)
-        self.residuals_item.set_xyata((x_data, residuals))
+        self.residuals_item.set_xydata((x_data, residuals))
 
         # Substitute each free variables with the calculated value.
         values = dict(zip(free_vars, params))

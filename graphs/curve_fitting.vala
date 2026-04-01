@@ -103,16 +103,16 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
-        protected unowned Button confirm_button { get; }
+        private unowned Button confirm_button { get; }
 
         [GtkChild]
-        protected unowned Adw.EntryRow custom_equation { get; }
+        private unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
-        protected unowned Box fitting_params_box { get; }
+        private unowned Box fitting_params_box { get; }
 
         [GtkChild]
-        protected unowned TextView text_view { get; }
+        private unowned TextView text_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -145,7 +145,7 @@ namespace Graphs {
             set { residuals_container.set_child (value); }
         }
 
-        protected virtual void setup () {
+        construct {
             fitting_parameters = new HashMap<string, FittingParameter> ();
             fit_result = null;
 
@@ -194,6 +194,8 @@ namespace Graphs {
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
 
+            PythonHelper.run_method (this, "_load_canvas");
+            Adw.StyleManager.get_default ().notify.connect (() => PythonHelper.run_method (this, "_load_canvas"));
             set_equation_from_selection ();
         }
 
