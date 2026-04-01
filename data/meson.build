@@ -69,6 +69,14 @@ if compile_schemas.found()
   )
 endif
 
+configure_file(
+          input: 'graphs.1.in',
+         output: 'graphs.1',
+  configuration: conf,
+        install: true,
+    install_dir: join_paths(mandir, 'man1'),
+)
+
 blueprint_files = [
   'ui/dialogs/beta-disallowed.blp',
   'ui/dialogs/delete-style.blp',
