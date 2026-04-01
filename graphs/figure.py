@@ -6,7 +6,6 @@ Acts as an interface between matplotlib and GObject.
 """
 import contextlib
 import logging
-from typing import Tuple
 
 from gi.repository import GObject, Gio, Gtk
 
@@ -22,7 +21,7 @@ class Figure(GObject.Object, figure.Figure):
 
     def __init__(
         self,
-        style_params: Tuple[RcParams, dict],
+        style_params: tuple[RcParams, dict],
         items: Gio.ListModel,
         parent=None,
     ):
