@@ -2,7 +2,6 @@
 """Module for parsing sql files."""
 from gettext import gettext as _
 from gettext import pgettext as C_
-from typing import Tuple
 
 from gi.repository import GLib, Graphs, Gtk
 
@@ -29,7 +28,7 @@ class SqlParser(Parser):
     @staticmethod
     def parse(
         settings: Graphs.ImportSettings,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
     ) -> misc.ItemList:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
