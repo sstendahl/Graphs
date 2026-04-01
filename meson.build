@@ -49,6 +49,7 @@ libdir = get_option('libdir')
 version = meson.project_version()
 pkgdatadir = join_paths(prefix, datadir, 'graphs')
 localedir = join_paths(prefix, get_option('localedir'))
+mandir = join_paths(prefix, get_option('mandir'))
 debug = get_option('buildtype') == 'debug'
 gettext_package = 'graphs'
 
