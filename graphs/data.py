@@ -59,12 +59,8 @@ class Data(Graphs.Data):
 
     def __iter__(self) -> Iterator[Graphs.Item]:
         """Iterate over items."""
-        iterator = self.iterator_wrapper()
-        while True:
-            item_ = iterator.next()
-            if item_ is None:
-                return
-            yield item_
+        for i in range(self.get_n_items()):
+            yield self.get_item(i)
 
     def __getitem__(self, pos: int):
         """Magic alias for retrieving items."""
@@ -306,10 +302,9 @@ class Data(Graphs.Data):
                 case ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case ChangeType.ITEM_REMOVED:
-                    self._add_item(
+                    self._insert_item(
                         item.new_from_dict(copy.deepcopy(change[1])),
                         change[0],
-                        True,
                     )
                 case ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
@@ -346,11 +341,7 @@ class Data(Graphs.Data):
                     else:
                         self[index].set_property(prop, value)
                 case ChangeType.ITEM_ADDED:
-                    self._add_item(
-                        item.new_from_dict(copy.deepcopy(change)),
-                        -1,
-                        True,
-                    )
+                    self._add_item(item.new_from_dict(copy.deepcopy(change)))
                 case ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case ChangeType.ITEMS_SWAPPED:
