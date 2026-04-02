@@ -20,9 +20,9 @@ namespace Graphs {
         private uint _css_counter = 0;
 
         private const OptionEntry[] OPTION_ENTRIES = {
-            { "version", 0, 0, OptionArg.NONE, null, "Display version number", null },
-            { "new-window", 'n', 0, OptionArg.NONE, null, "New window", null },
-            { "style-editor", 's', 0, OptionArg.NONE, null, "Style Editor", null },
+            { "new-window", 'n', 0, OptionArg.NONE, null, N_("New window"), null },
+            { "style-editor", 's', 0, OptionArg.NONE, null, N_("Style Editor"), null },
+            { OPTION_REMAINING, 0, 0, OptionArg.STRING_ARRAY, null, null, N_("[FILE…]") },
             { null },
         };
 
@@ -116,28 +116,19 @@ namespace Graphs {
          * Handle command line
          */
         public override int command_line (ApplicationCommandLine command_line) {
-            string[] args = command_line.get_arguments ();
             VariantDict options = command_line.get_options_dict ();
-            File[] files = {};
 
-            bool version;
-            options.lookup ("version", "b", out version);
-            if (version) {
-                command_line.print ("Graphs Version %s\n", Config.VERSION);
-                return 0;
-            }
-
-            for (int i = 1; i < args.length; i++) {
-                string filename = args[i];
-                files += command_line.create_file_for_arg (filename);
-            }
-
-            bool new_window;
+            bool new_window, new_style_editor;
             options.lookup ("new-window", "b", out new_window);
-            bool new_style_editor;
             options.lookup ("style-editor", "b", out new_style_editor);
 
-            if (files.length > 0) {
+            var val = options.lookup_value (OPTION_REMAINING, VariantType.STRING_ARRAY);
+            if (val != null) {
+                string[] remaining = val.get_strv ();
+                File[] files = new File[remaining.length];
+                for (int i = 0; i < remaining.length; i++) {
+                    files[i] = command_line.create_file_for_arg (remaining[i]);
+                }
                 open (files, "");
             } else if (new_window) {
                 var window = create_main_window ();
