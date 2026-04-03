@@ -13,6 +13,8 @@ from matplotlib.figure import Figure
 
 import numpy
 
+from scipy.stats import median_abs_deviation
+
 import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
@@ -250,8 +252,20 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         xerr = None if data[2] is None else numpy.asarray(data[2])
         yerr = None if data[3] is None else numpy.asarray(data[3])
 
-        mask = numpy.abs(numpy.gradient(ydata, xdata))[:-1] > 20
-        mask &= numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
+        # Detect singularities using Median Absolute Deviation
+        grad = numpy.abs(numpy.gradient(ydata, xdata))
+        median = numpy.median(grad)
+        mad = median_abs_deviation(grad, scale="normal")
+
+        if mad == 0:
+            mad = (xdata[1] - xdata[0]) * 0.01
+
+        threshold = median + 6 * mad
+        sign_change = numpy.sign(ydata[:-1]) != numpy.sign(ydata[1:])
+        mask = (grad[:-1] > threshold) & sign_change
+
+        if not numpy.any(mask):
+            return xdata, ydata, xerr, yerr
 
         edges = numpy.diff(mask.astype(int))
         starts = numpy.where(edges == 1)[0] + 1
