@@ -35,13 +35,13 @@ class ColumnsParser(Parser):
             raise ParseError(e.message) from e
 
         items = []
-        for item_string in settings.get_string("items").split(";;"):
+        variant = settings.get_value("items")
+        for i in range(variant.n_children()):
             item_settings = Graphs.ColumnsItemSettings()
-            item_settings.load_from_item_string(item_string)
+            item_settings.load_from_variant(variant.get_child_value(i))
 
-            yindex = item_settings.column_y
-            ylabel = parser.get_header(yindex)
-            ydata = parser.get_column(yindex)
+            ylabel = parser.get_header(item_settings.column_y)
+            ydata = parser.get_column(item_settings.column_y)
 
             yerr = parser.get_column(item_settings.yerr_index) \
                 if item_settings.use_yerr else None
@@ -57,9 +57,8 @@ class ColumnsParser(Parser):
                     xdata = numpy.full(len(ydata), xdata)
                 xdata = numpy.ndarray.tolist(xdata)
             else:
-                xindex = item_settings.column_x
-                xdata = parser.get_column(xindex)
-                xlabel = parser.get_header(xindex)
+                xdata = parser.get_column(item_settings.column_x)
+                xlabel = parser.get_header(item_settings.column_x)
 
             items.append(
                 item.DataItem.new(

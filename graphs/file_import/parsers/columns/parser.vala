@@ -35,10 +35,12 @@ namespace Graphs {
             var separator = ColumnsSeparator.parse (settings.get_string ("separator"));
             this.separator = separator.as_unichar ();
 
-            string[] item_strings = settings.get_string ("items").split (";;");
-            ColumnsItemSettings item_settings = ColumnsItemSettings ();
-            foreach (string item_string in item_strings) {
-                item_settings.load_from_item_string (item_string);
+            var iter = settings.get_value ("items").iterator ();
+            ColumnsItemSettings[] items = new ColumnsItemSettings[iter.n_children ()];
+            for (int i = 0; i < items.length; i++) {
+                var item_settings = ColumnsItemSettings ();
+                item_settings.load_from_variant (iter.next_value ());
+                items[i] = item_settings;
 
                 if (!item_settings.single_column) {
                     used_indices.add (item_settings.column_x);
@@ -57,9 +59,7 @@ namespace Graphs {
             for (uint i = 0; i < n_used_indices; i++) {
                 columns[i] = new Column ();
             }
-            foreach (string item_string in item_strings) {
-                item_settings.load_from_item_string (item_string);
-
+            foreach (ColumnsItemSettings item_settings in items) {
                 if (!item_settings.single_column) {
                     columns[get_rank (item_settings.column_x)].requests++;
                 }
