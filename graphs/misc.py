@@ -4,6 +4,8 @@ import enum
 
 from gi.repository import Graphs
 
+import sympy
+
 # Type hints
 ItemList = list[Graphs.Item]
 Limits = tuple[float, float, float, float]
@@ -33,6 +35,9 @@ class ChangeType(enum.Enum):
     ITEM_REMOVED = 2
     ITEMS_SWAPPED = 3
     FIGURE_SETTINGS_CHANGED = 4
+
+
+X = sympy.Symbol("x")
 
 
 LEGEND_POSITIONS = [
