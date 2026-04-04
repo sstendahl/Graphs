@@ -246,9 +246,10 @@ class SpreadsheetParser(Parser):
 
         column_indices = set()
         item_settings_list = []
-        for item_string in settings.get_string("items").split(";;"):
+        variant = settings.get_value("items")
+        for i in range(variant.n_children()):
             item_settings = Graphs.ColumnsItemSettings()
-            item_settings.load_from_item_string(item_string)
+            item_settings.load_from_variant(variant.get_child_value(i))
             item_settings_list.append(item_settings)
 
             column_indices.add(item_settings.column_y)
@@ -269,8 +270,7 @@ class SpreadsheetParser(Parser):
 
         items = []
         for item_settings in item_settings_list:
-            yindex = item_settings.column_y
-            ydata, ylabel = parsed_columns[yindex]
+            ydata, ylabel = parsed_columns[item_settings.column_y]
 
             if len(ydata) == 0:
                 raise ParseError(_("No numeric data found in column."))
@@ -285,8 +285,7 @@ class SpreadsheetParser(Parser):
                     xdata = numpy.full(len(ydata), xdata)
                 xdata = numpy.ndarray.tolist(xdata)
             else:
-                xindex = item_settings.column_x
-                xdata, xlabel = parsed_columns[xindex]
+                xdata, xlabel = parsed_columns[item_settings.column_x]
                 if len(xdata) != len(ydata):
                     raise ParseError(_("Columns do not have the same length."))
 
