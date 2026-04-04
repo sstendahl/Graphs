@@ -9,7 +9,6 @@ import contextlib
 import logging
 import typing
 from gettext import gettext as _
-from typing import Tuple
 
 from cycler import cycler
 
@@ -60,7 +59,7 @@ class StyleParseError(Exception):
 
 def parse(
     file: Gio.File,
-    validate: Tuple[RcParams, dict] = None,
+    validate: tuple[RcParams, dict] = None,
 ) -> (RcParams, dict):
     """
     Parse a style to RcParams.
@@ -221,7 +220,7 @@ _PREVIEW_YDATA2 = numpy.cos(_PREVIEW_XDATA)
 
 def create_preview(
     file: typing.IO,
-    params: Tuple[RcParams, dict],
+    params: tuple[RcParams, dict],
     file_format: str = "svg",
     dpi: int = 100,
 ) -> None:

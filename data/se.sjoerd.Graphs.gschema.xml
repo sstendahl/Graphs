@@ -226,23 +226,20 @@
 
   <schema id="se.sjoerd.Graphs.import-params.columns">
     <!--
-    Item import strings.
-    Values separated by ";", items separated by ";;".
+    Item settings.
 
     Settings in order:
     x-column index
     y-column index (ignored if single-column)
-    use single-column mode
-    equation for single-column mode (will be ignored if not single-column)
-    use_xerr
-    use_yerr (ignored if single-column)
     x_errorbar-column index
     y_errorbar-column index (ignored if single-column)
-
-    All settings must be present.
+    use single-column mode
+    use_xerr
+    use_yerr (ignored if single-column)
+    equation for single-column mode (will be ignored if not single-column)
     -->
-    <key name="items" type="s">
-      <default>"0;1;false;n;false;false;2;3"</default>
+    <key name="items" type="a(iiiibbbs)">
+      <default>[(0,1,2,3,false,false,false,"n")]</default>
     </key>
     <key name="delimiter" enum="se.sjoerd.Graphs.import-params.columns.delimiters">
       <default>"whitespace"</default>
@@ -259,23 +256,20 @@
   </schema>
   <schema id="se.sjoerd.Graphs.import-params.spreadsheet">
     <!--
-    Item import strings.
-    Values separated by ";", items separated by ";;".
+    Item settings.
 
     Settings in order:
     x-column index
     y-column index (ignored if single-column)
-    use single-column mode
-    equation for single-column mode (will be ignored if not single-column)
-    use_xerr
-    use_yerr
     x_errorbar-column index
     y_errorbar-column index (ignored if single-column)
-
-    All settings must be present.
+    use single-column mode
+    use_xerr
+    use_yerr (ignored if single-column)
+    equation for single-column mode (will be ignored if not single-column)
     -->
-    <key name="items" type="s">
-      <default>"0;1;false;n;false;false;2;3"</default>
+    <key name="items" type="a(iiiibbbs)">
+      <default>[(0,1,2,3,false,false,false,"n")]</default>
     </key>
     <key name="sheet-index" type="i">
       <default>0</default>

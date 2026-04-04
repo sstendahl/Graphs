@@ -83,28 +83,29 @@ namespace Graphs {
         public bool use_yerr;
         public string equation;
 
-        public void load_from_item_string (string item_string) {
-            string[] parts = item_string.split (";", 8);
-            column_x = int.parse (parts[0]);
-            column_y = int.parse (parts[1]);
-            single_column = bool.parse (parts[2]);
-            equation = parts[3];
-            use_xerr = bool.parse (parts[4]);
-            use_yerr = bool.parse (parts[5]);
-            xerr_index = int.parse (parts[6]);
-            yerr_index = int.parse (parts[7]);
+        public void load_from_variant (Variant variant) {
+            variant.get ("(iiiibbbs)",
+                out column_x,
+                out column_y,
+                out xerr_index,
+                out yerr_index,
+                out single_column,
+                out use_xerr,
+                out use_yerr,
+                out equation
+            );
         }
 
-        public string to_item_string () {
-            return "%d;%d;%s;%s;%s;%s;%d;%d".printf (
+        public Variant to_variant () {
+            return new Variant ("(iiiibbbs)",
                 column_x,
                 column_y,
-                single_column.to_string (),
-                equation,
-                use_xerr.to_string (),
-                use_yerr.to_string (),
                 xerr_index,
-                yerr_index
+                yerr_index,
+                single_column,
+                use_xerr,
+                use_yerr,
+                equation
             );
         }
     }

@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from typing import Tuple
-
 from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
@@ -29,10 +27,11 @@ def new_from_dict(dictionary: dict) -> Graphs.Item:
 
 
 class _PythonItemMixin:
+
     def reset(
         self,
-        old_style: Tuple[RcParams, dict],
-        new_style: Tuple[RcParams, dict],
+        old_style: tuple[RcParams, dict],
+        new_style: tuple[RcParams, dict],
     ) -> None:
         """Reset all properties."""
         # Combine rcparams and graphs_params into single dict:
@@ -49,7 +48,7 @@ class _PythonItemMixin:
 
     def _extract_params(
         self,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
         kwargs: dict = None,
     ) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
@@ -90,7 +89,7 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
         xdata: list[float] = None,
         ydata: list[float] = None,
         xerr: list[float] = None,
@@ -145,7 +144,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     @classmethod
     def new(
         cls,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
         equation: str,
         xstart: str,
         xstop: str,
@@ -197,7 +196,7 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     }
 
     @classmethod
-    def new(cls, style: Tuple[RcParams, dict], equation: str, **kwargs):
+    def new(cls, style: tuple[RcParams, dict], equation: str, **kwargs):
         """Create new EquationItem."""
         return cls(
             equation=equation,
@@ -219,7 +218,7 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
         xanchor: float = 0,
         yanchor: float = 0,
         text: str = "",
@@ -245,7 +244,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        _params: Tuple[RcParams, dict],
+        _params: tuple[RcParams, dict],
         data: tuple[list[float], list[float], list[float]],
         **kwargs,
     ):

@@ -7,7 +7,6 @@ from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
-from typing import Tuple
 
 from gi.repository import Gio, Graphs, Gtk
 
@@ -71,11 +70,11 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def get_old_selected_style_params(self) -> Tuple[RcParams, dict]:
+    def get_old_selected_style_params(self) -> tuple[RcParams, dict]:
         """Get the old selected style properties."""
         return self._old_style_params
 
-    def get_selected_style_params(self) -> Tuple[RcParams, dict]:
+    def get_selected_style_params(self) -> tuple[RcParams, dict]:
         """Get the selected style properties."""
         return self._selected_style_params
 
@@ -104,8 +103,8 @@ class Data(Graphs.Data):
                             style_params["axes.prop_cycle"].by_key()["color"],
                         )
                         self.set_errbar_color_cycle(
-                            graphs_params[
-                                "errorbar.color_cycle"].by_key()["color"],
+                            graphs_params["errorbar.color_cycle"].by_key()
+                            ["color"],
                         )
                         return
                     except (ValueError, SyntaxError, AttributeError):
@@ -462,8 +461,6 @@ class Data(Graphs.Data):
                     axis[3] = max_value
                     axis[1] = True
 
-        x = sympy.Symbol("x")
-
         for item_ in equation_items:
             xindex = item_.get_xposition() * 2
             xaxis = axes[xindex]
@@ -474,7 +471,7 @@ class Data(Graphs.Data):
             equation = item_.get_preprocessed_equation()
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
-            has_singularities = singularities(expr, x, domain)
+            has_singularities = singularities(expr, misc.X, domain)
 
             if xaxis[5] is None:
                 xscale = xaxis[4]

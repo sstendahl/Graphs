@@ -307,12 +307,16 @@ class CommonOperations():
             window.add_toast_string(msg)
 
         new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
-        data.add_items([DataItem.new(
-            data.get_selected_style_params(), new_xdata, new_ydata,
-            xerr=new_xerr if all_x else None,
-            yerr=new_yerr if all_y else None,
-            name=_("Combined Data"),
-        )])
+        data.add_items([
+            DataItem.new(
+                data.get_selected_style_params(),
+                new_xdata,
+                new_ydata,
+                xerr=new_xerr if all_x else None,
+                yerr=new_yerr if all_y else None,
+                name=_("Combined Data"),
+            ),
+        ])
         return True
 
     @staticmethod
@@ -498,7 +502,7 @@ class EquationOperations():
         """
         xdata, ydata = utilities.equation_to_data(equation, limits)
         if center_maximum == 0:  # Center at maximum Y
-            x = sympy.symbols("x")
+            x = misc.X
             equation = sympy.sympify(equation)
             derivative = sympy.diff(equation, x)
             critical_points = sympy.solveset(
@@ -532,25 +536,25 @@ class EquationOperations():
     @staticmethod
     def derivative(equation) -> str:
         """Calculate derivative of all selected data."""
-        return str(sympy.diff(equation, sympy.symbols("x")))
+        return str(sympy.diff(equation, misc.X))
 
     @staticmethod
     def integral(equation) -> str:
         """Calculate indefinite integral of all selected data."""
-        return str(sympy.integrate(equation, sympy.symbols("x")))
+        return str(sympy.integrate(equation, misc.X))
 
     @staticmethod
     def fft(equation) -> str:
         """Perform Fourier transformation on all selected data."""
-        x, k = sympy.symbols("x k")
-        equation = str(sympy.fourier_transform(equation, x, k))
+        k = sympy.Symbol("k")
+        equation = str(sympy.fourier_transform(equation, misc.X, k))
         return equation.replace("k", "x")
 
     @staticmethod
     def inverse_fft(equation) -> str:
         """Perform Inverse Fourier transformation on all selected data."""
-        x, k = sympy.symbols("x k")
-        equation = str(sympy.fourier_transform(equation, x, k))
+        k = sympy.Symbol("k")
+        equation = str(sympy.fourier_transform(equation, misc.X, k))
         return equation.replace("k", "x")
 
     @staticmethod

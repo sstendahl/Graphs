@@ -2,7 +2,6 @@
 """Module for parsing sql files."""
 from gettext import gettext as _
 from gettext import pgettext as C_
-from typing import Tuple
 
 from gi.repository import GLib, Graphs, Gtk
 
@@ -29,7 +28,7 @@ class SqlParser(Parser):
     @staticmethod
     def parse(
         settings: Graphs.ImportSettings,
-        style: Tuple[RcParams, dict],
+        style: tuple[RcParams, dict],
     ) -> misc.ItemList:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
@@ -55,11 +54,13 @@ class SqlParser(Parser):
         yerr = None
         if settings.get_boolean("use-xerr"):
             xerr = db_reader.get_column_data(
-                table_name, settings.get_string("xerr-column"),
+                table_name,
+                settings.get_string("xerr-column"),
             )
         if settings.get_boolean("use-yerr"):
             yerr = db_reader.get_column_data(
-                table_name, settings.get_string("yerr-column"),
+                table_name,
+                settings.get_string("yerr-column"),
             )
 
         return [
