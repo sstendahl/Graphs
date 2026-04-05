@@ -17,4 +17,29 @@ namespace Graphs {
         );
         return Tools.create_file_filters (false, filter);
     }
+
+    public enum Scale {
+        LINEAR,
+        LOG,
+        LOG2,
+        RADIANS,
+        SQUAREROOT,
+        INVERSE;
+
+        public static Scale from_string (string str) {
+            switch (str) {
+                case "linear": return LINEAR;
+                case "log": return LOG;
+                case "log2": return LOG2;
+                case "radians": return RADIANS;
+                case "squareroot": return SQUAREROOT;
+                case "inverse": return INVERSE;
+                default: assert_not_reached ();
+            }
+        }
+    }
+
+    public static string scale_to_string (Scale scale) {
+        return scale.to_string ()[13:].down ();
+    }
 }

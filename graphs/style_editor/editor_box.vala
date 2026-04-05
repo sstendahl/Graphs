@@ -4,7 +4,7 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
-    private string title_format_function (Scale scale, double value) {
+    private string title_format_function (Gtk.Scale scale, double value) {
         // Format a float value as a percentage string (integer part only)
         double percentage = (value / 2.0) * 100.0;
         return "%d%%".printf ((int) percentage);
@@ -19,25 +19,25 @@ namespace Graphs {
         protected unowned FontDialogButton font_chooser { get; }
 
         [GtkChild]
-        protected unowned Scale titlesize { get; }
+        protected unowned Gtk.Scale titlesize { get; }
 
         [GtkChild]
-        protected unowned Scale labelsize { get; }
+        protected unowned Gtk.Scale labelsize { get; }
 
         [GtkChild]
         protected unowned Adw.ComboRow linestyle { get; }
 
         [GtkChild]
-        protected unowned Scale linewidth { get; }
+        protected unowned Gtk.Scale linewidth { get; }
 
         [GtkChild]
         protected unowned Adw.ComboRow markers { get; }
 
         [GtkChild]
-        protected unowned Scale markersize { get; }
+        protected unowned Gtk.Scale markersize { get; }
 
         [GtkChild]
-        protected unowned Scale axis_width { get; }
+        protected unowned Gtk.Scale axis_width { get; }
 
         [GtkChild]
         protected unowned Adw.SwitchRow draw_frame { get; }
@@ -49,16 +49,16 @@ namespace Graphs {
         protected unowned Adw.SwitchRow minor_ticks { get; }
 
         [GtkChild]
-        protected unowned Scale major_tick_width { get; }
+        protected unowned Gtk.Scale major_tick_width { get; }
 
         [GtkChild]
-        protected unowned Scale minor_tick_width { get; }
+        protected unowned Gtk.Scale minor_tick_width { get; }
 
         [GtkChild]
-        protected unowned Scale major_tick_length { get; }
+        protected unowned Gtk.Scale major_tick_length { get; }
 
         [GtkChild]
-        protected unowned Scale minor_tick_length { get; }
+        protected unowned Gtk.Scale minor_tick_length { get; }
 
         [GtkChild]
         protected unowned Adw.SwitchRow tick_labels { get; }
@@ -79,19 +79,19 @@ namespace Graphs {
         protected unowned Adw.SwitchRow show_grid { get; }
 
         [GtkChild]
-        protected unowned Scale grid_linewidth { get; }
+        protected unowned Gtk.Scale grid_linewidth { get; }
 
         [GtkChild]
-        protected unowned Scale grid_opacity { get; }
+        protected unowned Gtk.Scale grid_opacity { get; }
 
         [GtkChild]
-        protected unowned Scale value_padding { get; }
+        protected unowned Gtk.Scale value_padding { get; }
 
         [GtkChild]
-        protected unowned Scale label_padding { get; }
+        protected unowned Gtk.Scale label_padding { get; }
 
         [GtkChild]
-        protected unowned Scale title_padding { get; }
+        protected unowned Gtk.Scale title_padding { get; }
 
         [GtkChild]
         protected unowned StyleColorRow text_color { get; }
@@ -121,13 +121,13 @@ namespace Graphs {
         private unowned Box poor_contrast_warning { get; }
 
         [GtkChild]
-        protected unowned Scale errorbar_capsize { get; }
+        protected unowned Gtk.Scale errorbar_capsize { get; }
 
         [GtkChild]
-        protected unowned Scale errorbar_capthick { get; }
+        protected unowned Gtk.Scale errorbar_capthick { get; }
 
         [GtkChild]
-        protected unowned Scale errorbar_linewidth { get; }
+        protected unowned Gtk.Scale errorbar_linewidth { get; }
 
         [GtkChild]
         protected unowned Adw.SwitchRow errorbar_barsabove { get; }

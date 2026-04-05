@@ -6,7 +6,7 @@ Provides GObject based wrappers for mpl artists.
 """
 from gi.repository import GObject, Graphs
 
-from graphs import misc, scales, utilities
+from graphs import misc, utilities
 
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
@@ -422,10 +422,10 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def _generate_data(self):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
-        scale = scales.Scale.from_string(self._axis.get_xscale())
+        scale = Graphs.scale_from_string(self._axis.get_xscale())
 
-        lower = utilities.get_value_at_fraction(-1, x_start, x_stop, scale)
-        upper = utilities.get_value_at_fraction(2, x_start, x_stop, scale)
+        lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
+        upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
         limits = (lower, upper)
 
         data = utilities.equation_to_data(self._equation, limits, scale=scale)

@@ -54,7 +54,7 @@ namespace Graphs {
         public string xstart { get; set; default = "0"; }
         public string xstop { get; set; default = "10"; }
         public int steps { get; set; default = 100; }
-        public int scale { get; set; default = 0; }
+        public Scale scale { get; set; default = Scale.LINEAR; }
 
         private string _equation = "";
         public string equation {

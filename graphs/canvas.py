@@ -10,7 +10,6 @@ import math
 
 from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
-from graphs import scales, utilities
 from graphs.figure import Figure
 
 from matplotlib import RcParams, backend_tools as tools
@@ -190,7 +189,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
             for ax in [self.figure.axis, self.figure.top_left_axis]:
                 xmin, xmax = ax.get_xlim()
-                scale = scales.Scale.from_string(ax.get_xscale())
+                scale = Graphs.scale_from_string(ax.get_xscale())
                 xmin, xmax = self._calculate_pan_values(xmin, xmax, scale, dx)
                 ax.set_xlim(xmin, xmax)
 
@@ -200,7 +199,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 self.figure.top_right_axis,
             ]:
                 ymin, ymax = ax.get_ylim()
-                scale = scales.Scale.from_string(ax.get_yscale())
+                scale = Graphs.scale_from_string(ax.get_yscale())
                 ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
                 ax.set_ylim(ymin, ymax)
 
@@ -259,13 +258,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if event.inaxes is not None:
             xlim = self.figure.top_right_axis.get_xlim()
             ylim = self.figure.top_right_axis.get_ylim()
-            self._xfrac = utilities.get_fraction_at_value(
+            self._xfrac = Graphs.get_fraction_at_value(
                 event.xdata,
                 xlim[0],
                 xlim[1],
                 self.figure.props.top_scale,
             )
-            self._yfrac = utilities.get_fraction_at_value(
+            self._yfrac = Graphs.get_fraction_at_value(
                 event.ydata,
                 ylim[0],
                 ylim[1],
@@ -293,7 +292,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             ax.set_xlim(
                 self._calculate_zoomed_values(
                     self._xfrac,
-                    scales.Scale.from_string(ax.get_xscale()),
+                    Graphs.scale_from_string(ax.get_xscale()),
                     ax.get_xlim(),
                     scaling,
                 ),
@@ -306,7 +305,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             ax.set_ylim(
                 self._calculate_zoomed_values(
                     self._yfrac,
-                    scales.Scale.from_string(ax.get_yscale()),
+                    Graphs.scale_from_string(ax.get_yscale()),
                     ax.get_ylim(),
                     scaling,
                 ),
@@ -318,26 +317,26 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def _calculate_pan_values(
         current_min: float,
         current_max: float,
-        scale: scales.Scale,
+        scale: Graphs.Scale,
         panspeed: float,
     ) -> tuple[float, float]:
         """Calculate axis values required for panning."""
         pan_scale = 0.003
 
-        value1 = utilities.get_value_at_fraction(
+        value1 = Graphs.get_value_at_fraction(
             panspeed * pan_scale,
             current_min,
             current_max,
-            scale.value,
+            scale,
         )
-        value2 = utilities.get_value_at_fraction(
+        value2 = Graphs.get_value_at_fraction(
             1 + panspeed * pan_scale,
             current_min,
             current_max,
-            scale.value,
+            scale,
         )
 
-        if scale == scales.Scale.INVERSE:
+        if scale == Graphs.Scale.INVERSE:
             value1, value2 = value2, value1
 
         return value1, value2
@@ -345,7 +344,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     @staticmethod
     def _calculate_zoomed_values(
         fraction: float,
-        scale: scales.Scale,
+        scale: Graphs.Scale,
         limit: float,
         zoom_factor: float,
     ) -> tuple[float, float]:
@@ -356,19 +355,19 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         has  been ezoomed.
         """
         min_, max_ = limit[0], limit[1]
-        value1 = utilities.get_value_at_fraction(
+        value1 = Graphs.get_value_at_fraction(
             fraction - fraction / zoom_factor,
             min_,
             max_,
-            scale.value,
+            scale,
         )
-        value2 = utilities.get_value_at_fraction(
+        value2 = Graphs.get_value_at_fraction(
             fraction + (1 - fraction) / zoom_factor,
             min_,
             max_,
-            scale.value,
+            scale,
         )
-        if scale == scales.Scale.INVERSE:
+        if scale == Graphs.Scale.INVERSE:
             value1, value2 = value2, value1
         return value1, value2
 
@@ -585,15 +584,15 @@ class _Highlight(SpanSelector):
 
     def load(self, canvas: Canvas) -> None:
         xmin, xmax = canvas.figure.top_left_axis.get_xlim()
-        scale = scales.Scale(canvas.figure.props.top_scale).value
+        scale = canvas.figure.props.top_scale
         self.extents = (
-            utilities.get_value_at_fraction(
+            Graphs.get_value_at_fraction(
                 canvas.get_min_selected(),
                 xmin,
                 xmax,
                 scale,
             ),
-            utilities.get_value_at_fraction(
+            Graphs.get_value_at_fraction(
                 canvas.get_max_selected(),
                 xmin,
                 xmax,
@@ -610,7 +609,7 @@ class _Highlight(SpanSelector):
         for prefix, value in zip(["min_", "max_"], extents):
             canvas.set_property(
                 prefix + "selected",
-                utilities.get_fraction_at_value(
+                Graphs.get_fraction_at_value(
                     value,
                     xmin,
                     xmax,

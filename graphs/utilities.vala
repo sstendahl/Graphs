@@ -4,6 +4,110 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
+    /**
+     * Get value at axis fraction.
+     *
+     * Obtain the selected value of an axis given at which percentage (in terms
+     * of fraction) of the length this axis is selected given the start and end
+     * range of this axis.
+     */
+    public static double get_value_at_fraction (
+        double fraction,
+        double start,
+        double end,
+        Scale scale
+    ) {
+        switch (scale) {
+            case Scale.LINEAR:
+            case Scale.RADIANS:
+                return start + fraction * (end - start);
+            case Scale.LOG: {
+                double log_start = Math.log10 (start);
+                double log_end = Math.log10 (end);
+                double log_range = log_end - log_start;
+                double log_value = log_start + log_range * fraction;
+                return Math.pow (10d, log_value);
+            }
+            case Scale.LOG2: {
+                double log_start = Math.log2 (start);
+                double log_end = Math.log2 (end);
+                double log_range = log_end - log_start;
+                double log_value = log_start + log_range * fraction;
+                return Math.pow (2d, log_value);
+            }
+            case Scale.SQUAREROOT: {
+                double sqrt_start = Math.fmax (0d, Math.sqrt (start));
+                double sqrt_end = Math.sqrt (end);
+                double sqrt_range = sqrt_end - sqrt_start;
+                // Square root value does not really work for negative fractions
+                double sqrt_value = sqrt_start + sqrt_range * Math.fmax (0d, fraction);
+                return sqrt_value * sqrt_value;
+            }
+            case Scale.INVERSE: {
+                // Adjust start if needed
+                double adjusted_start = start;
+                if (start <= 0d && end > 0d) {
+                    adjusted_start = end / 10d;
+                }
+                double scaled_range = 1d / adjusted_start - 1d / end;
+                return 1d / (1d / end + fraction * scaled_range);
+            }
+            default: assert_not_reached ();
+        }
+    }
+
+    /**
+     * Get fraction of axis at absolute value.
+     *
+     * Obtain the fraction of the total length of the selected axis a specific
+     * value corresponds to given the start and end range of the axis.
+     */
+    public static double get_fraction_at_value (
+        double val,
+        double start,
+        double end,
+        Scale scale
+    ) {
+        switch (scale) {
+            case Scale.LINEAR:
+            case Scale.RADIANS:
+                return (val - start) / (end - start);
+            case Scale.LOG: {
+                double log_start = Math.log10 (start);
+                double log_end = Math.log10 (end);
+                double log_value = Math.log10 (val);
+                double log_range = log_end - log_start;
+                return (log_value - log_start) / log_range;
+            }
+            case Scale.LOG2: {
+                double log_start = Math.log2 (start);
+                double log_end = Math.log2 (end);
+                double log_value = Math.log2 (val);
+                double log_range = log_end - log_start;
+                return (log_value - log_start) / log_range;
+            }
+            case Scale.SQUAREROOT: {
+                double adjusted_start = Math.fmax (0d, start);
+                double sqrt_start = Math.sqrt (adjusted_start);
+                double sqrt_end = Math.sqrt (end);
+                double sqrt_value = Math.sqrt (val);
+                double sqrt_range = sqrt_end - sqrt_start;
+                return (sqrt_value - sqrt_start) / sqrt_range;
+            }
+            case Scale.INVERSE: {
+                double adjusted_start = start;
+                if (start <= 0d && end > 0d) {
+                    adjusted_start = end / 10d;
+                }
+                double scaled_range = 1d / adjusted_start - 1d / end;
+                // Calculate the scaled percentage corresponding to the data point
+                double scaled_data_point = 1d / val;
+                return (scaled_data_point - 1d / end) / scaled_range;
+            }
+            default: assert_not_reached ();
+        }
+    }
+
     namespace Tools {
         /**
          * Reset a settings instance to default values.
