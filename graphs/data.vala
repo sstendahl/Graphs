@@ -34,7 +34,8 @@ namespace Graphs {
         }
 
         private bool[] _used_positions;
-        private Gee.AbstractList<Item> _items;
+        private Item[] _items = new Item[8];
+        private int _n_items = 0;
         private string[] _color_cycle;
         private string[] _used_colors;
         private string[] _errbar_color_cycle;
@@ -54,7 +55,6 @@ namespace Graphs {
         protected signal void figure_settings_changed (string prop);
 
         construct {
-            this._items = new Gee.LinkedList<Item> ();
             this._color_cycle = {};
             this._errbar_color_cycle = {};
             items_changed.connect (_update_used_positions);
@@ -125,11 +125,11 @@ namespace Graphs {
         }
 
         public uint get_n_items () {
-            return _items.size;
+            return _n_items;
         }
 
         public Item last () {
-            return _items.last ();
+            return _items[_n_items - 1];
         }
 
         // End section ListModel
@@ -138,33 +138,30 @@ namespace Graphs {
         // All required methods to implement the SelectionModel interface
 
         private void clear_selection () {
-            foreach (Item item in _items) {
-                item.selected = false;
+            for (uint index = 0; index < _n_items; index++) {
+                _items[index].selected = false;
             }
         }
 
         public Bitset get_selection_in_range (uint position, uint n_items) {
             var bitset = new Bitset.empty ();
-            var range = _items[(int) position : (int) (position + n_items)];
-            uint index = position;
-            foreach (Item item in range) {
-                if (item.selected) bitset.add (index);
-                index++;
+            for (uint index = position; index < position + n_items; index++) {
+                if (_items[index].selected) bitset.add (index);
             }
             return bitset;
         }
 
         public bool is_selected (uint position) {
-            return _items[(int) position].selected;
+            return _items[position].selected;
         }
 
         public bool select_all () {
             _notify_selection_changed = false;
-            foreach (Item item in _items) {
-                item.selected = true;
+            for (uint index = 0; index < _n_items; index++) {
+                _items[index].selected = true;
             }
             _notify_selection_changed = true;
-            selection_changed.emit (0, _items.size);
+            selection_changed.emit (0, _n_items);
             return true;
         }
 
@@ -172,27 +169,26 @@ namespace Graphs {
             if (unselect_rest) {
                 _notify_selection_changed = false;
                 clear_selection ();
-                _items[(int) position].selected = true;
+                _items[position].selected = true;
                 _notify_selection_changed = true;
-                selection_changed.emit (0, _items.size);
+                selection_changed.emit (0, _n_items);
             } else {
-                _items[(int) position].selected = true;
+                _items[position].selected = true;
             }
             return true;
         }
 
         public bool select_range (uint position, uint n_items, bool unselect_rest) {
-            var range = _items[(int) position : (int) (position + n_items)];
             _notify_selection_changed = false;
             if (unselect_rest) {
                 clear_selection ();
-                foreach (Item item in range) {
-                    item.selected = true;
+                for (uint index = position; index < position + n_items; index++) {
+                    _items[index].selected = true;
                 }
-                selection_changed.emit (0, _items.size);
+                selection_changed.emit (0, _n_items);
             } else {
-                foreach (Item item in range) {
-                    item.selected = true;
+                for (uint index = position; index < position + n_items; index++) {
+                     _items[index].selected = true;
                 }
                 selection_changed.emit (position, n_items);
             }
@@ -203,14 +199,12 @@ namespace Graphs {
         public bool set_selection (Bitset selection, Bitset mask) {
             if (mask.is_empty ()) return true;
             _notify_selection_changed = false;
-            uint index = 0;
-            foreach (Item item in _items) {
+            for (int index = 0; index < _n_items; index++) {
                 if (!mask.contains (index)) continue;
-                item.selected = selection.contains (index);
-                index++;
+                _items[index].selected = selection.contains (index);
             }
             _notify_selection_changed = true;
-            selection_changed.emit (0, _items.size);
+            selection_changed.emit (0, _n_items);
             return true;
         }
 
@@ -218,19 +212,19 @@ namespace Graphs {
             _notify_selection_changed = false;
             clear_selection ();
             _notify_selection_changed = true;
-            selection_changed.emit (0, _items.size);
+            selection_changed.emit (0, _n_items);
             return true;
         }
 
         public bool unselect_item (uint position) {
-            _items[(int) position].selected = false;
+            _items[position].selected = false;
             return true;
         }
 
         public bool unselect_range (uint position, uint n_items) {
             _notify_selection_changed = false;
-            foreach (Item item in _items[(int) position : (int) (position + n_items)]) {
-                item.selected = false;
+            for (uint index = position; index < position + n_items; index++) {
+                _items[index].selected = false;
             }
             _notify_selection_changed = true;
             selection_changed.emit (position, n_items);
@@ -243,7 +237,10 @@ namespace Graphs {
 
         public void clear () {
             uint n_items = get_n_items ();
-            _items.clear ();
+            for (int index = 0; index < n_items; index++) {
+                _items[index] = null;
+            }
+            _n_items = 0;
             items_changed.emit (0, n_items, 0);
             this.can_undo = false;
             this.can_redo = false;
@@ -256,35 +253,59 @@ namespace Graphs {
             notify_property ("unsaved");
         }
 
+        private void grow_if_needed (int grow_size) {
+            int minimum_size = _n_items + grow_size;
+            if (minimum_size > _items.length) {
+                // double the capacity unless we add even more items at this time
+                _items.resize (grow_size > _items.length ? minimum_size : 2 * _items.length);
+            }
+        }
+
         protected void _update_used_positions () {
-            if (_items.size == 0) {
+            if (_n_items == 0) {
                 _used_positions = {true, false, true, false};
                 return;
             }
             bool[] used_positions = {false, false, false, false};
-            foreach (Item item in _items) {
-                if (figure_settings.hide_unselected && !item.selected)
-                continue;
+            Item item;
+            for (uint index = 0; index < _n_items; index++) {
+                item = _items[index];
+                if (figure_settings.hide_unselected && !item.selected) continue;
                 used_positions[item.xposition] = true;
                 used_positions[item.yposition + 2] = true;
             }
             _used_positions = used_positions;
         }
 
-        protected void _add_item (Item item, int index = -1, bool notify = false) {
-            if (index < 0) index = _items.size;
+        private void _connect_to_item (Item item) {
             item.notify["selected"].connect (() => {
-                if (_notify_selection_changed) selection_changed.emit (index, 1);
+                if (_notify_selection_changed) selection_changed.emit (index (item), 1);
             });
             item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
-            _items.insert (index, item);
-            if (notify) items_changed.emit (index, 0, 1);
+        }
+
+        protected void _add_item (Item item) {
+            _connect_to_item (item);
+            grow_if_needed (1);
+            _items[_n_items] = item;
+            items_changed.emit (_n_items++, 0, 1);
+        }
+
+        protected void _insert_item (Item item, int index) {
+            _connect_to_item (item);
+            grow_if_needed (1);
+            _items.move (index, index + 1, _n_items - index);
+            _items[index] = item;
+            _n_items++;
+            items_changed.emit (index, 0, 1);
         }
 
         protected void _remove_item (uint index) {
-            _items.remove_at ((int) index);
+            _items[index] = null;
+            _items.move ((int) index + 1, (int) index, (int) (_n_items - index - 1));
+            _n_items--;
             items_changed.emit (index, 1, 0);
         }
 
@@ -308,10 +329,6 @@ namespace Graphs {
             if (_used_errbar_colors.length == _errbar_color_cycle.length) _used_errbar_colors = {};
         }
 
-        public void add_items (Item[] items) {
-            add_items_from_list (new Gee.ArrayList<Item>.wrap (items));
-        }
-
         /**
          * Add items to be managed.
          *
@@ -320,10 +337,10 @@ namespace Graphs {
          * they are still the default. If they are already modified and do not
          * match the items label, they get moved to another axis.
          */
-        public void add_items_from_list (Gee.List<Item> items) {
+        public void add_items (Item[] items) {
             _used_colors = {};
             _used_errbar_colors = {};
-            foreach (Item item in _items) {
+            foreach (Item item in this) {
                 if (item.color in _color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     string errcolor = ((DataItem) item).errcolor;
@@ -331,8 +348,9 @@ namespace Graphs {
                 }
             }
             string[] used_names = get_names ();
-            uint prev_size = get_n_items ();
+            uint prev_size = _n_items;
             int original_position;
+            grow_if_needed (items.length);
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
@@ -391,22 +409,24 @@ namespace Graphs {
                         }
                     }
                 }
-                _add_item (item, -1, false);
+                _connect_to_item (item);
+                _items[_n_items++] = item;
                 item_added.emit (item);
             }
-            items_changed.emit (prev_size, 0, items.size);
+            items_changed.emit (prev_size, 0, items.length);
             optimize_limits ();
             add_history_state ();
         }
 
         public void set_items (Item[] items) {
-            uint removed = _items.size;
-            _items.clear ();
+            uint removed = _n_items;
             foreach (Item item in items) {
-                _add_item (item);
+                _connect_to_item (item);
             }
+            _items = items;
+            _n_items = items.length;
             _update_used_positions ();
-            items_changed.emit (0, removed, _items.size);
+            items_changed.emit (0, removed, _n_items);
         }
 
         public void delete_items (Item[] items) {
@@ -456,61 +476,87 @@ namespace Graphs {
         // Section Vala iterator
 
         public Iterator<Item> iterator () {
-            return _items.iterator ();
+            return new ItemIterator (this);
+        }
+
+        private class ItemIterator : Object, Traversable<Item>, Iterator<Item> {
+            private Data _data;
+            private int _index = -1;
+
+            public bool read_only { get; default = true; }
+            public bool valid { get { return _index >= 0 && has_next (); } }
+
+            public ItemIterator (Data data) {
+                _data = data;
+            }
+
+            public bool @foreach (ForallFunc<Item> f) {
+                uint n_items = _data.get_n_items ();
+                while (_index < n_items) {
+                    if (!f ((Item) _data.get_item (_index))) return false;
+                    _index++;
+                }
+                _index--;
+                return true;
+            }
+
+            public bool has_next () {
+                return _index + 1 < _data.get_n_items ();
+            }
+
+            public bool next () {
+                if (has_next ()) {
+                    _index++;
+                    return true;
+                }
+                return false;
+            }
+
+            public new Item get () {
+                return (Item) _data.get_item (_index);
+            }
+
+            public void remove () {
+                assert_not_reached ();
+            }
         }
 
         public bool @foreach (ForallFunc<Item> f) {
-            return _items.@foreach (f);
-        }
-
-        protected string get_version () {
-            return Config.VERSION;
-        }
-
-        protected IteratorWrapper iterator_wrapper () {
-            return new IteratorWrapper (_items.iterator ());
-        }
-
-        /**
-         * There exists an issue with using the Gee.Iterator in python leading
-         * to garbage data. Wrap the iterator in a class to circumvent this.
-         */
-        public class IteratorWrapper : Object {
-            private Iterator<Item> iterator;
-
-            public IteratorWrapper (Iterator<Item> iterator) {
-                this.iterator = iterator;
+            for (int i = 0; i < _n_items; i++) {
+                if (!f (_items[i])) return false;
             }
-
-            public Item? next () {
-                if (!iterator.has_next ()) return null;
-                iterator.next ();
-                return iterator.get ();
-            }
+            return true;
         }
 
         // End section Vala iterator
 
         // Section misc
 
+        protected string get_version () {
+            return Config.VERSION;
+        }
+
         public bool is_empty () {
-            return _items.size == 0;
+            return _n_items == 0;
         }
 
         public Item[] get_items () {
-            return _items.to_array ();
+            return _items[:_n_items];
         }
 
         public string[] get_names () {
-            string[] names = {};
-            foreach (Item item in _items) {
-                names += item.name;
+            string[] names = new string[_n_items];
+            for (int index = 0; index < _n_items; index++) {
+                names[index] = _items[index].name;
             }
             return names;
         }
 
         public uint index (Item item) {
-            return _items.index_of (item);
+            for (uint index = 0; index < _n_items; index++) {
+                if (_items[index] == item) return index;
+            }
+            assert_not_reached ();
         }
 
         public bool[] get_used_positions () {
@@ -519,9 +565,13 @@ namespace Graphs {
 
         public void change_position (uint index1, uint index2) {
             if (index1 == index2) return;
-            Item item = _items[(int) index2];
-            _items.remove_at ((int) index2);
-            _items.insert ((int) index1, item);
+            Item item = _items[index2];
+            if (index1 < index2) {
+                _items.move ((int) index1, (int) index1 + 1, (int) (index2 - index1));
+            } else {
+                _items.move ((int) index2 + 1, (int) index2, (int) (index1 - index2));
+            }
+            _items[index1] = item;
             uint position = uint.min (index1, index2);
             uint changed = uint.max (index1, index2) - position + 1;
             items_changed.emit (position, changed, changed);
