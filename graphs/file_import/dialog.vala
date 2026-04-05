@@ -150,7 +150,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            Gee.List<Item> itemlist = new LinkedList<Item> ();
+            Gee.List<Item> itemlist = new ArrayList<Item> ();
             for (uint i = 0; i < settings_list.get_n_items (); i++) {
                 var settings = (ImportSettings) settings_list.get_item (i);
                 string message = DataImporter.parse (itemlist, settings, window.data);
@@ -158,7 +158,7 @@ namespace Graphs {
                     window.add_toast_string (message);
                 }
             }
-            window.data.add_items_from_list (itemlist);
+            window.data.add_items (itemlist.to_array ());
             close ();
         }
     }
