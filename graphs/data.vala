@@ -129,7 +129,7 @@ namespace Graphs {
         }
 
         public Item last () {
-            return _items[_n_items];
+            return _items[_n_items - 1];
         }
 
         // End section ListModel
@@ -185,7 +185,7 @@ namespace Graphs {
                 for (uint index = position; index < position + n_items; index++) {
                     _items[index].selected = true;
                 }
-                selection_changed.emit (0, _items.length);
+                selection_changed.emit (0, _n_items);
             } else {
                 for (uint index = position; index < position + n_items; index++) {
                      _items[index].selected = true;
@@ -289,8 +289,8 @@ namespace Graphs {
         protected void _add_item (Item item) {
             _connect_to_item (item);
             grow_if_needed (1);
-            _items[_n_items++] = item;
-            items_changed.emit (_n_items, 0, 1);
+            _items[_n_items] = item;
+            items_changed.emit (_n_items++, 0, 1);
         }
 
         protected void _insert_item (Item item, int index) {
