@@ -72,6 +72,9 @@ if __name__ == "__main__":
             except RuntimeError:
                 logging.warning(_("Could not load {font}").format(font=f))
 
+        from graphs import scales
+        scales.register_scales()
+
         from graphs.file_import import DataImporter
         from graphs.python_helper import PythonHelper
         from graphs.styles import StyleManager

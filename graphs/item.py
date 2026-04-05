@@ -149,7 +149,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
         xstart: str,
         xstop: str,
         steps: int,
-        scale: int,
+        scale: Graphs.Scale,
         **kwargs,
     ):
         """Create new GeneratedDataItem."""

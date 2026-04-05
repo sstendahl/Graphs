@@ -14,10 +14,10 @@ namespace Graphs {
         public string top_label { get; set; default = ""; }
         public string right_label { get; set; default = ""; }
 
-        public int bottom_scale { get; set; default = 0; }
-        public int left_scale { get; set; default = 0; }
-        public int top_scale { get; set; default = 0; }
-        public int right_scale { get; set; default = 0; }
+        public Scale bottom_scale { get; set; default = Scale.LINEAR; }
+        public Scale left_scale { get; set; default = Scale.LINEAR; }
+        public Scale top_scale { get; set; default = Scale.LINEAR; }
+        public Scale right_scale { get; set; default = Scale.LINEAR; }
 
         public bool legend { get; set; default = true; }
         public int legend_position { get; set; default = 0; }

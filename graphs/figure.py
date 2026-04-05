@@ -7,9 +7,9 @@ Acts as an interface between matplotlib and GObject.
 import contextlib
 import logging
 
-from gi.repository import GObject, Gio, Gtk
+from gi.repository import GObject, Gio, Graphs, Gtk
 
-from graphs import artist, misc, scales
+from graphs import artist, misc
 
 from matplotlib import RcParams, figure, pyplot
 
@@ -238,11 +238,11 @@ class Figure(GObject.Object, figure.Figure):
     @GObject.Property(type=int)
     def bottom_scale(self) -> int:
         """Scale of the bottom axis."""
-        return scales.Scale.from_string(self.axis.get_xscale()).value
+        return Graphs.scale_from_string(self.axis.get_xscale())
 
     @bottom_scale.setter
     def bottom_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
+        scale = Graphs.scale_to_string(scale)
         for axis in (self.axis, self.right_axis):
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
@@ -251,11 +251,11 @@ class Figure(GObject.Object, figure.Figure):
     @GObject.Property(type=int)
     def left_scale(self) -> int:
         """Scale of the left axis."""
-        return scales.Scale.from_string(self.axis.get_yscale()).value
+        return Graphs.scale_from_string(self.axis.get_yscale())
 
     @left_scale.setter
     def left_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
+        scale = Graphs.scale_to_string(scale)
         for axis in (self.axis, self.top_left_axis):
             axis.set_yscale(scale)
             axis.set_ylim(None, None)
@@ -264,11 +264,11 @@ class Figure(GObject.Object, figure.Figure):
     @GObject.Property(type=int)
     def top_scale(self) -> int:
         """Scale of the top axis."""
-        return scales.Scale.from_string(self.top_left_axis.get_xscale()).value
+        return Graphs.scale_from_string(self.top_left_axis.get_xscale())
 
     @top_scale.setter
     def top_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
+        scale = Graphs.scale_to_string(scale)
         for axis in (self.top_right_axis, self.top_left_axis):
             axis.set_xscale(scale)
             axis.set_xlim(None, None)
@@ -277,11 +277,11 @@ class Figure(GObject.Object, figure.Figure):
     @GObject.Property(type=int)
     def right_scale(self) -> int:
         """Scale of the right axis."""
-        return scales.Scale.from_string(self.right_axis.get_yscale()).value
+        return Graphs.scale_from_string(self.right_axis.get_yscale())
 
     @right_scale.setter
     def right_scale(self, scale: int) -> None:
-        scale = scales.Scale(scale).to_string()
+        scale = Graphs.scale_to_string(scale)
         for axis in (self.top_right_axis, self.right_axis):
             axis.set_yscale(scale)
             axis.set_ylim(None, None)

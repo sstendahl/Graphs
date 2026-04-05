@@ -73,13 +73,13 @@ namespace Graphs {
         private unowned Adw.ComboRow linestyle { get; }
 
         [GtkChild]
-        private unowned Scale linewidth { get; }
+        private unowned Gtk.Scale linewidth { get; }
 
         [GtkChild]
         private unowned Adw.ComboRow markerstyle { get; }
 
         [GtkChild]
-        private unowned Scale markersize { get; }
+        private unowned Gtk.Scale markersize { get; }
 
         public EditItemDataItemBox (DataItem item) {
             item.bind_property (
@@ -135,13 +135,13 @@ namespace Graphs {
         private unowned StyleColorRow errcolor_row { get; }
 
         [GtkChild]
-        private unowned Scale errcapsize { get; }
+        private unowned Gtk.Scale errcapsize { get; }
 
         [GtkChild]
-        private unowned Scale errcapthick { get; }
+        private unowned Gtk.Scale errcapthick { get; }
 
         [GtkChild]
-        private unowned Scale errlinewidth { get; }
+        private unowned Gtk.Scale errlinewidth { get; }
 
         public EditItemErrorBarGroup (DataItem item) {
             bool has_xerr, has_yerr;
@@ -247,7 +247,7 @@ namespace Graphs {
         private unowned Adw.ComboRow linestyle { get; }
 
         [GtkChild]
-        private unowned Scale linewidth { get; }
+        private unowned Gtk.Scale linewidth { get; }
 
         public EditItemEquationItemBox (EquationItem item) {
             equation_group.setup (item);
