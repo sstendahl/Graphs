@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="window">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Main Window</title>
+    <p>The Graphs main window is split into two areas: a sidebar on the left containing the item list and controls, and a canvas on the right where the figure is displayed.</p>
+    <section id="sidebar">
+        <title>Sidebar</title>
+        <p>The sidebar contains everything related to managing items and interacting with the figure.</p>
+        <section id="header-buttons">
+            <title>Header buttons</title>
+            <p>
+            At the top of the sidebar, we have the header with a button to add data,
+            a button to open the figure settings and a button with the primary menu.
+            At the top, the <em>Add</em> button opens a menu with three options:
+            </p>
+            <terms>
+                <item>
+                    <title>Add Data from File…</title>
+                    <p>Opens the import dialog to load a dataset from a file or database. See
+                        <link xref="import" />for details on the supported formats and import options.
+                    </p>
+                </item>
+                <item>
+                    <title>Add Equation…</title>
+                    <p>Opens a dialog to add a new equation item, rendered continuously on the canvas.</p>
+                </item>
+                <item>
+                    <title>Generate Data…</title>
+                    <p>Opens a dialog to generate a fixed dataset from an equation over a configurable x-range.</p>
+                </item>
+            </terms>
+        </section>
+        <section id="primary-menu">
+            <title>Primary Menu</title>
+            <p>The primary menu in the top right provides access to some general options:</p>
+            <terms>
+                <item>
+                    <title>New Project</title>
+                    <p>Opens a new empty project in a new window.</p>
+                </item>
+                <item>
+                    <title>Save Project / Save Project As…</title>
+                    <p>Saves the current project to a file, preserving all items, figure settings, and the full undo and view history.</p>
+                </item>
+                <item>
+                    <title>Open Project…</title>
+                    <p>Opens a previously saved project file.</p>
+                </item>
+                <item>
+                    <title>Close Project</title>
+                    <p>Closes the current project and returns to an empty state.</p>
+                </item>
+                <item>
+                    <title>Export Data…</title>
+                    <p>Exports the current datasets to a file.</p>
+                </item>
+                <item>
+                    <title>Export Figure…</title>
+                    <p>Exports the figure as an image.</p>
+                </item>
+                <item>
+                    <title>Style Editor</title>
+                    <p>Opens the style editor window. See
+                        <link xref="edit-style" />for details.
+                    </p>
+                </item>
+            </terms>
+        </section>
+        <p>The item list shows all items currently in the project. Each item can be selected or deselected by clicking the checkbox next to it. Only selected items are affected by data operations. Clicking the item name opens the edit panel for that item.
+            Items can be deleted, and their order can be changed by dragging.
+        </p>
+        <section id="figure-settings-button">
+            <title>Figure Settings</title>
+            <p>The figure settings button in the top right of the sidebar opens the Figure Settings panel, where the figure title, axis labels, axis limits, axis scales, legend visibility and position, and the active style can all be configured. Axis labels
+                and limits are only shown for the axes that are currently in use. The current figure settings can be saved as the default for new projects using the <em>Set as Default</em> button at the bottom of the panel.
+            </p>
+        </section>
+        <section id="canvas-modes">
+            <title>Canvas Modes</title>
+            <p>Below the item list, three canvas interaction modes are available:</p>
+            <terms>
+                <item>
+                    <title>Pan</title>
+                    <p>Click and drag on the canvas to pan the view. This is the default mode.
+                    </p>
+                </item>
+                <item>
+                    <title>Zoom</title>
+                    <p>Click and drag to draw a rectangle on the canvas to zoom into that area.
+                    </p>
+                </item>
+                <item>
+                    <title>Select</title>
+                    <p>Click and drag to highlight a region of the data. Data operations will only affect the data within the highlighted area when this mode is active.
+                    </p>
+                </item>
+            </terms>
+        </section>
+        <section id="operations">
+            <title>Operations</title>
+            <p>Below the canvas mode buttons, the operations panel provides quick access to all data manipulation actions. These act on all selected items. See
+                <link xref="manipulate" />for a full description of each operation.</p>
+        </section>
+    </section>
+    <section id="Canvas">
+        <title>Canvas</title>
+        <p>The canvas shows the plot containing all active items. Clicking once on the label, limits or opens the Figure Settings, focused on the clicked item. Making it possible to quickly adjust these artists</p>
+        <p>On top the top left we have the undo and redo button. On the top right of the canvas there's the view buttons. The back-arrow moves you to the previous view after having changed the limits while the forward-arrow moves you to the next view after
+            having clicked the back-arrow. Finally the Optimize Limits button will try and adjust the limits automatically to fit all visible items in the canvas. For equations, only the y-range is taken into account as the x-data spans an infinite range.</p>
+    </section>
+</page>

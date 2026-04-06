@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="figure-settings">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Figure Settings</title>
+    <p>The Figure Settings panel controls the labels, axis limits, scaling, and general appearance of the figure. It can be opened by pressing the settings button in the top right of the sidebar. The current settings can be saved as the default for all new
+        projects using the <em>Set as Default</em> button at the bottom of the panel.</p>
+    <section id="labels">
+        <title>Labels</title>
+        <p>A title can be set for the figure, and a label can be set for each axis independently. Only the labels for axes that are currently in use are shown. Labels and the title can also be edited directly on the canvas by clicking on them.</p>
+    </section>
+    <section id="limits">
+        <title>Axis Limits</title>
+        <p>The minimum and maximum values for each axis can be set manually. Only the limits for axes that are currently in use are shown. Leaving a limit field empty allows Graphs to determine the range automatically based on the data. The view can also
+            be reset to fit all data at any time using the <em>Optimize Limits</em> action.</p>
+    </section>
+    <section id="scaling">
+        <title>Scaling</title>
+        <p>Each axis can be set to one of the following scales independently:</p>
+        <terms>
+            <item>
+                <title>Linear</title>
+                <p>Equal spacing between values. The default scale for most data.</p>
+            </item>
+            <item>
+                <title>Logarithmic (Base 10)</title>
+                <p>Spacing based on powers of 10. Useful for data spanning several orders of magnitude.</p>
+            </item>
+            <item>
+                <title>Logarithmic (Base 2)</title>
+                <p>Spacing based on powers of 2.</p>
+            </item>
+            <item>
+                <title>Radians</title>
+                <p>Axis ticks are expressed as multiples of π.</p>
+            </item>
+            <item>
+                <title>Square Root</title>
+                <p>Spacing based on the square root of values.</p>
+            </item>
+            <item>
+                <title>Inverse</title>
+                <p>Spacing based on the reciprocal of values.</p>
+            </item>
+        </terms>
+    </section>
+    <section id="appearance">
+        <title>Appearance</title>
+        <terms>
+            <item>
+                <title>Show Legend</title>
+                <p>Toggles the visibility of the legend. When enabled, the legend position can be set to one of several locations on the figure, or left on Auto to let Graphs choose the least obstructive position.</p>
+            </item>
+            <item>
+                <title>Hide Unselected Items</title>
+                <p>When enabled, only items that are currently selected in the sidebar are shown on the canvas. This is useful for focusing on a subset of the data without deleting anything.</p>
+            </item>
+            <item>
+                <title>Style</title>
+                <p>Shows the currently active style and opens the style picker when clicked. See
+                    <link xref="edit-style" />for details on creating and editing styles.</p>
+            </item>
+        </terms>
+    </section>
+</page>

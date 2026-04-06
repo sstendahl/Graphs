@@ -1,77 +1,185 @@
-<page xmlns="http://projectmallard.org/1.0/"
-      type="topic"
-      id="curve_fitting">
-<info>
-  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
-  <link type="guide" xref="index#howto"/>
-</info>
-<title>Curve Fitting</title>
-<section id="fitting">
-<title>Fitting data</title>
-<p>
-Curve fitting allows for a powerful analysis method for your imported data. To
-start curve fitting on a data set, press the three vertical dots on the item
-you want to fit to, and choose "Curve Fitting". This brings up the Curve
-Fitting dialog for the selected data set. An extensive list of predefined
-equations can be chosen from the dropdown. The corresponding mathematical
-formula is shown in the same card.
-</p>
-<media type="image" src="media/curve_fitting_light.png"/>
-</section>
-
-<section id="bounds">
-<title>Bounds</title>
-<p>
-Each detected parameter in the formula will be shown in the sidebar. Here an
-initial guess can be set for the fit, as well as the minimum and maximum value
-for this parameter. Make sure that the initial guess is in between the bounds,
-and that the minimum bound is smaller than the maximum bound. If you don't want
-to use any bounds for the parameter, you can set the bounds to infinite using
-<code>-inf</code> and <code>inf</code> for the minimum and maximum bound
-respectively.
-</p>
-</section>
-
-<section id="results">
-<title>Results</title>
-<p>
-Below the fitting parameters, a box is shown with the resulting parameters of
-the fit. Apart of the final results, a margin is shown as well for each
-parameter as well as the sum of R² indicating the goodness of the fit. The
-margin can be set using the primary menu in the Curve Fitting dialog as a
-multiple of the standard deviation, corresponding to an uncertainty margin of
-65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively.
-</p>
-<p>
-Please note that like all fits, that this standard deviation is mostly a
-measure of how well the data agrees with the corresponding model. Factors such
-as whether this model is actually physically correct, if there's any systemic
-errors in the measurements, and if the parameters are correlated to each other
-is not taken into account when fitting data. This is an inherent property of
-all curve fitting, and a common point of confusion, leading to misleading error
-bars on data points even in scientifically published data.
-</p>
-</section>
-
-<section id="algorithms">
-<title>Fitting algorithms</title>
-<p>
-When performing a fit, there are three different fitting algorithms to choose
-from, these can be set from the primary menu.
-</p>
-<terms>
-  <item>
-    <title>Levenberg-Marquardt</title>
-    <p>The Levenberg-Marquardt algorithm is a traditionally relatively popular algorithm that performs very efficiently. However, it does not handle bounds for the fitting parameters.</p>
-  </item>
-  <item>
-    <title>Trust Region</title>
-    <p>The Trust Region Reflective algorithm is well-suited for solving large problems with bounds. This method generally performs well for most cases and should probably be used for most cases.</p>
-  </item>
-  <item>
-    <title>Dogbox</title>
-    <p>The Dogbox algorithm uses rectangular trust regions and typically works well with small problems involving bounds.</p>
-  </item>
-</terms>
-</section>
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="curve_fitting">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Curve Fitting</title>
+    <p>Curve fitting allows for powerful analysis of imported datasets by finding the parameters of a mathematical model that best describe the data. The following topics are covered in this page:</p>
+    <list>
+        <item>
+            <p>
+                <link xref="#fitting">Fitting Data</link>: set up and run a fit.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#bounds">Bounds</link>: constrain fitting parameters.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#results">Results</link>: interpretting the output.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#residuals">Residuals</link>: inspect the quality of the fit.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#algorithms">Fitting Algorithms</link>: choose the right algorithm for your data.</p>
+        </item>
+    </list>
+    <section id="fitting">
+        <title>Fitting Data</title>
+        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live on the canvas as parameters
+            are adjusted.</p>
+        <p>An equation to fit against is chosen from the dropdown. The following predefined equations are available, with their formula shown as a subtitle:</p>
+        <terms>
+            <item>
+                <title>Linear</title>
+                <p>
+                    <code>a·x + b</code>
+                </p>
+            </item>
+            <item>
+                <title>Quadratic</title>
+                <p>
+                    <code>a·x² + b·x + c</code>
+                </p>
+            </item>
+            <item>
+                <title>Exponential</title>
+                <p>
+                    <code>a·exp(b·x)</code>
+                </p>
+            </item>
+            <item>
+                <title>Power Law</title>
+                <p>
+                    <code>a·x^b</code>
+                </p>
+            </item>
+            <item>
+                <title>Logarithmic</title>
+                <p>
+                    <code>a·log(x) + b</code>
+                </p>
+            </item>
+            <item>
+                <title>Sigmoid Logistic</title>
+                <p>
+                    <code>L / (1 + exp(-k·(x - b)))</code>
+                </p>
+            </item>
+            <item>
+                <title>Gaussian</title>
+                <p>
+                    <code>a·exp(-(x - μ)² / (2·σ²))</code>
+                </p>
+            </item>
+            <item>
+                <title>Custom</title>
+                <p>Enter any equation of your choice using<code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
+            </item>
+        </terms>
+        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation item in the project, with the fitted parameter values substituted into the expression.</p>
+    </section>
+    <section id="bounds">
+        <title>Bounds</title>
+        <p>Each free parameter detected in the equation is shown in the sidebar with three fields: an initial guess, a minimum bound, and a maximum bound. The initial guess is the starting value used by the algorithm. Using a good initial guess close to
+            the expected value will help the fit converge. The bounds constrain the range of values the parameter is allowed to take.</p>
+        <p>The bounds fields default to<code>-inf</code>and<code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values.</p>
+        <p>Note that bounds fields are only shown when an algorithm that supports them is selected. When using Levenberg-Marquardt, bounds are hidden as that algorithm does not support them. See
+            <link xref="#algorithms" />for details.</p>
+    </section>
+    <section id="results">
+        <title>Results</title>
+        <p>After a successful fit the results panel shows two sections: Parameters and Statistics.
+        </p>
+        <p>The Parameters section lists each fitted parameter with its value. If a confidence level other than None is selected, a margin is shown next to each value in the form<code>± error</code>, where the error is the standard deviation of that parameter
+            multiplied by the selected confidence factor. So for a confidence level of 1σ the error is equal to the standard deviation, and for 2σ and 3σ the error is equal to twice and three times the standard deviation respectively. The confidence level
+            can be set from the primary menu:</p>
+        <list>
+            <item>
+                <p>
+                    <em>None</em>: no margin shown.</p>
+            </item>
+            <item>
+                <p>
+                    <em>1σ: 68% Confidence</em>
+                </p>
+            </item>
+            <item>
+                <p>
+                    <em>2σ: 95% Confidence</em>
+                </p>
+            </item>
+            <item>
+                <p>
+                    <em>3σ: 99.7% Confidence</em>
+                </p>
+            </item>
+        </list>
+        <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve on the canvas.</p>
+        <p>The Statistics section shows two goodness-of-fit measures: R² and RMSE.</p>
+        <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses
+            it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
+        <p>RMSE (Root Mean Square Error) measures the typical size of the residuals (the differences between the data points and the fitted curve) in the same units as the Y data. Unlike R², RMSE gives an absolute sense of how far off the predictions are
+            on average, which makes it useful when the physical magnitude of the error matters. </p>
+        <p>Note that both statistics reflect only how well the data agrees with the chosen model, not whether the model is physically correct. Factors such as systematic measurement errors and correlations between parameters are not accounted for. This is
+            an inherent limitation of curve fitting, and a common source of misleading uncertainty estimates even in published scientific work.</p>
+    </section>
+    <section id="residuals">
+        <title>Residuals</title>
+        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from the primary menu. This displays a second plot below the main canvas showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
+            is shown for reference.</p>
+        <p>A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data.</p>
+    </section>
+    <section id="errors">
+        <title>Error Messages</title>
+        <p>If the fit cannot be completed, an error message is shown in the results panel instead of the parameter values. The following errors can occur:</p>
+        <terms>
+            <item>
+                <title>Invalid equation</title>
+                <p>The equation contains a syntax error or uses unsupported variables. Check that the expression is valid.</p>
+            </item>
+            <item>
+                <title>Constraint error</title>
+                <p>The initial guess does not lie within the specified bounds, or the minimum bound is not smaller than the maximum. Ensure that Lower &lt; Initial &lt; Upper for each parameter.</p>
+            </item>
+            <item>
+                <title>Domain error</title>
+                <p>The equation is not valid over the range of the data, for example due to a logarithm of a negative number or a division by zero.</p>
+            </item>
+            <item>
+                <title>Fit failed: max iterations reached</title>
+                <p>The algorithm did not converge within the allowed number of iterations. Try adjusting the initial guesses to be closer to the expected values, or choose a different algorithm.</p>
+            </item>
+            <item>
+                <title>Matrix error</title>
+                <p>The data is insufficient for the chosen model. This can happen for example when there are fewer data points than free parameters, or if the data does not constrain the model well enough to determine a unique solution.</p>
+            </item>
+            <item>
+                <title>Confidence band error</title>
+                <p>The covariance matrix is unstable, so the confidence band cannot be computed reliably.</p>
+            </item>
+        </terms>
+    </section>
+    <section id="algorithms">
+        <title>Fitting Algorithms</title>
+        <p>Three fitting algorithms are available, selectable from the primary menu under <em>Optimization Method</em>:</p>
+        <terms>
+            <item>
+                <title>Levenberg-Marquardt</title>
+                <p>A widely used algorithm that performs efficiently for most problems. Does not support parameter bounds, the minimum and maximum fields are hidden when this method is selected.</p>
+            </item>
+            <item>
+                <title>Trust Region Reflective</title>
+                <p>Handles bounds well and performs reliably across a wide range of problems. A good default choice for most use cases.</p>
+            </item>
+            <item>
+                <title>Dogbox</title>
+                <p>Uses rectangular trust regions and is well suited to smaller problems where bounds are required.</p>
+            </item>
+        </terms>
+    </section>
 </page>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="projects">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Projects</title>
+    <p>A Graphs project file saves the complete state of your work so you can close it and pick up exactly where you left off. All project actions are available from the application menu.</p>
+    <section id="what-is-saved">
+        <title>What Is Saved</title>
+        <p>A project file preserves everything about the current session: all items and their data and appearance settings, all figure settings including labels, axis scales and limits, legend configuration, and the active style. The full undo and redo history
+            is also saved, so you can continue undoing changes after reopening a project. The view history is saved as well.</p>
+    </section>
+    <section id="saving">
+        <title>Saving a Project</title>
+        <p>To save the current project, choose <em>Save Project…</em> from the application menu. If the project has been saved before, <em>Save Project…</em> overwrites the existing file. To save a copy under a different name or location, use <em>Save Project As…</em>.</p>
+    </section>
+    <section id="opening">
+        <title>Opening a Project</title>
+        <p>To open a previously saved project, choose <em>Open Project…</em> from the application menu and select the project file. The project opens in the current window, replacing whatever was there before. To work on two projects at the same time, open
+            a new window first using <em>New Project</em>, then open the second project there.</p>
+        <p>A project file can also be imported as data into an existing project by using <em>Add Data from File…</em> and selecting the project file. This adds the items from the saved project into the current one without replacing anything.
+        </p>
+    </section>
+    <section id="closing">
+        <title>Closing a Project</title>
+        <p>To close the current project and return to an empty state, choose <em>Close
+Project</em> from the application menu.</p>
+    </section>
+    <section id="compatibility">
+        <title>Version Compatibility</title>
+        <p>Project files saved by older versions of Graphs are automatically migrated when opened. Projects saved by a newer incompatible version of Graphs cannot be opened in an older version.</p>
+    </section>
+</page>

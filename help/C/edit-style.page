@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="edit-style">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Styles</title>
+    <p>Styles control the overall appearance of the plots, including colors, fonts, line widths, ticks, grid, and more. Graphs comes with a selection of built-in styles to choose from, and you can create and edit your own to get exactly the look you want.</p>
+
+    <section id="applying">
+        <title>Applying a Style</title>
+        <p>The active style is selected from the Figure Settings panel, accessible in the sidebar in the top corner. See
+            <link xref="figure-settings" /> for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles,
+            item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are reserved when changing styles.</p>
+    </section>
+
+    <section id="managing">
+        <title>Creating and Managing Styles</title>
+        <p>To manage styles, press the <em>Manage</em> button on the style picker page, or open the Style Editor from the application menu. The Style Editor shows all available styles as previews.</p>
+        <p>To create a new style, press <em>Create Style…</em>, choose an existing style as a starting template, and give it a name. Your new style opens in the editor immediately, ready to customize. Changes are shown automatically in the preview as you
+            edit.</p>
+    </section>
+
+    <section id="import-export">
+        <title>Importing and Exporting Styles</title>
+        <p>Custom styles can be shared and loaded by saving them to and loading them from files in the Style Editor. To save a style, simply open your custom style and choose <em>Save Style as…</em> from the primary menu. You can import new styles using
+            <em>Import File…</em> in the Style Editor, or open new styles for editing using the <em>Open File…</em> option.</p>
+    </section>
+
+    <section id="style-options">
+        <title>Changing a Style</title>
+        <p>When changing a style, the following options can be set:</p>
+        <section id="style-general">
+            <title>General</title>
+            <terms>
+                <item>
+                    <title>Style Name</title>
+                    <p>The name of the style as it appears in the style picker.</p>
+                </item>
+                <item>
+                    <title>Font</title>
+                    <p>The font used for all text in the figure, including axis labels, tick labels, the title, and the legend.</p>
+                </item>
+                <item>
+                    <title>Title Size</title>
+                    <p>The size of the figure title relative to the base text size.</p>
+                </item>
+                <item>
+                    <title>Label Size</title>
+                    <p>The size of axis labels relative to the base text size.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-lines">
+            <title>Lines</title>
+            <p>These settings define the default appearance for new items. They can be overridden per item in the item editor.</p>
+            <terms>
+                <item>
+                    <title>Linestyle</title>
+                    <p>The default line style for new items: None, Solid, Dotted, Dashed, or Dashdot. Line width is only configurable when a style other than None is selected.</p>
+                </item>
+                <item>
+                    <title>Line Width</title>
+                    <p>The default thickness of lines.</p>
+                </item>
+                <item>
+                    <title>Markers</title>
+                    <p>The default marker shape drawn at each data point. A wide range of shapes is available. Marker size is only configurable when a marker other than None is selected.</p>
+                </item>
+                <item>
+                    <title>Marker Size</title>
+                    <p>The default size of markers.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-errorbars">
+            <title>Error Bars</title>
+            <p>Default appearance settings for error bars, applied to new items. These can be overridden per item in the item editor.</p>
+            <terms>
+                <item>
+                    <title>Cap Length</title>
+                    <p>The length of the horizontal cap at the end of each error bar.</p>
+                </item>
+                <item>
+                    <title>Cap Thickness</title>
+                    <p>The thickness of the cap lines.</p>
+                </item>
+                <item>
+                    <title>Line Width</title>
+                    <p>The thickness of the error bar lines.</p>
+                </item>
+                <item>
+                    <title>Draw Above Data</title>
+                    <p>When enabled, error bars are drawn on top of the data line and markers rather than beneath them.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-axes">
+            <title>Axes</title>
+            <terms>
+                <item>
+                    <title>Axis Width</title>
+                    <p>The thickness of the axis lines.</p>
+                </item>
+                <item>
+                    <title>Draw Frame</title>
+                    <p>When enabled, a full rectangular frame is drawn around the plot area. When disabled, only the axes that are in use are shown.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-ticks">
+            <title>Ticks</title>
+            <terms>
+                <item>
+                    <title>Tick Direction</title>
+                    <p>Whether tick marks point inwards or outwards.</p>
+                </item>
+                <item>
+                    <title>Minor Ticks</title>
+                    <p>When enabled, minor tick marks are shown between the major ticks. Minor tick width and length become configurable when this is on.</p>
+                </item>
+                <item>
+                    <title>Major Tick Width / Length</title>
+                    <p>The thickness and length of major tick marks.</p>
+                </item>
+                <item>
+                    <title>Minor Tick Width / Length</title>
+                    <p>The thickness and length of minor tick marks.</p>
+                </item>
+                <item>
+                    <title>Show Tick Labels on all Axes</title>
+                    <p>When enabled, tick labels are shown on all visible axes with ticks rather than only the axes with data. To show tick labels on both sides of each axis, make sure <em>Draw Frame</em> is checked on so that the axes are drawn.</p>
+                </item>
+                <item>
+                    <title>Ticks on Bottom / Top / Left / Right Axis</title>
+                    <p>Each axis can have its tick marks toggled on or off independently.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-grid">
+            <title>Grid</title>
+            <terms>
+                <item>
+                    <title>Show Grid</title>
+                    <p>Toggles the visibility of the background grid.</p>
+                </item>
+                <item>
+                    <title>Grid Width</title>
+                    <p>The thickness of grid lines. Only configurable when the grid is enabled.
+                    </p>
+                </item>
+                <item>
+                    <title>Grid Opacity</title>
+                    <p>The transparency of grid lines, from 0 (invisible) to 1 (fully opaque).
+                    </p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-padding">
+            <title>Padding</title>
+            <terms>
+                <item>
+                    <title>Value Padding</title>
+                    <p>The spacing between the axes and the tick value labels.</p>
+                </item>
+                <item>
+                    <title>Label Padding</title>
+                    <p>The spacing between the axes and the axis labels.</p>
+                </item>
+                <item>
+                    <title>Title Padding</title>
+                    <p>The spacing between the plot area and the figure title.</p>
+                </item>
+            </terms>
+        </section>
+
+        <section id="style-colors">
+            <title>Colors</title>
+            <p>The following figure colors can each be set independently: Text, Ticks, Axes, Grid, Background, and Outline.</p>
+        </section>
+
+        <section id="style-line-colors">
+            <title>Line Colors and Error Bar Colors</title>
+            <p>The line color cycle defines the sequence of colors automatically assigned to new items as they are added to the figure. Colors can be added using the <em>Add Color</em> button, removed individually, and reordered by dragging. A separate color
+                cycle is available for error bars.</p>
+        </section>
+    </section>
+</page>
