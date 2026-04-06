@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-02 17:44+0000\n"
-"PO-Revision-Date: 2026-04-02 21:05+0200\n"
+"POT-Creation-Date: 2026-04-06 18:13+0000\n"
+"PO-Revision-Date: 2026-04-06 21:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -638,8 +638,8 @@ msgid "Scale"
 msgstr "Prilagodi velikost"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49 data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Določa razmik med podatkovnimi točkami"
+msgid "How points are spaced"
+msgstr "Kako so točke razmaknjene"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/figure-settings/settings-page.blp:155
 #: data/ui/sidebar/figure-settings/settings-page.blp:171 data/ui/sidebar/figure-settings/settings-page.blp:187
@@ -1864,7 +1864,7 @@ msgstr "Napaka indeksa v %s, ni mogoče dostopati do indeksa %d v vrstici %d, na
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Ni mogoče uvoziti iz datoteke, slaba vrednost v vrstici %d"
 
-#: graphs/file_import/parsers/columns/ui.vala:38 graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41 graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Element %d"
@@ -1893,7 +1893,7 @@ msgstr "Preglednica"
 msgid "No numeric data found in column."
 msgstr "V stolpcu ni številskih podatkov."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:290
+#: graphs/file_import/parsers/spreadsheet/__init__.py:289
 msgid "Columns do not have the same length."
 msgstr "Stolpci nimajo enake dolžine."
 
@@ -2131,17 +2131,17 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:112
+#: graphs/data.py:108
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "Ni bilo mogoče razčleniti sloga {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:117
+#: graphs/data.py:113
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 
-#: graphs/data.py:615
+#: graphs/data.py:604
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -2310,11 +2310,11 @@ msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
