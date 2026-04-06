@@ -370,7 +370,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.props.linestyle + 1],
+            linestyle=misc.LINESTYLES[item.get_linestyle() + 1],
             marker="none",
         )[0]
         for prop in ("selected", "linewidth"):
@@ -575,15 +575,15 @@ class TextItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.text(
-            item.props.xanchor,
-            item.props.yanchor,
-            item.props.text,
+            item.get_xanchor(),
+            item.get_yanchor(),
+            item.get_text(),
             label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),
+            fontsize=item.get_size(),
+            rotation=item.get_rotation(),
             clip_on=True,
-            fontsize=item.props.size,
-            rotation=item.props.rotation,
         )
 
 

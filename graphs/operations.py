@@ -401,7 +401,7 @@ class CommonOperations():
                 else:
                     equation = f"{equation}+{shift_value}"
                 equation = str(sympy.simplify(equation))
-                item.props.equation = Graphs.prettify_equation(equation)
+                item.set_equation(Graphs.prettify_equation(equation))
                 continue
             if isinstance(item, DataItem):
                 if scale == Graphs.Scale.LOG:
@@ -457,9 +457,9 @@ class EquationOperations():
                     _(
                         "The operation on {name} "
                         "did not result in a plottable equation",
-                    ).format(name=item.props.name),
+                    ).format(name=item.get_name()),
                 ) from e
-            item.props.equation = Graphs.prettify_equation(equation)
+            item.set_equation(Graphs.prettify_equation(equation))
         except misc.InvalidEquationError as error:
             return False, error.message
         except (NotImplementedError, AttributeError, KeyError):

@@ -73,10 +73,9 @@ class PythonWindow(Graphs.Window):
                         has_err = item_.get_xerr() or item_.get_yerr()
                         if not has_err:
                             continue
-                        if item_.props.errcolor in old_errbar_cycle:
+                        if item_.get_errcolor() in old_errbar_cycle:
                             errbar_count %= len(new_errbar_cycle)
-                            item_.props.errcolor = \
-                                new_errbar_cycle[errbar_count]
+                            item_.set_errcolor(new_errbar_cycle[errbar_count])
                             errbar_count += 1
 
         self._reload_canvas()
