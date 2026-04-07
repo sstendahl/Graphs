@@ -35,7 +35,7 @@
         </section>
         <section id="spreadsheet">
             <title>Spreadsheets</title>
-            <p>Graphs supports importing data from .ods and .xlsx spreadsheet files. The X and Y columns are selected by their column index, starting from zero. As with column-based files, the <em>Single Column</em> option can be used to generate X values automatically when only Y data is available. Multiple items can be configured from the same spreadsheet in a single import session by using the <em>Add Item</em> button, each with its own column selection.</p>
+            <p>Graphs supports importing data from .ods and .xlsx spreadsheet files. The X and Y columns are selected by their alphabetical column index, starting from zero. As with column-based files, the <em>Single Column</em> option can be used to generate X values automatically when only Y data is available. Multiple items can be configured from the same spreadsheet in a single import session by using the <em>Add Item</em> button, each with its own column selection.</p>
         </section>
         <section id="sql">
             <title>Databases</title>
