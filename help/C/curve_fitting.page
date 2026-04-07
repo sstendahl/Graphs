@@ -30,7 +30,7 @@
     </list>
     <section id="fitting">
         <title>Fitting Data</title>
-        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live on the canvas as parameters
+        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live as parameters
             are adjusted.</p>
         <p>An equation to fit against is chosen from the dropdown. The following predefined equations are available, with their formula shown as a subtitle:</p>
         <terms>
@@ -78,10 +78,10 @@
             </item>
             <item>
                 <title>Custom</title>
-                <p>Enter any equation of your choice using<code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
+                <p>Enter any equation using<code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
             </item>
         </terms>
-        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation item in the project, with the fitted parameter values substituted into the expression.</p>
+        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
     </section>
     <section id="bounds">
         <title>Bounds</title>
@@ -119,7 +119,7 @@
                 </p>
             </item>
         </list>
-        <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve on the canvas.</p>
+        <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve.</p>
         <p>The Statistics section shows two goodness-of-fit measures: R² and RMSE.</p>
         <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses
             it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
@@ -130,7 +130,7 @@
     </section>
     <section id="residuals">
         <title>Residuals</title>
-        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from the primary menu. This displays a second plot below the main canvas showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
+        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
             is shown for reference.</p>
         <p>A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data.</p>
     </section>
