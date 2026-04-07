@@ -130,7 +130,7 @@
     </section>
     <section id="residuals">
         <title>Residuals</title>
-        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from the primary menu. This displays a second plot below the main canvas showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
+        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
             is shown for reference.</p>
         <p>A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data.</p>
     </section>
