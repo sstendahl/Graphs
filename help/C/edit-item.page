@@ -32,7 +32,7 @@
             </item>
             <item>
                 <title>Marker Size</title>
-                <p>The size of the markers, adjustable via a slider. Only enabled when a marker style other than None is selected.</p>
+                <p>The size of the markers. Only enabled when a marker style other than None is selected.</p>
             </item>
         </terms>
     </section>
