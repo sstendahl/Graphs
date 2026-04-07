@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-02 17:44+0000\n"
-"PO-Revision-Date: 2026-04-03 22:31+0300\n"
+"POT-Creation-Date: 2026-04-07 06:24+0000\n"
+"PO-Revision-Date: 2026-04-07 22:38+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -743,8 +743,8 @@ msgstr "Масштаб"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Визначає інтервали між точками даних"
+msgid "How points are spaced"
+msgstr "Як буде встановлено інтервал між точками"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -2005,8 +2005,8 @@ msgstr ""
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Не вдалося імпортувати дані з файла, помилкове значення у рядку %d"
 
-#: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Елемент %d"
@@ -2035,7 +2035,7 @@ msgstr "Електронна таблиця"
 msgid "No numeric data found in column."
 msgstr "У стовпчику не знайдено числових даних."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:290
+#: graphs/file_import/parsers/spreadsheet/__init__.py:289
 msgid "Columns do not have the same length."
 msgstr "Довжина стовпчиків є різною."
 
@@ -2189,7 +2189,6 @@ msgid "Deleted %s"
 msgstr "Вилучено %s"
 
 #: graphs/application.vala:23
-#| msgid "New Window"
 msgid "New window"
 msgstr "Нове вікно"
 
@@ -2278,19 +2277,19 @@ msgstr "КСКП"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:112
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "Не вдалося обробити стиль {stylename}, завантажуємо пріоритетний стиль "
 "системи"
 
-#: graphs/data.py:117
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стилю {stylename} не існує. Завантажуємо пріоритетний системний стиль"
 
-#: graphs/data.py:615
+#: graphs/data.py:603
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -2382,27 +2381,27 @@ msgstr "{name}: помилка під час виконання дії"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
-#: graphs/project.py:58
+#: graphs/project.py:57
 msgid "Project file is missing data"
 msgstr "У файлі проєкту не вистачає даних"
 
-#: graphs/project.py:79
+#: graphs/project.py:78
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проєкт походить з нової несумісної версії «Графіків»"
 
-#: graphs/project.py:299
+#: graphs/project.py:298
 msgid "Failed to do legacy migration"
 msgstr "Не вдалося перенести дані зі старої версії"
 
-#: graphs/project.py:301
+#: graphs/project.py:300
 msgid "Failed to parse project file"
 msgstr "Не вдалося обробити файл проєкту"
 
-#: graphs/project.py:307
+#: graphs/project.py:306
 msgid "Failed to migrate project"
 msgstr "Не вдалося перенести проєкт"
 
-#: graphs/project.py:313
+#: graphs/project.py:312
 msgid "Failed to validate project"
 msgstr "Не вдалося перевірити проєкт"
 
@@ -2466,11 +2465,11 @@ msgstr "У файлі {file} не міститься теґу name"
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "усі файли"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Портал документів"
 
@@ -2495,6 +2494,9 @@ msgstr "Графіки — %s"
 #: graphs/window.vala:381
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "Визначає інтервали між точками даних"
 
 #~ msgid "Invalid .xry format"
 #~ msgstr "Некоректний формат .xry"
