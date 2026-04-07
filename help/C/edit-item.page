@@ -38,7 +38,7 @@
     </section>
     <section id="equation-appearance">
         <title>Equations: Line and Equation</title>
-        <p>Equation items expose the equation itself for editing directly in the edit panel. The equation can be typed in the entry field and will update on the canvas as you type. A <em>Simplify</em> button is available to simplify the expression algebraically.
+        <p>Equation items expose the equation itself for editing directly in the edit panel. A <em>Simplify</em> button is available to simplify the expression algebraically.
             The available line options are the same as for datasets, except that markers are not supported for equations.</p>
     </section>
     <section id="generated-appearance">
