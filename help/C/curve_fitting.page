@@ -30,7 +30,7 @@
     </list>
     <section id="fitting">
         <title>Fitting Data</title>
-        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live on the canvas as parameters
+        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live as parameters
             are adjusted.</p>
         <p>An equation to fit against is chosen from the dropdown. The following predefined equations are available, with their formula shown as a subtitle:</p>
         <terms>
