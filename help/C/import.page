@@ -31,7 +31,7 @@
         <section id="columns">
             <title>Column-based Files</title>
             <p>Column-based files store data as rows of values separated by a delimiter such as a comma, tab, or whitespace. Graphs detects the delimiter automatically in most cases. When using a custom delimiter, an extra field appears where a delimiter of your choice can be entered. This field recognizes regular expressions. Using <code>\s+</code> matches any amount of whitespace including tabs for example, and is equivalent to the default Whitespace option.</p>
-            <p>If a file only contains a single column of Y values, the <em>Single Column</em> option can be enabled to generate X values automatically from a configurable equation, where <code>n</code>represents the row index starting from zero. For example, <code>n</code>produces 0, 1, 2, 3… while <code>n*0.5</code>produces 0, 0.5, 1.0, 1.5…</p>
+            <p>If a file only contains a single column of Y values, the <em>Single Column</em> option can be enabled to generate X values automatically from a configurable equation, where <code>n</code> represents the row index starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while <code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…</p>
         </section>
         <section id="spreadsheet">
             <title>Spreadsheets</title>
@@ -53,7 +53,7 @@
         <terms>
             <item>
                 <title>Equation</title>
-                <p>The mathematical expression to evaluate, using <code>x</code>as the variable.</p>
+                <p>The mathematical expression to evaluate, using <code>x</code> as the variable.</p>
             </item>
             <item>
                 <title>X Start and X Stop</title>
@@ -79,7 +79,7 @@ Equation…</em>, or press
                 <key>Alt</key>
                 <key>N</key>
             </keyseq>.</p>
-        <p>The expression uses <code>x</code>as the variable. Most commonly used mathematical syntax is accepted. For example, a simple quadratic can be entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or <code>1/(x+1)</code> work as expected. Trigonometric functions use radians by default. To use degrees instead, add a <code>d</code>to the function name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> uses radians.</p>
+        <p>The expression uses <code>x</code> as the variable. Most commonly used mathematical syntax is accepted. For example, a simple quadratic can be entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or <code>1/(x+1)</code> work as expected. Trigonometric functions use radians by default. To use degrees instead, add a <code>d</code> to the function name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> uses radians.</p>
         <p>One important distinction between equation items and datasets is that operations are performed analytically rather than numerically. For instance, taking the derivative of <code>x²+5</code> produces the equation <code>2·x</code> rather than a set of numerically computed slope values.</p>
     </section>
 </page>

@@ -70,7 +70,7 @@
             </item>
             <item>
                 <title>Custom</title>
-                <p>Enter any equation using <code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
+                <p>Enter any equation using <code>x</code> as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
             </item>
         </terms>
         <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
@@ -78,7 +78,7 @@
     <section id="bounds">
         <title>Bounds</title>
         <p>Each free parameter detected in the equation is shown in the sidebar with three fields: an initial guess, a minimum bound, and a maximum bound. The initial guess is the starting value used by the algorithm. Using a good initial guess close to the expected value will help the fit converge. The bounds constrain the range of values the parameter is allowed to take.</p>
-        <p>The bounds fields default to <code>-inf</code>and <code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values.</p>
+        <p>The bounds fields default to <code>-inf</code> and <code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values.</p>
         <p>Note that bounds fields are only shown when an algorithm that supports them is selected. When using Levenberg-Marquardt, bounds are hidden as that algorithm does not support them. See
             <link xref="#algorithms" />for details.</p>
     </section>
