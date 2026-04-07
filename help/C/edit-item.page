@@ -24,7 +24,7 @@
             </item>
             <item>
                 <title>Linewidth</title>
-                <p>The thickness of the line, adjustable via a slider. Only enabled when a linestyle other than None is selected.</p>
+                <p>The thickness of the line. Only enabled when a linestyle other than None is selected.</p>
             </item>
             <item>
                 <title>Markers</title>
