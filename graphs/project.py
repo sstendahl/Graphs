@@ -9,7 +9,6 @@ from operator import itemgetter
 from gi.repository import Gio, Graphs
 
 from graphs import file_io, item, migrate
-from graphs.misc import ChangeType
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -123,12 +122,12 @@ class ProjectMigrator:
         history_pos = self._project_dict["history-position"]
         while history_pos < 1:
             for (change_type, change) in history_states[history_pos][0]:
-                match ChangeType(change_type):
-                    case ChangeType.ITEM_ADDED:
+                match change_type:
+                    case Graphs.ChangeType.ITEM_ADDED:
                         item_positions.append(change["uuid"])
-                    case ChangeType.ITEM_REMOVED:
+                    case Graphs.ChangeType.ITEM_REMOVED:
                         item_positions.remove(change[1]["uuid"])
-                    case ChangeType.ITEMS_SWAPPED:
+                    case Graphs.ChangeType.ITEMS_SWAPPED:
                         uuid = item_positions.pop(change[0])
                         item_positions.insert(change[1], uuid)
             history_pos += 1
@@ -137,17 +136,17 @@ class ProjectMigrator:
             state_index = n_states - state_index - 1
             new_state = []
             for change_type, change in reversed(state[0]):
-                match ChangeType(change_type):
-                    case ChangeType.ITEM_ADDED:
+                match change_type:
+                    case Graphs.ChangeType.ITEM_ADDED:
                         item_positions.remove(change["uuid"])
                         change = _item_dict(change)
-                    case ChangeType.ITEM_REMOVED:
+                    case Graphs.ChangeType.ITEM_REMOVED:
                         item_positions.insert(change[0], change[1]["uuid"])
                         change = [change[0], _item_dict(change[1])]
-                    case ChangeType.ITEMS_SWAPPED:
+                    case Graphs.ChangeType.ITEMS_SWAPPED:
                         uuid = item_positions.pop(change[1])
                         item_positions.insert(change[0], uuid)
-                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                    case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         change[0] = item_positions.index(change[0])
                         if change[1] in ("xdata", "ydata"):
                             # Consolidate two change entries into a single one
@@ -159,7 +158,7 @@ class ProjectMigrator:
                                     data_change[1] = change[2:]
 
                                 change = [
-                                    ChangeType.ITEM_PROPERTY_CHANGED.value,
+                                    Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
                                     "data",
                                     (
                                         data_change[0][0],
@@ -249,37 +248,37 @@ class ProjectValidator:
         assert abs(history_pos) <= len(history_states)
         while history_pos < -1:
             for (change_type, change) in history_states[history_pos][0]:
-                match ChangeType(change_type):
-                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                match change_type:
+                    case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
                         self.items[index].set_property(prop, value)
-                    case ChangeType.ITEM_ADDED:
+                    case Graphs.ChangeType.ITEM_ADDED:
                         item_dict_copy = copy.deepcopy(change)
                         self.items.append(item.new_from_dict(item_dict_copy))
-                    case ChangeType.ITEM_REMOVED:
+                    case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
-                    case ChangeType.ITEMS_SWAPPED:
+                    case Graphs.ChangeType.ITEMS_SWAPPED:
                         item_ = self.items.pop(change[0])
                         self.items.insert(change[1], item_)
-                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[2])
             history_pos += 1
         for history_state in reversed(history_states):
             self.figure_settings.set_limits(history_state[1])
             for change_type, change in reversed(history_state[0]):
-                match ChangeType(change_type):
-                    case ChangeType.ITEM_PROPERTY_CHANGED:
+                match change_type:
+                    case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
                         self.items[index].set_property(prop, value)
-                    case ChangeType.ITEM_ADDED:
+                    case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()
-                    case ChangeType.ITEM_REMOVED:
+                    case Graphs.ChangeType.ITEM_REMOVED:
                         item_ = item.new_from_dict(copy.deepcopy(change[1]))
                         self.items.insert(change[0], item_)
-                    case ChangeType.ITEMS_SWAPPED:
+                    case Graphs.ChangeType.ITEMS_SWAPPED:
                         item_ = self.items.pop(change[1])
                         self.items.insert(change[0], item_)
-                    case ChangeType.FIGURE_SETTINGS_CHANGED:
+                    case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[1])
 
 
