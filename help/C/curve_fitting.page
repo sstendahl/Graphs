@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="curve_fitting">
     <info>
         <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
@@ -9,129 +9,109 @@
     <list>
         <item>
             <p>
-                <link xref="#fitting">Fitting Data</link>: set up and run a fit.</p>
+                <link xref="#fitting">Fitting Data</link>: Set up and run a fit.</p>
         </item>
         <item>
             <p>
-                <link xref="#bounds">Bounds</link>: constrain fitting parameters.</p>
+                <link xref="#bounds">Bounds</link>: Constrain fitting parameters.</p>
         </item>
         <item>
             <p>
-                <link xref="#results">Results</link>: interpretting the output.</p>
+                <link xref="#results">Results</link>: Interpretting the output.</p>
         </item>
         <item>
             <p>
-                <link xref="#residuals">Residuals</link>: inspect the quality of the fit.</p>
+                <link xref="#residuals">Residuals</link>: Inspect the quality of the fit.</p>
         </item>
         <item>
             <p>
-                <link xref="#algorithms">Fitting Algorithms</link>: choose the right algorithm for your data.</p>
+                <link xref="#algorithms">Fitting Algorithms</link>: Choose the right algorithm for your data.</p>
         </item>
     </list>
     <section id="fitting">
         <title>Fitting Data</title>
-        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live as parameters
-            are adjusted.</p>
+        <p>To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live as parameters are adjusted.</p>
         <p>An equation to fit against is chosen from the dropdown. The following predefined equations are available, with their formula shown as a subtitle:</p>
         <terms>
             <item>
                 <title>Linear</title>
-                <p>
-                    <code>a·x + b</code>
+                <p> <code>a·x + b</code>
                 </p>
             </item>
             <item>
                 <title>Quadratic</title>
-                <p>
-                    <code>a·x² + b·x + c</code>
+                <p> <code>a·x² + b·x + c</code>
                 </p>
             </item>
             <item>
                 <title>Exponential</title>
-                <p>
-                    <code>a·exp(b·x)</code>
+                <p> <code>a·exp(b·x)</code>
                 </p>
             </item>
             <item>
                 <title>Power Law</title>
-                <p>
-                    <code>a·x^b</code>
+                <p> <code>a·x^b</code>
                 </p>
             </item>
             <item>
                 <title>Logarithmic</title>
-                <p>
-                    <code>a·log(x) + b</code>
+                <p> <code>a·log(x) + b</code>
                 </p>
             </item>
             <item>
                 <title>Sigmoid Logistic</title>
-                <p>
-                    <code>L / (1 + exp(-k·(x - b)))</code>
+                <p> <code>L / (1 + exp(-k·(x - b)))</code>
                 </p>
             </item>
             <item>
                 <title>Gaussian</title>
-                <p>
-                    <code>a·exp(-(x - μ)² / (2·σ²))</code>
+                <p> <code>a·exp(-(x - μ)² / (2·σ²))</code>
                 </p>
             </item>
             <item>
                 <title>Custom</title>
-                <p>Enter any equation using<code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
+                <p>Enter any equation using <code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
             </item>
         </terms>
         <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
     </section>
     <section id="bounds">
         <title>Bounds</title>
-        <p>Each free parameter detected in the equation is shown in the sidebar with three fields: an initial guess, a minimum bound, and a maximum bound. The initial guess is the starting value used by the algorithm. Using a good initial guess close to
-            the expected value will help the fit converge. The bounds constrain the range of values the parameter is allowed to take.</p>
-        <p>The bounds fields default to<code>-inf</code>and<code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values.</p>
+        <p>Each free parameter detected in the equation is shown in the sidebar with three fields: an initial guess, a minimum bound, and a maximum bound. The initial guess is the starting value used by the algorithm. Using a good initial guess close to the expected value will help the fit converge. The bounds constrain the range of values the parameter is allowed to take.</p>
+        <p>The bounds fields default to <code>-inf</code>and <code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values.</p>
         <p>Note that bounds fields are only shown when an algorithm that supports them is selected. When using Levenberg-Marquardt, bounds are hidden as that algorithm does not support them. See
             <link xref="#algorithms" />for details.</p>
     </section>
     <section id="results">
         <title>Results</title>
-        <p>After a successful fit the results panel shows two sections: Parameters and Statistics.
-        </p>
-        <p>The Parameters section lists each fitted parameter with its value. If a confidence level other than None is selected, a margin is shown next to each value in the form<code>± error</code>, where the error is the standard deviation of that parameter
-            multiplied by the selected confidence factor. So for a confidence level of 1σ the error is equal to the standard deviation, and for 2σ and 3σ the error is equal to twice and three times the standard deviation respectively. The confidence level
-            can be set from the primary menu:</p>
+        <p>After a successful fit the results panel shows two sections: Parameters and Statistics.</p>
+        <p>The Parameters section lists each fitted parameter with its value. If a confidence level other than None is selected, a margin is shown next to each value in the form <code>± error</code>, where the error is the standard deviation of that parameter multiplied by the selected confidence factor. So for a confidence level of 1σ the error is equal to the standard deviation, and for 2σ and 3σ the error is equal to twice and three times the standard deviation respectively. The confidence level can be set from the primary menu:</p>
         <list>
             <item>
-                <p>
-                    <em>None</em>: no margin shown.</p>
+                <p> <em>None</em>: no margin shown.</p>
             </item>
             <item>
-                <p>
-                    <em>1σ: 68% Confidence</em>
+                <p> <em>1σ: 68% Confidence</em>
                 </p>
             </item>
             <item>
-                <p>
-                    <em>2σ: 95% Confidence</em>
+                <p> <em>2σ: 95% Confidence</em>
                 </p>
             </item>
             <item>
-                <p>
-                    <em>3σ: 99.7% Confidence</em>
+                <p> <em>3σ: 99.7% Confidence</em>
                 </p>
             </item>
         </list>
         <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve.</p>
         <p>The Statistics section shows two goodness-of-fit measures: R² and RMSE.</p>
-        <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses
-            it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
-        <p>RMSE (Root Mean Square Error) measures the typical size of the residuals (the differences between the data points and the fitted curve) in the same units as the Y data. Unlike R², RMSE gives an absolute sense of how far off the predictions are
-            on average, which makes it useful when the physical magnitude of the error matters. </p>
-        <p>Note that both statistics reflect only how well the data agrees with the chosen model, not whether the model is physically correct. Factors such as systematic measurement errors and correlations between parameters are not accounted for. This is
-            an inherent limitation of curve fitting, and a common source of misleading uncertainty estimates even in published scientific work.</p>
+        <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
+        <p>RMSE (Root Mean Square Error) measures the typical size of the residuals (the differences between the data points and the fitted curve) in the same units as the Y data. Unlike R², RMSE gives an absolute sense of how far off the predictions are on average, which makes it useful when the physical magnitude of the error matters.</p>
+        <p>Note that both statistics reflect only how well the data agrees with the chosen model, not whether the model is physically correct. Factors such as systematic measurement errors and correlations between parameters are not accounted for. This is an inherent limitation of curve fitting, and a common source of misleading uncertainty estimates even in published scientific work.</p>
     </section>
     <section id="residuals">
         <title>Residuals</title>
-        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero
-            is shown for reference.</p>
+        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero is shown for reference.</p>
         <p>A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data.</p>
     </section>
     <section id="errors">

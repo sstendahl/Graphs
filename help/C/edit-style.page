@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="edit-style">
     <info>
         <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
@@ -6,27 +6,20 @@
     </info>
     <title>Styles</title>
     <p>Styles control the overall appearance of the plots, including colors, fonts, line widths, ticks, grid, and more. Graphs comes with a selection of built-in styles to choose from, and you can create and edit your own to get exactly the look you want.</p>
-
     <section id="applying">
         <title>Applying a Style</title>
         <p>The active style is selected from the Figure Settings panel, accessible in the sidebar in the top corner. See
-            <link xref="figure-settings" /> for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles,
-            item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are reserved when changing styles.</p>
+            <link xref="figure-settings" />for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles, item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are reserved when changing styles.</p>
     </section>
-
     <section id="managing">
         <title>Creating and Managing Styles</title>
         <p>To manage styles, press the <em>Manage</em> button on the style picker page, or open the Style Editor from the application menu. The Style Editor shows all available styles as previews.</p>
-        <p>To create a new style, press <em>Create Style…</em>, choose an existing style as a starting template, and give it a name. Your new style opens in the editor immediately, ready to customize. Changes are shown automatically in the preview as you
-            edit.</p>
+        <p>To create a new style, press <em>Create Style…</em>, choose an existing style as a starting template, and give it a name. Your new style opens in the editor immediately, ready to customize. Changes are shown automatically in the preview as you edit.</p>
     </section>
-
     <section id="import-export">
         <title>Importing and Exporting Styles</title>
-        <p>Custom styles can be shared and loaded by saving them to and loading them from files in the Style Editor. To save a style, simply open your custom style and choose <em>Save Style as…</em> from the primary menu. You can import new styles using
-            <em>Import File…</em> in the Style Editor, or open new styles for editing using the <em>Open File…</em> option.</p>
+        <p>Custom styles can be shared and loaded by saving them to and loading them from files in the Style Editor. To save a style, simply open your custom style and choose <em>Save Style as…</em> from the primary menu. You can import new styles using <em>Import File…</em> in the Style Editor, or open new styles for editing using the <em>Open File…</em> option.</p>
     </section>
-
     <section id="style-options">
         <title>Changing a Style</title>
         <p>When changing a style, the following options can be set:</p>
@@ -51,7 +44,6 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-lines">
             <title>Lines</title>
             <p>These settings define the default appearance for new items. They can be overridden per item in the item editor.</p>
@@ -74,7 +66,6 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-errorbars">
             <title>Error Bars</title>
             <p>Default appearance settings for error bars, applied to new items. These can be overridden per item in the item editor.</p>
@@ -97,7 +88,6 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-axes">
             <title>Axes</title>
             <terms>
@@ -111,7 +101,6 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-ticks">
             <title>Ticks</title>
             <terms>
@@ -141,7 +130,6 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-grid">
             <title>Grid</title>
             <terms>
@@ -151,17 +139,14 @@
                 </item>
                 <item>
                     <title>Grid Width</title>
-                    <p>The thickness of grid lines. Only configurable when the grid is enabled.
-                    </p>
+                    <p>The thickness of grid lines. Only configurable when the grid is enabled.</p>
                 </item>
                 <item>
                     <title>Grid Opacity</title>
-                    <p>The transparency of grid lines, from 0 (invisible) to 1 (fully opaque).
-                    </p>
+                    <p>The transparency of grid lines, from 0 (invisible) to 1 (fully opaque).</p>
                 </item>
             </terms>
         </section>
-
         <section id="style-padding">
             <title>Padding</title>
             <terms>
@@ -179,16 +164,13 @@
                 </item>
             </terms>
         </section>
-
         <section id="style-colors">
             <title>Colors</title>
             <p>The following figure colors can each be set independently: Text, Ticks, Axes, Grid, Background, and Outline.</p>
         </section>
-
         <section id="style-line-colors">
             <title>Line Colors and Error Bar Colors</title>
-            <p>The line color cycle defines the sequence of colors automatically assigned to new items as they are added to the figure. Colors can be added using the <em>Add Color</em> button, removed individually, and reordered by dragging. A separate color
-                cycle is available for error bars.</p>
+            <p>The line color cycle defines the sequence of colors automatically assigned to new items as they are added to the figure. Colors can be added using the <em>Add Color</em> button, removed individually, and reordered by dragging. A separate color cycle is available for error bars.</p>
         </section>
     </section>
 </page>

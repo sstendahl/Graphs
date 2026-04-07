@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="export">
     <info>
         <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
@@ -12,13 +12,11 @@
         <terms>
             <item>
                 <title>File Format</title>
-                <p>The image format to export to. The following formats are supported: PNG, JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most purposes PNG is a good choice. SVG and PDF produce vector output that scales to any size without
-                    loss of quality, making them well suited for use in publications and presentations.</p>
+                <p>The image format to export to. The following formats are supported: PNG, JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most purposes PNG is a good choice. SVG and PDF produce vector output that scales to any size without loss of quality, making them well suited for use in publications and presentations.</p>
             </item>
             <item>
                 <title>Transparent Background</title>
-                <p>When enabled, the figure background is exported as transparent rather than filled with the style's background color. This is useful when embedding the figure into a document or presentation with its own background.
-                </p>
+                <p>When enabled, the figure background is exported as transparent rather than filled with the style's background color. This is useful when embedding the figure into a document or presentation with its own background.</p>
             </item>
             <item>
                 <title>Width and Height</title>

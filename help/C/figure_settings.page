@@ -1,20 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <page xmlns="http://projectmallard.org/1.0/" type="topic" id="figure-settings">
     <info>
         <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
         <link type="guide" xref="index#topics" />
     </info>
     <title>Figure Settings</title>
-    <p>The Figure Settings panel controls the labels, axis limits, scaling, and general appearance of the figure. It can be opened by pressing the settings button in the top right of the sidebar. The current settings can be saved as the default for all new
-        projects using the <em>Set as Default</em> button at the bottom of the panel.</p>
+    <p>The Figure Settings panel controls the labels, axis limits, scaling, and general appearance of the figure. It can be opened by pressing the settings button in the top right of the sidebar. The current settings can be saved as the default for all new projects using the <em>Set as Default</em> button at the bottom of the panel.</p>
     <section id="labels">
         <title>Labels</title>
         <p>A title can be set for the figure, and a label can be set for each axis independently. Only the labels for axes that are currently in use are shown. Labels and the title can also be edited directly on the canvas by clicking on them.</p>
     </section>
     <section id="limits">
         <title>Axis Limits</title>
-        <p>The minimum and maximum values for each axis can be set manually. Only the limits for axes that are currently in use are shown. Leaving a limit field empty allows Graphs to determine the range automatically based on the data. The view can also
-            be reset to fit all data at any time using the <em>Optimize Limits</em> action.</p>
+        <p>The minimum and maximum values for each axis can be set manually. Only the limits for axes that are currently in use are shown. Leaving a limit field empty allows Graphs to determine the range automatically based on the data. The view can also be reset to fit all data at any time using the <em>Optimize Limits</em> action.</p>
     </section>
     <section id="scaling">
         <title>Scaling</title>

@@ -1,17 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<page xmlns="http://projectmallard.org/1.0/" type="guide" id="index">
-  <info>
-    <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
-    <desc>Plot and manipulate data</desc>
-  </info>
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<page xmlns="http://projectmallard.org/1.0/" xmlns:its="http://www.w3.org/2005/11/its" type="guide" id="index">
+    <info>
+        <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude" />
+        <desc>Plot and manipulate data</desc>
+    </info>
     <title>
-        <media type="image" its:translate="no" mime="image/svg+xml" height="48px" width="48px" src="media/se.sjoerd.Graphs.svg" />
-        Graphs
-    </title>
-
-    <p>Graphs is a GNOME-Circle application for plotting and manipulating scientific data. Import datasets from files or sqlite database files, generate data from equations, apply mathematical operations, fit curves, and export publication-ready figures, all within
-        a clean, native interface.</p>
+        <media type="image" its:translate="no" mime="image/svg+xml" height="48px" width="48px" src="media/se.sjoerd.Graphs.svg" />Graphs</title>
+    <p>Graphs is a GNOME Circle application for plotting and manipulating scientific data. Import datasets from files or sqlite database files, generate data from equations, apply mathematical operations, fit curves, and export publication-ready figures, all within a clean, native interface.</p>
     <p>Use the topics below to learn how to use Graphs.</p>
     <section id="topics">
         <title>Topics</title>
