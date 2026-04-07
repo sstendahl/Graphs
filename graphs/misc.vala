@@ -42,4 +42,12 @@ namespace Graphs {
     public static string scale_to_string (Scale scale) {
         return scale.to_string ()[13:].down ();
     }
+
+    public enum ChangeType {
+        ITEM_PROPERTY_CHANGED,
+        ITEM_ADDED,
+        ITEM_REMOVED,
+        ITEMS_SWAPPED,
+        FIGURE_SETTINGS_CHANGED
+    }
 }

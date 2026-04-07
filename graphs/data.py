@@ -11,7 +11,6 @@ from operator import itemgetter
 from gi.repository import Gio, Graphs, Gtk
 
 from graphs import item, misc, project, style_io, utilities
-from graphs.misc import ChangeType
 
 from matplotlib import RcParams
 
@@ -139,21 +138,21 @@ class Data(Graphs.Data):
     def _on_position_changed(self, index1: int, index2: int) -> None:
         """Change item position of index2 to that of index1."""
         self._current_batch.append((
-            ChangeType.ITEMS_SWAPPED.value,
+            Graphs.ChangeType.ITEMS_SWAPPED,
             (index2, index1),
         ))
 
     @staticmethod
     def _on_item_added(self, item_: Graphs.Item) -> None:
         self._current_batch.append((
-            ChangeType.ITEM_ADDED.value,
+            Graphs.ChangeType.ITEM_ADDED,
             copy.deepcopy(item_.to_dict()),
         ))
 
     @staticmethod
     def _on_item_removed(self, item_: Graphs.Item, index: int) -> None:
         self._current_batch.append((
-            ChangeType.ITEM_REMOVED.value,
+            Graphs.ChangeType.ITEM_REMOVED,
             (index, item_.to_dict()),
         ))
 
@@ -161,7 +160,7 @@ class Data(Graphs.Data):
     def _on_item_changed(self, item_: Graphs.Item, prop: str) -> None:
         index = self.index(item_)
         self._current_batch.append((
-            ChangeType.ITEM_PROPERTY_CHANGED.value,
+            Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
@@ -175,7 +174,7 @@ class Data(Graphs.Data):
         if prop in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
             return
         self._current_batch.append((
-            ChangeType.FIGURE_SETTINGS_CHANGED.value,
+            Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
             (
                 prop,
                 copy.deepcopy(self._figure_settings_copy[prop]),
@@ -213,8 +212,8 @@ class Data(Graphs.Data):
         collapsed = OrderedDict()
 
         for change_type, data in self._current_batch:
-            match ChangeType(change_type):
-                case ChangeType.ITEM_PROPERTY_CHANGED:
+            match change_type:
+                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                     index, prop, _old_value, new_value = data
                     key = (change_type, index, prop)
 
@@ -226,11 +225,11 @@ class Data(Graphs.Data):
                             collapsed.pop(key)
                         else:
                             collapsed[key] = (
-                                ChangeType.ITEM_PROPERTY_CHANGED.value,
+                                Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
                                 (index, prop, first_old, new_value),
                             )
 
-                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     prop, _old_value, new_value = data
                     key = (change_type, prop)
 
@@ -242,7 +241,7 @@ class Data(Graphs.Data):
                             collapsed.pop(key)
                         else:
                             collapsed[key] = (
-                                ChangeType.FIGURE_SETTINGS_CHANGED.value,
+                                Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
                                 (prop, first_old, new_value),
                             )
 
@@ -290,8 +289,8 @@ class Data(Graphs.Data):
         selected = Gtk.Bitset.new_empty()
         mask = Gtk.Bitset.new_empty()
         for change_type, change in reversed(batch):
-            match ChangeType(change_type):
-                case ChangeType.ITEM_PROPERTY_CHANGED:
+            match change_type:
+                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                     index, prop, value = itemgetter(0, 1, 2)(change)
                     if prop == "selected":
                         mask.add(index)
@@ -299,16 +298,16 @@ class Data(Graphs.Data):
                             selected.add(index)
                     else:
                         self[index].set_property(prop, value)
-                case ChangeType.ITEM_ADDED:
+                case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
-                case ChangeType.ITEM_REMOVED:
+                case Graphs.ChangeType.ITEM_REMOVED:
                     self._insert_item(
                         item.new_from_dict(copy.deepcopy(change[1])),
                         change[0],
                     )
-                case ChangeType.ITEMS_SWAPPED:
+                case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
-                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     self.props.figure_settings.set_property(
                         change[0],
                         change[1],
@@ -331,8 +330,8 @@ class Data(Graphs.Data):
         selected = Gtk.Bitset.new_empty()
         mask = Gtk.Bitset.new_empty()
         for change_type, change in state[0]:
-            match ChangeType(change_type):
-                case ChangeType.ITEM_PROPERTY_CHANGED:
+            match change_type:
+                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                     index, prop, value = itemgetter(0, 1, 3)(change)
                     if prop == "selected":
                         mask.add(index)
@@ -340,13 +339,13 @@ class Data(Graphs.Data):
                             selected.add(index)
                     else:
                         self[index].set_property(prop, value)
-                case ChangeType.ITEM_ADDED:
+                case Graphs.ChangeType.ITEM_ADDED:
                     self._add_item(item.new_from_dict(copy.deepcopy(change)))
-                case ChangeType.ITEM_REMOVED:
+                case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
-                case ChangeType.ITEMS_SWAPPED:
+                case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[1], change[0])
-                case ChangeType.FIGURE_SETTINGS_CHANGED:
+                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     self.props.figure_settings.set_property(
                         change[0],
                         change[2],
