@@ -9,8 +9,8 @@ pages = [
   'index.page',
   'manipulate.page',
   'projects.page',
-  'legal.xml',
   'window.page',
+  'legal.xml',
 ]
 
 media = [
