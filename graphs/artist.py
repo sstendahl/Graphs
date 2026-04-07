@@ -364,6 +364,14 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
                 "view_changed",
                 self._on_view_change,
             )
+            self._axis.figure._items.connect(
+                "notify::can-view-back",
+                self._on_view_change,
+            )
+            self._axis.figure._items.connect(
+                "notify::can-view-forward",
+                self._on_view_change,
+            )
         self._artist = axis.plot(
             [],
             [],
