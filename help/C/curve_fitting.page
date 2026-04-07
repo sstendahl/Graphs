@@ -119,7 +119,7 @@
                 </p>
             </item>
         </list>
-        <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve on the canvas.</p>
+        <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve.</p>
         <p>The Statistics section shows two goodness-of-fit measures: R² and RMSE.</p>
         <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses
             it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
