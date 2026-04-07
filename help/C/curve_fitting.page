@@ -81,7 +81,7 @@
                 <p>Enter any equation using<code>x</code>as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
             </item>
         </terms>
-        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation item in the project, with the fitted parameter values substituted into the expression.</p>
+        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
     </section>
     <section id="bounds">
         <title>Bounds</title>
