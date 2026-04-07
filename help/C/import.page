@@ -25,7 +25,7 @@
     </list>
     <section id="dataset">
         <title>Dataset</title>
-        <p>A dataset is data imported from an external source. Graphs supports column-based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods and .xlsx), SQLite databases, Panalytical .xrdml files, and Leybold .xry files. Data from other Graphs projects can also be imported by selecting a project file.</p>
+        <p>A dataset is data imported from an external source. Graphs supports column-based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods and .xlsx),  SQLite database files, Panalytical .xrdml files, and Leybold .xry files. Data from other Graphs projects can also be imported by selecting a project file.</p>
         <p>To import data, press the <em>Add</em> button in the top left of the sidebar and choose <em>Add Data from File…</em>. Multiple files can be added in a single import session by using the add button in the top left of the import dialog. Each file appears in the sidebar of the dialog, where it can be selected to review and adjust its settings. Graphs will attempt to guess the appropriate settings for each file automatically. Once everything looks right, press <em>Import</em> to add all files to the project.</p>
         <p>The <em>Import Mode</em> determines how a file is parsed, and is set automatically based on the file type. The available modes are described below.</p>
         <section id="columns">
