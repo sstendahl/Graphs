@@ -2,13 +2,14 @@
 # Copyright (C) 2026 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Марко Костић <marko.m.kostic@gmail.com>,  2026.
+# Aceydot <aceydot@proton.me>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-02 17:44+0000\n"
-"PO-Revision-Date: 2026-04-03 13:49+0200\n"
+"POT-Creation-Date: 2026-04-07 06:24+0000\n"
+"PO-Revision-Date: 2026-04-07 20:42+0200\n"
 "Last-Translator: Марко Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <Serbian>\n"
 "Language: sr\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=n==1? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.8\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
@@ -621,8 +622,8 @@ msgid "Scale"
 msgstr "Размера"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49 data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Одређује размак између тачака података"
+msgid "How points are spaced"
+msgstr "Како су тачке распоређене"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/figure-settings/settings-page.blp:155 data/ui/sidebar/figure-settings/settings-page.blp:171
 #: data/ui/sidebar/figure-settings/settings-page.blp:187 data/ui/sidebar/figure-settings/settings-page.blp:203 data/ui/generate-data.blp:105
@@ -1839,7 +1840,7 @@ msgstr "Грешка индекса у %s, не могу да приступим
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Не могу да увезем из датотеке, лоша вредност у %d. реду"
 
-#: graphs/file_import/parsers/columns/ui.vala:38 graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41 graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Ставка %d"
@@ -1868,7 +1869,7 @@ msgstr "Табела"
 msgid "No numeric data found in column."
 msgstr "Нису пронађени бројчани подаци у колони."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:290
+#: graphs/file_import/parsers/spreadsheet/__init__.py:289
 msgid "Columns do not have the same length."
 msgstr "Колоне немају исту дужину."
 
@@ -2012,6 +2013,7 @@ msgstr "Програмери Графика"
 msgid "translator-credits"
 msgstr ""
 "Марко М. Костић <marko.m.kostic@gmail.com>\n"
+"Aceydot <aceydot@proton.me>\n"
 "\n"
 "https://гном.срб — превод Гнома на српски језик."
 
@@ -2109,17 +2111,17 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри уклапања за %s"
 
-#: graphs/data.py:112
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "Не могу да обрадим стил {stylename}, учитавам системски пожељан стил"
 
-#: graphs/data.py:117
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Стил {stylename} не постоји, учитавам системски пожељан стил"
 
-#: graphs/data.py:615
+#: graphs/data.py:603
 msgid "Failed to load project"
 msgstr "Није успело учитавање пројекта"
 
@@ -2208,27 +2210,27 @@ msgstr "{name}: грешка при извршавању радње"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Подаци који су били изван истакнуте области су одбачени"
 
-#: graphs/project.py:58
+#: graphs/project.py:57
 msgid "Project file is missing data"
 msgstr "Датотеци пројекта недостају подаци"
 
-#: graphs/project.py:79
+#: graphs/project.py:78
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Пројекат је из новије неусаглашене верзије Графика"
 
-#: graphs/project.py:299
+#: graphs/project.py:298
 msgid "Failed to do legacy migration"
 msgstr "Није успело пресељење застарелог пројекта"
 
-#: graphs/project.py:301
+#: graphs/project.py:300
 msgid "Failed to parse project file"
 msgstr "Није успела обрада датотеке пројекта"
 
-#: graphs/project.py:307
+#: graphs/project.py:306
 msgid "Failed to migrate project"
 msgstr "Није успело пресељење пројекта"
 
-#: graphs/project.py:313
+#: graphs/project.py:312
 msgid "Failed to validate project"
 msgstr "Није успела потврда пројекта"
 
@@ -2288,11 +2290,11 @@ msgstr "Датотека {file} не садржи ознаку имена"
 msgid "System"
 msgstr "Систем"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Све датотеке"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Портал докумената"
 
@@ -2317,3 +2319,6 @@ msgstr "Графици - %s"
 #: graphs/window.vala:381
 msgid "Open Location"
 msgstr "Отвори место"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "Одређује размак између тачака података"
