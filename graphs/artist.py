@@ -368,10 +368,6 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
                 "view_history_navigated",
                 self._on_view_change,
             )
-            self._axis.figure._items.connect(
-                "view_history_navigated",
-                self._on_view_change,
-            )
         self._artist = axis.plot(
             [],
             [],
