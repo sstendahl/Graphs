@@ -359,11 +359,11 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = sympy.sympify(equation)
         self._axis = axis
         self._view_change_timeout_id = None
-        if self._axis is not None:
-            self._axis.callbacks.connect(
-                "xlim_changed",
-                self._on_view_change,
-            )
+
+        self._axis.callbacks.connect(
+            "xlim_changed",
+            self._on_view_change,
+        )
         self._artist = axis.plot(
             [],
             [],
