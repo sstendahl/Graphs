@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="edit-item">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Editing Items</title>
+    <p>Each item in the sidebar can be edited by clicking on it. The edit panel varies depending on the item type, but all items share a common set of properties at the top.</p>
+    <section id="common">
+        <title>Name and Position</title>
+        <p>All items have a name, which is shown in the legend and the sidebar, and can be changed freely. Note that the naming does support LaTeX notation with the help of dollar signs. So for instance $\mu_0$ will provide the greek letter μ with a 0 as subscript. Each item can also be assigned to a specific axis: the X position can be set to either the bottom or top axis, and the Y position to either the left or right axis. This allows multiple datasets with different scales to be displayed on the same figure.</p>
+    </section>
+    <section id="dataset-appearance">
+        <title>Datasets: Line and Markers</title>
+        <p>For datasets and generated datasets, the following appearance options are available:</p>
+        <terms>
+            <item>
+                <title>Linestyle</title>
+                <p>The style of the line connecting data points. Options are None, Solid, Dotted, Dashed, and Dashdot. When set to None, no line is drawn between points.</p>
+            </item>
+            <item>
+                <title>Linewidth</title>
+                <p>The thickness of the line. Only enabled when a linestyle other than None is selected.</p>
+            </item>
+            <item>
+                <title>Markers</title>
+                <p>The shape drawn at each data point. A wide range of marker shapes is available, including circles, squares, triangles, stars, diamonds, and more. Set to None to draw no markers.</p>
+            </item>
+            <item>
+                <title>Marker Size</title>
+                <p>The size of the markers. Only enabled when a marker style other than None is selected.</p>
+            </item>
+        </terms>
+    </section>
+    <section id="equation-appearance">
+        <title>Equations: Line and Equation</title>
+        <p>Equation items expose the equation itself for editing directly in the edit panel. A <em>Simplify</em> button is available to simplify the expression algebraically. The available line options are the same as for datasets, except that markers are not supported for equations.</p>
+    </section>
+    <section id="generated-appearance">
+        <title>Generated Data: Equation and Range</title>
+        <p>Generated datasets have the same options as regular datasets. Additionally, they expose the same equation field as equation items, along with controls for the X range and resolution. The <em>X Start</em> and <em>X Stop</em> fields define the bounds of the generated data. The <em>Steps</em> field controls how many data points are generated. The <em>Scale</em> setting determines the spacing between those points, with the following options available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, Square Root, and Inverse.</p>
+    </section>
+    <section id="errorbars-appearance">
+        <title>Error Bars</title>
+        <p>For datasets that have error bar data, the appearance of the error bars can be configured in the <em>Error Bars</em> section:</p>
+        <terms>
+            <item>
+                <title>Show Horizontal / Show Vertical</title>
+                <p>Toggle the visibility of horizontal (X) and vertical (Y) error bars independently.</p>
+            </item>
+            <item>
+                <title>Draw Above Data</title>
+                <p>When enabled, error bars are drawn on top of the data line and markers rather than beneath them.</p>
+            </item>
+            <item>
+                <title>Color</title>
+                <p>The color of the error bars, set independently from the line color.</p>
+            </item>
+            <item>
+                <title>Cap Length</title>
+                <p>The length of the horizontal cap at the end of each error bar.</p>
+            </item>
+            <item>
+                <title>Cap Thickness</title>
+                <p>The thickness of the cap lines.</p>
+            </item>
+            <item>
+                <title>Line Width</title>
+                <p>The thickness of the error bar lines.</p>
+            </item>
+        </terms>
+    </section>
+</page>

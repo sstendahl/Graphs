@@ -1,44 +1,128 @@
-<page xmlns="http://projectmallard.org/1.0/"
-      type="topic"
-      id="manipulate">
-<info>
-  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
-  <link type="guide" xref="index#howto"/>
-</info>
-<title>Manipulating Data</title>
-
-<p>
-There are many different ways to manipulate data using Graphs. All data is
-treated the same using Graphs, independent what file it is imported from, or if
-it's a generated equation. When selecting a part of the canvas using the
-Highlight tool, only the highlight area will be manipulated.
-</p>
-
-<section id="smoothening">
-<title>Smoothening</title>
-<p>
-The smoothening action has two different modes, a rolling average or the
-Savitzky-Galov filter. The moving average simply works iterating through the
-data set, and replacing each point by the average of the last few data points
-that were encountered, this way sharp outliers are ignored but details may be
-lost. Sudden actual changes in the data may also be detected later when a
-smoothening has been applied. Another way to smoothen the data is the
-Savitzky-Galov. The difference with the moving average, is that not a simple
-average is used for the last data points, but instead a polynomial function is
-fitted between the data points. This makes it possible to filter the
-underlaying signal still quite nicely out of very noisy data.
-</p>
-</section>
-
-<section id="custom">
-<title>Custom Transformations</title>
-<p>
-Another way to manipulate the data is by using custom transformations. This
-field transforms both X and Y coordinate piece by piece according to an
-equation of choice. For instance, to take the square of all Y-coordinates,
-simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> on
-the x-data field. Note that the input coordinates are not case-sensitive.
-</p>
-<media type="image" src="media/custom_transform_light.png"/>
-</section>
+<?xml version="1.0" encoding="UTF-8" ?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="manipulate">
+    <info>
+        <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Manipulating Data</title>
+    <p>Graphs provides a wide range of operations for manipulating data. All operations work the same regardless of whether the item was imported from a file or generated from an equation. When a region of the canvas is selected using the Select tool, only data within that region will be affected.</p>
+    <list>
+        <item>
+            <p>
+                <link xref="#translate">Translate</link>: Shift data along the X or Y axis.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#multiply">Multiply</link>: Scale data along the X or Y axis.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#normalize">Normalize</link>: Scale Y values relative to the maximum.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#center">Center</link>: Shift data so it is centered on the X axis.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#smoothening">Smoothen</link>: Reduce noise in a dataset.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#derivative">Derivative</link>: Compute the derivative.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#integral">Integral</link>: Compute the cumulative integral.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#fft">Fourier Transform</link>: Transform data to the frequency domain.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#combine">Combine</link>: Merge multiple datasets into one.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#shift">Shift</link>: Automatically offset datasets so they do not overlap.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#cut">Cut</link>: Remove data within the selected region.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#custom">Custom Transformations</link>: Apply an arbitrary equation to the X and Y coordinates.</p>
+        </item>
+    </list>
+    <section id="translate">
+        <title>Translate</title>
+        <p>Translates all selected data by a fixed offset along the X or Y axis. Enter the desired offset in the corresponding entry field and apply the operation.</p>
+    </section>
+    <section id="multiply">
+        <title>Multiply</title>
+        <p>Multiplies all selected data by a fixed factor along the X or Y axis. Enter the desired multiplier in the corresponding entry field and apply the operation.</p>
+    </section>
+    <section id="normalize">
+        <title>Normalize</title>
+        <p>Scales the Y values of all selected data so that the maximum value becomes 1. All other values are divided by that maximum accordingly.</p>
+    </section>
+    <section id="center">
+        <title>Center</title>
+        <p>Shifts data along the X axis so that it is centered. Two modes are available: centering on the maximum Y value, which shifts the peak of the data to zero, and centering on the middle of the X range. The mode can be configured in the smoothen settings.</p>
+    </section>
+    <section id="smoothening">
+        <title>Smoothen</title>
+        <p>The smoothen operation reduces noise in a dataset. Two modes are available, configurable via the smoothen settings dialog.</p>
+        <p>The Savitzky-Golay filter fits a polynomial through the surrounding data points rather than taking a simple average. This makes it possible to recover the underlying signal more faithfully from noisy data, and is the recommended choice in most cases.</p>
+        <p>The moving average replaces each point with the average of a surrounding window of points. This is simpler but may blur sharp features and cause changes in the data to appear shifted.</p>
+    </section>
+    <section id="derivative">
+        <title>Derivative</title>
+        <p>Computes the numerical derivative of the selected data, replacing the Y values with the rate of change with respect to X. For equations, the derivative is calculated analytically.</p>
+    </section>
+    <section id="integral">
+        <title>Integral</title>
+        <p>Computes the cumulative integral of the selected data using the trapezoidal method, replacing the Y values with the running area under the curve. For equations, the integral is calculated analytically.</p>
+    </section>
+    <section id="fft">
+        <title>Fourier Transform</title>
+        <p>Transforms the selected data from the time or spatial domain into the frequency domain using the Fast Fourier Transform. An inverse transform is also available to convert back.</p>
+    </section>
+    <section id="combine">
+        <title>Combine</title>
+        <p>Merges all selected datasets into a single new dataset. The resulting data is sorted by X value. If all selected items have error bars, those are preserved in the combined output.</p>
+    </section>
+    <section id="shift">
+        <title>Shift</title>
+        <p>Automatically offsets each selected dataset along the Y axis so that the items are spread out and do not overlap one another. The shift amount is calculated based on the range of each dataset and respects the current axis scale, including logarithmic scales.</p>
+    </section>
+    <section id="cut">
+        <title>Cut</title>
+        <p>Removes all data points within the currently selected region. This operation requires the Select tool to be active and a region to be highlighted on the canvas.</p>
+    </section>
+    <section id="custom">
+        <title>Custom Transformations</title>
+        <p>Custom transformations let you modify the X and Y coordinates of a dataset point by point using equations of your choice. For instance, to square all Y values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code>
+            in the X field. Coordinate names are not case-sensitive.</p>
+        <p> <b>The following extra variables are available for custom transformations:</b>
+        </p>
+        <p> <b>General:</b>
+        </p>
+        <p> <code>x</code>, <code>y</code>: original coordinate values</p>
+        <p> <code>counts</code>: total number of data points</p>
+        <p> <b>X-Axis:</b>
+        </p>
+        <p> <code>x_min</code>, <code>x_max</code>: minimum and maximum</p>
+        <p> <code>x_mean</code>, <code>x_median</code>: average and median</p>
+        <p> <code>x_std</code>, <code>x_sum</code>: standard deviation and sum</p>
+        <p> <b>Y-Axis:</b>
+        </p>
+        <p> <code>y_min</code>, <code>y_max</code>: minimum and maximum</p>
+        <p> <code>y_mean</code>, <code>y_median</code>: average and median</p>
+        <p> <code>y_std</code>, <code>y_sum</code>: standard deviation and sum</p>
+        <p>Trigonometric functions use radians by default. Append <b>d</b>
+            to use degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>.</p>
+    </section>
 </page>
