@@ -1,50 +1,85 @@
-<page xmlns="http://projectmallard.org/1.0/"
-      type="topic"
-      id="import">
-<info>
-  <include href="legal.xml" xmlns="http://www.w3.org/2001/XInclude"/>
-  <link type="guide" xref="index#howto"/>
-</info>
-<title>Importing Data</title>
-<p>
-There are two primary ways to import new data in Graphs, importing data directly
-by file or generating new data using an equation.
-</p>
-
-<media type="image" src="media/add_data_light.png"/>
-
-<p>
-A wide array of filetypes are supported when importing data by file. Graphs
-currently supports Panalytical .xrdml files, Leybold .xry files as well as
-files that are saved in a column format such as most .csv files, .dat files,
-.xy files or plain text. Finally, data from other Graphs projects can be
-imported into the current project as well, simply by adding new data as usual,
-but by selecting a project file instead.
-</p>
-
-<p>
-When using a custom delimiter during the import, an extra field will be visible
-to enter the delimiter of choice. This field recognizes regular expressions.
-For example, to choose a delimiter that looks for whitespace, one could enter
-<code>\s+</code> as delimiter. In this example, <code>\s</code> denotes that
-the delimiter is a whitespace character, and the <code>+</code> denotes that at
-least one or more whitespace is required. Thus this input looks for any amount
-of whitespaces including tabs. Note that this particular input is equivalent to
-the default Whitespace option.
-</p>
-
-<media type="image" src="media/add_equation_light.png"/>
-
-<p>
-The other way to import data is to generate data directly using an equation.
-This can be done using the "Add Equation" button found in the top-left
-corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is
-accepted, with an <code>x</code> denoting the x-coordinate. A simple quadratic
-equation could for instance be created using <code>x²+5</code> as input. Be
-aware that trigonometric functions are using radians by default. If you want to
-use degrees, simply add a <code>d</code> to the trigonometric function. For
-instance <code>cosd(x)</code> generates a cosine where the x coordinate is
-given in degrees while <code>cos(x)</code> generates a cosine with the
-x-coordinate in radians.
-</p>
+<?xml version="1.0" encoding="UTF-8" ?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="import">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Adding Data</title>
+    <p>There are three different types of data items in Graphs:</p>
+    <list>
+        <item>
+            <p>
+                <link xref="#dataset"> <em>Dataset</em>
+                </link>: Data imported from a file or database.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#generated"> <em>Generated Dataset</em>
+                </link>: Data generated from an equation over a fixed set of points.</p>
+        </item>
+        <item>
+            <p>
+                <link xref="#equation"> <em>Equation</em>
+                </link>: A mathematical expression rendered continuously across the entire canvas.</p>
+        </item>
+    </list>
+    <section id="dataset">
+        <title>Dataset</title>
+        <p>A dataset is data imported from an external source. Graphs supports column-based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods and .xlsx),  SQLite database files, Panalytical .xrdml files, and Leybold .xry files. Data from other Graphs projects can also be imported by selecting a project file.</p>
+        <p>To import data, press the <em>Add</em> button in the top left of the sidebar and choose <em>Add Data from File…</em>. Multiple files can be added in a single import session by using the add button in the top left of the import dialog. Each file appears in the sidebar of the dialog, where it can be selected to review and adjust its settings. Graphs will attempt to guess the appropriate settings for each file automatically. Once everything looks right, press <em>Import</em> to add all files to the project.</p>
+        <p>The <em>Import Mode</em> determines how a file is parsed, and is set automatically based on the file type. The available modes are described below.</p>
+        <section id="columns">
+            <title>Column-based Files</title>
+            <p>Column-based files store data as rows of values separated by a delimiter such as a comma, tab, or whitespace. Graphs detects the delimiter automatically in most cases. When using a custom delimiter, an extra field appears where a delimiter of your choice can be entered. This field recognizes regular expressions. Using <code>\s+</code> matches any amount of whitespace including tabs for example, and is equivalent to the default Whitespace option.</p>
+            <p>If a file only contains a single column of Y values, the <em>Single Column</em> option can be enabled to generate X values automatically from a configurable equation, where <code>n</code> represents the row index starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while <code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…</p>
+        </section>
+        <section id="spreadsheet">
+            <title>Spreadsheets</title>
+            <p>Graphs supports importing data from .ods and .xlsx spreadsheet files. The X and Y columns are selected by their alphabetical column index, starting from zero. As with column-based files, the <em>Single Column</em> option can be used to generate X values automatically when only Y data is available. Multiple items can be configured from the same spreadsheet in a single import session by using the <em>Add Item</em> button, each with its own column selection.</p>
+        </section>
+        <section id="sql">
+            <title>Databases</title>
+            <p>SQLite database files are also supported. When importing a database file, the available tables are shown in a dropdown. Once a table is selected, the X and Y columns can each be chosen from the numeric columns available in that table. If a table contains no numeric columns, a warning is shown.</p>
+        </section>
+        <section id="errorbars">
+            <title>Error Bars</title>
+            <p>Datasets support optional X and Y error bars. For spreadsheet and database imports, error bars can be enabled per axis using the corresponding toggle, after which an additional column selector appears to specify which column contains the error values. Column-based file formats that natively include error bar data, such as .xrdml files, will have them imported automatically.</p>
+            <p>Once imported, error bars are preserved through most operations. When combining multiple datasets, error bars are carried over only if all selected items have them in the output.</p>
+        </section>
+    </section>
+    <section id="generated">
+        <title>Generated Datasets</title>
+        <p>Generated datasets create data by evaluating an equation over a range of X values. To add one, press the <em>Add</em> button in the sidebar and choose <em>Generate Data…</em>. The following parameters can be configured:</p>
+        <terms>
+            <item>
+                <title>Equation</title>
+                <p>The mathematical expression to evaluate, using <code>x</code> as the variable.</p>
+            </item>
+            <item>
+                <title>X Start and X Stop</title>
+                <p>The lower and upper bounds of the x-range to generate data over.</p>
+            </item>
+            <item>
+                <title>Steps</title>
+                <p>The number of data points to generate.</p>
+            </item>
+            <item>
+                <title>Scale</title>
+                <p>Determines the spacing between data points. Linear spacing places points at equal intervals. Other options such as Logarithmic, Square Root, and Inverse are useful when the data or the axis it will be plotted on follows a non-linear scale.</p>
+            </item>
+        </terms>
+        <p>Generated datasets are treated the same as imported data for most purposes. However, unlike a regular dataset, the parameters used to generate the data can be changed at any time from the item editor, and the data will be regenerated accordingly.</p>
+    </section>
+    <section id="equation">
+        <title>Equation</title>
+        <p>Equation items render a mathematical expression directly and continuously across the entire canvas. To add one, press the <em>Add</em> button in the sidebar and choose <em>Add
+Equation…</em>, or press
+            <keyseq>
+                <key>Ctrl</key>
+                <key>Alt</key>
+                <key>N</key>
+            </keyseq>.</p>
+        <p>The expression uses <code>x</code> as the variable. Most commonly used mathematical syntax is accepted. For example, a simple quadratic can be entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or <code>1/(x+1)</code> work as expected. Trigonometric functions use radians by default. To use degrees instead, add a <code>d</code> to the function name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> uses radians.</p>
+        <p>One important distinction between equation items and datasets is that operations are performed analytically rather than numerically. For instance, taking the derivative of <code>x²+5</code> produces the equation <code>2·x</code> rather than a set of numerically computed slope values.</p>
+    </section>
 </page>

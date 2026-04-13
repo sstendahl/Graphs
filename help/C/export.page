@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<page xmlns="http://projectmallard.org/1.0/" type="topic" id="export">
+    <info>
+        <include xmlns="http://www.w3.org/2001/XInclude" href="legal.xml" />
+        <link type="guide" xref="index#topics" />
+    </info>
+    <title>Exporting</title>
+    <p>Graphs can export both the figure as an image and the underlying data as files. Both options are available from the application menu.</p>
+    <section id="export-figure">
+        <title>Exporting the Figure</title>
+        <p>To export the figure as an image, open the application menu and choose <em>Export Figure…</em>. The export dialog offers the following options:</p>
+        <terms>
+            <item>
+                <title>File Format</title>
+                <p>The image format to export to. The following formats are supported: PNG, JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most purposes PNG is a good choice. SVG and PDF produce vector output that scales to any size without loss of quality, making them well suited for use in publications and presentations.</p>
+            </item>
+            <item>
+                <title>Transparent Background</title>
+                <p>When enabled, the figure background is exported as transparent rather than filled with the style's background color. This is useful when embedding the figure into a document or presentation with its own background.</p>
+            </item>
+            <item>
+                <title>Width and Height</title>
+                <p>The pixel dimensions of the exported image, between 100 and 7680 pixels wide and 100 and 4320 pixels tall. Press <em>Use Same Size as
+    App</em> to automatically fill in the current size of the canvas as it appears on screen.</p>
+            </item>
+        </terms>
+    </section>
+    <section id="export-data">
+        <title>Exporting Data</title>
+        <p>To export the underlying dataset values to a file, open the application menu and choose <em>Export Data…</em>. This exports the current data for all items in the project.</p>
+    </section>
+</page>
