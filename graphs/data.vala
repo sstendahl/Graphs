@@ -54,8 +54,6 @@ namespace Graphs {
         protected signal void item_removed (Item item, uint index);
         protected signal void figure_settings_changed (string prop);
 
-        public signal void view_history_navigated ();
-
         construct {
             this._color_cycle = {};
             this._errbar_color_cycle = {};
@@ -617,12 +615,10 @@ namespace Graphs {
 
         public void view_back () {
             run_python_method ("_view_back");
-            view_history_navigated.emit ();
         }
 
         public void view_forward () {
             run_python_method ("_view_forward");
-            view_history_navigated.emit ();
         }
 
         // End section history
