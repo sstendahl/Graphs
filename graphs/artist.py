@@ -359,8 +359,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = sympy.sympify(equation)
         self._axis = axis
         self._view_change_timeout_id = None
-
-        self._axis.callbacks.connect(
+        axis.callbacks.connect(
             "xlim_changed",
             self._on_view_change,
         )
