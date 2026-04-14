@@ -497,7 +497,7 @@ class _DummyToolbar(NavigationToolbar2):
             self._last_cursor = tools.Cursors.POINTER
 
     # Overwritten function - do not change name
-    def drag_pan(self, event):
+    def drag_pan(self, event) -> None:
         """Handle dragging in pan/zoom mode."""
         for ax in self._pan_info.axes:
             # Using the recorded button at the press is safer than the current
@@ -602,11 +602,10 @@ class _Highlight(SpanSelector):
 
     def apply(self, canvas: Canvas) -> None:
         xmin, xmax = canvas.figure.top_left_axis.get_xlim()
-        extents = self.extents
-        extents = max(xmin, extents[0]), min(xmax, extents[1])
-        self.extents = extents
+        low, high = self.extents
+        self.extents = max(xmin, low), min(xmax, high)
 
-        for prefix, value in zip(["min_", "max_"], extents):
+        for prefix, value in zip(["min_", "max_"], self.extents):
             canvas.set_property(
                 prefix + "selected",
                 Graphs.get_fraction_at_value(
