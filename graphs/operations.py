@@ -240,7 +240,7 @@ class CommonOperations():
                     item,
                     "transform",
                     figure_settings,
-                    window.get_canvas().get_mode(),
+                    window.get_mode(),
                     input_x,
                     input_y,
                     discard,
