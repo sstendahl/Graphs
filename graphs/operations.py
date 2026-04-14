@@ -21,7 +21,7 @@ import sympy
 def perform_operation(window: Graphs.Window, name: str) -> None:
     """Perform an operation."""
     interaction_mode = window.get_mode()
-    if name == "cut" and interaction_mode != 2:
+    if name == "cut" and interaction_mode != Graphs.Mode.SELECT:
         return
     args = []
     actions_settings = Graphs.Application.get_settings_child("actions")
@@ -30,16 +30,7 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
     if name == "smoothen":
         args.append(actions_settings.get_child(name))
     elif "translate" in name or "multiply" in name:
-        operations = window.get_operations()
-        try:
-            args += [
-                Graphs.evaluate_string(
-                    operations.get_property(name + "_entry").get_text(),
-                ),
-            ]
-        except ValueError as error:
-            window.add_toast_string(str(error))
-            return
+        args.append(window.get_operation_value(name))
 
     data = window.get_data()
     figure_settings = data.get_figure_settings()
@@ -78,13 +69,13 @@ class DataHelper():
 
     @staticmethod
     def get_xydata(
-        interaction_mode: int,
+        interaction_mode: Graphs.Mode,
         selected_limits: tuple[float, float],
         item: DataItem,
     ) -> tuple[list[float], list[float]]:
         """Get the X and Y data of a DataItem."""
         xdata, ydata = item.get_xydata()
-        if interaction_mode == 2:
+        if interaction_mode == Graphs.Mode.SELECT:
             startx, stopx = selected_limits
             # If startx and stopx are not out of range, that is,
             # if the item data is within the highlight
@@ -104,14 +95,14 @@ class DataHelper():
     @staticmethod
     def get_selected_limits(
         figure_settings: Graphs.FigureSettings,
-        interaction_mode: int,
+        interaction_mode: Graphs.Mode,
         item: DataItem,
     ) -> tuple[float, float]:
         """Get the min and max value of the item within the selected range."""
         if item.get_xposition() == 0:
             min_bottom = figure_settings.get_min_bottom()
             max_bottom = figure_settings.get_max_bottom()
-            if interaction_mode == 2:
+            if interaction_mode == Graphs.Mode.SELECT:
                 scale = figure_settings.get_bottom_scale()
                 min_x = Graphs.get_value_at_fraction(
                     figure_settings.get_min_selected(),
@@ -130,7 +121,7 @@ class DataHelper():
         else:
             min_top = figure_settings.get_min_top()
             max_top = figure_settings.get_max_top()
-            if interaction_mode == 2:
+            if interaction_mode == Graphs.Mode.SELECT:
                 scale = figure_settings.get_top_scale()
                 min_x = Graphs.get_value_at_fraction(
                     figure_settings.get_min_selected(),
@@ -227,7 +218,6 @@ class CommonOperations():
         def on_accept(_dialog, input_x, input_y, discard):
             data = window.get_data()
             figure_settings = data.get_figure_settings()
-            interaction_mode = window.get_canvas().get_mode()
             old_limits = figure_settings.get_limits()
 
             for item in data:
@@ -241,7 +231,7 @@ class CommonOperations():
                     item,
                     "transform",
                     figure_settings,
-                    interaction_mode,
+                    window.get_mode(),
                     input_x,
                     input_y,
                     discard,
@@ -436,7 +426,7 @@ class EquationOperations():
         item: EquationItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
-        _interaction_mode: int,
+        _interaction_mode: Graphs.Mode,
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
@@ -605,7 +595,7 @@ class DataOperations():
         item: DataItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
-        interaction_mode: int,
+        interaction_mode: Graphs.Mode,
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
@@ -632,7 +622,7 @@ class DataOperations():
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
         new_xdata, new_ydata = list(new_xdata), list(new_ydata)
-        if discard and interaction_mode == 2:
+        if discard and interaction_mode == Graphs.Mode.SELECT:
             logging.debug("Discard is true")
             message = _(
                 "Data that was outside of the highlighted area has"

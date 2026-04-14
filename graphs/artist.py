@@ -23,7 +23,7 @@ def _ellipsize(name: str) -> str:
     return name[:40] + "…" if len(name) > 40 else name
 
 
-def new_for_item(fig: Figure, item: Graphs.Item):
+def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
 
@@ -359,10 +359,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = sympy.sympify(equation)
         self._axis = axis
         self._view_change_timeout_id = None
-        axis.callbacks.connect(
-            "xlim_changed",
-            self._on_view_change,
-        )
+        axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
             [],
@@ -378,18 +375,17 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._set_properties(None, None)
         self._generate_data()
 
-    def _on_view_change(self, *_args):
+    def _timeout_callback(self) -> bool:
+        self._view_change_timeout_id = None
+        self._generate_data()
+        return False
+
+    def _on_view_change(self, *_args) -> None:
         """Debounced view change handler that generates data after delay."""
         if self._view_change_timeout_id is not None:
             GObject.source_remove(self._view_change_timeout_id)
-
-        def _timeout_callback():
-            self._view_change_timeout_id = None
-            self._generate_data()
-            return False
-
         self._view_change_timeout_id = \
-            GObject.timeout_add(100, _timeout_callback)
+            GObject.timeout_add(100, self._timeout_callback)
 
     @GObject.Property(type=str, flags=2)
     def equation(self) -> None:
