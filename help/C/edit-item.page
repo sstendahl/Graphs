@@ -8,7 +8,7 @@
     <p>Each item in the sidebar can be edited by clicking on it. The edit panel varies depending on the item type, but all items share a common set of properties at the top.</p>
     <section id="common">
         <title>Name and Position</title>
-        <p>All items have a name, which is shown in the legend and the sidebar, and can be changed freely. Note that the naming does support LaTeX notation with the help of dollar signs. So for instance $\mu_0$ will provide the greek letter μ with a 0 as subscript. Each item can also be assigned to a specific axis: the X position can be set to either the bottom or top axis, and the Y position to either the left or right axis. This allows multiple datasets with different scales to be displayed on the same figure.</p>
+        <p>All items have a name, which is shown in the legend and the sidebar, and can be changed freely. Note that the naming does support LaTeX notation with the help of dollar signs. So for instance $\mu_0$ will provide the Greek letter μ with a 0 as subscript. Each item can also be assigned to a specific axis: the X position can be set to either the bottom or top axis, and the Y position to either the left or right axis. This allows multiple datasets with different scales to be displayed on the same figure.</p>
     </section>
     <section id="dataset-appearance">
         <title>Datasets: Line and Markers</title>

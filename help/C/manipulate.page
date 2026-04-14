@@ -96,7 +96,7 @@
     </section>
     <section id="shift">
         <title>Shift</title>
-        <p>Automatically offsets each selected dataset along the Y axis so that the items are spread out and do not overlap one another. The shift amount is calculated based on the range of each dataset and respects the current axis scale, including logarithmic scales.</p>
+        <p>Automatically offsets each selected dataset along the Y axis so that the items are spread out and do not overlap one each other. The shift amount is calculated based on the range of each dataset and respects the current axis scale, including logarithmic scales.</p>
     </section>
     <section id="cut">
         <title>Cut</title>
@@ -106,7 +106,7 @@
         <title>Custom Transformations</title>
         <p>Custom transformations let you modify the X and Y coordinates of a dataset point by point using equations of your choice. For instance, to square all Y values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code>
             in the X field. Coordinate names are not case-sensitive.</p>
-        <p> <b>The following extra variables are available for custom transformations:</b>
+        <p><b>The following extra variables are available for custom transformations:</b>
         </p>
         <p> <b>General:</b>
         </p>

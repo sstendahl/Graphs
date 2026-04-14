@@ -11,7 +11,7 @@
         <p>The sidebar contains everything related to managing items and interacting with the figure.</p>
         <section id="header-buttons">
             <title>Header buttons</title>
-            <p>At the top of the sidebar, we have the header with a button to add data, a button to open the figure settings and a button with the primary menu. At the top, the <em>Add</em> button opens a menu with three options:</p>
+            <p>At the top of the sidebar, we have the header with a button to add data, a button to open the figure settings, and a button with the primary menu. At the top, the <em>Add</em> button opens a menu with three options:</p>
             <terms>
                 <item>
                     <title>Add Data from File…</title>
@@ -94,7 +94,7 @@
     </section>
     <section id="Canvas">
         <title>Canvas</title>
-        <p>The canvas shows the plot containing all active items. Clicking once on the label, limits or opens the Figure Settings, focused on the clicked item. Making it possible to quickly adjust these artists</p>
-        <p>On top the top left we have the undo and redo button. On the top right of the canvas there's the view buttons. The back-arrow moves you to the previous view after having changed the limits while the forward-arrow moves you to the next view after having clicked the back-arrow. Finally the Optimize Limits button will try and adjust the limits automatically to fit all visible items in the canvas. For equations, only the y-range is taken into account as the x-data spans an infinite range.</p>
+        <p>The canvas shows the plot containing all active items. Clicking once on the label, limits or opens the Figure Settings, focused on the clicked item, allowing for quick adjustments.</p>
+        <p>On the top left we have the undo and redo button. On the top right of the canvas there's the view buttons. The back-arrow moves you to the previous view after having changed the limits while the forward-arrow moves you to the next view after having clicked the back-arrow. Finally the Optimize Limits button will try and adjust the limits automatically to fit all visible items in the canvas. For equations, only the y-range is taken into account, as the x-data spans an infinite range.</p>
     </section>
 </page>

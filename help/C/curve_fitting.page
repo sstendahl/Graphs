@@ -17,7 +17,7 @@
         </item>
         <item>
             <p>
-                <link xref="#results">Results</link>: Interpretting the output.</p>
+                <link xref="#results">Results</link>: Interpreting the output.</p>
         </item>
         <item>
             <p>
@@ -70,10 +70,10 @@
             </item>
             <item>
                 <title>Custom</title>
-                <p>Enter any equation using <code>x</code> as the independent variable. Any other variable naems that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
+                <p>Enter any equation using <code>x</code> as the independent variable. Any other variable names that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted.</p>
             </item>
         </terms>
-        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
+        <p>Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression.</p>
     </section>
     <section id="bounds">
         <title>Bounds</title>
@@ -105,13 +105,13 @@
         </list>
         <p>The corresponding confidence band is also drawn as a shaded region around the fitted curve.</p>
         <p>The Statistics section shows two goodness-of-fit measures: R² and RMSE.</p>
-        <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses it's physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbritary.</p>
+        <p>For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses its physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbitrary.</p>
         <p>RMSE (Root Mean Square Error) measures the typical size of the residuals (the differences between the data points and the fitted curve) in the same units as the Y data. Unlike R², RMSE gives an absolute sense of how far off the predictions are on average, which makes it useful when the physical magnitude of the error matters.</p>
         <p>Note that both statistics reflect only how well the data agrees with the chosen model, not whether the model is physically correct. Factors such as systematic measurement errors and correlations between parameters are not accounted for. This is an inherent limitation of curve fitting, and a common source of misleading uncertainty estimates even in published scientific work.</p>
     </section>
     <section id="residuals">
         <title>Residuals</title>
-        <p>The residuals plot can be shown by enabling <em>Show Residuals</em>from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero is shown for reference.</p>
+        <p>The residuals plot can be shown by enabling <em>Show Residuals</em> from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero is shown for reference.</p>
         <p>A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data.</p>
     </section>
     <section id="errors">
