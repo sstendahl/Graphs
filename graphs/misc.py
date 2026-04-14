@@ -27,7 +27,6 @@ class InvalidEquationError(Exception):
 
 X = sympy.Symbol("x")
 
-
 LEGEND_POSITIONS = [
     "best",
     "upper right",
