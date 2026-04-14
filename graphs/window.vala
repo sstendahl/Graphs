@@ -74,13 +74,13 @@ namespace Graphs {
         private FigureSettingsPage figure_settings_page;
 
         construct {
-            application = Application.instance ();
+            application = (Application) GLib.Application.get_default ();
 
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_view.set_name ("view" + Application.instance ().get_next_css_counter ().to_string ());
+            content_view.set_name ("view" + ((Application) application).get_next_css_counter ().to_string ());
 
             this.key_controller = new EventControllerKey ();
             ((Widget) this).add_controller (key_controller);

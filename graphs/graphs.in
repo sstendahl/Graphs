@@ -83,6 +83,6 @@ if __name__ == "__main__":
         DataImporter()
 
     from gi.repository import Graphs
-    application = Graphs.Application.instance()
+    application = Graphs.Application.new()
     application.connect("startup", on_startup)
     sys.exit(application.run(sys.argv))

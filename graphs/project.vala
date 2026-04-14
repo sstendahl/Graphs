@@ -95,7 +95,7 @@ namespace Graphs {
                     return;
                 }
 
-                Application application = Application.instance ();
+                var application = (Application) GLib.Application.get_default ();
                 Window new_window = application.create_main_window ();
                 if (yield load (window, new_window.data, file)) {
                     new_window.present ();
