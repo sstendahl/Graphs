@@ -22,7 +22,7 @@ class SqlParser(Parser):
             "sql",
             C_("import-mode", "Database"),
             C_("file-filter", "SQLite Database"),
-            ["db", "sqlite", ".sqlite3"],
+            ["db", "sqlite", "sqlite3"],
         )
 
     @staticmethod
