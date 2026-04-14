@@ -50,4 +50,10 @@ namespace Graphs {
         ITEMS_SWAPPED,
         FIGURE_SETTINGS_CHANGED
     }
+
+    public enum Mode {
+        PAN,
+        ZOOM,
+        SELECT
+    }
 }

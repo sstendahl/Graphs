@@ -35,16 +35,16 @@ namespace Graphs {
             get { return false; } // needed to be registered as valid property
         }
 
-        public int mode {
+        public Mode mode {
             set {
-                pan_button.set_active (value == 0);
-                zoom_button.set_active (value == 1);
-                select_button.set_active (value == 2);
+                pan_button.set_active (value == Mode.PAN);
+                zoom_button.set_active (value == Mode.ZOOM);
+                select_button.set_active (value == Mode.SELECT);
             }
             get {
-                if (pan_button.get_active ()) return 0;
-                if (zoom_button.get_active ()) return 1;
-                if (select_button.get_active ()) return 2;
+                if (pan_button.get_active ()) return Mode.PAN;
+                if (zoom_button.get_active ()) return Mode.ZOOM;
+                if (select_button.get_active ()) return Mode.SELECT;
                 return -1;
             }
         }

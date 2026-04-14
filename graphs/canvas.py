@@ -454,7 +454,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         ctx.stroke()
 
     def _on_mode_change(self, *_args) -> None:
-        highlight_enabled = self.props.mode == 2
+        highlight_enabled = self.props.mode == Graphs.Mode.SELECT
         self.highlight.set_active(highlight_enabled)
         self.highlight.set_visible(highlight_enabled)
         self.queue_draw()
@@ -468,15 +468,15 @@ class _DummyToolbar(NavigationToolbar2):
         mode = self.canvas.props.mode
         if event.button == 2:
             event.button = 1
-            mode = 0
+            mode = Graphs.Mode.PAN
         elif event.button != 1:
             return
-        if mode == 0:
+        if mode == Graphs.Mode.PAN:
             if event.name == "button_press_event":
                 self.press_pan(event)
             elif event.name == "button_release_event":
                 self.release_pan(event)
-        elif mode == 1:
+        elif mode == Graphs.Mode.ZOOM:
             if event.name == "button_press_event":
                 self.press_zoom(event)
             elif event.name == "button_release_event":
@@ -486,10 +486,12 @@ class _DummyToolbar(NavigationToolbar2):
     def _update_cursor(self, event) -> None:
         mode = self.canvas.props.mode
         if event.inaxes and event.inaxes.get_navigate():
-            if mode == 1 and self._last_cursor != tools.Cursors.SELECT_REGION:
+            if mode == Graphs.Mode.PAN and \
+                    self._last_cursor != tools.Cursors.SELECT_REGION:
                 self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
                 self._last_cursor = tools.Cursors.SELECT_REGION
-            elif mode == 0 and self._last_cursor != tools.Cursors.MOVE:
+            elif mode == Graphs.Mode.ZOOM and \
+                    self._last_cursor != tools.Cursors.MOVE:
                 self.canvas.set_cursor(tools.Cursors.MOVE)
                 self._last_cursor = tools.Cursors.MOVE
         elif self._last_cursor != tools.Cursors.POINTER:
