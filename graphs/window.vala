@@ -51,7 +51,7 @@ namespace Graphs {
         protected CssProvider css_provider { get; private set; }
         protected EventControllerKey key_controller { get; private set; }
 
-        public int mode {
+        public Mode mode {
             get { return main_page.mode; }
             set { main_page.mode = value; }
         }
@@ -243,7 +243,7 @@ namespace Graphs {
             }
             main_page.operations.shift_button.set_sensitive (items_selected);
             main_page.operations.smoothen_button.set_sensitive (data_items_selected);
-            main_page.operations.set_cut_sensitivity (data_items_selected && mode == 2);
+            main_page.operations.set_cut_sensitivity (data_items_selected && mode == Mode.SELECT);
             main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
             optimize_limits_action.set_enabled (true);
@@ -270,7 +270,7 @@ namespace Graphs {
             }
             main_page.operations.shift_button.set_sensitive (items_selected);
             main_page.operations.smoothen_button.set_sensitive (data_items_selected);
-            main_page.operations.set_cut_sensitivity (data_items_selected && mode == 2);
+            main_page.operations.set_cut_sensitivity (data_items_selected && mode == Mode.SELECT);
             main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
         }
