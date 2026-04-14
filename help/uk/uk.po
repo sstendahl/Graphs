@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2026-04-13 17:44+0000\n"
-"PO-Revision-Date: 2026-04-13 22:22+0300\n"
+"POT-Creation-Date: 2026-04-14 12:28+0000\n"
+"PO-Revision-Date: 2026-04-14 18:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -35,27 +35,34 @@ msgid ""
 "the parameters of a mathematical model that best describes the data. The "
 "following topics are covered in this page:"
 msgstr ""
+"Апроксимація кривої дозволяє виконувати потужний аналіз імпортованих наборів"
+" даних шляхом знаходження параметрів математичної моделі, яка найкраще"
+" описує дані. На цій сторінці розглянуто такі теми:"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:11
 msgid "<link xref=\"#fitting\">Fitting Data</link>: Set up and run a fit."
 msgstr ""
+"<link xref=\"#fitting\">Апроксимація даних</link>: налаштовування і"
+" виконання апроксимації."
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:15
 msgid "<link xref=\"#bounds\">Bounds</link>: Constrain fitting parameters."
 msgstr ""
+"<link xref=\"#bounds\">Обмеження</link>: обмеження параметрів апроксимації."
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:19
-msgid "<link xref=\"#results\">Results</link>: Interpretting the output."
-msgstr ""
+msgid "<link xref=\"#results\">Results</link>: Interpreting the output."
+msgstr "<link xref=\"#results\">Результати</link>: інтерпретація результатів."
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:23
 msgid ""
 "<link xref=\"#residuals\">Residuals</link>: Inspect the quality of the fit."
 msgstr ""
+"<link xref=\"#residuals\">Різниці</link>: вивчення якості апроксимації."
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:27
@@ -63,28 +70,27 @@ msgid ""
 "<link xref=\"#algorithms\">Fitting Algorithms</link>: Choose the right "
 "algorithm for your data."
 msgstr ""
+"<link xref=\"#algorithms\">Алгоритми апроксимації</link>: вибір належного"
+" алгоритму для ваших даних."
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:32
-#| msgid "Fitting data"
 msgid "Fitting Data"
 msgstr "Апроксимація даних"
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:33
-#| msgid ""
-#| "Curve fitting allows for a powerful analysis method for your imported "
-#| "data. To start curve fitting on a data set, press the three vertical dots "
-#| "on the item you want to fit to, and choose \"Curve Fitting\". This brings "
-#| "up the Curve Fitting dialog for the selected data set. An extensive list "
-#| "of predefined equations can be chosen from the dropdown. The "
-#| "corresponding mathematical formula is shown in the same card."
 msgid ""
 "To start curve fitting on a dataset, press the three vertical dots on the "
 "item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve "
 "Fitting dialog. The fit and its confidence band are previewed live as "
 "parameters are adjusted."
 msgstr ""
+"Щоб розпочати апроксимацію набору даних кривою, натисніть три вертикальні"
+" крапки на елементі, який слід наблизити, і виберіть <em>Апроксимація"
+" кривою</em>. У відповідь буде відкрито вікно «Апроксимація кривою»."
+" Апроксимацію і її довірчу смугу можна переглядати інтерактивно при"
+" коригуванні параметрів."
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:34
@@ -92,6 +98,8 @@ msgid ""
 "An equation to fit against is chosen from the dropdown. The following "
 "predefined equations are available, with their formula shown as a subtitle:"
 msgstr ""
+"Рівняння для апроксимації можна вибрати зі спадного списку. Доступні такі"
+" попередньо визначені рівняння, формулу для яких показано як підзаголовок:"
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:37 C/figure_settings.page:22
@@ -172,17 +180,24 @@ msgstr "Нетипова"
 #: C/curve_fitting.page:73
 msgid ""
 "Enter any equation using <code>x</code> as the independent variable. Any "
-"other variable naems that are not functions (such as sin(x) or exp(x)) are "
+"other variable names that are not functions (such as sin(x) or exp(x)) are "
 "automatically detected and treated as free parameters to be fitted."
 msgstr ""
+"Введіть будь-яке рівняння, використовуючи <code>x</code> як незалежну"
+" змінну. Будь-які інші назви змінних, які не є функціями (наприклад, sin(x)"
+" або exp(x)), автоматично виявляються та обробляються як вільні параметри"
+" для апроксимації."
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:76
 msgid ""
-"Once a satisfactory fit is found, press <em>Add Fit to Data</em>to add the "
+"Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the "
 "resulting curve as a new equation in the project, with the fitted parameter "
 "values substituted into the expression."
 msgstr ""
+"Щойно буде знайдено задовільне наближення, натисніть <em>Додати апроксимацію"
+" даних</em>, щоб додати отриману криву як нове рівняння в проєкті,"
+" підставивши у вираз визначені значення параметрів."
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:79
@@ -198,6 +213,12 @@ msgid ""
 "initial guess close to the expected value will help the fit converge. The "
 "bounds constrain the range of values the parameter is allowed to take."
 msgstr ""
+"Кожен вільний параметр, виявлений у рівнянні, буде показано на бічній панелі"
+" з трьома полями: початкове припущення, мінімальна межа та максимальна межа."
+" Початкове припущення – це початкове значення, яке використовується"
+" алгоритмом. Використання якісного початкового припущення, близького до"
+" очікуваного значення, допоможе апроксимації збігтися. Межі обмежують"
+" діапазон значень, які може приймати параметр."
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:81
@@ -243,7 +264,7 @@ msgstr ""
 #. (itstool) path: item/p
 #: C/curve_fitting.page:91
 msgid "<em>None</em>: no margin shown."
-msgstr ""
+msgstr "<em>Немає</em>: без показу полів."
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:94
@@ -279,9 +300,9 @@ msgid ""
 "For a linear fit, R² measures how what proportion of the variation can be "
 "explained by the model. A value of 1 means the model explains all variation "
 "perfectly, while a value of 0 means it explains none. Note that for non-"
-"linear fits, the R² loses it's physical meaning of what proportion of the "
+"linear fits, the R² loses its physical meaning of what proportion of the "
 "variance is explained. It can still be somewhat useful to assess the "
-"goodness-of-fit, but the value itself becomes somewhat arbritary."
+"goodness-of-fit, but the value itself becomes somewhat arbitrary."
 msgstr ""
 
 #. (itstool) path: section/p
@@ -296,15 +317,6 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:110
-#| msgid ""
-#| "Please note that like all fits, that this standard deviation is mostly a "
-#| "measure of how well the data agrees with the corresponding model. Factors "
-#| "such as whether this model is actually physically correct, if there's any "
-#| "systemic errors in the measurements, and if the parameters are correlated "
-#| "to each other is not taken into account when fitting data. This is an "
-#| "inherent property of all curve fitting, and a common point of confusion, "
-#| "leading to misleading error bars on data points even in scientifically "
-#| "published data."
 msgid ""
 "Note that both statistics reflect only how well the data agrees with the "
 "chosen model, not whether the model is physically correct. Factors such as "
@@ -321,7 +333,7 @@ msgstr "Лишки"
 #. (itstool) path: section/p
 #: C/curve_fitting.page:114
 msgid ""
-"The residuals plot can be shown by enabling <em>Show Residuals</em>from "
+"The residuals plot can be shown by enabling <em>Show Residuals</em> from "
 "within the primary menu. This displays a second plot below the main one "
 "showing the difference between each data point and the fitted curve at that "
 "x-value. A dashed line at zero is shown for reference."
@@ -375,7 +387,7 @@ msgstr ""
 #. (itstool) path: item/title
 #: C/curve_fitting.page:130
 msgid "Domain error"
-msgstr ""
+msgstr "Помилка домену"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:131
@@ -383,11 +395,13 @@ msgid ""
 "The equation is not valid over the range of the data, for example due to a "
 "logarithm of a negative number or a division by zero."
 msgstr ""
+"Рівняння не є коректним у діапазоні даних, наприклад, через логарифм"
+" від'ємного числа або ділення на нуль."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:134
 msgid "Fit failed: max iterations reached"
-msgstr ""
+msgstr "Помилка апроксимації: перевищено максимальну кількість ітерацій"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:135
@@ -424,7 +438,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:148
-#| msgid "Fitting algorithms"
 msgid "Fitting Algorithms"
 msgstr "Алгоритми апроксимації"
 
@@ -450,7 +463,6 @@ msgstr ""
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:156
-#| msgid "Trust Region"
 msgid "Trust Region Reflective"
 msgstr "Відбита довірча область"
 
@@ -468,9 +480,6 @@ msgstr "Конура"
 
 #. (itstool) path: item/p
 #: C/curve_fitting.page:161
-#| msgid ""
-#| "The Dogbox algorithm uses rectangular trust regions and typically works "
-#| "well with small problems involving bounds."
 msgid ""
 "Uses rectangular trust regions and is well suited to smaller problems where "
 "bounds are required."
@@ -499,7 +508,7 @@ msgstr "Назва і розташування"
 msgid ""
 "All items have a name, which is shown in the legend and the sidebar, and can "
 "be changed freely. Note that the naming does support LaTeX notation with the "
-"help of dollar signs. So for instance $\\mu_0$ will provide the greek letter "
+"help of dollar signs. So for instance $\\mu_0$ will provide the Greek letter "
 "μ with a 0 as subscript. Each item can also be assigned to a specific axis: "
 "the X position can be set to either the bottom or top axis, and the Y "
 "position to either the left or right axis. This allows multiple datasets "
@@ -705,7 +714,7 @@ msgid ""
 "previews. Click any style to apply it to the figure immediately. When "
 "switching styles, item colors, markers and line widths are automatically "
 "remapped to match the new style's color cycle. Any item properties that were "
-"changed previously, however, are reserved when changing styles."
+"changed previously, however, are preserved when changing styles."
 msgstr ""
 
 #. (itstool) path: section/title
@@ -931,7 +940,7 @@ msgstr "Показувати мітки поділок на усіх вісях"
 msgid ""
 "When enabled, tick labels are shown on all visible axes with ticks rather "
 "than only the axes with data. To show tick labels on both sides of each "
-"axis, make sure <em>Draw Frame</em> is checked on so that the axes are drawn."
+"axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
 msgstr ""
 
 #. (itstool) path: item/title
@@ -1044,7 +1053,6 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/export.page:7
-#| msgid "Importing Data"
 msgid "Exporting"
 msgstr "Експортування"
 
@@ -1110,7 +1118,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/export.page:29
-#| msgid "Importing Data"
 msgid "Exporting Data"
 msgstr "Експортування даних"
 
@@ -1125,7 +1132,6 @@ msgstr ""
 #. (itstool) path: page/title
 #. (itstool) path: section/title
 #: C/figure_settings.page:7 C/window.page:68
-#| msgid "Curve Fitting"
 msgid "Figure Settings"
 msgstr "Параметри рисунка"
 
@@ -1280,7 +1286,6 @@ msgstr ""
 
 #. (itstool) path: page/title
 #: C/import.page:7
-#| msgid "Importing Data"
 msgid "Adding Data"
 msgstr "Додавання даних"
 
@@ -1358,7 +1363,7 @@ msgid ""
 "automatically in most cases. When using a custom delimiter, an extra field "
 "appears where a delimiter of your choice can be entered. This field "
 "recognizes regular expressions. Using <code>\\s+</code> matches any amount "
-"of whitespace including tabs for example, and is equivalent to the default "
+"of whitespace including tabs, for example, and is equivalent to the default "
 "Whitespace option."
 msgstr ""
 
@@ -1527,7 +1532,6 @@ msgstr "Креслення і робота з даними"
 
 #. (itstool) path: page/title
 #: C/index.page:7
-#| msgid "<_:media-1/> Graphs"
 msgid "<_:media-1/>Graphs"
 msgstr "<_:media-1/>Графіки"
 
@@ -1557,12 +1561,6 @@ msgstr "Робота з даними"
 
 #. (itstool) path: page/p
 #: C/manipulate.page:8
-#| msgid ""
-#| "There are many different ways to manipulate data using Graphs. All data "
-#| "is treated the same using Graphs, independent what file it is imported "
-#| "from, or if it's a generated equation. When selecting a part of the "
-#| "canvas using the Highlight tool, only the highlight area will be "
-#| "manipulated."
 msgid ""
 "Graphs provides a wide range of operations for manipulating data. All "
 "operations work the same regardless of whether the item was imported from a "
@@ -1699,7 +1697,6 @@ msgstr ""
 
 #. (itstool) path: section/title
 #: C/manipulate.page:76
-#| msgid "Smoothening"
 msgid "Smoothen"
 msgstr "Згладити"
 
@@ -1788,7 +1785,7 @@ msgstr "Зсунути"
 #: C/manipulate.page:99
 msgid ""
 "Automatically offsets each selected dataset along the Y axis so that the "
-"items are spread out and do not overlap one another. The shift amount is "
+"items are spread out and do not overlap one each other. The shift amount is "
 "calculated based on the range of each dataset and respects the current axis "
 "scale, including logarithmic scales."
 msgstr ""
@@ -1813,13 +1810,6 @@ msgstr "Нетипові перетворення"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:107
-#| msgid ""
-#| "Another way to manipulate the data is by using custom transformations. "
-#| "This field transforms both X and Y coordinate piece by piece according to "
-#| "an equation of choice. For instance, to take the square of all Y-"
-#| "coordinates, simply set <code>Y = Y²</code> on the y-data field, and "
-#| "<code>X = X</code> on the x-data field. Note that the input coordinates "
-#| "are not case-sensitive."
 msgid ""
 "Custom transformations let you modify the X and Y coordinates of a dataset "
 "point by point using equations of your choice. For instance, to square all Y "
@@ -2021,7 +2011,7 @@ msgstr ""
 #: C/window.page:14
 msgid ""
 "At the top of the sidebar, we have the header with a button to add data, a "
-"button to open the figure settings and a button with the primary menu. At "
+"button to open the figure settings, and a button with the primary menu. At "
 "the top, the <em>Add</em> button opens a menu with three options:"
 msgstr ""
 
@@ -2048,6 +2038,8 @@ msgid ""
 "Opens a dialog to add a new equation item, rendered continuously on the "
 "canvas."
 msgstr ""
+"Відкриває вікно для додавання нового запису рівняння, з неперервним показом"
+" на полотні."
 
 #. (itstool) path: item/title
 #: C/window.page:26
@@ -2116,7 +2108,6 @@ msgstr ""
 
 #. (itstool) path: item/title
 #: C/window.page:52
-#| msgid "Importing Data"
 msgid "Export Data…"
 msgstr "Експортувати дані…"
 
@@ -2234,20 +2225,20 @@ msgstr "Полотно"
 #: C/window.page:97
 msgid ""
 "The canvas shows the plot containing all active items. Clicking once on the "
-"label, limits or opens the Figure Settings, focused on the clicked item. "
-"Making it possible to quickly adjust these artists"
+"label, limits or opens the Figure Settings, focused on the clicked item, "
+"allowing for quick adjustments."
 msgstr ""
 
 #. (itstool) path: section/p
 #: C/window.page:98
 msgid ""
-"On top the top left we have the undo and redo button. On the top right of "
-"the canvas there's the view buttons. The back-arrow moves you to the "
-"previous view after having changed the limits while the forward-arrow moves "
-"you to the next view after having clicked the back-arrow. Finally the "
-"Optimize Limits button will try and adjust the limits automatically to fit "
-"all visible items in the canvas. For equations, only the y-range is taken "
-"into account as the x-data spans an infinite range."
+"On the top left we have the undo and redo button. On the top right of the "
+"canvas there's the view buttons. The back-arrow moves you to the previous "
+"view after having changed the limits while the forward-arrow moves you to "
+"the next view after having clicked the back-arrow. Finally the Optimize "
+"Limits button will try and adjust the limits automatically to fit all "
+"visible items in the canvas. For equations, only the y-range is taken into "
+"account, as the x-data spans an infinite range."
 msgstr ""
 
 #. (itstool) path: p/link
