@@ -9,7 +9,7 @@
     <section id="applying">
         <title>Applying a Style</title>
         <p>The active style is selected from the Figure Settings panel, accessible in the sidebar in the top corner. See
-            <link xref="figure-settings" />for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles, item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are reserved when changing styles.</p>
+            <link xref="figure-settings" />for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles, item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are preserved when changing styles.</p>
     </section>
     <section id="managing">
         <title>Creating and Managing Styles</title>
@@ -122,7 +122,7 @@
                 </item>
                 <item>
                     <title>Show Tick Labels on all Axes</title>
-                    <p>When enabled, tick labels are shown on all visible axes with ticks rather than only the axes with data. To show tick labels on both sides of each axis, make sure <em>Draw Frame</em> is checked on so that the axes are drawn.</p>
+                    <p>When enabled, tick labels are shown on all visible axes with ticks rather than only the axes with data. To show tick labels on both sides of each axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn.</p>
                 </item>
                 <item>
                     <title>Ticks on Bottom / Top / Left / Right Axis</title>
