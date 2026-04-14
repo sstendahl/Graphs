@@ -427,5 +427,11 @@ namespace Graphs {
             application.on_main_window_closed (this);
             return false;
         }
+
+        public double get_operation_value (string name) throws MathError {
+            Gtk.Entry entry;
+            main_page.operations.get (name + "_entry", out entry);
+            return evaluate_string (entry.get_text ());
+        }
     }
 }
