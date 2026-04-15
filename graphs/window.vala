@@ -311,7 +311,7 @@ namespace Graphs {
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
 
-                var icon = (Gtk.DragIcon) Gtk.DragIcon.get_for_drag (drag);
+                var icon = (Gtk.DragIcon) new Gtk.DragIcon.get_for_drag (drag);
                 icon.child = drag_widget;
 
                 drag.set_hotspot ((int) drag_x, (int) drag_y);
