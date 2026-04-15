@@ -395,7 +395,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
         self._equation = Graphs.preprocess_equation(equation)
-        self._expr = sympy.sympify(equation)
+        self._expr = sympy.sympify(self._equation)
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
