@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 pages = [
-  'curve_fitting.page',
+  'curve-fitting.page',
   'edit-item.page',
   'edit-style.page',
   'export.page',
-  'figure_settings.page',
+  'figure-settings.page',
   'import.page',
   'index.page',
   'manipulate.page',
