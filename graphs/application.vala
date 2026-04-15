@@ -16,7 +16,7 @@ namespace Graphs {
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
-        private uint _css_counter = 0;
+        private static uint _css_counter = 0;
 
         private const OptionEntry[] OPTION_ENTRIES = {
             { "new-window", 'n', 0, OptionArg.NONE, null, N_("New window"), null },
@@ -44,6 +44,7 @@ namespace Graphs {
             Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
             Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
             Intl.textdomain (Config.GETTEXT_PACKAGE);
+            Intl.setlocale (LocaleCategory.NUMERIC, "C");
 
             settings = new GLib.Settings (application_id);
 
@@ -140,18 +141,20 @@ namespace Graphs {
         public Window create_main_window () {
             Window window = PythonHelper.create_window ();
             main_windows.add (window);
+            add_window (window);
             return window;
         }
 
         public StyleEditor create_style_editor () {
             var style_editor = PythonHelper.create_style_editor ();
             style_editors.add (style_editor);
+            add_window (style_editor);
             return style_editor;
         }
 
-        public uint get_next_css_counter () {
+        public static string get_next_css_name () {
             _css_counter++;
-            return _css_counter;
+            return "view" + _css_counter.to_string ();
         }
 
         /**

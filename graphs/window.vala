@@ -74,13 +74,11 @@ namespace Graphs {
         private FigureSettingsPage figure_settings_page;
 
         construct {
-            application = (Application) GLib.Application.get_default ();
-
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_view.set_name ("view" + ((Application) application).get_next_css_counter ().to_string ());
+            content_view.set_name (Application.get_next_css_name ());
 
             this.key_controller = new EventControllerKey ();
             ((Widget) this).add_controller (key_controller);
@@ -311,7 +309,7 @@ namespace Graphs {
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
 
-                var icon = (Gtk.DragIcon) Gtk.DragIcon.get_for_drag (drag);
+                var icon = (Gtk.DragIcon) new Gtk.DragIcon.get_for_drag (drag);
                 icon.child = drag_widget;
 
                 drag.set_hotspot ((int) drag_x, (int) drag_y);

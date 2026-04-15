@@ -40,15 +40,9 @@ namespace Graphs {
             string[] tables = db_reader.table_names;
             string table_name = settings.get_string ("table-name");
 
-            // TODO: Use StringList.find () instead of manual loop at GNOME 50 runtime
             var table_model = new StringList (tables);
             table_row.set_model (table_model);
-            for (int i = 0; i < tables.length; i++) {
-                if (tables[i] == table_name) {
-                    table_row.set_selected (i);
-                    break;
-                }
-            }
+            table_row.set_selected (table_model.find (table_name));
             use_xerr.set_active (settings.get_boolean ("use-xerr"));
             use_yerr.set_active (settings.get_boolean ("use-yerr"));
             update_columns ();
@@ -115,36 +109,30 @@ namespace Graphs {
             }
 
             var column_model = new StringList (columns);
-            bool found_x = false;
-            bool found_y = false;
-            bool found_xerr = false;
-            bool found_yerr = false;
             column_x.set_model (column_model);
             column_y.set_model (column_model);
             column_xerr.set_model (column_model);
             column_yerr.set_model (column_model);
 
-            // TODO: Use StringList.find () instead of manual loop at GNOME 50 runtime
+            uint found = 0;
             for (int i = 0; i < columns.length; i++) {
                 if (columns[i] == x_column) {
                     column_x.set_selected (i);
-                    found_x = true;
+                    found++;
                 }
                 if (columns[i] == y_column) {
                     column_y.set_selected (i);
-                    found_y = true;
+                    found++;
                 }
                 if (columns[i] == xerr_column) {
                     column_xerr.set_selected (i);
-                    found_xerr = true;
+                    found++;
                 }
                 if (columns[i] == yerr_column) {
                     column_yerr.set_selected (i);
-                    found_yerr = true;
+                    found++;
                 }
-                if (found_x && found_y && found_xerr && found_yerr) {
-                    break;
-                }
+                if (found == 4) break;
             }
         }
     }

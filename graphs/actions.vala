@@ -96,7 +96,7 @@ namespace Graphs {
                 string current_mode = mode;
                 var action = new SimpleAction (@"mode-$current_mode", null);
                 action.activate.connect (() => {
-                    window.canvas.mode = modes.index_of (current_mode);
+                    window.canvas.mode = (Mode) modes.index_of (current_mode);
                     window.on_selection_changed ();
                 });
                 window.add_action (action);
