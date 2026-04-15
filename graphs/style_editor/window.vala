@@ -61,14 +61,11 @@ namespace Graphs {
         protected signal void save_request (File file);
 
         construct {
-            var application = (Application) GLib.Application.get_default ();
-            this.application = application;
-
             this.css_provider = new CssProvider ();
             StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
             );
-            content_view.set_name ("view" + application.get_next_css_counter ().to_string ());
+            content_view.set_name (Application.get_next_css_name ());
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
@@ -103,7 +100,7 @@ namespace Graphs {
                         if (_file == null || !unsaved) {
                             load (file);
                         } else {
-                            var new_window = application.create_style_editor ();
+                            var new_window = ((Application) application).create_style_editor ();
                             new_window.load (file);
                             new_window.present ();
                         }
