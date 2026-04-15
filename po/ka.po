@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-05 13:03+0000\n"
-"PO-Revision-Date: 2026-04-06 02:41+0200\n"
+"POT-Creation-Date: 2026-04-14 12:27+0000\n"
+"PO-Revision-Date: 2026-04-15 04:44+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -81,7 +81,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Vis
 msgid "New Window"
 msgstr "ახალი ფანჯარა"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:24
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:23
 msgid "Style Editor"
 msgstr "სტილის რედაქტორი"
 
@@ -621,8 +621,8 @@ msgid "Scale"
 msgstr "მასშტაბი"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49 data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "განსაზღვრავს დაშორებას მონაცემთა წერტილებს შორის"
+msgid "How points are spaced"
+msgstr "როგორ არის დაშორებული წერტილები"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/figure-settings/settings-page.blp:155 data/ui/sidebar/figure-settings/settings-page.blp:171
 #: data/ui/sidebar/figure-settings/settings-page.blp:187 data/ui/sidebar/figure-settings/settings-page.blp:203 data/ui/generate-data.blp:105
@@ -814,7 +814,7 @@ msgstr "ცენტრი"
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:85
+#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:86
 msgid "Style"
 msgstr "სტილი"
 
@@ -1299,7 +1299,7 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "სტილის გახსნა"
 
-#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:200
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
 msgid "Graphs Style Editor"
 msgstr "გრაფიკების სტილის რედაქტორი"
 
@@ -1999,7 +1999,7 @@ msgstr "ფერი %d"
 msgid "Graphs Style Editor — %s"
 msgstr "გრაფიკების სტილის რედაქტორი — %s"
 
-#: graphs/style_editor/window.vala:233
+#: graphs/style_editor/window.vala:234
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "მართლა გნებავთ, წაშალოთ %s?"
@@ -2017,11 +2017,11 @@ msgstr "ეკატერინე პაპავა"
 msgid "Deleted %s"
 msgstr "წაიშალა %s"
 
-#: graphs/application.vala:23
+#: graphs/application.vala:22
 msgid "New window"
 msgstr "ახალი ფანჯარა"
 
-#: graphs/application.vala:25
+#: graphs/application.vala:24
 msgid "[FILE…]"
 msgstr "[ფაილი...]"
 
@@ -2106,17 +2106,17 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
 
-#: graphs/data.py:108
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "სტილის {stylename} დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/data.py:113
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "დახაზვის სტილი {stylename} არ არსებობს. იტვირთება სისტემის ნაგულისხმევი"
 
-#: graphs/data.py:604
+#: graphs/data.py:603
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
@@ -2163,69 +2163,69 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:241
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "{name}: გარდაქმნის შესრულება შეუძლებელია. დარწმუნდით, რომ სინტაქსი სწორია"
 
-#: graphs/operations.py:302
+#: graphs/operations.py:292
 msgid "No data found in highlighted area"
 msgstr "გამოკვეთილ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:296
 msgid "Some items lack error bars; they will be discarded"
 msgstr "ზოგიერთ ელემენტს, შეიძლება, აცდენის ზოლები არ ჰქონდეთ. ისინი მოცილებული იქნება"
 
-#: graphs/operations.py:317
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
-#: graphs/operations.py:458
+#: graphs/operations.py:448
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name}-ზე ოპერაციის შედეგი დახატვადი ტოლობა არაა"
 
-#: graphs/operations.py:466
+#: graphs/operations.py:456
 msgid "Operation not supported for equations."
 msgstr "ოპერაცია განტოლებებისთვის მხარდაჭერილი არაა."
 
-#: graphs/operations.py:623
+#: graphs/operations.py:613
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:629
+#: graphs/operations.py:619
 msgid "Operation not supported for data items"
 msgstr "ოპერაცია მონაცემის ელემენტებისთვის მხარდაჭერილი არაა"
 
-#: graphs/operations.py:632
+#: graphs/operations.py:622
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: ოპერაციის ჩატარების შეცდომა"
 
-#: graphs/operations.py:638
+#: graphs/operations.py:628
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
-#: graphs/project.py:58
+#: graphs/project.py:57
 msgid "Project file is missing data"
 msgstr "პროექტის ფაილს მონაცემები აკლია"
 
-#: graphs/project.py:79
+#: graphs/project.py:78
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "პროექტი უფრო Graphs-ის უფრო ახალი, არათავსებადი ვერსიისაა"
 
-#: graphs/project.py:299
+#: graphs/project.py:298
 msgid "Failed to do legacy migration"
 msgstr "მოძველებული მიგრაცია ჩავარდა"
 
-#: graphs/project.py:301
+#: graphs/project.py:300
 msgid "Failed to parse project file"
 msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
 
-#: graphs/project.py:307
+#: graphs/project.py:306
 msgid "Failed to migrate project"
 msgstr "პროექტის მიგრაცია ჩავარდა"
 
-#: graphs/project.py:313
+#: graphs/project.py:312
 msgid "Failed to validate project"
 msgstr "პროექტის გადამოწმება ჩავარდა"
 
@@ -2314,6 +2314,9 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:381
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "განსაზღვრავს დაშორებას მონაცემთა წერტილებს შორის"
 
 #~ msgid "Invalid .xry format"
 #~ msgstr "არასწორი .xry ფორმატი"
