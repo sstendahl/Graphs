@@ -8,6 +8,8 @@ from graphs import item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
+from matplotlib import RcParams
+
 import numexpr
 
 import numpy
@@ -25,7 +27,11 @@ class ColumnsParser(Parser):
         )
 
     @staticmethod
-    def parse(settings, style) -> list:
+    def parse(
+        items: Graphs.ItemList,
+        settings: Graphs.ImportSettings,
+        style: tuple[RcParams, dict],
+    ) -> None:
         """Import data from columns file."""
         parser = Graphs.ColumnsParser.new(settings)
 
@@ -34,7 +40,6 @@ class ColumnsParser(Parser):
         except GLib.Error as e:
             raise ParseError(e.message) from e
 
-        items = []
         variant = settings.get_value("items")
         for i in range(variant.n_children()):
             item_settings = Graphs.ColumnsItemSettings()
@@ -60,7 +65,7 @@ class ColumnsParser(Parser):
                 xdata = parser.get_column(item_settings.column_x)
                 xlabel = parser.get_header(item_settings.column_x)
 
-            items.append(
+            items.add(
                 item.DataItem.new(
                     style,
                     xdata,
@@ -72,8 +77,6 @@ class ColumnsParser(Parser):
                     name=settings.get_filename(),
                 ),
             )
-
-        return items
 
     @staticmethod
     def init_settings_widgets(settings, box) -> None:

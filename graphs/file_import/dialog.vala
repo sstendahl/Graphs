@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
-using Gee;
 using Gtk;
 
 namespace Graphs {
@@ -150,7 +149,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            Gee.List<Item> itemlist = new ArrayList<Item> ();
+            ItemList itemlist = new ItemList ();
             for (uint i = 0; i < settings_list.get_n_items (); i++) {
                 var settings = (ImportSettings) settings_list.get_item (i);
                 string message = DataImporter.parse (itemlist, settings, window.data);

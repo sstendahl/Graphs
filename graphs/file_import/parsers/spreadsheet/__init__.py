@@ -236,9 +236,10 @@ class SpreadsheetParser(Parser):
 
     @staticmethod
     def parse(
+        items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
         style: tuple[RcParams, dict],
-    ) -> list:
+    ) -> None:
         """Import data from ODS or XLSX file."""
         file = settings.get_file()
         sheet_index = settings.get_int("sheet-index")
@@ -267,7 +268,6 @@ class SpreadsheetParser(Parser):
             sheet_index,
         )
 
-        items = []
         for item_settings in item_settings_list:
             ydata, ylabel = parsed_columns[item_settings.column_y]
 
@@ -293,7 +293,7 @@ class SpreadsheetParser(Parser):
             yerr, _label = parsed_columns[item_settings.yerr_index] \
                 if item_settings.use_yerr else (None, None)
 
-            items.append(
+            items.add(
                 item.DataItem.new(
                     style,
                     xdata,
@@ -305,5 +305,3 @@ class SpreadsheetParser(Parser):
                     name=settings.get_filename(),
                 ),
             )
-
-        return items

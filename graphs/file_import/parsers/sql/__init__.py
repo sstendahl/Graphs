@@ -5,7 +5,7 @@ from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs, Gtk
 
-from graphs import item, misc
+from graphs import item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
@@ -27,9 +27,10 @@ class SqlParser(Parser):
 
     @staticmethod
     def parse(
+        items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
         style: tuple[RcParams, dict],
-    ) -> misc.ItemList:
+    ) -> None:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
         table_name = settings.get_string("table-name")
@@ -63,7 +64,7 @@ class SqlParser(Parser):
                 settings.get_string("yerr-column"),
             )
 
-        return [
+        items.add(
             item.DataItem.new(
                 style,
                 xdata=xdata,
@@ -74,7 +75,7 @@ class SqlParser(Parser):
                 ylabel=y_column,
                 name=f"{x_column} vs {y_column}",
             ),
-        ]
+        )
 
     @staticmethod
     def init_settings(settings: Graphs.ImportSettings) -> bool:

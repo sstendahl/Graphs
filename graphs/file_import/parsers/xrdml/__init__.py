@@ -3,8 +3,12 @@
 from gettext import gettext as _
 from gettext import pgettext as C_
 
-from graphs import file_io, item, misc
+from gi.repository import Graphs
+
+from graphs import file_io, item
 from graphs.file_import.parsers import Parser
+
+from matplotlib import RcParams
 
 import numpy
 
@@ -23,7 +27,11 @@ class XrdmlParser(Parser):
         )
 
     @staticmethod
-    def parse(settings, style) -> misc.ItemList:
+    def parse(
+        items: Graphs.ItemList,
+        settings: Graphs.ImportSettings,
+        style: tuple[RcParams, dict],
+    ) -> None:
         """Import data from xrdml file."""
         content = file_io.parse_xml(settings.get_file())
         intensities = content.getElementsByTagName("intensities")
@@ -50,7 +58,7 @@ class XrdmlParser(Parser):
                 end_pos = float(end_pos[0].firstChild.data)
                 xdata = numpy.linspace(start_pos, end_pos, len(ydata))
                 xdata = numpy.ndarray.tolist(xdata)
-        return [
+        items.add(
             item.DataItem.new(
                 style,
                 xdata,
@@ -59,4 +67,4 @@ class XrdmlParser(Parser):
                 xlabel=f"{scan_axis} ({unit})",
                 ylabel=_("Intensity (cps)"),
             ),
-        ]
+        )
