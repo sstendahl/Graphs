@@ -1,11 +1,9 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for parsing xry files."""
-from gettext import gettext as _
 from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-from graphs import item
 from graphs.file_import.parsers import Parser
 
 
@@ -29,31 +27,5 @@ class XryParser(Parser):
         data: Graphs.Data,
     ) -> None:
         """Import data from .xry files used by Leybold X-ray apparatus."""
-        style = data.get_selected_style_params()
         parser = Graphs.XryParser.new()
-
-        item_count, text_item_count = parser.parse(settings.get_file())
-        name = settings.get_filename()
-
-        for i in range(item_count):
-            xdata, ydata = parser.get_data_pair(i)
-            items.add(
-                item.DataItem.new(
-                    style,
-                    xdata,
-                    ydata,
-                    name=f"{name} - {i + 1}" if item_count > 1 else name,
-                    xlabel=_("β (°)"),
-                    ylabel=_("R (1/s)"),
-                ),
-            )
-
-        for i in range(text_item_count):
-            text, x, y = parser.get_text_data(i)
-            items.add(item.TextItem.new(
-                style,
-                x,
-                y,
-                text,
-                name=text,
-            ))
+        parser.parse(data, settings, items)
