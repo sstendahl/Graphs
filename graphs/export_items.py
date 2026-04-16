@@ -50,9 +50,9 @@ def _save_item(
     )
 
     xerr, yerr = None, None
-    if isinstance(item, (DataItem, GeneratedDataItem)):
+    if isinstance(item, (Graphs.DataItem, Graphs.GeneratedDataItem)):
         xdata, ydata, xerr, yerr = item.props.data
-    elif isinstance(item, EquationItem):
+    elif isinstance(item, Graphs.EquationItem):
         limits = figure_settings.get_limits()
         if item.get_xposition() == 0:
             limits = [limits[0], limits[1]]

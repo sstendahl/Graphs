@@ -2,7 +2,6 @@
 """Main window."""
 from gi.repository import Graphs
 
-from graphs import item
 from graphs.canvas import Canvas
 from graphs.data import Data
 
@@ -55,27 +54,27 @@ class PythonWindow(Graphs.Window):
             new_errbar_cycle = \
                 new_style[1]["errorbar.color_cycle"].by_key()["color"]
 
-            for item_ in data:
-                item_.reset(old_style, new_style)
+            for item in data:
+                item.reset(old_style, new_style)
 
             count = 0
             errbar_count = 0
-            for item_ in data:
+            for item in data:
                 if (
-                    isinstance(item_, (item.DataItem, item.EquationItem))
-                    and item_.get_color() in old_cycle
+                    isinstance(item, (Graphs.DataItem, Graphs.EquationItem))
+                    and item.get_color() in old_cycle
                 ):
                     count %= len(new_cycle)
-                    item_.set_color(new_cycle[count])
+                    item.set_color(new_cycle[count])
                     count += 1
 
-                    if isinstance(item_, item.DataItem):
-                        has_err = item_.get_xerr() or item_.get_yerr()
+                    if isinstance(item, Graphs.DataItem):
+                        has_err = item.get_xerr() or item.get_yerr()
                         if not has_err:
                             continue
-                        if item_.get_errcolor() in old_errbar_cycle:
+                        if item.get_errcolor() in old_errbar_cycle:
                             errbar_count %= len(new_errbar_cycle)
-                            item_.set_errcolor(new_errbar_cycle[errbar_count])
+                            item.set_errcolor(new_errbar_cycle[errbar_count])
                             errbar_count += 1
 
         self._reload_canvas()
