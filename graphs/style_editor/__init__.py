@@ -6,7 +6,7 @@ from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs.canvas import Canvas
-from graphs.item import DataItem
+from graphs.item import ItemFactory, override_properties
 from graphs.style_editor.editor_box import StyleEditorBox
 
 import numpy
@@ -55,7 +55,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         test_style = style_manager.get_system_style_params()
         for xdata, ydata, xerr, yerr in preview_data:
             self._test_items.append(
-                DataItem.new(
+                ItemFactory.new_data_item(
                     test_style,
                     xdata=xdata,
                     ydata=ydata,
@@ -93,9 +93,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         for index, item in enumerate(self._test_items):
             item.set_color(color_cycle[index % len(color_cycle)])
             item.set_errcolor(errbar_cycle[index % len(errbar_cycle)])
-            item_params = params, graphs_params
-            for prop, value in item._extract_params(item_params).items():
-                item.set_property(prop, value)
+            override_properties(item, (params, graphs_params))
 
         all_params = params, graphs_params
         canvas = Canvas(all_params, self._test_items, False)

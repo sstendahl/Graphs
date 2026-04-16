@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for item instantiation."""
-from graphs.item import DataItem, FillItem, TextItem, new_from_dict
+from gi.repository import Graphs
+
+from graphs.item import DataItem, new_from_dict
 
 import pytest
 
@@ -14,7 +16,7 @@ def test_new_from_dict_data_item():
         "color": "#1A5FB4",
     }
     item = new_from_dict(d)
-    assert isinstance(item, DataItem)
+    assert isinstance(item, Graphs.DataItem)
     assert item.get_name() == "My Dataset"
     assert item.get_xydata() == ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0])
     assert item.get_xerr() == [1, 3, 2]
@@ -32,7 +34,7 @@ def test_new_from_dict_text_item():
         "color": "#000000",
     }
     item = new_from_dict(d)
-    assert isinstance(item, TextItem)
+    assert isinstance(item, Graphs.TextItem)
     assert item.props.text == "Hello"
     assert item.props.xanchor == pytest.approx(0.5)
     assert item.props.yanchor == pytest.approx(0.25)
@@ -48,7 +50,7 @@ def test_new_from_dict_fill_item():
         "alpha": 0.25,
     }
     item = new_from_dict(d)
-    assert isinstance(item, FillItem)
+    assert isinstance(item, Graphs.FillItem)
 
 
 def test_new_from_dict_unknown_type_raises():

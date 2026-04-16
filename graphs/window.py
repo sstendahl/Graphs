@@ -56,20 +56,20 @@ class PythonWindow(Graphs.Window):
                 new_style[1]["errorbar.color_cycle"].by_key()["color"]
 
             for item_ in data:
-                item_.reset(old_style, new_style)
+                item.reset(item_, old_style, new_style)
 
             count = 0
             errbar_count = 0
             for item_ in data:
                 if (
-                    isinstance(item_, (item.DataItem, item.EquationItem))
+                    isinstance(item_, (Graphs.DataItem, Graphs.EquationItem))
                     and item_.get_color() in old_cycle
                 ):
                     count %= len(new_cycle)
                     item_.set_color(new_cycle[count])
                     count += 1
 
-                    if isinstance(item_, item.DataItem):
+                    if isinstance(item_, Graphs.DataItem):
                         has_err = item_.get_xerr() or item_.get_yerr()
                         if not has_err:
                             continue

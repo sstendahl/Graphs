@@ -5,7 +5,7 @@ from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs import canvas
-from graphs.item import DataItem, FillItem
+from graphs.item import ItemFactory
 
 import numexpr
 
@@ -39,7 +39,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._x_fit = numpy.linspace(*self._xlim, 5000)
 
         style = Graphs.StyleManager.get_instance().get_system_style_params()
-        self.data_curve = DataItem.new(
+        self.data_curve = ItemFactory.new_data_item(
             style,
             xdata=xdata,
             ydata=ydata,
@@ -49,19 +49,19 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             markerstyle=MARKER_STYLE,
             markersize=MARKER_SIZE,
         )
-        self.fitted_curve = DataItem.new(
+        self.fitted_curve = ItemFactory.new_data_item(
             style,
             xdata=[],
             ydata=[],
             color=FIT_COLOR,
         )
-        self.fill = FillItem.new(
+        self.fill = ItemFactory.new_fill_item(
             style,
             ([], [], []),
             color=FILL_COLOR,
             alpha=FILL_ALPHA,
         )
-        self.residuals_item = DataItem.new(
+        self.residuals_item = ItemFactory.new_data_item(
             style,
             xdata=[],
             ydata=[],

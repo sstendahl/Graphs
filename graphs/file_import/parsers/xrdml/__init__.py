@@ -5,8 +5,9 @@ from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-from graphs import file_io, item
+from graphs import file_io
 from graphs.file_import.parsers import Parser
+from graphs.item import ItemFactory
 
 import numpy
 
@@ -57,7 +58,7 @@ class XrdmlParser(Parser):
                 xdata = numpy.linspace(start_pos, end_pos, len(ydata))
                 xdata = numpy.ndarray.tolist(xdata)
         items.add(
-            item.DataItem.new(
+            ItemFactory.new_data_item(
                 data.get_selected_style_params(),
                 xdata,
                 ydata,

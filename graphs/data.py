@@ -146,14 +146,14 @@ class Data(Graphs.Data):
     def _on_item_added(self, item_: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            copy.deepcopy(item_.to_dict()),
+            copy.deepcopy(item.to_dict(item_)),
         ))
 
     @staticmethod
     def _on_item_removed(self, item_: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, item_.to_dict()),
+            (index, item.to_dict(item_)),
         ))
 
     @staticmethod
@@ -185,7 +185,7 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([item_.to_dict() for item_ in self])
+        self._data_copy = copy.deepcopy([item.to_dict(i) for i in self])
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -415,13 +415,13 @@ class Data(Graphs.Data):
         hide_unselected = figure_settings.get_hide_unselected()
 
         for item_ in self:
-            if not isinstance(item_, (item.DataItem, item.EquationItem)):
+            if not isinstance(item_, (Graphs.DataItem, Graphs.EquationItem)):
                 continue
 
             if not item_.get_selected() and hide_unselected:
                 continue
 
-            if isinstance(item_, item.EquationItem):
+            if isinstance(item_, Graphs.EquationItem):
                 equation_items.append(item_)
                 continue
 
@@ -541,7 +541,7 @@ class Data(Graphs.Data):
         figure_settings = self.get_figure_settings()
         return {
             "version": self.get_version(),
-            "data": [item_.to_dict() for item_ in self],
+            "data": [item.to_dict(item_) for item_ in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)

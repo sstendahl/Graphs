@@ -7,8 +7,9 @@ from gettext import pgettext as C_
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import file_io, item
+from graphs import file_io
 from graphs.file_import.parsers import Parser
+from graphs.item import ItemFactory
 from graphs.misc import ParseError
 
 import numexpr
@@ -293,7 +294,7 @@ class SpreadsheetParser(Parser):
                 if item_settings.use_yerr else (None, None)
 
             items.add(
-                item.DataItem.new(
+                ItemFactory.new_data_item(
                     style,
                     xdata,
                     ydata,

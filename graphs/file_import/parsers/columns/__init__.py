@@ -4,8 +4,8 @@ from gettext import pgettext as C_
 
 from gi.repository import GLib, Graphs
 
-from graphs import item
 from graphs.file_import.parsers import Parser
+from graphs.item import ItemFactory
 from graphs.misc import ParseError
 
 import numexpr
@@ -65,7 +65,7 @@ class ColumnsParser(Parser):
                 xlabel = parser.get_header(item_settings.column_x)
 
             items.add(
-                item.DataItem.new(
+                ItemFactory.new_data_item(
                     style,
                     xdata,
                     ydata,
