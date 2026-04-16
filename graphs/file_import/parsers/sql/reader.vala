@@ -89,7 +89,7 @@ namespace Graphs {
             }
         }
 
-        public double[] get_column_data (string table_name, string column_name) throws IOError {
+        private double[] get_column_data (string table_name, string column_name) throws IOError {
             double[] result = new double[64];
             int n_results = 0;
             Sqlite.Statement stmt;
@@ -127,6 +127,35 @@ namespace Graphs {
                 names.append_val (stmt.column_text (0));
             }
             return names.data;
+        }
+
+        public string parse (ItemList items, ImportSettings settings, Data data) throws IOError {
+            string table_name = settings.get_string ("table-name");
+            if (get_numeric_columns (table_name).length == 0) {
+                string msg = "Could not import data from table \"%s\", no numeric columns were found";
+                return msg.printf (table_name);
+            }
+
+            string x_column = settings.get_string ("x-column");
+            string y_column = settings.get_string ("y-column");
+            double[] xdata = get_column_data (table_name, x_column);
+            double[] ydata = get_column_data (table_name, y_column);
+
+            if (xdata.length == 0) return _("No data found in table column");
+
+            double[]? xerr = null;
+            double[]? yerr = null;
+            if (settings.get_boolean ("use-xerr"))
+                xerr = get_column_data (table_name, settings.get_string ("xerr-column"));
+            if (settings.get_boolean ("use-yerr"))
+                yerr = get_column_data (table_name, settings.get_string ("yerr-column"));
+
+            DataItem item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+            item.xlabel = x_column;
+            item.ylabel = y_column;
+            item.name = x_column + " vs " + y_column;
+            items.add (item);
+            return "";
         }
     }
 }
