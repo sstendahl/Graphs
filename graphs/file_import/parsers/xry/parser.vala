@@ -11,13 +11,6 @@ namespace Graphs {
         }
     }
 
-    [Compact]
-    private class XryText {
-        public double x;
-        public double y;
-        public string text;
-    }
-
     /**
      * Reader class for parsing xry files
      */
@@ -25,15 +18,14 @@ namespace Graphs {
         private DataInputStream input;
         private XryColumn[] columns;
         private double[] xdata;
-        private XryText[] texts;
 
         private void skip (int n) throws Error {
             for (int i = 0; i < n; i++) input.read_line ();
         }
 
-        public void parse (File file, out int item_count, out int text_item_count) throws Error {
+        public void parse (Data data, ImportSettings settings, ItemList items) throws Error {
             var converter = new CharsetConverter ("UTF-8", "ISO-8859-1");
-            var conv_stream = new ConverterInputStream (file.read (), converter);
+            var conv_stream = new ConverterInputStream (settings.file.read (), converter);
             this.input = new DataInputStream (conv_stream);
 
             skip (4);
@@ -43,7 +35,7 @@ namespace Graphs {
 
             skip (12);
             string[] info = input.read_line ().strip ().split (" ");
-            item_count = (int) evaluate_string (info[0]);
+            int item_count = (int) evaluate_string (info[0]);
             int length = (int) evaluate_string (info[1]);
 
             columns = new XryColumn[item_count];
@@ -74,36 +66,33 @@ namespace Graphs {
                     column.data = column.data[column.first_val:];
                 if (column.last_val != column.data.length - 1 + column.first_val)
                     column.data.resize (column.last_val - column.first_val + 1);
+
+                string name = settings.filename;
+                if (item_count > 1) name = "%s - %d".printf (name, i + 1);
+
+                double[] xdata = this.xdata[column.first_val:column.last_val + 1];
+                DataItem item = ItemFactory.new_data_item (data, xdata, column.data);
+                item.name = name;
+                item.xlabel = _("β (°)");
+                item.ylabel = _("R (1/s)");
+                items.add (item);
             }
 
             skip (9 + item_count);
-            text_item_count = (int) evaluate_string (input.read_line ());
-            texts = new XryText[text_item_count];
-
+            int text_item_count = (int) evaluate_string (input.read_line ());
             for (int i = 0; i < text_item_count; i++) {
-                XryText text = new XryText ();
-
                 string[] values = input.read_line ().strip ().split (" ");
-                text.x = evaluate_string (values[5]);
-                text.y = evaluate_string (values[6]);
-                text.text = string.joinv (" ", values[7:]);
 
-                texts[i] = (owned) text;
+                double xanchor = evaluate_string (values[5]);
+                double yanchor = evaluate_string (values[6]);
+                string text = string.joinv (" ", values[7:]);
+
+                TextItem item = ItemFactory.new_text_item (data, xanchor, yanchor, text);
+                item.name = text;
+                items.add (item);
             }
 
             input.close ();
-        }
-
-        public void get_data_pair (int idx, out double[] xdata, out double[] ydata) {
-            ydata = columns[idx].data;
-            xdata = this.xdata[columns[idx].first_val:columns[idx].last_val + 1];
-        }
-
-        public string get_text_data (int idx, out double x, out double y) {
-            unowned XryText text = texts[idx];
-            x = text.x;
-            y = text.y;
-            return text.text;
         }
     }
 }

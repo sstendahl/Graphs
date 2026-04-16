@@ -33,8 +33,18 @@ namespace Graphs {
             instance = this;
         }
 
+        protected signal DataItem data_item_request (Data data, Bytes xdata, Bytes ydata, Bytes? xerr, Bytes? yerr);
         protected signal GeneratedDataItem generated_data_item_request (Data data, string equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (Data data, string equation);
+        protected signal TextItem text_item_request (Data data, double xanchor, double yanchor, string text);
+
+        public static DataItem new_data_item (Data data, double[] xdata, double[] ydata, double[]? xerr = null, double[]? yerr = null) {
+            Bytes? b_xerr = xerr == null ? null : new Bytes ((uint8[]) xerr);
+            Bytes? b_yerr = yerr == null ? null : new Bytes ((uint8[]) yerr);
+            Bytes b_xdata = new Bytes ((uint8[]) xdata);
+            Bytes b_ydata = new Bytes ((uint8[]) ydata);
+            return instance.data_item_request.emit (data, b_xdata, b_ydata, b_xerr, b_yerr);
+        }
 
         public static GeneratedDataItem new_generated_data_item (Data data, string equation, string xstart, string xstop, int steps, Scale scale) {
             return instance.generated_data_item_request.emit (data, equation, xstart, xstop, steps, scale);
@@ -42,6 +52,10 @@ namespace Graphs {
 
         public static EquationItem new_equation_item (Data data, string equation) {
             return instance.equation_item_request.emit (data, equation);
+        }
+
+        public static TextItem new_text_item (Data data, double xanchor, double yanchor, string text) {
+            return instance.text_item_request.emit (data, xanchor, yanchor, text);
         }
     }
 
