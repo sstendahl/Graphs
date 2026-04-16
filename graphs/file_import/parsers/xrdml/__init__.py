@@ -8,8 +8,6 @@ from gi.repository import Graphs
 from graphs import file_io, item
 from graphs.file_import.parsers import Parser
 
-from matplotlib import RcParams
-
 import numpy
 
 
@@ -30,7 +28,7 @@ class XrdmlParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        style: tuple[RcParams, dict],
+        data: Graphs.Data,
     ) -> None:
         """Import data from xrdml file."""
         content = file_io.parse_xml(settings.get_file())
@@ -60,7 +58,7 @@ class XrdmlParser(Parser):
                 xdata = numpy.ndarray.tolist(xdata)
         items.add(
             item.DataItem.new(
-                style,
+                data.get_selected_style_params(),
                 xdata,
                 ydata,
                 name=settings.get_filename(),

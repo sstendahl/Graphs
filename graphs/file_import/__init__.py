@@ -108,9 +108,8 @@ class DataImporter(Graphs.DataImporter):
         data: Graphs.Data,
     ) -> str:
         parser = parsers.get_parser(settings.get_mode())
-        style = data.get_selected_style_params()
         try:
-            parser.parse(itemlist, settings, style)
+            parser.parse(itemlist, settings, data)
             return ""
         except ParseError as error:
             return error.message

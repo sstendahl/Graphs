@@ -11,8 +11,6 @@ from graphs import file_io, item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
-from matplotlib import RcParams
-
 import numexpr
 
 import numpy
@@ -238,9 +236,10 @@ class SpreadsheetParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        style: tuple[RcParams, dict],
+        data: Graphs.Data,
     ) -> None:
         """Import data from ODS or XLSX file."""
+        style = data.get_selected_style_params()
         file = settings.get_file()
         sheet_index = settings.get_int("sheet-index")
 
