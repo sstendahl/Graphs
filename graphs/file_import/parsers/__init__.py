@@ -27,7 +27,7 @@ class Parser(Graphs.Parser):
         )
 
     @staticmethod
-    def parse(_items, _settings, _style) -> None:
+    def parse(_items, _settings, _data) -> None:
         """
         Parse a file given params.
 

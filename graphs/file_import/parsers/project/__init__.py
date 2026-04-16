@@ -9,8 +9,6 @@ from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 from graphs.project import ProjectParseError
 
-from matplotlib import RcParams
-
 
 class ProjectParser(Parser):
     """Project parser."""
@@ -29,7 +27,7 @@ class ProjectParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        _style: tuple[RcParams, dict],
+        _data: Graphs.Data,
     ) -> None:
         """Import data from project file."""
         try:
