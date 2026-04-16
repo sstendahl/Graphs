@@ -259,3 +259,23 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     def reset(self):
         """Not yet implemented."""
         raise NotImplementedError
+
+
+class ItemFactory(Graphs.ItemFactory):
+    """Item factory."""
+
+    _items = {
+        "generated-data-item": GeneratedDataItem,
+        "equation-item": EquationItem,
+    }
+
+    def __init__(self):
+        super().__init__()
+        for item, cls in self._items.items():
+            self.connect(item + "-request", self._on_request, cls)
+
+    @staticmethod
+    def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:
+        style = data.get_selected_style_params()
+        *args, cls = args
+        return cls.new(style, *args)

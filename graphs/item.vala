@@ -24,6 +24,28 @@ namespace Graphs {
     }
 
     /**
+     * Item factory for creating Python items.
+     */
+    public class ItemFactory : Object {
+        private static ItemFactory instance;
+
+        construct {
+            instance = this;
+        }
+
+        protected signal GeneratedDataItem generated_data_item_request (Data data, string equation, string xstart, string xstop, int steps, Scale scale);
+        protected signal EquationItem equation_item_request (Data data, string equation);
+
+        public static GeneratedDataItem new_generated_data_item (Data data, string equation, string xstart, string xstop, int steps, Scale scale) {
+            return instance.generated_data_item_request.emit (data, equation, xstart, xstop, steps, scale);
+        }
+
+        public static EquationItem new_equation_item (Data data, string equation) {
+            return instance.equation_item_request.emit (data, equation);
+        }
+    }
+
+    /**
      * Base item class
      */
     public class Item : Object {

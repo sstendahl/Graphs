@@ -56,12 +56,23 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            this.settings.set_string ("equation", this.equation.get_text ());
-            this.settings.set_string ("xstart", xstart.get_text ());
-            this.settings.set_string ("xstop", xstop.get_text ());
-            this.settings.set_int ("steps", (int) this.steps.get_value ());
-            this.settings.set_enum ("scale", (Scale) this.scale.get_selected ());
-            Item item = PythonHelper.generate_data (window.data, item_name.get_text ());
+            string equation = this.equation.get_text ();
+            string xstart = this.xstart.get_text ();
+            string xstop = this.xstop.get_text ();
+            int steps = (int) this.steps.get_value ();
+            Scale scale = (Scale) this.scale.get_selected ();
+
+            this.settings.set_string ("equation", equation);
+            this.settings.set_string ("xstart", xstart);
+            this.settings.set_string ("xstop", xstop);
+            this.settings.set_int ("steps", steps);
+            this.settings.set_enum ("scale", scale);
+
+            string name = item_name.get_text ();
+            if (name == "") name = "Y = " + equation;
+
+            Item item = ItemFactory.new_generated_data_item (window.data, equation, xstart, xstop, steps, scale);
+            item.name = name;
             Item[] items = {item};
             window.data.add_items (items);
             window.data.optimize_limits ();

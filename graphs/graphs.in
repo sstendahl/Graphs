@@ -76,11 +76,13 @@ if __name__ == "__main__":
         scales.register_scales()
 
         from graphs.file_import import DataImporter
+        from graphs.item import ItemFactory
         from graphs.python_helper import PythonHelper
         from graphs.styles import StyleManager
         PythonHelper()
         StyleManager()
         DataImporter()
+        ItemFactory()
 
     from gi.repository import Graphs
     application = Graphs.Application.new()
