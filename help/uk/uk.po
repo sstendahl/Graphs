@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-15 22:00+0300\n"
+"PO-Revision-Date: 2026-04-16 21:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -310,8 +310,7 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:107
-msgid ""
-"The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
 msgstr ""
 "У розділі «Статистика» буде показано два показники відповідності: R² та КСКП."
 
@@ -479,6 +478,9 @@ msgid ""
 "when there are fewer data points than free parameters, or if the data does "
 "not constrain the model well enough to determine a unique solution."
 msgstr ""
+"Для вибраної моделі недостатньо даних. Це може статися, наприклад, коли точок"
+" даних менше, ніж вільних параметрів, або якщо дані недостатньо добре"
+" обмежують модель для визначення однозначного розв'язку."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:142
@@ -491,6 +493,8 @@ msgid ""
 "The covariance matrix is unstable, so the confidence band cannot be computed "
 "reliably."
 msgstr ""
+"Коваріаційна матриця нестабільна, тому довірчу смугу неможливо обчислити"
+" надійно."
 
 #. (itstool) path: section/title
 #: C/curve_fitting.page:148
@@ -503,6 +507,8 @@ msgid ""
 "Three fitting algorithms are available, selectable from the primary menu "
 "under <em>Optimization Method</em>:"
 msgstr ""
+"Доступні три алгоритми апроксимації, які можна вибрати в головному меню у"
+" розділі <em>Метод оптимізації</em>:"
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:152
@@ -516,6 +522,9 @@ msgid ""
 "not support parameter bounds, the minimum and maximum fields are hidden when "
 "this method is selected."
 msgstr ""
+"Широко використовуваний алгоритм, який ефективно працює для більшості задач."
+" Підтримки обмеження параметрів не передбачено — поля мінімуму та максимуму"
+" буде приховано, коли вибрано цей метод."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:156
@@ -528,6 +537,8 @@ msgid ""
 "Handles bounds well and performs reliably across a wide range of problems. A "
 "good default choice for most use cases."
 msgstr ""
+"Добре справляється з межами та надійно працює в широкому спектрі задач."
+" Добрий типовий варіант для більшості випадків використання."
 
 #. (itstool) path: item/title
 #: C/curve_fitting.page:160
@@ -540,6 +551,8 @@ msgid ""
 "Uses rectangular trust regions and is well suited to smaller problems where "
 "bounds are required."
 msgstr ""
+"Використовує прямокутні довірчі області та добре підходить для менших задач,"
+" де потрібні межі."
 
 #. (itstool) path: page/title
 #: C/edit-item.page:7
@@ -553,6 +566,10 @@ msgid ""
 "varies depending on the item type, but all items share a common set of "
 "properties at the top."
 msgstr ""
+"Кожен запис на бічній панелі можна редагувати, навівши на нього вказівник"
+" миші і клацнувши лівою кнопкою. Панель редагування залежить від типу"
+" елемента, але всі елементи мають спільний набір властивостей у верхній"
+" частині."
 
 #. (itstool) path: section/title
 #: C/edit-item.page:10
@@ -570,6 +587,13 @@ msgid ""
 "position to either the left or right axis. This allows multiple datasets "
 "with different scales to be displayed on the same figure."
 msgstr ""
+"Усі елементи мають назву, яку буде показано в умовних позначеннях та на"
+" бічній панелі, і її можна довільно змінювати. Зверніть увагу, що у назвах"
+" передбачено підтримку синтаксису LaTeX з використанням символів долара."
+" Наприклад, $\\mu_0$ додасть до грецької літери μ нижній індекс 0. Кожен"
+" елемент також можна призначити певній осі: можна встановити нижню і верхню"
+" позицію вісі X, а позицію Y — як ліворуч, так і праворуч. Це надає змогу"
+" показувати кілька наборів даних з різними масштабами на одному рисунку."
 
 #. (itstool) path: section/title
 #: C/edit-item.page:14
@@ -582,6 +606,8 @@ msgid ""
 "For datasets and generated datasets, the following appearance options are "
 "available:"
 msgstr ""
+"Для наборів даних та створених наборів даних доступні такі параметри"
+" зовнішнього вигляду:"
 
 #. (itstool) path: item/title
 #: C/edit-item.page:18 C/edit-style.page:52
@@ -595,6 +621,9 @@ msgid ""
 "Dotted, Dashed, and Dashdot. When set to None, no line is drawn between "
 "points."
 msgstr ""
+"Стиль лінії, що з'єднує точки даних. Варіанти: «Немає», «Суцільна»,"
+" «Пунктирна», «Штрихова» та «Штрих-пунктирна». Якщо встановлено значення"
+" «Немає», лінію між точками намальовано не буде."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:22
@@ -607,6 +636,8 @@ msgid ""
 "The thickness of the line. Only enabled when a linestyle other than None is "
 "selected."
 msgstr ""
+"Товщина лінії. Буде увімкнено, лише якщо вибрано стиль лінії, відмінний від"
+" «Немає»."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:26 C/edit-style.page:60
@@ -620,6 +651,9 @@ msgid ""
 "available, including circles, squares, triangles, stars, diamonds, and more. "
 "Set to None to draw no markers."
 msgstr ""
+"Фігура, намальована в кожній точці даних. Доступний широкий вибір форм"
+" позначок, зокрема кола, квадрати, трикутники, зірки, ромби тощо. Встановіть"
+" значення «Немає», щоб програма не показувала позначки."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:30 C/edit-style.page:64
@@ -632,6 +666,8 @@ msgid ""
 "The size of the markers. Only enabled when a marker style other than None is "
 "selected."
 msgstr ""
+"Розмір позначок. Буде увімкнено, лише якщо вибрано стиль позначок, відмінний"
+" від «Немає»."
 
 #. (itstool) path: section/title
 #: C/edit-item.page:36
@@ -646,11 +682,15 @@ msgid ""
 "algebraically. The available line options are the same as for datasets, "
 "except that markers are not supported for equations."
 msgstr ""
+"Пункти рівняння надають можливість редагування самого рівняння безпосередньо"
+" на панелі редагування. Для алгебраїчного спрощення виразу доступна кнопка <"
+"em>Спростити</em>. Доступні параметри ліній такі ж, як і для наборів даних,"
+" за винятком того, що підтримки позначок для рівнянь не передбачено."
 
 #. (itstool) path: section/title
 #: C/edit-item.page:40
 msgid "Generated Data: Equation and Range"
-msgstr ""
+msgstr "Створені дані: рівняння і діапазон"
 
 #. (itstool) path: section/p
 #: C/edit-item.page:41
@@ -664,6 +704,14 @@ msgid ""
 "available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, "
 "Square Root, and Inverse."
 msgstr ""
+"Створені набори даних мають ті самі параметри, що й звичайні набори даних."
+" Крім того, вони надають те саме поле рівняння, що й елементи рівняння, а"
+" також елементи керування діапазоном X та роздільністю. Поля <em>Початок X<"
+"/em> та <em>Кінець X</em> визначають межі згенерованих даних. Поле <em>Кроки<"
+"/em> контролює, скільки точок даних буде створено. Налаштування <em>Масштаб<"
+"/em> визначає відстань між цими точками, з такими доступними параметрами:"
+" Лінійний, Логарифмічний (за основою 10), Логарифмічний (за основою 2),"
+" Радіани, Квадратний корінь та Інверсія."
 
 #. (itstool) path: section/title
 #: C/edit-item.page:44 C/edit-style.page:70 C/import.page:45
@@ -676,6 +724,8 @@ msgid ""
 "For datasets that have error bar data, the appearance of the error bars can "
 "be configured in the <em>Error Bars</em> section:"
 msgstr ""
+"Для наборів даних, що містять дані про смуги похибок, зовнішній вигляд смуг"
+" похибок можна налаштувати в розділі <em>Позначки похибок</em>:"
 
 #. (itstool) path: item/title
 #: C/edit-item.page:48
@@ -688,6 +738,8 @@ msgid ""
 "Toggle the visibility of horizontal (X) and vertical (Y) error bars "
 "independently."
 msgstr ""
+"Увімкнути або вимкнути видимість горизонтальних (X) і вертикальних (Y) смуг"
+" похибок незалежно."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:52 C/edit-style.page:86
@@ -700,6 +752,8 @@ msgid ""
 "When enabled, error bars are drawn on top of the data line and markers "
 "rather than beneath them."
 msgstr ""
+"Якщо позначено, смуги похибок буде намальовано поверх лінії даних та"
+" позначок, а не під ними."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:56
@@ -709,7 +763,7 @@ msgstr "Колір"
 #. (itstool) path: item/p
 #: C/edit-item.page:57
 msgid "The color of the error bars, set independently from the line color."
-msgstr ""
+msgstr "Колір смуг похибок, встановлюється незалежно від кольору лінії."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:60 C/edit-style.page:74
@@ -1042,8 +1096,7 @@ msgstr "Непрозорість ґратки"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:146
-msgid ""
-"The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
 msgstr ""
 
 #. (itstool) path: section/title
@@ -1652,8 +1705,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/manipulate.page:27
-msgid ""
-"<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
 msgstr ""
 
 #. (itstool) path: item/p
@@ -1689,8 +1741,7 @@ msgstr ""
 
 #. (itstool) path: item/p
 #: C/manipulate.page:51
-msgid ""
-"<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
 msgstr ""
 
 #. (itstool) path: item/p
@@ -2232,8 +2283,7 @@ msgstr "Панорамування"
 
 #. (itstool) path: item/p
 #: C/window.page:77
-msgid ""
-"Click and drag on the canvas to pan the view. This is the default mode."
+msgid "Click and drag on the canvas to pan the view. This is the default mode."
 msgstr ""
 
 #. (itstool) path: item/title
