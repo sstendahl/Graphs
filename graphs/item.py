@@ -29,16 +29,28 @@ class _PythonItemMixin:
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(
+    def override(
         self,
         style: tuple[RcParams, dict],
-        kwargs: dict = None,
+    ) -> None:
+        """Override all properties."""
+        # Combine rcparams and graphs_params into single dict:
+        style = style[0] | style[1]
+        for prop, (key, function) in self._style_properties.items():
+            value = style[key] if function is None else function(style[key])
+            self.set_property(prop, value)
+
+    @staticmethod
+    def _extract_params(
+        cls,
+        style: tuple[RcParams, dict],
+        kwargs: dict,
     ) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
-            for prop, (key, function) in self._style_properties.items()
-            if kwargs is None or prop not in kwargs
+            for prop, (key, function) in cls._style_properties.items()
+            if prop not in kwargs
         }
 
     def to_dict(self) -> dict:
