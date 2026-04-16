@@ -9,25 +9,6 @@ from matplotlib import RcParams
 import numpy
 
 
-def new_from_dict(dictionary: dict) -> Graphs.Item:
-    """Instanciate item from dict."""
-    match dictionary["type"]:
-        case "DataItem":
-            cls = DataItem
-        case "GeneratedDataItem":
-            cls = GeneratedDataItem
-        case "EquationItem":
-            cls = EquationItem
-        case "TextItem":
-            cls = TextItem
-        case "FillItem":
-            cls = FillItem
-        case _:
-            raise ValueError(f"could not find type {dictionary['type']}")
-    dictionary.pop("type")
-    return cls(**dictionary)
-
-
 class _PythonItemMixin:
 
     def reset(
@@ -277,6 +258,25 @@ class ItemFactory(Graphs.ItemFactory):
         for item, cls in self._items.items():
             self.connect(item + "-request", self._on_request, cls)
         self.connect("data-item-request", self._on_data_item_request)
+
+    @staticmethod
+    def new_from_dict(dictionary: dict) -> Graphs.Item:
+        """Instanciate item from dict."""
+        match dictionary["type"]:
+            case "DataItem":
+                cls = DataItem
+            case "GeneratedDataItem":
+                cls = GeneratedDataItem
+            case "EquationItem":
+                cls = EquationItem
+            case "TextItem":
+                cls = TextItem
+            case "FillItem":
+                cls = FillItem
+            case _:
+                raise ValueError(f"could not find type {dictionary['type']}")
+        dictionary.pop("type")
+        return cls(**dictionary)
 
     @staticmethod
     def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:

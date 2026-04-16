@@ -8,7 +8,8 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs
 
-from graphs import file_io, item, migrate
+from graphs import file_io, migrate
+from graphs.item import ItemFactory
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -101,21 +102,21 @@ class ProjectMigrator:
         # Handle items no longer making use of uuid as well as xdata and ydata
         # being stored in a tuple as data. Also truncate the Graphs prefix
         # before the typename
-        def _item_dict(item_):
+        def _item_dict(item):
             return_item = {
                 key: value
-                for (key, value) in item_.items()
+                for (key, value) in item.items()
                 if key not in ("uuid", "xdata", "ydata")
             }
-            return_item["data"] = (item_["xdata"], item_["ydata"], None, None)
+            return_item["data"] = (item["xdata"], item["ydata"], None, None)
             return_item["type"] = return_item["type"][6:]
             return return_item
 
         item_positions = []
         data = []
-        for item_ in self._project_dict["data"]:
-            item_positions.append(item_["uuid"])
-            data.append(_item_dict(item_))
+        for item in self._project_dict["data"]:
+            item_positions.append(item["uuid"])
+            data.append(_item_dict(item))
         self._project_dict["data"] = data
         history_states = self._project_dict["history-states"]
         n_states = len(history_states)
@@ -231,7 +232,8 @@ class ProjectValidator:
         )
 
         # Validate items
-        self.items = [item.new_from_dict(d) for d in self.project_dict["data"]]
+        data = self.project_dict["data"]
+        self.items = [ItemFactory.new_from_dict(d) for d in data]
 
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
@@ -253,13 +255,12 @@ class ProjectValidator:
                         index, prop, value = itemgetter(0, 1, 3)(change)
                         self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:
-                        item_dict_copy = copy.deepcopy(change)
-                        self.items.append(item.new_from_dict(item_dict_copy))
+                        data = copy.deepcopy(change)
+                        self.items.append(ItemFactory.new_from_dict(data))
                     case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
                     case Graphs.ChangeType.ITEMS_SWAPPED:
-                        item_ = self.items.pop(change[0])
-                        self.items.insert(change[1], item_)
+                        self.items.insert(change[1], self.items.pop(change[0]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[2])
             history_pos += 1
@@ -273,11 +274,11 @@ class ProjectValidator:
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:
-                        item_ = item.new_from_dict(copy.deepcopy(change[1]))
-                        self.items.insert(change[0], item_)
+                        data = copy.deepcopy(change[1])
+                        item = ItemFactory.new_from_dict(data)
+                        self.items.insert(change[0], item)
                     case Graphs.ChangeType.ITEMS_SWAPPED:
-                        item_ = self.items.pop(change[1])
-                        self.items.insert(change[0], item_)
+                        self.items.insert(change[0], self.items.pop(change[1]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[1])
 

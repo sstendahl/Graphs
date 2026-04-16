@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for item instantiation."""
-from graphs.item import DataItem, FillItem, TextItem, new_from_dict
+from graphs.item import DataItem, FillItem, ItemFactory, TextItem
 
 import pytest
 
@@ -13,7 +13,7 @@ def test_new_from_dict_data_item():
         "data": ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0], [1, 3, 2], [3, 1, 2]),
         "color": "#1A5FB4",
     }
-    item = new_from_dict(d)
+    item = ItemFactory.new_from_dict(d)
     assert isinstance(item, DataItem)
     assert item.get_name() == "My Dataset"
     assert item.get_xydata() == ([0.0, 1.0, 2.0], [5.0, 6.0, 7.0])
@@ -31,7 +31,7 @@ def test_new_from_dict_text_item():
         "yanchor": 0.25,
         "color": "#000000",
     }
-    item = new_from_dict(d)
+    item = ItemFactory.new_from_dict(d)
     assert isinstance(item, TextItem)
     assert item.props.text == "Hello"
     assert item.props.xanchor == pytest.approx(0.5)
@@ -47,7 +47,7 @@ def test_new_from_dict_fill_item():
         "color": "#62A0EA",
         "alpha": 0.25,
     }
-    item = new_from_dict(d)
+    item = ItemFactory.new_from_dict(d)
     assert isinstance(item, FillItem)
 
 
@@ -55,7 +55,7 @@ def test_new_from_dict_unknown_type_raises():
     """Test if new_from_dict raises ValueError for an unknown item type."""
     d = {"type": "BogusItem", "name": "X"}
     with pytest.raises(ValueError):
-        new_from_dict(d)
+        ItemFactory.new_from_dict(d)
 
 
 def test_data_item_default_data():
