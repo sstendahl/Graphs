@@ -1,10 +1,12 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from gi.repository import GObject, Graphs
+from gi.repository import GLib, GObject, Graphs
 
 from graphs import misc, utilities
 
 from matplotlib import RcParams
+
+import numpy
 
 
 def new_from_dict(dictionary: dict) -> Graphs.Item:
@@ -274,9 +276,32 @@ class ItemFactory(Graphs.ItemFactory):
         super().__init__()
         for item, cls in self._items.items():
             self.connect(item + "-request", self._on_request, cls)
+        self.connect("data-item-request", self._on_data_item_request)
 
     @staticmethod
     def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:
-        style = data.get_selected_style_params()
         *args, cls = args
-        return cls.new(style, *args)
+        return cls.new(data.get_selected_style_params(), *args)
+
+    @staticmethod
+    def _bytes_to_list(b: GLib.Bytes) -> list[float]:
+        if b is None:
+            return None
+        return numpy.frombuffer(b.get_data(), dtype=numpy.float64).tolist()
+
+    @staticmethod
+    def _on_data_item_request(
+        self,
+        data: Graphs.Data,
+        xdata: GLib.Bytes,
+        ydata: GLib.Bytes,
+        xerr: GLib.Bytes,
+        yerr: GLib.Bytes,
+    ) -> DataItem:
+        return DataItem.new(
+            data.get_selected_style_params(),
+            self._bytes_to_list(xdata),
+            self._bytes_to_list(ydata),
+            self._bytes_to_list(xerr),
+            self._bytes_to_list(yerr),
+        )
