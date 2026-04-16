@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-06 18:13+0000\n"
-"PO-Revision-Date: 2026-04-06 21:28+0200\n"
+"POT-Creation-Date: 2026-04-16 15:23+0000\n"
+"PO-Revision-Date: 2026-04-16 20:44+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -93,7 +93,7 @@ msgstr "risanje;graf;grafi;znanost;matematika;matematike;enačbe;podatki;grafiko
 msgid "New Window"
 msgstr "Novo okno"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:24
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:23
 msgid "Style Editor"
 msgstr "Urejevalnik slogov"
 
@@ -203,7 +203,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:101
+#: graphs/item.vala:158
 msgid "Equation"
 msgstr "Enačba"
 
@@ -838,7 +838,7 @@ msgid "Hide Unselected Items"
 msgstr "Skrij neizbrane elemente"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:85
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "Slog"
 
@@ -1324,7 +1324,7 @@ msgid "Open Style"
 msgstr "Odpri slog"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238
-#: graphs/style_editor/window.vala:200
+#: graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Urejevalnik sloga grafov"
 
@@ -1680,7 +1680,7 @@ msgstr "Spustite tukaj za uvoz"
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:391
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:389
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -1869,96 +1869,96 @@ msgstr "Ni mogoče uvoziti iz datoteke, slaba vrednost v vrstici %d"
 msgid "Item %d"
 msgstr "Element %d"
 
-#: graphs/file_import/parsers/project/__init__.py:19
+#: graphs/file_import/parsers/project/__init__.py:21
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Projektna datoteka programa Grafi"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:207
+#: graphs/file_import/parsers/spreadsheet/__init__.py:205
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Preglednica"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Preglednica"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:275
+#: graphs/file_import/parsers/spreadsheet/__init__.py:274
 msgid "No numeric data found in column."
 msgstr "V stolpcu ni številskih podatkov."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:289
+#: graphs/file_import/parsers/spreadsheet/__init__.py:288
 msgid "Columns do not have the same length."
 msgstr "Stolpci nimajo enake dolžine."
 
-#: graphs/file_import/parsers/sql/__init__.py:23
+#: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Zbirka podatkov"
 
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Zbirka podatkov SQLite"
 
-#: graphs/file_import/parsers/sql/__init__.py:41
-#, python-brace-format
-msgid "Could not import data from table \"{table_name}\", no numeric columns were found"
-msgstr "Ni mogoče uvoziti podatkov iz tabele »{table_name}«, številskih stolpcev ni možno najti"
+#: graphs/file_import/parsers/sql/reader.vala:135
+#, c-format
+msgid "Could not import data from table \"%s\", no numeric columns were found"
+msgstr "Ni mogoče uvoziti podatkov iz tabele »%s«, številskih stolpcev ni možno najti"
 
-#: graphs/file_import/parsers/sql/__init__.py:51
+#: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
 msgstr "V stolpcu tabele ni podatkov"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:22
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:66
 msgid "Intensity (cps)"
 msgstr "Intenzivnost (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:18
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:76
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:77
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
+#: graphs/file_import/__init__.py:117
 msgid "Import failed"
 msgstr "Uvoz je spodletel"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
@@ -2024,7 +2024,7 @@ msgstr "Barve %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Urejevalnik sloga grafov — %s"
 
-#: graphs/style_editor/window.vala:233
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ali ste prepričani, da želite izbrisati %s?"
@@ -2042,11 +2042,11 @@ msgstr "Martin Srebotnjak <miles@filmsi.net>"
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
 
-#: graphs/application.vala:23
+#: graphs/application.vala:22
 msgid "New window"
 msgstr "Novo okno"
 
-#: graphs/application.vala:25
+#: graphs/application.vala:24
 msgid "[FILE…]"
 msgstr "[DATOTEKA ...]"
 
@@ -2126,22 +2126,22 @@ msgstr "R²"
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:448
+#: graphs/curve_fitting.vala:449
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:108
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "Ni bilo mogoče razčleniti sloga {stylename}; nalaga se prednostni sistemski slog"
 
-#: graphs/data.py:113
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Slog {stylename} ne obstaja, nalaga se sistemski prednostni slog"
 
-#: graphs/data.py:604
+#: graphs/data.py:603
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -2167,19 +2167,19 @@ msgstr "Besedilne datoteke"
 msgid "Could not load {font}"
 msgstr "Ni bilo mogoče naložiti {font}"
 
-#: graphs/item.vala:49
+#: graphs/item.vala:106
 msgid "Dataset"
 msgstr "Nabor podatkov"
 
-#: graphs/item.vala:74
+#: graphs/item.vala:131
 msgid "Generated Dataset"
 msgstr "Ustvarjen nabor podatkov"
 
-#: graphs/item.vala:117
+#: graphs/item.vala:174
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.vala:123
+#: graphs/item.vala:180
 msgid "Fill"
 msgstr "Polnilo"
 
@@ -2188,69 +2188,69 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:241
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:302
+#: graphs/operations.py:292
 msgid "No data found in highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:296
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Nekateri elementi so brez stolpcev napake; ti bodo opuščeni"
 
-#: graphs/operations.py:317
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:458
+#: graphs/operations.py:448
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:466
+#: graphs/operations.py:456
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:623
+#: graphs/operations.py:613
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:629
+#: graphs/operations.py:619
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:632
+#: graphs/operations.py:622
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:638
+#: graphs/operations.py:628
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
-#: graphs/project.py:58
+#: graphs/project.py:57
 msgid "Project file is missing data"
 msgstr "V datoteki projekta manjkajo podatki"
 
-#: graphs/project.py:79
+#: graphs/project.py:78
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
 
-#: graphs/project.py:299
+#: graphs/project.py:298
 msgid "Failed to do legacy migration"
 msgstr "Migracija opuščenega je spodletela"
 
-#: graphs/project.py:301
+#: graphs/project.py:300
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/project.py:307
+#: graphs/project.py:306
 msgid "Failed to migrate project"
 msgstr "Migriranje projekta ni uspelo"
 
-#: graphs/project.py:313
+#: graphs/project.py:312
 msgid "Failed to validate project"
 msgstr "Preverjanje projekta ni uspelo"
 
@@ -2262,7 +2262,7 @@ msgstr "Shranjeni projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/python_helper.vala:37
+#: graphs/python_helper.vala:32
 msgid "Exported Data"
 msgstr "Izvoženi podatki"
 
@@ -2318,24 +2318,24 @@ msgstr "Vse datoteke"
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:157
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:184
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:185
 msgid "Draft"
 msgstr "Osnutek"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:191
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
-#: graphs/window.vala:381
+#: graphs/window.vala:379
 msgid "Open Location"
 msgstr "Odpri mesto"
