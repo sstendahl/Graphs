@@ -11,13 +11,6 @@ namespace Graphs {
         }
     }
 
-    [Compact]
-    private class XryText {
-        public double x;
-        public double y;
-        public string text;
-    }
-
     /**
      * Reader class for parsing xry files
      */
@@ -25,13 +18,12 @@ namespace Graphs {
         private DataInputStream input;
         private XryColumn[] columns;
         private double[] xdata;
-        private XryText[] texts;
 
         private void skip (int n) throws Error {
             for (int i = 0; i < n; i++) input.read_line ();
         }
 
-        public void parse (File file, out int item_count, out int text_item_count) throws Error {
+        public void parse (Data data, File file, ItemList items, out int item_count) throws Error {
             var converter = new CharsetConverter ("UTF-8", "ISO-8859-1");
             var conv_stream = new ConverterInputStream (file.read (), converter);
             this.input = new DataInputStream (conv_stream);
@@ -77,18 +69,17 @@ namespace Graphs {
             }
 
             skip (9 + item_count);
-            text_item_count = (int) evaluate_string (input.read_line ());
-            texts = new XryText[text_item_count];
-
+            int text_item_count = (int) evaluate_string (input.read_line ());
             for (int i = 0; i < text_item_count; i++) {
-                XryText text = new XryText ();
-
                 string[] values = input.read_line ().strip ().split (" ");
-                text.x = evaluate_string (values[5]);
-                text.y = evaluate_string (values[6]);
-                text.text = string.joinv (" ", values[7:]);
 
-                texts[i] = (owned) text;
+                double xanchor = evaluate_string (values[5]);
+                double yanchor = evaluate_string (values[6]);
+                string text = string.joinv (" ", values[7:]);
+
+                TextItem item = ItemFactory.new_text_item (data, xanchor, yanchor, text);
+                item.name = text;
+                items.add (item);
             }
 
             input.close ();
@@ -97,13 +88,6 @@ namespace Graphs {
         public void get_data_pair (int idx, out double[] xdata, out double[] ydata) {
             ydata = columns[idx].data;
             xdata = this.xdata[columns[idx].first_val:columns[idx].last_val + 1];
-        }
-
-        public string get_text_data (int idx, out double x, out double y) {
-            unowned XryText text = texts[idx];
-            x = text.x;
-            y = text.y;
-            return text.text;
         }
     }
 }

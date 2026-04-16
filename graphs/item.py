@@ -267,6 +267,7 @@ class ItemFactory(Graphs.ItemFactory):
     _items = {
         "generated-data-item": GeneratedDataItem,
         "equation-item": EquationItem,
+        "text-item": TextItem,
     }
 
     def __init__(self):

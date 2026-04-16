@@ -35,6 +35,7 @@ namespace Graphs {
 
         protected signal GeneratedDataItem generated_data_item_request (Data data, string equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (Data data, string equation);
+        protected signal TextItem text_item_request (Data data, double xanchor, double yanchor, string text);
 
         public static GeneratedDataItem new_generated_data_item (Data data, string equation, string xstart, string xstop, int steps, Scale scale) {
             return instance.generated_data_item_request.emit (data, equation, xstart, xstop, steps, scale);
@@ -42,6 +43,10 @@ namespace Graphs {
 
         public static EquationItem new_equation_item (Data data, string equation) {
             return instance.equation_item_request.emit (data, equation);
+        }
+
+        public static TextItem new_text_item (Data data, double xanchor, double yanchor, string text) {
+            return instance.text_item_request.emit (data, xanchor, yanchor, text);
         }
     }
 

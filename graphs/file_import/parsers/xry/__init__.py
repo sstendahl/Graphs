@@ -32,7 +32,7 @@ class XryParser(Parser):
         style = data.get_selected_style_params()
         parser = Graphs.XryParser.new()
 
-        item_count, text_item_count = parser.parse(settings.get_file())
+        item_count = parser.parse(data, settings.get_file(), items)
         name = settings.get_filename()
 
         for i in range(item_count):
@@ -47,13 +47,3 @@ class XryParser(Parser):
                     ylabel=_("R (1/s)"),
                 ),
             )
-
-        for i in range(text_item_count):
-            text, x, y = parser.get_text_data(i)
-            items.add(item.TextItem.new(
-                style,
-                x,
-                y,
-                text,
-                name=text,
-            ))
