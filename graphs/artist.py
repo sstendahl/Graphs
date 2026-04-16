@@ -252,6 +252,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         xerr = None if data[2] is None else numpy.asarray(data[2])
         yerr = None if data[3] is None else numpy.asarray(data[3])
 
+        if len(xdata) < 2:
+            return xdata, ydata, xerr, yerr
+
         # Detect singularities using Median Absolute Deviation
         grad = numpy.abs(numpy.gradient(ydata, xdata))
         median = numpy.median(grad)
