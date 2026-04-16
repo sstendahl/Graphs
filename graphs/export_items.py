@@ -5,7 +5,6 @@ import sys
 from gi.repository import Gio, Graphs
 
 from graphs import utilities
-from graphs.item import DataItem, EquationItem, GeneratedDataItem
 
 
 def export_items(
@@ -39,7 +38,7 @@ def _export_columns(
 
 def _save_item(
     file: Gio.File,
-    item: DataItem | EquationItem | GeneratedDataItem,
+    item: Graphs.DataItem | Graphs.EquationItem | Graphs.GeneratedDataItem,
     figure_settings: Graphs.FigureSettings,
 ) -> None:
     """Save Item in columns format."""

@@ -259,7 +259,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 class ItemFactory(Graphs.ItemFactory):
     """Item factory."""
 
-    _items = {
+    _default_new = {
         "generated-data-item": GeneratedDataItem,
         "equation-item": EquationItem,
         "text-item": TextItem,
@@ -267,7 +267,7 @@ class ItemFactory(Graphs.ItemFactory):
 
     def __init__(self):
         super().__init__()
-        for item, cls in self._items.items():
+        for item, cls in self._default_new.items():
             self.connect(item + "-request", self._on_request, cls)
         self.connect("data-item-request", self._on_data_item_request)
 
@@ -309,7 +309,7 @@ class ItemFactory(Graphs.ItemFactory):
         ydata: GLib.Bytes,
         xerr: GLib.Bytes,
         yerr: GLib.Bytes,
-    ) -> DataItem:
+    ) -> Graphs.DataItem:
         return DataItem.new(
             data.get_selected_style_params(),
             self._bytes_to_list(xdata),
