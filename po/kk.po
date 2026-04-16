@@ -7,18 +7,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-02-24 12:40+0000\n"
-"PO-Revision-Date: 2026-02-28 22:05+0500\n"
+"POT-Creation-Date: 2026-04-15 19:10+0000\n"
+"PO-Revision-Date: 2026-04-16 07:09+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <Kazakh>\n"
 "Language: kk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Графиктер"
 
@@ -112,6 +112,7 @@ msgid "New Window"
 msgstr "Жаңа терезе"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: graphs/application.vala:23
 msgid "Style Editor"
 msgstr "Стиль түзеткіші"
 
@@ -249,7 +250,7 @@ msgstr "Тек Y мәндерін импорттау, X мәндері авто�
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.py:225
+#: graphs/item.vala:101
 msgid "Equation"
 msgstr "Теңдеу"
 
@@ -742,8 +743,8 @@ msgstr "Масштаб"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Деректер нүктелері арасындағы аралықты анықтайды"
+msgid "How points are spaced"
+msgstr "Нүктелердің орналасу аралығы"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -819,7 +820,7 @@ msgid "Labels"
 msgstr "Белгілер"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:106
+#: graphs/style_editor/__init__.py:102
 msgid "Title"
 msgstr "Тақырыбы"
 
@@ -963,7 +964,7 @@ msgstr "Таңдалмаған элементтерді жасыру"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:82
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "Стиль"
 
@@ -1454,7 +1455,7 @@ msgid "Open Style"
 msgstr "Стильді ашу"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Графиктер стилінің редакторы"
 
@@ -1474,7 +1475,7 @@ msgstr "Файлды ашу…"
 msgid "Open Preview"
 msgstr "Алдын ала қарауды ашу"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:179
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Кенеп жүктелмеді"
@@ -1559,17 +1560,17 @@ msgstr "Таңдауыңызша"
 msgid "Add Fit to Data"
 msgstr "Деректерге жуықтауды қосу"
 
-#: data/ui/curve-fitting.blp:157
+#: data/ui/curve-fitting.blp:161
 msgid "Toggle Sidebar"
 msgstr "Бүйірлік панельді қосу/сөндіру"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:202
 msgid "Optimization Method"
 msgstr "Оңтайландыру әдісі"
 
 #. Translators: see
 #. https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Левенберг-Марквардт"
@@ -1577,46 +1578,46 @@ msgstr "Левенберг-Марквардт"
 #. Translators: see
 #. https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is
 #. a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:209
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Сенімді аймақты шағылыстыру"
 
 #. Translators: see
 #. https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:216
+#: data/ui/curve-fitting.blp:220
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:223
+#: data/ui/curve-fitting.blp:227
 msgid "Confidence Bounds"
 msgstr "Сенімділік шекаралары"
 
-#: data/ui/curve-fitting.blp:226
+#: data/ui/curve-fitting.blp:230
 msgctxt "confidence"
 msgid "None"
 msgstr "Ешқандай"
 
-#: data/ui/curve-fitting.blp:233
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% сенімділік"
 
-#: data/ui/curve-fitting.blp:240
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% сенімділік"
 
-#: data/ui/curve-fitting.blp:247
+#: data/ui/curve-fitting.blp:251
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% сенімділік"
 
-#: data/ui/curve-fitting.blp:255
+#: data/ui/curve-fitting.blp:259
 msgid "Show Residuals"
 msgstr "Қалдықтарды көрсету"
 
@@ -1815,7 +1816,7 @@ msgstr "Импорттау үшін осында тастаңыз"
 msgid "Show Sidebar"
 msgstr "Бүйірлік панельді көрсету"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:401
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:389
 msgid "Undo"
 msgstr "Болдырмау"
 
@@ -2003,8 +2004,8 @@ msgstr ""
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Файлдан импорттау мүмкін емес, %d-жолдағы мән қате"
 
-#: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "%d-элемент"
@@ -2019,35 +2020,35 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Графиктер жобасының файлы"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Электрондық кесте"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+#: graphs/file_import/parsers/spreadsheet/__init__.py:208
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Электрондық кесте"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:276
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
 msgstr "Бағанда сандық деректер табылмады."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:291
+#: graphs/file_import/parsers/spreadsheet/__init__.py:289
 msgid "Columns do not have the same length."
 msgstr "Бағандар ұзындығы бірдей емес."
 
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/__init__.py:23
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Дерекқор"
 
-#: graphs/file_import/parsers/sql/__init__.py:25
+#: graphs/file_import/parsers/sql/__init__.py:24
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite дерекқоры"
 
-#: graphs/file_import/parsers/sql/__init__.py:42
+#: graphs/file_import/parsers/sql/__init__.py:41
 #, python-brace-format
 msgid ""
 "Could not import data from table \"{table_name}\", no numeric columns were "
@@ -2056,7 +2057,7 @@ msgstr ""
 "\"{table_name}\" кестесінен деректерді импорттау мүмкін болмады, сандық "
 "бағандар табылмады"
 
-#: graphs/file_import/parsers/sql/__init__.py:52
+#: graphs/file_import/parsers/sql/__init__.py:51
 msgid "No data found in table column"
 msgstr "Кесте бағанында деректер табылмады"
 
@@ -2145,15 +2146,15 @@ msgstr "Y осінің белгісі"
 msgid "Defaults Updated"
 msgstr "Әдепкі параметрлер жаңартылды"
 
-#: graphs/style_editor/__init__.py:68
+#: graphs/style_editor/__init__.py:64
 msgid "Example Item"
 msgstr "Мысал элементі"
 
-#: graphs/style_editor/__init__.py:107 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:103 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X белгісі"
 
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:249
+#: graphs/style_editor/__init__.py:104 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y белгісі"
 
@@ -2168,25 +2169,33 @@ msgstr "Түс %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Графиктер стилінің редакторы — %s"
 
-#: graphs/style_editor/window.vala:234
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "%s өшіруді шынымен қалайсыз ба?"
 
-#: graphs/actions.vala:28
+#: graphs/actions.vala:30
 msgid "The Graphs Developers"
 msgstr "Graphs әзірлеушілері"
 
-#: graphs/actions.vala:42
+#: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:54
+#: graphs/actions.vala:184 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "%s өшірілді"
 
-#: graphs/curve_fitting.py:103
+#: graphs/application.vala:22
+msgid "New window"
+msgstr "Жаңа терезе"
+
+#: graphs/application.vala:24
+msgid "[FILE…]"
+msgstr "[ФАЙЛ…]"
+
+#: graphs/curve_fitting.py:99
 msgid "Residuals"
 msgstr "Қалдықтар"
 
@@ -2246,39 +2255,39 @@ msgstr ""
 "Сенімділік аралығының қатесі: \n"
 "Ковариация матрицасы тұрақсыз."
 
-#: graphs/curve_fitting.vala:250
+#: graphs/curve_fitting.vala:252
 msgid "Parameters"
 msgstr "Параметрлер"
 
-#: graphs/curve_fitting.vala:266
+#: graphs/curve_fitting.vala:268
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:446
+#: graphs/curve_fitting.vala:448
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s үшін сәйкестендіру параметрлері"
 
-#: graphs/data.py:108
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "{stylename} стилін талдау мүмкін болмады, жүйе қалаған стиль жүктелуде"
 
-#: graphs/data.py:113
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "{stylename} стилі жоқ, жүйе қалаған стиль жүктелуде"
 
-#: graphs/data.py:601
+#: graphs/data.py:603
 msgid "Failed to load project"
 msgstr "Жобаны жүктеу сәтсіз аяқталды"
 
@@ -2300,23 +2309,23 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Мәтіндік файлдар"
 
-#: graphs/graphs.in:74
+#: graphs/graphs.in:73
 msgid "Could not load {font}"
 msgstr "{font} жүктелмеді"
 
-#: graphs/item.py:83
+#: graphs/item.vala:49
 msgid "Dataset"
 msgstr "Мәліметтер жиыны"
 
-#: graphs/item.py:156
+#: graphs/item.vala:74
 msgid "Generated Dataset"
 msgstr "Жасалған мәліметтер жиыны"
 
-#: graphs/item.py:272
+#: graphs/item.vala:117
 msgid "Label"
 msgstr "Белгі"
 
-#: graphs/item.py:308
+#: graphs/item.vala:123
 msgid "Fill"
 msgstr "Толтыру"
 
@@ -2325,72 +2334,72 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib стилінің файлы"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:241
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Түрлендіруді орындау мүмкін емес, синтаксистің дұрыстығына көз жеткізіңіз"
 
-#: graphs/operations.py:302
+#: graphs/operations.py:292
 msgid "No data found in highlighted area"
 msgstr "Ерекшеленген аймақта мәліметтер табылмады"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:296
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Кейбір элементтерде қателік индикаторлары жоқ; олар алынып тасталады"
 
-#: graphs/operations.py:314
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "Біріктірілген мәліметтер"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:448
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "{name} бойынша орындалған операция нәтижесінде графикке салынатын теңдеу "
 "шықпады"
 
-#: graphs/operations.py:459
+#: graphs/operations.py:456
 msgid "Operation not supported for equations."
 msgstr "Операция теңдеулер үшін қолдау көрсетілмейді."
 
-#: graphs/operations.py:616
+#: graphs/operations.py:613
 msgid "No data found within the highlighted area"
 msgstr "Ерекшеленген аймақта мәліметтер табылмады"
 
-#: graphs/operations.py:622
+#: graphs/operations.py:619
 msgid "Operation not supported for data items"
 msgstr "Операция мәліметтер элементтері үшін қолдау көрсетілмейді"
 
-#: graphs/operations.py:625
+#: graphs/operations.py:622
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Операцияны орындау қатесі"
 
-#: graphs/operations.py:631
+#: graphs/operations.py:628
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Ерекшеленген аймақтан тыс мәліметтер алынып тасталды"
 
-#: graphs/project.py:58
+#: graphs/project.py:57
 msgid "Project file is missing data"
 msgstr "Жоба файлында мәліметтер жетіспейді"
 
-#: graphs/project.py:79
+#: graphs/project.py:78
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Жоба Graphs бағдарламасының үйлесімсіз жаңа нұсқасынан"
 
-#: graphs/project.py:287
+#: graphs/project.py:298
 msgid "Failed to do legacy migration"
 msgstr "Ескі нұсқадан көшіру сәтсіз аяқталды"
 
-#: graphs/project.py:289
+#: graphs/project.py:300
 msgid "Failed to parse project file"
 msgstr "Жоба файлын талдау сәтсіз аяқталды"
 
-#: graphs/project.py:295
+#: graphs/project.py:306
 msgid "Failed to migrate project"
 msgstr "Жобаны көшіру сәтсіз аяқталды"
 
-#: graphs/project.py:301
+#: graphs/project.py:312
 msgid "Failed to validate project"
 msgstr "Жобаны тексеру сәтсіз аяқталды"
 
@@ -2402,31 +2411,31 @@ msgstr "Сақталған жоба"
 msgid "Project"
 msgstr "Жоба"
 
-#: graphs/python_helper.vala:38
+#: graphs/python_helper.vala:37
 msgid "Exported Data"
 msgstr "Экспортталған мәліметтер"
 
-#: graphs/style_io.py:109
+#: graphs/style_io.py:108
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "{file} файлындағы {line} жолында қос нүкте жетіспейді"
 
-#: graphs/style_io.py:117
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "{file} файлында стильге қатысы жоқ {param} параметрі бар"
 
-#: graphs/style_io.py:120
+#: graphs/style_io.py:119
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "{file} файлындағы {param} параметрі еленбейді"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:123
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "{file} файлының {line} жолында қайталанатын кілт"
 
-#: graphs/style_io.py:142
+#: graphs/style_io.py:141
 #, python-brace-format
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
@@ -2435,54 +2444,57 @@ msgstr ""
 "{file} файлының {line} жолында қате мән, {key} пайдаланушы параметріне "
 "қолдау көрсетілмейді"
 
-#: graphs/style_io.py:166
+#: graphs/style_io.py:165
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "{file} файлының {line} жолында қате мән"
 
-#: graphs/style_io.py:171
+#: graphs/style_io.py:170
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "{filename} талдау мүмкін болмады"
 
-#: graphs/style_io.py:181
+#: graphs/style_io.py:180
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "{file} файлында атау тегі жоқ"
 
-#: graphs/styles.vala:58
+#: graphs/styles.vala:66
 msgid "System"
 msgstr "Жүйе"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Барлық файлдар"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Құжаттар порталы"
 
-#: graphs/window.vala:142
+#: graphs/window.vala:157
 msgid "Graphs (Development)"
 msgstr "Graphs (әзірлеу)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:184
 msgid "Untitled Project"
 msgstr "Атаусыз жоба"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:185
 msgid "Draft"
 msgstr "Шимай"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:191
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs - %s"
 
-#: graphs/window.vala:391
+#: graphs/window.vala:379
 msgid "Open Location"
 msgstr "Орналасқан жерді ашу"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "Деректер нүктелері арасындағы аралықты анықтайды"
 
 #~ msgid "Invalid .xry format"
 #~ msgstr ".xry пішімі жарамсыз"
