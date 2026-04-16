@@ -8,8 +8,6 @@ from gi.repository import Graphs
 from graphs import item
 from graphs.file_import.parsers import Parser
 
-from matplotlib import RcParams
-
 
 class XryParser(Parser):
     """Xry parser."""
@@ -28,9 +26,10 @@ class XryParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        style: tuple[RcParams, dict],
+        data: Graphs.Data,
     ) -> None:
         """Import data from .xry files used by Leybold X-ray apparatus."""
+        style = data.get_selected_style_params()
         parser = Graphs.XryParser.new()
 
         item_count, text_item_count = parser.parse(settings.get_file())

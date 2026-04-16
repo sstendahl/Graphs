@@ -8,8 +8,6 @@ from graphs import item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
-from matplotlib import RcParams
-
 import numexpr
 
 import numpy
@@ -30,9 +28,10 @@ class ColumnsParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        style: tuple[RcParams, dict],
+        data: Graphs.Data,
     ) -> None:
         """Import data from columns file."""
+        style = data.get_selected_style_params()
         parser = Graphs.ColumnsParser.new(settings)
 
         try:

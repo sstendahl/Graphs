@@ -9,8 +9,6 @@ from graphs import item
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 
-from matplotlib import RcParams
-
 
 class SqlParser(Parser):
     """SQL database parser."""
@@ -29,7 +27,7 @@ class SqlParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        style: tuple[RcParams, dict],
+        data: Graphs.Data,
     ) -> None:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
@@ -66,7 +64,7 @@ class SqlParser(Parser):
 
         items.add(
             item.DataItem.new(
-                style,
+                data.get_selected_style_params(),
                 xdata=xdata,
                 ydata=ydata,
                 xerr=xerr,
