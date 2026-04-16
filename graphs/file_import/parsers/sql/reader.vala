@@ -132,7 +132,7 @@ namespace Graphs {
         public string parse (ItemList items, ImportSettings settings, Data data) throws IOError {
             string table_name = settings.get_string ("table-name");
             if (get_numeric_columns (table_name).length == 0) {
-                string msg = "Could not import data from table \"%s\", no numeric columns were found";
+                string msg = _("Could not import data from table \"%s\", no numeric columns were found");
                 return msg.printf (table_name);
             }
 
