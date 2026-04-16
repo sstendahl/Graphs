@@ -30,19 +30,14 @@ def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     Creates bindings between item and artist properties so changes are handled
     automatically.
     """
-    match item.__gtype_name__:
-        case "GraphsPythonDataItem":
-            cls = DataItemArtistWrapper
-        case "GraphsPythonGeneratedDataItem":
-            cls = DataItemArtistWrapper
-        case "GraphsPythonEquationItem":
-            cls = EquationItemArtistWrapper
-        case "GraphsPythonFillItem":
-            cls = FillItemArtistWrapper
-        case "GraphsPythonTextItem":
-            cls = TextItemArtistWrapper
-        case _:
-            pass
+    if isinstance(item, Graphs.DataItem):
+        cls = DataItemArtistWrapper
+    elif isinstance(item, Graphs.EquationItem):
+        cls = EquationItemArtistWrapper
+    elif isinstance(item, Graphs.TextItem):
+        cls = TextItemArtistWrapper
+    elif isinstance(item, Graphs.FillItem):
+        cls = FillItemArtistWrapper
     artist_wrapper = cls(
         fig.axes[item.get_yposition() * 2 + item.get_xposition()],
         item,
