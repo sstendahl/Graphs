@@ -4,7 +4,6 @@ from gi.repository import Gio, Graphs
 
 from graphs import curve_fitting, export_items, file_io, operations
 from graphs.figure import Figure
-from graphs.item import EquationItem, GeneratedDataItem
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
 
@@ -15,13 +14,11 @@ import numpy
 import sympy
 
 _REQUESTS = (
-    "add-equation",
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
     "export-figure",
     "export-items",
-    "generate-data",
     "has-err",
     "perform-operation",
     "python-method",
@@ -43,21 +40,6 @@ class PythonHelper(Graphs.PythonHelper):
                 request,
                 getattr(self, "_on_" + request.replace("-", "_")),
             )
-
-    @staticmethod
-    def _on_add_equation_request(
-        self,
-        data: Graphs.Data,
-        equation: str,
-        name: str,
-    ) -> EquationItem:
-        if name == "":
-            name = f"Y = {equation}"
-        return EquationItem.new(
-            data.get_selected_style_params(),
-            equation,
-            name=name,
-        )
 
     @staticmethod
     def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
@@ -109,26 +91,6 @@ class PythonHelper(Graphs.PythonHelper):
                 transparent=settings.get_boolean("transparent"),
                 bbox_inches=None,
             )
-
-    @staticmethod
-    def _on_generate_data_request(
-        self,
-        data: Graphs.Data,
-        name: str,
-    ) -> GeneratedDataItem:
-        settings = Graphs.Application.get_settings_child("generate-data")
-        equation = settings.get_string("equation")
-        if name == "":
-            name = f"Y = {equation}"
-        return GeneratedDataItem.new(
-            data.get_selected_style_params(),
-            equation,
-            settings.get_string("xstart"),
-            settings.get_string("xstop"),
-            settings.get_int("steps"),
-            settings.get_enum("scale"),
-            name=name,
-        )
 
     @staticmethod
     def _on_has_err_request(self, item: Graphs.Item) -> int:

@@ -10,11 +10,6 @@ namespace Graphs {
             instance = this;
         }
 
-        protected signal EquationItem add_equation_request (Data data, string equation, string name);
-        public static EquationItem add_equation (Data data, string equation, string name) {
-            return instance.add_equation_request.emit (data, equation, name);
-        }
-
         protected signal StyleEditor create_style_editor_request ();
         public static StyleEditor create_style_editor () {
             return instance.create_style_editor_request.emit ();
@@ -48,11 +43,6 @@ namespace Graphs {
             int result = instance.has_err_request.emit (item);
             xerr = result == 1 || result == 3;
             yerr = result == 2 || result == 3;
-        }
-
-        protected signal GeneratedDataItem generate_data_request (Data data, string name);
-        public static GeneratedDataItem generate_data (Data data, string name) {
-            return instance.generate_data_request.emit (data, name);
         }
 
         protected signal void perform_operation_request (Window window, string name);
