@@ -4,11 +4,6 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
-    // Work around https://bugzilla.gnome.org/show_bug.cgi?id=683599
-    public void add_item_to_list (Item item, Gee.List<Item> list) {
-        list.add (item);
-    }
-
     public class Parser : Object {
         public string name { get; construct set; }
         public string ui_name { get; construct set; }
@@ -22,7 +17,7 @@ namespace Graphs {
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal bool init_import_settings_request (ImportSettings settings);
         protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
-        protected signal string parse_request (Gee.List<Item> itemlist, ImportSettings settings, Data data);
+        protected signal string parse_request (ItemList itemlist, ImportSettings settings, Data data);
 
         private static GLib.Settings mode_settings;
         private static string[] mode_settings_list;
@@ -107,7 +102,7 @@ namespace Graphs {
             }
         }
 
-        public static string parse (Gee.List<Item> itemlist, ImportSettings settings, Data data) {
+        public static string parse (ItemList itemlist, ImportSettings settings, Data data) {
             return instance.parse_request.emit (itemlist, settings, data);
         }
 

@@ -3,6 +3,27 @@ using Gdk;
 
 namespace Graphs {
     /**
+     * Small list class
+     */
+    public class ItemList : Object {
+        private Gee.List<Item> _items = new Gee.ArrayList<Item> ();
+
+        public void add (Item item) {
+            _items.add (item);
+        }
+
+        public void add_all (Item[] items) {
+            foreach (Item item in items) {
+                _items.add (item);
+            }
+        }
+
+        public Item[] to_array () {
+            return _items.to_array ();
+        }
+    }
+
+    /**
      * Base item class
      */
     public class Item : Object {

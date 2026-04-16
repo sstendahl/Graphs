@@ -2,10 +2,14 @@
 """Module for "parsing" project files."""
 from gettext import pgettext as C_
 
-from graphs import item, misc, project
+from gi.repository import Graphs
+
+from graphs import item, project
 from graphs.file_import.parsers import Parser
 from graphs.misc import ParseError
 from graphs.project import ProjectParseError
+
+from matplotlib import RcParams
 
 
 class ProjectParser(Parser):
@@ -22,10 +26,14 @@ class ProjectParser(Parser):
         )
 
     @staticmethod
-    def parse(settings, _style) -> misc.ItemList:
+    def parse(
+        items: Graphs.ItemList,
+        settings: Graphs.ImportSettings,
+        _style: tuple[RcParams, dict],
+    ) -> None:
         """Import data from project file."""
         try:
             project_dict = project.read_project_file(settings.get_file())
-            return list(map(item.new_from_dict, project_dict["data"]))
+            items.add_all(list(map(item.new_from_dict, project_dict["data"])))
         except ProjectParseError as e:
             raise ParseError(e.message) from e

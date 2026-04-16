@@ -4,7 +4,7 @@ import logging
 from gettext import gettext as _
 from pathlib import Path
 
-from gi.repository import Gee, Graphs, Gtk
+from gi.repository import Graphs, Gtk
 
 from graphs.file_import import parsers
 from graphs.file_import.parsers import (
@@ -103,16 +103,14 @@ class DataImporter(Graphs.DataImporter):
     @staticmethod
     def _on_parse_request(
         self,
-        itemlist: Gee.List,
+        itemlist: Graphs.ItemList,
         settings: Graphs.ImportSettings,
         data: Graphs.Data,
     ) -> str:
         parser = parsers.get_parser(settings.get_mode())
         style = data.get_selected_style_params()
         try:
-            items = parser.parse(settings, style)
-            for item in items:
-                Graphs.add_item_to_list(item, itemlist)
+            parser.parse(itemlist, settings, style)
             return ""
         except ParseError as error:
             return error.message

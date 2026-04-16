@@ -5,8 +5,10 @@ from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-from graphs import item, misc
+from graphs import item
 from graphs.file_import.parsers import Parser
+
+from matplotlib import RcParams
 
 
 class XryParser(Parser):
@@ -23,18 +25,20 @@ class XryParser(Parser):
         )
 
     @staticmethod
-    def parse(settings, style) -> misc.ItemList:
+    def parse(
+        items: Graphs.ItemList,
+        settings: Graphs.ImportSettings,
+        style: tuple[RcParams, dict],
+    ) -> None:
         """Import data from .xry files used by Leybold X-ray apparatus."""
         parser = Graphs.XryParser.new()
 
         item_count, text_item_count = parser.parse(settings.get_file())
-
         name = settings.get_filename()
-        items = []
 
         for i in range(item_count):
             xdata, ydata = parser.get_data_pair(i)
-            items.append(
+            items.add(
                 item.DataItem.new(
                     style,
                     xdata,
@@ -47,12 +51,10 @@ class XryParser(Parser):
 
         for i in range(text_item_count):
             text, x, y = parser.get_text_data(i)
-            items.append(item.TextItem.new(
+            items.add(item.TextItem.new(
                 style,
                 x,
                 y,
                 text,
                 name=text,
             ))
-
-        return items
