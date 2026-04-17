@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-17 08:53+0300\n"
+"PO-Revision-Date: 2026-04-17 20:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1171,7 +1171,7 @@ msgstr "Інтервал міток"
 #. (itstool) path: item/p
 #: C/edit-style.page:159
 msgid "The spacing between the axes and the axis labels."
-msgstr ""
+msgstr "Інтервал між осями і мітками осей."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:162
@@ -1181,7 +1181,7 @@ msgstr "Інтервал заголовка"
 #. (itstool) path: item/p
 #: C/edit-style.page:163
 msgid "The spacing between the plot area and the figure title."
-msgstr ""
+msgstr "Інтервал між областю креслення і заголовком рисунка."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:168
@@ -1194,11 +1194,13 @@ msgid ""
 "The following figure colors can each be set independently: Text, Ticks, "
 "Axes, Grid, Background, and Outline."
 msgstr ""
+"Наступні кольори фігур можна встановити незалежно один від одного: текст,"
+" поділки, осі, ґратка, фон і рамка."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:172
 msgid "Line Colors and Error Bar Colors"
-msgstr ""
+msgstr "Кольори ліній і кольори смужок похибок"
 
 #. (itstool) path: section/p
 #: C/edit-style.page:173
@@ -1208,6 +1210,11 @@ msgid ""
 "<em>Add Color</em> button, removed individually, and reordered by dragging. "
 "A separate color cycle is available for error bars."
 msgstr ""
+"Цикл кольорів лінії визначає послідовність кольорів, які автоматично"
+" призначаються новим елементам під час їхнього додавання до рисунка. Кольори"
+" можна додавати за допомогою кнопки <em>Додати колір</em>; можна вилучати"
+" окремі кольори та змінювати їхній порядок перетягуванням. Для смуг похибок"
+" доступний окремий цикл кольорів."
 
 #. (itstool) path: page/title
 #: C/export.page:7
@@ -1220,11 +1227,14 @@ msgid ""
 "Graphs can export both the figure as an image and the underlying data as "
 "files. Both options are available from the application menu."
 msgstr ""
+"«Графіки» можуть експортувати як рисунок як зображення, так і дані, що лежать"
+" в його основі, як файли. Доступ до обох варіантів можна отримати з меню"
+" програми."
 
 #. (itstool) path: section/title
 #: C/export.page:10
 msgid "Exporting the Figure"
-msgstr ""
+msgstr "Експортування рисунка"
 
 #. (itstool) path: section/p
 #: C/export.page:11
@@ -1232,6 +1242,9 @@ msgid ""
 "To export the figure as an image, open the application menu and choose "
 "<em>Export Figure…</em>. The export dialog offers the following options:"
 msgstr ""
+"Щоб експортувати рисунок як зображення, відкрийте меню програми та виберіть"
+" пункт <em>Експортувати рисунок…</em>. У діалоговому вікні експортування вам"
+" буде запропоновано такі пункти:"
 
 #. (itstool) path: item/title
 #: C/export.page:14
@@ -1247,6 +1260,12 @@ msgid ""
 "to any size without loss of quality, making them well suited for use in "
 "publications and presentations."
 msgstr ""
+"Формат зображення для експортування. Передбачено підтримку таких форматів:"
+" PNG, JPEG, WebP, SVG, PDF, PostScript та Encapsulated PostScript. Для"
+" більшості цілей добрим вибором є PNG. Вибір SVG і PDF призводить до"
+" створення векторних зображень, які масштабуються до будь-якого розміру без"
+" втрати якості, що робить їх добре придатними для використання в публікаціях"
+" та презентаціях."
 
 #. (itstool) path: item/title
 #: C/export.page:18
@@ -1260,6 +1279,9 @@ msgid ""
 "filled with the style's background color. This is useful when embedding the "
 "figure into a document or presentation with its own background."
 msgstr ""
+"Якщо увімкнено, фон рисунка буде експортовано як прозорий, а не заповнений"
+" кольором тла стилю. Це корисно для вбудовування рисунка у документ або"
+" презентацію з власним тлом."
 
 #. (itstool) path: item/title
 #: C/export.page:22
@@ -1273,6 +1295,10 @@ msgid ""
 "and 100 and 4320 pixels tall. Press <em>Use Same Size as App</em> to "
 "automatically fill in the current size of the canvas as it appears on screen."
 msgstr ""
+"Розміри експортованого зображення в пікселях: від 100 до 7680 пікселів"
+" завширшки та від 100 до 4320 пікселів заввишки. Натисніть <em>Розмір, як у"
+" програмі</em>, щоб автоматично заповнити поточний розмір полотна так, як"
+" його показано на екрані."
 
 #. (itstool) path: section/title
 #: C/export.page:29
@@ -1286,6 +1312,9 @@ msgid ""
 "and choose <em>Export Data…</em>. This exports the current data for all "
 "items in the project."
 msgstr ""
+"Щоб експортувати значення базового набору даних до файла, відкрийте меню"
+" програми і виберіть пункт <em>Експортувати дані…</em>. У результаті буде"
+" експортовано поточні дані для всіх елементів у проєкті."
 
 #. (itstool) path: page/title
 #. (itstool) path: section/title
@@ -1302,6 +1331,11 @@ msgid ""
 "the default for all new projects using the <em>Set as Default</em> button at "
 "the bottom of the panel."
 msgstr ""
+"За допомогою панелі «Параметри рисунка» можна керувати мітками, межами осей,"
+" масштабуванням та загальним виглядом рисунка. Її можна відкрити, натиснувши"
+" кнопку параметрів у верхньому правому куті бічної панелі. Поточні параметри"
+" можна зберегти як типові для всіх нових проєктів за допомогою кнопки <em"
+">Зробити типовим</em> внизу панелі."
 
 #. (itstool) path: section/title
 #: C/figure_settings.page:10
@@ -1316,6 +1350,9 @@ msgid ""
 "Labels and the title can also be edited directly on the canvas by clicking "
 "on them."
 msgstr ""
+"Для рисунка можна встановити заголовок, а також мітку для кожної осі окремо."
+" Буде показано лише підписи для використаних осей. Мітки і заголовок також"
+" можна редагувати безпосередньо на полотні, клацаючи на них."
 
 #. (itstool) path: section/title
 #: C/figure_settings.page:14
@@ -1331,21 +1368,26 @@ msgid ""
 "The view can also be reset to fit all data at any time using the "
 "<em>Optimize Limits</em> action."
 msgstr ""
+"Мінімальні та максимальні значення для кожної осі можна встановити вручну."
+" Буде показано лише межі для використаних осей. Якщо залишити поле меж"
+" порожнім, «Графіки» зможуть автоматично визначити діапазон на основі даних."
+" Крім того, можна завжди відновити підбирання за даними за допомогою кнопки <"
+"em>Оптимізувати межі</em>."
 
 #. (itstool) path: section/title
 #: C/figure_settings.page:18
 msgid "Scaling"
-msgstr "Масштабування"
+msgstr "Шкали"
 
 #. (itstool) path: section/p
 #: C/figure_settings.page:19
 msgid "Each axis can be set to one of the following scales independently:"
-msgstr ""
+msgstr "Для кожної з осей можна встановити шкали незалежно:"
 
 #. (itstool) path: item/p
 #: C/figure_settings.page:23
 msgid "Equal spacing between values. The default scale for most data."
-msgstr ""
+msgstr "Рівна відстань між значеннями. Типова шкала для більшості даних."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:26
@@ -1358,6 +1400,8 @@ msgid ""
 "Spacing based on powers of 10. Useful for data spanning several orders of "
 "magnitude."
 msgstr ""
+"Інтервали на основі степенів 10. Корисно для даних, які охоплюють декілька"
+" порядків значень величини."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:30
@@ -1367,7 +1411,7 @@ msgstr "Логарифмічна (з основою 2)"
 #. (itstool) path: item/p
 #: C/figure_settings.page:31
 msgid "Spacing based on powers of 2."
-msgstr ""
+msgstr "Інтервали на основі степенів 2."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:34
@@ -1377,7 +1421,7 @@ msgstr "Радіани"
 #. (itstool) path: item/p
 #: C/figure_settings.page:35
 msgid "Axis ticks are expressed as multiples of π."
-msgstr ""
+msgstr "Поділки вісі у кратних до π значеннях."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:38
@@ -1387,7 +1431,7 @@ msgstr "Квадратний корінь"
 #. (itstool) path: item/p
 #: C/figure_settings.page:39
 msgid "Spacing based on the square root of values."
-msgstr ""
+msgstr "Інтервали на основі квадратного корені зі значень."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:42
@@ -1397,7 +1441,7 @@ msgstr "Обернена"
 #. (itstool) path: item/p
 #: C/figure_settings.page:43
 msgid "Spacing based on the reciprocal of values."
-msgstr ""
+msgstr "Інтервали на основі обернених значень."
 
 #. (itstool) path: section/title
 #: C/figure_settings.page:48
@@ -1416,6 +1460,10 @@ msgid ""
 "be set to one of several locations on the figure, or left on Auto to let "
 "Graphs choose the least obstructive position."
 msgstr ""
+"Вмикає або вимикає видимість панелі умовних позначень. Якщо увімкнено,"
+" розташування панелі умовних позначень можна встановити в одному з кількох"
+" місць на рисунку або залишити на «Авто», щоб «Графіки» могли вибрати місце,"
+" яке найменше перетинається з вмістом рисунка."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:55
