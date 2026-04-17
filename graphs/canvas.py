@@ -487,13 +487,13 @@ class _DummyToolbar(NavigationToolbar2):
         mode = self.canvas.props.mode
         if event.inaxes and event.inaxes.get_navigate():
             if mode == Graphs.Mode.PAN and \
-                    self._last_cursor != tools.Cursors.SELECT_REGION:
-                self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
-                self._last_cursor = tools.Cursors.SELECT_REGION
-            elif mode == Graphs.Mode.ZOOM and \
                     self._last_cursor != tools.Cursors.MOVE:
                 self.canvas.set_cursor(tools.Cursors.MOVE)
                 self._last_cursor = tools.Cursors.MOVE
+            elif mode == Graphs.Mode.ZOOM and \
+                    self._last_cursor != tools.Cursors.SELECT_REGION:
+                self.canvas.set_cursor(tools.Cursors.SELECT_REGION)
+                self._last_cursor = tools.Cursors.SELECT_REGION
         elif self._last_cursor != tools.Cursors.POINTER:
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
