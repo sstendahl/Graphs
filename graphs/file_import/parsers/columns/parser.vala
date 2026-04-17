@@ -25,6 +25,7 @@ namespace Graphs {
         private unichar separator;
         private Regex delimiter_regex;
 
+        private ColumnsItemSettings[] items;
         private Bitset used_indices = new Bitset.empty ();
         private uint64 n_used_indices;
         private Column[] columns;
@@ -36,7 +37,7 @@ namespace Graphs {
             this.separator = separator.as_unichar ();
 
             var iter = settings.get_value ("items").iterator ();
-            ColumnsItemSettings[] items = new ColumnsItemSettings[iter.n_children ()];
+            items = new ColumnsItemSettings[iter.n_children ()];
             for (int i = 0; i < items.length; i++) {
                 var item_settings = ColumnsItemSettings ();
                 item_settings.load_from_variant (iter.next_value ());
@@ -148,6 +149,39 @@ namespace Graphs {
             stream.close ();
         }
 
+        public void add_items (Data data, ItemList itemlist) throws Error {
+            foreach (var item_settings in items) {
+                uint yrank = get_rank (item_settings.column_y);
+                string ylabel = columns[yrank].header;
+                double[] ydata = columns[yrank].get_data ();
+
+                double[]? xerr = item_settings.use_xerr ? columns[item_settings.xerr_index].get_data () : null;
+                double[]? yerr = item_settings.use_yerr ? columns[item_settings.yerr_index].get_data () : null;
+
+                string xlabel;
+                double[] xdata;
+                if (item_settings.single_column) {
+                    xlabel = "";
+                    try {
+                        string equation = preprocess_equation (item_settings.equation);
+                        xdata = PythonHelper.evaluate_expression (equation, ydata.length, "n");
+                    } catch (MathError e) {
+                        throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
+                    }
+                } else {
+                    uint xrank = get_rank (item_settings.column_x);
+                    xlabel = columns[xrank].header;
+                    xdata = columns[xrank].get_data ();
+                }
+
+                Item item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+                item.xlabel = xlabel;
+                item.ylabel = ylabel;
+                item.name = settings.filename;
+                itemlist.add (item);
+            }
+        }
+
         private uint get_rank (uint val) {
             uint current;
             uint rank = 0;
@@ -158,14 +192,6 @@ namespace Graphs {
                 rank++;
             } while (bitset_iter.next (out current));
             assert_not_reached ();
-        }
-
-        public string get_header (uint index) {
-            return columns[get_rank (index)].header;
-        }
-
-        public void get_column (uint index, out double[] values) {
-            values = columns[get_rank (index)].get_data ();
         }
     }
 }
