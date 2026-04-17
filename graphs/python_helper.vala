@@ -25,6 +25,17 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
+        private static double[] _evaluate_expression_result;
+        protected signal bool evaluate_expression_request (string equation, int steps, string variable);
+        protected static void set_evaluate_expression_result (double[] result) {
+            _evaluate_expression_result = result;
+        }
+        public static double[] evaluate_expression (string equation, int steps, string variable = "x") throws MathError {
+            if (!instance.evaluate_expression_request.emit (equation, steps, variable))
+                throw new MathError.SYNTAX ("invalid equation");
+            return (owned) _evaluate_expression_result;
+        }
+
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public static void export_items (Window window, string mode, File file, Item[] items) {
             instance.export_items_request.emit (window, mode, file, items);
