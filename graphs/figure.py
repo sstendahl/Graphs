@@ -24,7 +24,7 @@ class Figure(GObject.Object, figure.Figure):
         style_params: tuple[RcParams, dict],
         items: Gio.ListModel,
         parent=None,
-        limits: list[float] = None,
+        figure_settings: Graphs.FigureSettings = None,
     ):
         GObject.Object.__init__(self)
         self._style_params = style_params
@@ -37,13 +37,28 @@ class Figure(GObject.Object, figure.Figure):
         self.top_left_axis = self.axis.twiny()
         self.right_axis = self.axis.twinx()
         self.top_right_axis = self.top_left_axis.twinx()
-        self._hide_unselected = False
         self._legend_axis = self.axis
-        self._legend = True
-        self._legend_position = misc.LEGEND_POSITIONS[0]
         self._artists = []
 
-        if limits is not None:
+        if figure_settings is not None:
+            bottom_scale = \
+                Graphs.scale_to_string(figure_settings.get_bottom_scale())
+            top_scale = \
+                Graphs.scale_to_string(figure_settings.get_top_scale())
+            left_scale = \
+                Graphs.scale_to_string(figure_settings.get_left_scale())
+            right_scale = \
+                Graphs.scale_to_string(figure_settings.get_right_scale())
+            self.axis.set_xscale(bottom_scale)
+            self.axis.set_yscale(left_scale)
+            self.top_left_axis.set_xscale(top_scale)
+            self.top_left_axis.set_yscale(left_scale)
+            self.right_axis.set_xscale(bottom_scale)
+            self.right_axis.set_yscale(right_scale)
+            self.top_right_axis.set_xscale(top_scale)
+            self.top_right_axis.set_yscale(right_scale)
+
+            limits = figure_settings.get_limits()
             self.axis.set_xlim(limits[0], limits[1])
             self.axis.set_ylim(limits[4], limits[5])
             self.top_left_axis.set_xlim(limits[2], limits[3])
@@ -52,6 +67,34 @@ class Figure(GObject.Object, figure.Figure):
             self.right_axis.set_ylim(limits[6], limits[7])
             self.top_right_axis.set_xlim(limits[2], limits[3])
             self.top_right_axis.set_ylim(limits[6], limits[7])
+
+            title = figure_settings.get_title()
+            self.axis.set_title(title, picker=True).id = "title"
+            self.axis.set_xlabel(
+                figure_settings.get_bottom_label(),
+                picker=True,
+            ).id = "bottom_label"
+            self.top_left_axis.set_xlabel(
+                figure_settings.get_top_label(),
+                picker=True,
+            ).id = "top_label"
+            self.axis.set_ylabel(
+                figure_settings.get_left_label(),
+                picker=True,
+            ).id = "left_label"
+            self.right_axis.set_ylabel(
+                figure_settings.get_right_label(),
+                picker=True,
+            ).id = "right_label"
+
+            self._hide_unselected = figure_settings.get_hide_unselected()
+            self._legend = figure_settings.get_legend()
+            legend_position = figure_settings.get_legend_position()
+            self._legend_position = misc.LEGEND_POSITIONS[legend_position]
+        else:
+            self._hide_unselected = False
+            self._legend = True
+            self._legend_position = misc.LEGEND_POSITIONS[0]
 
         items.connect("items-changed", self._redraw)
         if isinstance(items, Gtk.SelectionModel):

@@ -84,10 +84,3 @@ LIMITS = [
     f"{prefix}-{direction}" for direction in DIRECTIONS
     for prefix in ("min", "max")
 ]
-
-FIGURE_PROPERTIES = [
-    "title",
-    "legend",
-    "legend_position",
-    "hide_unselected",
-] + [f"{d}_scale" for d in DIRECTIONS] + [f"{d}_label" for d in DIRECTIONS]

@@ -14,6 +14,15 @@ CSS_TEMPLATE = """
     color: {color};
 }}
 """
+_SCALES = [f"{d}_scale" for d in misc.DIRECTIONS]
+_LABELS = [f"{d}_label" for d in misc.DIRECTIONS]
+_LIMITS = [lim.replace("-", "_") for lim in misc.LIMITS]
+_FIGURE_PROPERTIES = [
+    "title",
+    "legend",
+    "legend_position",
+    "hide_unselected",
+] + _SCALES + _LABELS + _LIMITS
 
 
 class PythonWindow(Graphs.Window):
@@ -112,14 +121,9 @@ class PythonWindow(Graphs.Window):
         params = self.props.data.get_selected_style_params()
 
         figure_settings = self.props.data.get_figure_settings()
-        limits = figure_settings.get_limits()
-        canvas = Canvas(params, self.props.data, limits=limits)
+        canvas = Canvas(params, self.props.data, True, figure_settings)
 
-        for prop in misc.FIGURE_PROPERTIES:
-            figure_settings.bind_property(prop, canvas.figure, prop, 1 | 2)
-
-        for limit in misc.LIMITS:
-            prop = limit.replace("-", "_")
+        for prop in _FIGURE_PROPERTIES:
             figure_settings.bind_property(prop, canvas.figure, prop, 1)
 
         for prop in ("min_selected", "max_selected"):
