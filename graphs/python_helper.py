@@ -17,6 +17,7 @@ _REQUESTS = (
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
+    "evaluate-expression",
     "export-figure",
     "export-items",
     "has-err",
@@ -56,6 +57,23 @@ class PythonHelper(Graphs.PythonHelper):
         item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
+
+    @staticmethod
+    def _on_evaluate_expression_request(
+        self,
+        equation: str,
+        steps: int,
+        var: str,
+    ) -> bool:
+        local_dict = {var: numpy.arange(steps)}
+        try:
+            data = numexpr.evaluate(equation, local_dict=local_dict)
+            if data.ndim == 0:
+                data = numpy.full(steps, data)
+            self.set_evaluate_expression_result(data.tolist())
+            return True
+        except (KeyError, SyntaxError, ValueError, TypeError):
+            return False
 
     @staticmethod
     def _on_export_items_request(
