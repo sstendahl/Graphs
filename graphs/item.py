@@ -17,6 +17,8 @@ class _PythonItemMixin:
         new_style: tuple[RcParams, dict],
     ) -> None:
         """Reset all properties."""
+        if not hasattr(self, "_style_properties"):
+            return
         # Combine rcparams and graphs_params into single dict:
         old_style = old_style[0] | old_style[1]
         new_style = new_style[0] | new_style[1]
@@ -34,6 +36,8 @@ class _PythonItemMixin:
         style: tuple[RcParams, dict],
     ) -> None:
         """Override all properties."""
+        if not hasattr(self, "_style_properties"):
+            return
         # Combine rcparams and graphs_params into single dict:
         style = style[0] | style[1]
         for prop, (key, function) in self._style_properties.items():
@@ -250,10 +254,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         super().__init__(**kwargs)
         if self.props.data is None:
             self.props.data = (None, None, None)
-
-    def reset(self):
-        """Not yet implemented."""
-        raise NotImplementedError
 
 
 class ItemFactory(Graphs.ItemFactory):
