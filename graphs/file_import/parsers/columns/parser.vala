@@ -123,7 +123,7 @@ namespace Graphs {
                 do {
                     if (column_index >= str_values.length) {
                         column_rank++;
-                        continue;
+                        break;
                     }
                     if (try_evaluate_string (str_values[column_index], out val, separator)) {
                         columns[column_rank++].data[value_size] = val;
