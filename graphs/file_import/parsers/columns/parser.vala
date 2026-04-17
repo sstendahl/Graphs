@@ -102,7 +102,7 @@ namespace Graphs {
                 if (++line_number <= skip_rows || line.strip ().length == 0) continue;
 
                 string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
-                if (str_values.length < max_index + 1) {
+                if (str_values.length < max_index + 1 && value_size > 0) {
                     throw new ColumnsParseError.INDEX_ERROR (
                         _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
                         .printf (settings.filename, max_index, line_number, str_values.length)
@@ -121,6 +121,10 @@ namespace Graphs {
                 bitset_iter.init_first (used_indices, out column_index);
                 column_rank = 0;
                 do {
+                    if (column_index >= str_values.length) {
+                        column_rank++;
+                        continue;
+                    }
                     if (try_evaluate_string (str_values[column_index], out val, separator)) {
                         columns[column_rank++].data[value_size] = val;
                         continue;
@@ -133,8 +137,7 @@ namespace Graphs {
                             _("Cannot import from file, bad value on line %d").printf (line_number)
                         );
                     }
-
-                    columns[column_rank].header = str_values[column_index];
+                    columns[column_rank++].header = str_values[column_index];
                     // prevent leading 0 in data
                     value_size = -1;
                 } while (bitset_iter.next (out column_index));
@@ -155,8 +158,8 @@ namespace Graphs {
                 string ylabel = columns[yrank].header;
                 double[] ydata = columns[yrank].get_data ();
 
-                double[]? xerr = item_settings.use_xerr ? columns[item_settings.xerr_index].get_data () : null;
-                double[]? yerr = item_settings.use_yerr ? columns[item_settings.yerr_index].get_data () : null;
+                double[]? xerr = item_settings.use_xerr ? columns[get_rank (item_settings.xerr_index)].get_data () : null;
+                double[]? yerr = item_settings.use_yerr ? columns[get_rank (item_settings.yerr_index)].get_data () : null;
 
                 string xlabel;
                 double[] xdata;
