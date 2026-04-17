@@ -67,22 +67,22 @@ class ItemArtistWrapper(GObject.Object):
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._artist.set_label(_ellipsize(name))
+        self._color_artist.set_label(_ellipsize(name))
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
         """Get color property."""
-        return self._artist.get_color()
+        return self._color_artist.get_color()
 
     @color.setter
     def color(self, color: str) -> None:
         """Set color property."""
-        self._artist.set_color(color)
+        self._color_artist.set_color(color)
 
     @GObject.Property(type=float, default=1)
     def alpha(self) -> float:
         """Get alpha property."""
-        return self._artist.get_alpha()
+        return self._color_artist.get_alpha()
 
     @alpha.setter
     def alpha(self, alpha: float) -> None:
@@ -314,6 +314,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         )
 
         self._data, self._caps, self._bars = self._artist
+        self._color_artist = self._data
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
@@ -367,6 +368,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linestyle=misc.LINESTYLES[item.get_linestyle() + 1],
             marker="none",
         )[0]
+        self._color_artist = self._artist
         for prop in ("selected", "linewidth"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
@@ -578,6 +580,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
             rotation=item.get_rotation(),
             clip_on=True,
         )
+        self._color_artist = self._artist
 
 
 class FillItemArtistWrapper(ItemArtistWrapper):
@@ -602,3 +605,4 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             color=item.get_color(),
             alpha=item.get_alpha(),
         )
+        self._color_artist = self._artist
