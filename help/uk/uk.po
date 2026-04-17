@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-16 21:56+0300\n"
+"PO-Revision-Date: 2026-04-17 08:53+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -773,7 +773,7 @@ msgstr "Довжина кінчика"
 #. (itstool) path: item/p
 #: C/edit-item.page:61 C/edit-style.page:75
 msgid "The length of the horizontal cap at the end of each error bar."
-msgstr ""
+msgstr "Довжина горизонтального кінчика у кінці кожної смужки похибки."
 
 #. (itstool) path: item/title
 #: C/edit-item.page:64 C/edit-style.page:78
@@ -808,6 +808,10 @@ msgid ""
 "in styles to choose from, and you can create and edit your own to get "
 "exactly the look you want."
 msgstr ""
+"Стилі контролюють загальний вигляд графіків, включаючи кольори, шрифти,"
+" товщину ліній, поділки, сітку тощо. У «Графіках» передбачено на вибір"
+" вбудовані стилі, і ви можете створювати та редагувати власні, щоб отримати"
+" саме той вигляд, який вам потрібен."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:10
@@ -826,6 +830,16 @@ msgid ""
 "remapped to match the new style's color cycle. Any item properties that were "
 "changed previously, however, are preserved when changing styles."
 msgstr ""
+"Активний стиль можна вибрати на панелі «Параметри рисунка», доступній на"
+" бічній панелі у верхньому куті. Див. <link xref=\"figure-settings\"/>, щоб"
+" дізнатися більше. У розділі «Зовнішній вигляд»буде показано назву поточного"
+" стилю. Якщо натиснути кнопку назви буде відкрито засіб вибору стилю, у якому"
+" буде показано усі доступні стилі у форматі попереднього перегляду. Натисніть"
+" пункт будь-якого стилю, щоб негайно застосувати його до рисунка. Під час"
+" перемикання стилів кольори елементів, позначки і товщина ліній автоматично"
+" перепризначаються відповідно до циклу кольорів нового стилю. Однак під час"
+" зміни стилів буде збережено будь-які властивості елементів, які було змінено"
+" раніше."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:15
@@ -839,6 +853,9 @@ msgid ""
 "or open the Style Editor from the application menu. The Style Editor shows "
 "all available styles as previews."
 msgstr ""
+"Щоб керувати стилями, натисніть кнопку <em>Керування</em> на сторінці вибору"
+" стилів або відкрийте Редактор стилів з меню програми. У редакторі стилів"
+" буде показано усі доступні стилі у форматі попереднього перегляду."
 
 #. (itstool) path: section/p
 #: C/edit-style.page:17
@@ -848,6 +865,10 @@ msgid ""
 "the editor immediately, ready to customize. Changes are shown automatically "
 "in the preview as you edit."
 msgstr ""
+"Щоб створити новий стиль, натисніть <em>Створити стиль…</em>, виберіть"
+" наявний стиль як початковий шаблон і дайте назву новому стилю. Ваш новий"
+" стиль буде одразу відкрито у редакторі, готовим до налаштування. Під час"
+" редагування зміни буде автоматично показано на панелі попереднього перегляду."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:20
@@ -863,6 +884,12 @@ msgid ""
 "import new styles using <em>Import File…</em> in the Style Editor, or open "
 "new styles for editing using the <em>Open File…</em> option."
 msgstr ""
+"Нетипові стилі можна використовувати разом із файлами, зберігаючи їх у файлах"
+" та завантажуючи з файлів у Редакторі стилів. Щоб зберегти стиль, просто"
+" відкрийте свій власний стиль і виберіть пункт <em>Зберегти стиль як…</em> у"
+" головному меню. Ви можете імпортувати нові стилі за допомогою пункту <em"
+">Імпортувати файл…</em> у Редакторі стилів або відкрити нові стилі для"
+" редагування за допомогою пункту <em>Відкрити файл…</em>."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:24
@@ -900,6 +927,8 @@ msgid ""
 "The font used for all text in the figure, including axis labels, tick "
 "labels, the title, and the legend."
 msgstr ""
+"Шрифт, який буде використано для всього тексту на рисунку, зокрема підписів"
+" осей, підписів позначок, заголовка та панелі умовних позначень."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:38
@@ -909,7 +938,7 @@ msgstr "Розмір заголовка"
 #. (itstool) path: item/p
 #: C/edit-style.page:39
 msgid "The size of the figure title relative to the base text size."
-msgstr ""
+msgstr "Розмір заголовка рисунка відносно базового розміру тексту."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:42
@@ -919,7 +948,7 @@ msgstr "Розмір мітки"
 #. (itstool) path: item/p
 #: C/edit-style.page:43
 msgid "The size of axis labels relative to the base text size."
-msgstr ""
+msgstr "Розмір міток вісі відносно базового розміру тексту."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:48
@@ -932,6 +961,8 @@ msgid ""
 "These settings define the default appearance for new items. They can be "
 "overridden per item in the item editor."
 msgstr ""
+"Ці параметри визначають типовий зовнішній вигляд нових елементів. Їх можна"
+" змінити для кожного елемента у редакторі елементів."
 
 #. (itstool) path: item/p
 #: C/edit-style.page:53
@@ -940,11 +971,14 @@ msgid ""
 "Dashdot. Line width is only configurable when a style other than None is "
 "selected."
 msgstr ""
+"Типовий стиль лінії для нових елементів: «Немає», «Суцільна», «Пунктирна»,"
+" «Штрихова» або «Штрих-пунктирна». Товщину лінії можна налаштувати, лише якщо"
+" вибрано стиль, відмінний від «Немає»."
 
 #. (itstool) path: item/p
 #: C/edit-style.page:57
 msgid "The default thickness of lines."
-msgstr ""
+msgstr "Типова товщина ліній."
 
 #. (itstool) path: item/p
 #: C/edit-style.page:61
@@ -953,6 +987,9 @@ msgid ""
 "available. Marker size is only configurable when a marker other than None is "
 "selected."
 msgstr ""
+"Типова форма позначки, яку буде намальовано у кожній точці даних. Доступний"
+" широкий вибір форм. Розмір позначки можна налаштувати, лише якщо вибрано"
+" позначку, відмінну від «Немає»."
 
 #. (itstool) path: item/p
 #: C/edit-style.page:65
@@ -965,6 +1002,9 @@ msgid ""
 "Default appearance settings for error bars, applied to new items. These can "
 "be overridden per item in the item editor."
 msgstr ""
+"Типові параметри вигляду для смужок похибок, які буде застосовано до нових"
+" елементів. Ці параметри можна перевизначити для окремих елементів у"
+" редакторі елементів."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:92
@@ -979,7 +1019,7 @@ msgstr "Товщина вісі"
 #. (itstool) path: item/p
 #: C/edit-style.page:96
 msgid "The thickness of the axis lines."
-msgstr ""
+msgstr "Товщина ліній осей."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:99
@@ -992,6 +1032,8 @@ msgid ""
 "When enabled, a full rectangular frame is drawn around the plot area. When "
 "disabled, only the axes that are in use are shown."
 msgstr ""
+"Якщо увімкнено, навколо області креслення буде намальовано прямокутну рамку."
+" Якщо вимкнено, буде показано лише використані вісі."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:105
@@ -1001,12 +1043,12 @@ msgstr "Позначки"
 #. (itstool) path: item/title
 #: C/edit-style.page:108
 msgid "Tick Direction"
-msgstr ""
+msgstr "Напрямок поділок"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:109
 msgid "Whether tick marks point inwards or outwards."
-msgstr ""
+msgstr "Визначає напрямок поділок: всередину чи назовні рисунка."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:112
@@ -1019,26 +1061,29 @@ msgid ""
 "When enabled, minor tick marks are shown between the major ticks. Minor tick "
 "width and length become configurable when this is on."
 msgstr ""
+"Якщо позначено цей пункт, між основними поділками буде показано проміжні"
+" поділки. Якщо цей пункт позначено, ширину та довжину проміжних поділок можна"
+" буде налаштувати."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:116
 msgid "Major Tick Width / Length"
-msgstr ""
+msgstr "Товщина/Довжина основних поділок"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:117
 msgid "The thickness and length of major tick marks."
-msgstr ""
+msgstr "Товщина і довжина основних поділок."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:120
 msgid "Minor Tick Width / Length"
-msgstr ""
+msgstr "Товщина/Довжина додаткових поділок"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:121
 msgid "The thickness and length of minor tick marks."
-msgstr ""
+msgstr "Товщина і довжина проміжних поділок."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:124
@@ -1052,16 +1097,20 @@ msgid ""
 "than only the axes with data. To show tick labels on both sides of each "
 "axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
 msgstr ""
+"Якщо позначено, мітки поділок буде показано на всіх видимих ​​осях з"
+" поділками, а не лише на осях з даними. Щоб програма показувала поділки з"
+" обох боків кожної осі, переконайтеся, що позначено пункт <em>Малювати рамку<"
+"/em>, щоб програма намалювала вісі."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:128
 msgid "Ticks on Bottom / Top / Left / Right Axis"
-msgstr ""
+msgstr "Поділки на нижній/верхній/лівій/правій вісі"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:129
 msgid "Each axis can have its tick marks toggled on or off independently."
-msgstr ""
+msgstr "Вмикати і вимикати показ поділок можна окремо для кожної вісі."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:134
@@ -1076,7 +1125,7 @@ msgstr "Показати ґратку"
 #. (itstool) path: item/p
 #: C/edit-style.page:138
 msgid "Toggles the visibility of the background grid."
-msgstr ""
+msgstr "Вмикає або вимикає видимість фонової ґратки."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:141
@@ -1087,7 +1136,7 @@ msgstr "Товщина ґратки"
 #: C/edit-style.page:142
 msgid ""
 "The thickness of grid lines. Only configurable when the grid is enabled."
-msgstr ""
+msgstr "Товщина ліній ґратки. Можна налаштовувати, лише якщо ґратку увімкнено."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:145
@@ -1097,7 +1146,7 @@ msgstr "Непрозорість ґратки"
 #. (itstool) path: item/p
 #: C/edit-style.page:146
 msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
-msgstr ""
+msgstr "Прозорість ліній ґратки, від 0 (невидимі) до 1 (повністю непрозорі)."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:151
@@ -1112,7 +1161,7 @@ msgstr "Інтервал значень"
 #. (itstool) path: item/p
 #: C/edit-style.page:155
 msgid "The spacing between the axes and the tick value labels."
-msgstr ""
+msgstr "Інтервал між осями і мітками значень поділок."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:158
