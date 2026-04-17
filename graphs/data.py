@@ -10,7 +10,8 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import item, misc, project, style_io, utilities
+from graphs import misc, project, style_io, utilities
+from graphs.item import ItemFactory
 
 from matplotlib import RcParams
 
@@ -143,29 +144,29 @@ class Data(Graphs.Data):
         ))
 
     @staticmethod
-    def _on_item_added(self, item_: Graphs.Item) -> None:
+    def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            copy.deepcopy(item_.to_dict()),
+            copy.deepcopy(item.to_dict()),
         ))
 
     @staticmethod
-    def _on_item_removed(self, item_: Graphs.Item, index: int) -> None:
+    def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, item_.to_dict()),
+            (index, item.to_dict()),
         ))
 
     @staticmethod
-    def _on_item_changed(self, item_: Graphs.Item, prop: str) -> None:
-        index = self.index(item_)
+    def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
+        index = self.index(item)
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
                 copy.deepcopy(self._data_copy[index][prop]),
-                copy.deepcopy(item_.get_property(prop)),
+                copy.deepcopy(item.get_property(prop)),
             ),
         ))
 
@@ -185,7 +186,7 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([item_.to_dict() for item_ in self])
+        self._data_copy = copy.deepcopy([item.to_dict() for item in self])
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -302,7 +303,7 @@ class Data(Graphs.Data):
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._insert_item(
-                        item.new_from_dict(copy.deepcopy(change[1])),
+                        ItemFactory.new_from_dict(copy.deepcopy(change[1])),
                         change[0],
                     )
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -340,7 +341,8 @@ class Data(Graphs.Data):
                     else:
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
-                    self._add_item(item.new_from_dict(copy.deepcopy(change)))
+                    change = copy.deepcopy(change)
+                    self._add_item(ItemFactory.new_from_dict(change))
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -414,20 +416,19 @@ class Data(Graphs.Data):
         equation_items = []
         hide_unselected = figure_settings.get_hide_unselected()
 
-        for item_ in self:
-            if not isinstance(item_, (item.DataItem, item.EquationItem)):
+        for item in self:
+            if not isinstance(item, (Graphs.DataItem, Graphs.EquationItem)):
                 continue
 
-            if not item_.get_selected() and hide_unselected:
+            if not item.get_selected() and hide_unselected:
                 continue
 
-            if isinstance(item_, item.EquationItem):
-                equation_items.append(item_)
+            if isinstance(item, Graphs.EquationItem):
+                equation_items.append(item)
                 continue
 
-            indices = \
-                (item_.get_xposition() * 2, 1 + item_.get_yposition() * 2)
-            for index, xydata in zip(indices, item_.get_xydata()):
+            indices = (item.get_xposition() * 2, 1 + item.get_yposition() * 2)
+            for index, xydata in zip(indices, item.get_xydata()):
                 axis = axes[index]
 
                 xydata = numpy.asarray(xydata)
@@ -451,14 +452,14 @@ class Data(Graphs.Data):
                     axis[3] = max_value
                     axis[1] = True
 
-        for item_ in equation_items:
-            xindex = item_.get_xposition() * 2
+        for item in equation_items:
+            xindex = item.get_xposition() * 2
             xaxis = axes[xindex]
-            yaxis = axes[1 + item_.get_yposition() * 2]
+            yaxis = axes[1 + item.get_yposition() * 2]
             x_limits = [xaxis[2], xaxis[3]]
             yscale = yaxis[4]
 
-            equation = item_.get_preprocessed_equation()
+            equation = item.get_preprocessed_equation()
             expr = sympy.sympify(equation)
             domain = sympy.Interval(*x_limits)
             has_singularities = singularities(expr, misc.X, domain)
@@ -541,7 +542,7 @@ class Data(Graphs.Data):
         figure_settings = self.get_figure_settings()
         return {
             "version": self.get_version(),
-            "data": [item_.to_dict() for item_ in self],
+            "data": [item.to_dict() for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
@@ -563,7 +564,8 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        self.set_items([item.new_from_dict(d) for d in project_dict["data"]])
+        items = [ItemFactory.new_from_dict(d) for d in project_dict["data"]]
+        self.set_items(items)
 
         # Set clipboard
         self._set_data_copy()

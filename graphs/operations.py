@@ -7,7 +7,7 @@ from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs import misc, utilities
-from graphs.item import DataItem, EquationItem
+from graphs.item import DataItem
 
 import numexpr
 
@@ -43,9 +43,9 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
         for item in data:
             if not item.get_selected():
                 continue
-            if isinstance(item, EquationItem):
+            if isinstance(item, Graphs.EquationItem):
                 operations_class = EquationOperations
-            elif isinstance(item, DataItem):
+            elif isinstance(item, Graphs.DataItem):
                 operations_class = DataOperations
             else:
                 continue
@@ -71,7 +71,7 @@ class DataHelper():
     def get_xydata(
         interaction_mode: Graphs.Mode,
         selected_limits: tuple[float, float],
-        item: DataItem,
+        item: Graphs.DataItem,
     ) -> tuple[list[float], list[float]]:
         """Get the X and Y data of a DataItem."""
         xdata, ydata = item.get_xydata()
@@ -96,7 +96,7 @@ class DataHelper():
     def get_selected_limits(
         figure_settings: Graphs.FigureSettings,
         interaction_mode: Graphs.Mode,
-        item: DataItem,
+        item: Graphs.DataItem,
     ) -> tuple[float, float]:
         """Get the min and max value of the item within the selected range."""
         if item.get_xposition() == 0:
@@ -223,9 +223,9 @@ class CommonOperations():
             for item in data:
                 if not item.get_selected():
                     continue
-                if isinstance(item, EquationItem):
+                if isinstance(item, Graphs.EquationItem):
                     operations_class = EquationOperations
-                elif isinstance(item, DataItem):
+                elif isinstance(item, Graphs.DataItem):
                     operations_class = DataOperations
                 success, message = operations_class.execute(
                     item,
@@ -259,7 +259,7 @@ class CommonOperations():
         settings = data.get_figure_settings()
 
         selected = [i for i in data if i.get_selected()]
-        data_items = [i for i in selected if isinstance(i, DataItem)]
+        data_items = [i for i in selected if isinstance(i, Graphs.DataItem)]
 
         def get_err_info(attr):
             has_err = [getattr(i.props, attr) is not None for i in data_items]
@@ -274,10 +274,10 @@ class CommonOperations():
             lims = DataHelper.get_selected_limits(settings, mode, item)
             xdata, ydata = None, None
 
-            if isinstance(item, EquationItem):
+            if isinstance(item, Graphs.EquationItem):
                 eq = item.get_preprocessed_equation()
                 xdata, ydata = utilities.equation_to_data(eq, lims)
-            elif isinstance(item, DataItem):
+            elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)
                 if all_x:
                     new_xerr.extend(item.get_xerr())
@@ -317,7 +317,7 @@ class CommonOperations():
         figure_settings = data.get_figure_settings()
         data_list = ([
             item for item in data if item.get_selected()
-            and isinstance(item, (EquationItem, DataItem))
+            and isinstance(item, (Graphs.EquationItem, Graphs.DataItem))
         ])
         ranges = [
             figure_settings.get_max_left() - figure_settings.get_min_left(),
@@ -332,12 +332,12 @@ class CommonOperations():
                 item,
             )
             scale = right_scale if item.get_yposition() else left_scale
-            if isinstance(item, EquationItem):
+            if isinstance(item, Graphs.EquationItem):
                 xdata, ydata = utilities.equation_to_data(
                     item.get_preprocessed_equation(),
                     selected_limits,
                 )
-            elif isinstance(item, DataItem):
+            elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
@@ -346,13 +346,13 @@ class CommonOperations():
 
             shift_value = 0
 
-            item_ = data_list[0]
+            item = data_list[0]
             for i in range(index + 1):
-                previous_item = item_
-                item_ = data_list[i]
-                y_range = ranges[item_.get_yposition()]
+                previous_item = item
+                item = data_list[i]
+                y_range = ranges[item.get_yposition()]
 
-                if isinstance(previous_item, EquationItem):
+                if isinstance(previous_item, Graphs.EquationItem):
                     prev_xdata, prev_ydata = utilities.equation_to_data(
                         previous_item.get_preprocessed_equation(),
                         selected_limits,
@@ -382,7 +382,7 @@ class CommonOperations():
             if shift_value == 0:
                 continue
             shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
-            if isinstance(item, EquationItem):
+            if isinstance(item, Graphs.EquationItem):
                 equation = item.get_preprocessed_equation()
                 if scale == Graphs.Scale.LOG:
                     equation = f"({equation})*10**{shift_value}"
@@ -393,7 +393,7 @@ class CommonOperations():
                 equation = str(sympy.simplify(equation))
                 item.set_equation(Graphs.prettify_equation(equation))
                 continue
-            if isinstance(item, DataItem):
+            if isinstance(item, Graphs.DataItem):
                 if scale == Graphs.Scale.LOG:
                     new_ydata = [value * 10**shift_value for value in ydata]
                 elif scale == Graphs.Scale.LOG2:
@@ -423,7 +423,7 @@ class EquationOperations():
 
     @staticmethod
     def execute(
-        item: EquationItem,
+        item: Graphs.EquationItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
         _interaction_mode: Graphs.Mode,
@@ -592,7 +592,7 @@ class DataOperations():
 
     @staticmethod
     def execute(
-        item: DataItem,
+        item: Graphs.DataItem,
         name: str,
         figure_settings: Graphs.FigureSettings,
         interaction_mode: Graphs.Mode,
