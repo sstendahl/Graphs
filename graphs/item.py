@@ -9,25 +9,6 @@ from matplotlib import RcParams
 import numpy
 
 
-def new_from_dict(dictionary: dict) -> Graphs.Item:
-    """Instanciate item from dict."""
-    match dictionary["type"]:
-        case "DataItem":
-            cls = DataItem
-        case "GeneratedDataItem":
-            cls = GeneratedDataItem
-        case "EquationItem":
-            cls = EquationItem
-        case "TextItem":
-            cls = TextItem
-        case "FillItem":
-            cls = FillItem
-        case _:
-            raise ValueError(f"could not find type {dictionary['type']}")
-    dictionary.pop("type")
-    return cls(**dictionary)
-
-
 class _PythonItemMixin:
 
     def reset(
@@ -36,6 +17,8 @@ class _PythonItemMixin:
         new_style: tuple[RcParams, dict],
     ) -> None:
         """Reset all properties."""
+        if not hasattr(self, "_style_properties"):
+            return
         # Combine rcparams and graphs_params into single dict:
         old_style = old_style[0] | old_style[1]
         new_style = new_style[0] | new_style[1]
@@ -48,16 +31,30 @@ class _PythonItemMixin:
             if self.get_property(prop) == old_value:
                 self.set_property(prop, new_value)
 
-    def _extract_params(
+    def override(
         self,
         style: tuple[RcParams, dict],
-        kwargs: dict = None,
+    ) -> None:
+        """Override all properties."""
+        if not hasattr(self, "_style_properties"):
+            return
+        # Combine rcparams and graphs_params into single dict:
+        style = style[0] | style[1]
+        for prop, (key, function) in self._style_properties.items():
+            value = style[key] if function is None else function(style[key])
+            self.set_property(prop, value)
+
+    @staticmethod
+    def _extract_params(
+        cls,
+        style: tuple[RcParams, dict],
+        kwargs: dict,
     ) -> dict:
         style = style[0] | style[1]  # Add graphs_params to style dict
         return {
             prop: style[key] if function is None else function(style[key])
-            for prop, (key, function) in self._style_properties.items()
-            if kwargs is None or prop not in kwargs
+            for prop, (key, function) in cls._style_properties.items()
+            if prop not in kwargs
         }
 
     def to_dict(self) -> dict:
@@ -258,15 +255,11 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         if self.props.data is None:
             self.props.data = (None, None, None)
 
-    def reset(self):
-        """Not yet implemented."""
-        raise NotImplementedError
-
 
 class ItemFactory(Graphs.ItemFactory):
     """Item factory."""
 
-    _items = {
+    _default_new = {
         "generated-data-item": GeneratedDataItem,
         "equation-item": EquationItem,
         "text-item": TextItem,
@@ -274,9 +267,28 @@ class ItemFactory(Graphs.ItemFactory):
 
     def __init__(self):
         super().__init__()
-        for item, cls in self._items.items():
+        for item, cls in self._default_new.items():
             self.connect(item + "-request", self._on_request, cls)
         self.connect("data-item-request", self._on_data_item_request)
+
+    @staticmethod
+    def new_from_dict(dictionary: dict) -> Graphs.Item:
+        """Instanciate item from dict."""
+        match dictionary["type"]:
+            case "DataItem":
+                cls = DataItem
+            case "GeneratedDataItem":
+                cls = GeneratedDataItem
+            case "EquationItem":
+                cls = EquationItem
+            case "TextItem":
+                cls = TextItem
+            case "FillItem":
+                cls = FillItem
+            case _:
+                raise ValueError(f"could not find type {dictionary['type']}")
+        dictionary.pop("type")
+        return cls(**dictionary)
 
     @staticmethod
     def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:
@@ -297,7 +309,7 @@ class ItemFactory(Graphs.ItemFactory):
         ydata: GLib.Bytes,
         xerr: GLib.Bytes,
         yerr: GLib.Bytes,
-    ) -> DataItem:
+    ) -> Graphs.DataItem:
         return DataItem.new(
             data.get_selected_style_params(),
             self._bytes_to_list(xdata),
