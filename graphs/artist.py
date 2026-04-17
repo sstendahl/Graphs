@@ -429,7 +429,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             data = self._insert_singularity_points(data, singularities)
 
         self._artist.set_data(*data)
-        self._axis.figure.parent.queue_draw()
+        if self._axis.figure.parent is not None:
+            self._axis.figure.parent.queue_draw()
 
     def _find_singularities(self, limits):
         lower, upper = limits
