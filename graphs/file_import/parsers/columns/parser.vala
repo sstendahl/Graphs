@@ -121,10 +121,7 @@ namespace Graphs {
                 bitset_iter.init_first (used_indices, out column_index);
                 column_rank = 0;
                 do {
-                    if (column_index >= str_values.length) {
-                        column_rank++;
-                        break;
-                    }
+                    if (column_index >= str_values.length) break;
                     if (try_evaluate_string (str_values[column_index], out val, separator)) {
                         columns[column_rank++].data[value_size] = val;
                         continue;
