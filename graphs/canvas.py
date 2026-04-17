@@ -34,6 +34,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         style_params: tuple[RcParams, dict],
         items: Gio.ListModel,
         interactive: bool = True,
+        limits: list[float] = None,
     ):
         """
         Create the canvas.
@@ -53,7 +54,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
         FigureCanvasBase.__init__(
             self,
-            figure=Figure(style_params, items, self),
+            figure=Figure(style_params, items, self, limits),
         )
         self._rubberband_rect = None
 

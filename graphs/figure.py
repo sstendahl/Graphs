@@ -24,6 +24,7 @@ class Figure(GObject.Object, figure.Figure):
         style_params: tuple[RcParams, dict],
         items: Gio.ListModel,
         parent=None,
+        limits: list[float] = None,
     ):
         GObject.Object.__init__(self)
         self._style_params = style_params
@@ -41,6 +42,16 @@ class Figure(GObject.Object, figure.Figure):
         self._legend = True
         self._legend_position = misc.LEGEND_POSITIONS[0]
         self._artists = []
+
+        if limits is not None:
+            self.axis.set_xlim(limits[0], limits[1])
+            self.axis.set_ylim(limits[4], limits[5])
+            self.top_left_axis.set_xlim(limits[2], limits[3])
+            self.top_left_axis.set_ylim(limits[4], limits[5])
+            self.right_axis.set_xlim(limits[0], limits[1])
+            self.right_axis.set_ylim(limits[6], limits[7])
+            self.top_right_axis.set_xlim(limits[2], limits[3])
+            self.top_right_axis.set_ylim(limits[6], limits[7])
 
         items.connect("items-changed", self._redraw)
         if isinstance(items, Gtk.SelectionModel):

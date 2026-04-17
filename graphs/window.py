@@ -2,6 +2,7 @@
 """Main window."""
 from gi.repository import Graphs
 
+from graphs import misc
 from graphs.canvas import Canvas
 from graphs.data import Data
 
@@ -110,15 +111,18 @@ class PythonWindow(Graphs.Window):
         rcParams.update(rcParamsDefault)
         params = self.props.data.get_selected_style_params()
 
-        canvas = Canvas(params, self.props.data)
         figure_settings = self.props.data.get_figure_settings()
-        canvas_props = ("min_selected", "max_selected")
+        limits = figure_settings.get_limits()
+        canvas = Canvas(params, self.props.data, limits=limits)
 
-        for prop in dir(figure_settings.props):
-            if prop not in canvas_props + ("use_custom_style", "custom_style"):
-                figure_settings.bind_property(prop, canvas.figure, prop, 1 | 2)
+        for prop in misc.FIGURE_PROPERTIES:
+            figure_settings.bind_property(prop, canvas.figure, prop, 1 | 2)
 
-        for prop in canvas_props:
+        for limit in misc.LIMITS:
+            prop = limit.replace("-", "_")
+            figure_settings.bind_property(prop, canvas.figure, prop, 1)
+
+        for prop in ("min_selected", "max_selected"):
             figure_settings.bind_property(prop, canvas, prop, 1 | 2)
 
         canvas.connect("edit-request", self._on_edit_request)
