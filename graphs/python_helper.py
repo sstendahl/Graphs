@@ -3,7 +3,6 @@
 from gi.repository import GObject, Gio, Graphs
 
 from graphs import curve_fitting, export_items, file_io, operations
-from graphs.artist import EquationItemArtistWrapper
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
@@ -89,9 +88,7 @@ class PythonHelper(Graphs.PythonHelper):
                         figure, prop, figure_settings.get_property(prop),
                     )
 
-            for artist in figure._artists:
-                if isinstance(artist, EquationItemArtistWrapper):
-                    artist._generate_data()
+            figure._redraw()
 
             vector_formats = ["pdf", "eps", "ps", "svg"]
             fmt = settings.get_string("file-format")
