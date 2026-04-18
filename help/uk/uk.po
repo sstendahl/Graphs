@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-17 20:00+0300\n"
+"PO-Revision-Date: 2026-04-18 19:13+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -310,7 +310,8 @@ msgstr ""
 
 #. (itstool) path: section/p
 #: C/curve_fitting.page:107
-msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgid ""
+"The Statistics section shows two goodness-of-fit measures: R² and RMSE."
 msgstr ""
 "У розділі «Статистика» буде показано два показники відповідності: R² та КСКП."
 
@@ -868,7 +869,8 @@ msgstr ""
 "Щоб створити новий стиль, натисніть <em>Створити стиль…</em>, виберіть"
 " наявний стиль як початковий шаблон і дайте назву новому стилю. Ваш новий"
 " стиль буде одразу відкрито у редакторі, готовим до налаштування. Під час"
-" редагування зміни буде автоматично показано на панелі попереднього перегляду."
+" редагування зміни буде автоматично показано на панелі попереднього"
+" перегляду."
 
 #. (itstool) path: section/title
 #: C/edit-style.page:20
@@ -1136,7 +1138,8 @@ msgstr "Товщина ґратки"
 #: C/edit-style.page:142
 msgid ""
 "The thickness of grid lines. Only configurable when the grid is enabled."
-msgstr "Товщина ліній ґратки. Можна налаштовувати, лише якщо ґратку увімкнено."
+msgstr ""
+"Товщина ліній ґратки. Можна налаштовувати, лише якщо ґратку увімкнено."
 
 #. (itstool) path: item/title
 #: C/edit-style.page:145
@@ -1145,7 +1148,8 @@ msgstr "Непрозорість ґратки"
 
 #. (itstool) path: item/p
 #: C/edit-style.page:146
-msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgid ""
+"The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
 msgstr "Прозорість ліній ґратки, від 0 (невидимі) до 1 (повністю непрозорі)."
 
 #. (itstool) path: section/title
@@ -1477,6 +1481,9 @@ msgid ""
 "shown on the canvas. This is useful for focusing on a subset of the data "
 "without deleting anything."
 msgstr ""
+"Якщо увімкнено, на полотні буде показано лише ті елементи, які позначено на"
+" бічній панелі. Це корисно для зосередження уваги на підмножині даних без"
+" вилучення елементів."
 
 #. (itstool) path: item/title
 #: C/figure_settings.page:59
@@ -1489,6 +1496,9 @@ msgid ""
 "Shows the currently active style and opens the style picker when clicked. "
 "See <link xref=\"edit-style\"/>for details on creating and editing styles."
 msgstr ""
+"Показує поточний активний стиль і відкриває засіб вибору стилю після"
+" натискання. Див. <link xref=\"edit-style\"/>, щоб дізнатися більше про"
+" створення та редагування стилів."
 
 #. (itstool) path: page/title
 #: C/import.page:7
@@ -1498,7 +1508,7 @@ msgstr "Додавання даних"
 #. (itstool) path: page/p
 #: C/import.page:8
 msgid "There are three different types of data items in Graphs:"
-msgstr ""
+msgstr "У «Графіках» передбачено три різних типи елементів даних:"
 
 #. (itstool) path: item/p
 #: C/import.page:11
@@ -1506,6 +1516,8 @@ msgid ""
 "<link xref=\"#dataset\"> <em>Dataset</em> </link>: Data imported from a file "
 "or database."
 msgstr ""
+"<link xref=\"#dataset\"> <em>Набір даних</em> </link>: дані, які імпортовано"
+" з файла або бази даних."
 
 #. (itstool) path: item/p
 #: C/import.page:16
@@ -1513,6 +1525,8 @@ msgid ""
 "<link xref=\"#generated\"> <em>Generated Dataset</em> </link>: Data "
 "generated from an equation over a fixed set of points."
 msgstr ""
+"<link xref=\"#generated\"> <em>Створений набір даних</em> </link>: дані,"
+" створені на основі рівняння і фіксованого набору точок."
 
 #. (itstool) path: item/p
 #: C/import.page:21
@@ -1520,6 +1534,8 @@ msgid ""
 "<link xref=\"#equation\"> <em>Equation</em> </link>: A mathematical "
 "expression rendered continuously across the entire canvas."
 msgstr ""
+"<link xref=\"#equation\"> <em>Рівняння</em> </link>: неперервне креслення на"
+" основі математичного виразу у всьому діапазоні полотна."
 
 #. (itstool) path: section/title
 #: C/import.page:27
@@ -1535,6 +1551,11 @@ msgid ""
 "Leybold .xry files. Data from other Graphs projects can also be imported by "
 "selecting a project file."
 msgstr ""
+"Набір даних – це дані, імпортовані із зовнішнього джерела. У «Графіках»"
+" передбачено підтримку файлів на основі стовпців (зокрема .csv, .dat, .xy та"
+" звичайних текстових файлів), електронних таблиць (.ods та .xlsx), файлів"
+" бази даних SQLite, файлів Panalytical .xrdml та файлів Leybold .xry. Також"
+" можна імпортувати дані з інших проєктів «Графіків», вибравши файл проєкту."
 
 #. (itstool) path: section/p
 #: C/import.page:29
@@ -1547,6 +1568,15 @@ msgid ""
 "appropriate settings for each file automatically. Once everything looks "
 "right, press <em>Import</em> to add all files to the project."
 msgstr ""
+"Щоб імпортувати дані, натисніть кнопку <em>Додати</em> у верхньому лівому"
+" куті бічної панелі і виберіть <em>Додати дані з файла…</em>. Щоб одночасно"
+" додати декілька файлів, скористайтеся кнопкою додавання у верхньому лівому"
+" куті діалогового вікна імпортування. Кожен файл буде показано на бічній"
+" панелі діалогового вікна, де його можна вибрати для перегляду та"
+" налаштування його параметрів. «Графіки» автоматично спробують вгадати"
+" відповідні параметри для кожного файла. Щойно буде досягнуто прийнятного"
+" результату, натисніть кнопку <em>Імпортувати</em>, щоб додати всі файли до"
+" проєкту."
 
 #. (itstool) path: section/p
 #: C/import.page:30
@@ -1555,11 +1585,14 @@ msgid ""
 "automatically based on the file type. The available modes are described "
 "below."
 msgstr ""
+"<em>Режим імпортування</em> визначає спосіб обробки файла; програма"
+" встановлює його автоматично на основі типу файла. Доступні режими описано"
+" нижче."
 
 #. (itstool) path: section/title
 #: C/import.page:32
 msgid "Column-based Files"
-msgstr ""
+msgstr "Файли на основі стовпчиків"
 
 #. (itstool) path: section/p
 #: C/import.page:33
@@ -1572,6 +1605,13 @@ msgid ""
 "of whitespace including tabs, for example, and is equivalent to the default "
 "Whitespace option."
 msgstr ""
+"Файли на основі стовпчиків містять дані у вигляді рядків значень, розділених"
+" роздільником, таким як кома, символ табуляції або пробіл. У більшості"
+" випадків «Графіки» автоматично визначає роздільник. Якщо використано"
+" нетиповий роздільник, програма покаже додаткове поле, куди можна ввести"
+" вибраний роздільник. У цьому полі можна використовувати формальні вирази."
+" Рядок <code>\\s+</code> відповідає будь-якій кількості пробілів, зокрема,"
+" наприклад, табуляції, і є еквівалентним типовому варіанту «Пробіл»."
 
 #. (itstool) path: section/p
 #: C/import.page:34
@@ -1582,6 +1622,11 @@ msgid ""
 "starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while "
 "<code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…"
 msgstr ""
+"Якщо файл містить лише один стовпець значень Y, можна вибрати варіант <em"
+">Один стовпчик</em>, щоб значення X автоматично генерувалися з налаштованого"
+" рівняння, де <code>n</code> позначає індекс рядка, починаючи з нуля."
+" Наприклад, <code>n</code> повертає 0, 1, 2, 3…, тоді як <code>n*0.5</code>"
+" повертає 0, 0.5, 1.0, 1.5…"
 
 #. (itstool) path: section/title
 #: C/import.page:37
@@ -1599,6 +1644,14 @@ msgid ""
 "import session by using the <em>Add Item</em> button, each with its own "
 "column selection."
 msgstr ""
+"У «Графіках» передбачено підтримку імпортування даних з файлів електронних"
+" таблиць .ods та .xlsx. Стовпчики X та Y вибираються за індексом стовпця за"
+" абеткою, починаючи з нуля. Як і у випадку з файлами на основі стовпчиків,"
+" варіант <em>Один стовпчик</em> можна використовувати для автоматичного"
+" створення значень X, якщо доступні лише дані Y. Декілька записів можна"
+" налаштувати з однієї електронної таблиці в одному сеансі імпортування за"
+" допомогою кнопки <em>Додати елемент</em>; для кожного запису можна вибрати"
+" стовпчик окремо."
 
 #. (itstool) path: section/title
 #: C/import.page:41
@@ -1613,6 +1666,11 @@ msgid ""
 "X and Y columns can each be chosen from the numeric columns available in "
 "that table. If a table contains no numeric columns, a warning is shown."
 msgstr ""
+"Також передбачено підтримку файлів баз даних SQLite. Під час імпортування"
+" файла бази даних доступні таблиці буде показано у спадному списку. Після"
+" вибору таблиці стовпці X та Y можна вибрати з числових стовпців, доступних"
+" у цій таблиці. Якщо таблиця не містить числових стовпців, буде показано"
+" попередження."
 
 #. (itstool) path: section/p
 #: C/import.page:46
@@ -1623,6 +1681,13 @@ msgid ""
 "contains the error values. Column-based file formats that natively include "
 "error bar data, such as .xrdml files, will have them imported automatically."
 msgstr ""
+"Для наборів даних передбачено підтримку необов'язкових смуг похибок за X та"
+" Y. Для імпортування електронних таблиць та баз даних смуги похибок можна"
+" увімкнути для кожної осі за допомогою відповідного перемикача, після чого"
+" з’являється додатковий засіб вибору стовпчиків, щоб можна було вказати,"
+" який стовпчик містить значення похибок. Формати файлів на основі"
+" стовпчиків, які містять дані смуг похибок, такі як файли .xrdml, буде"
+" імпортовано автоматично."
 
 #. (itstool) path: section/p
 #: C/import.page:47
@@ -1631,11 +1696,14 @@ msgid ""
 "combining multiple datasets, error bars are carried over only if all "
 "selected items have them in the output."
 msgstr ""
+"Після імпортування смуги похибок зберігаються під час більшості операцій."
+" Під час об'єднання кількох наборів даних смуги похибок переносяться, лише"
+" якщо всі вибрані елементи містять їх у виведенні."
 
 #. (itstool) path: section/title
 #: C/import.page:51
 msgid "Generated Datasets"
-msgstr ""
+msgstr "Створені набори даних"
 
 #. (itstool) path: section/p
 #: C/import.page:52
@@ -1644,6 +1712,10 @@ msgid ""
 "values. To add one, press the <em>Add</em> button in the sidebar and choose "
 "<em>Generate Data…</em>. The following parameters can be configured:"
 msgstr ""
+"Згенеровані набори даних створюють дані шляхом обчислення значень за"
+" рівнянням для діапазону значень X. Щоб додати набір, натисніть кнопку <em"
+">Додати</em> на бічній панелі та виберіть <em>Створити дані…</em>. Можна"
+" налаштувати такі параметри:"
 
 #. (itstool) path: item/title
 #. (itstool) path: section/title
@@ -1657,16 +1729,17 @@ msgid ""
 "The mathematical expression to evaluate, using <code>x</code> as the "
 "variable."
 msgstr ""
+"Математичний вираз для обчислення, де використано <code>x</code> як змінну."
 
 #. (itstool) path: item/title
 #: C/import.page:59
 msgid "X Start and X Stop"
-msgstr ""
+msgstr "«Початок за X» і «Кінець за X»"
 
 #. (itstool) path: item/p
 #: C/import.page:60
 msgid "The lower and upper bounds of the x-range to generate data over."
-msgstr ""
+msgstr "Нижня і верхня межі діапазону за x, для якого слід створити дані."
 
 #. (itstool) path: item/title
 #: C/import.page:63
@@ -1676,12 +1749,12 @@ msgstr "Кроки"
 #. (itstool) path: item/p
 #: C/import.page:64
 msgid "The number of data points to generate."
-msgstr ""
+msgstr "Кількість точок даних, для яких слід створити дані."
 
 #. (itstool) path: item/title
 #: C/import.page:67
 msgid "Scale"
-msgstr "Масштаб"
+msgstr "Шкала"
 
 #. (itstool) path: item/p
 #: C/import.page:68
@@ -1691,6 +1764,10 @@ msgid ""
 "are useful when the data or the axis it will be plotted on follows a non-"
 "linear scale."
 msgstr ""
+"Визначає відстань між точками даних. Для лінійного інтервалу точки буде"
+" розміщено з рівними інтервалами. Інші варіанти, зокрема «Логарифмічна»,"
+" «Квадратний корінь» та «Обернена», корисні, коли дані або вісь, на якій"
+" вони будуть нанесені, мають нелінійний масштаб."
 
 #. (itstool) path: section/p
 #: C/import.page:71
@@ -1700,6 +1777,10 @@ msgid ""
 "can be changed at any time from the item editor, and the data will be "
 "regenerated accordingly."
 msgstr ""
+"Створені набори даних для більшості цілей буде оброблено так само, як"
+" імпортовані дані. Однак, на відміну від звичайного набору даних, параметри,"
+" що використовуються для створення даних, можна змінити будь-коли в"
+" редакторі записів, а дані будуть відповідним чином створені повторно."
 
 #. (itstool) path: section/p
 #: C/import.page:75
@@ -1754,6 +1835,8 @@ msgstr ""
 #: C/index.page:10
 msgid "Use the topics below to learn how to use Graphs."
 msgstr ""
+"Скористайтеся наведеними нижче темами для вивчення способів користування"
+" «Графіками»."
 
 #. (itstool) path: section/title
 #: C/index.page:12
@@ -1779,12 +1862,15 @@ msgstr ""
 msgid ""
 "<link xref=\"#translate\">Translate</link>: Shift data along the X or Y axis."
 msgstr ""
+"<link xref=\"#translate\">Перенести</link>: зсунути дані уздовж вісі X або Y."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:15
 msgid ""
 "<link xref=\"#multiply\">Multiply</link>: Scale data along the X or Y axis."
 msgstr ""
+"<link xref=\"#multiply\">Помножити</link>: масштабувати дані уздовж вісі X"
+" або Y."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:19
@@ -1792,6 +1878,8 @@ msgid ""
 "<link xref=\"#normalize\">Normalize</link>: Scale Y values relative to the "
 "maximum."
 msgstr ""
+"<link xref=\"#normalize\">Нормалізувати</link>: масштабувати значення Y за"
+" максимальним значенням."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:23
@@ -1799,22 +1887,26 @@ msgid ""
 "<link xref=\"#center\">Center</link>: Shift data so it is centered on the X "
 "axis."
 msgstr ""
+"<link xref=\"#center\">За центром</link>: зсунути дані так, щоб їх було"
+" центровано за віссю X."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:27
-msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgid ""
+"<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
 msgstr ""
+"<link xref=\"#smoothening\">Згладити</link>: зменшити шум у наборі даних."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:31
 msgid "<link xref=\"#derivative\">Derivative</link>: Compute the derivative."
-msgstr ""
+msgstr "<link xref=\"#derivative\">Похідна</link>: обчислити похідну."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:35
 msgid ""
 "<link xref=\"#integral\">Integral</link>: Compute the cumulative integral."
-msgstr ""
+msgstr "<link xref=\"#integral\">Інтеграл</link>: обчислити інтеграл."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:39
@@ -1822,12 +1914,16 @@ msgid ""
 "<link xref=\"#fft\">Fourier Transform</link>: Transform data to the "
 "frequency domain."
 msgstr ""
+"<link xref=\"#fft\">Перетворення Фур'є</link>: перетворити дані до домену"
+" частот."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:43
 msgid ""
 "<link xref=\"#combine\">Combine</link>: Merge multiple datasets into one."
 msgstr ""
+"<link xref=\"#combine\">Об'єднати</link>: об'єднати декілька наборів даних в"
+" один."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:47
@@ -1835,11 +1931,15 @@ msgid ""
 "<link xref=\"#shift\">Shift</link>: Automatically offset datasets so they do "
 "not overlap."
 msgstr ""
+"<link xref=\"#shift\">Зсунути</link>: автоматично зсунути набори даних так,"
+" щоб вони не перекривалися."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:51
-msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgid ""
+"<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
 msgstr ""
+"<link xref=\"#cut\">Обрізати</link>: вилучити дані у вибраному діапазоні."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:55
@@ -1847,6 +1947,8 @@ msgid ""
 "<link xref=\"#custom\">Custom Transformations</link>: Apply an arbitrary "
 "equation to the X and Y coordinates."
 msgstr ""
+"<link xref=\"#custom\">Нетипові перетворення</link>: застосувати довільне"
+" рівняння до координат X і Y."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:60
@@ -2036,7 +2138,7 @@ msgstr "<b>Загальне:</b>"
 #. (itstool) path: section/p
 #: C/manipulate.page:113
 msgid "<code>x</code>, <code>y</code>: original coordinate values"
-msgstr ""
+msgstr "<code>x</code>, <code>y</code>: початкові значення координат"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:114
@@ -2209,7 +2311,7 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/window.page:13
 msgid "Header buttons"
-msgstr ""
+msgstr "Кнопки у заголовку"
 
 #. (itstool) path: section/p
 #: C/window.page:14
@@ -2230,6 +2332,9 @@ msgid ""
 "Opens the import dialog to load a dataset from a file or database. See <link "
 "xref=\"import\"/>for details on the supported formats and import options."
 msgstr ""
+"Відкриває діалогове вікно імпортування для завантаження набору даних з файла"
+" або бази даних. Див. <link xref=\"import\"/>, щоб дізнатися більше про"
+" підтримувані формати та параметри імпортування."
 
 #. (itstool) path: item/title
 #: C/window.page:22
@@ -2380,7 +2485,8 @@ msgstr "Панорамування"
 
 #. (itstool) path: item/p
 #: C/window.page:77
-msgid "Click and drag on the canvas to pan the view. This is the default mode."
+msgid ""
+"Click and drag on the canvas to pan the view. This is the default mode."
 msgstr ""
 
 #. (itstool) path: item/title
