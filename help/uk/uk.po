@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-18 20:34+0300\n"
+"PO-Revision-Date: 2026-04-18 20:57+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2297,6 +2297,12 @@ msgid ""
 "undo and redo history is also saved, so you can continue undoing changes "
 "after reopening a project. The view history is saved as well."
 msgstr ""
+"Файл проєкту зберігає всі дані поточного сеансу: усі графіки, їхні дані та"
+" налаштування зовнішнього вигляду, всі налаштування рисунків, зокрема"
+" підписи, шкали та обмеження осей, налаштування умовних позначень та"
+" активний стиль. Також зберігається повний журнал скасування та повторення"
+" дій, тому ви можете продовжити скасування змін після повторного відкриття"
+" проєкту. Також буде збережено журнал перегляду."
 
 #. (itstool) path: section/title
 #: C/projects.page:14
@@ -2311,6 +2317,10 @@ msgid ""
 "em> overwrites the existing file. To save a copy under a different name or "
 "location, use <em>Save Project As…</em>."
 msgstr ""
+"Щоб зберегти поточний проєкт, виберіть у меню програми пункт <em>Зберегти"
+" проєкт…</em>. Якщо проєкт було збережено раніше, пункт <em>Зберегти"
+" проєкт…</em> перезапише наявний файл. Щоб зберегти копію під іншою назвою"
+" або в іншому місці, скористайтеся пунктом <em>Зберегти проєкт як…</em>."
 
 #. (itstool) path: section/title
 #: C/projects.page:18
@@ -2326,6 +2336,11 @@ msgid ""
 "at the same time, open a new window first using <em>New Project</em>, then "
 "open the second project there."
 msgstr ""
+"Щоб відкрити раніше збережений проєкт, виберіть у меню програми <em>Відкрити"
+" проект…</em> і виберіть файл проєкту. Проєкт буде відкрито у поточному"
+" вікні, замінюючи все, що було там раніше. Щоб працювати над двома проєктами"
+" одночасно, спочатку відкрийте нове вікно за допомогою пункту <em>Новий"
+" проєкт</em>, а потім відкрийте там другий проєкт."
 
 #. (itstool) path: section/p
 #: C/projects.page:20
@@ -2335,6 +2350,10 @@ msgid ""
 "the items from the saved project into the current one without replacing "
 "anything."
 msgstr ""
+"Файл проєкту також можна імпортувати як дані до наявного проєкту,"
+" скориставшись командою <em>Додати дані з файла…</em> і вибравши файл"
+" проєкту. Це додасть графіки зі збереженого проєкту до поточного без заміни"
+" будь-яких елементів."
 
 #. (itstool) path: section/title
 #: C/projects.page:23
@@ -2362,6 +2381,9 @@ msgid ""
 "when opened. Projects saved by a newer incompatible version of Graphs cannot "
 "be opened in an older version."
 msgstr ""
+"Файли проєктів, збережені старими версіями «Графіків», автоматично"
+" переносяться під час відкриття. Проєкти, збережені новішою несумісною"
+" версією «Графіків», не можна відкрити у старій версії."
 
 #. (itstool) path: page/title
 #: C/window.page:7
@@ -2375,6 +2397,9 @@ msgid ""
 "containing the item list and controls, and a canvas on the right where the "
 "figure is displayed."
 msgstr ""
+"Головне вікно програми «Графіки» розділене на дві області: бічну панель"
+" ліворуч, яка містить список графіків та елементи керування, і полотно"
+" праворуч, де буде показано рисунок."
 
 #. (itstool) path: section/title
 #: C/window.page:10
@@ -2402,6 +2427,9 @@ msgid ""
 "button to open the figure settings, and a button with the primary menu. At "
 "the top, the <em>Add</em> button opens a menu with three options:"
 msgstr ""
+"У верхній частині бічної панелі є заголовок із кнопкою для додавання даних,"
+" кнопкою для відкриття налаштувань рисунка та кнопкою з основним меню. Угорі"
+" кнопка <em>Додати</em> відкриває меню з трьома пунктами:"
 
 #. (itstool) path: item/title
 #: C/window.page:17
@@ -2545,6 +2573,11 @@ msgid ""
 "panel for that item. Items can be deleted, and their order can be changed by "
 "dragging."
 msgstr ""
+"У списку графіків буде показано усі графіки, які є у поточному проєкті."
+" Кожен графік можна позначити або скасувати позначення, натиснувши прапорець"
+" поруч із його пунктом. Дії з даними впливають лише на позначені графіки."
+" Клацання на назві графіка відкриває панель редагування для цього графіка."
+" Графіки можна вилучати, а їхній порядок можна змінювати перетягуванням."
 
 #. (itstool) path: section/p
 #: C/window.page:69
@@ -2557,6 +2590,13 @@ msgid ""
 "for new projects using the <em>Set as Default</em> button at the bottom of "
 "the panel."
 msgstr ""
+"Кнопка параметрів рисунка у верхньому правому куті бічної панелі відкриває"
+" панель параметрів рисунка, де можна налаштувати назву рисунка, підписи"
+" осей, межі осей, шкали осей, видимість і розташування панелі умовних"
+" позначень, а також активний стиль. Підписи та межі осей буде показано лише"
+" для тих осей, які використано. Поточні параметри рисунка можна зберегти як"
+" типові для нових проектів за допомогою кнопки <em>Зробити типовими</em>"
+" внизу панелі."
 
 #. (itstool) path: section/title
 #: C/window.page:72
@@ -2579,6 +2619,8 @@ msgstr "Панорамування"
 msgid ""
 "Click and drag on the canvas to pan the view. This is the default mode."
 msgstr ""
+"Натисніть ліву кнопку миші і перетягніть вказівник на полотні, щоб виконати"
+" панорамування перегляду. Це типовий режим."
 
 #. (itstool) path: item/title
 #: C/window.page:80
@@ -2590,6 +2632,8 @@ msgstr "Масштаб"
 msgid ""
 "Click and drag to draw a rectangle on the canvas to zoom into that area."
 msgstr ""
+"Клацніть і перетягніть, щоб намалювати прямокутник на полотні і виконати"
+" масштабування до позначеної області."
 
 #. (itstool) path: item/title
 #: C/window.page:84
@@ -2602,6 +2646,9 @@ msgid ""
 "Click and drag to highlight a region of the data. Data operations will only "
 "affect the data within the highlighted area when this mode is active."
 msgstr ""
+"Натисніть ліву кнопку миші і перетягніть вказівник, щоб підсвітити область"
+" даних. Якщо активним є цей режим, дії з даними виконуватимуться лише для"
+" даних у позначеній області."
 
 #. (itstool) path: section/title
 #: C/window.page:90
@@ -2615,6 +2662,10 @@ msgid ""
 "all data manipulation actions. These act on all selected items. See <link "
 "xref=\"manipulate\"/>for a full description of each operation."
 msgstr ""
+"Розташована під кнопками режиму полотна панель операцій забезпечує швидкий"
+" доступ до всіх дій для роботи з даними. Вони діють на всі позначені"
+" графіки. Див. <link xref=\"manipulate\"/>, щоб ознайомитися із повним"
+" описом усіх дій."
 
 #. (itstool) path: section/title
 #: C/window.page:96
@@ -2628,6 +2679,9 @@ msgid ""
 "label, limits or opens the Figure Settings, focused on the clicked item, "
 "allowing for quick adjustments."
 msgstr ""
+"На полотні буде показано графік, що міститиме усі активні елементи."
+" Одноразове клацання на мітці обмежує або відкриває параметри рисунка, з"
+" фокусом на позначеному елементі, що надає змогу швидкого налаштовування."
 
 #. (itstool) path: section/p
 #: C/window.page:98
@@ -2640,6 +2694,14 @@ msgid ""
 "visible items in the canvas. For equations, only the y-range is taken into "
 "account, as the x-data spans an infinite range."
 msgstr ""
+"У верхньому лівому куті розташовано кнопки скасування та повторення. У"
+" верхньому правому куті полотна розташовані кнопки перегляду. Стрілка назад"
+" переміщує вас до попереднього перегляду після зміни обмежень, тоді як"
+" стрілка вперед переміщує вас до наступного перегляду після натискання"
+" стрілки назад. Нарешті, кнопка «Оптимізувати межі» накаже програмі"
+" спробувати автоматично скоригувати межі так, щоб на полотні було показано"
+" усі видимі елементи. Для рівнянь буде враховано лише діапазон за y,"
+" оскільки дані за x охоплюють нескінченний діапазон."
 
 #. (itstool) path: p/link
 #: C/legal.xml:3
