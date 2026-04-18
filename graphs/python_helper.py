@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import GObject, Gio, Graphs
+from gi.repository import Gio, Graphs
 
 from graphs import curve_fitting, export_items, file_io, operations
 from graphs.figure import Figure
@@ -95,18 +95,11 @@ class PythonHelper(Graphs.PythonHelper):
         data: Graphs.Data,
     ) -> None:
         with file_io.open(file, "wb") as file_like:
-            figure = Figure(data.get_selected_style_params(), data)
-
-            figure_settings = data.get_figure_settings()
-            excluded = ("min_selected", "max_selected", "use_custom_style",
-                        "custom_style")
-            for prop in dir(figure_settings.props):
-                if prop not in excluded:
-                    GObject.Object.set_property(
-                        figure, prop, figure_settings.get_property(prop),
-                    )
-
-            figure._redraw()
+            figure = Figure(
+                data.get_selected_style_params(),
+                data,
+                figure_settings=data.get_figure_settings(),
+            )
 
             vector_formats = ["pdf", "eps", "ps", "svg"]
             fmt = settings.get_string("file-format")
