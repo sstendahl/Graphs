@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
 "POT-Creation-Date: 2026-04-16 15:23+0000\n"
-"PO-Revision-Date: 2026-04-16 19:58+0300\n"
+"PO-Revision-Date: 2026-04-18 19:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -105,11 +105,14 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"a"
 "tion;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
-"tion;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані;к"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"a"
+"tion;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані;"
+"к"
 "реслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
@@ -739,7 +742,7 @@ msgstr "Кроки"
 #: data/ui/sidebar/edit-item/generated-data.blp:48
 #: data/ui/generate-data.blp:100
 msgid "Scale"
-msgstr "Масштаб"
+msgstr "Шкала"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
