@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-07 06:24+0000\n"
-"PO-Revision-Date: 2026-04-09 07:21+0800\n"
+"POT-Creation-Date: 2026-04-18 16:33+0000\n"
+"PO-Revision-Date: 2026-04-19 07:36+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -102,7 +102,7 @@ msgid "New Window"
 msgstr "新建窗口"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:24
+#: graphs/application.vala:23
 msgid "Style Editor"
 msgstr "样式编辑器"
 
@@ -233,7 +233,7 @@ msgstr "仅导入 Y 值，X 值将自动生成"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:101
+#: graphs/item.vala:158
 msgid "Equation"
 msgstr "方程式"
 
@@ -797,7 +797,7 @@ msgid "Labels"
 msgstr "标签"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:102
+#: graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "标题"
 
@@ -941,7 +941,7 @@ msgstr "隐藏未选中项目"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:85
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "样式"
 
@@ -1432,7 +1432,7 @@ msgid "Open Style"
 msgstr "打开样式"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:200
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Graphs 样式编辑器"
 
@@ -1789,7 +1789,7 @@ msgstr "拖放到这里来导入"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:391
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:389
 msgid "Undo"
 msgstr "撤消"
 
@@ -1954,7 +1954,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "重做动作"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "列"
@@ -1963,14 +1963,14 @@ msgstr "列"
 msgid "Custom delimiter cannot be empty"
 msgstr "自定义分隔符不能为空"
 
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr "%1$s 中有索引错误，无法在第 %3$d 行访问索引 %2$d，仅找到 %4$d 栏"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "无法从文件导入，在第 %d 行有坏值"
@@ -1981,22 +1981,22 @@ msgstr "无法从文件导入，在第 %d 行有坏值"
 msgid "Item %d"
 msgstr "项目 %d"
 
-#: graphs/file_import/parsers/project/__init__.py:19
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:207
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "电子表格"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "电子表格"
@@ -2009,70 +2009,68 @@ msgstr "表格栏内未发现数字数据。"
 msgid "Columns do not have the same length."
 msgstr "表格栏不具有相同的长度。"
 
-#: graphs/file_import/parsers/sql/__init__.py:23
+#: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
 msgstr "数据库"
 
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite 数据库"
 
-#: graphs/file_import/parsers/sql/__init__.py:41
-#, python-brace-format
-msgid ""
-"Could not import data from table \"{table_name}\", no numeric columns were "
-"found"
-msgstr "无法从表格“{table_name}”导入数据，未发现数字栏"
+#: graphs/file_import/parsers/sql/reader.vala:135
+#, c-format
+msgid "Could not import data from table \"%s\", no numeric columns were found"
+msgstr "无法从表格“%s”导入数据，未发现数字栏"
 
-#: graphs/file_import/parsers/sql/__init__.py:51
+#: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
 msgstr "表格栏内未发现数据"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:67
 msgid "Intensity (cps)"
 msgstr "强度 (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:18
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:76
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:77
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
+#: graphs/file_import/__init__.py:117
 msgid "Import failed"
 msgstr "导入失败"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "支持的文件"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
@@ -2119,11 +2117,11 @@ msgstr "默认值已更新"
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor/__init__.py:103 graphs/style_io.py:247
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor/__init__.py:104 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -2138,7 +2136,7 @@ msgstr "颜色 %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Graphs 样式编辑器 — %s"
 
-#: graphs/style_editor/window.vala:233
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
@@ -2158,11 +2156,11 @@ msgstr ""
 msgid "Deleted %s"
 msgstr "已删除 %s"
 
-#: graphs/application.vala:23
+#: graphs/application.vala:22
 msgid "New window"
 msgstr "新建窗口"
 
-#: graphs/application.vala:25
+#: graphs/application.vala:24
 msgid "[FILE…]"
 msgstr "[文件…]"
 
@@ -2242,22 +2240,22 @@ msgstr "R²"
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:448
+#: graphs/curve_fitting.vala:449
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:107
+#: graphs/data.py:108
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr "无法解析样式 {stylename}，加载系统首选样式"
 
-#: graphs/data.py:112
+#: graphs/data.py:113
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "样式 {stylename} 不存在，加载系统首选样式"
 
-#: graphs/data.py:603
+#: graphs/data.py:605
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -2283,19 +2281,19 @@ msgstr "文本文件"
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/item.vala:49
+#: graphs/item.vala:106
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.vala:74
+#: graphs/item.vala:131
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.vala:117
+#: graphs/item.vala:174
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.vala:123
+#: graphs/item.vala:180
 msgid "Fill"
 msgstr "填充"
 
@@ -2304,69 +2302,69 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:241
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "无法执行变换，请确保语法正确"
 
-#: graphs/operations.py:302
+#: graphs/operations.py:292
 msgid "No data found in highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:296
 msgid "Some items lack error bars; they will be discarded"
 msgstr "一些项目缺少误差棒，它们将被丢弃"
 
-#: graphs/operations.py:317
+#: graphs/operations.py:307
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:458
+#: graphs/operations.py:448
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "对 {name} 的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:466
+#: graphs/operations.py:456
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:623
+#: graphs/operations.py:613
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:629
+#: graphs/operations.py:619
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:632
+#: graphs/operations.py:622
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:638
+#: graphs/operations.py:628
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
-#: graphs/project.py:57
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "工程文件缺失数据"
 
-#: graphs/project.py:78
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
 
-#: graphs/project.py:298
+#: graphs/project.py:299
 msgid "Failed to do legacy migration"
 msgstr "旧版本文件迁移失败"
 
-#: graphs/project.py:300
+#: graphs/project.py:301
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/project.py:306
+#: graphs/project.py:307
 msgid "Failed to migrate project"
 msgstr "迁移工程失败"
 
-#: graphs/project.py:312
+#: graphs/project.py:313
 msgid "Failed to validate project"
 msgstr "校验工程失败"
 
@@ -2378,7 +2376,7 @@ msgstr "保存的工程"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/python_helper.vala:37
+#: graphs/python_helper.vala:43
 msgid "Exported Data"
 msgstr "已导出数据"
 
@@ -2436,25 +2434,25 @@ msgstr "所有文件"
 msgid "Document Portal"
 msgstr "文档门户"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:157
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:184
 msgid "Untitled Project"
 msgstr "未命名工程"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:185
 msgid "Draft"
 msgstr "草稿"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:191
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:381
+#: graphs/window.vala:379
 msgid "Open Location"
 msgstr "打开位置"
 
