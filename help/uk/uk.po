@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "POT-Creation-Date: 2026-04-14 12:28+0000\n"
-"PO-Revision-Date: 2026-04-18 19:13+0300\n"
+"PO-Revision-Date: 2026-04-18 20:34+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1790,6 +1790,11 @@ msgid ""
 "sidebar and choose <em>Add Equation…</em>, or press <keyseq> <key>Ctrl</key> "
 "<key>Alt</key> <key>N</key> </keyseq>."
 msgstr ""
+"Для графіків за рівнянням буде показано математичний вираз безпосередньо та"
+" неперервно по всьому полотну. Щоб додати такий графік, натисніть кнопку <em"
+">Додати</em> на бічній панелі та виберіть <em>Додати рівняння…</em> або"
+" натисніть комбінацію клавіш <keyseq> <key>Ctrl</key> <key>Alt</key> <key>N<"
+"/key> </keyseq>."
 
 #. (itstool) path: section/p
 #: C/import.page:82
@@ -1802,6 +1807,13 @@ msgid ""
 "name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> "
 "uses radians."
 msgstr ""
+"Змінною виразу має бути <code>x</code>. Можна використовувати найпоширеніший"
+" математичний синтаксис. Наприклад, просте квадратичне рівняння можна ввести"
+" як <code>x²+5</code>, а вирази типу <code>sin(x)*x</code> або <code"
+">1/(x+1)</code> теж працюватимуть звичним чином. У типових тригонометричних"
+" функціях буде використано радіани. Щоб скористатися градусами, додайте <"
+"code>d</code> до назви функції. У функції <code>cosd(x)</code> буде"
+" використано градуси, а у функції <code>cos(x)</code> — радіани."
 
 #. (itstool) path: section/p
 #: C/import.page:83
@@ -1811,6 +1823,10 @@ msgid ""
 "taking the derivative of <code>x²+5</code> produces the equation <code>2·x</"
 "code> rather than a set of numerically computed slope values."
 msgstr ""
+"Одна важлива відмінність між елементами рівняння та наборами даних полягає в"
+" тому, що операції виконуються аналітично, а не чисельно. Наприклад, взяття"
+" похідної від <code>x²+5</code> дає рівняння <code>2·x</code>, а не набір"
+" обчислених значень нахилу дотичної."
 
 #. (itstool) path: info/desc
 #: C/index.page:5
@@ -1830,6 +1846,11 @@ msgid ""
 "generate data from equations, apply mathematical operations, fit curves, and "
 "export publication-ready figures, all within a clean, native interface."
 msgstr ""
+"«Графіки» — це програма Кола GNOME для побудови графіків та роботи з"
+" науковими даними. Імпортуйте набори даних з файлів або файлів бази даних"
+" SQLite, генеруйте дані з рівнянь, застосовуйте математичні операції,"
+" апроксимуйте криві та експортуйте рисунки, готові до публікації, і все це в"
+" чистому, природному інтерфейсі."
 
 #. (itstool) path: page/p
 #: C/index.page:10
@@ -1856,6 +1877,11 @@ msgid ""
 "file or generated from an equation. When a region of the canvas is selected "
 "using the Select tool, only data within that region will be affected."
 msgstr ""
+"У «Графіках» передбачено широкий спектр операцій для роботи з даними. Усі"
+" операції працюють однаково, незалежно від того, дані графіка було"
+" імпортовано з файла, чи створено на основі рівняння. Якщо частину полотна"
+" буде вибрано за допомогою інструмента «Позначити», програма виконуватиме"
+" дії, лише для даних у позначеній області."
 
 #. (itstool) path: item/p
 #: C/manipulate.page:11
@@ -1961,6 +1987,8 @@ msgid ""
 "Translates all selected data by a fixed offset along the X or Y axis. Enter "
 "the desired offset in the corresponding entry field and apply the operation."
 msgstr ""
+"Пересуває всі вибрані дані на фіксоване зміщення вздовж осі X або Y. Введіть"
+" потрібне зміщення у поле введення і застосуйте операцію."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:64
@@ -1974,6 +2002,8 @@ msgid ""
 "the desired multiplier in the corresponding entry field and apply the "
 "operation."
 msgstr ""
+"Множить усі вибрані дані на фіксований коефіцієнт вздовж осі X або Y."
+" Введіть бажаний множник у поле введення і застосуйте операцію."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:68
@@ -1986,6 +2016,8 @@ msgid ""
 "Scales the Y values of all selected data so that the maximum value becomes "
 "1. All other values are divided by that maximum accordingly."
 msgstr ""
+"Масштабує значення Y усіх позначених даних так, щоб максимальне значення"
+" стало 1. Усі інші значення відповідно діляться на це максимальне значення."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:72
@@ -2000,6 +2032,10 @@ msgid ""
 "data to zero, and centering on the middle of the X range. The mode can be "
 "configured in the smoothen settings."
 msgstr ""
+"Зсуває дані вздовж осі X так, щоб вони були вирівняні за центром. Доступні"
+" два режими: центрування за максимальним значенням Y, що зміщує пік даних до"
+" нуля, та центрування за серединою діапазону X. Режим можна налаштувати у"
+" параметрах згладжування."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:76
@@ -2012,6 +2048,8 @@ msgid ""
 "The smoothen operation reduces noise in a dataset. Two modes are available, "
 "configurable via the smoothen settings dialog."
 msgstr ""
+"Операція згладжування зменшує шум у наборі даних. Доступні два режими, які"
+" можна налаштувати в діалоговому вікні параметрів згладжування."
 
 #. (itstool) path: section/p
 #: C/manipulate.page:78
@@ -2021,6 +2059,9 @@ msgid ""
 "recover the underlying signal more faithfully from noisy data, and is the "
 "recommended choice in most cases."
 msgstr ""
+"Фільтр Савіцького-Голея апроксимує дані поліномом через навколишні точки"
+" даних, а не просто усереднює їх. Це надає змогу точніше відновити базовий"
+" сигнал із зашумлених даних і є рекомендованим вибором у більшості випадків."
 
 #. (itstool) path: section/p
 #: C/manipulate.page:79
@@ -2029,6 +2070,9 @@ msgid ""
 "window of points. This is simpler but may blur sharp features and cause "
 "changes in the data to appear shifted."
 msgstr ""
+"Рухом середнє замінює кожну точку середнім значенням навколишнього вікна"
+" точок. Це простіше, але може зменшити різкість і призвести до того, що"
+" зміни в даних виглядатимуть зміщеними."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:82
@@ -2042,6 +2086,8 @@ msgid ""
 "values with the rate of change with respect to X. For equations, the "
 "derivative is calculated analytically."
 msgstr ""
+"Обчислює числову похідну вибраних даних, замінюючи значення Y швидкістю"
+" зміни відносно X. Для рівнянь похідна обчислюється аналітично."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:86
@@ -2055,6 +2101,9 @@ msgid ""
 "method, replacing the Y values with the running area under the curve. For "
 "equations, the integral is calculated analytically."
 msgstr ""
+"Обчислює накопичувальний інтеграл для вибраних даних за допомогою методу"
+" трапецій, замінюючи значення Y площею під кривою. Для рівнянь невизначений"
+" інтеграл обчислюється аналітично."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:90
@@ -2068,6 +2117,9 @@ msgid ""
 "frequency domain using the Fast Fourier Transform. An inverse transform is "
 "also available to convert back."
 msgstr ""
+"Перетворює вибрані дані з часової або просторової області в частотну область"
+" за допомогою швидкого перетворення Фур'є. Також доступне і зворотне"
+" перетворення для повернення до оригіналу."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:94
@@ -2081,6 +2133,9 @@ msgid ""
 "is sorted by X value. If all selected items have error bars, those are "
 "preserved in the combined output."
 msgstr ""
+"Об'єднує всі позначені набори даних в один новий набір даних. Отримані дані"
+" буде впорядковано за значеннями X. Якщо всі позначені набори містять дані"
+" щодо смуг похибок, вони зберігаються в об'єднаному результаті."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:98
@@ -2095,6 +2150,10 @@ msgid ""
 "calculated based on the range of each dataset and respects the current axis "
 "scale, including logarithmic scales."
 msgstr ""
+"Автоматично зміщує кожен вибраний набір даних вздовж осі Y, щоб записи були"
+" розподілені та не перекривалися один з одним. Величина зсуву розраховується"
+" на основі діапазону кожного набору даних та враховує поточну шкалу осі,"
+" зокрема логарифмічну шкалу."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:102
@@ -2108,6 +2167,9 @@ msgid ""
 "requires the Select tool to be active and a region to be highlighted on the "
 "canvas."
 msgstr ""
+"Вилучає всі точки даних у поточній позначеній області. Для цієї операції"
+" потрібно, щоб було активовано інструмент «Позначити», і на полотні була"
+" позначена область."
 
 #. (itstool) path: section/title
 #: C/manipulate.page:106
@@ -2122,6 +2184,11 @@ msgid ""
 "values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code> "
 "in the X field. Coordinate names are not case-sensitive."
 msgstr ""
+"Нетипові перетворення надають змогу змінювати координати X та Y набору даних"
+" поточково на основі вказаного вами рівняння. Наприклад, щоб піднести до"
+" квадрату усі значення Y, встановіть <code>Y = Y²</code> у полі Y та залиште"
+" <code>X = X</code> у полі X. У назвах координат можна використовувати як"
+" малі, так і великі літери."
 
 #. (itstool) path: section/p
 #: C/manipulate.page:109
@@ -2129,6 +2196,7 @@ msgid ""
 "<b>The following extra variables are available for custom transformations:</"
 "b>"
 msgstr ""
+"<b>Для нетипових перетворень можна використовувати такі додаткові змінні:</b>"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:111
@@ -2143,7 +2211,7 @@ msgstr "<code>x</code>, <code>y</code>: початкові значення ко
 #. (itstool) path: section/p
 #: C/manipulate.page:114
 msgid "<code>counts</code>: total number of data points"
-msgstr ""
+msgstr "<code>counts</code>: загальна кількість точок даних"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:115
@@ -2154,16 +2222,18 @@ msgstr "<b>Вісь X:</b>"
 #: C/manipulate.page:117
 msgid "<code>x_min</code>, <code>x_max</code>: minimum and maximum"
 msgstr ""
+"<code>x_min</code>, <code>x_max</code>: мінімальне і максимальне значення"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:118
 msgid "<code>x_mean</code>, <code>x_median</code>: average and median"
 msgstr ""
+"<code>x_mean</code>, <code>x_median</code>: середнє значення і медіана"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:119
 msgid "<code>x_std</code>, <code>x_sum</code>: standard deviation and sum"
-msgstr ""
+msgstr "<code>x_std</code>, <code>x_sum</code>: стандартне відхилення і сума"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:120
@@ -2174,16 +2244,18 @@ msgstr "<b>Вісь Y:</b>"
 #: C/manipulate.page:122
 msgid "<code>y_min</code>, <code>y_max</code>: minimum and maximum"
 msgstr ""
+"<code>y_min</code>, <code>y_max</code>: мінімальне і максимальне значення"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:123
 msgid "<code>y_mean</code>, <code>y_median</code>: average and median"
 msgstr ""
+"<code>y_mean</code>, <code>y_median</code>: середнє значення і медіана"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:124
 msgid "<code>y_std</code>, <code>y_sum</code>: standard deviation and sum"
-msgstr ""
+msgstr "<code>y_std</code>, <code>y_sum</code>: стандартне відхилення і сума"
 
 #. (itstool) path: section/p
 #: C/manipulate.page:125
@@ -2191,6 +2263,9 @@ msgid ""
 "Trigonometric functions use radians by default. Append <b>d</b> to use "
 "degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>."
 msgstr ""
+"У тригонометричних функціях типово буде використано радіани. Додайте до"
+" назви функції <b>d</b>, щоб скористатися градусами; приклади: <code"
+">sind(x)</code> або <code>cosd(x)</code>."
 
 #. (itstool) path: page/title
 #: C/projects.page:7
@@ -2204,11 +2279,14 @@ msgid ""
 "it and pick up exactly where you left off. All project actions are available "
 "from the application menu."
 msgstr ""
+"У файлі проєкту «Графіків» буде збережено стан вашої роботи повністю, отже"
+" ви можете закрити вікно програми і потім продовжити саме з того місця, де"
+" зупинилися. Усі дії з проєктом доступні з меню програми."
 
 #. (itstool) path: section/title
 #: C/projects.page:10
 msgid "What Is Saved"
-msgstr ""
+msgstr "Дані, які зберігаються"
 
 #. (itstool) path: section/p
 #: C/projects.page:11
@@ -2269,6 +2347,8 @@ msgid ""
 "To close the current project and return to an empty state, choose <em>Close "
 "Project</em> from the application menu."
 msgstr ""
+"Щоб закрити поточний проєкт і повернутися до порожнього стану, виберіть"
+" пункт <em>Закрити проєкт</em> у меню програми."
 
 #. (itstool) path: section/title
 #: C/projects.page:28
@@ -2307,6 +2387,8 @@ msgid ""
 "The sidebar contains everything related to managing items and interacting "
 "with the figure."
 msgstr ""
+"На бічній панелі розташовано усі елементи інтерфейсу для керування графіками"
+" та взаємодії із рисунком."
 
 #. (itstool) path: section/title
 #: C/window.page:13
@@ -2361,6 +2443,8 @@ msgid ""
 "Opens a dialog to generate a fixed dataset from an equation over a "
 "configurable x-range."
 msgstr ""
+"Відкриває вікно для створення фіксованого набору даних на основі рівняння та"
+" придатного до налаштовування діапазону значень за x."
 
 #. (itstool) path: section/title
 #: C/window.page:32
@@ -2372,6 +2456,8 @@ msgstr "Основне меню"
 msgid ""
 "The primary menu in the top right provides access to some general options:"
 msgstr ""
+"За допомогою основного меню, кнопку якого розташовано вгорі праворуч у вікні"
+" програми, можна отримати доступ до деяких загальних пунктів дій:"
 
 #. (itstool) path: item/title
 #: C/window.page:36
@@ -2381,12 +2467,12 @@ msgstr "Новий проєкт"
 #. (itstool) path: item/p
 #: C/window.page:37
 msgid "Opens a new empty project in a new window."
-msgstr ""
+msgstr "Відкриває новий порожній проєкт у новому вікні."
 
 #. (itstool) path: item/title
 #: C/window.page:40
 msgid "Save Project / Save Project As…"
-msgstr ""
+msgstr "Зберегти проєкт / Зберегти проєкт як…"
 
 #. (itstool) path: item/p
 #: C/window.page:41
@@ -2394,6 +2480,8 @@ msgid ""
 "Saves the current project to a file, preserving all items, figure settings, "
 "and the full undo and view history."
 msgstr ""
+"Зберігає проєкт до файла, зберігаючи усі записи, параметри рисунків та"
+" повний журнал скасування-перегляду."
 
 #. (itstool) path: item/title
 #: C/window.page:44
@@ -2403,7 +2491,7 @@ msgstr "Відкрити проєкт…"
 #. (itstool) path: item/p
 #: C/window.page:45
 msgid "Opens a previously saved project file."
-msgstr ""
+msgstr "Відкриває раніше збережений файл проєкту."
 
 #. (itstool) path: item/title
 #: C/window.page:48
@@ -2413,7 +2501,7 @@ msgstr "Закрити проєкт"
 #. (itstool) path: item/p
 #: C/window.page:49
 msgid "Closes the current project and returns to an empty state."
-msgstr ""
+msgstr "Закриває поточний проєкт і повертає програму до порожнього стану."
 
 #. (itstool) path: item/title
 #: C/window.page:52
@@ -2423,7 +2511,7 @@ msgstr "Експортувати дані…"
 #. (itstool) path: item/p
 #: C/window.page:53
 msgid "Exports the current datasets to a file."
-msgstr ""
+msgstr "Експортує поточні набори даних до файла."
 
 #. (itstool) path: item/title
 #: C/window.page:56
@@ -2433,7 +2521,7 @@ msgstr "Експортувати рисунок…"
 #. (itstool) path: item/p
 #: C/window.page:57
 msgid "Exports the figure as an image."
-msgstr ""
+msgstr "Експортує рисунок до файла зображення."
 
 #. (itstool) path: item/title
 #: C/window.page:60
@@ -2445,6 +2533,8 @@ msgstr "Редактор стилю"
 msgid ""
 "Opens the style editor window. See <link xref=\"edit-style\"/>for details."
 msgstr ""
+"Відкриває вікно редактора стилів. Див. <link xref=\"edit-style\"/>, щоб"
+" дізнатися більше."
 
 #. (itstool) path: section/p
 #: C/window.page:66
@@ -2471,12 +2561,13 @@ msgstr ""
 #. (itstool) path: section/title
 #: C/window.page:72
 msgid "Canvas Modes"
-msgstr ""
+msgstr "Режими полотна"
 
 #. (itstool) path: section/p
 #: C/window.page:73
 msgid "Below the item list, three canvas interaction modes are available:"
 msgstr ""
+"Під списком графіків розташовано кнопки трьох режимів взаємодії з полотном:"
 
 #. (itstool) path: item/title
 #: C/window.page:76
