@@ -252,11 +252,7 @@ class Data(Graphs.Data):
         self._current_batch = list(collapsed.values())
 
     @staticmethod
-    def _on_add_history_state_request(
-        self,
-        limits: misc.Limits,
-        l: int,
-    ) -> bool:
+    def _on_add_history_state_request(self) -> bool:
         """Add a state to the clipboard."""
         self._collapse_current_batch()
         if not self._current_batch:
@@ -267,11 +263,6 @@ class Data(Graphs.Data):
         self._history_pos = -1
         limits = self.get_figure_settings().get_limits().values()
         self._history_states.append((self._current_batch, limits))
-        if l > 0:
-            assert l == 8
-            old_state = self._history_states[-2][1]
-            for index in range(8):
-                old_state[index] = limits[index]
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
@@ -519,7 +510,7 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        items = [ItemFactory.new_from_dict(d) for d in project_dict["data"]]
+        items = list(map(ItemFactory.new_from_dict, project_dict["data"]))
         self.set_items(items)
 
         # Set clipboard

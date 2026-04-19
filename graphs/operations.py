@@ -34,7 +34,6 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
 
     data = window.get_data()
     figure_settings = data.get_figure_settings()
-    old_limits = figure_settings.get_limits().values()
 
     if hasattr(CommonOperations, name):
         all_success = getattr(CommonOperations, name)(window)
@@ -60,8 +59,8 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
                 window.add_toast_string(message)
             all_success = success or all_success
     if all_success:
+        data.add_history_state()
         data.optimize_limits()
-        data.add_history_state(old_limits)
 
 
 class DataHelper():
@@ -218,7 +217,6 @@ class CommonOperations():
         def on_accept(_dialog, input_x, input_y, discard):
             data = window.get_data()
             figure_settings = data.get_figure_settings()
-            old_limits = figure_settings.get_limits().values()
 
             for item in data:
                 if not item.get_selected():
@@ -244,8 +242,8 @@ class CommonOperations():
                     toast = message if success else fail_message
                     window.add_toast_string(toast)
 
+                data.add_history_state()
                 data.optimize_limits()
-                data.add_history_state(old_limits)
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
