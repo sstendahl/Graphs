@@ -6,7 +6,7 @@ namespace Graphs {
     public class Limits {
         private double[] _values;
 
-        public Limits(double[] values)
+        public Limits (double[] values)
             requires (values.length = 8) {
             _values = values;
         }

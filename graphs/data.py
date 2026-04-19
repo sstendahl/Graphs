@@ -2,7 +2,6 @@
 """Data management module."""
 import copy
 import logging
-import math
 from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _

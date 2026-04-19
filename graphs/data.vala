@@ -638,7 +638,7 @@ namespace Graphs {
         public void view_back () {
             if (!can_view_back) return;
             int index = _view_history_states.size + --_view_history_pos;
-            figure_settings.set_limits(_view_history_states.get (index));
+            figure_settings.set_limits (_view_history_states.get (index));
 
             this.can_view_back = _view_history_pos.abs () < _view_history_states.size;
             this.can_view_forward = true;
@@ -647,7 +647,7 @@ namespace Graphs {
         public void view_forward () {
             if (!can_view_forward) return;
             int index = _view_history_states.size + ++_view_history_pos;
-            figure_settings.set_limits(_view_history_states.get (index));
+            figure_settings.set_limits (_view_history_states.get (index));
 
             this.can_view_back = true;
             this.can_view_forward = _view_history_pos < -1;

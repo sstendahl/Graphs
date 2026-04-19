@@ -12,7 +12,7 @@ namespace Graphs.MathTools {
      * Whether or not two values are close to each other.
      */
     public bool is_close (double a, double b) {
-        return Math.fabs(a - b) <= Math.fmax(REL_TOL * Math.fmax(Math.fabs(a), Math.fabs(b)), ABS_TOL);
+        return Math.fabs (a - b) <= Math.fmax (REL_TOL * Math.fmax (a.abs (), b.abs ()), ABS_TOL);
     }
 
     /**
