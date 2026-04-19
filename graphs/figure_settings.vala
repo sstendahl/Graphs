@@ -3,6 +3,23 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    public class Limits {
+        private double[] _values;
+
+        public Limits(double[] values)
+            requires (values.length = 8) {
+            _values = values;
+        }
+
+        public double[] values () {
+            return _values;
+        }
+
+        public double get (uint i) {
+            return _values[i];
+        }
+    }
+
     /**
      * Figure settings
      */
@@ -55,18 +72,17 @@ namespace Graphs {
             );
         }
 
-        public double[] get_limits () {
-            double[] limits = new double[8];
+        public Limits get_limits () {
+            double[] values = new double[8];
             for (uint i = 0; i < LIMIT_NAMES.length; i++) {
                 double limit;
                 get (LIMIT_NAMES[i], out limit);
-                limits[i] = limit;
+                values[i] = limit;
             }
-            return limits;
+            return new Limits ((owned) values);
         }
 
-        public void set_limits (double[] limits)
-        requires (limits.length == 8) {
+        public void set_limits (Limits limits) {
             for (uint i = 0; i < LIMIT_NAMES.length; i++) {
                 set (LIMIT_NAMES[i], limits[i]);
             }

@@ -238,7 +238,7 @@ class ProjectValidator:
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
         for history_state in view_history_states:
-            self.figure_settings.set_limits(history_state)
+            self.figure_settings.set_limits(Graphs.Limits.new(history_state))
         view_history_pos = int(self.project_dict["view-history-position"])
         assert view_history_pos < 0
         assert abs(view_history_pos) <= len(view_history_states)
@@ -265,7 +265,8 @@ class ProjectValidator:
                         self.figure_settings.set_property(change[0], change[2])
             history_pos += 1
         for history_state in reversed(history_states):
-            self.figure_settings.set_limits(history_state[1])
+            limits = history_state[1]
+            self.figure_settings.set_limits(Graphs.Limits.new(limits))
             for change_type, change in reversed(history_state[0]):
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:

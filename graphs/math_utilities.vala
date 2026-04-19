@@ -2,8 +2,29 @@
 using Gee;
 
 namespace Graphs.MathTools {
+    private const double REL_TOL = 1e-9;
+    private const double ABS_TOL = 1e-4;
+
     private const double PI_THRESH = 0.00010000314159265359; // 1e-4 + 1e-9 * pi
     private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
+
+    /**
+     * Whether or not two values are close to each other.
+     */
+    public bool is_close (double a, double b) {
+        return Math.fabs(a - b) <= Math.fmax(REL_TOL * Math.fmax(Math.fabs(a), Math.fabs(b)), ABS_TOL);
+    }
+
+    /**
+     * Wether or not two values contain values close to each other.
+     */
+    public bool all_close (double[] a, double[] b)
+        requires (a.length == b.length) {
+        for (uint i = 0; i < a.length; i++) {
+            if (!is_close (a[i], b[i])) return false;
+        }
+        return true;
+    }
 
     /**
      * String representation of a double, prettifies for typical constants

@@ -34,7 +34,7 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
 
     data = window.get_data()
     figure_settings = data.get_figure_settings()
-    old_limits = figure_settings.get_limits()
+    old_limits = figure_settings.get_limits().values()
 
     if hasattr(CommonOperations, name):
         all_success = getattr(CommonOperations, name)(window)
@@ -218,7 +218,7 @@ class CommonOperations():
         def on_accept(_dialog, input_x, input_y, discard):
             data = window.get_data()
             figure_settings = data.get_figure_settings()
-            old_limits = figure_settings.get_limits()
+            old_limits = figure_settings.get_limits().values()
 
             for item in data:
                 if not item.get_selected():
@@ -430,7 +430,7 @@ class EquationOperations():
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
-        old_limits = figure_settings.get_limits()
+        old_limits = figure_settings.get_limits().values()
         try:
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
