@@ -56,18 +56,18 @@ namespace Graphs {
         }
 
         public double[] get_limits () {
-            double[] limits = {};
-            foreach (string limit_name in LIMIT_NAMES) {
+            double[] limits = new double[8];
+            for (uint i = 0; i < LIMIT_NAMES.length; i++) {
                 double limit;
-                get (limit_name, out limit);
-                limits += limit;
+                get (LIMIT_NAMES[i], out limit);
+                limits[i] = limit;
             }
             return limits;
         }
 
         public void set_limits (double[] limits)
         requires (limits.length == 8) {
-            for (int i = 0; i < LIMIT_NAMES.length; i++) {
+            for (uint i = 0; i < LIMIT_NAMES.length; i++) {
                 set (LIMIT_NAMES[i], limits[i]);
             }
         }
