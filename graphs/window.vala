@@ -142,9 +142,6 @@ namespace Graphs {
             update_history_actions ();
             update_close_project_action ();
 
-            data.bind_property ("can_view_back", view_back_button, "sensitive", 2);
-            data.bind_property ("can_view_forward", view_forward_button, "sensitive", 2);
-
             data.items_changed.connect (on_items_changed);
             data.selection_changed.connect (on_selection_changed);
             data.notify["unsaved"].connect (on_unsaved_change);
