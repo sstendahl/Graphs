@@ -122,8 +122,8 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         return (
             self.get_xdata().tolist(),
             self.get_ydata().tolist(),
-            None if (xerr := self.get_xerr() is None) else xerr.tolist(),
-            None if (yerr := self.get_xerr() is None) else yerr.tolist(),
+            None if (xerr := self.get_xerr()) is None else xerr.tolist(),
+            None if (yerr := self.get_yerr()) is None else yerr.tolist(),
         )
 
     def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:

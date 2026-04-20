@@ -71,7 +71,7 @@ class DataHelper():
         interaction_mode: Graphs.Mode,
         selected_limits: tuple[float, float],
         item: Graphs.DataItem,
-    ) -> tuple[list[float], list[float]]:
+    ) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Get the X and Y data of a DataItem."""
         xdata, ydata = item.get_xydata()
         if interaction_mode == Graphs.Mode.SELECT:
@@ -146,9 +146,6 @@ class DataHelper():
         value: float,
     ) -> list:
         """Filter coordinates based on the given condition."""
-        xdata = numpy.array(xdata)
-        ydata = numpy.array(ydata)
-
         conditions = {
             "<=": numpy.less_equal,
             ">=": numpy.greater_equal,
@@ -159,7 +156,7 @@ class DataHelper():
         xdata_filtered = xdata[mask]
         ydata_filtered = ydata[mask]
 
-        return list(xdata_filtered), list(ydata_filtered)
+        return xdata_filtered, ydata_filtered
 
     @staticmethod
     def create_data_mask(
@@ -256,31 +253,34 @@ class CommonOperations():
         mode = window.get_mode()
         settings = data.get_figure_settings()
 
-        selected = [i for i in data if i.get_selected()]
-        data_items = [i for i in selected if isinstance(i, Graphs.DataItem)]
-
-        def get_err_info(attr):
-            has_err = [getattr(i.props, attr) is not None for i in data_items]
-            return (all(has_err) if has_err else False), any(has_err)
-
-        all_x, some_x = get_err_info("xerr")
-        all_y, some_y = get_err_info("yerr")
-
         new_xdata, new_ydata, new_xerr, new_yerr = [], [], [], []
+        some_x, some_y = False, False
 
-        for item in selected:
+        for item in data:
+            if not item.get_selected():
+                continue
+
             lims = DataHelper.get_selected_limits(settings, mode, item)
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
                 eq = item.get_preprocessed_equation()
                 xdata, ydata = utilities.equation_to_data(eq, lims)
+                new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)
-                if all_x:
-                    new_xerr.extend(item.get_xerr())
-                if all_y:
-                    new_yerr.extend(item.get_yerr())
+                xerr = item.get_xerr()
+                if xerr is not None and new_xerr is not None:
+                    new_xerr.extend(xerr)
+                    some_x = True
+                else:
+                    new_xerr = None
+                yerr = item.get_yerr()
+                if yerr is not None and new_xerr is not None:
+                    new_yerr.extend(yerr)
+                    some_y = True
+                else:
+                    new_xerr = None
 
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
@@ -290,7 +290,7 @@ class CommonOperations():
             window.add_toast_string(_("No data found in highlighted area"))
             return False
 
-        if (some_x and not all_x) or (some_y and not all_y):
+        if (some_x and new_xerr is None) or (some_y and new_yerr is None):
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
@@ -300,8 +300,8 @@ class CommonOperations():
                 data.get_selected_style_params(),
                 new_xdata,
                 new_ydata,
-                xerr=new_xerr if all_x else None,
-                yerr=new_yerr if all_y else None,
+                xerr=new_xerr,
+                yerr=new_yerr,
                 name=_("Combined Data"),
             ),
         ])
@@ -339,7 +339,7 @@ class CommonOperations():
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
-            if (not xdata.any()) or (not ydata.any()):
+            if min(xdata.size, ydata.size) == 0:
                 continue
 
             shift_value = 0
@@ -621,7 +621,6 @@ class DataOperations():
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
-        new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         if discard and interaction_mode == Graphs.Mode.SELECT:
             logging.debug("Discard is true")
             message = _(
@@ -642,7 +641,7 @@ class DataOperations():
             new_ydata = item.get_ydata().copy()
             xerr = item.get_xerr()
             yerr = item.get_yerr()
-            if xdata == []:  # If cut action was performed
+            if xdata is None:  # If cut action was performed
                 new_xdata = new_xdata[~mask]
                 new_ydata = new_ydata[~mask]
 
@@ -774,24 +773,20 @@ class DataOperations():
     @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
-        return [], [], False, False
+        return None, None, False, False
 
     @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        dy_dx = numpy.gradient(y_values, x_values)
+        dy_dx = numpy.gradient(xdata, ydata)
         return xdata, dy_dx, False, True
 
     @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
         """Calculate indefinite integral of all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
         indefinite_integral = scipy.integrate.cumulative_trapezoid(
-            y_values,
-            x_values,
+            ydata,
+            xdata,
             initial=0,
         )
         return xdata, indefinite_integral, False, True
@@ -799,20 +794,16 @@ class DataOperations():
     @staticmethod
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        y_fourier = numpy.fft.fft(y_values)
-        x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
+        y_fourier = numpy.fft.fft(ydata)
+        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
     @staticmethod
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        y_fourier = numpy.fft.ifft(y_values)
-        x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
+        y_fourier = numpy.fft.ifft(ydata)
+        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 

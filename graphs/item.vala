@@ -110,7 +110,7 @@ namespace Graphs {
         }
 
         public unowned double[] get_ydata () {
-            return _xdata;
+            return _ydata;
         }
 
         public unowned double[]? get_xerr () {
