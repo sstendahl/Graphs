@@ -50,7 +50,7 @@ def _save_item(
 
     xerr, yerr = None, None
     if isinstance(item, (Graphs.DataItem, Graphs.GeneratedDataItem)):
-        xdata, ydata, xerr, yerr = item.props.data
+        xdata, ydata, xerr, yerr = item.get_data_tuple()
     elif isinstance(item, Graphs.EquationItem):
         limits = figure_settings.get_limits().values()
         if item.get_xposition() == 0:

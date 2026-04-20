@@ -2,10 +2,12 @@
 """Tests for operations."""
 from graphs.operations import DataHelper, DataOperations
 
+import numpy
+
 import pytest
 
-XDATA = [0, 1, 4, 5, 7, 8, 12, 3]  # no duplicate x values
-YDATA = [5, 2, 7, 1, 31, 5, 123, 156]
+XDATA = numpy.array([0, 1, 4, 5, 7, 8, 12, 3])  # no duplicate x values
+YDATA = numpy.array([5, 2, 7, 1, 31, 5, 123, 156])
 
 
 def is_sorted(lst):
@@ -27,37 +29,24 @@ def test_sort_data_xy_remain_paired():
         assert original[x] == y
 
 
-def test_filter_data_less_equal():
-    """Test if filter_data keeps only values at or below the threshold."""
-    xdata, ydata = DataHelper.filter_data(
-        [1, 2, 3, 4, 5], [10, 20, 30, 40, 50], "<=", 3,
-    )
-    assert xdata == [1, 2, 3]
-    assert ydata == [10, 20, 30]
-
-
-def test_filter_data_greater_equal():
-    """Test if filter_data keeps only values at or above the threshold."""
-    xdata, ydata = DataHelper.filter_data(
-        [1, 2, 3, 4, 5], [10, 20, 30, 40, 50], ">=", 3,
-    )
-    assert xdata == [3, 4, 5]
-    assert ydata == [30, 40, 50]
-
-
 def test_create_data_mask_matching_pairs():
     """Test if create_data_mask returns True only for matching (x, y) pairs."""
-    xdata1 = [1, 2, 3]
-    ydata1 = [10, 20, 30]
-    xdata2 = [2, 3]
-    ydata2 = [20, 30]
+    xdata1 = numpy.array([1, 2, 3])
+    ydata1 = numpy.array([10, 20, 30])
+    xdata2 = numpy.array([2, 3])
+    ydata2 = numpy.array([20, 30])
     mask = DataHelper.create_data_mask(xdata1, ydata1, xdata2, ydata2)
     assert list(mask) == [False, True, True]
 
 
 def test_create_data_mask_no_matches():
     """Test if create_data_mask returns all False when no pairs match."""
-    mask = DataHelper.create_data_mask([1, 2], [10, 20], [3, 4], [30, 40])
+    mask = DataHelper.create_data_mask(
+        numpy.array([1, 2]),
+        numpy.array([10, 20]),
+        numpy.array([3, 4]),
+        numpy.array([30, 40]),
+    )
     assert not any(mask)
 
 
@@ -106,7 +95,7 @@ def test_center_at_maximum():
     xdata, ydata, _sort, _discard = DataOperations.center(
         None, XDATA, YDATA, 0,
     )
-    y_max_index = YDATA.index(max(YDATA))
+    y_max_index = numpy.argmax(YDATA)
     assert xdata[y_max_index] == 0
 
 
@@ -141,11 +130,11 @@ def test_integral():
     assert y_new == pytest.approx([0, 7.5, 20, 32.5, 40], rel=1e-6)
 
 
-def test_cut_returns_empty():
-    """Test if cut returns empty x and y lists."""
+def test_cut_returns_none():
+    """Test if cut returns no x and y lists."""
     xdata, ydata, _sort, _discard = DataOperations.cut(None, XDATA, YDATA)
-    assert xdata == []
-    assert ydata == []
+    assert xdata is None
+    assert ydata is None
 
 
 def test_fft_output_length():

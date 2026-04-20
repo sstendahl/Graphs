@@ -70,7 +70,7 @@ class PythonHelper(Graphs.PythonHelper):
             data = numexpr.evaluate(equation, local_dict=local_dict)
             if data.ndim == 0:
                 data = numpy.full(steps, data)
-            self.set_evaluate_expression_result(data.tolist())
+            self.set_evaluate_expression_result(data)
             return True
         except (KeyError, SyntaxError, ValueError, TypeError):
             return False

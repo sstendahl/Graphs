@@ -56,7 +56,6 @@ class XrdmlParser(Parser):
                 start_pos = float(start_pos[0].firstChild.data)
                 end_pos = float(end_pos[0].firstChild.data)
                 xdata = numpy.linspace(start_pos, end_pos, len(ydata))
-                xdata = numpy.ndarray.tolist(xdata)
         items.add(
             DataItem.new(
                 data.get_selected_style_params(),
