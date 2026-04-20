@@ -282,7 +282,6 @@ class SpreadsheetParser(Parser):
                 )
                 if xdata.ndim == 0:
                     xdata = numpy.full(len(ydata), xdata)
-                xdata = numpy.ndarray.tolist(xdata)
             else:
                 xdata, xlabel = parsed_columns[item_settings.column_x]
                 if len(xdata) != len(ydata):

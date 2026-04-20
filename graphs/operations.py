@@ -71,25 +71,20 @@ class DataHelper():
         interaction_mode: Graphs.Mode,
         selected_limits: tuple[float, float],
         item: Graphs.DataItem,
-    ) -> tuple[list[float], list[float]]:
+    ) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Get the X and Y data of a DataItem."""
         xdata, ydata = item.get_xydata()
-        if interaction_mode == Graphs.Mode.SELECT:
-            startx, stopx = selected_limits
-            # If startx and stopx are not out of range, that is,
-            # if the item data is within the highlight
-            xmin = min(xdata)
-            if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
-                xdata, ydata = DataHelper.filter_data(
-                    xdata, ydata, ">=", startx,
-                )
-                xdata, ydata = DataHelper.filter_data(
-                    xdata, ydata, "<=", stopx,
-                )
-            else:
-                xdata = None
-                ydata = None
-        return xdata, ydata
+        if interaction_mode != Graphs.Mode.SELECT:
+            return xdata, ydata
+        startx, stopx = selected_limits
+        # If startx and stopx are not out of range, that is,
+        # if the item data is within the highlight
+        xmin = min(xdata)
+        if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
+            mask = numpy.greater_equal(xdata, startx)
+            mask &= numpy.less_equal(xdata, stopx)
+            return xdata[mask], ydata[mask]
+        return None, None
 
     @staticmethod
     def get_selected_limits(
@@ -101,72 +96,47 @@ class DataHelper():
         if item.get_xposition() == 0:
             min_bottom = figure_settings.get_min_bottom()
             max_bottom = figure_settings.get_max_bottom()
-            if interaction_mode == Graphs.Mode.SELECT:
-                scale = figure_settings.get_bottom_scale()
-                min_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_min_selected(),
-                    min_bottom,
-                    max_bottom,
-                    scale,
-                )
-                max_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_max_selected(),
-                    min_bottom,
-                    max_bottom,
-                    scale,
-                )
-            else:
-                min_x, max_x = min_bottom, max_bottom
+            if interaction_mode != Graphs.Mode.SELECT:
+                return min_bottom, max_bottom
+            scale = figure_settings.get_bottom_scale()
+            min_x = Graphs.get_value_at_fraction(
+                figure_settings.get_min_selected(),
+                min_bottom,
+                max_bottom,
+                scale,
+            )
+            max_x = Graphs.get_value_at_fraction(
+                figure_settings.get_max_selected(),
+                min_bottom,
+                max_bottom,
+                scale,
+            )
         else:
             min_top = figure_settings.get_min_top()
             max_top = figure_settings.get_max_top()
-            if interaction_mode == Graphs.Mode.SELECT:
-                scale = figure_settings.get_top_scale()
-                min_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_min_selected(),
-                    min_top,
-                    max_top,
-                    scale,
-                )
-                max_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_max_selected(),
-                    min_top,
-                    max_top,
-                    scale,
-                )
-            else:
-                min_x, max_x = min_top, max_top
+            if interaction_mode != Graphs.Mode.SELECT:
+                return min_top, max_top
+            scale = figure_settings.get_top_scale()
+            min_x = Graphs.get_value_at_fraction(
+                figure_settings.get_min_selected(),
+                min_top,
+                max_top,
+                scale,
+            )
+            max_x = Graphs.get_value_at_fraction(
+                figure_settings.get_max_selected(),
+                min_top,
+                max_top,
+                scale,
+            )
         return min_x, max_x
 
     @staticmethod
-    def filter_data(
-        xdata: list,
-        ydata: list,
-        condition: str,
-        value: float,
-    ) -> list:
-        """Filter coordinates based on the given condition."""
-        xdata = numpy.array(xdata)
-        ydata = numpy.array(ydata)
-
-        conditions = {
-            "<=": numpy.less_equal,
-            ">=": numpy.greater_equal,
-            "==": numpy.equal,
-        }
-        mask = conditions[condition](xdata, value)
-
-        xdata_filtered = xdata[mask]
-        ydata_filtered = ydata[mask]
-
-        return list(xdata_filtered), list(ydata_filtered)
-
-    @staticmethod
     def create_data_mask(
-        xdata1: list,
-        ydata1: list,
-        xdata2: list,
-        ydata2: list,
+        xdata1: numpy.ndarray,
+        ydata1: numpy.ndarray,
+        xdata2: numpy.ndarray,
+        ydata2: numpy.ndarray,
     ) -> bool:
         """
         Create a mask for matching pairs of coordinates.
@@ -174,8 +144,6 @@ class DataHelper():
         Returns:
         - Boolean mask indicating where pairs of coordinates match.
         """
-        xdata1, ydata1, xdata2, ydata2 = \
-            map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
         return numpy.any((xdata1[:, None] == xdata2)
                          & (ydata1[:, None] == ydata2),
                          axis=1)
@@ -184,7 +152,7 @@ class DataHelper():
     def sort_data(xdata: list, ydata: list) -> (list, list):
         """Sort data."""
         return map(
-            list,
+            numpy.array,
             zip(
                 *sorted(
                     zip(xdata, ydata),
@@ -197,13 +165,9 @@ class DataHelper():
     def filter_range(xdata, ydata, prev_xdata, prev_ydata):
         """Filter range."""
         if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
-            new_xdata, new_ydata = DataHelper.filter_data(
-                prev_xdata, prev_ydata, ">=", min(xdata),
-            )
-            new_xdata, new_ydata = DataHelper.filter_data(
-                new_xdata, new_ydata, "<=", max(xdata),
-            )
-            return new_xdata, new_ydata
+            mask = numpy.greater_equal(xdata, min(xdata))
+            mask &= numpy.less_equal(xdata, max(xdata))
+            return xdata[mask], ydata[mask]
         return xdata, ydata
 
 
@@ -256,31 +220,34 @@ class CommonOperations():
         mode = window.get_mode()
         settings = data.get_figure_settings()
 
-        selected = [i for i in data if i.get_selected()]
-        data_items = [i for i in selected if isinstance(i, Graphs.DataItem)]
-
-        def get_err_info(attr):
-            has_err = [getattr(i.props, attr) is not None for i in data_items]
-            return (all(has_err) if has_err else False), any(has_err)
-
-        all_x, some_x = get_err_info("xerr")
-        all_y, some_y = get_err_info("yerr")
-
         new_xdata, new_ydata, new_xerr, new_yerr = [], [], [], []
+        some_x, some_y = False, False
 
-        for item in selected:
+        for item in data:
+            if not item.get_selected():
+                continue
+
             lims = DataHelper.get_selected_limits(settings, mode, item)
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
                 eq = item.get_preprocessed_equation()
                 xdata, ydata = utilities.equation_to_data(eq, lims)
+                new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = DataHelper().get_xydata(mode, lims, item)
-                if all_x:
-                    new_xerr.extend(item.get_xerr())
-                if all_y:
-                    new_yerr.extend(item.get_yerr())
+                xerr = item.get_xerr()
+                if xerr is not None and new_xerr is not None:
+                    new_xerr.extend(xerr)
+                    some_x = True
+                else:
+                    new_xerr = None
+                yerr = item.get_yerr()
+                if yerr is not None and new_xerr is not None:
+                    new_yerr.extend(yerr)
+                    some_y = True
+                else:
+                    new_xerr = None
 
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
@@ -290,7 +257,7 @@ class CommonOperations():
             window.add_toast_string(_("No data found in highlighted area"))
             return False
 
-        if (some_x and not all_x) or (some_y and not all_y):
+        if (some_x and new_xerr is None) or (some_y and new_yerr is None):
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
@@ -300,8 +267,8 @@ class CommonOperations():
                 data.get_selected_style_params(),
                 new_xdata,
                 new_ydata,
-                xerr=new_xerr if all_x else None,
-                yerr=new_yerr if all_y else None,
+                xerr=new_xerr,
+                yerr=new_yerr,
                 name=_("Combined Data"),
             ),
         ])
@@ -339,7 +306,7 @@ class CommonOperations():
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
-            if (not xdata) or (not ydata):
+            if min(xdata.size, ydata.size) == 0:
                 continue
 
             shift_value = 0
@@ -405,6 +372,8 @@ class CommonOperations():
                 )):
                     # Change coordinates that were within span
                     if masked:
+                        item_xdata = item_xdata.copy()
+                        item_ydata = item_ydata.copy()
                         item_xdata[index] = xdata[i]
                         item_ydata[index] = new_ydata[i]
                         i += 1
@@ -582,7 +551,7 @@ class EquationOperations():
         return input_y.lower().replace("y", equation)
 
 
-_return = (list[float], list[float], bool, bool)
+_return = (numpy.ndarray, numpy.ndarray, bool, bool)
 
 
 class DataOperations():
@@ -619,7 +588,6 @@ class DataOperations():
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
-        new_xdata, new_ydata = list(new_xdata), list(new_ydata)
         if discard and interaction_mode == Graphs.Mode.SELECT:
             logging.debug("Discard is true")
             message = _(
@@ -636,30 +604,24 @@ class DataOperations():
             )
 
             xdata, ydata = new_xdata, new_ydata
-            new_xdata, new_ydata, xerr, yerr = item.props.data
-            if xdata == []:  # If cut action was performed
-                remove_list = \
-                    [index for index, masked in enumerate(mask) if masked]
-                for index in sorted(remove_list, reverse=True):
-                    new_xdata.pop(index)
-                    new_ydata.pop(index)
-                xerr = numpy.delete(xerr, remove_list) \
-                    if xerr is not None else None
-                yerr = numpy.delete(yerr, remove_list) \
-                    if yerr is not None else None
+            new_xdata = item.get_xdata().copy()
+            new_ydata = item.get_ydata().copy()
+            xerr = item.get_xerr()
+            yerr = item.get_yerr()
+            if xdata is None:  # If cut action was performed
+                new_xdata = new_xdata[~mask]
+                new_ydata = new_ydata[~mask]
+
+                xerr = xerr[~mask] if xerr is not None else None
+                yerr = yerr[~mask] if yerr is not None else None
             else:
-                i = 0
-                for index, masked in enumerate(mask):
-                    # Change coordinates that were within span
-                    if masked:
-                        new_xdata[index] = xdata[i]
-                        new_ydata[index] = ydata[i]
-                        i += 1
+                new_xdata[mask] = xdata
+                new_ydata[mask] = ydata
             if sort:
                 logging.debug("Sorting data")
                 new_xdata, new_ydata = \
                     DataHelper.sort_data(new_xdata, new_ydata)
-            item.props.data = new_xdata, new_ydata, xerr, yerr
+            item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
             return True, message
 
     @staticmethod
@@ -672,7 +634,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return [value + offset for value in xdata], ydata, True, False
+        return xdata + offset, ydata, True, False
 
     @staticmethod
     def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
@@ -684,7 +646,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return xdata, [value + offset for value in ydata], False, False
+        return xdata, ydata + offset, False, False
 
     @staticmethod
     def multiply_x(
@@ -701,7 +663,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return [value * multiplier for value in xdata], ydata, True, False
+        return xdata * multiplier, ydata, True, False
 
     @staticmethod
     def multiply_y(
@@ -718,12 +680,12 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return xdata, [value * multiplier for value in ydata], False, False
+        return xdata, ydata * multiplier, False, False
 
     @staticmethod
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
-        return xdata, [value / max(ydata) for value in ydata], False, False
+        return xdata, ydata / max(ydata), False, False
 
     @staticmethod
     def smoothen(
@@ -763,55 +725,45 @@ class DataOperations():
         on the maximum value of the data
         """
         if center_maximum == 0:  # Center at maximum Y
-            middle_index = ydata.index(max(ydata))
+            middle_index = numpy.argmax(ydata)
             middle_value = xdata[middle_index]
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
-        new_xdata = [coordinate - middle_value for coordinate in xdata]
-        return new_xdata, ydata, True, False
+        return xdata - middle_value, ydata, True, False
 
     @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
         """Cut selected data over the span that is selected."""
-        return [], [], False, False
+        return None, None, False, False
 
     @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        dy_dx = numpy.gradient(y_values, x_values)
-        return xdata, dy_dx.tolist(), False, True
+        return xdata, numpy.gradient(ydata, xdata), False, True
 
     @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
         """Calculate indefinite integral of all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
         indefinite_integral = scipy.integrate.cumulative_trapezoid(
-            y_values,
-            x_values,
+            ydata,
+            xdata,
             initial=0,
-        ).tolist()
+        )
         return xdata, indefinite_integral, False, True
 
     @staticmethod
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        y_fourier = numpy.fft.fft(y_values)
-        x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
+        y_fourier = numpy.fft.fft(ydata)
+        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
     @staticmethod
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
-        x_values = numpy.array(xdata)
-        y_values = numpy.array(ydata)
-        y_fourier = numpy.fft.ifft(y_values)
-        x_fourier = numpy.fft.fftfreq(len(x_values), x_values[1] - x_values[0])
+        y_fourier = numpy.fft.ifft(ydata)
+        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
         y_fourier = [value.real for value in y_fourier]
         return x_fourier, y_fourier, False, True
 
