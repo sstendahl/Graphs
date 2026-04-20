@@ -605,7 +605,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.fill_between(
-            *item.props.data,
+            *item.get_data_tuple(),
             label=_ellipsize(item.get_name()),
             color=item.get_color(),
             alpha=item.get_alpha(),

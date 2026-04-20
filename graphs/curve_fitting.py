@@ -180,7 +180,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         y_upper = y_fit + confidence_band
         y_lower = y_fit - confidence_band
-        self.fill.props.data = (x_fit, y_lower, y_upper)
+        self.fill.set_data_tuple((x_fit, y_lower, y_upper))
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
