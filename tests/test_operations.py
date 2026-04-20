@@ -6,8 +6,8 @@ import numpy
 
 import pytest
 
-XDATA = [0, 1, 4, 5, 7, 8, 12, 3]  # no duplicate x values
-YDATA = [5, 2, 7, 1, 31, 5, 123, 156]
+XDATA = numpy.array([0, 1, 4, 5, 7, 8, 12, 3])  # no duplicate x values
+YDATA = numpy.array([5, 2, 7, 1, 31, 5, 123, 156])
 
 
 def is_sorted(lst):
@@ -95,7 +95,7 @@ def test_center_at_maximum():
     xdata, ydata, _sort, _discard = DataOperations.center(
         None, XDATA, YDATA, 0,
     )
-    y_max_index = YDATA.index(max(YDATA))
+    y_max_index = numpy.argmax(YDATA)
     assert xdata[y_max_index] == 0
 
 

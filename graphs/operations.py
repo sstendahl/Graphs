@@ -83,7 +83,6 @@ class DataHelper():
         if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
             mask = numpy.greater_equal(xdata, startx)
             mask &= numpy.less_equal(xdata, stopx)
-
             return xdata[mask], ydata[mask]
         return None, None
 
@@ -97,41 +96,39 @@ class DataHelper():
         if item.get_xposition() == 0:
             min_bottom = figure_settings.get_min_bottom()
             max_bottom = figure_settings.get_max_bottom()
-            if interaction_mode == Graphs.Mode.SELECT:
-                scale = figure_settings.get_bottom_scale()
-                min_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_min_selected(),
-                    min_bottom,
-                    max_bottom,
-                    scale,
-                )
-                max_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_max_selected(),
-                    min_bottom,
-                    max_bottom,
-                    scale,
-                )
-            else:
-                min_x, max_x = min_bottom, max_bottom
+            if interaction_mode != Graphs.Mode.SELECT:
+                return min_bottom, max_bottom
+            scale = figure_settings.get_bottom_scale()
+            min_x = Graphs.get_value_at_fraction(
+                figure_settings.get_min_selected(),
+                min_bottom,
+                max_bottom,
+                scale,
+            )
+            max_x = Graphs.get_value_at_fraction(
+                figure_settings.get_max_selected(),
+                min_bottom,
+                max_bottom,
+                scale,
+            )
         else:
             min_top = figure_settings.get_min_top()
             max_top = figure_settings.get_max_top()
-            if interaction_mode == Graphs.Mode.SELECT:
-                scale = figure_settings.get_top_scale()
-                min_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_min_selected(),
-                    min_top,
-                    max_top,
-                    scale,
-                )
-                max_x = Graphs.get_value_at_fraction(
-                    figure_settings.get_max_selected(),
-                    min_top,
-                    max_top,
-                    scale,
-                )
-            else:
-                min_x, max_x = min_top, max_top
+            if interaction_mode != Graphs.Mode.SELECT:
+                return min_top, max_top
+            scale = figure_settings.get_top_scale()
+            min_x = Graphs.get_value_at_fraction(
+                figure_settings.get_min_selected(),
+                min_top,
+                max_top,
+                scale,
+            )
+            max_x = Graphs.get_value_at_fraction(
+                figure_settings.get_max_selected(),
+                min_top,
+                max_top,
+                scale,
+            )
         return min_x, max_x
 
     @staticmethod
@@ -170,7 +167,6 @@ class DataHelper():
         if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
             mask = numpy.greater_equal(xdata, min(xdata))
             mask &= numpy.less_equal(xdata, max(xdata))
-
             return xdata[mask], ydata[mask]
         return xdata, ydata
 
@@ -555,7 +551,7 @@ class EquationOperations():
         return input_y.lower().replace("y", equation)
 
 
-_return = (list[float], list[float], bool, bool)
+_return = (numpy.ndarray, numpy.ndarray, bool, bool)
 
 
 class DataOperations():
@@ -619,13 +615,8 @@ class DataOperations():
                 xerr = xerr[~mask] if xerr is not None else None
                 yerr = yerr[~mask] if yerr is not None else None
             else:
-                i = 0
-                for index, masked in enumerate(mask):
-                    # Change coordinates that were within span
-                    if masked:
-                        new_xdata[index] = xdata[i]
-                        new_ydata[index] = ydata[i]
-                        i += 1
+                new_xdata[mask] = xdata
+                new_ydata[mask] = ydata
             if sort:
                 logging.debug("Sorting data")
                 new_xdata, new_ydata = \
@@ -643,7 +634,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return [value + offset for value in xdata], ydata, True, False
+        return xdata + offset, ydata, True, False
 
     @staticmethod
     def translate_y(_item, xdata: list, ydata: list, offset: float) -> _return:
@@ -655,7 +646,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return xdata, [value + offset for value in ydata], False, False
+        return xdata, ydata + offset, False, False
 
     @staticmethod
     def multiply_x(
@@ -672,7 +663,7 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return [value * multiplier for value in xdata], ydata, True, False
+        return xdata * multiplier, ydata, True, False
 
     @staticmethod
     def multiply_y(
@@ -689,12 +680,12 @@ class DataOperations():
         Will show a toast if a ValueError is raised, typically when a user
         entered an invalid number (e.g. comma instead of point separators)
         """
-        return xdata, [value * multiplier for value in ydata], False, False
+        return xdata, ydata * multiplier, False, False
 
     @staticmethod
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
-        return xdata, [value / max(ydata) for value in ydata], False, False
+        return xdata, ydata / max(ydata), False, False
 
     @staticmethod
     def smoothen(
@@ -734,12 +725,11 @@ class DataOperations():
         on the maximum value of the data
         """
         if center_maximum == 0:  # Center at maximum Y
-            middle_index = ydata.index(max(ydata))
+            middle_index = numpy.argmax(ydata)
             middle_value = xdata[middle_index]
         elif center_maximum == 1:  # Center at middle
             middle_value = (min(xdata) + max(xdata)) / 2
-        new_xdata = [coordinate - middle_value for coordinate in xdata]
-        return new_xdata, ydata, True, False
+        return xdata - middle_value, ydata, True, False
 
     @staticmethod
     def cut(_item, _xdata, _ydata) -> _return:
@@ -749,8 +739,7 @@ class DataOperations():
     @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
-        dy_dx = numpy.gradient(ydata, xdata)
-        return xdata, dy_dx, False, True
+        return xdata, numpy.gradient(ydata, xdata), False, True
 
     @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
