@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from gi.repository import GLib, GObject, Graphs
+from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
@@ -72,8 +72,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonDataItem"
 
-    data = GObject.Property(type=object)
-
     _style_properties = {
         "errbarsabove": ("errorbar.barsabove", None),
         "errcapsize": ("errorbar.capsize", None),
@@ -96,49 +94,71 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         **kwargs,
     ):
         """Create new DataItem."""
+        data = Graphs.DataHolder.new(xdata, ydata, xerr, yerr)
+        return cls.new_with_data(style, data, **kwargs)
+
+    @classmethod
+    def new_with_data(
+        cls,
+        style: tuple[RcParams, dict],
+        data: Graphs.DataHolder,
+        **kwargs,
+    ):
+        """Create new DataItem with a DataHolder."""
         return cls(
-            data=(xdata, ydata, xerr, yerr),
+            data=data,
             **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if self.props.data is None:
-            self.props.data = ([], [], None, None)
+    def to_dict(self) -> dict:
+        """Convert item to dict."""
+        dictionary = super().to_dict()
+        dictionary["data"] = self.get_data_tuple()
+        return dictionary
 
-    def get_xydata(self) -> tuple[list, list]:
+    def get_data_tuple(self) -> tuple[list, list, list, list]:
+        """Get the data as a picklable tuple."""
+        return (
+            self.get_xdata().tolist(),
+            self.get_ydata().tolist(),
+            None if (xerr := self.get_xerr() is None) else xerr.tolist(),
+            None if (yerr := self.get_xerr() is None) else yerr.tolist(),
+        )
+
+    def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:
+        """Set the data from a tuple."""
+        self.props.data = Graphs.DataHolder.new(*data)
+
+    def get_xydata(self) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Get x- and y-data."""
-        return self.props.data[:2]
+        return self.get_xdata(), self.get_ydata()
 
-    def set_xydata(self, xydata: tuple[list, list]) -> None:
+    def set_xydata(self, xydata: tuple[numpy.ndarray, numpy.ndarray]) -> None:
         """Set x- and y-data."""
-        self.props.data = xydata + self.props.data[2:]
+        self.set_data_tuple((*xydata, self.get_xerr(), self.get_yerr()))
 
-    def get_xdata(self) -> list:
+    def get_xdata(self) -> numpy.ndarray:
         """Get xdata."""
-        return self.props.data[0]
+        return utilities.bytes_to_ndarray(self.props.data.get_xdata_b())
 
-    def get_ydata(self) -> list:
+    def get_ydata(self) -> numpy.ndarray:
         """Get ydata."""
-        return self.props.data[1]
+        return utilities.bytes_to_ndarray(self.props.data.get_ydata_b())
 
-    def get_xerr(self) -> list:
+    def get_xerr(self) -> numpy.ndarray:
         """Get xerr."""
-        return self.props.data[2]
+        return utilities.bytes_to_ndarray(self.props.data.get_xerr_b())
 
-    def get_yerr(self) -> list:
+    def get_yerr(self) -> numpy.ndarray:
         """Get yerr."""
-        return self.props.data[3]
+        return utilities.bytes_to_ndarray(self.props.data.get_yerr_b())
 
 
 class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     """Generated Dataitem."""
 
     __gtype_name__ = "GraphsPythonGeneratedDataItem"
-
-    # we cannot inherit properties from a mixin
-    data = GObject.Property(type=object)
 
     @classmethod
     def new(
@@ -170,7 +190,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
 
     def _regenerate(self, *_args) -> None:
         """Regenerate Data."""
-        self.props.data = utilities.equation_to_data(
+        xdata, ydata = utilities.equation_to_data(
             Graphs.preprocess_equation(self.props.equation),
             [
                 Graphs.evaluate_string(self.props.xstart),
@@ -178,7 +198,8 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
             ],
             self.props.steps,
             self.props.scale,
-        ) + (None, None)
+        )
+        self.props.data = Graphs.DataHolder.new(xdata, ydata, None, None)
 
 
 class EquationItem(Graphs.EquationItem, _PythonItemMixin):
@@ -253,32 +274,44 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if self.props.data is None:
-            self.props.data = (None, None, None)
+            self.props.data = ([], [], [])
+
+    def get_data_tuple(self) -> tuple[list, list, list]:
+        """Get the data as a picklable tuple."""
+        return self.props.data
+
+    def set_data_tuple(self, data: tuple[list, list, list]) -> None:
+        """Set the data from a tuple."""
+        self.props.data = data
 
 
 class ItemFactory(Graphs.ItemFactory):
     """Item factory."""
 
-    _default_new = {
-        "generated-data-item": GeneratedDataItem,
-        "equation-item": EquationItem,
-        "text-item": TextItem,
+    _constructors = {
+        "data-item": DataItem.new_with_data,
+        "generated-data-item": GeneratedDataItem.new,
+        "equation-item": EquationItem.new,
+        "text-item": TextItem.new,
     }
 
     def __init__(self):
         super().__init__()
-        for item, cls in self._default_new.items():
-            self.connect(item + "-request", self._on_request, cls)
-        self.connect("data-item-request", self._on_data_item_request)
+        for item, callback in self._constructors.items():
+            self.connect(item + "-request", self._on_request, callback)
 
     @staticmethod
     def new_from_dict(dictionary: dict) -> Graphs.Item:
         """Instanciate item from dict."""
         match dictionary["type"]:
             case "DataItem":
-                cls = DataItem
+                dictionary.pop("type")
+                dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+                return DataItem(**dictionary)
             case "GeneratedDataItem":
-                cls = GeneratedDataItem
+                dictionary.pop("type")
+                dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+                return GeneratedDataItem(**dictionary)
             case "EquationItem":
                 cls = EquationItem
             case "TextItem":
@@ -292,28 +325,5 @@ class ItemFactory(Graphs.ItemFactory):
 
     @staticmethod
     def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:
-        *args, cls = args
-        return cls.new(data.get_selected_style_params(), *args)
-
-    @staticmethod
-    def _bytes_to_list(b: GLib.Bytes) -> list[float]:
-        if b is None:
-            return None
-        return numpy.frombuffer(b.get_data(), dtype=numpy.float64).tolist()
-
-    @staticmethod
-    def _on_data_item_request(
-        self,
-        data: Graphs.Data,
-        xdata: GLib.Bytes,
-        ydata: GLib.Bytes,
-        xerr: GLib.Bytes,
-        yerr: GLib.Bytes,
-    ) -> Graphs.DataItem:
-        return DataItem.new(
-            data.get_selected_style_params(),
-            self._bytes_to_list(xdata),
-            self._bytes_to_list(ydata),
-            self._bytes_to_list(xerr),
-            self._bytes_to_list(yerr),
-        )
+        *args, callback = args
+        return callback(data.get_selected_style_params(), *args)

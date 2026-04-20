@@ -99,13 +99,13 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     markersize = GObject.Property(type=float, default=7)
     legend = True
 
-    @GObject.Property
-    def data(self) -> tuple[list, list, list, list]:
+    @GObject.Property(type=Graphs.DataHolder)
+    def data(self) -> Graphs.DataHolder:
         """Get data property."""
         raise NotImplementedError
 
     @data.setter
-    def data(self, data: tuple[list, list, list, list]) -> None:
+    def data(self, data: Graphs.DataHolder) -> None:
         """Set data property."""
         xdata, ydata, xerr, yerr = self._handle_singularities(data)
         self._data.set_data((xdata, ydata))
@@ -241,11 +241,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._data.set_markersize(markersize)
 
     @staticmethod
-    def _handle_singularities(data: tuple) -> tuple:
+    def _handle_singularities(data: Graphs.DataHolder) -> tuple:
         """Adjust data to handle singularity jumps."""
-        xdata, ydata = map(numpy.asarray, data[:2])
-        xerr = None if data[2] is None else numpy.asarray(data[2])
-        yerr = None if data[3] is None else numpy.asarray(data[3])
+        xdata = utilities.bytes_to_ndarray(data.get_xdata_b())
+        ydata = utilities.bytes_to_ndarray(data.get_ydata_b())
+        xerr = utilities.bytes_to_ndarray(data.get_xerr_b())
+        yerr = utilities.bytes_to_ndarray(data.get_yerr_b())
 
         if len(xdata) < 2:
             return xdata, ydata, xerr, yerr
@@ -282,13 +283,17 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         bad_points[:-1] |= mask & left
         bad_points[1:] |= mask & ~left
 
+        xdata = xdata.copy()
+        ydata = ydata.copy()
         xdata[bad_points] = numpy.nan
         ydata[bad_points] = numpy.nan
 
         if xerr is not None:
+            xerr = xerr.copy()
             xerr[bad_points] = numpy.nan
 
         if yerr is not None:
+            yerr = yerr.copy()
             yerr[bad_points] = numpy.nan
 
         return xdata, ydata, xerr, yerr
@@ -461,8 +466,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     def _insert_singularity_points(self, data, singularities) -> tuple:
         """Insert NaN and infinite value points at singularities."""
-        xdata, ydata = map(numpy.asarray, data)
-
+        xdata, ydata = data
         singularities_arr = numpy.fromiter(sorted(singularities), dtype=float)
         indices = numpy.searchsorted(xdata, singularities_arr)
 

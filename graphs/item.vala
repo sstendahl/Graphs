@@ -33,17 +33,13 @@ namespace Graphs {
             instance = this;
         }
 
-        protected signal DataItem data_item_request (Data data, Bytes xdata, Bytes ydata, Bytes? xerr, Bytes? yerr);
+        protected signal DataItem data_item_request (Data data, DataHolder holder);
         protected signal GeneratedDataItem generated_data_item_request (Data data, string equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (Data data, string equation);
         protected signal TextItem text_item_request (Data data, double xanchor, double yanchor, string text);
 
         public static DataItem new_data_item (Data data, double[] xdata, double[] ydata, double[]? xerr = null, double[]? yerr = null) {
-            Bytes? b_xerr = xerr == null ? null : new Bytes ((uint8[]) xerr);
-            Bytes? b_yerr = yerr == null ? null : new Bytes ((uint8[]) yerr);
-            Bytes b_xdata = new Bytes ((uint8[]) xdata);
-            Bytes b_ydata = new Bytes ((uint8[]) ydata);
-            return instance.data_item_request.emit (data, b_xdata, b_ydata, b_xerr, b_yerr);
+            return instance.data_item_request.emit (data, new DataHolder (xdata, ydata, xerr, yerr));
         }
 
         public static GeneratedDataItem new_generated_data_item (Data data, string equation, string xstart, string xstop, int steps, Scale scale) {
@@ -89,7 +85,61 @@ namespace Graphs {
         public abstract string equation { get; set; }
     }
 
+    public class DataHolder : Object {
+        private double[] _xdata;
+        private double[] _ydata;
+        private double[]? _xerr;
+        private double[]? _yerr;
+
+        public DataHolder (double[] xdata, double[] ydata, double[]? xerr, double[]? yerr) {
+            _xdata = xdata;
+            _ydata = ydata;
+            _xerr = xerr;
+            _yerr = yerr;
+        }
+
+        public DataHolder.empty () {
+            _xdata = new double[0];
+            _ydata = new double[0];
+            _xerr = null;
+            _yerr = null;
+        }
+
+        public unowned double[] get_xdata () {
+            return _xdata;
+        }
+
+        public unowned double[] get_ydata () {
+            return _xdata;
+        }
+
+        public unowned double[]? get_xerr () {
+            return _xerr;
+        }
+
+        public unowned double[]? get_yerr () {
+            return _yerr;
+        }
+
+        public GLib.Bytes get_xdata_b () {
+            return new Bytes ((uint8[]) _xdata);
+        }
+
+        public GLib.Bytes get_ydata_b () {
+            return new Bytes ((uint8[]) _ydata);
+        }
+
+        public GLib.Bytes? get_xerr_b () {
+            return _xerr == null ? null : new Bytes ((uint8[]) _xerr);
+        }
+
+        public GLib.Bytes? get_yerr_b () {
+            return _yerr == null ? null : new Bytes ((uint8[]) _yerr);
+        }
+    }
+
     public class DataItem : Item {
+        public DataHolder data { get; set; default = new DataHolder.empty (); }
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
         public double errcapthick { get; set; default = 1; }

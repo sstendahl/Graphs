@@ -32,7 +32,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
         xdata, ydata = item.get_xydata()
-        self._data = numpy.asarray(xdata), numpy.asarray(ydata)
+        self._data = xdata, ydata
         x_min, x_max = min(xdata), max(xdata)
         padding = (x_max - x_min) * 0.025
         self._xlim = (x_min - padding, x_max + padding)

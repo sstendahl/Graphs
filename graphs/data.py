@@ -144,7 +144,7 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            copy.deepcopy(item.to_dict()),
+            item.to_dict(),
         ))
 
     @staticmethod
@@ -157,13 +157,15 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
         index = self.index(item)
+        value = copy.deepcopy(item.get_property(prop)) if prop != "data" \
+            else item.get_data_tuple()
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
                 copy.deepcopy(self._data_copy[index][prop]),
-                copy.deepcopy(item.get_property(prop)),
+                value,
             ),
         ))
 
@@ -284,6 +286,8 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
+                    elif prop == "data":
+                        self[index].set_data_tuple(value)
                     else:
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
@@ -301,7 +305,7 @@ class Data(Graphs.Data):
                         change[1],
                     )
         self.set_selection(selected, mask)
-        limits = Graphs.Limits(self._history_states[self._history_pos][1])
+        limits = Graphs.Limits.new(self._history_states[self._history_pos][1])
         self.get_figure_settings().set_limits(limits)
         self.props.can_redo = True
         self.props.can_undo = \
@@ -324,6 +328,8 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
+                    elif prop == "data":
+                        self[index].set_data_tuple(value)
                     else:
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
@@ -339,7 +345,7 @@ class Data(Graphs.Data):
                         change[2],
                     )
         self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(Graphs.Limits(state[1]))
+        self.get_figure_settings().set_limits(Graphs.Limits.new(state[1]))
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._set_data_copy()
@@ -375,7 +381,6 @@ class Data(Graphs.Data):
             for index, xydata in zip(indices, item.get_xydata()):
                 axis = axes[index]
 
-                xydata = numpy.asarray(xydata)
                 xydata = xydata[numpy.isfinite(xydata)]
 
                 if xydata.size == 0:

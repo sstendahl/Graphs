@@ -339,7 +339,7 @@ class CommonOperations():
                 xdata, ydata = DataHelper().get_xydata(
                     interaction_mode, selected_limits, item,
                 )
-            if (not xdata) or (not ydata):
+            if (not xdata.any()) or (not ydata.any()):
                 continue
 
             shift_value = 0
@@ -405,6 +405,8 @@ class CommonOperations():
                 )):
                     # Change coordinates that were within span
                     if masked:
+                        item_xdata = item_xdata.copy()
+                        item_ydata = item_ydata.copy()
                         item_xdata[index] = xdata[i]
                         item_ydata[index] = new_ydata[i]
                         i += 1
@@ -636,17 +638,16 @@ class DataOperations():
             )
 
             xdata, ydata = new_xdata, new_ydata
-            new_xdata, new_ydata, xerr, yerr = item.props.data
+            new_xdata = item.get_xdata().copy()
+            new_ydata = item.get_ydata().copy()
+            xerr = item.get_xerr()
+            yerr = item.get_yerr()
             if xdata == []:  # If cut action was performed
-                remove_list = \
-                    [index for index, masked in enumerate(mask) if masked]
-                for index in sorted(remove_list, reverse=True):
-                    new_xdata.pop(index)
-                    new_ydata.pop(index)
-                xerr = numpy.delete(xerr, remove_list) \
-                    if xerr is not None else None
-                yerr = numpy.delete(yerr, remove_list) \
-                    if yerr is not None else None
+                new_xdata = new_xdata[~mask]
+                new_ydata = new_ydata[~mask]
+
+                xerr = xerr[~mask] if xerr is not None else None
+                yerr = yerr[~mask] if yerr is not None else None
             else:
                 i = 0
                 for index, masked in enumerate(mask):
@@ -659,7 +660,7 @@ class DataOperations():
                 logging.debug("Sorting data")
                 new_xdata, new_ydata = \
                     DataHelper.sort_data(new_xdata, new_ydata)
-            item.props.data = new_xdata, new_ydata, xerr, yerr
+            item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
             return True, message
 
     @staticmethod
@@ -781,7 +782,7 @@ class DataOperations():
         x_values = numpy.array(xdata)
         y_values = numpy.array(ydata)
         dy_dx = numpy.gradient(y_values, x_values)
-        return xdata, dy_dx.tolist(), False, True
+        return xdata, dy_dx, False, True
 
     @staticmethod
     def integral(_item, xdata: list, ydata: list) -> _return:
@@ -792,7 +793,7 @@ class DataOperations():
             y_values,
             x_values,
             initial=0,
-        ).tolist()
+        )
         return xdata, indefinite_integral, False, True
 
     @staticmethod
