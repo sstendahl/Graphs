@@ -160,12 +160,14 @@ namespace Graphs {
             view_back_action.activate.connect (() => {
                 data.view_back ();
             });
+            data.bind_property ("can_view_back", view_back_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (view_back_action);
 
             var view_forward_action = new SimpleAction ("view-forward", null);
             view_forward_action.activate.connect (() => {
                 data.view_forward ();
             });
+            data.bind_property ("can_view_forward", view_forward_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (view_forward_action);
 
             var delete_selected_action = new SimpleAction ("delete-selected", null);
