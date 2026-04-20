@@ -157,7 +157,7 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
         index = self.index(item)
-        value = copy.deepcopy(item.get_property(prop)) if prop != "data" \
+        value = item.get_property(prop) if prop != "data" \
             else item.get_data_tuple()
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,

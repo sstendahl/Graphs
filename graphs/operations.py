@@ -74,22 +74,18 @@ class DataHelper():
     ) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Get the X and Y data of a DataItem."""
         xdata, ydata = item.get_xydata()
-        if interaction_mode == Graphs.Mode.SELECT:
-            startx, stopx = selected_limits
-            # If startx and stopx are not out of range, that is,
-            # if the item data is within the highlight
-            xmin = min(xdata)
-            if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
-                xdata, ydata = DataHelper.filter_data(
-                    xdata, ydata, ">=", startx,
-                )
-                xdata, ydata = DataHelper.filter_data(
-                    xdata, ydata, "<=", stopx,
-                )
-            else:
-                xdata = None
-                ydata = None
-        return xdata, ydata
+        if interaction_mode != Graphs.Mode.SELECT:
+            return xdata, ydata
+        startx, stopx = selected_limits
+        # If startx and stopx are not out of range, that is,
+        # if the item data is within the highlight
+        xmin = min(xdata)
+        if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
+            mask = numpy.greater_equal(xdata, startx)
+            mask &= numpy.less_equal(xdata, stopx)
+
+            return xdata[mask], ydata[mask]
+        return None, None
 
     @staticmethod
     def get_selected_limits(
@@ -139,31 +135,11 @@ class DataHelper():
         return min_x, max_x
 
     @staticmethod
-    def filter_data(
-        xdata: list,
-        ydata: list,
-        condition: str,
-        value: float,
-    ) -> list:
-        """Filter coordinates based on the given condition."""
-        conditions = {
-            "<=": numpy.less_equal,
-            ">=": numpy.greater_equal,
-            "==": numpy.equal,
-        }
-        mask = conditions[condition](xdata, value)
-
-        xdata_filtered = xdata[mask]
-        ydata_filtered = ydata[mask]
-
-        return xdata_filtered, ydata_filtered
-
-    @staticmethod
     def create_data_mask(
-        xdata1: list,
-        ydata1: list,
-        xdata2: list,
-        ydata2: list,
+        xdata1: numpy.ndarray,
+        ydata1: numpy.ndarray,
+        xdata2: numpy.ndarray,
+        ydata2: numpy.ndarray,
     ) -> bool:
         """
         Create a mask for matching pairs of coordinates.
@@ -171,8 +147,6 @@ class DataHelper():
         Returns:
         - Boolean mask indicating where pairs of coordinates match.
         """
-        xdata1, ydata1, xdata2, ydata2 = \
-            map(numpy.array, [xdata1, ydata1, xdata2, ydata2])
         return numpy.any((xdata1[:, None] == xdata2)
                          & (ydata1[:, None] == ydata2),
                          axis=1)
@@ -181,7 +155,7 @@ class DataHelper():
     def sort_data(xdata: list, ydata: list) -> (list, list):
         """Sort data."""
         return map(
-            list,
+            numpy.array,
             zip(
                 *sorted(
                     zip(xdata, ydata),
@@ -194,13 +168,10 @@ class DataHelper():
     def filter_range(xdata, ydata, prev_xdata, prev_ydata):
         """Filter range."""
         if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
-            new_xdata, new_ydata = DataHelper.filter_data(
-                prev_xdata, prev_ydata, ">=", min(xdata),
-            )
-            new_xdata, new_ydata = DataHelper.filter_data(
-                new_xdata, new_ydata, "<=", max(xdata),
-            )
-            return new_xdata, new_ydata
+            mask = numpy.greater_equal(xdata, min(xdata))
+            mask &= numpy.less_equal(xdata, max(xdata))
+
+            return xdata[mask], ydata[mask]
         return xdata, ydata
 
 
@@ -778,7 +749,7 @@ class DataOperations():
     @staticmethod
     def derivative(_item, xdata: list, ydata: list) -> _return:
         """Calculate derivative of all selected data."""
-        dy_dx = numpy.gradient(xdata, ydata)
+        dy_dx = numpy.gradient(ydata, xdata)
         return xdata, dy_dx, False, True
 
     @staticmethod

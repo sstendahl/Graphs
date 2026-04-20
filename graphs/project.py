@@ -253,7 +253,10 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
-                        self.items[index].set_property(prop, value)
+                        if prop == "data":
+                            self.items[index].set_data_tuple(value)
+                        else:
+                            self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
                         self.items.append(ItemFactory.new_from_dict(data))
@@ -271,7 +274,10 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
-                        self.items[index].set_property(prop, value)
+                        if prop == "data":
+                            self.items[index].set_data_tuple(value)
+                        else:
+                            self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:
