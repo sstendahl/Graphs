@@ -2,7 +2,6 @@
 """Data management module."""
 import copy
 import logging
-import math
 from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
@@ -128,11 +127,9 @@ class Data(Graphs.Data):
         )
 
     def _init_history_states(self) -> None:
-        limits = self.props.figure_settings.get_limits()
+        limits = self.props.figure_settings.get_limits().values()
         self._history_states = [([], limits)]
         self._history_pos = -1
-        self._view_history_states = [limits]
-        self._view_history_pos = -1
         self._set_data_copy()
 
     @staticmethod
@@ -254,11 +251,7 @@ class Data(Graphs.Data):
         self._current_batch = list(collapsed.values())
 
     @staticmethod
-    def _on_add_history_state_request(
-        self,
-        limits: misc.Limits,
-        l: int,
-    ) -> bool:
+    def _on_add_history_state_request(self) -> bool:
         """Add a state to the clipboard."""
         self._collapse_current_batch()
         if not self._current_batch:
@@ -267,14 +260,8 @@ class Data(Graphs.Data):
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
         self._history_pos = -1
-        self._history_states.append(
-            (self._current_batch, self.get_figure_settings().get_limits()),
-        )
-        if l > 0:
-            assert l == 8
-            old_state = self._history_states[-2][1]
-            for index in range(8):
-                old_state[index] = limits[index]
+        limits = self.get_figure_settings().get_limits().values()
+        self._history_states.append((self._current_batch, limits))
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
@@ -314,9 +301,8 @@ class Data(Graphs.Data):
                         change[1],
                     )
         self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(
-            self._history_states[self._history_pos][1],
-        )
+        limits = Graphs.Limits(self._history_states[self._history_pos][1])
+        self.get_figure_settings().set_limits(limits)
         self.props.can_redo = True
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
@@ -353,52 +339,10 @@ class Data(Graphs.Data):
                         change[2],
                     )
         self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(state[1])
+        self.get_figure_settings().set_limits(Graphs.Limits(state[1]))
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._set_data_copy()
-
-    def _add_view_history_state(self) -> None:
-        """Add the view to the view history."""
-        limits = self.get_figure_settings().get_limits()
-        if all(
-            math.isclose(old, new) for old,
-            new in zip(self._view_history_states[-1], limits)
-        ):
-            return
-        # If a couple of redo's were performed previously, it deletes the
-        # clipboard data that is located after the current clipboard
-        # position and disables the redo button
-        if self._view_history_pos != -1:
-            self._view_history_states = \
-                self._view_history_states[:self._view_history_pos + 1]
-        if len(self._view_history_states) > 101:
-            self._view_history_states = self._view_history_states[1::]
-        self._view_history_pos = -1
-        self._view_history_states.append(limits)
-
-    def _view_back(self) -> None:
-        """Move the view to the previous value in the view history."""
-        if not self.props.can_view_back:
-            return
-        self._view_history_pos -= 1
-        self.get_figure_settings().set_limits(
-            self._view_history_states[self._view_history_pos],
-        )
-        self.props.can_view_forward = True
-        self.props.can_view_back = \
-            abs(self._view_history_pos) < len(self._view_history_states)
-
-    def _view_forward(self) -> None:
-        """Move the view to the next value in the view history."""
-        if not self.props.can_view_forward:
-            return
-        self._view_history_pos += 1
-        self.get_figure_settings().set_limits(
-            self._view_history_states[self._view_history_pos],
-        )
-        self.props.can_view_back = True
-        self.props.can_view_forward = self._view_history_pos < -1
 
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
@@ -540,6 +484,7 @@ class Data(Graphs.Data):
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
+        view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
             "data": [item.to_dict() for item in self],
@@ -549,8 +494,8 @@ class Data(Graphs.Data):
             },
             "history-states": self._history_states,
             "history-position": self._history_pos,
-            "view-history-states": self._view_history_states,
-            "view-history-position": self._view_history_pos,
+            "view-history-states": [lims.values() for lims in view_states],
+            "view-history-position": view_pos,
         }
 
     def load_from_project_dict(self, project_dict: dict) -> None:
@@ -564,23 +509,21 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        items = [ItemFactory.new_from_dict(d) for d in project_dict["data"]]
+        items = list(map(ItemFactory.new_from_dict, project_dict["data"]))
         self.set_items(items)
 
         # Set clipboard
         self._set_data_copy()
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
-        self._view_history_states = project_dict["view-history-states"]
-        self._view_history_pos = project_dict["view-history-position"]
+        view_states = project_dict["view-history-states"]
+        limits = list(map(Graphs.Limits.new, view_states))
+        self.set_view_history(project_dict["view-history-position"], limits)
 
         # Set clipboard/view buttons
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
         self.props.can_redo = self._history_pos < -1
-        self.props.can_view_back = \
-            abs(self._view_history_pos) < len(self._view_history_states)
-        self.props.can_view_forward = self._view_history_pos < -1
 
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())

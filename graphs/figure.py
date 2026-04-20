@@ -58,7 +58,7 @@ class Figure(GObject.Object, figure.Figure):
             self.top_right_axis.set_xscale(top_scale)
             self.top_right_axis.set_yscale(right_scale)
 
-            limits = figure_settings.get_limits()
+            limits = figure_settings.get_limits().values()
             self.axis.set_xlim(limits[0], limits[1])
             self.axis.set_ylim(limits[4], limits[5])
             self.top_left_axis.set_xlim(limits[2], limits[3])

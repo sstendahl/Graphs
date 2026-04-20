@@ -52,7 +52,7 @@ def _save_item(
     if isinstance(item, (Graphs.DataItem, Graphs.GeneratedDataItem)):
         xdata, ydata, xerr, yerr = item.props.data
     elif isinstance(item, Graphs.EquationItem):
-        limits = figure_settings.get_limits()
+        limits = figure_settings.get_limits().values()
         if item.get_xposition() == 0:
             limits = [limits[0], limits[1]]
         elif item.get_xposition() == 1:
