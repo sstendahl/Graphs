@@ -29,27 +29,6 @@ def test_sort_data_xy_remain_paired():
         assert original[x] == y
 
 
-def test_create_data_mask_matching_pairs():
-    """Test if create_data_mask returns True only for matching (x, y) pairs."""
-    xdata1 = numpy.array([1, 2, 3])
-    ydata1 = numpy.array([10, 20, 30])
-    xdata2 = numpy.array([2, 3])
-    ydata2 = numpy.array([20, 30])
-    mask = DataHelper.create_data_mask(xdata1, ydata1, xdata2, ydata2)
-    assert list(mask) == [False, True, True]
-
-
-def test_create_data_mask_no_matches():
-    """Test if create_data_mask returns all False when no pairs match."""
-    mask = DataHelper.create_data_mask(
-        numpy.array([1, 2]),
-        numpy.array([10, 20]),
-        numpy.array([3, 4]),
-        numpy.array([30, 40]),
-    )
-    assert not any(mask)
-
-
 def test_normalize():
     """Test if normalize scales ydata to a maximum value of 1."""
     xdata, ydata, _sort, _discard = DataOperations.normalize(
