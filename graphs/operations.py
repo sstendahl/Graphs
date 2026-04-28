@@ -217,11 +217,11 @@ class CommonOperations():
                 else:
                     new_xerr = None
                 yerr = item.get_yerr()
-                if yerr is not None and new_xerr is not None:
+                if yerr is not None and new_yerr is not None:
                     new_yerr.extend(yerr)
                     some_y = True
                 else:
-                    new_xerr = None
+                    new_yerr = None
 
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
@@ -270,6 +270,7 @@ class CommonOperations():
                 interaction_mode,
                 item,
             )
+            startx, stopx = selected_limits
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
                 xdata, ydata = utilities.equation_to_data(
@@ -279,7 +280,6 @@ class CommonOperations():
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
-                    startx, stopx = selected_limits
                     # If startx and stopx are not out of range, that is,
                     # if the item data is within the highlight
                     xmin, xmax = min(xdata), max(xdata)
@@ -301,15 +301,16 @@ class CommonOperations():
                 y_range = ranges[item.get_yposition()]
 
                 if isinstance(previous_item, Graphs.EquationItem):
-                    prev_xdata, prev_ydata = utilities.equation_to_data(
-                        previous_item.get_preprocessed_equation(),
-                        selected_limits,
-                    )
+                    prev_min, prev_max = startx, stopx
                 else:
-                    prev_xdata, prev_ydata = previous_item.get_xydata()
+                    prev_xdata = previous_item.get_xdata()
+                    prev_min, prev_max = min(prev_xdata), max(prev_xdata)
+                    if interaction_mode == Graphs.Mode.SELECT:
+                        prev_min = max(prev_min, startx)
+                        prev_min = min(prev_max, stopx)
 
                 xmin, xmax = min(xdata), max(xdata)
-                if xmin >= min(prev_xdata) and xmax <= max(prev_ydata):
+                if xmin >= prev_min and xmax <= prev_max:
                     mask = numpy.greater_equal(xdata, xmin)
                     mask &= numpy.less_equal(xdata, xmax)
                     ydata = ydata[mask]
@@ -458,7 +459,7 @@ class EquationOperations():
             # If we don't manage to solve this analytically, just find
             # the maximum by calculating
             except TypeError:
-                middle_index = ydata.index(max(ydata))
+                middle_index = numpy.argmax(ydata)
                 middle_value = xdata[middle_index]
 
         elif center_maximum == 1:  # Center at middle
