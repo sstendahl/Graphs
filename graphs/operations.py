@@ -79,12 +79,11 @@ class DataHelper():
         startx, stopx = selected_limits
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
-        xmin = min(xdata)
-        if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
-            mask = numpy.greater_equal(xdata, startx)
-            mask &= numpy.less_equal(xdata, stopx)
-            return xdata[mask], ydata[mask]
-        return None, None
+        if stopx < min(xdata) or startx > max(xdata):
+            return None, None
+        mask = numpy.greater_equal(xdata, startx)
+        mask &= numpy.less_equal(xdata, stopx)
+        return xdata[mask], ydata[mask]
 
     @staticmethod
     def get_selected_limits(
@@ -132,17 +131,13 @@ class DataHelper():
         return min_x, max_x
 
     @staticmethod
-    def sort_data(xdata: list, ydata: list) -> (list, list):
+    def sort_data(
+        xdata: numpy.ndarray,
+        ydata: numpy.ndarray,
+    ) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Sort data."""
-        return map(
-            numpy.array,
-            zip(
-                *sorted(
-                    zip(xdata, ydata),
-                    key=lambda x_values: x_values[0],
-                ),
-            ),
-        )
+        idx = numpy.argsort(xdata)
+        return xdata[idx], ydata[idx]
 
 
 class CommonOperations():
@@ -282,13 +277,11 @@ class CommonOperations():
                 if interaction_mode == Graphs.Mode.SELECT:
                     # If startx and stopx are not out of range, that is,
                     # if the item data is within the highlight
-                    xmin, xmax = min(xdata), max(xdata)
-                    if not (startx < xmin and stopx < xmin or (startx > xmax)):
-                        data_mask = numpy.greater_equal(xdata, startx)
-                        data_mask &= numpy.less_equal(xdata, stopx)
-                        xdata, ydata = xdata[data_mask], ydata[data_mask]
-                    else:
+                    if stopx < min(xdata) or startx > max(xdata):
                         continue
+                    data_mask = numpy.greater_equal(xdata, startx)
+                    data_mask &= numpy.less_equal(xdata, stopx)
+                    xdata, ydata = xdata[data_mask], ydata[data_mask]
             if min(xdata.size, ydata.size) == 0:
                 continue
 
