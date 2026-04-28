@@ -79,12 +79,11 @@ class DataHelper():
         startx, stopx = selected_limits
         # If startx and stopx are not out of range, that is,
         # if the item data is within the highlight
-        xmin = min(xdata)
-        if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
-            mask = numpy.greater_equal(xdata, startx)
-            mask &= numpy.less_equal(xdata, stopx)
-            return xdata[mask], ydata[mask]
-        return None, None
+        if stopx < min(xdata) or startx > max(xdata):
+            return None, None
+        mask = numpy.greater_equal(xdata, startx)
+        mask &= numpy.less_equal(xdata, stopx)
+        return xdata[mask], ydata[mask]
 
     @staticmethod
     def get_selected_limits(
@@ -132,43 +131,13 @@ class DataHelper():
         return min_x, max_x
 
     @staticmethod
-    def create_data_mask(
-        xdata1: numpy.ndarray,
-        ydata1: numpy.ndarray,
-        xdata2: numpy.ndarray,
-        ydata2: numpy.ndarray,
-    ) -> bool:
-        """
-        Create a mask for matching pairs of coordinates.
-
-        Returns:
-        - Boolean mask indicating where pairs of coordinates match.
-        """
-        return numpy.any((xdata1[:, None] == xdata2)
-                         & (ydata1[:, None] == ydata2),
-                         axis=1)
-
-    @staticmethod
-    def sort_data(xdata: list, ydata: list) -> (list, list):
+    def sort_data(
+        xdata: numpy.ndarray,
+        ydata: numpy.ndarray,
+    ) -> tuple[numpy.ndarray, numpy.ndarray]:
         """Sort data."""
-        return map(
-            numpy.array,
-            zip(
-                *sorted(
-                    zip(xdata, ydata),
-                    key=lambda x_values: x_values[0],
-                ),
-            ),
-        )
-
-    @staticmethod
-    def filter_range(xdata, ydata, prev_xdata, prev_ydata):
-        """Filter range."""
-        if min(xdata) >= min(prev_xdata) and max(xdata) <= max(prev_ydata):
-            mask = numpy.greater_equal(xdata, min(xdata))
-            mask &= numpy.less_equal(xdata, max(xdata))
-            return xdata[mask], ydata[mask]
-        return xdata, ydata
+        idx = numpy.argsort(xdata)
+        return xdata[idx], ydata[idx]
 
 
 class CommonOperations():
@@ -243,11 +212,11 @@ class CommonOperations():
                 else:
                     new_xerr = None
                 yerr = item.get_yerr()
-                if yerr is not None and new_xerr is not None:
+                if yerr is not None and new_yerr is not None:
                     new_yerr.extend(yerr)
                     some_y = True
                 else:
-                    new_xerr = None
+                    new_yerr = None
 
             if xdata is not None and ydata is not None:
                 new_xdata.extend(xdata)
@@ -296,6 +265,7 @@ class CommonOperations():
                 interaction_mode,
                 item,
             )
+            startx, stopx = selected_limits
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
                 xdata, ydata = utilities.equation_to_data(
@@ -303,9 +273,15 @@ class CommonOperations():
                     selected_limits,
                 )
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = DataHelper().get_xydata(
-                    interaction_mode, selected_limits, item,
-                )
+                xdata, ydata = item.get_xydata()
+                if interaction_mode == Graphs.Mode.SELECT:
+                    # If startx and stopx are not out of range, that is,
+                    # if the item data is within the highlight
+                    if stopx < min(xdata) or startx > max(xdata):
+                        continue
+                    data_mask = numpy.greater_equal(xdata, startx)
+                    data_mask &= numpy.less_equal(xdata, stopx)
+                    xdata, ydata = xdata[data_mask], ydata[data_mask]
             if min(xdata.size, ydata.size) == 0:
                 continue
 
@@ -318,21 +294,22 @@ class CommonOperations():
                 y_range = ranges[item.get_yposition()]
 
                 if isinstance(previous_item, Graphs.EquationItem):
-                    prev_xdata, prev_ydata = utilities.equation_to_data(
-                        previous_item.get_preprocessed_equation(),
-                        selected_limits,
-                    )
+                    prev_min, prev_max = startx, stopx
                 else:
-                    prev_xdata, prev_ydata = previous_item.get_xydata()
+                    prev_xdata = previous_item.get_xdata()
+                    prev_min, prev_max = min(prev_xdata), max(prev_xdata)
+                    if interaction_mode == Graphs.Mode.SELECT:
+                        prev_min = max(prev_min, startx)
+                        prev_min = min(prev_max, stopx)
 
-                new_ydata = DataHelper.filter_range(
-                    xdata,
-                    ydata,
-                    prev_xdata,
-                    prev_ydata,
-                )[1]
-                ymin = min(x for x in new_ydata if x != 0)
-                ymax = max(x for x in new_ydata if x != 0)
+                xmin, xmax = min(xdata), max(xdata)
+                if xmin >= prev_min and xmax <= prev_max:
+                    mask = numpy.greater_equal(xdata, xmin)
+                    mask &= numpy.less_equal(xdata, xmax)
+                    ydata = ydata[mask]
+                nonzero_data = ydata[ydata != 0]
+                ymin = nonzero_data.min()
+                ymax = nonzero_data.max()
 
                 if scale == Graphs.Scale.LOG:
                     shift_value += \
@@ -360,24 +337,16 @@ class CommonOperations():
                 continue
             if isinstance(item, Graphs.DataItem):
                 if scale == Graphs.Scale.LOG:
-                    new_ydata = [value * 10**shift_value for value in ydata]
+                    new_ydata = ydata * 10**shift_value
                 elif scale == Graphs.Scale.LOG2:
-                    new_ydata = [value * 2**shift_value for value in ydata]
+                    new_ydata = ydata * 2**shift_value
                 else:  # Apply linear scaling
-                    new_ydata = [value + shift_value for value in ydata]
-                i = 0
-                item_xdata, item_ydata = item.get_xydata()
-                for index, masked in enumerate(DataHelper.create_data_mask(
-                    item_xdata, item_ydata, xdata, ydata,
-                )):
-                    # Change coordinates that were within span
-                    if masked:
-                        item_xdata = item_xdata.copy()
-                        item_ydata = item_ydata.copy()
-                        item_xdata[index] = xdata[i]
-                        item_ydata[index] = new_ydata[i]
-                        i += 1
-                item.set_xydata((item_xdata, item_ydata))
+                    new_ydata = ydata + shift_value
+                if interaction_mode == Graphs.Mode.SELECT:
+                    item_ydata = item.get_ydata().copy()
+                    item_ydata[data_mask] = new_ydata
+                    new_ydata = item_ydata
+                item.set_xydata((item.get_xdata(), new_ydata))
                 continue
         return True
 
@@ -483,7 +452,7 @@ class EquationOperations():
             # If we don't manage to solve this analytically, just find
             # the maximum by calculating
             except TypeError:
-                middle_index = ydata.index(max(ydata))
+                middle_index = numpy.argmax(ydata)
                 middle_value = xdata[middle_index]
 
         elif center_maximum == 1:  # Center at middle
@@ -566,18 +535,26 @@ class DataOperations():
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
-        selected_limits = DataHelper.get_selected_limits(
-            figure_settings,
-            interaction_mode,
-            item,
-        )
-        xdata, ydata = DataHelper.get_xydata(
-            interaction_mode, selected_limits, item,
-        )
+        xdata, ydata = item.get_xydata()
+        if interaction_mode == Graphs.Mode.SELECT:
+            startx, stopx = DataHelper.get_selected_limits(
+                figure_settings,
+                interaction_mode,
+                item,
+            )
+            # If startx and stopx are not out of range, that is,
+            # if the item data is within the highlight
+            xmin = min(xdata)
+            if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
+                mask = numpy.greater_equal(xdata, startx)
+                mask &= numpy.less_equal(xdata, stopx)
+                xdata, ydata = xdata[mask], ydata[mask]
+            else:
+                xdata, ydata = None, None
+        if not (xdata is not None and len(xdata) != 0):
+            return False, _("No data found within the highlighted area")
         try:
             callback = getattr(DataOperations, name)
-            if not (xdata is not None and len(xdata) != 0):
-                return False, _("No data found within the highlighted area")
             message = ""
             new_xdata, new_ydata, sort, discard = callback(
                 item, xdata, ydata, *args,
@@ -588,41 +565,32 @@ class DataOperations():
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
-        if discard and interaction_mode == Graphs.Mode.SELECT:
-            logging.debug("Discard is true")
-            message = _(
-                "Data that was outside of the highlighted area has"
-                " been discarded",
-            )
-        else:
-            logging.debug("Discard is false")
-            mask = DataHelper.create_data_mask(
-                item.get_xdata(),
-                item.get_ydata(),
-                xdata,
-                ydata,
-            )
-
-            xdata, ydata = new_xdata, new_ydata
-            new_xdata = item.get_xdata().copy()
-            new_ydata = item.get_ydata().copy()
-            xerr = item.get_xerr()
-            yerr = item.get_yerr()
-            if xdata is None:  # If cut action was performed
-                new_xdata = new_xdata[~mask]
-                new_ydata = new_ydata[~mask]
-
+        xerr = item.get_xerr()
+        yerr = item.get_yerr()
+        if interaction_mode == Graphs.Mode.SELECT:
+            if discard:
+                logging.debug("Discard is true")
+                message = _(
+                    "Data that was outside of the highlighted area has"
+                    " been discarded",
+                )
+            elif new_xdata is None:  # If cut action was performed
+                new_xdata = item.get_xdata()[~mask]
+                new_ydata = item.get_ydata()[~mask]
                 xerr = xerr[~mask] if xerr is not None else None
                 yerr = yerr[~mask] if yerr is not None else None
             else:
-                new_xdata[mask] = xdata
-                new_ydata[mask] = ydata
-            if sort:
-                logging.debug("Sorting data")
-                new_xdata, new_ydata = \
-                    DataHelper.sort_data(new_xdata, new_ydata)
-            item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
-            return True, message
+                logging.debug("Discard is false")
+                xdata = item.get_xdata().copy()
+                ydata = item.get_ydata().copy()
+                xdata[mask] = new_xdata
+                ydata[mask] = new_ydata
+                new_xdata, new_ydata = xdata, ydata
+        if sort:
+            logging.debug("Sorting data")
+            new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
+        item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
+        return True, message
 
     @staticmethod
     def translate_x(_item, xdata: list, ydata: list, offset: float) -> _return:
