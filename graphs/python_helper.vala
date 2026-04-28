@@ -25,6 +25,11 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
+        protected signal DataHolder equation_to_data_request (string equation, double xstart, double xstop, int steps, Scale scale);
+        public static DataHolder equation_to_data (string equation, double xstart, double xstop, int steps, Scale scale) {
+            return instance.equation_to_data_request.emit (equation, xstart, xstop, steps, scale);
+        }
+
         private static double[] _evaluate_expression_result;
         protected signal bool evaluate_expression_request (string equation, int steps, string variable);
         protected static void set_evaluate_expression_result (double[] result) {
