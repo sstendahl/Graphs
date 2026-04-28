@@ -2,7 +2,7 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs
 
-from graphs import curve_fitting, export_items, file_io, operations
+from graphs import curve_fitting, export_items, file_io, operations, utilities
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
@@ -17,6 +17,7 @@ _REQUESTS = (
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
+    "equation-to-data",
     "evaluate-expression",
     "export-figure",
     "export-items",
@@ -57,6 +58,23 @@ class PythonHelper(Graphs.PythonHelper):
         item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
+
+    @staticmethod
+    def _on_equation_to_data_request(
+        self,
+        equation: str,
+        xstart: float,
+        xstop: float,
+        steps: int,
+        scale: Graphs.Scale,
+    ) -> Graphs.DataHolder:
+        xdata, ydata = utilities.equation_to_data(
+            equation,
+            [xstart, xstop],
+            steps,
+            scale,
+        )
+        return Graphs.DataHolder.new(xdata, ydata, None, None)
 
     @staticmethod
     def _on_evaluate_expression_request(
