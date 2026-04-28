@@ -182,25 +182,6 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
             **kwargs,
         )
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self._regenerate()
-        for prop in ("equation", "xstart", "xstop", "steps", "scale"):
-            self.connect("notify::" + prop, self._regenerate)
-
-    def _regenerate(self, *_args) -> None:
-        """Regenerate Data."""
-        xdata, ydata = utilities.equation_to_data(
-            Graphs.preprocess_equation(self.props.equation),
-            [
-                Graphs.evaluate_string(self.props.xstart),
-                Graphs.evaluate_string(self.props.xstop),
-            ],
-            self.props.steps,
-            self.props.scale,
-        )
-        self.props.data = Graphs.DataHolder.new(xdata, ydata, None, None)
-
 
 class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     """EquationItem."""

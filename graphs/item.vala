@@ -164,6 +164,7 @@ namespace Graphs {
         public Scale scale { get; set; default = Scale.LINEAR; }
 
         private string _equation = "";
+        private string _preprocessed_equation = "";
         public string equation {
             get { return _equation; }
             set {
@@ -171,14 +172,34 @@ namespace Graphs {
                 if (old_equation == value) return;
 
                 _equation = value;
+                try {
+                    _preprocessed_equation = preprocess_equation (value);
+                } catch (MathError e) { assert_not_reached (); }
 
                 if ("Y =" + old_equation == name)
                     name = "Y = " + value;
+
+                regenerate ();
             }
         }
 
         construct {
             typename = _("Generated Dataset");
+
+            const string[] PROPS = {"xstart", "xstop", "steps", "scale"};
+            foreach (string prop in PROPS) {
+                this.notify[prop].connect (regenerate);
+            }
+        }
+
+        private void regenerate () {
+            try {
+                data = PythonHelper.equation_to_data (
+                    _preprocessed_equation,
+                    evaluate_string (xstart),
+                    evaluate_string (xstop),
+                    steps, scale);
+            } catch (MathError e) { assert_not_reached (); }
         }
     }
 
