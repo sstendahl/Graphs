@@ -354,7 +354,6 @@ namespace Graphs {
             }
             string[] used_names = get_names ();
             uint prev_size = _n_items;
-            int original_position;
             grow_if_needed (items.length);
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
@@ -381,15 +380,15 @@ namespace Graphs {
                     }
                 }
                 if (item.xlabel != "") {
-                    original_position = item.xposition;
-                    if (original_position == 0) {
+                    var original_position = item.xposition;
+                    if (original_position == XPosition.BOTTOM) {
                         if (is_default ("bottom-label") | is_empty ()) {
                             figure_settings.bottom_label = item.xlabel;
                         } else if (item.xlabel != figure_settings.bottom_label) {
-                            item.xposition = 1;
+                            item.xposition = XPosition.TOP;
                         }
                     }
-                    if (item.xposition == 1) {
+                    if (item.xposition == XPosition.TOP) {
                         if (is_default ("top-label")) {
                             figure_settings.top_label = item.xlabel;
                         } else if (item.xlabel != figure_settings.top_label) {
@@ -398,15 +397,15 @@ namespace Graphs {
                     }
                 }
                 if (item.ylabel != "") {
-                    original_position = item.yposition;
-                    if (original_position == 0) {
+                    var original_position = item.yposition;
+                    if (original_position == YPosition.LEFT) {
                         if (is_default ("left-label") | is_empty ()) {
                             figure_settings.left_label = item.ylabel;
                         } else if (item.ylabel != figure_settings.left_label) {
-                            item.yposition = 1;
+                            item.yposition = YPosition.RIGHT;
                         }
                     }
-                    if (item.yposition == 1) {
+                    if (item.yposition == YPosition.RIGHT) {
                         if (is_default ("right-label")) {
                             figure_settings.right_label = item.ylabel;
                         } else if (item.ylabel != figure_settings.right_label) {

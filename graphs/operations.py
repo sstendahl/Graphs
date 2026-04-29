@@ -92,7 +92,7 @@ class DataHelper():
         item: Graphs.DataItem,
     ) -> tuple[float, float]:
         """Get the min and max value of the item within the selected range."""
-        if item.get_xposition() == 0:
+        if item.get_xposition() == Graphs.XPosition.BOTTOM:
             min_bottom = figure_settings.get_min_bottom()
             max_bottom = figure_settings.get_max_bottom()
             if interaction_mode != Graphs.Mode.SELECT:

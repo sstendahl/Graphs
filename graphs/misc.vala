@@ -18,6 +18,16 @@ namespace Graphs {
         return Tools.create_file_filters (false, filter);
     }
 
+    public enum XPosition {
+        BOTTOM,
+        TOP
+    }
+
+    public enum YPosition {
+        LEFT,
+        RIGHT
+    }
+
     public enum Scale {
         LINEAR,
         LOG,

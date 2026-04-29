@@ -66,8 +66,8 @@ namespace Graphs {
         public bool selected { get; set; default = true; }
         public string xlabel { get; set; default = ""; }
         public string ylabel { get; set; default = ""; }
-        public int xposition { get; set; default = 0; }
-        public int yposition { get; set; default = 0; }
+        public XPosition xposition { get; set; default = XPosition.BOTTOM; }
+        public YPosition yposition { get; set; default = YPosition.LEFT; }
 
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);

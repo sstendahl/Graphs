@@ -53,9 +53,9 @@ def _save_item(
         xdata, ydata, xerr, yerr = item.get_data_tuple()
     elif isinstance(item, Graphs.EquationItem):
         limits = figure_settings.get_limits().values()
-        if item.get_xposition() == 0:
+        if item.get_xposition() == Graphs.XPosition.BOTTOM:
             limits = [limits[0], limits[1]]
-        elif item.get_xposition() == 1:
+        else:
             limits = [limits[2], limits[3]]
         equation = item.get_preprocessed_equation()
         xdata, ydata = utilities.equation_to_data(equation, limits)
