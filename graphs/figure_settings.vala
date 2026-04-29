@@ -3,6 +3,11 @@ using Adw;
 using Gtk;
 
 namespace Graphs {
+    private const string[] LIMIT_NAMES = {
+        "min-bottom", "max-bottom", "min-top", "max-top",
+        "min-left", "max-left", "min-right", "max-right",
+    };
+
     public class Limits {
         private double[] _values;
 

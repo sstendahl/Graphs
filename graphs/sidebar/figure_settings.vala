@@ -105,69 +105,87 @@ namespace Graphs {
             bool[] visible_axes = window.data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
-            string[] min_max = {"min", "max"};
-            for (int i = 0; i < 4; i++) {
-                bool visible = visible_axes[i];
-                if (!visible) continue;
 
-                string direction = DIRECTION_NAMES[i];
-                bool x = i < 2;
+            string direction;
 
-                foreach (string s in min_max) {
-                    string key = s + "_" + direction;
-                    Adw.EntryRow entry;
-                    this.get (key, out entry);
-                    figure_settings.bind_property (
-                        key, entry, "text", BindingFlags.SYNC_CREATE, prettyprint_transform
-                    );
-
-                    entry.apply.connect (() => {
-                        double new_val;
-                        try_evaluate_string (entry.get_text (), out new_val);
-
-                        figure_settings.set (key, new_val);
-                        window.data.add_view_history_state ();
-                        window.canvas.view_changed ();
-
-                        // workaround button not disappearing when pressed
-                        entry.set_show_apply_button (false);
-                        entry.set_show_apply_button (true);
-                    });
-
-                    // Remove direction prefix if only one is present
-                    if (s == "min") {
-                        if (x && !both_x) entry.set_title (_("X Axis Minimum"));
-                        else if (!x && !both_y) entry.set_title (_("Y Axis Minimum"));
-                    } else {
-                        if (x && !both_x) entry.set_title (_("X Axis Maximum"));
-                        else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
-                    }
-                }
-
-                Adw.ComboRow scale;
-                string scale_key = direction + "_scale";
-                this.get (scale_key, out scale);
-                Adw.EntryRow label;
-                this.get (direction + "_label", out label);
-                Box limits;
-                this.get (direction + "_limits", out limits);
-
-                figure_settings.bind_property (scale_key, scale, "selected", SYNC);
-
-                scale.set_visible (true);
-                label.set_visible (true);
-                limits.set_visible (true);
-
-                // Remove direction prefix if only one is present
-                if (x && !both_x) {
-                    scale.set_title (_("X Axis Scale"));
-                    label.set_title (_("X Axis Label"));
-                }
-                else if (!x && !both_y) {
-                    scale.set_title (_("Y Axis Scale"));
-                    label.set_title (_("Y Axis Label"));
-                }
+            if (visible_axes[0]) {
+                direction = XPosition.BOTTOM.friendly_string ();
+                handle_widgets (figure_settings, direction, true, both_x, both_y);
             }
+            if (visible_axes[1]) {
+                direction = XPosition.TOP.friendly_string ();
+                handle_widgets (figure_settings, direction, true, both_x, both_y);
+            }
+            if (visible_axes[2]) {
+                direction = YPosition.LEFT.friendly_string ();
+                handle_widgets (figure_settings, direction, false, both_x, both_y);
+            }
+            if (visible_axes[3]) {
+                direction = YPosition.RIGHT.friendly_string ();
+                handle_widgets (figure_settings, direction, false, both_x, both_y);
+            }
+        }
+
+        private void handle_widgets (FigureSettings figure_settings, string direction, bool x, bool both_x, bool both_y) {
+            Adw.EntryRow entry;
+            string prop;
+
+            prop = "min-" + direction;
+            this.get (prop, out entry);
+            bind_entry (entry, figure_settings, prop);
+            // Remove direction prefix if only one is present
+            if (x && !both_x) entry.set_title (_("X Axis Minimum"));
+            else if (!x && !both_y) entry.set_title (_("Y Axis Minimum"));
+
+            prop = "max-" + direction;
+            this.get (prop, out entry);
+            bind_entry (entry, figure_settings, prop);
+            // Remove direction prefix if only one is present
+            if (x && !both_x) entry.set_title (_("X Axis Maximum"));
+            else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
+
+            Adw.ComboRow scale;
+            prop = direction + "-scale";
+            this.get (prop, out scale);
+            Adw.EntryRow label;
+            this.get (direction + "-label", out label);
+            Box limits;
+            this.get (direction + "-limits", out limits);
+
+            figure_settings.bind_property (prop, scale, "selected", SYNC);
+
+            scale.set_visible (true);
+            label.set_visible (true);
+            limits.set_visible (true);
+
+            // Remove direction prefix if only one is present
+            if (x && !both_x) {
+                scale.set_title (_("X Axis Scale"));
+                label.set_title (_("X Axis Label"));
+            }
+            else if (!x && !both_y) {
+                scale.set_title (_("Y Axis Scale"));
+                label.set_title (_("Y Axis Label"));
+            }
+        }
+
+        private void bind_entry (Adw.EntryRow entry, FigureSettings figure_settings, string prop) {
+            figure_settings.bind_property (
+                prop, entry, "text", BindingFlags.SYNC_CREATE, prettyprint_transform
+            );
+
+            entry.apply.connect (() => {
+                double new_val;
+                try_evaluate_string (entry.get_text (), out new_val);
+
+                figure_settings.set (prop, new_val);
+                window.data.add_view_history_state ();
+                window.canvas.view_changed ();
+
+                // workaround button not disappearing when pressed
+                entry.set_show_apply_button (false);
+                entry.set_show_apply_button (true);
+            });
         }
 
         public void focus_widget (string name) {
