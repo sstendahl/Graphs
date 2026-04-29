@@ -438,16 +438,20 @@ namespace Graphs {
                 uint index = this.index (item);
                 item_removed.emit (item, index);
                 _remove_item (index);
-                int[] positions = { item.xposition, item.yposition + 2 };
-                foreach (int position in positions) {
-                    string direction = DIRECTION_NAMES[position];
-                    string item_label = position < 2 ? item.xlabel : item.ylabel;
-                    string axis_label;
-                    figure_settings.get (direction + "_label", out axis_label);
-                    if (_used_positions[position] && item_label == axis_label) {
-                        string settings_value = _settings.get_string (direction + "-label");
-                        figure_settings.set (direction + "_label", settings_value);
-                    }
+
+                string axis_label;
+                string prop;
+
+                prop = item.xposition.friendly_string () + "-label";
+                figure_settings.get (prop, out axis_label);
+                if (_used_positions[item.xposition] && item.xlabel == axis_label) {
+                    figure_settings.set (prop, _settings.get_string (prop));
+                }
+
+                prop = item.yposition.friendly_string () + "-label";
+                figure_settings.get (prop, out axis_label);
+                if (_used_positions[item.yposition + 2] && item.ylabel == axis_label) {
+                    figure_settings.set (prop, _settings.get_string (prop));
                 }
             }
             add_history_state ();

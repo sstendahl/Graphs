@@ -5,9 +5,6 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
-    private const string[] X_DIRECTIONS = {"top", "bottom"};
-    private const string[] Y_DIRECTIONS = {"left", "right"};
-
     /**
      * Graphs application
      */
