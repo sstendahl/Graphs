@@ -2,20 +2,37 @@
 using Gtk;
 
 namespace Graphs {
-    public const string[] LIMIT_NAMES = {
-        "min-bottom", "max-bottom", "min-top", "max-top",
-        "min-left", "max-left", "min-right", "max-right",
-    };
-
-    public const string[] DIRECTION_NAMES = {
-        "bottom", "top", "left", "right"
-    };
-
     public ListModel get_mplstyle_file_filters () {
         var filter = Tools.create_file_filter (
             C_("file-filter", "Matplotlib Style File"), "mplstyle"
         );
         return Tools.create_file_filters (false, filter);
+    }
+
+    public enum XPosition {
+        BOTTOM,
+        TOP;
+
+        public string friendly_string () {
+            switch (this) {
+                case BOTTOM: return "bottom";
+                case TOP: return "top";
+                default: assert_not_reached ();
+            }
+        }
+    }
+
+    public enum YPosition {
+        LEFT,
+        RIGHT;
+
+        public string friendly_string () {
+            switch (this) {
+                case LEFT: return "left";
+                case RIGHT: return "right";
+                default: assert_not_reached ();
+            }
+        }
     }
 
     public enum Scale {
