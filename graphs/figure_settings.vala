@@ -42,7 +42,7 @@ namespace Graphs {
         public Scale right_scale { get; set; default = Scale.LINEAR; }
 
         public bool legend { get; set; default = true; }
-        public int legend_position { get; set; default = 0; }
+        public LegendPosition legend_position { get; set; default = LegendPosition.BEST; }
         public bool use_custom_style { get; set; default = false; }
         public string custom_style { get; set; default = "Adwaita"; }
         public bool hide_unselected { get; set; default = false; }
