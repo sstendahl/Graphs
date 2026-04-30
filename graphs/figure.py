@@ -89,12 +89,12 @@ class Figure(GObject.Object, figure.Figure):
 
             self._hide_unselected = figure_settings.get_hide_unselected()
             self._legend = figure_settings.get_legend()
-            legend_position = figure_settings.get_legend_position()
-            self._legend_position = misc.LEGEND_POSITIONS[legend_position]
+            pos = figure_settings.get_legend_position()
+            self._legend_position = Graphs.legend_position_to_string(pos)
         else:
             self._hide_unselected = False
             self._legend = True
-            self._legend_position = misc.LEGEND_POSITIONS[0]
+            self._legend_position = "best"
 
         items.connect("items-changed", self._redraw)
         if isinstance(items, Gtk.SelectionModel):
@@ -229,14 +229,17 @@ class Figure(GObject.Object, figure.Figure):
         self._legend = legend
         self.update_legend()
 
-    @GObject.Property(type=int, default=0)
+    @GObject.Property(
+        type=Graphs.LegendPosition,
+        default=Graphs.LegendPosition.BEST,
+    )
     def legend_position(self) -> int:
-        """Legend Position (see `misc.LEGEND_POSITIONS`)."""
-        return misc.LEGEND_POSITIONS.index(self._legend_position)
+        """Legend Position."""
+        return Graphs.LegendPosition.from_string(self._legend_position)
 
     @legend_position.setter
-    def legend_position(self, legend_position: int) -> None:
-        self._legend_position = misc.LEGEND_POSITIONS[legend_position]
+    def legend_position(self, pos: Graphs.LegendPosition) -> None:
+        self._legend_position = Graphs.legend_position_to_string(pos)
         self.update_legend()
 
     @GObject.Property(type=str)
