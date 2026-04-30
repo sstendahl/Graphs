@@ -8,7 +8,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 import math
 
-from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs.figure import Figure
 
@@ -56,9 +56,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )
         self._rubberband_rect = None
 
-        self.connect("resize", self.resize_event)
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
-        self.connect("resize", self.figure.update_legend)
+        self.connect("resize", self._on_resize)
+        self._resize_timeout_id = None
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
@@ -373,6 +373,25 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if scale == Graphs.Scale.INVERSE:
             value1, value2 = value2, value1
         return value1, value2
+
+    def _on_resize(self, widget, width, height) -> None:
+        """
+        Handle the legend update on window resizes.
+
+        Uses a rebound to avoid spamming the update_legend call.
+        """
+        # Connect to matplotlib's resize event.
+        self.resize_event(widget, width, height)
+
+        if self._resize_timeout_id is not None:
+            GObject.source_remove(self._resize_timeout_id)
+
+        def do_update():
+            self.figure.update_legend()
+            self._resize_timeout_id = None
+            return False
+
+        self._resize_timeout_id = GObject.timeout_add(10, do_update)
 
     def _on_pick(self, event) -> None:
         """Emit edit-request signal for picked label, tick or title."""

@@ -14,6 +14,11 @@ from graphs import artist, misc
 from matplotlib import RcParams, figure, pyplot
 
 
+def _ellipsize(text: str, max_chars: int) -> str:
+    """Truncate text with an ellipsis."""
+    return (text[:max_chars] + "…") if len(text) > max_chars else text
+
+
 class Figure(GObject.Object, figure.Figure):
     """Custom Figure."""
 
@@ -183,13 +188,8 @@ class Figure(GObject.Object, figure.Figure):
                 if handle.legend
             ]
             if handles:
-                max_chars = max(10, int(self.bbox.width / 15))
-                labels = []
-                for h in handles:
-                    label = h.get_label()
-                    labels.append(label[:max_chars] + "…"
-                                  if len(label) > max_chars else label)
-
+                max_char = max(10, int(self.bbox.width / 15))
+                labels = [_ellipsize(h.get_label(), max_char) for h in handles]
                 self._legend_axis.legend(
                     handles=handles,
                     labels=labels,
