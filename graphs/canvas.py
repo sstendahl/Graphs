@@ -58,7 +58,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)
         self.connect("resize", self._on_resize)
-        self._resize_timeout_id = None
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
@@ -375,23 +374,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         return value1, value2
 
     def _on_resize(self, widget, width, height) -> None:
-        """
-        Handle the legend update on window resizes.
-
-        Uses a rebound to avoid spamming the update_legend call.
-        """
-        # Connect to matplotlib's resize event.
+        """Handle the legend update on window resizes."""
         self.resize_event(widget, width, height)
-
-        if self._resize_timeout_id is not None:
-            GObject.source_remove(self._resize_timeout_id)
-
-        def do_update():
-            self.figure.update_legend()
-            self._resize_timeout_id = None
-            return False
-
-        self._resize_timeout_id = GObject.timeout_add(10, do_update)
+        self.figure.update_legend()
 
     def _on_pick(self, event) -> None:
         """Emit edit-request signal for picked label, tick or title."""
