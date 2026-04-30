@@ -19,10 +19,6 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
-def _ellipsize(name: str) -> str:
-    return name[:40] + "…" if len(name) > 40 else name
-
-
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -67,7 +63,7 @@ class ItemArtistWrapper(GObject.Object):
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._color_artist.set_label(_ellipsize(name))
+        self._color_artist.set_label(name)
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
@@ -306,7 +302,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             ydata,
             xerr=xerr,
             yerr=yerr,
-            label=_ellipsize(item.get_name()),
+            label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.get_linestyle()],
@@ -367,7 +363,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._artist = axis.plot(
             [],
             [],
-            label=_ellipsize(item.get_name()),
+            label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
             linestyle=misc.LINESTYLES[item.get_linestyle() + 1],
@@ -578,7 +574,7 @@ class TextItemArtistWrapper(ItemArtistWrapper):
             item.get_xanchor(),
             item.get_yanchor(),
             item.get_text(),
-            label=_ellipsize(item.get_name()),
+            label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
             fontsize=item.get_size(),
@@ -606,7 +602,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
         self._artist = axis.fill_between(
             *item.get_data_tuple(),
-            label=_ellipsize(item.get_name()),
+            label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
         )

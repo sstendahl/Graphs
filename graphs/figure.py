@@ -175,7 +175,7 @@ class Figure(GObject.Object, figure.Figure):
         ]
         self.update_legend()
 
-    def update_legend(self) -> None:
+    def update_legend(self, *_args) -> None:
         """Update the legend or hide if not used."""
         if self._legend and self._artists:
             handles = [
@@ -183,8 +183,16 @@ class Figure(GObject.Object, figure.Figure):
                 if handle.legend
             ]
             if handles:
+                max_chars = max(10, int(self.bbox.width / 15))
+                labels = []
+                for h in handles:
+                    label = h.get_label()
+                    labels.append(label[:max_chars] + "…"
+                        if len(label) > max_chars else label)
+
                 self._legend_axis.legend(
                     handles=handles,
+                    labels=labels,
                     loc=self._legend_position,
                     frameon=True,
                     reverse=True,
