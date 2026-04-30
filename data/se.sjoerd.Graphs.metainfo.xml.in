@@ -139,6 +139,7 @@
           <li>The custom transformation has gained the following extra variables: x_mean, y_mean, x_median, y_median, x_std, y_std and counts</li>
           <li>Settings that affect the canvas (item or figure settings) are now displayed in the sidebar, so you can immediately see the changes on your graph</li>
           <li>Graphs now properly supports mobile screen sizes</li>
+          <li>Legend labels are now truncated dynamically to the window width, instead of to the previously fixed 40 character limit</li>
           <li>Graphs now inhibits the session when unsaved data is still open</li>
           <li>The resolution (image size) for exported figures can now be set manually</li>
           <li>Added support for base-2 logarithmic scaling</li>

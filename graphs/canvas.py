@@ -50,13 +50,14 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
-        self.connect("resize", self.resize_event)
-        self.connect("notify::scale-factor", self._update_device_pixel_ratio)
         FigureCanvasBase.__init__(
             self,
             figure=Figure(style_params, items, self, figure_settings),
         )
         self._rubberband_rect = None
+
+        self.connect("notify::scale-factor", self._update_device_pixel_ratio)
+        self.connect("resize", self._on_resize)
 
         # Handle stuff only used if the canvas is interactive
         if interactive:
@@ -371,6 +372,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if scale == Graphs.Scale.INVERSE:
             value1, value2 = value2, value1
         return value1, value2
+
+    def _on_resize(self, widget, width, height) -> None:
+        """Handle the legend update on window resizes."""
+        self.resize_event(widget, width, height)
+        self.figure.update_legend()
 
     def _on_pick(self, event) -> None:
         """Emit edit-request signal for picked label, tick or title."""
