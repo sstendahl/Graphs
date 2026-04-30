@@ -188,7 +188,7 @@ class Figure(GObject.Object, figure.Figure):
                 for h in handles:
                     label = h.get_label()
                     labels.append(label[:max_chars] + "…"
-                        if len(label) > max_chars else label)
+                                  if len(label) > max_chars else label)
 
                 self._legend_axis.legend(
                     handles=handles,
