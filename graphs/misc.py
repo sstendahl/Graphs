@@ -27,31 +27,6 @@ class InvalidEquationError(Exception):
 
 X = sympy.Symbol("x")
 
-LEGEND_POSITIONS = [
-    "best",
-    "upper right",
-    "upper left",
-    "lower left",
-    "lower right",
-    "center left",
-    "center right",
-    "lower center",
-    "upper center",
-    "center",
-]
-DELIMITERS = {
-    "whitespace": "\\s+",
-    "tab": "\\t+",
-    "colon": ":",
-    "semicolon": ";",
-    "comma": ",",
-    "period": ".",
-    "custom": "custom",
-}
-SEPARATORS = {
-    "comma": ",",
-    "period": ".",
-}
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [
     "none",
