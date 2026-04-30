@@ -14,6 +14,11 @@ from graphs import artist, misc
 from matplotlib import RcParams, figure, pyplot
 
 
+def _ellipsize(text: str, max_chars: int) -> str:
+    """Truncate text with an ellipsis."""
+    return (text[:max_chars] + "…") if len(text) > max_chars else text
+
+
 class Figure(GObject.Object, figure.Figure):
     """Custom Figure."""
 
@@ -175,7 +180,7 @@ class Figure(GObject.Object, figure.Figure):
         ]
         self.update_legend()
 
-    def update_legend(self) -> None:
+    def update_legend(self, *_args) -> None:
         """Update the legend or hide if not used."""
         if self._legend and self._artists:
             handles = [
@@ -183,8 +188,11 @@ class Figure(GObject.Object, figure.Figure):
                 if handle.legend
             ]
             if handles:
+                max_char = max(10, int(self.bbox.width / 15))
+                labels = [_ellipsize(h.get_label(), max_char) for h in handles]
                 self._legend_axis.legend(
                     handles=handles,
+                    labels=labels,
                     loc=self._legend_position,
                     frameon=True,
                     reverse=True,
