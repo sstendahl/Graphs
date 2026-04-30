@@ -8,7 +8,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 import math
 
-from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
 from graphs.figure import Figure
 
