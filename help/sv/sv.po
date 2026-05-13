@@ -1,13 +1,13 @@
 # Swedish translation for Graphs.
-# Copyright © 2024-2025 Graphs's COPYRIGHT HOLDER
+# Copyright © 2024-2026 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024, 2025.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024, 2025, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2025-11-30 22:06+0000\n"
-"PO-Revision-Date: 2025-12-01 00:09+0100\n"
+"POT-Creation-Date: 2026-04-15 07:44+0000\n"
+"PO-Revision-Date: 2026-05-13 16:03+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -15,392 +15,2668 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
-msgstr "Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024"
+msgstr "Anders Jonsson <anders.jonsson@norsjovallen.se>, 2024, 2026"
 
 #. (itstool) path: page/title
-#: C/curve_fitting.page:8
+#: C/curve-fitting.page:7
 msgid "Curve Fitting"
 msgstr "Kurvanpassning"
 
+#. (itstool) path: page/p
+#: C/curve-fitting.page:8
+msgid ""
+"Curve fitting allows for powerful analysis of imported datasets by finding "
+"the parameters of a mathematical model that best describes the data. The "
+"following topics are covered in this page:"
+msgstr ""
+"Kurvanpassning möjliggör kraftfull analys av importerade datamängder genom "
+"att hitta parametrarna för en matematisk modell som bäst beskriver data. "
+"Följande ämnen täcks på denna sida:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:11
+msgid "<link xref=\"#fitting\">Fitting Data</link>: Set up and run a fit."
+msgstr ""
+"<link xref=\"#fitting\">Anpassa data</link>: Konfigurera och kör en "
+"anpassning."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:15
+msgid "<link xref=\"#bounds\">Bounds</link>: Constrain fitting parameters."
+msgstr "<link xref=\"#bounds\">Gränser</link>: Begränsa anpassningsparametrar."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:19
+msgid "<link xref=\"#results\">Results</link>: Interpreting the output."
+msgstr "<link xref=\"#results\">Resultat</link>: Tolka utdata."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:23
+msgid ""
+"<link xref=\"#residuals\">Residuals</link>: Inspect the quality of the fit."
+msgstr ""
+"<link xref=\"#residuals\">Residualer</link>: Inspektera anpassningens "
+"kvalitet."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:27
+msgid ""
+"<link xref=\"#algorithms\">Fitting Algorithms</link>: Choose the right "
+"algorithm for your data."
+msgstr ""
+"<link xref=\"#algorithms\">Anpassningsalgoritmer</link>: Välj rätt algoritm "
+"för dina data."
+
 #. (itstool) path: section/title
-#: C/curve_fitting.page:10
-msgid "Fitting data"
+#: C/curve-fitting.page:32
+msgid "Fitting Data"
 msgstr "Anpassa data"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:11
+#: C/curve-fitting.page:33
 msgid ""
-"Curve fitting allows for a powerful analysis method for your imported data. "
-"To start curve fitting on a data set, press the three vertical dots on the "
-"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
-"Curve Fitting dialog for the selected data set. An extensive list of "
-"predefined equations can be chosen from the dropdown. The corresponding "
-"mathematical formula is shown in the same card."
+"To start curve fitting on a dataset, press the three vertical dots on the "
+"item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve "
+"Fitting dialog. The fit and its confidence band are previewed live as "
+"parameters are adjusted."
 msgstr ""
-"Kurvanpassning möjliggör en kraftfull analysmetod för dina importerade data. "
 "För att påbörja kurvanpassning på en datamängd trycker du på de tre "
-"vertikala prickarna på objektet du vill anpassa till, och välj ”Anpassa”. "
-"Detta tar fram kurvanpassningsdialogen för den valda datamängden. En "
-"utförlig lista över fördefinierade ekvationer kan väljas från "
-"rullgardinslistan. Motsvarande matematisk formel visas på samma kort."
+"vertikala prickarna på objektet du vill anpassa och väljer <em>Anpassa</em>. "
+"Detta öppnar kurvanpassningsdialogen. Anpassningen och dess konfidensband "
+"förhandsvisas löpande medan parametrar justeras."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/curve_fitting.page:19
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/curve-fitting.page:34
 msgid ""
-"external ref='media/curve_fitting_light.png' "
-"md5='d33b620c42f2c1cf82c94998adf4a670'"
+"An equation to fit against is chosen from the dropdown. The following "
+"predefined equations are available, with their formula shown as a subtitle:"
 msgstr ""
-"external ref='media/curve_fitting_light.png' "
-"md5='d33b620c42f2c1cf82c94998adf4a670'"
+"En ekvation att anpassa mot väljs från rullgardinsmenyn. Följande "
+"fördefinierade ekvationer är tillgängliga, med sin formel visad som "
+"undertitel:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:37 C/figure-settings.page:22
+msgid "Linear"
+msgstr "Linjär"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:38
+msgid "<code>a·x + b</code>"
+msgstr "<code>a·x + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:42
+msgid "Quadratic"
+msgstr "Kvadratisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:43
+msgid "<code>a·x² + b·x + c</code>"
+msgstr "<code>a·x² + b·x + c</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:47
+msgid "Exponential"
+msgstr "Exponentiell"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:48
+msgid "<code>a·exp(b·x)</code>"
+msgstr "<code>a·exp(b·x)</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:52
+msgid "Power Law"
+msgstr "Potenslag"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:53
+msgid "<code>a·x^b</code>"
+msgstr "<code>a·x^b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:57
+msgid "Logarithmic"
+msgstr "Logaritmisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:58
+msgid "<code>a·log(x) + b</code>"
+msgstr "<code>a·log(x) + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:62
+msgid "Sigmoid Logistic"
+msgstr "Sigmoid logistisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:63
+msgid "<code>L / (1 + exp(-k·(x - b)))</code>"
+msgstr "<code>L / (1 + exp(-k·(x - b)))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:67
+msgid "Gaussian"
+msgstr "Gaussisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:68
+msgid "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+msgstr "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:72
+msgid "Custom"
+msgstr "Anpassad"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:73
+msgid ""
+"Enter any equation using <code>x</code> as the independent variable. Any "
+"other variable names that are not functions (such as sin(x) or exp(x)) are "
+"automatically detected and treated as free parameters to be fitted."
+msgstr ""
+"Ange valfri ekvation med <code>x</code> som oberoende variabel. Alla andra "
+"variabelnamn som inte är funktioner (såsom sin(x) eller exp(x)) upptäcks "
+"automatiskt och behandlas som fria parametrar att passa in."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:76
+msgid ""
+"Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the "
+"resulting curve as a new equation in the project, with the fitted parameter "
+"values substituted into the expression."
+msgstr ""
+"Då du hittat en lämplig anpassning, tryck ned <em>Passa till data</em> för "
+"att lägga till den resulterande kurvan som en ny ekvation i projektet, med "
+"de anpassade parametervärdena ersatta i uttrycket."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:23
+#: C/curve-fitting.page:79
 msgid "Bounds"
 msgstr "Gränser"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:24
+#: C/curve-fitting.page:80
 msgid ""
-"Each detected parameter in the formula will be shown in the sidebar. Here an "
-"initial guess can be set for the fit, as well as the minimum and maximum "
-"value for this parameter. Make sure that the initial guess is in between the "
-"bounds, and that the minimum bound is smaller than the maximum bound. If you "
-"don't want to use any bounds for the parameter, you can set the bounds to "
-"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
-"maximum bound respectively."
+"Each free parameter detected in the equation is shown in the sidebar with "
+"three fields: an initial guess, a minimum bound, and a maximum bound. The "
+"initial guess is the starting value used by the algorithm. Using a good "
+"initial guess close to the expected value will help the fit converge. The "
+"bounds constrain the range of values the parameter is allowed to take."
 msgstr ""
-"Varje upptäckt parameter i formeln kommer visas i sidopanelen. Här kan en "
-"initial gissning sättas för anpassningen, såväl som minimi- och maximivärdet "
-"för denna parameter. Säkerställ att den ursprungliga gissningen är mellan "
-"gränserna, och att minimigränsen är mindre än maximigränsen. Om du inte vill "
-"ha några gränser för parametern kan du ställa gränserna till oändligheten "
-"med <code>-inf</code> and <code>inf</code> för minimi- respektive "
-"maximigränsen."
+"Varje fri parameter som upptäcks i ekvationen visas i sidopanelen med tre "
+"fält: en ursprunglig gissning, en lägre gräns, och en maximal gräns. Den "
+"ursprungliga gissningen är startvärdet som används av algoritmen. Att "
+"använda en bra ursprunglig gissning nära det förväntade värdet kommer hjälpa "
+"till att få anpassningen att konvergera. Gränserna begränsar intervallet på "
+"värdena som parametern får anta."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:81
+msgid ""
+"The bounds fields default to <code>-inf</code> and <code>inf</code>, meaning "
+"no constraints are applied. To restrict a parameter, enter the desired "
+"minimum and maximum values."
+msgstr ""
+"Begränsningsfälten är som standard <code>-inf</code> och <code>inf</code>, "
+"vilket betyder att inga begränsningar tillämpas. För att begränsa en "
+"parameter, ange de önskade minimum- och maximumvärdena."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:82
+msgid ""
+"Note that bounds fields are only shown when an algorithm that supports them "
+"is selected. When using Levenberg-Marquardt, bounds are hidden as that "
+"algorithm does not support them. See <link xref=\"#algorithms\"/>for details."
+msgstr ""
+"Observera att begränsningsfält endast visas då en algoritm som stöder dem "
+"väljs. Då Levenberg-Marquardt används är begränsningar dolda då den "
+"algoritmen inte stöder dem. Se <link xref=\"#algorithms\"/>för detaljer."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:36
+#: C/curve-fitting.page:86
 msgid "Results"
 msgstr "Resultat"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:37
+#: C/curve-fitting.page:87
 msgid ""
-"Below the fitting parameters, a box is shown with the resulting parameters "
-"of the fit. Apart of the final results, a margin is shown as well for each "
-"parameter as well as the sum of R² indicating the goodness of the fit. The "
-"margin can be set using the primary menu in the Curve Fitting dialog as a "
-"multiple of the standard deviation, corresponding to an uncertainty margin "
-"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+"After a successful fit the results panel shows two sections: Parameters and "
+"Statistics."
 msgstr ""
-"Under anpassningsparametrarna visas en ruta med anpassningens resulterande "
-"parametrar. Utöver de slutgiltiga resultaten visas även en marginal för "
-"varje parameter såväl som summan av R² vilket indikerar hur bra anpassningen "
-"är (goodness of fit). Marginalen kan ställas in med primärmenyn i "
-"kurvanpassningsdialogen som en multipel av standardavvikelsen, motsvarande "
-"en osäkerhetsmarginal på 65, 95 eller 99.7% för en standardavvikelse på 1σ, "
-"2σ respektive 3σ."
+"Efter en lyckad anpassning har resultatpanelen två delar: Parametrar och "
+"Statistik."
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:45
+#: C/curve-fitting.page:88
 msgid ""
-"Please note that like all fits, that this standard deviation is mostly a "
-"measure of how well the data agrees with the corresponding model. Factors "
-"such as whether this model is actually physically correct, if there's any "
-"systemic errors in the measurements, and if the parameters are correlated to "
-"each other is not taken into account when fitting data. This is an inherent "
-"property of all curve fitting, and a common point of confusion, leading to "
-"misleading error bars on data points even in scientifically published data."
+"The Parameters section lists each fitted parameter with its value. If a "
+"confidence level other than None is selected, a margin is shown next to each "
+"value in the form <code>± error</code>, where the error is the standard "
+"deviation of that parameter multiplied by the selected confidence factor. So "
+"for a confidence level of 1σ the error is equal to the standard deviation, "
+"and for 2σ and 3σ the error is equal to twice and three times the standard "
+"deviation respectively. The confidence level can be set from the primary "
+"menu:"
 msgstr ""
-"Observera att som för alla anpassningar är denna standardavvikelse främst "
-"ett mätvärde på hur bra data överensstämmer med motsvarande modell. Faktorer "
-"som huruvida denna modell faktiskt är fysiskt korrekt, om det finns några "
-"systemfel i mätningarna, och om parametrarna är korrelerade med varandra tas "
-"inte i beaktande vid anpassning av data. Detta är en inbyggd egenskap för "
-"all kurvanpassning samt en vanlig förvirringspunkt, och leder till "
-"missledande felstaplar på datapunkter även i vetenskapligt publicerade data."
+"Delen Parametrar listar varje anpassad parameter med dess värde. Om en annan "
+"konfidensnivå än Ingen anges så visas en marginal intill varje värde på "
+"formen <code>± fel</code>, där felet är standardavvikelsen av den parametern "
+"multiplicerad med den valda konfidensfaktorn. Så för en konfidensnivå på 1σ "
+"är felet lika med standardavvikelsen, och för 2σ och 3σ är felet lika med "
+"två respektive tre gånger standardavvikelsen. Konfidensnivån kan ställas in "
+"från primärmenyn:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:91
+msgid "<em>None</em>: no margin shown."
+msgstr "<em>Ingen</em>: inga marginaler visas."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:94
+msgid "<em>1σ: 68% Confidence</em>"
+msgstr "<em>1σ: 68% konfidens</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:98
+msgid "<em>2σ: 95% Confidence</em>"
+msgstr "<em>2σ: 95% konfidens</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:102
+msgid "<em>3σ: 99.7% Confidence</em>"
+msgstr "<em>3σ: 99,7% konfidens</em>"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:106
+msgid ""
+"The corresponding confidence band is also drawn as a shaded region around "
+"the fitted curve."
+msgstr ""
+"Motsvarande konfidensband ritas också ut som en skuggad region runt den "
+"anpassade kurvan."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:107
+msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgstr "Statistikdelen visar två goodness-of-fit-mått: R² och RMSE."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:108
+msgid ""
+"For a linear fit, R² measures how what proportion of the variation can be "
+"explained by the model. A value of 1 means the model explains all variation "
+"perfectly, while a value of 0 means it explains none. Note that for non-"
+"linear fits, the R² loses its physical meaning of what proportion of the "
+"variance is explained. It can still be somewhat useful to assess the "
+"goodness-of-fit, but the value itself becomes somewhat arbitrary."
+msgstr ""
+"För en linjär anpassning mäter R² hur vilken proportion av variationen kan "
+"förklaras av modellen. Ett värde på 1 betyder att modellen förklarar all "
+"variation perfekt, medan ett värde på 0 betyder att den inte förklarar "
+"något. Observera att för icke-linjära anpassningar förlorar R² sin fysiska "
+"betydelse om vilken proportion av variansen som förklaras. Den kan "
+"fortfarande vara något användbar för att utvärdera goodness-of-fit, men "
+"värdet i sig blir något godtyckligt."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:109
+msgid ""
+"RMSE (Root Mean Square Error) measures the typical size of the residuals "
+"(the differences between the data points and the fitted curve) in the same "
+"units as the Y data. Unlike R², RMSE gives an absolute sense of how far off "
+"the predictions are on average, which makes it useful when the physical "
+"magnitude of the error matters."
+msgstr ""
+"RMSE (Root Mean Square Error) mäter den typiska storleken för residualerna "
+"(skillnaderna mellan datapunkterna och den anpassade kurvan) i samma enhet "
+"som Y-data. Till skillnad från R² ger RMSE en absolut uppfattning över hur "
+"långt bort förutsägelserna är i genomsnitt, vilket gör det användbart när "
+"den fysiska magnituden på felet spelar roll."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:110
+msgid ""
+"Note that both statistics reflect only how well the data agrees with the "
+"chosen model, not whether the model is physically correct. Factors such as "
+"systematic measurement errors and correlations between parameters are not "
+"accounted for. This is an inherent limitation of curve fitting, and a common "
+"source of misleading uncertainty estimates even in published scientific work."
+msgstr ""
+"Observera att båda statistikor endast reflekterar hur väl data "
+"överensstämmer med vald modell, inte huruvida modellen är fysiskt korrekt. "
+"Faktorer som systematiska mätfel och korrelationer mellan parametrar tas "
+"inte i beaktande. Detta är en inbyggd egenskap för kurvanpassning samt en "
+"vanlig källa till missledande osäkerhetsuppskattningar även i publicerade "
+"vetenskapliga avhandlingar."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:57
-msgid "Fitting algorithms"
+#: C/curve-fitting.page:113
+msgid "Residuals"
+msgstr "Residualer"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:114
+msgid ""
+"The residuals plot can be shown by enabling <em>Show Residuals</em> from "
+"within the primary menu. This displays a second plot below the main one "
+"showing the difference between each data point and the fitted curve at that "
+"x-value. A dashed line at zero is shown for reference."
+msgstr ""
+"Residualdiagrammet kan visas genom att aktivera <em>Visa residualer</em> "
+"inifrån primärmenyn. Detta visar ett andra diagram under det huvudsakliga "
+"som visar skillnaden mellan varje datapunkt och den anpassade kurvan vid det "
+"x-värdet. En streckad linje vid noll visas för referens."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:115
+msgid ""
+"A good fit will show residuals scattered randomly around zero with no "
+"visible pattern. A systematic pattern in the residuals, such as a curve or a "
+"trend suggests that the chosen model may not be appropriate for the data."
+msgstr ""
+"En bra anpassning kommer visa residualer som är spridda slumpmässigt runt "
+"noll utan något synligt mönster. Ett systematiskt mönster i residualerna, "
+"såsom en kurva eller en trend antyder att den valda modellen kanske inte är "
+"lämplig för dessa data."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:118
+msgid "Error Messages"
+msgstr "Felmeddelanden"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:119
+msgid ""
+"If the fit cannot be completed, an error message is shown in the results "
+"panel instead of the parameter values. The following errors can occur:"
+msgstr ""
+"Om anpassningen inte kan slutföras visas ett felmeddelande i resultatpanelen "
+"i stället för parametervärdena. Följande fel kan förekomma:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:122
+msgid "Invalid equation"
+msgstr "Ogiltig ekvation"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:123
+msgid ""
+"The equation contains a syntax error or uses unsupported variables. Check "
+"that the expression is valid."
+msgstr ""
+"Ekvationen innehåller ett syntaxfel eller använder variabler som inte stöds. "
+"Kontrollera att uttrycket är giltigt."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:126
+msgid "Constraint error"
+msgstr "Begränsningsfel"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:127
+msgid ""
+"The initial guess does not lie within the specified bounds, or the minimum "
+"bound is not smaller than the maximum. Ensure that Lower &lt; Initial &lt; "
+"Upper for each parameter."
+msgstr ""
+"Den ursprungliga gissningen ligger inte inom de angivna gränserna, eller så "
+"är den lägre gränsen inte mindre än maxgränsen. Säkerställ att Lägre &lt; "
+"Ursprunglig &lt; Övre för varje parameter."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:130
+msgid "Domain error"
+msgstr "Domänfel"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:131
+msgid ""
+"The equation is not valid over the range of the data, for example due to a "
+"logarithm of a negative number or a division by zero."
+msgstr ""
+"Ekvationen är inte giltig över dataintervallet, exempelvis på grund av en "
+"logaritm av ett negativt tal eller division med noll."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:134
+msgid "Fit failed: max iterations reached"
+msgstr "Anpassning misslyckades: Max antal iterationer uppnådda"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:135
+msgid ""
+"The algorithm did not converge within the allowed number of iterations. Try "
+"adjusting the initial guesses to be closer to the expected values, or choose "
+"a different algorithm."
+msgstr ""
+"Algoritmen konvergerade inte inom det tillåtna antalet iterationer. Försök "
+"justera de ursprungliga gissningarna så de är närmare de förväntade värdena, "
+"eller välj en annan algoritm."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:138
+msgid "Matrix error"
+msgstr "Matrisfel"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:139
+msgid ""
+"The data is insufficient for the chosen model. This can happen for example "
+"when there are fewer data points than free parameters, or if the data does "
+"not constrain the model well enough to determine a unique solution."
+msgstr ""
+"Data är otillräckliga för den valda modellen. Detta kan hända exempelvis när "
+"det finns färre datapunkter än fria parametrar, eller om data inte begränsar "
+"modellen tillräckligt för att bestämma en unik lösning."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:142
+msgid "Confidence band error"
+msgstr "Konfidensbandfel"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:143
+msgid ""
+"The covariance matrix is unstable, so the confidence band cannot be computed "
+"reliably."
+msgstr ""
+"Kovariansmatrisen är instabil, så konfidensbandet kan inte beräknas "
+"tillförlitligt."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:148
+msgid "Fitting Algorithms"
 msgstr "Anpassningsalgoritmer"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:58
+#: C/curve-fitting.page:149
 msgid ""
-"When performing a fit, there are three different fitting algorithms to "
-"choose from, these can be set from the primary menu."
+"Three fitting algorithms are available, selectable from the primary menu "
+"under <em>Optimization Method</em>:"
 msgstr ""
-"När en anpassning utförs finns det tre olika anpassningsalgoritmer att välja "
-"på. Dessa kan ställas in i primärmenyn."
+"Tre anpassningsalgoritmer är tillgängliga, valbara från primärmenyn under "
+"<em>Optimeringsmetod</em>:"
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:64
+#: C/curve-fitting.page:152
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:65
+#: C/curve-fitting.page:153
 msgid ""
-"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
-"algorithm that performs very efficiently. However, it does not handle bounds "
-"for the fitting parameters."
+"A widely used algorithm that performs efficiently for most problems. Does "
+"not support parameter bounds, the minimum and maximum fields are hidden when "
+"this method is selected."
 msgstr ""
-"Levenberg-Marquardt-algoritmen är en traditionellt relativt populär algoritm "
-"som presterar väldigt effektivt. Den hanterar dock inte gränser för "
-"anpassningsparametrarna."
+"En ofta använd algoritm som är effektiv för de flesta problem. Stöder inte "
+"parametergränser, minimum- och maximumfälten döljs när denna metod har valts."
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:68
-msgid "Trust Region"
-msgstr "Förtroenderegion"
+#: C/curve-fitting.page:156
+msgid "Trust Region Reflective"
+msgstr "Reflexiv förtroenderegion"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:69
+#: C/curve-fitting.page:157
 msgid ""
-"The Trust Region Reflective algorithm is well-suited for solving large "
-"problems with bounds. This method generally performs well for most cases and "
-"should probably be used for most cases."
+"Handles bounds well and performs reliably across a wide range of problems. A "
+"good default choice for most use cases."
 msgstr ""
-"Den reflexiva förtroenderegionsalgoritmen passar väl för att lösa stora "
-"problem med gränser. Denna metod presterar generellt bra i de flesta fall "
-"och bör troligen användas i de flesta fall."
+"Hanterar gränser bra och fungerar tillförlitligt på en stor uppsättning "
+"problem. Ett bra standardval för de flesta användningsfall."
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:72
+#: C/curve-fitting.page:160
 msgid "Dogbox"
 msgstr "Dogbox"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:73
+#: C/curve-fitting.page:161
 msgid ""
-"The Dogbox algorithm uses rectangular trust regions and typically works well "
-"with small problems involving bounds."
+"Uses rectangular trust regions and is well suited to smaller problems where "
+"bounds are required."
 msgstr ""
-"Dogbox-algoritmen använder rektangulära förtroenderegioner och fungerar "
-"vanligen bra med små problem som innefattar gränser."
+"Använder rektangulära förtroenderegioner och passar bra för mindre problem "
+"där gränser krävs."
 
 #. (itstool) path: page/title
+#: C/edit-item.page:7
+msgid "Editing Items"
+msgstr "Redigera objekt"
+
+#. (itstool) path: page/p
+#: C/edit-item.page:8
+msgid ""
+"Each item in the sidebar can be edited by clicking on it. The edit panel "
+"varies depending on the item type, but all items share a common set of "
+"properties at the top."
+msgstr ""
+"Varje objekt i sidopanelen kan redigeras genom att klicka på det. "
+"Redigeringspanelen varierar beroende på objekttypen, men alla objekt delar "
+"en gemensam uppsättning egenskaper högst upp."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:10
+msgid "Name and Position"
+msgstr "Namn och position"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:11
+msgid ""
+"All items have a name, which is shown in the legend and the sidebar, and can "
+"be changed freely. Note that the naming does support LaTeX notation with the "
+"help of dollar signs. So for instance $\\mu_0$ will provide the Greek letter "
+"μ with a 0 as subscript. Each item can also be assigned to a specific axis: "
+"the X position can be set to either the bottom or top axis, and the Y "
+"position to either the left or right axis. This allows multiple datasets "
+"with different scales to be displayed on the same figure."
+msgstr ""
+"Alla objekt har ett namn, vilket visas i förklaringen och sidopanelen, och "
+"kan ändras fritt. Observera att namngivandet stöder LaTeX-notation med hjälp "
+"av dollartecken. Så exempelvis kommer $\\mu_0$ ge den grekiska bokstaven μ "
+"med 0 som index. Varje objekt kan också tilldelas till en specifik axel: X-"
+"positionen kan ställas in till att antingen vara den lägre eller övre axeln, "
+"och Y-positionen till antingen vänster eller höger axel. Detta tillåter "
+"flera datamängder med olika skalor att visas på samma figur."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:14
+msgid "Datasets: Line and Markers"
+msgstr "Datamängder: Linje och markörer"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:15
+msgid ""
+"For datasets and generated datasets, the following appearance options are "
+"available:"
+msgstr ""
+"För datamängder och genererade datamängder finns följande utseendealternativ "
+"tillgängliga:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:18 C/edit-style.page:52
+msgid "Linestyle"
+msgstr "Linjestil"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:19
+msgid ""
+"The style of the line connecting data points. Options are None, Solid, "
+"Dotted, Dashed, and Dashdot. When set to None, no line is drawn between "
+"points."
+msgstr ""
+"Stilen på linjen som kopplar ihop datapunkter. Alternativ är Ingen, Hel, "
+"Prickad, Streckad och Streck-punkt. När den är satt till Ingen ritas ingen "
+"linje mellan punkter."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:22
+msgid "Linewidth"
+msgstr "Linjebredd"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:23
+msgid ""
+"The thickness of the line. Only enabled when a linestyle other than None is "
+"selected."
+msgstr ""
+"Tjockleken på linjen. Endast aktiverad när en annan linjestil än Ingen är "
+"vald."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:26 C/edit-style.page:60
+msgid "Markers"
+msgstr "Markörer"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:27
+msgid ""
+"The shape drawn at each data point. A wide range of marker shapes is "
+"available, including circles, squares, triangles, stars, diamonds, and more. "
+"Set to None to draw no markers."
+msgstr ""
+"Formen som ritas vid varje datapunkt. Ett brett utbud av markörformer finns "
+"tillgängliga, inklusive cirklar, kvadrater, stjärnor, diamanter med mera. "
+"Ställ in till Ingen för att inte rita några markörer."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:30 C/edit-style.page:64
+msgid "Marker Size"
+msgstr "Markörstorlek"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:31
+msgid ""
+"The size of the markers. Only enabled when a marker style other than None is "
+"selected."
+msgstr ""
+"Storleken på markörerna. Endast aktiverat då en annan markörstil än Ingen "
+"har valts."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:36
+msgid "Equations: Line and Equation"
+msgstr "Ekvationer: Linje och ekvation"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:37
+msgid ""
+"Equation items expose the equation itself for editing directly in the edit "
+"panel. A <em>Simplify</em> button is available to simplify the expression "
+"algebraically. The available line options are the same as for datasets, "
+"except that markers are not supported for equations."
+msgstr ""
+"Ekvationsobjekt exponerar själva ekvationen för redigering direkt i "
+"redigeringspanelen. En <em>Förenkla</em>-knapp finns för att förenkla "
+"uttrycket algebraiskt. De tillgängliga linjealternativen är desamma som för "
+"datamängder, förutom att markörer inte stöds för ekvationer."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:40
+msgid "Generated Data: Equation and Range"
+msgstr "Genererade data: Ekvation och intervall"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:41
+msgid ""
+"Generated datasets have the same options as regular datasets. Additionally, "
+"they expose the same equation field as equation items, along with controls "
+"for the X range and resolution. The <em>X Start</em> and <em>X Stop</em> "
+"fields define the bounds of the generated data. The <em>Steps</em> field "
+"controls how many data points are generated. The <em>Scale</em> setting "
+"determines the spacing between those points, with the following options "
+"available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, "
+"Square Root, and Inverse."
+msgstr ""
+"Genererade datamängder har samma alternativ som vanliga datamängder. De "
+"exponerar även samma ekvationsfält som ekvationsobjekt, tillsammans med "
+"kontroller för X-intervallet och X-upplösningen. Fälten <em>X-start</em> och "
+"<em>X-stopp</em> definierar gränserna för genererade data. Fältet <em>Steg</"
+"em> styr hur många datapunkter som genereras. Inställningen <em>Skala</em> "
+"avgör avståndet mellan dessa punkter, med följande tillgängliga alternativ: "
+"Linjär, Logaritmisk (bas 10), Logaritmisk (bas 2), Radianer, Kvadratrot och "
+"Inverterad."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:44 C/edit-style.page:70 C/import.page:45
+msgid "Error Bars"
+msgstr "Felstaplar"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:45
+msgid ""
+"For datasets that have error bar data, the appearance of the error bars can "
+"be configured in the <em>Error Bars</em> section:"
+msgstr ""
+"För datamängder som har felstapeldata kan utseendet för felstaplarna "
+"konfigureras i delen <em>Felstaplar</em>:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:48
+msgid "Show Horizontal / Show Vertical"
+msgstr "Visa horisontella / Visa vertikala"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:49
+msgid ""
+"Toggle the visibility of horizontal (X) and vertical (Y) error bars "
+"independently."
+msgstr ""
+"Växla synligheten för horisontella (X) och vertikala (Y) felstaplar "
+"oberoende av varandra."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:52 C/edit-style.page:86
+msgid "Draw Above Data"
+msgstr "Rita ovanför data"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:53 C/edit-style.page:87
+msgid ""
+"When enabled, error bars are drawn on top of the data line and markers "
+"rather than beneath them."
+msgstr ""
+"När aktiverad ritas felstaplar ovanpå datalinjen och markörer snarare än "
+"under dem."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:56
+msgid "Color"
+msgstr "Färg"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:57
+msgid "The color of the error bars, set independently from the line color."
+msgstr "Färgen på felstaplarna, ställs in oberoende av linjefärgen."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:60 C/edit-style.page:74
+msgid "Cap Length"
+msgstr "Ändpunktslängd"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:61 C/edit-style.page:75
+msgid "The length of the horizontal cap at the end of each error bar."
+msgstr "Längden på den horisontella ändpunkten i slutet på varje felstapel."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:64 C/edit-style.page:78
+msgid "Cap Thickness"
+msgstr "Ändpunktstjocklek"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:65 C/edit-style.page:79
+msgid "The thickness of the cap lines."
+msgstr "Tjockleken på ändpunktslinjerna."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:68 C/edit-style.page:56 C/edit-style.page:82
+msgid "Line Width"
+msgstr "Linjebredd"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:69 C/edit-style.page:83
+msgid "The thickness of the error bar lines."
+msgstr "Tjockleken på felstapellinjerna."
+
+#. (itstool) path: page/title
+#: C/edit-style.page:7
+msgid "Styles"
+msgstr "Stilar"
+
+#. (itstool) path: page/p
+#: C/edit-style.page:8
+msgid ""
+"Styles control the overall appearance of the plots, including colors, fonts, "
+"line widths, ticks, grid, and more. Graphs comes with a selection of built-"
+"in styles to choose from, and you can create and edit your own to get "
+"exactly the look you want."
+msgstr ""
+"Stilar styr det allmänna utseendet för diagrammen, inklusive färger, "
+"typsnitt, linjebredder, skalstreck, rutnät med mera. Graphs kommer med ett "
+"urval inbyggda stilar att välja bland, och du kan skapa och redigera dina "
+"egna för att få precis det utseende du vill ha."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:10
+msgid "Applying a Style"
+msgstr "Tillämpa en stil"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:11
+msgid ""
+"The active style is selected from the Figure Settings panel, accessible in "
+"the sidebar in the top corner. See <link xref=\"figure-settings\"/>for more "
+"information. In the Appearance section, the current style name is shown. "
+"Clicking it opens the style picker, which displays all available styles as "
+"previews. Click any style to apply it to the figure immediately. When "
+"switching styles, item colors, markers and line widths are automatically "
+"remapped to match the new style's color cycle. Any item properties that were "
+"changed previously, however, are preserved when changing styles."
+msgstr ""
+"Den aktiva stilen väljs från figurinställningspanelen, åtkomlig i "
+"sidopanelen i det övre hörnet. Se <link xref=\"figure-settings\"/>för mer "
+"information. I delen Utseende visas det aktuella stilnamnet. Att klicka på "
+"den öppnar stilväljaren, vilken visar alla tillgängliga stilar som "
+"förhandsvisningar. Klicka på en stil för att tillämpa den på figuren "
+"omedelbart. När stilar ändras mappas automatiskt objektfärger, markörer och "
+"linjebredder om så de matchar den nya stilens färgcykel. All "
+"objektegenskaper som ändrats tidigare bevaras dock vid ändring av stil."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:15
+msgid "Creating and Managing Styles"
+msgstr "Skapa och hantera stilar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:16
+msgid ""
+"To manage styles, press the <em>Manage</em> button on the style picker page, "
+"or open the Style Editor from the application menu. The Style Editor shows "
+"all available styles as previews."
+msgstr ""
+"Gör att hantera stilar, tryck på knappen <em>Hantera</em> på "
+"stilväljarsidan, eller öppna stilredigeraren från programmenyn. "
+"Stilredigeraren visar alla tillgängliga stilar som förhandsvisningar."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:17
+msgid ""
+"To create a new style, press <em>Create Style…</em>, choose an existing "
+"style as a starting template, and give it a name. Your new style opens in "
+"the editor immediately, ready to customize. Changes are shown automatically "
+"in the preview as you edit."
+msgstr ""
+"För att skapa en ny stil, tryck <em>Skapa stil…</em>, välj en befintlig stil "
+"som startmall, och ge den ett namn. Din nya stil öppnas omedelbart i "
+"redigeraren, färdig att anpassas. Ändringar visas automatiskt i "
+"förhandsvisningen medan du redigerar."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:20
+msgid "Importing and Exporting Styles"
+msgstr "Importera och exportera stilar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:21
+msgid ""
+"Custom styles can be shared and loaded by saving them to and loading them "
+"from files in the Style Editor. To save a style, simply open your custom "
+"style and choose <em>Save Style as…</em> from the primary menu. You can "
+"import new styles using <em>Import File…</em> in the Style Editor, or open "
+"new styles for editing using the <em>Open File…</em> option."
+msgstr ""
+"Anpassade stilar kan delas och läsas in genom att spara dem till och läsa in "
+"dem från filer i stilredigeraren. För att spara en stil öppnar du helt "
+"enkelt din anpassade stil och väljer <em>Spara stil som…</em> från "
+"primärmenyn. Du kan importera nya stilar med <em>Importera fil…</em> i "
+"stilredigeraren, eller öppna nya stilar för redigering med alternativet "
+"<em>Öppna fil…</em>."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:24
+msgid "Changing a Style"
+msgstr "Ändra en stil"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:25
+msgid "When changing a style, the following options can be set:"
+msgstr "När en stil ändras kan följande alternativ ställas in:"
+
+#. (itstool) path: section/title
+#: C/edit-style.page:27
+msgid "General"
+msgstr "Allmänt"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:30
+msgid "Style Name"
+msgstr "Stilnamn"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:31
+msgid "The name of the style as it appears in the style picker."
+msgstr "Namnet på stilen som den visas i stilväljaren."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:34
+msgid "Font"
+msgstr "Typsnitt"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:35
+msgid ""
+"The font used for all text in the figure, including axis labels, tick "
+"labels, the title, and the legend."
+msgstr ""
+"Typsnittet som används för all text i figuren, inklusive axeletiketter, "
+"skalstrecksetiketter, titeln och förklaringen."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:38
+msgid "Title Size"
+msgstr "Titelstorlek"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:39
+msgid "The size of the figure title relative to the base text size."
+msgstr "Storleken på figurtiteln relativt till bastextstorleken."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:42
+msgid "Label Size"
+msgstr "Etikettstorlek"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:43
+msgid "The size of axis labels relative to the base text size."
+msgstr "Storleken på axeletiketter relativt till bastextstorleken."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:48
+msgid "Lines"
+msgstr "Linjer"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:49
+msgid ""
+"These settings define the default appearance for new items. They can be "
+"overridden per item in the item editor."
+msgstr ""
+"Dessa inställningar definierar standardutseendet för nya objekt. De kan "
+"åsidosättas per objekt i objektredigeraren."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:53
+msgid ""
+"The default line style for new items: None, Solid, Dotted, Dashed, or "
+"Dashdot. Line width is only configurable when a style other than None is "
+"selected."
+msgstr ""
+"Standardlinjestilen för nya objekt: Ingen, Hel, Prickad, Streckad eller "
+"Streck-punkt. Linjebredd är endast konfigurerbar då en annan stil än Ingen "
+"har valts."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:57
+msgid "The default thickness of lines."
+msgstr "Standardtjockleken för linjer."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:61
+msgid ""
+"The default marker shape drawn at each data point. A wide range of shapes is "
+"available. Marker size is only configurable when a marker other than None is "
+"selected."
+msgstr ""
+"Standardmarkörformen som ritas vid varje datapunkt. Ett stort urval former "
+"finns tillgängliga. Markörstorleken är endast konfigurerbar när en annan "
+"markör än Ingen har valts."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:65
+msgid "The default size of markers."
+msgstr "Standardstorleken för markörer."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:71
+msgid ""
+"Default appearance settings for error bars, applied to new items. These can "
+"be overridden per item in the item editor."
+msgstr ""
+"Standardutseendeinställningar för felstaplar, tillämpade på nya objekt. De "
+"kan åsidosättas per objekt i objektredigeraren."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:92
+msgid "Axes"
+msgstr "Axlar"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:95
+msgid "Axis Width"
+msgstr "Axelbredd"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:96
+msgid "The thickness of the axis lines."
+msgstr "Tjockleken på axellinjerna."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:99
+msgid "Draw Frame"
+msgstr "Använd ram"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:100
+msgid ""
+"When enabled, a full rectangular frame is drawn around the plot area. When "
+"disabled, only the axes that are in use are shown."
+msgstr ""
+"När aktiverad ritas en fullständig rektangulär ram runt diagramområdet. När "
+"inaktiverat visas endast axlarna som används."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:105
+msgid "Ticks"
+msgstr "Skalstreck"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:108
+msgid "Tick Direction"
+msgstr "Skalstrecksriktning"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:109
+msgid "Whether tick marks point inwards or outwards."
+msgstr "Huruvida skalstreck pekar inåt eller utåt."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:112
+msgid "Minor Ticks"
+msgstr "Små skalstreck"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:113
+msgid ""
+"When enabled, minor tick marks are shown between the major ticks. Minor tick "
+"width and length become configurable when this is on."
+msgstr ""
+"När aktiverad visas små skalstreck mellan de stora skalstrecken. Bredd och "
+"längd för små skalstreck blir konfigurerbart när detta är på."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:116
+msgid "Major Tick Width / Length"
+msgstr "Längd / bredd på stora skalstreck"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:117
+msgid "The thickness and length of major tick marks."
+msgstr "Tjockleken och längden på stora skalstreck."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:120
+msgid "Minor Tick Width / Length"
+msgstr "Längd / bredd på små skalstreck"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:121
+msgid "The thickness and length of minor tick marks."
+msgstr "Tjockleken och längden på små skalstreck."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:124
+msgid "Show Tick Labels on all Axes"
+msgstr "Visa skalstrecksetiketter på alla axlar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:125
+msgid ""
+"When enabled, tick labels are shown on all visible axes with ticks rather "
+"than only the axes with data. To show tick labels on both sides of each "
+"axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
+msgstr ""
+"När aktiverad visas skalstrecksetiketter på alla synliga axlar med "
+"skalstreck snarare än bara på axlarna med data. För att visa "
+"skalstrecksetiketter på båda sidor om varje axel, se till att <em>Använd "
+"ram</em> är ikryssat så att axlarna ritas ut."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:128
+msgid "Ticks on Bottom / Top / Left / Right Axis"
+msgstr "Skalstreck på nedre / övre / vänster / höger axel"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:129
+msgid "Each axis can have its tick marks toggled on or off independently."
+msgstr ""
+"Varje axel kan ha sina skalstreck aktiverade eller inaktiverade oberoende av "
+"varandra."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:134
+msgid "Grid"
+msgstr "Rutnät"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:137
+msgid "Show Grid"
+msgstr "Visa rutnät"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:138
+msgid "Toggles the visibility of the background grid."
+msgstr "Växlar synligheten för bakgrundsrutnätet."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:141
+msgid "Grid Width"
+msgstr "Rutnätsbredd"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:142
+msgid ""
+"The thickness of grid lines. Only configurable when the grid is enabled."
+msgstr ""
+"Tjockleken på rutnätslinjer. Endast konfigurerbart då rutnätet är aktiverat."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:145
+msgid "Grid Opacity"
+msgstr "Rutnätsopacitet"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:146
+msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgstr ""
+"Transparensen på rutnätslinjer, från 0 (osynliga) till 1 (helt "
+"ogenomskinliga)."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:151
+msgid "Padding"
+msgstr "Utfyllnad"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:154
+msgid "Value Padding"
+msgstr "Värdemarginal"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:155
+msgid "The spacing between the axes and the tick value labels."
+msgstr "Avstånd mellan axlarna och skalstrecksetiketterna."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:158
+msgid "Label Padding"
+msgstr "Etikettmarginal"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:159
+msgid "The spacing between the axes and the axis labels."
+msgstr "Avstånd mellan axlarna och axeletiketterna."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:162
+msgid "Title Padding"
+msgstr "Titelmarginal"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:163
+msgid "The spacing between the plot area and the figure title."
+msgstr "Avstånd mellan diagramområdet och figurtiteln."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:168
+msgid "Colors"
+msgstr "Färger"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:169
+msgid ""
+"The following figure colors can each be set independently: Text, Ticks, "
+"Axes, Grid, Background, and Outline."
+msgstr ""
+"Följande figurfärger kan ställas in oberoende av varandra: Text, Skalstreck, "
+"Axlar, Rutnät, Bakgrund och Kontur."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:172
+msgid "Line Colors and Error Bar Colors"
+msgstr "Linjefärger och felstapelfärger"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:173
+msgid ""
+"The line color cycle defines the sequence of colors automatically assigned "
+"to new items as they are added to the figure. Colors can be added using the "
+"<em>Add Color</em> button, removed individually, and reordered by dragging. "
+"A separate color cycle is available for error bars."
+msgstr ""
+"Linjefärgcykeln definierar sekvensen av färger som automatiskt tilldelas "
+"till nya objekt då de läggs till i figuren. Färger kan läggas till med "
+"knappen <em>Lägg till färg</em>, tas bort individuellt, och få ändrad "
+"ordning genom att dra dem. En separat färgcykel finns tillgänglig för "
+"felstaplar."
+
+#. (itstool) path: page/title
+#: C/export.page:7
+msgid "Exporting"
+msgstr "Export"
+
+#. (itstool) path: page/p
+#: C/export.page:8
+msgid ""
+"Graphs can export both the figure as an image and the underlying data as "
+"files. Both options are available from the application menu."
+msgstr ""
+"Graphs kan exportera både figuren som en bild och underliggande data som "
+"filer. Båda alternativen finns tillgängliga från programmenyn."
+
+#. (itstool) path: section/title
+#: C/export.page:10
+msgid "Exporting the Figure"
+msgstr "Exportera figuren"
+
+#. (itstool) path: section/p
+#: C/export.page:11
+msgid ""
+"To export the figure as an image, open the application menu and choose "
+"<em>Export Figure…</em>. The export dialog offers the following options:"
+msgstr ""
+"För att exportera figuren som en bild, öppna programmenyn och välj "
+"<em>Exportera figur…</em>. Exportdialogen erbjuder följande alternativ:"
+
+#. (itstool) path: item/title
+#: C/export.page:14
+msgid "File Format"
+msgstr "Filformat"
+
+#. (itstool) path: item/p
+#: C/export.page:15
+msgid ""
+"The image format to export to. The following formats are supported: PNG, "
+"JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most "
+"purposes PNG is a good choice. SVG and PDF produce vector output that scales "
+"to any size without loss of quality, making them well suited for use in "
+"publications and presentations."
+msgstr ""
+"Bildformatet att exportera till. Följande format stöds: PNG, JPEG, WebP, "
+"SVG, PDF, Postscript och Encapsulated PostScript. För de flesta syften är "
+"PNG ett bra val. SVG och PDF producerar vektorutmatning som skalar till "
+"valfri storlek utan förlust av kvalitet, vilket gör dem lämpliga för "
+"användning i tryck och presentationer."
+
+#. (itstool) path: item/title
+#: C/export.page:18
+msgid "Transparent Background"
+msgstr "Transparent bakgrund"
+
+#. (itstool) path: item/p
+#: C/export.page:19
+msgid ""
+"When enabled, the figure background is exported as transparent rather than "
+"filled with the style's background color. This is useful when embedding the "
+"figure into a document or presentation with its own background."
+msgstr ""
+"När aktiverad exporteras figurbakgrunden som transparent snarare än fylld "
+"med stilens bakgrundsfärg. Detta är användbart vid inbäddning av figuren i "
+"ett dokument eller presentation med sin egen bakgrund."
+
+#. (itstool) path: item/title
+#: C/export.page:22
+msgid "Width and Height"
+msgstr "Bredd och höjd"
+
+#. (itstool) path: item/p
+#: C/export.page:23
+msgid ""
+"The pixel dimensions of the exported image, between 100 and 7680 pixels wide "
+"and 100 and 4320 pixels tall. Press <em>Use Same Size as App</em> to "
+"automatically fill in the current size of the canvas as it appears on screen."
+msgstr ""
+"Bildpunktsdimensionerna för den exporterade bilden, mellan 100 och 7680 "
+"bildpunkter bred samt 100 och 4320 bildpunkter hög. Tryck <em>Använd samma "
+"storlek som program</em> för att automatiskt fylla i den aktuella storleken "
+"på kanvasen som den visas på skärmen."
+
+#. (itstool) path: section/title
+#: C/export.page:29
+msgid "Exporting Data"
+msgstr "Exportera data"
+
+#. (itstool) path: section/p
+#: C/export.page:30
+msgid ""
+"To export the underlying dataset values to a file, open the application menu "
+"and choose <em>Export Data…</em>. This exports the current data for all "
+"items in the project."
+msgstr ""
+"För att exportera den underliggande datamängdens värden till en fil, öppna "
+"programmenyn och välj <em>Exportera data…</em>. Detta exporterar aktuella "
+"data för alla objekt i projektet."
+
+#. (itstool) path: page/title
+#. (itstool) path: section/title
+#: C/figure-settings.page:7 C/window.page:68
+msgid "Figure Settings"
+msgstr "Figurinställningar"
+
+#. (itstool) path: page/p
+#: C/figure-settings.page:8
+msgid ""
+"The Figure Settings panel controls the labels, axis limits, scaling, and "
+"general appearance of the figure. It can be opened by pressing the settings "
+"button in the top right of the sidebar. The current settings can be saved as "
+"the default for all new projects using the <em>Set as Default</em> button at "
+"the bottom of the panel."
+msgstr ""
+"Figurinställningspanelen styr etiketterna, axelgränserna, skalning och det "
+"allmänna utseendet hos figuren. Den kan öppnas genom att trycka på "
+"inställningsknappen i sidopanelens övre högra hörn. De aktuella "
+"inställningarna kan sparas som standard för alla nya projekt genom att "
+"använda knappen <em>Ange som standard</em> längst ner i panelen."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:10
+msgid "Labels"
+msgstr "Etiketter"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:11
+msgid ""
+"A title can be set for the figure, and a label can be set for each axis "
+"independently. Only the labels for axes that are currently in use are shown. "
+"Labels and the title can also be edited directly on the canvas by clicking "
+"on them."
+msgstr ""
+"En titel kan ställas in för figuren, och en etikett kan ställas in för varje "
+"axel oberoende av varandra. Endast etiketterna för axlar som används för "
+"tillfället visas. Etiketter och titeln kan också redigeras direkt på "
+"kanvasen genom att klicka på dem."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:14
+msgid "Axis Limits"
+msgstr "Axelgränser"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:15
+msgid ""
+"The minimum and maximum values for each axis can be set manually. Only the "
+"limits for axes that are currently in use are shown. Leaving a limit field "
+"empty allows Graphs to determine the range automatically based on the data. "
+"The view can also be reset to fit all data at any time using the "
+"<em>Optimize Limits</em> action."
+msgstr ""
+"Min- och maxvärdena för varje axel kan ställas in manuellt. Endast gränserna "
+"för axlar som används för tillfället visas. Att lämna ett gränsfält tomt "
+"låter Graphs avgöra intervallet automatiskt baserat på data. Vyn kan också "
+"återställas för att rymma alla data när som helst med åtgärden <em>Optimera "
+"gränserna</em>."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:18
+msgid "Scaling"
+msgstr "Skalning"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:19
+msgid "Each axis can be set to one of the following scales independently:"
+msgstr ""
+"Varje axel kan oberoende av varandra sättas till en av följande skalor:"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:23
+msgid "Equal spacing between values. The default scale for most data."
+msgstr "Lika utrymme mellan värden. Standardskalan för de flesta data."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:26
+msgid "Logarithmic (Base 10)"
+msgstr "Logaritmisk (bas 10)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:27
+msgid ""
+"Spacing based on powers of 10. Useful for data spanning several orders of "
+"magnitude."
+msgstr ""
+"Avstånd baserat på 10-potenser. Användbart för data som spänner över flera "
+"magnituder."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:30
+msgid "Logarithmic (Base 2)"
+msgstr "Logaritmisk (bas 2)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:31
+msgid "Spacing based on powers of 2."
+msgstr "Avstånd baserat på 2-potenser."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:34
+msgid "Radians"
+msgstr "Radianer"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:35
+msgid "Axis ticks are expressed as multiples of π."
+msgstr "Axelskalstreck uttrycks som multiplar av π."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:38
+msgid "Square Root"
+msgstr "Kvadratrot"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:39
+msgid "Spacing based on the square root of values."
+msgstr "Avstånd baserat på kvadratroten på värden."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:42
+msgid "Inverse"
+msgstr "Inverterad"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:43
+msgid "Spacing based on the reciprocal of values."
+msgstr "Avstånd baserat på inversen på värden."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:48
+msgid "Appearance"
+msgstr "Utseende"
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:51
+msgid "Show Legend"
+msgstr "Visa förklaring"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:52
+msgid ""
+"Toggles the visibility of the legend. When enabled, the legend position can "
+"be set to one of several locations on the figure, or left on Auto to let "
+"Graphs choose the least obstructive position."
+msgstr ""
+"Växlar synligheten för förklaringen. När aktiverad kan förklaringens "
+"position ställas in till en av flera platser på figuren, eller lämnas som "
+"Automatisk för att låta Graphs välja den minst störande positionen."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:55
+msgid "Hide Unselected Items"
+msgstr "Dölj omarkerade data"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:56
+msgid ""
+"When enabled, only items that are currently selected in the sidebar are "
+"shown on the canvas. This is useful for focusing on a subset of the data "
+"without deleting anything."
+msgstr ""
+"När aktiverad visas endast objekt som för närvarande är markerade i "
+"sidopanelen på kanvasen. Detta är användbart för att fokusera på en delmängd "
+"av data utan att ta bort något."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:59
+msgid "Style"
+msgstr "Stil"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:60
+msgid ""
+"Shows the currently active style and opens the style picker when clicked. "
+"See <link xref=\"edit-style\"/>for details on creating and editing styles."
+msgstr ""
+"Visar den för närvarande aktiva stilen och öppnar stilväljaren när den "
+"klickas på. Se <link xref=\"edit-style\"/>för detaljer om att skapa och "
+"redigera stilar."
+
+#. (itstool) path: page/title
+#: C/import.page:7
+msgid "Adding Data"
+msgstr "Lägga till data"
+
+#. (itstool) path: page/p
 #: C/import.page:8
-msgid "Importing Data"
-msgstr "Importera data"
+msgid "There are three different types of data items in Graphs:"
+msgstr "Det finns tre olika typer av dataobjekt i Graphs:"
 
-#. (itstool) path: page/p
-#: C/import.page:9
+#. (itstool) path: item/p
+#: C/import.page:11
 msgid ""
-"There are two primary ways to import new data in Graphs, importing data "
-"directly by file or generating new data using an equation."
+"<link xref=\"#dataset\"> <em>Dataset</em> </link>: Data imported from a file "
+"or database."
 msgstr ""
-"Det finns två primära sätt att importera nya data i Graphs, importera data "
-"direkt från fil eller generera nya data genom en ekvation."
+"<link xref=\"#dataset\"> <em>Datamängd</em> </link>: Data importerade från "
+"en fil eller databas."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:14
-msgctxt "_"
-msgid ""
-"external ref='media/add_data_light.png' "
-"md5='5246da95eb47c74c7488f9b9016dde3d'"
-msgstr ""
-"external ref='media/add_data_light.png' "
-"md5='5246da95eb47c74c7488f9b9016dde3d'"
-
-#. (itstool) path: page/p
+#. (itstool) path: item/p
 #: C/import.page:16
 msgid ""
-"A wide array of filetypes are supported when importing data by file. Graphs "
-"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
-"files that are saved in a column format such as most .csv files, .dat "
-"files, .xy files or plain text. Finally, data from other Graphs projects can "
-"be imported into the current project as well, simply by adding new data as "
-"usual, but by selecting a project file instead."
+"<link xref=\"#generated\"> <em>Generated Dataset</em> </link>: Data "
+"generated from an equation over a fixed set of points."
 msgstr ""
-"Ett brett utbud av filtyper stöds vid import av data från fil. Graphs har "
-"för närvarande stöd för Panalyticals .xrdm-filer, Leybolds .xry-filer såväl "
-"som filer som sparas i ett kolumnformat såsom de flesta .csv-filer, .dat-"
-"filer, .xy-filer eller klartext. Slutligen kan även data från andra Graphs-"
-"projekt importeras in i det aktuella projektet genom att helt enkelt lägga "
-"till nya data som vanligt, men välja en projektfil i stället."
+"<link xref=\"#generated\"> <em>Genererad datamängd</em> </link>: Data "
+"genererade från en ekvation över en fast uppsättning punkter."
 
-#. (itstool) path: page/p
-#: C/import.page:25
+#. (itstool) path: item/p
+#: C/import.page:21
 msgid ""
-"When using a custom delimiter during the import, an extra field will be "
-"visible to enter the delimiter of choice. This field recognizes regular "
-"expressions. For example, to choose a delimiter that looks for whitespace, "
-"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
-"code> denotes that the delimiter is a whitespace character, and the <code>+</"
-"code> denotes that at least one or more whitespace is required. Thus this "
-"input looks for any amount of whitespaces including tabs. Note that this "
-"particular input is equivalent to the default Whitespace option."
+"<link xref=\"#equation\"> <em>Equation</em> </link>: A mathematical "
+"expression rendered continuously across the entire canvas."
 msgstr ""
-"När en anpassad avskiljare används under importen kommer ett extra fält vara "
-"synligt för att ange den valda avskiljaren. Detta fält känner igen reguljära "
-"uttryck. För att exempelvis välja en avskiljare som söker blanksteg går det "
-"ange <code>\\s+</code> som avskiljare. I detta exempel betyder <code>\\s</"
-"code> att avskiljaren är ett tomrum, och <code>+</code> betyder att "
-"åtminstone ett eller flera tomrum krävs. Alltså söker denna inmatning "
-"godtycklig mängd blanksteg inklusive tabbar. Observera att denna specifika "
-"inmatning är ekvivalent med standardalternativet Tomrum."
+"<link xref=\"#equation\"> <em>Ekvation</em> </link>: Ett matematiskt uttryck "
+"kontinuerligt renderat över hela kanvasen."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:36
-msgctxt "_"
+#. (itstool) path: section/title
+#: C/import.page:27
+msgid "Dataset"
+msgstr "Datamängd"
+
+#. (itstool) path: section/p
+#: C/import.page:28
 msgid ""
-"external ref='media/add_equation_light.png' "
-"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+"A dataset is data imported from an external source. Graphs supports column-"
+"based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods "
+"and .xlsx), SQLite database files, Panalytical .xrdml files, and "
+"Leybold .xry files. Data from other Graphs projects can also be imported by "
+"selecting a project file."
 msgstr ""
-"external ref='media/add_equation_light.png' "
-"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+"En datamängd är data importerade från en extern källa. Graphs stöder "
+"kolumnbaserade filer (såsom .csv, .dat, .xy och klartext), kalkylblad (.ods "
+"och .xlsx), SQLite-databasfiler, Panalytical .xrdml-filer, och Leybold .xry-"
+"filer. Data från andra Graphs-projekt kan också importeras genom att markera "
+"en projektfil."
 
-# TODO: x coordinate/x-coordinate
-#. (itstool) path: page/p
+#. (itstool) path: section/p
+#: C/import.page:29
+msgid ""
+"To import data, press the <em>Add</em> button in the top left of the sidebar "
+"and choose <em>Add Data from File…</em>. Multiple files can be added in a "
+"single import session by using the add button in the top left of the import "
+"dialog. Each file appears in the sidebar of the dialog, where it can be "
+"selected to review and adjust its settings. Graphs will attempt to guess the "
+"appropriate settings for each file automatically. Once everything looks "
+"right, press <em>Import</em> to add all files to the project."
+msgstr ""
+"För att importera data, tryck på knappen <em>Lägg till</em> i sidopanelens "
+"övre högra hörn och välj <em>Lägg till data från fil…</em>. Flera filer kan "
+"läggas till i en enda importsession genom att använda Lägg till-knappen i "
+"importdialogens övre vänstra hörn. Varje fil visas i dialogens sidopanel, "
+"där den kan väljas för att granska och justera dess inställningar. Graphs "
+"kommer försöka gissa de lämpliga inställningarna för varje fil automatiskt. "
+"Tryck när allt ser rätt ut på <em>Importera</em> för att lägga till alla "
+"filerna till projektet."
+
+#. (itstool) path: section/p
+#: C/import.page:30
+msgid ""
+"The <em>Import Mode</em> determines how a file is parsed, and is set "
+"automatically based on the file type. The available modes are described "
+"below."
+msgstr ""
+"<em>Importläge</em> avgör hur en fil tolkas, och ställs in automatiskt "
+"baserat på filtypen. De tillgängliga lägena beskrivs nedan."
+
+#. (itstool) path: section/title
+#: C/import.page:32
+msgid "Column-based Files"
+msgstr "Kolumnbaserade filer"
+
+#. (itstool) path: section/p
+#: C/import.page:33
+msgid ""
+"Column-based files store data as rows of values separated by a delimiter "
+"such as a comma, tab, or whitespace. Graphs detects the delimiter "
+"automatically in most cases. When using a custom delimiter, an extra field "
+"appears where a delimiter of your choice can be entered. This field "
+"recognizes regular expressions. Using <code>\\s+</code> matches any amount "
+"of whitespace including tabs, for example, and is equivalent to the default "
+"Whitespace option."
+msgstr ""
+"Kolumnbaserade filer lagrar data som rader av värden separerade av en "
+"avgränsare såsom kommatecken, tabb, eller blanksteg. Graphs upptäcker "
+"avgränsaren automatiskt i de flesta fall. När en anpassad avgränsare används "
+"visas ett extra fält där din önskade avgränsare kan matas in. Detta fält "
+"känner igen reguljära uttryck. Att använda <code>\\s+</code> matchar "
+"exempelvis godtyckliga mängder av blanktecken inklusive tabbar, och är "
+"ekvivalent med standardalternativet Tomrum."
+
+#. (itstool) path: section/p
+#: C/import.page:34
+msgid ""
+"If a file only contains a single column of Y values, the <em>Single Column</"
+"em> option can be enabled to generate X values automatically from a "
+"configurable equation, where <code>n</code> represents the row index "
+"starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while "
+"<code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…"
+msgstr ""
+"Om en fil endast innehåller en enda kolumn med Y-värden kan alternativet "
+"<em>Ensam kolumn</em> aktiveras för att generera X-värden automatiskt från "
+"en konfigurerbar ekvation, där <code>n</code> representerar radindexet med "
+"start vid noll. Exempelvis producerar <code>n</code> 0, 1, 2, 3… medan "
+"<code>n*0.5</code> producerar 0, 0.5, 1.0, 1.5…"
+
+#. (itstool) path: section/title
+#: C/import.page:37
+msgid "Spreadsheets"
+msgstr "Kalkylblad"
+
+#. (itstool) path: section/p
 #: C/import.page:38
 msgid ""
-"The other way to import data is to generate data directly using an equation. "
-"This can be done using the \"Add Equation\" button found in the top-left "
-"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
-"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
-"quadratic equation could for instance be created using <code>x²+5</code> as "
-"input. Be aware that trigonometric functions are using radians by default. "
-"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
-"function. For instance <code>cosd(x)</code> generates a cosine where the x "
-"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
-"with the x-coordinate in radians."
+"Graphs supports importing data from .ods and .xlsx spreadsheet files. The X "
+"and Y columns are selected by their alphabetical column index, starting from "
+"zero. As with column-based files, the <em>Single Column</em> option can be "
+"used to generate X values automatically when only Y data is available. "
+"Multiple items can be configured from the same spreadsheet in a single "
+"import session by using the <em>Add Item</em> button, each with its own "
+"column selection."
 msgstr ""
-"Det andra sättet att importera data är att generera data direkt med en "
-"ekvation. Detta kan göras med knappen ”Lägg till ekvation” som hittas i det "
-"övre vänstra hörnet, genom att trycka ned <cmd>Ctrl+Alt+N</cmd>. Den flesta "
-"sorters vanlig syntax accepteras, med ett <code>x</code> för x-koordinaten. "
-"En enkel kvadratisk ekvation skulle exempelvis kunna skapas med <code>x²+5</"
-"code> som indata. Var uppmärksam på att trigonometriska funktioner använder "
-"radianer som standard. Om du vill använda grader lägger du helt enkelt till "
-"ett <code>d</code> till den trigonometriska funktionen. Exempelvis skapar "
-"<code>cosd(x)</code> cosinus där x-koordinaten ges i grader medan "
-"<code>cos(x)</code> skapar cosinus där x-koordinaten ges i radianer."
+"Graphs stöder import av data från .ods- och .xlsx-kalkylbladsfiler. X- och Y-"
+"kolumnerna väljs efter sitt alfabetiska kolumnindex, med start på noll. Som "
+"med kolumnbaserade filer kan alternativet <em>Ensam kolumn</em> användas för "
+"att generera X-värden automatiskt när endast Y-data finns tillgängligt. "
+"Flera objekt kan konfigureras från samma kalkylblad i en ensam importsession "
+"genom att använda knappen <em>Lägg till objekt</em>, vart och ett med sin "
+"egen kolumnmarkering."
+
+#. (itstool) path: section/title
+#: C/import.page:41
+msgid "Databases"
+msgstr "Databaser"
+
+#. (itstool) path: section/p
+#: C/import.page:42
+msgid ""
+"SQLite database files are also supported. When importing a database file, "
+"the available tables are shown in a dropdown. Once a table is selected, the "
+"X and Y columns can each be chosen from the numeric columns available in "
+"that table. If a table contains no numeric columns, a warning is shown."
+msgstr ""
+"SQLite-databasfiler stöds också. När en databasfil importeras visas de "
+"tillgängliga tabellerna i en rullgardinsmeny. När en tabell markerats kan X- "
+"och Y-kolumnerna var och en väljas från de numeriska kolumnerna som är "
+"tillgängliga i den tabellen. Om en tabell inte innehåller några numeriska "
+"kolumner visas en varning."
+
+#. (itstool) path: section/p
+#: C/import.page:46
+msgid ""
+"Datasets support optional X and Y error bars. For spreadsheet and database "
+"imports, error bars can be enabled per axis using the corresponding toggle, "
+"after which an additional column selector appears to specify which column "
+"contains the error values. Column-based file formats that natively include "
+"error bar data, such as .xrdml files, will have them imported automatically."
+msgstr ""
+"Datamängder stöder valfritt X- och Y-felstaplar. För kalkylblads- och "
+"databasimporter kan felstaplar aktiveras per axel med motsvarande "
+"växlingsknapp, efter vilken ytterligare en kolumnväljare visas för att ange "
+"vilken kolumn som innehåller felvärdena. Kolumnbaserade filformat som har "
+"felstapeldata inbyggt, som exempelvis .xrdml-files, kommer få dem "
+"importerade automatiskt."
+
+#. (itstool) path: section/p
+#: C/import.page:47
+msgid ""
+"Once imported, error bars are preserved through most operations. When "
+"combining multiple datasets, error bars are carried over only if all "
+"selected items have them in the output."
+msgstr ""
+"Då de importerats bevaras felstaplar genom de flesta operationer. Vid "
+"kombination av flera datamängder förs felstaplar endast över om alla "
+"markerade objekt har dem i utmatningen."
+
+#. (itstool) path: section/title
+#: C/import.page:51
+msgid "Generated Datasets"
+msgstr "Genererade datamängder"
+
+#. (itstool) path: section/p
+#: C/import.page:52
+msgid ""
+"Generated datasets create data by evaluating an equation over a range of X "
+"values. To add one, press the <em>Add</em> button in the sidebar and choose "
+"<em>Generate Data…</em>. The following parameters can be configured:"
+msgstr ""
+"Genererade datamängder skapar data genom att utvärdera en ekvation över ett "
+"intervall med X-värden. För att lägga till en, tryck på knappen <em>Lägg "
+"till</em> i sidopanelen och välj <em>Generera data…</em>. Följande "
+"parametrar kan konfigureras:"
+
+#. (itstool) path: item/title
+#. (itstool) path: section/title
+#: C/import.page:55 C/import.page:74
+msgid "Equation"
+msgstr "Ekvation"
+
+#. (itstool) path: item/p
+#: C/import.page:56
+msgid ""
+"The mathematical expression to evaluate, using <code>x</code> as the "
+"variable."
+msgstr ""
+"Det matematiska uttrycket att utvärdera, med <code>x</code> som variabeln."
+
+#. (itstool) path: item/title
+#: C/import.page:59
+msgid "X Start and X Stop"
+msgstr "X-start och X-stopp"
+
+#. (itstool) path: item/p
+#: C/import.page:60
+msgid "The lower and upper bounds of the x-range to generate data over."
+msgstr "De nedre och övre gränserna för x-intervallet att generera data över."
+
+#. (itstool) path: item/title
+#: C/import.page:63
+msgid "Steps"
+msgstr "Steg"
+
+#. (itstool) path: item/p
+#: C/import.page:64
+msgid "The number of data points to generate."
+msgstr "Antalet datapunkter att generera."
+
+#. (itstool) path: item/title
+#: C/import.page:67
+msgid "Scale"
+msgstr "Skala"
+
+#. (itstool) path: item/p
+#: C/import.page:68
+msgid ""
+"Determines the spacing between data points. Linear spacing places points at "
+"equal intervals. Other options such as Logarithmic, Square Root, and Inverse "
+"are useful when the data or the axis it will be plotted on follows a non-"
+"linear scale."
+msgstr ""
+"Avgör avståndet mellan datapunkter. Linjärt avstånd placerar punkter med "
+"lika stora intervall. Andra alternativ som Logaritmisk, Kvadratrot och "
+"Inverterad är användbara när data eller axeln de plottas mot följer en icke-"
+"linjär skala."
+
+#. (itstool) path: section/p
+#: C/import.page:71
+msgid ""
+"Generated datasets are treated the same as imported data for most purposes. "
+"However, unlike a regular dataset, the parameters used to generate the data "
+"can be changed at any time from the item editor, and the data will be "
+"regenerated accordingly."
+msgstr ""
+"Genererade datamängder behandlas på samma sätt som importerade data för de "
+"flesta syften. Till skillnad från en vanlig datamängd kan dock parametrarna "
+"som används för att generera data ändras när som helst från "
+"objektredigeraren, så kommer de data som finns regenereras enligt detta."
+
+#. (itstool) path: section/p
+#: C/import.page:75
+msgid ""
+"Equation items render a mathematical expression directly and continuously "
+"across the entire canvas. To add one, press the <em>Add</em> button in the "
+"sidebar and choose <em>Add Equation…</em>, or press <keyseq> <key>Ctrl</key> "
+"<key>Alt</key> <key>N</key> </keyseq>."
+msgstr ""
+"Ekvationsobjekt renderar ett matematiskt uttryck direkt och kontinuerligt "
+"över hela kanvasen. För att lägga till ett, tryck på knappen <em>Lägg till</"
+"em> i sidopanelen och välj <em>Lägg till ekvation…</em>, eller tryck "
+"<keyseq> <key>Ctrl</key> <key>Alt</key> <key>N</key> </keyseq>."
+
+#. (itstool) path: section/p
+#: C/import.page:82
+msgid ""
+"The expression uses <code>x</code> as the variable. Most commonly used "
+"mathematical syntax is accepted. For example, a simple quadratic can be "
+"entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or "
+"<code>1/(x+1)</code> work as expected. Trigonometric functions use radians "
+"by default. To use degrees instead, add a <code>d</code> to the function "
+"name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> "
+"uses radians."
+msgstr ""
+"Uttrycket använder <code>x</code> som variabeln. Den mesta vanligen använd "
+"matematisk syntax accepteras. Exempelvis kan en enkel andragradsfunktion "
+"anges som <code>x²+5</code>, och uttryck som <code>sin(x)*x</code> eller "
+"<code>1/(x+1)</code> fungerar som väntat. Trigonometriska funktioner "
+"använder radianer som standard. För att använda grader i stället, lägg till "
+"ett <code>d</code> till funktionsnamnet. Att använda <code>cosd(x)</code> "
+"kommer använda grader medan <code>cos(x)</code> använder radianer."
+
+#. (itstool) path: section/p
+#: C/import.page:83
+msgid ""
+"One important distinction between equation items and datasets is that "
+"operations are performed analytically rather than numerically. For instance, "
+"taking the derivative of <code>x²+5</code> produces the equation <code>2·x</"
+"code> rather than a set of numerically computed slope values."
+msgstr ""
+"En viktig skillnad mellan ekvationsobjekt och datamängder är att operationer "
+"utförs analytiskt snarare än numeriskt. Att exempelvis ta derivatan av "
+"<code>x²+5</code> producerar ekvationen <code>2·x</code> snarare än en "
+"uppsättning av numeriskt beräknade kurvvärden."
 
 #. (itstool) path: info/desc
-#: C/index.page:8
+#: C/index.page:5
 msgid "Plot and manipulate data"
 msgstr "Plotta och manipulera data"
 
 #. (itstool) path: page/title
-#: C/index.page:11
-msgid "<_:media-1/> Graphs"
-msgstr "<_:media-1/> Graphs"
+#: C/index.page:7
+msgid "<_:media-1/>Graphs"
+msgstr "<_:media-1/>Graphs"
+
+#. (itstool) path: page/p
+#: C/index.page:9
+msgid ""
+"Graphs is a GNOME Circle application for plotting and manipulating "
+"scientific data. Import datasets from files or sqlite database files, "
+"generate data from equations, apply mathematical operations, fit curves, and "
+"export publication-ready figures, all within a clean, native interface."
+msgstr ""
+"Graphs är ett GNOME Circle-program för att plotta och manipulera "
+"vetenskapliga data. Importera datamängder från filer eller sqlite-"
+"databasfiler, generera data från ekvationer, tillämpa matematiska "
+"operationer, anpassa kurvor, och exportera figurer redo att publiceras, allt "
+"inifrån ett rent, inbyggt gränssnitt."
+
+#. (itstool) path: page/p
+#: C/index.page:10
+msgid "Use the topics below to learn how to use Graphs."
+msgstr "Använd ämnena nedan för att lära dig använda Graphs."
 
 #. (itstool) path: section/title
-#: C/index.page:17
-msgid "How to"
-msgstr "Guider"
-
-#. (itstool) path: section/p
-#: C/index.page:18
-msgid ""
-"There's multiple how-to guides available for Graphs. These can be found here."
-msgstr ""
-"Det finns flera förklarande guider tillgängliga för Graphs. Dessa kan hittas "
-"här."
+#: C/index.page:12
+msgid "Topics"
+msgstr "Ämnen"
 
 #. (itstool) path: page/title
-#: C/manipulate.page:8
+#: C/manipulate.page:7
 msgid "Manipulating Data"
 msgstr "Manipulera data"
 
 #. (itstool) path: page/p
-#: C/manipulate.page:10
+#: C/manipulate.page:8
 msgid ""
-"There are many different ways to manipulate data using Graphs. All data is "
-"treated the same using Graphs, independent what file it is imported from, or "
-"if it's a generated equation. When selecting a part of the canvas using the "
-"Highlight tool, only the highlight area will be manipulated."
+"Graphs provides a wide range of operations for manipulating data. All "
+"operations work the same regardless of whether the item was imported from a "
+"file or generated from an equation. When a region of the canvas is selected "
+"using the Select tool, only data within that region will be affected."
 msgstr ""
-"Det finns många sätt att manipulera data med Graphs. Alla data behandlas på "
-"samma sätt med Graphs, oberoende av vilken fil de importerats från, eller om "
-"det är en genererad ekvation. Vid markering av en del av kanvasen med "
-"markeringsverktyget kommer endast den markerade ytan manipuleras."
+"Graphs tillhandahållare många operationer för att manipulera data. Alla "
+"operationer fungerar på samma sätt oberoende av om objektet importerats från "
+"en fil eller om det genereras från en ekvation. Vid markering av en region "
+"av kanvasen med markeringsverktyget kommer endast data i den regionen att "
+"påverkas."
 
-#. (itstool) path: section/title
-#: C/manipulate.page:18
-msgid "Smoothening"
-msgstr "Utjämning"
+#. (itstool) path: item/p
+#: C/manipulate.page:11
+msgid ""
+"<link xref=\"#translate\">Translate</link>: Shift data along the X or Y axis."
+msgstr ""
+"<link xref=\"#translate\">Förskjut</link>: Skifta data längs X- eller Y-"
+"axeln."
 
-#. (itstool) path: section/p
+#. (itstool) path: item/p
+#: C/manipulate.page:15
+msgid ""
+"<link xref=\"#multiply\">Multiply</link>: Scale data along the X or Y axis."
+msgstr ""
+"<link xref=\"#multiply\">Multiplicera</link>: Skala data längs X- eller Y-"
+"axeln."
+
+#. (itstool) path: item/p
 #: C/manipulate.page:19
 msgid ""
-"The smoothening action has two different modes, a rolling average or the "
-"Savitzky-Galov filter. The moving average simply works iterating through the "
-"data set, and replacing each point by the average of the last few data "
-"points that were encountered, this way sharp outliers are ignored but "
-"details may be lost. Sudden actual changes in the data may also be detected "
-"later when a smoothening has been applied. Another way to smoothen the data "
-"is the Savitzky-Galov. The difference with the moving average, is that not a "
-"simple average is used for the last data points, but instead a polynomial "
-"function is fitted between the data points. This makes it possible to filter "
-"the underlaying signal still quite nicely out of very noisy data."
+"<link xref=\"#normalize\">Normalize</link>: Scale Y values relative to the "
+"maximum."
 msgstr ""
-"Utjämningsåtgärden har två olika lägen, ett rullande medelvärde eller "
-"Savitzky-Galov-filtret. Det rullande medelvärdet itererar helt enkelt igenom "
-"datamängden och ersätter varje punkt med medelvärdet av de senaste "
-"datapunkterna som påträffades, så extrema värden ignoreras men detaljer kan "
-"gå förlorade. Plötsliga faktiska ändringar i data kan också upptäckas senare "
-"när en utjämning har tillämpats. Ett annat sätt att jämna ut data är "
-"Savitzky-Galov. Skillnaden mot det rullande medelvärdet är att det inte är "
-"ett enkelt medelvärde som används för de senaste datapunkterna, utan i "
-"stället anpassas en polynomfunktion mellan datapunkterna. Detta gör det "
-"möjligt att fortfarande filtrera den underliggande signalen rätt bra från "
-"data med mycket brus."
+"<link xref=\"#normalize\">Normalisera</link>: Skala Y-värden relativt till "
+"maxvärdet."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:23
+msgid ""
+"<link xref=\"#center\">Center</link>: Shift data so it is centered on the X "
+"axis."
+msgstr ""
+"<link xref=\"#center\">Centrera</link>: Skifta data så det centreras på X-"
+"axeln."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:27
+msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgstr ""
+"<link xref=\"#smoothening\">Jämna ut</link>: Reducera brus i en datamängd."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:31
+msgid "<link xref=\"#derivative\">Derivative</link>: Compute the derivative."
+msgstr "<link xref=\"#derivative\">Derivata</link>: Beräkna derivatan."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:35
+msgid ""
+"<link xref=\"#integral\">Integral</link>: Compute the cumulative integral."
+msgstr ""
+"<link xref=\"#integral\">Integral</link>: Beräkna den kumulativa integralen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:39
+msgid ""
+"<link xref=\"#fft\">Fourier Transform</link>: Transform data to the "
+"frequency domain."
+msgstr ""
+"<link xref=\"#fft\">Fouriertransform</link>: Transformera data till "
+"frekvensdomänen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:43
+msgid ""
+"<link xref=\"#combine\">Combine</link>: Merge multiple datasets into one."
+msgstr ""
+"<link xref=\"#combine\">Kombinera</link>: Slå samman flera datamängder till "
+"en."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:47
+msgid ""
+"<link xref=\"#shift\">Shift</link>: Automatically offset datasets so they do "
+"not overlap."
+msgstr ""
+"<link xref=\"#shift\">Skifta</link>: Förskjut automatiskt datamängder så de "
+"inte överlappar."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:51
+msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgstr ""
+"<link xref=\"#cut\">Klipp</link>: Ta bort data inom den markerade regionen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:55
+msgid ""
+"<link xref=\"#custom\">Custom Transformations</link>: Apply an arbitrary "
+"equation to the X and Y coordinates."
+msgstr ""
+"<link xref=\"#custom\">Anpassade transformationer</link>: Tillämpa en "
+"godtycklig ekvation på X- och Y-koordinaterna."
 
 #. (itstool) path: section/title
-#: C/manipulate.page:34
+#: C/manipulate.page:60
+msgid "Translate"
+msgstr "Förskjut"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:61
+msgid ""
+"Translates all selected data by a fixed offset along the X or Y axis. Enter "
+"the desired offset in the corresponding entry field and apply the operation."
+msgstr ""
+"Förskjuter alla markerade data med en fast förskjutning längs X- eller Y-"
+"axeln. Ange den önskade förskjutningen i motsvarande inmatningsfält och "
+"tillämpa operationen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:64
+msgid "Multiply"
+msgstr "Multiplicera"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:65
+msgid ""
+"Multiplies all selected data by a fixed factor along the X or Y axis. Enter "
+"the desired multiplier in the corresponding entry field and apply the "
+"operation."
+msgstr ""
+"Multiplicerar alla markerade data med en fast faktor längs X- eller Y-axeln. "
+"Ange den önskade multiplikatorn i motsvarande inmatningsfält och tillämpa "
+"operationen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:68
+msgid "Normalize"
+msgstr "Normalisera"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:69
+msgid ""
+"Scales the Y values of all selected data so that the maximum value becomes "
+"1. All other values are divided by that maximum accordingly."
+msgstr ""
+"Skalar Y-värdena för alla markerade data så att maxvärdet blir 1. Alla andra "
+"värden divideras med maxvärdet."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:72
+msgid "Center"
+msgstr "Centrera"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:73
+msgid ""
+"Shifts data along the X axis so that it is centered. Two modes are "
+"available: centering on the maximum Y value, which shifts the peak of the "
+"data to zero, and centering on the middle of the X range. The mode can be "
+"configured in the smoothen settings."
+msgstr ""
+"Skiftar data längs X-axeln så att det är centrerat. Två lägen är "
+"tillgängliga: centrering på det högsta Y-värdet, vilket skiftar toppen för "
+"data till noll, och centrering på mitten av X-intervallet. Läget kan "
+"konfigureras i utjämningsinställningarna."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:76
+msgid "Smoothen"
+msgstr "Jämna ut"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:77
+msgid ""
+"The smoothen operation reduces noise in a dataset. Two modes are available, "
+"configurable via the smoothen settings dialog."
+msgstr ""
+"Operationen Jämna ut reducerar brus i en datamängd. Två lägen är "
+"tillgängliga, konfigurerbara i utjämningsinställningsdialogen."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:78
+msgid ""
+"The Savitzky-Golay filter fits a polynomial through the surrounding data "
+"points rather than taking a simple average. This makes it possible to "
+"recover the underlying signal more faithfully from noisy data, and is the "
+"recommended choice in most cases."
+msgstr ""
+"Savitzky-Golay-filtret anpassar ett polynom genom kringliggande datapunkter "
+"snarare än att ta ett enkelt medelvärde. Detta gör det möjligt att mer "
+"troget återfå den underliggande signalen från brusiga data, och är det "
+"rekommenderade valet i de flesta fall."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:79
+msgid ""
+"The moving average replaces each point with the average of a surrounding "
+"window of points. This is simpler but may blur sharp features and cause "
+"changes in the data to appear shifted."
+msgstr ""
+"Det rörliga medelvärdet ersätter varje punkt med medelvärdet av ett "
+"omgivande fönster av punkter. Detta är enklare men kan göra skarpt innehåll "
+"oskarpt och orsaka förändringar i data så det verkar vara skiftat."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:82
+msgid "Derivative"
+msgstr "Derivata"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:83
+msgid ""
+"Computes the numerical derivative of the selected data, replacing the Y "
+"values with the rate of change with respect to X. For equations, the "
+"derivative is calculated analytically."
+msgstr ""
+"Beräknar den numeriska derivatan av valda data, och ersätter Y-värdena med "
+"förändringstakten med avseende på X. För ekvationer beräknas derivatan "
+"analytiskt."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:86
+msgid "Integral"
+msgstr "Integral"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:87
+msgid ""
+"Computes the cumulative integral of the selected data using the trapezoidal "
+"method, replacing the Y values with the running area under the curve. For "
+"equations, the integral is calculated analytically."
+msgstr ""
+"Beräknar den kumulativa integralen av valda data med trapetsmetoden, och "
+"ersätter Y-värdena med området som körs under kurvan. För ekvationer "
+"beräknas integralen analytiskt."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:90
+msgid "Fourier Transform"
+msgstr "Fouriertransform"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:91
+msgid ""
+"Transforms the selected data from the time or spatial domain into the "
+"frequency domain using the Fast Fourier Transform. An inverse transform is "
+"also available to convert back."
+msgstr ""
+"Transformerar markerade data från tids- eller rumsdomänen till "
+"frekvensdomänen med den snabba fouriertransformen (FFT). En invers transform "
+"är också tillgänglig för att konvertera tillbaka."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:94
+msgid "Combine"
+msgstr "Kombinera"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:95
+msgid ""
+"Merges all selected datasets into a single new dataset. The resulting data "
+"is sorted by X value. If all selected items have error bars, those are "
+"preserved in the combined output."
+msgstr ""
+"Slår samman alla markerade datamängder till en enda ny datamängd. "
+"Resulterande data sorteras efter X-värde. Om alla markerade objekt har "
+"felstaplar så bevaras dessa i den kombinerade utmatningen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:98
+msgid "Shift"
+msgstr "Skifta"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:99
+msgid ""
+"Automatically offsets each selected dataset along the Y axis so that the "
+"items are spread out and do not overlap one each other. The shift amount is "
+"calculated based on the range of each dataset and respects the current axis "
+"scale, including logarithmic scales."
+msgstr ""
+"Förskjuter automatiskt varje markerad datamängd längs Y-axeln så objekten "
+"sprids ut och inte överlappar varandra. Skiftningsmängden beräknas baserat "
+"på intervallet för varje datamängd och respekterar aktuell axelskala, "
+"inklusive logaritmiska skalor."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:102
+msgid "Cut"
+msgstr "Klipp"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:103
+msgid ""
+"Removes all data points within the currently selected region. This operation "
+"requires the Select tool to be active and a region to be highlighted on the "
+"canvas."
+msgstr ""
+"Tar bort alla datapunkter i den för närvarande markerade regionen. Denna "
+"operation kräver att markeringsverktyget är aktivt och att en region är "
+"markerad på kanvasen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:106
 msgid "Custom Transformations"
 msgstr "Anpassade transformationer"
 
 #. (itstool) path: section/p
-#: C/manipulate.page:35
+#: C/manipulate.page:107
 msgid ""
-"Another way to manipulate the data is by using custom transformations. This "
-"field transforms both X and Y coordinate piece by piece according to an "
-"equation of choice. For instance, to take the square of all Y-coordinates, "
-"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
-"on the x-data field. Note that the input coordinates are not case-sensitive."
+"Custom transformations let you modify the X and Y coordinates of a dataset "
+"point by point using equations of your choice. For instance, to square all Y "
+"values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code> "
+"in the X field. Coordinate names are not case-sensitive."
 msgstr ""
-"Ett annat sätt att manipulera data är genom att använda anpassade "
-"transformationer. Detta fält transformerar både X- och Y-koordinater bit för "
-"bit enligt en vald ekvation. För att exempelvis ta kvadraten av alla Y-"
-"koordinater ställer du helt enkelt in <code>Y = Y²</code> på y-datafältet, "
-"och <code>X = X</code> på x-datafältet. Observera att indatakoordinaterna "
-"inte är skiftlägeskänsliga."
+"Anpassade transformationer låter dig ändra X- och Y-koordinater för en "
+"datamängd bit för bit enligt ekvationer du väljer. För att exempelvis ta "
+"kvadraten av alla Y-värden ställer du helt enkelt in <code>Y = Y²</code> i Y-"
+"fältet och lämnar <code>X = X</code> i X-fältet. Koordinatnamn är inte "
+"skiftlägeskänsliga."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/manipulate.page:42
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/manipulate.page:109
 msgid ""
-"external ref='media/custom_transform_light.png' "
-"md5='311f5286f3372e5fea1431dd6a63d666'"
+"<b>The following extra variables are available for custom transformations:</"
+"b>"
 msgstr ""
-"external ref='media/custom_transform_light.png' "
-"md5='311f5286f3372e5fea1431dd6a63d666'"
+"<b>Följande extra variabler finns tillgängliga för anpassade "
+"transformationer:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:111
+msgid "<b>General:</b>"
+msgstr "<b>Allmänt:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:113
+msgid "<code>x</code>, <code>y</code>: original coordinate values"
+msgstr "<code>x</code>, <code>y</code>: ursprungliga koordinatvärden"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:114
+msgid "<code>counts</code>: total number of data points"
+msgstr "<code>counts</code>: totala antalet datapunkter"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:115
+msgid "<b>X-Axis:</b>"
+msgstr "<b>X-Axel:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:117
+msgid "<code>x_min</code>, <code>x_max</code>: minimum and maximum"
+msgstr "<code>x_min</code>, <code>x_max</code>: minimum och maximum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:118
+msgid "<code>x_mean</code>, <code>x_median</code>: average and median"
+msgstr "<code>x_mean</code>, <code>x_median</code>: medelvärde och median"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:119
+msgid "<code>x_std</code>, <code>x_sum</code>: standard deviation and sum"
+msgstr "<code>x_std</code>, <code>x_sum</code>: standardavvikelse och summa"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:120
+msgid "<b>Y-Axis:</b>"
+msgstr "<b>Y-Axel:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:122
+msgid "<code>y_min</code>, <code>y_max</code>: minimum and maximum"
+msgstr "<code>y_min</code>, <code>y_max</code>: minimum och maximum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:123
+msgid "<code>y_mean</code>, <code>y_median</code>: average and median"
+msgstr "<code>y_mean</code>, <code>y_median</code>: medelvärde och median"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:124
+msgid "<code>y_std</code>, <code>y_sum</code>: standard deviation and sum"
+msgstr "<code>y_std</code>, <code>y_sum</code>: standardavvikelse och summa"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:125
+msgid ""
+"Trigonometric functions use radians by default. Append <b>d</b> to use "
+"degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>."
+msgstr ""
+"Trigonometriska funktioner använder radianer som standard. Lägg till <b>d</"
+"b> för att använda grader, t.ex. <code>sind(x)</code> eller <code>cosd(x)</"
+"code>."
+
+#. (itstool) path: page/title
+#: C/projects.page:7
+msgid "Projects"
+msgstr "Projekt"
+
+#. (itstool) path: page/p
+#: C/projects.page:8
+msgid ""
+"A Graphs project file saves the complete state of your work so you can close "
+"it and pick up exactly where you left off. All project actions are available "
+"from the application menu."
+msgstr ""
+"En Graphs-projektfil sparar det fullständiga tillståndet för ditt arbete så "
+"du kan stänga det och fortsätta precis där du lämnade det. Alla "
+"projektåtgärder finns tillgängliga från programmenyn."
+
+#. (itstool) path: section/title
+#: C/projects.page:10
+msgid "What Is Saved"
+msgstr "Vad sparas"
+
+#. (itstool) path: section/p
+#: C/projects.page:11
+msgid ""
+"A project file preserves everything about the current session: all items and "
+"their data and appearance settings, all figure settings including labels, "
+"axis scales and limits, legend configuration, and the active style. The full "
+"undo and redo history is also saved, so you can continue undoing changes "
+"after reopening a project. The view history is saved as well."
+msgstr ""
+"En projektfil bevarar allt om den aktuella sessionen: alla objekt och deras "
+"data och utseendeinställningar, alla figurinställningar inklusive etiketter, "
+"axelskalor och gränser, förklaringskonfiguration och den aktiva stilen. Den "
+"fullständiga ångra- och gör om-historiken sparas också, så du kan fortsätta "
+"ångra ändringar efter att du öppnat ett projekt på nytt. Vyhistoriken sparas "
+"också."
+
+#. (itstool) path: section/title
+#: C/projects.page:14
+msgid "Saving a Project"
+msgstr "Spara ett projekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:15
+msgid ""
+"To save the current project, choose <em>Save Project…</em> from the "
+"application menu. If the project has been saved before, <em>Save Project…</"
+"em> overwrites the existing file. To save a copy under a different name or "
+"location, use <em>Save Project As…</em>."
+msgstr ""
+"För att spara det aktuella projektet, välj <em>Spara projekt…</em> från "
+"programmenyn. Om projektet har sparats förut så skriver <em>Spara projekt…</"
+"em> över den befintliga filen. För att spara en kopia under ett annat namn "
+"eller på en annan plats, använd <em>Spara projekt som…</em>."
+
+#. (itstool) path: section/title
+#: C/projects.page:18
+msgid "Opening a Project"
+msgstr "Öppna ett projekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:19
+msgid ""
+"To open a previously saved project, choose <em>Open Project…</em> from the "
+"application menu and select the project file. The project opens in the "
+"current window, replacing whatever was there before. To work on two projects "
+"at the same time, open a new window first using <em>New Project</em>, then "
+"open the second project there."
+msgstr ""
+"För att öppna ett tidigare sparat projekt, välj <em>Öppna projekt…</em> från "
+"programmenyn och välj projektfilen. Projektet öppnas i det aktuella fönstret "
+"och ersätter vadhelst som var där innan. För att arbeta på två projekt "
+"samtidigt, öppna först ett nytt fönster med <em>Nytt projekt</em>, öppna "
+"sedan det andra projektet där."
+
+#. (itstool) path: section/p
+#: C/projects.page:20
+msgid ""
+"A project file can also be imported as data into an existing project by "
+"using <em>Add Data from File…</em> and selecting the project file. This adds "
+"the items from the saved project into the current one without replacing "
+"anything."
+msgstr ""
+"En projektfil kan också importeras som data in i ett befintligt projekt "
+"genom att använda <em>Lägg till data från fil…</em> och välja projektfilen. "
+"Detta lägger till objekten från det sparade projektet i det aktuella utan "
+"att ersätta något."
+
+#. (itstool) path: section/title
+#: C/projects.page:23
+msgid "Closing a Project"
+msgstr "Stänga ett projekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:24
+msgid ""
+"To close the current project and return to an empty state, choose <em>Close "
+"Project</em> from the application menu."
+msgstr ""
+"För att stänga det aktuella projektet och återgå till ett tomt tillstånd, "
+"välj <em>Stäng projekt</em> från programmenyn."
+
+#. (itstool) path: section/title
+#: C/projects.page:28
+msgid "Version Compatibility"
+msgstr "Versionskompatibilitet"
+
+#. (itstool) path: section/p
+#: C/projects.page:29
+msgid ""
+"Project files saved by older versions of Graphs are automatically migrated "
+"when opened. Projects saved by a newer incompatible version of Graphs cannot "
+"be opened in an older version."
+msgstr ""
+"Projektfiler som sparats av äldre versioner av Graphs migreras automatiskt "
+"då de öppnas. Projekt som sparats av en nyare, inkompatibel version av "
+"Graphs kan inte öppnas i en äldre version."
+
+#. (itstool) path: page/title
+#: C/window.page:7
+msgid "Main Window"
+msgstr "Huvudfönster"
+
+#. (itstool) path: page/p
+#: C/window.page:8
+msgid ""
+"The Graphs main window is split into two areas: a sidebar on the left "
+"containing the item list and controls, and a canvas on the right where the "
+"figure is displayed."
+msgstr ""
+"Graphs huvudfönster är uppdelat i två områden: en sidopanel till vänster som "
+"innehåller objektlistan och kontrollerna, och en kanvas till höger där "
+"figuren visas."
+
+#. (itstool) path: section/title
+#: C/window.page:10
+msgid "Sidebar"
+msgstr "Sidopanel"
+
+#. (itstool) path: section/p
+#: C/window.page:11
+msgid ""
+"The sidebar contains everything related to managing items and interacting "
+"with the figure."
+msgstr ""
+"Sidopanelen innehåller allt som är relaterat till att hantera objekt och att "
+"interagera med figuren."
+
+#. (itstool) path: section/title
+#: C/window.page:13
+msgid "Header buttons"
+msgstr "Rubrikknappar"
+
+#. (itstool) path: section/p
+#: C/window.page:14
+msgid ""
+"At the top of the sidebar, we have the header with a button to add data, a "
+"button to open the figure settings, and a button with the primary menu. At "
+"the top, the <em>Add</em> button opens a menu with three options:"
+msgstr ""
+"Högst upp i sidopanelen har vi rubriken med en knapp för att lägga till "
+"data, en knapp för att öppna figurinställningarna, och en knapp med "
+"primärmenyn. Högst upp öppnar knappen <em>Lägg till</em> en meny med tre "
+"alternativ:"
+
+#. (itstool) path: item/title
+#: C/window.page:17
+msgid "Add Data from File…"
+msgstr "Lägg till data från fil…"
+
+#. (itstool) path: item/p
+#: C/window.page:18
+msgid ""
+"Opens the import dialog to load a dataset from a file or database. See <link "
+"xref=\"import\"/>for details on the supported formats and import options."
+msgstr ""
+"Öppnar importdialogen för att läsa in en datamängd från en fil eller "
+"databas. Se <link xref=\"import\"/>för detaljer om formaten och "
+"importalternativen som stöds."
+
+#. (itstool) path: item/title
+#: C/window.page:22
+msgid "Add Equation…"
+msgstr "Lägg till ekvation…"
+
+#. (itstool) path: item/p
+#: C/window.page:23
+msgid ""
+"Opens a dialog to add a new equation item, rendered continuously on the "
+"canvas."
+msgstr ""
+"Öppnar en dialog för att lägga till ett nytt ekvationsobjekt, renderat "
+"kontinuerligt över kanvasen."
+
+#. (itstool) path: item/title
+#: C/window.page:26
+msgid "Generate Data…"
+msgstr "Generera data…"
+
+#. (itstool) path: item/p
+#: C/window.page:27
+msgid ""
+"Opens a dialog to generate a fixed dataset from an equation over a "
+"configurable x-range."
+msgstr ""
+"Öppnar en dialog för att generera en fast datamängd från en ekvation över "
+"ett konfigurerbart x-intervall."
+
+#. (itstool) path: section/title
+#: C/window.page:32
+msgid "Primary Menu"
+msgstr "Primärmeny"
+
+#. (itstool) path: section/p
+#: C/window.page:33
+msgid ""
+"The primary menu in the top right provides access to some general options:"
+msgstr ""
+"Primärmenyn längst upp till höger ger åtkomst till några allmänna alternativ:"
+
+#. (itstool) path: item/title
+#: C/window.page:36
+msgid "New Project"
+msgstr "Nytt projekt"
+
+#. (itstool) path: item/p
+#: C/window.page:37
+msgid "Opens a new empty project in a new window."
+msgstr "Öppnar ett nytt tomt projekt i ett nytt fönster."
+
+#. (itstool) path: item/title
+#: C/window.page:40
+msgid "Save Project / Save Project As…"
+msgstr "Spara projekt / Spara projekt som…"
+
+#. (itstool) path: item/p
+#: C/window.page:41
+msgid ""
+"Saves the current project to a file, preserving all items, figure settings, "
+"and the full undo and view history."
+msgstr ""
+"Sparar det aktuella projektet till en fil, bevarar alla objekt, "
+"figurinställningar, och den fullständiga ångra- och vyhistoriken."
+
+#. (itstool) path: item/title
+#: C/window.page:44
+msgid "Open Project…"
+msgstr "Öppna projekt…"
+
+#. (itstool) path: item/p
+#: C/window.page:45
+msgid "Opens a previously saved project file."
+msgstr "Öppnar en tidigare sparad projektfil."
+
+#. (itstool) path: item/title
+#: C/window.page:48
+msgid "Close Project"
+msgstr "Stäng projekt"
+
+#. (itstool) path: item/p
+#: C/window.page:49
+msgid "Closes the current project and returns to an empty state."
+msgstr "Stänger det aktuella projektet och återvänder till ett tomt tillstånd."
+
+#. (itstool) path: item/title
+#: C/window.page:52
+msgid "Export Data…"
+msgstr "Exportera data…"
+
+#. (itstool) path: item/p
+#: C/window.page:53
+msgid "Exports the current datasets to a file."
+msgstr "Exporterar aktuella datamängder till en fil."
+
+#. (itstool) path: item/title
+#: C/window.page:56
+msgid "Export Figure…"
+msgstr "Exportera figur…"
+
+#. (itstool) path: item/p
+#: C/window.page:57
+msgid "Exports the figure as an image."
+msgstr "Exporterar figuren som en bild."
+
+#. (itstool) path: item/title
+#: C/window.page:60
+msgid "Style Editor"
+msgstr "Stilredigerare"
+
+#. (itstool) path: item/p
+#: C/window.page:61
+msgid ""
+"Opens the style editor window. See <link xref=\"edit-style\"/>for details."
+msgstr ""
+"Öppnar stilredigerarfönstret. Se <link xref=\"edit-style\"/>för detaljer."
+
+#. (itstool) path: section/p
+#: C/window.page:66
+msgid ""
+"The item list shows all items currently in the project. Each item can be "
+"selected or deselected by clicking the checkbox next to it. Only selected "
+"items are affected by data operations. Clicking the item name opens the edit "
+"panel for that item. Items can be deleted, and their order can be changed by "
+"dragging."
+msgstr ""
+"Objektlistan visar alla objekt som för närvarande finns i projektet. Varje "
+"objekt kan markeras eller avmarkeras genom att klicka på kryssrutan intill "
+"det. Endast markerade objekt påverkas av dataoperationer. Att klicka på "
+"objektnamnet öppnar redigeringspanelen för det objektet. Objekt kan tas "
+"bort, och deras ordning kan ändras genom att dra dem."
+
+#. (itstool) path: section/p
+#: C/window.page:69
+msgid ""
+"The figure settings button in the top right of the sidebar opens the Figure "
+"Settings panel, where the figure title, axis labels, axis limits, axis "
+"scales, legend visibility and position, and the active style can all be "
+"configured. Axis labels and limits are only shown for the axes that are "
+"currently in use. The current figure settings can be saved as the default "
+"for new projects using the <em>Set as Default</em> button at the bottom of "
+"the panel."
+msgstr ""
+"Figurinställningsknappen i sidopanelens övre högra hörn öppnar "
+"figurinställningspanelen, där figurtiteln, axeletiketter, axelgränser, "
+"axelskalor, synlighet och position för förklaring, samt den aktiva stilen "
+"alla kan konfigureras. Etiketter och gränser för axlar visas bara för "
+"axlarna som används för närvarande. De aktuella figurinställningarna kan "
+"sparas som standardvärdet för nya projekt med knappen <em>Ställ in som "
+"standard</em> längst ner i panelen."
+
+#. (itstool) path: section/title
+#: C/window.page:72
+msgid "Canvas Modes"
+msgstr "Kanvaslägen"
+
+#. (itstool) path: section/p
+#: C/window.page:73
+msgid "Below the item list, three canvas interaction modes are available:"
+msgstr "Under objektlistan finns tre lägen för kanvasinteraktion tillgängliga:"
+
+#. (itstool) path: item/title
+#: C/window.page:76
+msgid "Pan"
+msgstr "Panorera"
+
+#. (itstool) path: item/p
+#: C/window.page:77
+msgid "Click and drag on the canvas to pan the view. This is the default mode."
+msgstr ""
+"Klicka och dra på kanvasen för att panorera vyn. Detta är standardläget."
+
+#. (itstool) path: item/title
+#: C/window.page:80
+msgid "Zoom"
+msgstr "Zooma"
+
+#. (itstool) path: item/p
+#: C/window.page:81
+msgid ""
+"Click and drag to draw a rectangle on the canvas to zoom into that area."
+msgstr ""
+"Klicka och dra för att rita en rektangel på kanvasen och zooma in på det "
+"området."
+
+#. (itstool) path: item/title
+#: C/window.page:84
+msgid "Select"
+msgstr "Markera"
+
+#. (itstool) path: item/p
+#: C/window.page:85
+msgid ""
+"Click and drag to highlight a region of the data. Data operations will only "
+"affect the data within the highlighted area when this mode is active."
+msgstr ""
+"Klicka och dra för att markera en dataregion. Dataoperationer kommer endast "
+"påverka data inom det markerade området när detta läge är aktivt."
+
+#. (itstool) path: section/title
+#: C/window.page:90
+msgid "Operations"
+msgstr "Operationer"
+
+#. (itstool) path: section/p
+#: C/window.page:91
+msgid ""
+"Below the canvas mode buttons, the operations panel provides quick access to "
+"all data manipulation actions. These act on all selected items. See <link "
+"xref=\"manipulate\"/>for a full description of each operation."
+msgstr ""
+"Under kanvaslägeknapparna ger operationspanelen snabb åtkomst till alla "
+"åtgärder för datamanipulation. Dessa agerar på alla markerade objekt. Se "
+"<link xref=\"manipulate\"/>för en fullständig beskrivning av varje operation."
+
+#. (itstool) path: section/title
+#: C/window.page:96
+msgid "Canvas"
+msgstr "Kanvas"
+
+#. (itstool) path: section/p
+#: C/window.page:97
+msgid ""
+"The canvas shows the plot containing all active items. Clicking once on the "
+"label, limits or opens the Figure Settings, focused on the clicked item, "
+"allowing for quick adjustments."
+msgstr ""
+"Kanvasen visar diagrammet som innehåller alla aktiva objekt. Att klicka en "
+"gång på etiketten begränsar eller öppnar figurinställningarna, fokuserade på "
+"det klickade objektet, vilket tillåter snabba justeringar."
+
+#. (itstool) path: section/p
+#: C/window.page:98
+msgid ""
+"On the top left we have the undo and redo button. On the top right of the "
+"canvas there's the view buttons. The back-arrow moves you to the previous "
+"view after having changed the limits while the forward-arrow moves you to "
+"the next view after having clicked the back-arrow. Finally the Optimize "
+"Limits button will try and adjust the limits automatically to fit all "
+"visible items in the canvas. For equations, only the y-range is taken into "
+"account, as the x-data spans an infinite range."
+msgstr ""
+"Längst upp till vänster har vi knappen för ångra och gör om. Längst upp till "
+"höger på kanvasen finns vyknapparna. Bakåtpilen tar dig till föregående vy "
+"efter att ha ändrat gränserna medan framåtpilen flyttar dig till nästa vy "
+"efter att ha klickat på bakåtpilen. Slutligen kommer knappen Optimera "
+"gränser försöka justera gränserna automatiskt för att anpassa alla synliga "
+"objekt i kanvasen. För ekvationer tas endast y-intervallet i beaktande, då x-"
+"data spänner över ett oändligt intervall."
 
 #. (itstool) path: p/link
 #: C/legal.xml:3
@@ -408,6 +2684,6 @@ msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
 msgstr "Creative Commons Erkännande-DelaLika 4.0 Internationell"
 
 #. (itstool) path: license/p
-#: C/legal.xml:3
+#: C/legal.xml:2
 msgid "This work is licensed under a <_:link-1/>."
 msgstr "Det här verket är licensierat under licensen <_:link-1/>."
