@@ -2,14 +2,14 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Vincent Chatelain <vinchatl_gnome@proton.me>, 2024.
-# Jean-Marc Tissières <jmetissieres@gmail.com>, 2025.
+# Jean-Marc Tissières <jmetissieres@gmail.com>, 2025-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-03-20 13:40+0000\n"
-"PO-Revision-Date: 2025-11-26 17:21+0100\n"
+"POT-Creation-Date: 2026-04-29 17:28+0000\n"
+"PO-Revision-Date: 2026-05-06 18:18+0200\n"
 "Last-Translator: Jean-Marc Tissières <jmetissieres@gmail.com>\n"
 "Language-Team: French <gnomefr@traduc.org>\n"
 "Language: fr\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
@@ -113,6 +113,7 @@ msgid "New Window"
 msgstr "Nouvelle fenêtre"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Éditeur de style"
 
@@ -241,7 +242,7 @@ msgstr "Colonne Y"
 
 #: data/ui/import/columns/item-group.blp:51
 msgid "Y Values Only"
-msgstr ""
+msgstr "Valeurs Y uniquement"
 
 #: data/ui/import/columns/item-group.blp:52
 #: data/ui/import/spreadsheet/item-group.blp:52
@@ -250,7 +251,7 @@ msgstr "Importation des valeurs Y seulement, les valeurs X sont générées"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:101
+#: graphs/item.vala:229
 msgid "Equation"
 msgstr "Équation"
 
@@ -291,29 +292,25 @@ msgstr ""
 #: data/ui/import/sql/main-group.blp:28
 #: data/ui/import/spreadsheet/item-group.blp:91
 msgid "X Error Bars"
-msgstr ""
+msgstr "Barres d’erreur X"
 
 #: data/ui/import/columns/item-group.blp:95
 #: data/ui/import/sql/main-group.blp:33
 #: data/ui/import/spreadsheet/item-group.blp:95
 msgid "Y Error Bars"
-msgstr ""
+msgstr "Barres d’erreur Y"
 
 #: data/ui/import/columns/item-group.blp:108
 #: data/ui/import/sql/main-group.blp:40
 #: data/ui/import/spreadsheet/item-group.blp:108
-#, fuzzy
-#| msgid "X Column"
 msgid "X Error Column"
-msgstr "Colonne X"
+msgstr "Colonne d’erreur X"
 
 #: data/ui/import/columns/item-group.blp:120
 #: data/ui/import/sql/main-group.blp:46
 #: data/ui/import/spreadsheet/item-group.blp:120
-#, fuzzy
-#| msgid "Y Column"
 msgid "Y Error Column"
-msgstr "Colonne Y"
+msgstr "Colonne d’erreur Y"
 
 #: data/ui/import/columns/main-group.blp:5
 msgid "Format"
@@ -402,19 +399,19 @@ msgstr "Colonne Y"
 
 #: data/ui/import/sql/main-group.blp:54
 msgid "This table contains no numeric columns"
-msgstr "Cette table contient des colonnes non numériques"
+msgstr "Cette table ne contient aucune colonne numérique"
 
 #: data/ui/import/spreadsheet/main-group.blp:5
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Feuille de calcul"
 
 #: data/ui/import/spreadsheet/main-group.blp:8
 msgid "Sheet"
-msgstr ""
+msgstr "Feuille"
 
 #: data/ui/import/spreadsheet/main-group.blp:9
 msgid "Select which sheet to import"
-msgstr ""
+msgstr "Sélectionnez la feuille à importer"
 
 #: data/ui/import/spreadsheet/item-group.blp:51
 msgid "Single Column"
@@ -688,46 +685,37 @@ msgstr "Simplifier"
 #: data/ui/sidebar/edit-item/errorbar-group.blp:9
 #: data/ui/style-editor/editor-box.blp:146
 msgid "Error Bars"
-msgstr ""
+msgstr "Barres d’erreurs"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:12
-#, fuzzy
-#| msgctxt "markerstyle"
-#| msgid "Horizontal Line"
 msgid "Show Horizontal"
-msgstr "Ligne horizontale"
+msgstr "Afficher horizontalement"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:16
-#, fuzzy
-#| msgid "Show Grid"
 msgid "Show Vertical"
-msgstr "Afficher la grille"
+msgstr "Afficher verticalement"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:20
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
-msgstr ""
+msgstr "Tracer au-dessus des données"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:24
-#, fuzzy
-#| msgid "Colors"
 msgid "Color"
-msgstr "Couleurs"
+msgstr "Couleur"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:28
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
-msgstr ""
+msgstr "Longueur du tiret"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:42
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
-msgstr ""
+msgstr "Épaisseur du tiret"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:56
 #: data/ui/style-editor/editor-box.blp:179
-#, fuzzy
-#| msgid "Linewidth"
 msgid "Line Width"
 msgstr "Largeur de ligne"
 
@@ -750,8 +738,8 @@ msgstr "Échelle"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Détermine la distance entre les points de données"
+msgid "How points are spaced"
+msgstr "Espacement des points"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -827,7 +815,7 @@ msgid "Labels"
 msgstr "Étiquettes"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:102
+#: graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "Titre"
 
@@ -971,7 +959,7 @@ msgstr "Masquer les éléments non sélectionnés"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:85
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "Style"
 
@@ -1130,7 +1118,7 @@ msgstr "Récupérer la dérivée des données"
 
 #: data/ui/sidebar/operations.blp:158
 msgid "Derivative"
-msgstr "Dériver"
+msgstr "Dérivée"
 
 #: data/ui/sidebar/operations.blp:164
 msgid "Get the indefinite integral of the data"
@@ -1138,7 +1126,7 @@ msgstr "Récupérer la primitive des données"
 
 #: data/ui/sidebar/operations.blp:175
 msgid "Integral"
-msgstr "Intégrer"
+msgstr "Intégrale"
 
 #: data/ui/sidebar/operations.blp:181
 msgid "Get the Fast Fourier Transform of the data"
@@ -1190,7 +1178,7 @@ msgstr "À la valeur Y maximale"
 
 #: data/ui/sidebar/operations.blp:365
 msgid "At Middle X Value"
-msgstr "À la valeur X moyenne"
+msgstr "À la valeur X médiane"
 
 #: data/ui/sidebar/operations.blp:374 data/ui/smoothen-settings.blp:35
 msgid "Savitzky–Golay Filter"
@@ -1249,8 +1237,6 @@ msgid "Lines"
 msgstr "Lignes"
 
 #: data/ui/style-editor/editor-box.blp:77
-#, fuzzy
-#| msgid "Linewidth"
 msgid "Line width"
 msgstr "Largeur de ligne"
 
@@ -1264,7 +1250,7 @@ msgstr "Largeur des axes"
 
 #: data/ui/style-editor/editor-box.blp:216
 msgid "Draw Frame"
-msgstr "Fenêtre de dessin"
+msgstr "Tracer le cadre"
 
 #: data/ui/style-editor/editor-box.blp:221
 msgid "Ticks"
@@ -1417,7 +1403,7 @@ msgstr "Ajouter une couleur"
 
 #: data/ui/style-editor/editor-box.blp:538
 msgid "Error Bar Colors"
-msgstr ""
+msgstr "Couleur des barres d’erreur"
 
 #: data/ui/style-editor/item-color-row.blp:18
 msgid "Edit"
@@ -1469,7 +1455,7 @@ msgid "Open Style"
 msgstr "Ouvrir un style"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:200
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Éditeur de style de Graphes"
 
@@ -1524,11 +1510,11 @@ msgstr "Nom (optionnel)"
 
 #: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
-msgstr "Extrapolation de courbe"
+msgstr "Ajustement de courbe"
 
 #: data/ui/curve-fitting.blp:51
 msgid "Open Curve Fitting Menu"
-msgstr "Ouvrir le menu d’extrapolation de courbe"
+msgstr "Ouvrir le menu d’ajustement de courbe"
 
 #: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
@@ -1572,7 +1558,7 @@ msgstr "Personnalisée"
 
 #: data/ui/curve-fitting.blp:138
 msgid "Add Fit to Data"
-msgstr "Ajouter une extrapolation aux données"
+msgstr "Ajouter un ajustement aux données"
 
 #: data/ui/curve-fitting.blp:161
 msgid "Toggle Sidebar"
@@ -1628,10 +1614,8 @@ msgid "3σ: 99.7% Confidence"
 msgstr "3σ : confiance de 99,7%"
 
 #: data/ui/curve-fitting.blp:259
-#, fuzzy
-#| msgid "Show Sidebar"
 msgid "Show Residuals"
-msgstr "Afficher le panneau latéral"
+msgstr "Afficher les résidus"
 
 #: data/ui/export-figure.blp:6
 msgid "Export Figure"
@@ -1706,7 +1690,7 @@ msgstr "Utiliser la même taille que l’application"
 
 #: data/ui/fitting-parameters.blp:30
 msgid "Initial Guess"
-msgstr "Approximation initiale"
+msgstr "Estimation initiale"
 
 #: data/ui/fitting-parameters.blp:45
 msgid "Minimum"
@@ -1796,6 +1780,22 @@ msgid ""
 "Trigonometric functions use radians by default.\n"
 "Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
+"<b>Variables disponibles</b>\n"
+"Général :\n"
+" counts - nombre de points de données\n"
+"\n"
+"Axe X :\n"
+" x_min, x_max - valeurs minimale et maximale,\n"
+" x_mean, x_median - moyenne et médiane,\n"
+" x_std, x_sum - écart-type et somme\n"
+"\n"
+"Axe Y :\n"
+" y_min, y_max - minimum et maximum,\n"
+" y_mean, y_median - moyenne et médiane,\n"
+" y_std, y_sum - écart-type et somme\n"
+"\n"
+"Les fonctions trigonométriques utilisent les radians par défaut.\n"
+"Ajoutez « d » pour utiliser les degrés, p. ex. sind(x) ou cosd(x)."
 
 #: data/ui/transform.blp:64
 msgid "X ="
@@ -1813,7 +1813,7 @@ msgstr "Déposer ici pour importer"
 msgid "Show Sidebar"
 msgstr "Afficher le panneau latéral"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:398
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
 msgid "Undo"
 msgstr "Annuler"
 
@@ -1978,7 +1978,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Rétablir l’action"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Colonnes"
@@ -1987,7 +1987,7 @@ msgstr "Colonnes"
 msgid "Custom delimiter cannot be empty"
 msgstr "Un délimiteur personnalisé ne peut pas être vide"
 
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -1996,132 +1996,129 @@ msgstr ""
 "Erreur d’index dans %s, impossible d’accéder à l’index %d à la ligne %d, "
 "seules les colonnes %d ont été trouvées"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr ""
 "Importation impossible depuis le fichier, valeur incorrecte à la ligne %d"
 
-#: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Élément %d"
 
-#: graphs/file_import/parsers/project/__init__.py:19
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projet"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Fichier de projet Graphes"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Feuille de calcul"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Feuille de calcul"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:276
-#, fuzzy
-#| msgid "No data found in table column"
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
-msgstr "Aucune donnée trouvée dans la colonne de la table"
+msgstr "Aucune donnée numérique trouvée dans la colonne."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:291
+#: graphs/file_import/parsers/spreadsheet/__init__.py:288
 msgid "Columns do not have the same length."
-msgstr ""
+msgstr "Les colonnes n’ont pas la même longueur."
 
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Base de données"
 
-#: graphs/file_import/parsers/sql/__init__.py:25
+#: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Base de données SQLite"
 
-#: graphs/file_import/parsers/sql/__init__.py:42
-#, python-brace-format
-msgid ""
-"Could not import data from table \"{table_name}\", no numeric columns were "
-"found"
+#: graphs/file_import/parsers/sql/reader.vala:135
+#, c-format
+msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr ""
-"Impossible d’importer des données depuis la table « {table_name} », aucune "
-"colonne numérique trouvée"
+"Impossible d’importer des données depuis la table « %s », aucune colonne "
+"numérique trouvée"
 
-#: graphs/file_import/parsers/sql/__init__.py:52
+#: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
 msgstr "Aucune donnée trouvée dans la colonne de la table"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:66
 msgid "Intensity (cps)"
 msgstr "Intensité (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:18
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:76
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:77
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
+#: graphs/file_import/__init__.py:117
 msgid "Import failed"
 msgstr "Échec de l’importation"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Fichiers pris en charge"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Fichiers ASCII"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "Minimum de l’axe X"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Minimum de l’axe Y"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "Maximum de l’axe X"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Maximum de l’axe Y"
 
@@ -2139,12 +2136,10 @@ msgid "Y Axis Scale"
 msgstr "Échelle de l’axe Y"
 
 #: graphs/sidebar/figure_settings.vala:168
-#, fuzzy
-#| msgid "X Axis Label"
 msgid "Y Axis Label"
-msgstr "Étiquette de l’axe X"
+msgstr "Étiquette de l’axe Y"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Paramètres par défaut mis à jour"
 
@@ -2152,11 +2147,11 @@ msgstr "Paramètres par défaut mis à jour"
 msgid "Example Item"
 msgstr "Exemple"
 
-#: graphs/style_editor/__init__.py:103 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "Étiquette X"
 
-#: graphs/style_editor/__init__.py:104 graphs/style_io.py:249
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Étiquette Y"
 
@@ -2171,7 +2166,7 @@ msgstr "Couleur %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Éditeur de style de Graphes — %s"
 
-#: graphs/style_editor/window.vala:233
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Êtes-vous sûr de vouloir supprimer %s ?"
@@ -2184,101 +2179,117 @@ msgstr "Les développeurs de Graphes"
 msgid "translator-credits"
 msgstr ""
 "Vincent Chatelain <vinchatl_gnome@proton.me>\n"
-"Jean-Marc Tissières <jmetissieres@gmail.com>"
+"Jean-Marc Tissières <jmetissieres@gmail.com>\n"
+"Julien Humbert <julroy67@gmail.com>"
 
-#: graphs/actions.vala:184 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "%s supprimé"
 
-#: graphs/curve_fitting.py:105
+#: graphs/application.vala:19
+msgid "New window"
+msgstr "Nouvelle fenêtre"
+
+#: graphs/application.vala:21
+msgid "[FILE…]"
+msgstr "[FICHIER…]"
+
+#: graphs/curve_fitting.py:99
 msgid "Residuals"
-msgstr ""
+msgstr "Résidus"
 
 #: graphs/curve_fitting.vala:74
-#, fuzzy
-#| msgid ""
-#| "Please enter valid fitting \n"
-#| "parameters to start the fit"
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
 msgstr ""
 "Veuillez saisir des paramètres\n"
-"d’extrapolation valides pour \n"
-"commencer l’extrapolation"
+"numériques valides."
 
 #: graphs/curve_fitting.vala:75
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
 msgstr ""
+"Erreur de contrainte : assurez-vous que \n"
+"Inférieure < Initiale < Supérieure."
 
 #: graphs/curve_fitting.vala:76
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
 msgstr ""
+"Erreur de matrice : les données sont\n"
+"insuffisantes pour ce modèle."
 
 #: graphs/curve_fitting.vala:77
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
 msgstr ""
+"Échec de l’ajustement : le nombre maximal\n"
+"d’itérations a été atteint sans convergence."
 
 #: graphs/curve_fitting.vala:78
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
 msgstr ""
+"Erreur de domaine : l’équation n’est pas\n"
+"valide pour cette plage de données."
 
 #: graphs/curve_fitting.vala:79
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
 msgstr ""
+"Équation incorrecte : vérifiez\n"
+"la syntaxe et les variables."
 
 #: graphs/curve_fitting.vala:80
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
 msgstr ""
+"Erreur de l’intervalle de confiance :\n"
+"La matrice de covariance est instable."
 
-#: graphs/curve_fitting.vala:250
+#: graphs/curve_fitting.vala:252
 msgid "Parameters"
 msgstr "Paramètres"
 
-#: graphs/curve_fitting.vala:266
+#: graphs/curve_fitting.vala:268
 msgid "Statistics"
-msgstr ""
+msgstr "Statistiques"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "R²"
-msgstr ""
+msgstr "R²"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "RMSE"
-msgstr ""
+msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:446
+#: graphs/curve_fitting.vala:449
 #, c-format
 msgid "Fitting Parameters for %s"
-msgstr "Paramètre d’extrapolation pour %s"
+msgstr "Paramètres d’ajustement pour %s"
 
-#: graphs/data.py:113
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "Impossible d’analyser le style {stylename}, chargement du style par défaut à "
 "la place"
 
-#: graphs/data.py:118
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
 "Le style {stylename} n’existe pas, chargement du style par défaut à la place"
 
-#: graphs/data.py:616
+#: graphs/data.py:553
 msgid "Failed to load project"
 msgstr "Échec de chargement du projet"
 
@@ -2304,68 +2315,67 @@ msgstr "Fichiers texte"
 msgid "Could not load {font}"
 msgstr "Impossible de charger {font}"
 
-#: graphs/item.vala:49
+#: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Jeu de données"
 
-#: graphs/item.vala:74
+#: graphs/item.vala:187
 msgid "Generated Dataset"
 msgstr "Générer un jeu de données"
 
-#: graphs/item.vala:117
+#: graphs/item.vala:245
 msgid "Label"
 msgstr "Étiquette"
 
-#: graphs/item.vala:123
+#: graphs/item.vala:251
 msgid "Fill"
 msgstr "Remplir"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Fichier du style Matplotlib"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Impossible d’effectuer la transformation, vérifiez la syntaxe"
 
-#: graphs/operations.py:302
-#, fuzzy
-#| msgid "No data found within the highlighted area"
+#: graphs/operations.py:226
 msgid "No data found in highlighted area"
 msgstr "Aucune donnée trouvée dans la zone en surbrillance"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:230
 msgid "Some items lack error bars; they will be discarded"
 msgstr ""
+"Certaines éléments ne comportent pas de barres d’erreur et seront écartés"
 
-#: graphs/operations.py:314
+#: graphs/operations.py:241
 msgid "Combined Data"
 msgstr "Données combinées"
 
-#: graphs/operations.py:454
+#: graphs/operations.py:384
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "L’opération sur {name} ne donne pas d’équation traçable"
 
-#: graphs/operations.py:462
+#: graphs/operations.py:392
 msgid "Operation not supported for equations."
 msgstr "Opération non prise en charge pour des équations."
 
-#: graphs/operations.py:619
+#: graphs/operations.py:555
 msgid "No data found within the highlighted area"
 msgstr "Aucune donnée trouvée dans la zone en surbrillance"
 
-#: graphs/operations.py:625
+#: graphs/operations.py:563
 msgid "Operation not supported for data items"
 msgstr "Opération non prise en charge pour des données"
 
-#: graphs/operations.py:628
+#: graphs/operations.py:566
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name} : erreur durant l’opération"
 
-#: graphs/operations.py:634
+#: graphs/operations.py:574
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr ""
 "Les données à l’extérieur de la zone en surbrillance ont été supprimées"
@@ -2379,19 +2389,19 @@ msgid "Project is from a newer incompatible version of Graphs"
 msgstr ""
 "Ce projet provient d’une version plus récente et incompatible de Graphes"
 
-#: graphs/project.py:299
+#: graphs/project.py:306
 msgid "Failed to do legacy migration"
 msgstr "Impossible d’effectuer la migration de l’existant"
 
-#: graphs/project.py:301
+#: graphs/project.py:308
 msgid "Failed to parse project file"
 msgstr "Impossible d’analyser le fichier du projet"
 
-#: graphs/project.py:307
+#: graphs/project.py:314
 msgid "Failed to migrate project"
 msgstr "Impossible de migrer le projet"
 
-#: graphs/project.py:313
+#: graphs/project.py:320
 msgid "Failed to validate project"
 msgstr "Impossible de valider le projet"
 
@@ -2403,31 +2413,31 @@ msgstr "Projet enregistré"
 msgid "Project"
 msgstr "Projet"
 
-#: graphs/python_helper.vala:37
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Données exportées"
 
-#: graphs/style_io.py:109
+#: graphs/style_io.py:108
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Virgule manquante dans le fichier {file}, à la ligne {line}"
 
-#: graphs/style_io.py:117
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Paramètre {param} non lié au style dans le fichier {file}"
 
-#: graphs/style_io.py:120
+#: graphs/style_io.py:119
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Paramètre {param} ignoré dans le fichier {file}"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:123
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Clé dupliquée dans le fichier {file}, à la ligne {line}"
 
-#: graphs/style_io.py:142
+#: graphs/style_io.py:141
 #, python-brace-format
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
@@ -2436,17 +2446,17 @@ msgstr ""
 "Mauvaise valeur dans le fichier {file} à la ligne {line}, le paramètre "
 "personnalisé {key} n’est pas pris en charge"
 
-#: graphs/style_io.py:166
+#: graphs/style_io.py:165
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Mauvaise valeur dans le fichier {file} à la ligne {line}"
 
-#: graphs/style_io.py:171
+#: graphs/style_io.py:170
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Impossible d’analyser {filename}"
 
-#: graphs/style_io.py:181
+#: graphs/style_io.py:180
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "Le fichier {file} ne contient pas d’étiquette de nom"
@@ -2455,32 +2465,35 @@ msgstr "Le fichier {file} ne contient pas d’étiquette de nom"
 msgid "System"
 msgstr "Système"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Tous les fichiers"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Portail des documents"
 
-#: graphs/window.vala:149
+#: graphs/window.vala:154
 msgid "Graphs (Development)"
 msgstr "Graphes (expérimental)"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:181
 msgid "Untitled Project"
 msgstr "Projet sans nom"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:182
 msgid "Draft"
 msgstr "Brouillon"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:200
+#: graphs/window.vala:188
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphes — %s"
 
-#: graphs/window.vala:388
+#: graphs/window.vala:376
 msgid "Open Location"
 msgstr "Ouvrir l’emplacement"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "Détermine la distance entre les points de données"
