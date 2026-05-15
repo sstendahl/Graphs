@@ -63,7 +63,7 @@ class ItemArtistWrapper(GObject.Object):
     @name.setter
     def name(self, name: str) -> None:
         """Set name/label property."""
-        self._color_artist.set_label(name)
+        self._artist.set_label(name)
 
     @GObject.Property(type=str, default="000000")
     def color(self) -> str:
