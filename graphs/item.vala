@@ -176,7 +176,7 @@ namespace Graphs {
                     _preprocessed_equation = preprocess_equation (value);
                 } catch (MathError e) { assert_not_reached (); }
 
-                if ("Y =" + old_equation == name)
+                if ("Y = " + old_equation == name)
                     name = "Y = " + value;
 
                 regenerate ();
