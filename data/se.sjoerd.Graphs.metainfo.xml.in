@@ -92,7 +92,7 @@
   </description>
 
   <releases>
-    <release version="2.0.0" date="2026-03-27">
+    <release version="2.0.0" date="2026-05-15">
       <description>
         <p>Version 2.0 of Graphs is a major update, introducing several new features such as proper equation support and a completely redesigned style editor.</p>
         <p>Different data types:</p>
