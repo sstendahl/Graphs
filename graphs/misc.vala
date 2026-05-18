@@ -66,7 +66,7 @@ namespace Graphs {
         UPPER_LEFT,
         LOWER_LEFT,
         LOWER_RIGHT,
-        CENTER_LIGHT,
+        CENTER_LEFT,
         CENTER_RIGHT,
         LOWER_CENTER,
         UPPER_CENTER,
@@ -79,7 +79,7 @@ namespace Graphs {
                 case "upper left": return UPPER_LEFT;
                 case "lower left": return LOWER_LEFT;
                 case "lower right": return LOWER_RIGHT;
-                case "center left": return CENTER_LIGHT;
+                case "center left": return CENTER_LEFT;
                 case "center right": return CENTER_RIGHT;
                 case "lower center": return LOWER_CENTER;
                 case "upper center": return UPPER_CENTER;
@@ -95,7 +95,7 @@ namespace Graphs {
                 case UPPER_LEFT: return "upper left";
                 case LOWER_LEFT: return "lower left";
                 case LOWER_RIGHT: return "lower right";
-                case CENTER_LIGHT: return "center left";
+                case CENTER_LEFT: return "center left";
                 case CENTER_RIGHT: return "center right";
                 case LOWER_CENTER: return "lower center";
                 case UPPER_CENTER: return "upper center";

@@ -383,6 +383,7 @@ class Figure(GObject.Object, figure.Figure):
     def min_left(self, value: float) -> None:
         for axis in (self.axis, self.top_left_axis):
             axis.set_ylim(value, None)
+        self.queue_draw()
 
     @GObject.Property(type=float)
     def max_left(self) -> float:
