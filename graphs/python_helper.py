@@ -21,7 +21,6 @@ _REQUESTS = (
     "evaluate-expression",
     "export-figure",
     "export-items",
-    "has-err",
     "perform-operation",
     "python-method",
     "simplify-equation",
@@ -132,12 +131,6 @@ class PythonHelper(Graphs.PythonHelper):
                 transparent=settings.get_boolean("transparent"),
                 bbox_inches=None,
             )
-
-    @staticmethod
-    def _on_has_err_request(self, item: Graphs.Item) -> int:
-        xerr = item.get_xerr() is not None
-        yerr = item.get_yerr() is not None
-        return xerr | (yerr << 1)  # 0=none, 1=xerr only, 2=yerr only, 3=both
 
     @staticmethod
     def _on_perform_operation_request(
