@@ -3,6 +3,9 @@
 #include <math.h>
 #include <omp.h>
 
+/*
+ * Small helper to find the min and max value of a double array.
+ */
 bool
 array_minmax (const double *restrict data, size_t len, bool ignore_zero,
               double *restrict out_min, double *restrict out_max)
