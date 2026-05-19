@@ -651,6 +651,19 @@ namespace Graphs {
             }
 
             foreach (EquationItem item in equation_items) {
+                int xindex = item.xposition * 2;
+                int yindex = item.yposition * 2 + 1;
+
+                double min_x = axes[xindex].min_value;
+                double max_x = axes[xindex].max_value;
+
+                DataHolder holder = PythonHelper.equation_to_data (
+                    item.get_preprocessed_equation (),
+                    min_x,
+                    max_x,
+                    5000,
+                    axes[xindex].scale
+                );
                 // TODO
             }
 

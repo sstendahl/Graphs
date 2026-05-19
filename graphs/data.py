@@ -354,6 +354,59 @@ class Data(Graphs.Data):
         self.props.can_undo = True
         self._set_data_copy()
 
+    @staticmethod
+    def _on_equation_limits_request(
+        self,
+        equation: str,
+    ) -> None:
+        expr = sympy.sympify(equation)
+        domain = sympy.Interval(*x_limits)
+        has_singularities = singularities(expr, misc.X, domain)
+
+        if xaxis[5] is None:
+            xscale = xaxis[4]
+        xdata = utilities.create_equidistant_xdata(x_limits, xscale)
+        ydata = numexpr.evaluate(equation, local_dict={"x": xaxis[5]})
+        ydata = ydata[numpy.isfinite(ydata)]
+
+        if has_singularities:
+            # Don't take negative values into account for log scaling
+            if yscale in LOG_SCALES:
+                ydata = ydata[ydata > 0]
+
+            y_min, y_max = ydata.min(), ydata.max()
+            lower_bound = Graphs.get_value_at_fraction(
+                0.05,
+                y_min,
+                y_max,
+                yscale,
+            )
+            upper_bound = Graphs.get_value_at_fraction(
+                0.95,
+                y_min,
+                y_max,
+                yscale,
+            )
+            ydata = ydata.clip(lower_bound, upper_bound)
+
+        if ydata.size == 0:
+            continue
+
+        if yscale in NONZERO_SCALES:
+            nonzero = ydata[ydata != 0]
+            min_value = nonzero.min() if nonzero.size else ydata.min()
+        else:
+            min_value = ydata.min()
+        max_value = ydata.max()
+
+        if yaxis[1]:
+            yaxis[2] = min(yaxis[2], min_value)
+            yaxis[3] = max(yaxis[3], max_value)
+        else:
+            yaxis[2] = min_value
+            yaxis[3] = max_value
+            yaxis[1] = True
+
     def _optimize_limits(self) -> None:
         """Optimize the limits of the canvas to the data class."""
         figure_settings = self.get_figure_settings()
