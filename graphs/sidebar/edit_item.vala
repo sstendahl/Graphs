@@ -20,11 +20,10 @@ namespace Graphs {
                 edit_item_box.append (new EditItemGeneratedDataItemBox ((GeneratedDataItem) item));
             }
             if (item is DataItem) {
-                edit_item_box.append (new EditItemDataItemBox ((DataItem) item));
-                bool has_xerr, has_yerr;
-                PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
-                if (has_xerr || has_yerr) {
-                    edit_item_box.append (new EditItemErrorBarGroup ((DataItem) item));
+                DataItem data_item = (DataItem) item;
+                edit_item_box.append (new EditItemDataItemBox (data_item));
+                if (data_item.has_xerr () || data_item.has_yerr ()) {
+                    edit_item_box.append (new EditItemErrorBarGroup (data_item));
                 }
             } else if (item is EquationItem) {
                 edit_item_box.append (new EditItemEquationItemBox ((EquationItem) item));
@@ -144,13 +143,8 @@ namespace Graphs {
         private unowned Gtk.Scale errlinewidth { get; }
 
         public EditItemErrorBarGroup (DataItem item) {
-            bool has_xerr, has_yerr;
-            PythonHelper.item_has_err (item, out has_xerr, out has_yerr);
-
-            use_xerr.set_visible (has_xerr);
-            use_yerr.set_visible (has_yerr);
-
-            if (has_xerr) {
+            if (item.has_xerr ()) {
+                use_xerr.set_visible (true);
                 item.bind_property (
                     "showxerr",
                     use_xerr,
@@ -158,7 +152,8 @@ namespace Graphs {
                     BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
                 );
             }
-            if (has_yerr) {
+            if (item.has_yerr ()) {
+                use_yerr.set_visible (true);
                 item.bind_property (
                     "showyerr",
                     use_yerr,
