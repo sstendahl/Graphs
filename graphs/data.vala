@@ -586,7 +586,81 @@ namespace Graphs {
             position_changed.emit (index1, index2);
         }
 
+        struct AxisInfo {
+            string direction;
+            bool used;
+            double min_value;
+            double max_value;
+            Scale scale;
+
+            public AxisInfo.for_direction (FigureSettings figure_settings, string direction) {
+                this.direction = direction;
+                used = false;
+                figure_settings.get ("min_" + direction, out min_value);
+                figure_settings.get ("max_" + direction, out max_value);
+                figure_settings.get (direction + "_scale", out scale);
+            }
+
+            public void update_min_max (double min_value, double max_value) {
+                if (used) {
+                    this.min_value = double.min (this.min_value, min_value);
+                    this.max_value = double.max (this.max_value, max_value);
+                } else {
+                    this.min_value = min_value;
+                    this.max_value = max_value;
+                    used = true;
+                }
+            }
+        }
+
+        private bool find_min_max (double[] data, out double min_value, out double max_value) {
+            int i = 0;
+            double[] finite = new double[data.length];
+
+            for (int j = 0; j < data.length; j++) {
+                if (!data[j].is_finite ()) continue;
+
+                finite[i] = data[j];
+                i++;
+            }
+
+            if (finite.length == 0) return false;
+
+            min_value = finite[0];
+            max_value = finite[0];
+            if (false) {
+
+            } else {
+                foreach (double d : finite) {
+                    min_value = double.min (min_value, d);
+                    max_value = double.max (max_value, d);
+                }
+            }
+
+            return true;
+        }
+
         public void optimize_limits () {
+            AxisInfo[] axes = {
+                AxisInfo.for_direction (figure_settings, "bottom"),
+                AxisInfo.for_direction (figure_settings, "left"),
+                AxisInfo.for_direction (figure_settings, "top"),
+                AxisInfo.for_direction (figure_settings, "right"),
+            };
+
+            var equation_items = new Gee.ArrayList<EquationItem> ();
+
+            foreach (Item item in this) {
+                if (!item.selected && figure_settings.hide_unselected) continue;
+
+                if (item is EquationItem) {
+                    equation_items.add ((EquationItem) item);
+                    continue;
+                }
+
+                if (!(item is DataItem)) continue;
+            }
+
             run_python_method ("_optimize_limits");
             add_view_history_state ();
         }

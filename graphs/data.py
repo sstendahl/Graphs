@@ -51,6 +51,10 @@ class Data(Graphs.Data):
             "add-history-state-request",
             self._on_add_history_state_request,
         )
+        self.connect(
+            "equation-limits-request",
+            self._on_equation_limits_request,
+        )
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
