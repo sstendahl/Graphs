@@ -323,14 +323,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         cap_iter = iter(self._caps)
         if xerr is not None:
             self._xbar = next(bar_iter)
-            self._xcaps = (next(cap_iter), next(cap_iter))
+            self._xcaps = tuple(cap_iter)
             if not item.get_showxerr():
                 self._xbar.set_visible(False)
                 for cap in self._xcaps:
                     cap.set_visible(False)
         if yerr is not None:
             self._ybar = next(bar_iter)
-            self._ycaps = (next(cap_iter), next(cap_iter))
+            self._ycaps = tuple(cap_iter)
             if not item.get_showyerr():
                 self._ybar.set_visible(False)
                 for cap in self._ycaps:
