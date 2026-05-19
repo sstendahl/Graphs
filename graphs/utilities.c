@@ -26,10 +26,7 @@ array_minmax (const double *restrict data, size_t len, bool ignore_zero,
     {
       double v = data[i];
 
-      if (!isfinite (v))
-        continue;
-
-      if (ignore_zero && v == 0.0)
+      if (!isfinite (v) || (ignore_zero && v == 0.0))
         continue;
 
       if (v < minv)
@@ -50,10 +47,7 @@ array_minmax (const double *restrict data, size_t len, bool ignore_zero,
     {
       double v = data[i];
 
-      if (!isfinite (v))
-        continue;
-
-      if (ignore_zero && v == 0.0)
+      if (!isfinite (v) || (ignore_zero && v == 0.0))
         continue;
 
       found = true;
