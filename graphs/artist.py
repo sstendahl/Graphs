@@ -241,8 +241,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Adjust data to handle singularity jumps."""
         xdata = utilities.bytes_to_ndarray(data.get_xdata_b())
         ydata = utilities.bytes_to_ndarray(data.get_ydata_b())
-        xerr = utilities.bytes_to_ndarray(data.get_xerr_b())
-        yerr = utilities.bytes_to_ndarray(data.get_yerr_b())
+        xerr_b = data.get_xerr_b()
+        yerr_b = data.get_yerr_b()
+        xerr = None if xerr_b is None else utilities.bytes_to_ndarray(xerr_b)
+        yerr = None if yerr_b is None else utilities.bytes_to_ndarray(yerr_b)
 
         if len(xdata) < 2:
             return xdata, ydata, xerr, yerr
