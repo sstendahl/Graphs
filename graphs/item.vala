@@ -163,6 +163,14 @@ namespace Graphs {
         public unowned double[] get_ydata () {
             return data.get_ydata ();
         }
+
+        public bool has_xerr () {
+            return data.get_xerr () != null;
+        }
+
+        public bool has_yerr () {
+            return data.get_yerr () != null;
+        }
     }
 
     public class GeneratedDataItem : DataItem, EquationBasedItem {
