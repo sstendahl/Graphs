@@ -53,39 +53,40 @@ class PythonWindow(Graphs.Window):
         recolor_items: bool,
     ) -> None:
         """Handle style change."""
-        if recolor_items:
-            old_style = data.get_old_selected_style_params()
-            new_style = data.get_selected_style_params()
+        if not recolor_items:
+            self._reload_canvas()
+            return
 
-            old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
-            new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
-            old_errbar_cycle = \
-                old_style[1]["errorbar.color_cycle"].by_key()["color"]
-            new_errbar_cycle = \
-                new_style[1]["errorbar.color_cycle"].by_key()["color"]
+        old_style = data.get_old_selected_style_params()
+        new_style = data.get_selected_style_params()
 
-            for item in data:
-                item.reset(old_style, new_style)
+        old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
+        new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
+        old_err_cycle = old_style[1]["errorbar.color_cycle"].by_key()["color"]
+        new_err_cycle = new_style[1]["errorbar.color_cycle"].by_key()["color"]
 
-            count = 0
-            errbar_count = 0
-            for item in data:
-                if (
-                    isinstance(item, (Graphs.DataItem, Graphs.EquationItem))
-                    and item.get_color() in old_cycle
-                ):
-                    count %= len(new_cycle)
-                    item.set_color(new_cycle[count])
-                    count += 1
+        for item in data:
+            item.reset(old_style, new_style)
 
-                    if isinstance(item, Graphs.DataItem):
-                        has_err = item.has_xerr() or item.has_yerr()
-                        if not has_err:
-                            continue
-                        if item.get_errcolor() in old_errbar_cycle:
-                            errbar_count %= len(new_errbar_cycle)
-                            item.set_errcolor(new_errbar_cycle[errbar_count])
-                            errbar_count += 1
+        count = 0
+        errbar_count = 0
+        for item in data:
+            if not isinstance(item, (Graphs.DataItem, Graphs.EquationItem)) \
+                    or item.get_color() not in old_cycle:
+                continue
+
+            count %= len(new_cycle)
+            item.set_color(new_cycle[count])
+            count += 1
+
+            if not isinstance(item, Graphs.DataItem) \
+                    or not item.has_xerr() and not item.has_yerr() \
+                    or item.get_errcolor() not in old_err_cycle:
+                continue
+
+            errbar_count %= len(new_err_cycle)
+            item.set_errcolor(new_err_cycle[errbar_count])
+            errbar_count += 1
 
         self._reload_canvas()
 
