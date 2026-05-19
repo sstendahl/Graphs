@@ -155,6 +155,14 @@ namespace Graphs {
         construct {
             typename = _("Dataset");
         }
+
+        public bool has_xerr () {
+            return data.get_xerr () != null;
+        }
+
+        public bool has_yerr () {
+            return data.get_yerr () != null;
+        }
     }
 
     public class GeneratedDataItem : DataItem, EquationBasedItem {
