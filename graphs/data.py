@@ -19,9 +19,6 @@ _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "max-selected",
 ]
 
-LOG_SCALES = {1, 2}
-NONZERO_SCALES = {1, 2, 4}
-
 
 class Data(Graphs.Data):
     """Class for managing data."""
