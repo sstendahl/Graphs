@@ -79,7 +79,7 @@ class PythonWindow(Graphs.Window):
                     count += 1
 
                     if isinstance(item, Graphs.DataItem):
-                        has_err = item.get_xerr() or item.get_yerr()
+                        has_err = item.has_xerr() or item.has_yerr()
                         if not has_err:
                             continue
                         if item.get_errcolor() in old_errbar_cycle:
