@@ -689,8 +689,8 @@ namespace Graphs {
                     double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
                     double log_span = log_max - log_min;
 
-                    min_all = Math.pow(10, log_min - padding_factor * log_span);
-                    max_all = Math.pow(10, log_max + padding_factor * log_span);
+                    min_all = Math.pow (10, log_min - padding_factor * log_span);
+                    max_all = Math.pow (10, log_max + padding_factor * log_span);
                 } else {
                     double span = max_all - min_all;
 
