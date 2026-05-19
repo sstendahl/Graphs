@@ -9,17 +9,10 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import misc, project, style_io, utilities
+from graphs import misc, project, style_io
 from graphs.item import ItemFactory
 
 from matplotlib import RcParams
-
-import numexpr
-
-import numpy
-
-import sympy
-from sympy.calculus.singularities import singularities
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
