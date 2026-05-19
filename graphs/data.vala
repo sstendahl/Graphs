@@ -657,14 +657,21 @@ namespace Graphs {
                 double min_x = axes[xindex].min_value;
                 double max_x = axes[xindex].max_value;
 
+                string equation = item.get_preprocessed_equation ();
+
+                if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
+
                 DataHolder holder = PythonHelper.equation_to_data (
-                    item.get_preprocessed_equation (),
+                    equation,
                     min_x,
                     max_x,
                     5000,
                     axes[xindex].scale
                 );
-                // TODO
+
+                double min_y, max_y;
+                if (!CUtilities.array_minmax (holder.get_ydata (), axes[yindex].is_nonzero (), out min_y, out max_y)) continue;
+                axes[yindex].update_min_max (min_y, max_y);
             }
 
             for (int i = 0; i < axes.length; i++) {

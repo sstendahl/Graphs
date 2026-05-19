@@ -5,7 +5,7 @@
 
 bool
 array_minmax (const double *restrict data, size_t len, bool ignore_zero,
-                     double *restrict out_min, double *restrict out_max)
+              double *restrict out_min, double *restrict out_max)
 {
   if (!data || !out_min || !out_max || len == 0)
     return false;

@@ -54,6 +54,11 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
+        public signal bool has_singularities_request (string equation, double xstart, double xstop);
+        public static bool has_singularities (string equation, double xstart, double xstop) {
+            return instance.has_singularities_request.emit (equation, xstart, xstop);
+        }
+
         protected signal void perform_operation_request (Window window, string name);
         public static void perform_operation (Window window, string name) {
             instance.perform_operation_request.emit (window, name);
