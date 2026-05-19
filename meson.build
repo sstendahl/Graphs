@@ -2,7 +2,7 @@
 project('Graphs', 'c', 'vala',
           version: '2.0.1',
     meson_version: '>= 1.2.0',
-  default_options: [ 'warning_level=2', 'werror=false', ],
+  default_options: ['warning_level=2', 'werror=false'],
           license: 'GPL-3.0-or-later',
 )
 
@@ -84,7 +84,6 @@ vala_conf.set_quoted('COPYRIGHT', copyright)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + gettext_package + '"',
-  '-w',
   language: 'c'
 )
 

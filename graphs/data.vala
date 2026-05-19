@@ -611,33 +611,10 @@ namespace Graphs {
                     used = true;
                 }
             }
-        }
 
-        private bool find_min_max (double[] data, out double min_value, out double max_value) {
-            int i = 0;
-            double[] finite = new double[data.length];
-
-            for (int j = 0; j < data.length; j++) {
-                if (!data[j].is_finite ()) continue;
-
-                finite[i] = data[j];
-                i++;
+            public bool is_nonzero () {
+                return (scale == 1 || scale == 2 || scale == 4);
             }
-
-            if (finite.length == 0) return false;
-
-            min_value = finite[0];
-            max_value = finite[0];
-            if (false) {
-
-            } else {
-                foreach (double d : finite) {
-                    min_value = double.min (min_value, d);
-                    max_value = double.max (max_value, d);
-                }
-            }
-
-            return true;
         }
 
         public void optimize_limits () {
@@ -659,9 +636,59 @@ namespace Graphs {
                 }
 
                 if (!(item is DataItem)) continue;
+                var data_item = (DataItem) item;
+
+                int xindex = item.xposition * 2;
+                int yindex = item.yposition * 2 + 1;
+
+                double min_x, max_x, min_y, max_y;
+
+                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].is_nonzero (), out min_x, out max_x)) continue;
+                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].is_nonzero (), out min_y, out max_y)) continue;
+
+                axes[xindex].update_min_max (min_x, max_x);
+                axes[yindex].update_min_max (min_y, max_y);
             }
 
-            run_python_method ("_optimize_limits");
+            foreach (EquationItem item in equation_items) {
+                // TODO
+            }
+
+            for (int i = 0; i < axes.length; i++) {
+                if (!axes[i].used) continue;
+
+                // 0.05 padding on y-axis, 0.015 padding on x-axis
+                double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
+
+                double min_all = axes[i].min_value;
+                double max_all = axes[i].max_value;
+
+                Scale scale = axes[i].scale;
+                if (scale == Scale.LOG || scale == Scale.LOG2) {
+                    double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
+                    double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
+                    double log_span = log_max - log_min;
+
+                    min_all = Math.pow(10, log_min - padding_factor * log_span);
+                    max_all = Math.pow(10, log_max + padding_factor * log_span);
+                } else {
+                    double span = max_all - min_all;
+
+                    max_all += padding_factor * span;
+
+                    // For inverse scale, calculate padding using a factor
+                    if (scale == Scale.INVERSE) {
+                        min_all *= 0.99;
+                    } else {
+                        min_all -= padding_factor * span;
+                    }
+                }
+
+                string direction = axes[i].direction;
+                figure_settings.set ("min_" + direction, min_all);
+                figure_settings.set ("max_" + direction, max_all);
+            }
+
             add_view_history_state ();
         }
 

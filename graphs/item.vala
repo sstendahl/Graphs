@@ -155,6 +155,14 @@ namespace Graphs {
         construct {
             typename = _("Dataset");
         }
+
+        public unowned double[] get_xdata () {
+            return data.get_xdata ();
+        }
+
+        public unowned double[] get_ydata () {
+            return data.get_ydata ();
+        }
     }
 
     public class GeneratedDataItem : DataItem, EquationBasedItem {
