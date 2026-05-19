@@ -241,8 +241,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Adjust data to handle singularity jumps."""
         xdata = utilities.bytes_to_ndarray(data.get_xdata_b())
         ydata = utilities.bytes_to_ndarray(data.get_ydata_b())
-        xerr = utilities.bytes_to_ndarray(data.get_xerr_b())
-        yerr = utilities.bytes_to_ndarray(data.get_yerr_b())
+        xerr_b = data.get_xerr_b()
+        yerr_b = data.get_yerr_b()
+        xerr = None if xerr_b is None else utilities.bytes_to_ndarray(xerr_b)
+        yerr = None if yerr_b is None else utilities.bytes_to_ndarray(yerr_b)
 
         if len(xdata) < 2:
             return xdata, ydata, xerr, yerr
@@ -323,14 +325,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         cap_iter = iter(self._caps)
         if xerr is not None:
             self._xbar = next(bar_iter)
-            self._xcaps = (next(cap_iter), next(cap_iter))
+            self._xcaps = tuple(cap_iter)
             if not item.get_showxerr():
                 self._xbar.set_visible(False)
                 for cap in self._xcaps:
                     cap.set_visible(False)
         if yerr is not None:
             self._ybar = next(bar_iter)
-            self._ycaps = (next(cap_iter), next(cap_iter))
+            self._ycaps = tuple(cap_iter)
             if not item.get_showyerr():
                 self._ybar.set_visible(False)
                 for cap in self._ycaps:
