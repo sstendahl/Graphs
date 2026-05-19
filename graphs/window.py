@@ -65,12 +65,11 @@ class PythonWindow(Graphs.Window):
         old_err_cycle = old_style[1]["errorbar.color_cycle"].by_key()["color"]
         new_err_cycle = new_style[1]["errorbar.color_cycle"].by_key()["color"]
 
-        for item in data:
-            item.reset(old_style, new_style)
-
         count = 0
         errbar_count = 0
         for item in data:
+            item.reset(old_style, new_style)
+
             if not isinstance(item, (Graphs.DataItem, Graphs.EquationItem)) \
                     or item.get_color() not in old_cycle:
                 continue
