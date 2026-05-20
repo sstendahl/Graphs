@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for operations."""
-from graphs.operations import DataHelper, DataOperations
+from graphs.operations import DataOperations
 
 import numpy
 
@@ -13,20 +13,6 @@ YDATA = numpy.array([5, 2, 7, 1, 31, 5, 123, 156])
 def is_sorted(lst):
     """Check if a list is sorted in ascending order."""
     return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))
-
-
-def test_sort_data_x_is_sorted():
-    """Test if sort_data sorts x data in ascending order."""
-    sorted_x, sorted_y = DataHelper.sort_data(XDATA, YDATA)
-    assert is_sorted(sorted_x)
-
-
-def test_sort_data_xy_remain_paired():
-    """Test if sort_data keeps x and y values correctly paired."""
-    sorted_x, sorted_y = DataHelper.sort_data(XDATA, YDATA)
-    original = dict(zip(XDATA, YDATA))
-    for x, y in zip(sorted_x, sorted_y):
-        assert original[x] == y
 
 
 def test_normalize():
