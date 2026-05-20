@@ -131,11 +131,11 @@ endforeach
 
 blueprints = custom_target('blueprints',
     input: files(blueprint_files),
-   output: '.',
+   output: 'ui',
   command: [
     find_program('blueprint-compiler'),
     'batch-compile',
-    '@OUTPUT@',
+    meson.current_build_dir(),
     '@CURRENT_SOURCE_DIR@',
     '@INPUT@',
   ],
@@ -196,15 +196,17 @@ other = files(
   'whats_new',
 )
 
+style_io = files('../graphs/style_io.py')
+gresource_generator = files('generate_gresource.py')
 gresource_xml = custom_target('gresource_xml',
-    input: [blueprints, styles, icons, other],
-   output: application_id + '.gresource.xml',
-  command: [
-    python,
-    files('generate_gresource.py'),
+         input: [blueprints, styles, icons, other],
+        output: application_id + '.gresource.xml',
+  depend_files: [style_io, gresource_generator],
+       command: [
+    gresource_generator,
     '@OUTPUT@',
     meson.current_build_dir(),
-    files('../graphs/style_io.py'),
+    style_io,
     '--styles', styles,
     '--ui', blueprints_ui,
     '--icons', icons,
