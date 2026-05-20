@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for operations."""
-from graphs.operations import DataHelper, DataOperations
+from graphs.operations import DataOperations
 
 import numpy
 
