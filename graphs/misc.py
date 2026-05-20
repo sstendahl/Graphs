@@ -1,12 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Miscallaneous constants."""
-from gi.repository import Graphs
-
 import sympy
-
-# Type hints
-ItemList = list[Graphs.Item]
-Limits = tuple[float, float, float, float]
 
 
 class ParseError(Exception):
