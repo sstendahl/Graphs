@@ -92,6 +92,11 @@
   </description>
 
   <releases>
+    <release version="2.0.2" date="2026-05-20">
+      <description>
+        <p>Fixes a bug where changing the style would break when error bars are present on the canvas</p>
+      </description>
+    </release>    
     <release version="2.0.1" date="2026-05-18">
       <description>
         <p>Fixes a bug where the canvas was not refreshed when setting the minimum value on the left-axis</p>
