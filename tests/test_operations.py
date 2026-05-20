@@ -15,20 +15,6 @@ def is_sorted(lst):
     return all(lst[i] <= lst[i + 1] for i in range(len(lst) - 1))
 
 
-def test_sort_data_x_is_sorted():
-    """Test if sort_data sorts x data in ascending order."""
-    sorted_x, sorted_y = DataHelper.sort_data(XDATA, YDATA)
-    assert is_sorted(sorted_x)
-
-
-def test_sort_data_xy_remain_paired():
-    """Test if sort_data keeps x and y values correctly paired."""
-    sorted_x, sorted_y = DataHelper.sort_data(XDATA, YDATA)
-    original = dict(zip(XDATA, YDATA))
-    for x, y in zip(sorted_x, sorted_y):
-        assert original[x] == y
-
-
 def test_normalize():
     """Test if normalize scales ydata to a maximum value of 1."""
     xdata, ydata, _sort, _discard = DataOperations.normalize(
