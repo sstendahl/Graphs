@@ -586,8 +586,125 @@ namespace Graphs {
             position_changed.emit (index1, index2);
         }
 
+        struct AxisInfo {
+            string direction;
+            bool used;
+            double min_value;
+            double max_value;
+            Scale scale;
+
+            public AxisInfo.for_direction (FigureSettings figure_settings, string direction) {
+                this.direction = direction;
+                used = false;
+                figure_settings.get ("min_" + direction, out min_value);
+                figure_settings.get ("max_" + direction, out max_value);
+                figure_settings.get (direction + "_scale", out scale);
+            }
+
+            public void update_min_max (double min_value, double max_value) {
+                if (used) {
+                    this.min_value = double.min (this.min_value, min_value);
+                    this.max_value = double.max (this.max_value, max_value);
+                } else {
+                    this.min_value = min_value;
+                    this.max_value = max_value;
+                    used = true;
+                }
+            }
+        }
+
         public void optimize_limits () {
-            run_python_method ("_optimize_limits");
+            AxisInfo[] axes = {
+                AxisInfo.for_direction (figure_settings, "bottom"),
+                AxisInfo.for_direction (figure_settings, "left"),
+                AxisInfo.for_direction (figure_settings, "top"),
+                AxisInfo.for_direction (figure_settings, "right"),
+            };
+
+            var equation_items = new Gee.ArrayList<EquationItem> ();
+
+            foreach (Item item in this) {
+                if (!item.selected && figure_settings.hide_unselected) continue;
+
+                if (item is EquationItem) {
+                    equation_items.add ((EquationItem) item);
+                    continue;
+                }
+
+                if (!(item is DataItem)) continue;
+                var data_item = (DataItem) item;
+
+                int xindex = item.xposition * 2;
+                int yindex = item.yposition * 2 + 1;
+
+                double min_x, max_x, min_y, max_y;
+
+                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].scale.is_nonzero (), out min_x, out max_x)) continue;
+                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
+
+                axes[xindex].update_min_max (min_x, max_x);
+                axes[yindex].update_min_max (min_y, max_y);
+            }
+
+            foreach (EquationItem item in equation_items) {
+                int xindex = item.xposition * 2;
+                int yindex = item.yposition * 2 + 1;
+
+                double min_x = axes[xindex].min_value;
+                double max_x = axes[xindex].max_value;
+
+                string equation = item.get_preprocessed_equation ();
+
+                if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
+
+                DataHolder holder = PythonHelper.equation_to_data (
+                    equation,
+                    min_x,
+                    max_x,
+                    5000,
+                    axes[xindex].scale
+                );
+
+                double min_y, max_y;
+                if (!CUtilities.array_minmax (holder.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
+                axes[yindex].update_min_max (min_y, max_y);
+            }
+
+            for (int i = 0; i < axes.length; i++) {
+                if (!axes[i].used) continue;
+
+                // 0.05 padding on y-axis, 0.015 padding on x-axis
+                double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
+
+                double min_all = axes[i].min_value;
+                double max_all = axes[i].max_value;
+
+                Scale scale = axes[i].scale;
+                if (scale.is_logarithmic ()) {
+                    double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
+                    double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
+                    double log_span = log_max - log_min;
+
+                    min_all = Math.pow (10, log_min - padding_factor * log_span);
+                    max_all = Math.pow (10, log_max + padding_factor * log_span);
+                } else {
+                    double span = max_all - min_all;
+
+                    max_all += padding_factor * span;
+
+                    // For inverse scale, calculate padding using a factor
+                    if (scale == Scale.INVERSE) {
+                        min_all *= 0.99;
+                    } else {
+                        min_all -= padding_factor * span;
+                    }
+                }
+
+                string direction = axes[i].direction;
+                figure_settings.set ("min_" + direction, min_all);
+                figure_settings.set ("max_" + direction, max_all);
+            }
+
             add_view_history_state ();
         }
 

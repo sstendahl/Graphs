@@ -2,7 +2,14 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs
 
-from graphs import curve_fitting, export_items, file_io, operations, utilities
+from graphs import (
+    curve_fitting,
+    export_items,
+    file_io,
+    misc,
+    operations,
+    utilities,
+)
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
@@ -12,6 +19,7 @@ import numexpr
 import numpy
 
 import sympy
+from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
     "create-style-editor",
@@ -21,6 +29,7 @@ _REQUESTS = (
     "evaluate-expression",
     "export-figure",
     "export-items",
+    "has-singularities",
     "perform-operation",
     "python-method",
     "simplify-equation",
@@ -131,6 +140,16 @@ class PythonHelper(Graphs.PythonHelper):
                 transparent=settings.get_boolean("transparent"),
                 bbox_inches=None,
             )
+
+    @staticmethod
+    def _on_has_singularities_request(
+        self,
+        equation: str,
+        xstart: float,
+        xstop: float,
+    ) -> None:
+        domain = sympy.Interval(xstart, xstop)
+        return singularities(sympy.sympify(equation), misc.X, domain)
 
     @staticmethod
     def _on_perform_operation_request(

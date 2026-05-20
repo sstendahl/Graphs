@@ -54,6 +54,14 @@ namespace Graphs {
                 default: assert_not_reached ();
             }
         }
+
+        public bool is_logarithmic () {
+            return this == LOG || this == LOG2;
+        }
+
+        public bool is_nonzero () {
+            return is_logarithmic () || this == SQUAREROOT;
+        }
     }
 
     public static string scale_to_string (Scale scale) {
