@@ -43,6 +43,16 @@ python.install_sources(
          subdir: 'graphs',
 )
 
+c_helpers = static_library('c_helpers',
+  files(
+    'utilities.c',
+  ),
+  include_directories: include_directories('.'),
+               c_args: ['-O3', '-fopenmp-simd', '-Wall'],
+              install: false,
+                  pic: true,
+)
+
 configure_file(
          output: 'config.h',
   configuration: vala_conf,
@@ -79,6 +89,7 @@ graphs_lib = shared_library('graphs',
     'add_equation.vala',
     'application.vala',
     'canvas.vala',
+    'bindings.vala',
     'curve_fitting.vala',
     'data.vala',
     'export_figure.vala',
@@ -101,7 +112,9 @@ graphs_lib = shared_library('graphs',
          dependencies: dependencies + config_dep,
   include_directories: include_directories('.'),
             link_args: ['-lm'],
+            link_with: c_helpers,
             vala_args: ['--pkg=posix'],
+               c_args: ['-w'], # suppress vala generated c warnings
               install: true,
           install_dir: [true],
 )
