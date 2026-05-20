@@ -611,10 +611,6 @@ namespace Graphs {
                     used = true;
                 }
             }
-
-            public bool is_nonzero () {
-                return (scale == 1 || scale == 2 || scale == 4);
-            }
         }
 
         public void optimize_limits () {
@@ -643,8 +639,8 @@ namespace Graphs {
 
                 double min_x, max_x, min_y, max_y;
 
-                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].is_nonzero (), out min_x, out max_x)) continue;
-                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].is_nonzero (), out min_y, out max_y)) continue;
+                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].scale.is_nonzero (), out min_x, out max_x)) continue;
+                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
 
                 axes[xindex].update_min_max (min_x, max_x);
                 axes[yindex].update_min_max (min_y, max_y);
@@ -670,7 +666,7 @@ namespace Graphs {
                 );
 
                 double min_y, max_y;
-                if (!CUtilities.array_minmax (holder.get_ydata (), axes[yindex].is_nonzero (), out min_y, out max_y)) continue;
+                if (!CUtilities.array_minmax (holder.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
                 axes[yindex].update_min_max (min_y, max_y);
             }
 
@@ -684,7 +680,7 @@ namespace Graphs {
                 double max_all = axes[i].max_value;
 
                 Scale scale = axes[i].scale;
-                if (scale == Scale.LOG || scale == Scale.LOG2) {
+                if (scale.is_logarithmic ()) {
                     double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
                     double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
                     double log_span = log_max - log_min;
