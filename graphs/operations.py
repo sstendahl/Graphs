@@ -67,25 +67,6 @@ class DataHelper():
     """Helper methods that assist with the handling of the data."""
 
     @staticmethod
-    def get_xydata(
-        interaction_mode: Graphs.Mode,
-        selected_limits: tuple[float, float],
-        item: Graphs.DataItem,
-    ) -> tuple[numpy.ndarray, numpy.ndarray]:
-        """Get the X and Y data of a DataItem."""
-        xdata, ydata = item.get_xydata()
-        if interaction_mode != Graphs.Mode.SELECT:
-            return xdata, ydata
-        startx, stopx = selected_limits
-        # If startx and stopx are not out of range, that is,
-        # if the item data is within the highlight
-        if stopx < min(xdata) or startx > max(xdata):
-            return None, None
-        mask = numpy.greater_equal(xdata, startx)
-        mask &= numpy.less_equal(xdata, stopx)
-        return xdata[mask], ydata[mask]
-
-    @staticmethod
     def get_selected_limits(
         figure_settings: Graphs.FigureSettings,
         interaction_mode: Graphs.Mode,
@@ -129,15 +110,6 @@ class DataHelper():
                 scale,
             )
         return min_x, max_x
-
-    @staticmethod
-    def sort_data(
-        xdata: numpy.ndarray,
-        ydata: numpy.ndarray,
-    ) -> tuple[numpy.ndarray, numpy.ndarray]:
-        """Sort data."""
-        idx = numpy.argsort(xdata)
-        return xdata[idx], ydata[idx]
 
 
 class CommonOperations():
@@ -204,23 +176,30 @@ class CommonOperations():
                 xdata, ydata = utilities.equation_to_data(eq, lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = DataHelper().get_xydata(mode, lims, item)
-                xerr = item.get_xerr()
-                if xerr is not None and new_xerr is not None:
-                    new_xerr.extend(xerr)
+                xdata, ydata = item.get_xydata()
+                if mode == Graphs.Mode.SELECT:
+                    startx, stopx = lims
+                    # If startx and stopx are not out of range, that is,
+                    # if the item data is within the highlight
+                    if stopx < min(xdata) or startx > max(xdata):
+                        continue
+                    mask = numpy.greater_equal(xdata, startx)
+                    mask &= numpy.less_equal(xdata, stopx)
+                    xdata, ydata = xdata[mask], ydata[mask]
+
+                if item.has_xerr() and new_xerr is not None:
+                    new_xerr.extend(item.get_xerr())
                     some_x = True
                 else:
                     new_xerr = None
-                yerr = item.get_yerr()
-                if yerr is not None and new_yerr is not None:
-                    new_yerr.extend(yerr)
+                if item.has_yerr() and new_yerr is not None:
+                    new_yerr.extend(item.get_yerr())
                     some_y = True
                 else:
                     new_yerr = None
 
-            if xdata is not None and ydata is not None:
-                new_xdata.extend(xdata)
-                new_ydata.extend(ydata)
+            new_xdata.extend(xdata)
+            new_ydata.extend(ydata)
 
         if not new_xdata or not new_ydata:
             window.add_toast_string(_("No data found in highlighted area"))
@@ -230,12 +209,12 @@ class CommonOperations():
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
-        new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
+        idx = numpy.argsort(new_xdata)
         data.add_items([
             DataItem.new(
                 data.get_selected_style_params(),
-                new_xdata,
-                new_ydata,
+                new_xdata[idx],
+                new_ydata[idx],
                 xerr=new_xerr,
                 yerr=new_yerr,
                 name=_("Combined Data"),
@@ -588,7 +567,8 @@ class DataOperations():
                 new_xdata, new_ydata = xdata, ydata
         if sort:
             logging.debug("Sorting data")
-            new_xdata, new_ydata = DataHelper.sort_data(new_xdata, new_ydata)
+            idx = numpy.argsort(new_xdata)
+            new_xdata, new_ydata = new_xdata[idx], new_ydata[idx]
         item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
         return True, message
 
