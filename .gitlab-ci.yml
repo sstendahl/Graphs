@@ -36,6 +36,9 @@ stages:
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-50
   stage: build
   interruptible: true
+  before_script:
+    - pip3 install meson ninja
+    - export PATH="$HOME/.local/bin:$PATH"
   script:
     - meson setup build
     - meson compile -C build
