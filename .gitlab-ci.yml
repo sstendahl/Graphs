@@ -61,7 +61,6 @@ build@aarch64:
   stage: test
   interruptible: true
   before_script:
-    - pip install meson ninja pytest
     - pip install -r requirements.txt
   script:
     - meson test -C build
