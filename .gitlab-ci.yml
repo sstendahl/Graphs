@@ -33,7 +33,7 @@ stages:
     - when: never
 
 .build:
-  image: python:3.14
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-50
   stage: build
   interruptible: true
   before_script:
@@ -57,7 +57,7 @@ build@aarch64:
     - .build
 
 .test:
-  image: python:3.14
+  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-50
   stage: test
   interruptible: true
   before_script:
