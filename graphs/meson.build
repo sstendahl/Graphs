@@ -7,6 +7,7 @@ configure_file(
    install_mode: 'rwxr-xr-x',
     install_dir: bindir,
 )
+devenv.prepend('PATH', meson.current_build_dir())
 
 python.install_sources(
   files(
@@ -119,7 +120,7 @@ graphs_lib = shared_library('graphs',
           install_dir: [true],
 )
 
-custom_target('graphs typelib',
+graphs_typelib = custom_target('graphs typelib',
        output: 'Graphs-1.typelib',
       depends: graphs_lib,
       install: true,
