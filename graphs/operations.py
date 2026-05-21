@@ -63,53 +63,35 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
         data.optimize_limits()
 
 
-class DataHelper():
-    """Helper methods that assist with the handling of the data."""
-
-    @staticmethod
-    def get_selected_limits(
-        figure_settings: Graphs.FigureSettings,
-        interaction_mode: Graphs.Mode,
-        item: Graphs.DataItem,
-    ) -> tuple[float, float]:
-        """Get the min and max value of the item within the selected range."""
-        if item.get_xposition() == Graphs.XPosition.BOTTOM:
-            min_bottom = figure_settings.get_min_bottom()
-            max_bottom = figure_settings.get_max_bottom()
-            if interaction_mode != Graphs.Mode.SELECT:
-                return min_bottom, max_bottom
-            scale = figure_settings.get_bottom_scale()
-            min_x = Graphs.get_value_at_fraction(
-                figure_settings.get_min_selected(),
-                min_bottom,
-                max_bottom,
-                scale,
-            )
-            max_x = Graphs.get_value_at_fraction(
-                figure_settings.get_max_selected(),
-                min_bottom,
-                max_bottom,
-                scale,
-            )
-        else:
-            min_top = figure_settings.get_min_top()
-            max_top = figure_settings.get_max_top()
-            if interaction_mode != Graphs.Mode.SELECT:
-                return min_top, max_top
-            scale = figure_settings.get_top_scale()
-            min_x = Graphs.get_value_at_fraction(
-                figure_settings.get_min_selected(),
-                min_top,
-                max_top,
-                scale,
-            )
-            max_x = Graphs.get_value_at_fraction(
-                figure_settings.get_max_selected(),
-                min_top,
-                max_top,
-                scale,
-            )
+def get_selected_limits(
+    figure_settings: Graphs.FigureSettings,
+    interaction_mode: Graphs.Mode,
+    position: Graphs.XPosition,
+) -> tuple[float, float]:
+    """Get the min and max value of the item within the selected range."""
+    if position == Graphs.XPosition.BOTTOM:
+        min_x = figure_settings.get_min_bottom()
+        max_x = figure_settings.get_max_bottom()
+        scale = figure_settings.get_bottom_scale()
+    else:
+        min_x = figure_settings.get_min_top()
+        max_x = figure_settings.get_max_top()
+        scale = figure_settings.get_top_scale()
+    if interaction_mode != Graphs.Mode.SELECT:
         return min_x, max_x
+    new_min = Graphs.get_value_at_fraction(
+        figure_settings.get_min_selected(),
+        min_x,
+        max_x,
+        scale,
+    )
+    new_max = Graphs.get_value_at_fraction(
+        figure_settings.get_max_selected(),
+        min_x,
+        max_x,
+        scale,
+    )
+    return new_min, new_max
 
 
 class CommonOperations():
@@ -168,7 +150,7 @@ class CommonOperations():
             if not item.get_selected():
                 continue
 
-            lims = DataHelper.get_selected_limits(settings, mode, item)
+            lims = get_selected_limits(settings, mode, item.get_xposition())
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
@@ -239,18 +221,13 @@ class CommonOperations():
         left_scale = figure_settings.get_left_scale()
         right_scale = figure_settings.get_right_scale()
         for index, item in enumerate(data_list):
-            selected_limits = DataHelper.get_selected_limits(
-                figure_settings,
-                interaction_mode,
-                item,
-            )
-            startx, stopx = selected_limits
+            pos = item.get_xposition()
+            lims = get_selected_limits(figure_settings, interaction_mode, pos)
+            startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                xdata, ydata = utilities.equation_to_data(
-                    item.get_preprocessed_equation(),
-                    selected_limits,
-                )
+                equation = item.get_preprocessed_equation()
+                xdata, ydata = utilities.equation_to_data(equation, lims)
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
@@ -516,22 +493,20 @@ class DataOperations():
         """Execute the operation on the given item."""
         xdata, ydata = item.get_xydata()
         if interaction_mode == Graphs.Mode.SELECT:
-            startx, stopx = DataHelper.get_selected_limits(
+            startx, stopx = get_selected_limits(
                 figure_settings,
                 interaction_mode,
-                item,
+                item.get_xposition(),
             )
             # If startx and stopx are not out of range, that is,
             # if the item data is within the highlight
-            xmin = min(xdata)
-            if not (startx < xmin and stopx < xmin or (startx > max(xdata))):
-                mask = numpy.greater_equal(xdata, startx)
-                mask &= numpy.less_equal(xdata, stopx)
-                xdata, ydata = xdata[mask], ydata[mask]
-            else:
-                xdata, ydata = None, None
-        if not (xdata is not None and len(xdata) != 0):
-            return False, _("No data found within the highlighted area")
+            if stopx < min(xdata) or startx > max(xdata):
+                return False, _("No data found within the highlighted area")
+            mask = numpy.greater_equal(xdata, startx)
+            mask &= numpy.less_equal(xdata, stopx)
+            if not mask.any():
+                return False, _("No data found within the highlighted area")
+            xdata, ydata = xdata[mask], ydata[mask]
         try:
             callback = getattr(DataOperations, name)
             message = ""
