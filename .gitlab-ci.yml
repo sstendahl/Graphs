@@ -2,8 +2,14 @@ include:
   - project: "GNOME/citemplates"
     file: "flatpak/flatpak_ci_initiative.yml"
 
-.vars:
+stages:
+  - .pre
+  - build
+  - test
+
+.flatpak-vars:
   image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-50
+  interruptible: true
   variables:
     MANIFEST_PATH: build-aux/flatpak/se.sjoerd.Graphs.json
     FLATPAK_MODULE: graphs
@@ -11,33 +17,91 @@ include:
     RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
     CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
     BUNDLE: "se.sjoerd.Graphs.flatpak"
+  rules:
+    # Disable merge request runs
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+
+    # Allow main branch
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: on_success
+
+    # Allow version branches like v1.8.x, v2.0.x, etc.
+    - if: $CI_COMMIT_BRANCH =~ /^v\d+\.\d+\.x$/
+      when: on_success
+
+    - when: never
+
+.build:
+  image: python:3.14
+  stage: build
   interruptible: true
-  cache:
-    key: "$CI_JOB_NAME"
+  before_script:
+    - pip install meson ninja
+  script:
+    - meson setup build
+    - meson compile -C build
+  artifacts:
     paths:
-      - .flatpak-builder/downloads
-      - .flatpak-builder/git
-      - .flatpak-builder/cache
+      - build/
+    expire_in: 1 day
+
+# Build for x86_64
+build@x86_64:
+  extends:
+    - .build
+
+# Build for aarch64
+build@aarch64:
+  extends:
+    - .build
+
+.test:
+  image: python:3.14
+  stage: test
+  interruptible: true
+  before_script:
+    - pip install meson ninja pytest
+    - pip install -r requirements.txt
+  script:
+    - meson test -C build
+
+# Test for x86_64
+test@x86_64:
+  extends:
+    - .test
+  needs:
+    - job: build@x86_64
+      artifacts: true
+
+# Test for aarch64
+test@aarch64:
+  extends:
+    - .test
+  needs:
+    - job: build@aarch64
+      artifacts: true
 
 # Build Flatpak for x86_64
 flatpak@x86_64:
   stage: build
   extends:
     - .flatpak@x86_64
-    - .vars
+    - .flatpak-vars
 
 # Build Flatpak for aarch64
 flatpak@aarch64:
   stage: build
   extends:
     - .flatpak@aarch64
-    - .vars
+    - .flatpak-vars
 
 python-lint:
-  image: python:3.12.6
+  image: python:3.14
   stage: .pre
-  script:
+  before_script:
     - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
+  script:
     - flake8
 
 vala-lint:
