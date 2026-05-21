@@ -97,7 +97,7 @@ flatpak@aarch64:
     - .flatpak-vars
 
 python-lint:
-  image: python:3.14
+  image: python:3.12.6
   stage: .pre
   before_script:
     - pip install flake8 flake8-docstrings flake8-simplify flake8-unused-arguments flake8-quotes flake8-bugbear flake8-pie flake8-print flake8-warnings flake8-commas flake8-builtins flake8-import-order pep8-naming
