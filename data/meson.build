@@ -16,7 +16,8 @@ desktop_file = i18n.merge_file(
 desktop_file_validate = find_program('desktop-file-validate', required: false)
 if desktop_file_validate.found()
   test('Validate graphs desktop file', desktop_file_validate,
-    args: [desktop_file.full_path()],
+       args: [desktop_file.full_path()],
+    depends: desktop_file,
   )
 endif
 
@@ -39,6 +40,7 @@ if (appstreamcli.found())
   test('Validate appstream file', appstreamcli,
        args: ['validate', '--no-net', '--explain', appstream_file.full_path()],
     workdir: meson.current_build_dir(),
+    depends: appstream_file,
   )
 endif
 
