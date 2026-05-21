@@ -33,12 +33,12 @@ stages:
     - when: never
 
 .build:
-  image: quay.io/gnome_infrastructure/gnome-runtime-images:gnome-50
+  image: fedora:latest
   stage: build
   interruptible: true
   before_script:
-    - pip3 install meson ninja
-    - export PATH="$HOME/.local/bin:$PATH"
+    - dnf install -y gcc meson python3 python3-pip
+    - dnf install -y vala glib2-devel gtk4-devel libgee-devel
   script:
     - meson setup build
     - meson compile -C build
