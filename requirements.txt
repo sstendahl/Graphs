@@ -1,0 +1,6 @@
+numpy
+scipy
+matplotlib
+numexpr
+sympy
+gio_pyio
