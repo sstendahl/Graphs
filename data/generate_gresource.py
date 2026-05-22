@@ -8,7 +8,6 @@ Used at build time by meson, but is build-system-independent.
 import argparse
 import importlib.util
 import logging
-import shutil
 import sys
 from pathlib import Path
 from xml.etree import ElementTree
@@ -27,8 +26,12 @@ parser.add_argument(
     help="the output file",
 )
 parser.add_argument(
-    "dir",
-    help="Path to build directory. Files provided will be copied there.",
+    "build_dir",
+    help="Path to build directory. Generated Files will be put there.",
+)
+parser.add_argument(
+    "source_dir",
+    help="Path to source directory.",
 )
 parser.add_argument(
     "style_io",
@@ -88,11 +91,12 @@ main_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix},
 )
-current_dir = Path(args.dir)
+build_dir = Path(args.build_dir)
+source_dir = Path(args.source_dir)
 
 # Begin Other Section
 for file in args.other:
-    path = Path(shutil.copy(file, current_dir))
+    path = Path(file).resolve()
     element = ElementTree.SubElement(
         main_gresource,
         "file",
@@ -100,21 +104,20 @@ for file in args.other:
             "compressed": "True",
         },
     )
-    element.text = str(path.relative_to(current_dir))
+    element.text = str(path.relative_to(source_dir))
 # End Other Section
 
 # Begin style section
 styles = []
 style_paths = {}
-style_prefix = main_prefix + "styles/"
 styles_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
-    attrib={"prefix": style_prefix},
+    attrib={"prefix": main_prefix},
 )
-style_list = Path(current_dir, "styles.txt")
+style_list = Path(build_dir, "styles.txt")
 for style_path in args.styles:
-    style_file = Path(shutil.copy(style_path, current_dir))
+    style_file = Path(style_path).resolve()
     style_element = ElementTree.SubElement(
         styles_gresource,
         "file",
@@ -122,11 +125,11 @@ for style_path in args.styles:
             "compressed": "True",
         },
     )
-    style_element.text = str(style_file.relative_to(current_dir))
+    style_element.text = str(style_file.relative_to(source_dir))
     g_file = Gio.File.new_for_path(str(style_file))
     params = style_io.parse(g_file)
     stylename = params[1]["name"]
-    out_path = Path(current_dir, style_file.name.replace(".mplstyle", ".png"))
+    out_path = Path(build_dir, style_file.name.replace(".mplstyle", ".png"))
     style_paths[stylename] = out_path
     with open(out_path, "wb") as out_file:
         style_io.create_preview(out_file, params, "png", 31)
@@ -137,10 +140,10 @@ for style_path in args.styles:
             "compressed": "True",
         },
     )
-    preview_element.text = str(out_path.relative_to(current_dir))
+    preview_element.text = str(out_path.relative_to(build_dir))
     styles.append([
         stylename,
-        style_prefix + style_file.name,
+        main_prefix + style_file.name,
         main_prefix + out_path.name,
     ])
 styles.sort(key=lambda x: x[0].casefold())
@@ -153,7 +156,7 @@ style_list_element = ElementTree.SubElement(
         "compressed": "True",
     },
 )
-style_list_element.text = str(style_list.relative_to(current_dir))
+style_list_element.text = str(style_list.relative_to(build_dir))
 
 
 def _to_array(file_path):
@@ -171,7 +174,7 @@ for sys_style in ("Adwaita", "Yaru"):
         axis=1,
     )
     stitched_image = Image.fromarray(stitched_array)
-    out_path = Path(current_dir, "system-style-" + sys_style.lower() + ".png")
+    out_path = Path(build_dir, "system-style-" + sys_style.lower() + ".png")
     with open(out_path, "wb") as file:
         stitched_image.save(file, "PNG")
     preview_element = ElementTree.SubElement(
@@ -181,7 +184,7 @@ for sys_style in ("Adwaita", "Yaru"):
             "compressed": "True",
         },
     )
-    preview_element.text = str(out_path.relative_to(current_dir))
+    preview_element.text = str(out_path.relative_to(build_dir))
 # End style section
 
 # Begin ui section
@@ -191,7 +194,7 @@ ui_gresource = ElementTree.SubElement(
     attrib={"prefix": main_prefix},
 )
 for ui_file in args.ui:
-    path = Path(current_dir, ui_file)
+    path = Path(build_dir, ui_file)
     ui_file_element = ElementTree.SubElement(
         ui_gresource,
         "file",
@@ -199,7 +202,7 @@ for ui_file in args.ui:
             "preprocess": "xml-stripblanks",
         },
     )
-    ui_file_element.text = str(path.relative_to(current_dir))
+    ui_file_element.text = str(path.relative_to(build_dir))
 # End ui section
 
 # Begin icon section
@@ -208,16 +211,18 @@ icon_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix + "icons/scalable/actions/"},
 )
+icon_dir = Path(source_dir, "icons")
 for icon_file in args.icons:
-    path = Path(shutil.copy(icon_file, current_dir))
+    path = Path(icon_file).resolve()
     icon_file_element = ElementTree.SubElement(
         icon_gresource,
         "file",
         attrib={
             "preprocess": "xml-stripblanks",
+            "alias": str(path.relative_to(icon_dir)),
         },
     )
-    icon_file_element.text = str(path.relative_to(current_dir))
+    icon_file_element.text = str(path.relative_to(source_dir))
 # End icon section
 
 # Write
