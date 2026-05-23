@@ -4,7 +4,6 @@ namespace Graphs.MathParser {
         private unowned string src;
         private unichar c;
         private unichar decimal_separator;
-        private bool allow_custom_ident;
 
         public TokenType current_type;
         public Ident current_ident;
@@ -12,10 +11,6 @@ namespace Graphs.MathParser {
 
         private int current_start;
         private int current_end;
-
-        public Lexer (bool allow_custom_ident = false) {
-            this.allow_custom_ident = allow_custom_ident;
-        }
 
         public void start_lexing (string src, unichar decimal_separator = '.') throws MathError {
             this.src = src;
@@ -168,8 +163,6 @@ namespace Graphs.MathParser {
         }
 
         private inline void fail_identifier (ref int state) throws MathError {
-            if (!allow_custom_ident)
-                throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
             current_ident = Ident.CUSTOM;
             state = 200;
         }
@@ -440,10 +433,7 @@ namespace Graphs.MathParser {
                 if (!src.get_next_char (ref tmp_idx, out c)
                     || !(c.isalnum () || c == 'π')
                     || is_superscript (c)) {
-                    if (state == 10) {
-                        current_ident = Ident.E;
-                    } else if (current_ident == Ident.CUSTOM && !allow_custom_ident)
-                        throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
+                    if (state == 10) current_ident = Ident.E;
                     break;
                 }
 

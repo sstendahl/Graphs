@@ -90,7 +90,7 @@ namespace Graphs.MathTools {
     public static string[] get_free_variables (string equation) throws MathError {
         HashSet<string> strings = new HashSet<string> ();
 
-        MathParser.Lexer lexer = new MathParser.Lexer (true);
+        MathParser.Lexer lexer = new MathParser.Lexer ();
         lexer.start_lexing (equation);
 
         // we assume a correct input so we are only interested in custom idents

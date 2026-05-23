@@ -6,7 +6,8 @@ namespace Graphs {
      */
     public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
         try {
-            result = MathParser.Evaluator.instance ().parse (expression, decimal_separator);
+            var ast = MathParser.Parser.instance ().parse (expression, decimal_separator);
+            result = MathParser.Evaluator.instance ().eval (ast);
             return true;
         } catch (Error e) {
             result = 0;
@@ -23,7 +24,8 @@ namespace Graphs {
      * Evaluate a string to a double.
      */
     public static double evaluate_string (string expression) throws MathError {
-        return MathParser.Evaluator.instance ().parse (expression);
+        var ast = MathParser.Parser.instance ().parse (expression);
+        return MathParser.Evaluator.instance ().eval (ast);
     }
 
     // This method exists separately as optional arguments are not automatically
@@ -32,21 +34,24 @@ namespace Graphs {
      * Evaluate a string to a double with given decimal separator.
      */
     public static double evaluate_string_with_separator (string expression, unichar separator) throws MathError {
-        return MathParser.Evaluator.instance ().parse (expression, separator);
+        var ast = MathParser.Parser.instance ().parse (expression, separator);
+        return MathParser.Evaluator.instance ().eval (ast);
     }
 
     /**
      * Preprocess an equation to be compatible with numexpr syntax.
      */
     public static string preprocess_equation (string equation) throws MathError {
-        return MathParser.Preprocessor.instance ().preprocess (equation);
+        var ast = MathParser.Parser.instance ().parse (equation);
+        return MathParser.Printer.instance ().print (ast);
     }
 
     /**
      * Return an equation in a prettier, more humanly readable, format.
      */
     public static string prettify_equation (string equation) throws MathError {
-        string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
+        var ast = MathParser.Parser.instance ().parse (equation);
+        string result = MathParser.Printer.instance ().print (ast, true);
 
         // remove asterisk between parentheses
         result = result.replace (")*(", "()");
@@ -96,6 +101,59 @@ namespace Graphs {
             ABS,
 
             CUSTOM
+        }
+
+        private abstract class Expression {}
+
+        private class NumberExpression : Expression {
+            public double val;
+            public NumberExpression (double v) { val = v; }
+        }
+
+        private class VariableExpression : Expression {
+            public string name;
+            public VariableExpression (string n) { name = n; }
+        }
+
+        private class UnaryExpression : Expression {
+            public TokenType op;
+            public Expression expr;
+            public UnaryExpression (TokenType op, Expression e) {
+                this.op = op;
+                this.expr = e;
+            }
+        }
+
+        private class BinaryExpression : Expression {
+            public TokenType op;
+            public Expression left;
+            public Expression right;
+
+            public BinaryExpression (Expression l, TokenType op, Expression r) {
+                this.left = l;
+                this.op = op;
+                this.right = r;
+            }
+        }
+
+        private class FunctionExpression : Expression {
+            public Ident ident;
+            public Expression arg;
+
+            public FunctionExpression (Ident id, Expression arg) {
+                this.ident = id;
+                this.arg = arg;
+            }
+        }
+
+        private class PostfixExpression : Expression {
+            public Expression expr;
+            public TokenType op;
+
+            public PostfixExpression (Expression e, TokenType op) {
+                this.expr = e;
+                this.op = op;
+            }
         }
 
         private static inline long factorial (int n) {
