@@ -8,9 +8,9 @@ namespace Graphs.MathParser {
         }
 
         public double eval (Expression expr) throws MathError {
-            if (expr is VariableExpression)
-                throw new MathError.UNKNOWN_FUNCTION ("variables not allowed");
+            if (expr is VariableExpression) return variable ((VariableExpression) expr);
             if (expr is NumberExpression)   return number ((NumberExpression) expr);
+            if (expr is ConstantExpression) return constant ((ConstantExpression) expr);
             if (expr is UnaryExpression)    return unary ((UnaryExpression) expr);
             if (expr is BinaryExpression)   return binary ((BinaryExpression) expr);
             if (expr is FunctionExpression) return function ((FunctionExpression) expr);
@@ -21,6 +21,14 @@ namespace Graphs.MathParser {
 
         private double number (NumberExpression expr) throws MathError {
             return expr.val;
+        }
+
+        private double constant (ConstantExpression expr) throws MathError {
+            return expr.val ();
+        }
+
+        private double variable (VariableExpression expr) throws MathError {
+            throw new MathError.UNKNOWN_FUNCTION ("variables not allowed");
         }
 
         private double unary (UnaryExpression expr) throws MathError {

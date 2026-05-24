@@ -17,13 +17,14 @@ namespace Graphs.MathParser {
             return builder.free_and_steal ();
         }
 
-        private void emit (Expression node) throws MathError {
-            if (node is NumberExpression)   { number ((NumberExpression) node); return; }
-            if (node is VariableExpression) { variable ((VariableExpression) node); return; }
-            if (node is UnaryExpression)    { unary ((UnaryExpression) node); return; }
-            if (node is BinaryExpression)   { binary ((BinaryExpression) node); return; }
-            if (node is FunctionExpression) { function ((FunctionExpression) node); return; }
-            if (node is PostfixExpression)  { postfix ((PostfixExpression) node); return; }
+        private void emit (Expression expr) throws MathError {
+            if (expr is NumberExpression)   { number ((NumberExpression) expr); return; }
+            if (expr is ConstantExpression) { constant ((ConstantExpression) expr); return; }
+            if (expr is VariableExpression) { variable ((VariableExpression) expr); return; }
+            if (expr is UnaryExpression)    { unary ((UnaryExpression) expr); return; }
+            if (expr is BinaryExpression)   { binary ((BinaryExpression) expr); return; }
+            if (expr is FunctionExpression) { function ((FunctionExpression) expr); return; }
+            if (expr is PostfixExpression)  { postfix ((PostfixExpression) expr); return; }
 
             assert_not_reached ();
         }
@@ -33,6 +34,20 @@ namespace Graphs.MathParser {
 
         private void variable (VariableExpression expr) throws MathError {
             builder.append (expr.name.down ());
+        }
+
+        private void constant (ConstantExpression expr) throws MathError {
+            if (!prettify) {
+                builder.append_printf ("%.15g", expr.val ());
+                return;
+            }
+
+            switch (expr.constant) {
+                case Ident.PI: builder.append ("pi"); return;
+                case Ident.E: builder.append_c ('e'); return;
+                case Ident.INF: builder.append ("inf"); return;
+                default: throw new MathError.UNKNOWN_FUNCTION ("invalid constant");
+            }
         }
 
         private void number (NumberExpression expr) throws MathError {
@@ -110,6 +125,14 @@ namespace Graphs.MathParser {
 
         private void function (FunctionExpression expr) throws MathError {
             Ident id = expr.ident;
+
+            if (prettify) {
+                builder.append (id.to_string ()[13:].down ());
+                builder.append_c ('(');
+                emit (expr.arg);
+                builder.append_c (')');
+                return;
+            }
 
             function_pre (id);
             emit (expr.arg);

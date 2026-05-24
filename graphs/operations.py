@@ -6,7 +6,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import misc, utilities
+from graphs import ast, misc, utilities
 from graphs.item import DataItem
 
 import numexpr
@@ -154,7 +154,7 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
-                eq = item.get_preprocessed_equation()
+                eq = Graphs.ast_to_numexpr(item.get_ast())
                 xdata, ydata = utilities.equation_to_data(eq, lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
@@ -226,7 +226,7 @@ class CommonOperations():
             startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                equation = item.get_preprocessed_equation()
+                equation = Graphs.ast_to_numexpr(item.get_ast())
                 xdata, ydata = utilities.equation_to_data(equation, lims)
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
@@ -281,15 +281,16 @@ class CommonOperations():
                 continue
             shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
             if isinstance(item, Graphs.EquationItem):
-                equation = item.get_preprocessed_equation()
+                equation = ast.sympify(item.get_ast())
                 if scale == Graphs.Scale.LOG:
-                    equation = f"({equation})*10**{shift_value}"
+                    equation = equation * 10 ** shift_value
                 elif scale == Graphs.Scale.LOG2:
-                    equation = f"({equation})*2**{shift_value}"
+                    equation = equation * 2 ** shift_value
                 else:
-                    equation = f"{equation}+{shift_value}"
+                    equation = equation + shift_value
                 equation = str(sympy.simplify(equation))
-                item.set_equation(Graphs.prettify_equation(equation))
+                equation = Graphs.ast_to_expression(equation)
+                item.set_ast(equation)
                 continue
             if isinstance(item, Graphs.DataItem):
                 if scale == Graphs.Scale.LOG:
@@ -330,10 +331,12 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            equation = item.get_preprocessed_equation()
-            equation = str(sympy.simplify(callback(equation, *args)))
+            equation = ast.sympify(item.get_ast())
+            equation = callback(equation, *args)
+            equation = Graphs.expression_to_ast(str(sympy.simplify(equation)))
             try:
-                numexpr.evaluate(equation, local_dict={"x": XDATA})
+                preprocessed = Graphs.ast_to_numexpr(equation)
+                numexpr.evaluate(preprocessed, local_dict={"x": XDATA})
             except (KeyError, SyntaxError, ValueError, TypeError) as e:
                 raise misc.InvalidEquationError(
                     _(
@@ -341,7 +344,7 @@ class EquationOperations():
                         "did not result in a plottable equation",
                     ).format(name=item.get_name()),
                 ) from e
-            item.set_equation(Graphs.prettify_equation(equation))
+            item.set_ast(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
         except (NotImplementedError, AttributeError, KeyError):
@@ -351,28 +354,28 @@ class EquationOperations():
     @staticmethod
     def translate_x(equation, offset) -> str:
         """Translate all selected data on the x-axis."""
-        return re.sub(r"(?<!e)x(?!p)", f"(x+{offset})", equation)
+        return equation.subs(misc.X, misc.X + offset)
 
     @staticmethod
     def translate_y(equation, offset) -> str:
         """Translate all selected data on the y-axis."""
-        return f"({equation})+{offset}"
+        return equation + offset
 
     @staticmethod
     def multiply_x(equation, multiplier: float) -> str:
         """Multiply all selected data on the x-axis."""
-        return re.sub(r"(?<!e)x(?!p)", f"(x*{multiplier})", equation)
+        return equation.subs(misc.X, misc.X * multiplier)
 
     @staticmethod
     def multiply_y(equation, multiplier: float) -> str:
         """Multiply all selected data on the y-axis."""
-        return f"({equation})*{multiplier}"
+        return equation * multiplier
 
     @staticmethod
     def normalize(equation, limits) -> str:
         """Normalize all selected data."""
         ydata = utilities.equation_to_data(equation, limits)[1]
-        return f"({equation})/{max(ydata)}"
+        return equation / max(ydata)
 
     @staticmethod
     def center(equation, limits, center_maximum: int) -> str:
@@ -382,62 +385,57 @@ class EquationOperations():
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        xdata, ydata = utilities.equation_to_data(equation, limits)
+        x = misc.X
+        low, high = limits
         if center_maximum == 0:  # Center at maximum Y
-            x = misc.X
-            equation = sympy.sympify(equation)
             derivative = sympy.diff(equation, x)
             critical_points = sympy.solveset(
                 derivative,
                 x,
-                domain=sympy.Interval(limits[0], limits[1]),
+                domain=sympy.Interval(low, high),
             )
-            endpoints = \
-                [equation.subs(x, limits[0]), equation.subs(x, limits[1])]
 
-            try:
-                critical_values = \
-                    [equation.subs(x, cp) for cp in critical_points]
-                if critical_values:
-                    max_index = critical_values.index(max(critical_values))
-                    middle_value = list(critical_points)[max_index]
-                else:
-                    max_index = endpoints.index(max(endpoints))
-                    middle_value = [limits[0], limits[1]][max_index]
+            candidates = []
+            candidates.extend([low, high])
 
-            # If we don't manage to solve this analytically, just find
-            # the maximum by calculating
-            except TypeError:
-                middle_index = numpy.argmax(ydata)
-                middle_value = xdata[middle_index]
+            if isinstance(critical_points, sympy.FiniteSet):
+                for point in critical_points:
+                    try:
+                        candidates.append(float(point))
+                    except TypeError:
+                        continue
 
+            values = [equation.subs(x, c) for c in candidates]
+
+            best_index = max(range(len(values)), key=lambda i: values[i])
+            middle_value = candidates[best_index]
         elif center_maximum == 1:  # Center at middle
-            middle_value = (min(xdata) + max(xdata)) / 2
-        return re.sub(r"(?<!e)x(?!p)", f"(x+{middle_value})", equation)
+            middle_value = sympy.Rational(1, 2) * (low + high)
+        return equation.subs(x, x + middle_value)
 
     @staticmethod
     def derivative(equation) -> str:
         """Calculate derivative of all selected data."""
-        return str(sympy.diff(equation, misc.X))
+        return sympy.diff(equation, misc.X)
 
     @staticmethod
     def integral(equation) -> str:
         """Calculate indefinite integral of all selected data."""
-        return str(sympy.integrate(equation, misc.X))
+        return sympy.integrate(equation, misc.X)
 
     @staticmethod
     def fft(equation) -> str:
         """Perform Fourier transformation on all selected data."""
         k = sympy.Symbol("k")
-        equation = str(sympy.fourier_transform(equation, misc.X, k))
-        return equation.replace("k", "x")
+        equation = sympy.fourier_transform(equation, misc.X, k)
+        return equation.subs(k, misc.X)
 
     @staticmethod
     def inverse_fft(equation) -> str:
         """Perform Inverse Fourier transformation on all selected data."""
         k = sympy.Symbol("k")
-        equation = str(sympy.fourier_transform(equation, misc.X, k))
-        return equation.replace("k", "x")
+        equation = sympy.fourier_transform(equation, misc.X, k)
+        return equation.subs(k, misc.X)
 
     @staticmethod
     def transform(
@@ -472,8 +470,8 @@ class EquationOperations():
                 input_x = input_x.lower().replace(key, str(value))
                 input_y = input_y.lower().replace(key, str(value))
 
-        equation = re.sub(r"(?<!e)x(?!p)", input_x, equation)
-        return input_y.lower().replace("y", equation)
+        equation = re.sub(r"(?<!e)x(?!p)", input_x, str(equation))
+        return input_y.lower().replace("y", str(equation))
 
 
 _return = (numpy.ndarray, numpy.ndarray, bool, bool)
@@ -717,17 +715,15 @@ class DataOperations():
             "x_sum": sum(xdata),
             "y_sum": sum(ydata),
         }
+        input_x = Graphs.expression_to_ast(input_x)
+        input_x = Graphs.ast_to_numexpr(input_x)
+        input_y = Graphs.expression_to_ast(input_x)
+        input_y = Graphs.ast_to_numexpr(input_x)
         # Add array of zeros to return values, such that output remains a list
         # of the correct size, even when a float is given as input.
         return (
-            numexpr.evaluate(
-                Graphs.preprocess_equation(input_x) + "+ 0*x",
-                local_dict,
-            ),
-            numexpr.evaluate(
-                Graphs.preprocess_equation(input_y) + "+ 0*y",
-                local_dict,
-            ),
+            numexpr.evaluate(input_x + "+ 0*x", local_dict),
+            numexpr.evaluate(input_y + "+ 0*y", local_dict),
             True,
             discard,
         )

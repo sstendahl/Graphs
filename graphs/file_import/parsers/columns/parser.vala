@@ -163,7 +163,7 @@ namespace Graphs {
                 if (item_settings.single_column) {
                     xlabel = "";
                     try {
-                        string equation = preprocess_equation (item_settings.equation);
+                        Expression equation = expression_to_ast (item_settings.equation);
                         xdata = PythonHelper.evaluate_expression (equation, ydata.length, "n");
                     } catch (MathError e) {
                         throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);

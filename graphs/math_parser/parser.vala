@@ -144,12 +144,11 @@ namespace Graphs.MathParser {
                     }
 
                     switch (id) {
-                        case Ident.PI: return new NumberExpression (Math.PI);
-                        case Ident.E: return new NumberExpression (Math.E);
-                        case Ident.INF: return new NumberExpression (double.INFINITY);
+                        case Ident.PI: return new ConstantExpression (Ident.PI);
+                        case Ident.E: return new ConstantExpression (Ident.E);
+                        case Ident.INF: return new ConstantExpression (Ident.INF);
                         default: throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
                     }
-
                 case TokenType.LPAREN:
                     lexer.next ();
                     Expression expr = expr ();

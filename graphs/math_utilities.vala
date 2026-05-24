@@ -94,9 +94,9 @@ namespace Graphs.MathTools {
         lexer.start_lexing (equation);
 
         // we assume a correct input so we are only interested in custom idents
-        while (lexer.current_type != MathParser.TokenType.END) {
-            if (lexer.current_type == MathParser.TokenType.IDENT
-                && lexer.current_ident == MathParser.Ident.CUSTOM) {
+        while (lexer.current_type != TokenType.END) {
+            if (lexer.current_type == TokenType.IDENT
+                && lexer.current_ident == Ident.CUSTOM) {
                 string token = lexer.get_current_token_as_string ();
                 if (token.down () != "x") strings.add (token);
             }

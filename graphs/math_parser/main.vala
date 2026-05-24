@@ -39,123 +39,27 @@ namespace Graphs {
     }
 
     /**
-     * Preprocess an equation to be compatible with numexpr syntax.
+     * Parse an Expression from string to an AST.
      */
-    public static string preprocess_equation (string equation) throws MathError {
-        var ast = MathParser.Parser.instance ().parse (equation);
-        return MathParser.Printer.instance ().print (ast);
+    public static Expression expression_to_ast (string expression) throws MathError {
+        return MathParser.Parser.instance ().parse (expression);
     }
 
     /**
-     * Return an equation in a prettier, more humanly readable, format.
+     * Convert an AST to a string
      */
-    public static string prettify_equation (string equation) throws MathError {
-        var ast = MathParser.Parser.instance ().parse (equation);
-        string result = MathParser.Printer.instance ().print (ast, true);
-
-        // remove asterisk between parentheses
-        result = result.replace (")*(", "()");
-
-        return result;
+    public static string ast_to_expression (Expression expression) throws MathError {
+        return MathParser.Printer.instance ().print (expression, true);
     }
 
-    public errordomain MathError {
-        SYNTAX,
-        UNKNOWN_FUNCTION,
-        DOMAIN,
-        DIV_ZERO
+    /**
+     * Convert an AST to a string compatible with numexpr syntax
+     */
+    public static string ast_to_numexpr (Expression expression) throws MathError {
+        return MathParser.Printer.instance ().print (expression, false);
     }
 
     namespace MathParser {
-        private enum TokenType {
-            NUMBER,
-            IDENT,
-            PLUS, MINUS, STAR, SLASH,
-            CARET,
-            FACT,
-            SUPERSCRIPT,
-            LPAREN, RPAREN,
-            END
-        }
-
-        private enum Ident {
-            // constants
-            PI,
-            E,
-            INF,
-
-            // trig
-            SIN, COS, TAN, COT, SEC, CSC,
-            SIND, COSD, TAND, COTD, SECD, CSCD,
-
-            // inverse trig
-            ASIN, ACOS, ATAN, ACOT, ASEC, ACSC,
-            ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
-
-            // misc math
-            LOG,
-            LOG2,
-            LOG10,
-            SQRT,
-            EXP,
-            ABS,
-
-            CUSTOM
-        }
-
-        private abstract class Expression {}
-
-        private class NumberExpression : Expression {
-            public double val;
-            public NumberExpression (double v) { val = v; }
-        }
-
-        private class VariableExpression : Expression {
-            public string name;
-            public VariableExpression (string n) { name = n; }
-        }
-
-        private class UnaryExpression : Expression {
-            public TokenType op;
-            public Expression expr;
-            public UnaryExpression (TokenType op, Expression e) {
-                this.op = op;
-                this.expr = e;
-            }
-        }
-
-        private class BinaryExpression : Expression {
-            public TokenType op;
-            public Expression left;
-            public Expression right;
-
-            public BinaryExpression (Expression l, TokenType op, Expression r) {
-                this.left = l;
-                this.op = op;
-                this.right = r;
-            }
-        }
-
-        private class FunctionExpression : Expression {
-            public Ident ident;
-            public Expression arg;
-
-            public FunctionExpression (Ident id, Expression arg) {
-                this.ident = id;
-                this.arg = arg;
-            }
-        }
-
-        private class PostfixExpression : Expression {
-            public Expression expr;
-            public TokenType op;
-
-            public PostfixExpression (Expression e, TokenType op) {
-                this.expr = e;
-                this.op = op;
-            }
-        }
-
         private static inline long factorial (int n) {
             long r = 1;
             for (int i = 2; i <= n; i++)

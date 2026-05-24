@@ -61,6 +61,7 @@ graphs/file_import/parsers/xry/__init__.py
 graphs/file_import/parsers/xry/parser.vala
 graphs/file_import/__init__.py
 graphs/file_import/file_import.vala
+graphs/math_parser/ast.vala
 graphs/math_parser/evaluator.vala
 graphs/math_parser/lexer.vala
 graphs/math_parser/main.vala
@@ -82,6 +83,7 @@ graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.vala
 graphs/artist.py
+graphs/ast.vala
 graphs/canvas.py
 graphs/canvas.vala
 graphs/curve_fitting.py
