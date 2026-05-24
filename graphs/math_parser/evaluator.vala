@@ -9,12 +9,12 @@ namespace Graphs.MathParser {
 
         public double eval (Expression expr) throws MathError {
             if (expr is VariableExpression) return variable ((VariableExpression) expr);
-            if (expr is NumberExpression)   return number ((NumberExpression) expr);
+            if (expr is NumberExpression) return number ((NumberExpression) expr);
             if (expr is ConstantExpression) return constant ((ConstantExpression) expr);
-            if (expr is UnaryExpression)    return unary ((UnaryExpression) expr);
-            if (expr is BinaryExpression)   return binary ((BinaryExpression) expr);
+            if (expr is UnaryExpression) return unary ((UnaryExpression) expr);
+            if (expr is BinaryExpression) return binary ((BinaryExpression) expr);
             if (expr is FunctionExpression) return function ((FunctionExpression) expr);
-            if (expr is PostfixExpression)  return postfix ((PostfixExpression) expr);
+            if (expr is PostfixExpression) return postfix ((PostfixExpression) expr);
 
             assert_not_reached ();
         }
@@ -36,7 +36,7 @@ namespace Graphs.MathParser {
 
             switch (expr.op) {
                 case TokenType.MINUS: return -v;
-                case TokenType.PLUS:  return v;
+                case TokenType.PLUS: return v;
                 default: throw new MathError.SYNTAX ("invalid unary operator");
             }
         }
@@ -46,9 +46,9 @@ namespace Graphs.MathParser {
             double r = eval (expr.right);
 
             switch (expr.op) {
-                case TokenType.PLUS:  return l + r;
+                case TokenType.PLUS: return l + r;
                 case TokenType.MINUS: return l - r;
-                case TokenType.STAR:  return l * r;
+                case TokenType.STAR: return l * r;
                 case TokenType.CARET: return Math.pow (l, r);
                 case TokenType.SUPERSCRIPT: return ipow (l, (int) r);
 

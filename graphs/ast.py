@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""
-Sympify an AST.
-"""
+"""Sympify an AST."""
 import contextlib
 
 from gi.repository import Graphs
@@ -10,43 +8,43 @@ import sympy
 from sympy.core.function import Function
 
 
-def disable_rewrite(sympy_class, name):
-    class f(sympy_class):
-        def _eval_simplify(self, **kwargs):
+def _disable_rewrite(sympy_class, name):
+    class F(sympy_class):
+        def _eval_simplify(self, **_kwargs):
             return self
 
         def _sympystr(self, printer):
             return f"{name}({printer.doprint(self.args[0])})"
 
-    return f
+    return F
 
 
-def deg_trig(sympy_func, name):
-    class f(Function):
+def _deg_trig(sympy_func, name):
+    class F(Function):
         @classmethod
         def eval(cls, x):
             if x.is_Number:
                 return sympy_func(sympy.pi * x / 180)
 
-        def _eval_rewrite_as_sympy(self, *args):
+        def _eval_rewrite_as_sympy(self, *_args):
             x = self.args[0]
             return sympy_func(sympy.pi * x / 180)
 
-    return disable_rewrite(f, name)
+    return _disable_rewrite(F, name)
 
 
-def deg_inv_trig(sympy_func, name):
-    class f(Function):
+def _deg_inv_trig(sympy_func, name):
+    class F(Function):
         @classmethod
         def eval(cls, x):
             if x.is_Number:
                 return 180 * sympy_func(x) / sympy.pi
 
-        def _eval_rewrite_as_sympy(self, *args):
+        def _eval_rewrite_as_sympy(self, *_args):
             x = self.args[0]
             return 180 * sympy_func(x) / sympy.pi
 
-    return disable_rewrite(f, name)
+    return _disable_rewrite(F, name)
 
 
 FUNCTION_MAPPING = {
@@ -56,24 +54,24 @@ FUNCTION_MAPPING = {
     Graphs.Ident.COT: sympy.cot,
     Graphs.Ident.SEC: sympy.sec,
     Graphs.Ident.CSC: sympy.csc,
-    Graphs.Ident.SIND: deg_trig(sympy.sin, "sind"),
-    Graphs.Ident.COSD: deg_trig(sympy.cos, "cosd"),
-    Graphs.Ident.TAND: deg_trig(sympy.tan, "tand"),
-    Graphs.Ident.COTD: deg_trig(sympy.cot, "cotd"),
-    Graphs.Ident.SECD: deg_trig(sympy.sec, "secd"),
-    Graphs.Ident.CSCD: deg_trig(sympy.csc, "cscd"),
+    Graphs.Ident.SIND: _deg_trig(sympy.sin, "sind"),
+    Graphs.Ident.COSD: _deg_trig(sympy.cos, "cosd"),
+    Graphs.Ident.TAND: _deg_trig(sympy.tan, "tand"),
+    Graphs.Ident.COTD: _deg_trig(sympy.cot, "cotd"),
+    Graphs.Ident.SECD: _deg_trig(sympy.sec, "secd"),
+    Graphs.Ident.CSCD: _deg_trig(sympy.csc, "cscd"),
     Graphs.Ident.ASIN: sympy.asin,
     Graphs.Ident.ACOS: sympy.acos,
     Graphs.Ident.ATAN: sympy.atan,
     Graphs.Ident.ACOT: sympy.acot,
     Graphs.Ident.ASEC: sympy.asec,
     Graphs.Ident.ACSC: sympy.acsc,
-    Graphs.Ident.ASIND: deg_inv_trig(sympy.asin, "asind"),
-    Graphs.Ident.ACOSD: deg_inv_trig(sympy.acos, "acosd"),
-    Graphs.Ident.ATAND: deg_inv_trig(sympy.atan, "atand"),
-    Graphs.Ident.ACOTD: deg_inv_trig(sympy.acot, "acotd"),
-    Graphs.Ident.ASECD: deg_inv_trig(sympy.asec, "asecd"),
-    Graphs.Ident.ACSCD: deg_inv_trig(sympy.acsc, "acscd"),
+    Graphs.Ident.ASIND: _deg_inv_trig(sympy.asin, "asind"),
+    Graphs.Ident.ACOSD: _deg_inv_trig(sympy.acos, "acosd"),
+    Graphs.Ident.ATAND: _deg_inv_trig(sympy.atan, "atand"),
+    Graphs.Ident.ACOTD: _deg_inv_trig(sympy.acot, "acotd"),
+    Graphs.Ident.ASECD: _deg_inv_trig(sympy.asec, "asecd"),
+    Graphs.Ident.ACSCD: _deg_inv_trig(sympy.acsc, "acscd"),
     Graphs.Ident.SQRT: sympy.sqrt,
     Graphs.Ident.EXP: sympy.exp,
     Graphs.Ident.ABS: sympy.Abs,
@@ -82,7 +80,6 @@ FUNCTION_MAPPING = {
 
 def sympify(expr):
     """Sympify an Expression."""
-
     if isinstance(expr, Graphs.NumberExpression):
         return sympy.Float(expr.val)
 
@@ -133,12 +130,12 @@ def sympify(expr):
 
     elif isinstance(expr, Graphs.FunctionExpression):
         arg = sympify(expr.arg)
-        id = expr.ident
+        ident = expr.ident
 
         with contextlib.suppress(KeyError):
-            return FUNCTION_MAPPING[id](arg)
+            return FUNCTION_MAPPING[ident](arg)
 
-        match id:
+        match ident:
             case Graphs.Ident.LOG:
                 return sympy.log(arg, 10)
             case Graphs.Ident.LOG2:
@@ -146,7 +143,7 @@ def sympify(expr):
             case Graphs.Ident.LOG10:
                 return sympy.log(arg, 10)
             case _:
-                raise ValueError(f"unsupported function identifier: {id}")
+                raise ValueError(f"unsupported function identifier: {ident}")
 
     elif isinstance(expr, Graphs.PostfixExpression):
         match expr.op:

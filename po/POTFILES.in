@@ -83,7 +83,7 @@ graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.vala
 graphs/artist.py
-graphs/ast.vala
+graphs/ast.py
 graphs/canvas.py
 graphs/canvas.vala
 graphs/curve_fitting.py

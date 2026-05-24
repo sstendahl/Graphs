@@ -18,13 +18,13 @@ namespace Graphs.MathParser {
         }
 
         private void emit (Expression expr) throws MathError {
-            if (expr is NumberExpression)   { number ((NumberExpression) expr); return; }
+            if (expr is NumberExpression) { number ((NumberExpression) expr); return; }
             if (expr is ConstantExpression) { constant ((ConstantExpression) expr); return; }
             if (expr is VariableExpression) { variable ((VariableExpression) expr); return; }
-            if (expr is UnaryExpression)    { unary ((UnaryExpression) expr); return; }
-            if (expr is BinaryExpression)   { binary ((BinaryExpression) expr); return; }
+            if (expr is UnaryExpression) { unary ((UnaryExpression) expr); return; }
+            if (expr is BinaryExpression) { binary ((BinaryExpression) expr); return; }
             if (expr is FunctionExpression) { function ((FunctionExpression) expr); return; }
-            if (expr is PostfixExpression)  { postfix ((PostfixExpression) expr); return; }
+            if (expr is PostfixExpression) { postfix ((PostfixExpression) expr); return; }
 
             assert_not_reached ();
         }
@@ -96,9 +96,9 @@ namespace Graphs.MathParser {
             if (need_parens_left) builder.append_c (')');
 
             switch (expr.op) {
-                case TokenType.PLUS:  builder.append (" + "); break;
+                case TokenType.PLUS: builder.append (" + "); break;
                 case TokenType.MINUS: builder.append (" - "); break;
-                case TokenType.STAR:  builder.append (" * "); break;
+                case TokenType.STAR: builder.append (" * "); break;
                 case TokenType.SLASH: builder.append (" / "); break;
                 case TokenType.CARET:
                 case TokenType.SUPERSCRIPT:
