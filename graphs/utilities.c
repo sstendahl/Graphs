@@ -231,3 +231,52 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
 
   return out;
 }
+
+size_t
+filter_nonfinite (double *xdata, double *ydata, size_t n)
+{
+  if (!xdata || !ydata || n == 0)
+    return 0;
+
+  char *mask = (char *)malloc (n * sizeof (char));
+  size_t *prefix = (size_t *)malloc (n * sizeof (size_t));
+
+  if (!mask || !prefix)
+    {
+      free (mask);
+      free (prefix);
+      return 0;
+    }
+
+  /* Build a mask for finite values */
+#pragma omp parallel for
+  for (size_t i = 0; i < n; ++i)
+    {
+      mask[i] = isfinite (ydata[i]) ? 1 : 0;
+    }
+
+  /* Build a prefix sum - carries loop depenency */
+  int count = 0;
+  for (size_t i = 0; i < n; ++i)
+    {
+      prefix[i] = count;
+      count += mask[i];
+    }
+
+  /* Compact data in place */
+#pragma omp parallel for
+  for (size_t i = 0; i < n; ++i)
+    {
+      if (mask[i])
+        {
+          size_t dst = prefix[i];
+          xdata[dst] = xdata[i];
+          ydata[dst] = ydata[i];
+        }
+    }
+
+  free (mask);
+  free (prefix);
+
+  return count;
+}

@@ -127,6 +127,12 @@ namespace Graphs.MathTools {
         double[] xdata = new double[steps];
         CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
         double[] ydata = evaluate_expression_array (equation, xdata);
+
+        int filtered_size = CUtilities.filter_nonfinite (xdata, ydata, xdata.length);
+        if (filtered_size < xdata.length) {
+            xdata.resize (filtered_size);
+            ydata.resize (filtered_size);
+        }
         return new DataHolder ((owned) xdata, (owned) ydata, null, null);
     }
 

@@ -22,3 +22,5 @@ bool arange (double *out, size_t steps);
 
 bool create_equidistant_data (double start, double stop, Scale scale,
                               double *out, size_t steps);
+
+size_t filter_nonfinite (double *xdata, double *ydata, size_t n);

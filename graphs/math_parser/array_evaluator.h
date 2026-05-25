@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 /* This is a copy of the enum in ast.vala */
 typedef enum
 {
@@ -39,6 +41,6 @@ double factorial (double x);
 
 double ipow (double base, int exp);
 
-void eval_array (const Instruction *program, int plen,
-                 const double *restrict xdata, int xn, double *restrict ydata,
-                 int yn);
+void eval_array (const Instruction *program, size_t plen,
+                 const double *restrict xdata, double *restrict ydata,
+                 size_t n);

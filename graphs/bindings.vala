@@ -30,4 +30,13 @@ namespace Graphs.CUtilities {
         [CCode (array_length = true)]
         double[] out
     );
+
+    [CCode (cname = "filter_nonfinite")]
+    public extern int filter_nonfinite (
+        [CCode (array_length = false)]
+        double[] xdata,
+        [CCode (array_length = false)]
+        double[] ydata,
+        size_t n
+    );
 }

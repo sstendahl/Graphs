@@ -58,7 +58,7 @@ namespace Graphs {
     public static double[] evaluate_expression_array (Expression expression, double[] xdata, string variable = "x") throws MathError {
         var program = MathParser.Compiler.instance ().compile (expression, variable);
         double[] ydata = new double[xdata.length];
-        MathParser.eval_array (program, xdata, ydata);
+        MathParser.eval_array (program, xdata, ydata, xdata.length);
         return ydata;
     }
 
@@ -81,10 +81,11 @@ namespace Graphs {
         private extern void eval_array (
             [CCode (array_length = true)]
             Instruction[] program,
-            [CCode (array_length = true)]
+            [CCode (array_length = false)]
             double[] xdata,
-            [CCode (array_length = true)]
-            double[] ydata
+            [CCode (array_length = false)]
+            double[] ydata,
+            size_t n
         );
     }
 }

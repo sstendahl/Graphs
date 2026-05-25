@@ -19,33 +19,32 @@ ipow (double base, int exp)
 {
   double result = 1;
 
-  while (exp > 0) {
-      if (exp & 1) result *= base;
+  while (exp > 0)
+    {
+      if (exp & 1)
+        result *= base;
       base *= base;
       exp >>= 1;
-  }
+    }
 
   return result;
 }
 
 void
-eval_array (const Instruction *program, int plen, const double *restrict xdata,
-            int xn, double *restrict ydata, int yn)
+eval_array (const Instruction *program, size_t plen,
+            const double *restrict xdata, double *restrict ydata, size_t n)
 {
-  if (xn != yn)
-    return;
-
 #pragma omp parallel for schedule(static)
-  for (int i = 0; i < xn; i++)
+  for (size_t i = 0; i < n; i++)
     {
 
-      double stack[STACK_MAX] = {0};
+      double stack[STACK_MAX] = { 0 };
       int sp = 0;
 
       double x = xdata[i];
 
 #pragma omp simd
-      for (int pc = 0; pc < plen; pc++)
+      for (size_t pc = 0; pc < plen; pc++)
         {
 
           Instruction ins = program[pc];
