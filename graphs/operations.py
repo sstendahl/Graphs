@@ -384,7 +384,7 @@ class EquationOperations():
     @staticmethod
     def normalize(equation, limits) -> str:
         """Normalize all selected data."""
-        domain = sympy.Interval(*lims)
+        domain = sympy.Interval(*limits)
         return equation / sympy.maximum(equation, misc.X, domain)
 
     @staticmethod
@@ -716,9 +716,7 @@ class DataOperations():
         discard: bool = False,
     ) -> _return:
         """Perform custom transformation."""
-        local_dict = {
-            "x": xdata,
-            "y": ydata,
+        vars = {
             "x_min": min(xdata),
             "x_max": max(xdata),
             "y_min": min(ydata),
@@ -733,15 +731,13 @@ class DataOperations():
             "x_sum": sum(xdata),
             "y_sum": sum(ydata),
         }
-        input_x = Graphs.expression_to_ast(input_x)
-        input_x = Graphs.ast_to_numexpr(input_x)
-        input_y = Graphs.expression_to_ast(input_y)
-        input_y = Graphs.ast_to_numexpr(input_y)
-        # Add array of zeros to return values, such that output remains a list
-        # of the correct size, even when a float is given as input.
-        return (
-            numexpr.evaluate(input_x + "+ 0*x", local_dict),
-            numexpr.evaluate(input_y + "+ 0*y", local_dict),
-            True,
-            discard,
-        )
+        expr_x = ast.sympify(Graphs.expression_to_ast(input_x)).subs(vars)
+        expr_y = ast.sympify(Graphs.expression_to_ast(input_y)).subs(vars)
+
+        f_x = sympy.lambdify((misc.X, misc.Y), expr_x, modules="scipy")
+        f_y = sympy.lambdify((misc.X, misc.Y), expr_y, modules="scipy")
+
+        out_x = f_x(xdata, ydata)
+        out_y = f_y(xdata, ydata)
+
+        return out_x, out_y, True, discard
