@@ -53,13 +53,6 @@ namespace Graphs {
     }
 
     /**
-     * Convert an AST to a string compatible with numexpr syntax
-     */
-    public static string ast_to_numexpr (Expression expression) throws MathError {
-        return MathParser.Printer.instance ().print (expression, false);
-    }
-
-    /**
      * Evaluate an AST to a double array.
      */
     public static double[] evaluate_expression_array (Expression expression, double[] xdata, string variable = "x") throws MathError {

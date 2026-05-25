@@ -9,8 +9,6 @@ from gi.repository import Gio, Graphs
 from graphs import ast, misc, utilities
 from graphs.item import DataItem
 
-import numexpr
-
 import numpy
 
 import scipy

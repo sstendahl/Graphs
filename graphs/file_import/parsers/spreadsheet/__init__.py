@@ -12,10 +12,6 @@ from graphs.file_import.parsers import Parser
 from graphs.item import DataItem
 from graphs.misc import ParseError
 
-import numexpr
-
-import numpy
-
 # XML Namespaces
 ODS_TABLE_NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:table:1.0"
 XLSX_MAIN_NAMESPACE = \

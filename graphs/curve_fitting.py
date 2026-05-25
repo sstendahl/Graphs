@@ -7,8 +7,6 @@ from gi.repository import Gio, Graphs
 from graphs import ast, canvas
 from graphs.item import DataItem, FillItem
 
-import numexpr
-
 import numpy
 
 from scipy.optimize import _minpack, curve_fit
