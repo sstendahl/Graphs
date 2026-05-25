@@ -57,8 +57,15 @@ def _save_item(
             limits = [limits[0], limits[1]]
         else:
             limits = [limits[2], limits[3]]
-        equation = Graphs.ast_to_numexpr(item.get_ast())
-        xdata, ydata = utilities.equation_to_data(equation, limits)
+        holder = Graphs.math_tools_equation_to_data(
+            item.get_ast(),
+            limits[0],
+            limits[1],
+            5000,
+            Graphs.Scale.LINEAR,
+        )
+        xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
+        ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
 
     n_cols = 2 + (xerr is not None) + (yerr is not None)
     fmt = delimiter.join(["%.12e"] * n_cols)

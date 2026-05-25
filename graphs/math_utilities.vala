@@ -106,4 +106,46 @@ namespace Graphs.MathTools {
 
         return strings.to_array ();
     }
+
+    public static double[] arange (int steps) {
+        double[] result = new double[steps];
+        CUtilities.arange (result);
+        return result;
+    }
+
+    public static double[] evaluate_expression (Expression expr, int length, string variable) {
+        double[] input = arange (length);
+        return evaluate_expression_array (expr, input, variable);
+    }
+
+    public static Bytes evaluate_expression_b (Expression expr, int length, string variable) {
+        double[] output = evaluate_expression (expr, length, variable);
+        return new Bytes.take ((uint8[]) output);
+    }
+
+    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) {
+        double[] xdata = new double[steps];
+        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
+        double[] ydata = evaluate_expression_array (equation, xdata);
+        return new DataHolder ((owned) xdata, (owned) ydata, null, null);
+    }
+
+    private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    public static bool validate_expression (Expression expression) {
+        try {
+            double[] ydata = evaluate_expression_array (expression, XDATA);
+            return CUtilities.finite_double (ydata);
+        } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public static bool validate_equation (string equation) {
+        try {
+            return validate_expression (expression_to_ast (equation));
+        } catch (MathError e) {
+            return false;
+        }
+    }
 }

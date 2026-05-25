@@ -25,25 +25,6 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
-        protected signal DataHolder equation_to_data_request (string equation, double xstart, double xstop, int steps, Scale scale);
-        public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps, Scale scale) {
-            try {
-                string preprocessed = ast_to_numexpr (equation);
-                return instance.equation_to_data_request.emit (preprocessed, xstart, xstop, steps, scale);
-            } catch (MathError e) { assert_not_reached (); }
-        }
-
-        private static double[] _evaluate_expression_result;
-        protected signal bool evaluate_expression_request (string equation, int steps, string variable);
-        protected static void set_evaluate_expression_result (double[] result) {
-            _evaluate_expression_result = result;
-        }
-        public static double[] evaluate_expression (Expression equation, int steps, string variable = "x") throws MathError {
-            if (!instance.evaluate_expression_request.emit (ast_to_numexpr (equation), steps, variable))
-                throw new MathError.SYNTAX ("invalid equation");
-            return (owned) _evaluate_expression_result;
-        }
-
         protected signal void export_items_request (Window window, string mode, File file, Item[] items);
         public static void export_items (Window window, string mode, File file, Item[] items) {
             instance.export_items_request.emit (window, mode, file, items);
@@ -77,16 +58,6 @@ namespace Graphs {
             try {
                 return expression_to_ast (instance.simplify_equation_request.emit (input));
             } catch (MathError e) { assert_not_reached (); }
-        }
-
-        protected signal bool validate_equation_request (string input);
-        public static bool validate_equation (string input) {
-            try {
-                Expression ast = expression_to_ast (input);
-                return instance.validate_equation_request.emit (ast_to_numexpr (ast));
-            } catch (MathError e) {
-                return false;
-            }
         }
     }
 }

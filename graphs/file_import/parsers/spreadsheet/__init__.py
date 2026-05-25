@@ -7,7 +7,7 @@ from gettext import pgettext as C_
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import file_io
+from graphs import file_io, utilities
 from graphs.file_import.parsers import Parser
 from graphs.item import DataItem
 from graphs.misc import ParseError
@@ -277,12 +277,12 @@ class SpreadsheetParser(Parser):
             if item_settings.single_column:
                 xlabel = ""
                 equation = Graphs.expression_to_ast(item_settings.equation)
-                xdata = numexpr.evaluate(
-                    Graphs.ast_to_numexpr(equation),
-                    local_dict={"n": numpy.arange(len(ydata))},
+                xdata_b = Graphs.math_tools_evaluate_expression_b(
+                    equation,
+                    len(ydata),
+                    "n",
                 )
-                if xdata.ndim == 0:
-                    xdata = numpy.full(len(ydata), xdata)
+                xdata = utilities.bytes_to_ndarray(xdata_b)
             else:
                 xdata, xlabel = parsed_columns[item_settings.column_x]
                 if len(xdata) != len(ydata):

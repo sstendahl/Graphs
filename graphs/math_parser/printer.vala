@@ -33,7 +33,7 @@ namespace Graphs.MathParser {
         private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
 
         private void variable (VariableExpression expr) throws MathError {
-            builder.append (expr.name ().down ());
+            builder.append (expr.name ());
         }
 
         private void constant (ConstantExpression expr) throws MathError {

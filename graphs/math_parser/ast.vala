@@ -167,4 +167,39 @@ namespace Graphs {
             return _op;
         }
     }
+
+    public enum OpCode {
+        PUSH_CONST,
+        PUSH_X,
+
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        POW,
+
+        NEG,
+        FACT,
+
+        SIN,
+        COS,
+        TAN,
+        LOG,
+        LOG2,
+        LOG10,
+        SQRT,
+        EXP,
+        ABS,
+
+        END
+    }
+
+    public struct Instruction {
+        public OpCode op;
+        public double val;
+    }
+
+    public class CompiledExpression {
+
+    }
 }

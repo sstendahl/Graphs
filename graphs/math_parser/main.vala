@@ -59,6 +59,16 @@ namespace Graphs {
         return MathParser.Printer.instance ().print (expression, false);
     }
 
+    /**
+     * Evaluate an AST to a double array.
+     */
+    public static double[] evaluate_expression_array (Expression expression, double[] xdata, string variable = "x") throws MathError {
+        var program = MathParser.Compiler.instance ().compile (expression, variable);
+        double[] ydata = new double[xdata.length];
+        MathParser.eval_array (program, xdata, ydata);
+        return ydata;
+    }
+
     namespace MathParser {
         private static inline long factorial (int n) {
             long r = 1;
@@ -88,5 +98,15 @@ namespace Graphs {
                 default: return false;
             }
         }
+
+        [CCode (cname = "eval_array", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern void eval_array (
+            [CCode (array_length = true)]
+            Instruction[] program,
+            [CCode (array_length = true)]
+            double[] xdata,
+            [CCode (array_length = true)]
+            double[] ydata
+        );
     }
 }

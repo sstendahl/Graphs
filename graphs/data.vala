@@ -657,7 +657,7 @@ namespace Graphs {
 
                 if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
 
-                DataHolder holder = PythonHelper.equation_to_data (
+                DataHolder holder = MathTools.equation_to_data (
                     equation,
                     min_x,
                     max_x,

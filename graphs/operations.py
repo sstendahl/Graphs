@@ -154,8 +154,15 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
-                eq = Graphs.ast_to_numexpr(item.get_ast())
-                xdata, ydata = utilities.equation_to_data(eq, lims)
+                holder = Graphs.math_tools_equation_to_data(
+                    item.get_ast(),
+                    lims[0],
+                    lims[1],
+                    5000,
+                    Graphs.Scale.LINEAR,
+                )
+                xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
+                ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
@@ -228,8 +235,15 @@ class CommonOperations():
             startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                equation = Graphs.ast_to_numexpr(item.get_ast())
-                xdata, ydata = utilities.equation_to_data(equation, lims)
+                holder = Graphs.math_tools_equation_to_data(
+                    item.get_ast(),
+                    startx,
+                    stopx,
+                    5000,
+                    Graphs.Scale.LINEAR,
+                )
+                xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
+                ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
@@ -310,9 +324,6 @@ class CommonOperations():
         return True
 
 
-XDATA = numpy.linspace(0, 10, 10)
-
-
 class EquationOperations():
     """Operations to be performed on equation items."""
 
@@ -336,16 +347,13 @@ class EquationOperations():
             equation = ast.sympify(item.get_ast())
             equation = callback(equation, *args)
             equation = Graphs.expression_to_ast(str(sympy.simplify(equation)))
-            try:
-                preprocessed = Graphs.ast_to_numexpr(equation)
-                numexpr.evaluate(preprocessed, local_dict={"x": XDATA})
-            except (KeyError, SyntaxError, ValueError, TypeError) as e:
+            if not Graphs.math_tools_validate_expression(equation):
                 raise misc.InvalidEquationError(
                     _(
                         "The operation on {name} "
                         "did not result in a plottable equation",
                     ).format(name=item.get_name()),
-                ) from e
+                )
             item.set_ast(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
@@ -376,8 +384,8 @@ class EquationOperations():
     @staticmethod
     def normalize(equation, limits) -> str:
         """Normalize all selected data."""
-        ydata = utilities.equation_to_data(equation, limits)[1]
-        return equation / max(ydata)
+        domain = sympy.Interval(*lims)
+        return equation / sympy.maximum(equation, misc.X, domain)
 
     @staticmethod
     def center(equation, limits, center_maximum: int) -> str:
@@ -448,7 +456,15 @@ class EquationOperations():
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
-        xdata, ydata = utilities.equation_to_data(equation, limits)
+        holder = Graphs.math_tools_equation_to_data(
+            Graphs.expression_to_ast(equation),
+            limits[0],
+            limits[1],
+            5000,
+            Graphs.Scale.LINEAR,
+        )
+        xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
+        ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
         local_dict = {
             "x": xdata,
             "y": ydata,

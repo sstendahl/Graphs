@@ -210,7 +210,7 @@ namespace Graphs {
 
         private void regenerate () {
             try {
-                data = PythonHelper.equation_to_data (
+                data = MathTools.equation_to_data (
                     _ast,
                     evaluate_string (xstart),
                     evaluate_string (xstop),

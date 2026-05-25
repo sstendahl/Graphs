@@ -354,9 +354,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        expression = item.get_ast()
-        self._equation = Graphs.ast_to_numexpr(expression)
-        self._expr = ast.sympify(expression)
+        self._equation = item.get_equation()
+        self._ast = item.get_ast()
+        self._expr = ast.sympify(self._ast)
         self._axis = axis
         self._view_change_timeout_id = None
         axis.callbacks.connect("xlim_changed", self._on_view_change)
@@ -395,9 +395,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     @equation.setter
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
-        expression = Graphs.expression_to_ast(equation)
-        self._equation = Graphs.ast_to_numexpr(expression)
-        self._expr = ast.sympify(expression)
+        self._equation = equation
+        self._ast = Graphs.expression_to_ast(equation)
+        self._expr = ast.sympify(self._ast)
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
@@ -423,10 +423,18 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
         upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
-        limits = (lower, upper)
 
-        data = utilities.equation_to_data(self._equation, limits, scale=scale)
-        singularities = self._find_singularities(limits)
+        holder = Graphs.math_tools_equation_to_data(
+            self._ast,
+            lower,
+            upper,
+            5000,
+            scale,
+        )
+        xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
+        ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
+        data = xdata, ydata
+        singularities = self._find_singularities(lower, upper)
         if singularities:
             data = self._insert_singularity_points(data, singularities)
 
@@ -434,9 +442,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         if self._axis.figure.parent is not None:
             self._axis.figure.parent.queue_draw()
 
-    def _find_singularities(self, limits):
-        lower, upper = limits
-
+    def _find_singularities(self, lower, upper):
         cached = self._singularities_cache.get(self._equation)
         if cached:
             cached_min, cached_max = cached["limits"]
