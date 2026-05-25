@@ -20,7 +20,7 @@ namespace Graphs.MathParser {
         }
 
         private double number (NumberExpression expr) throws MathError {
-            return expr.val;
+            return expr.val ();
         }
 
         private double constant (ConstantExpression expr) throws MathError {
@@ -32,9 +32,9 @@ namespace Graphs.MathParser {
         }
 
         private double unary (UnaryExpression expr) throws MathError {
-            double v = eval (expr.expr);
+            double v = eval (expr.expr ());
 
-            switch (expr.op) {
+            switch (expr.op ()) {
                 case TokenType.MINUS: return -v;
                 case TokenType.PLUS: return v;
                 default: throw new MathError.SYNTAX ("invalid unary operator");
@@ -42,10 +42,10 @@ namespace Graphs.MathParser {
         }
 
         private double binary (BinaryExpression expr) throws MathError {
-            double l = eval (expr.left);
-            double r = eval (expr.right);
+            double l = eval (expr.left ());
+            double r = eval (expr.right ());
 
-            switch (expr.op) {
+            switch (expr.op ()) {
                 case TokenType.PLUS: return l + r;
                 case TokenType.MINUS: return l - r;
                 case TokenType.STAR: return l * r;
@@ -62,9 +62,9 @@ namespace Graphs.MathParser {
         }
 
         private double postfix (PostfixExpression expr) throws MathError {
-            double v = eval (expr.expr);
+            double v = eval (expr.expr ());
 
-            switch (expr.op) {
+            switch (expr.op ()) {
                 case TokenType.FACT:
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
@@ -74,8 +74,8 @@ namespace Graphs.MathParser {
         }
 
         private double function (FunctionExpression expr) throws MathError {
-            double x = eval (expr.arg);
-            return call_function (expr.ident, x);
+            double x = eval (expr.arg ());
+            return call_function (expr.ident (), x);
         }
 
         private const double DEGREES_TO_RADIANS = 0.017453292519943295; // pi/180

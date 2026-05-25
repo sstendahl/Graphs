@@ -81,10 +81,10 @@ FUNCTION_MAPPING = {
 def sympify(expr):
     """Sympify an Expression."""
     if isinstance(expr, Graphs.NumberExpression):
-        return sympy.Float(expr.val)
+        return sympy.Float(expr.val())
 
     if isinstance(expr, Graphs.ConstantExpression):
-        constant = expr.constant
+        constant = expr.constant()
 
         match constant:
             case Graphs.Ident.PI:
@@ -97,24 +97,26 @@ def sympify(expr):
                 raise ValueError(f"unsupported constant operator: {constant}")
 
     elif isinstance(expr, Graphs.VariableExpression):
-        return sympy.Symbol(expr.name)
+        return sympy.Symbol(expr.name())
 
     elif isinstance(expr, Graphs.UnaryExpression):
-        inner = sympify(expr.expr)
+        inner = sympify(expr.expr())
+        op = expr.op()
 
-        match expr.op:
+        match op:
             case Graphs.TokenType.PLUS:
                 return inner
             case Graphs.TokenType.MINUS:
                 return -inner
             case _:
-                raise ValueError(f"unsupported unary operator: {expr.op}")
+                raise ValueError(f"unsupported unary operator: {op}")
 
     elif isinstance(expr, Graphs.BinaryExpression):
-        left = sympify(expr.left)
-        right = sympify(expr.right)
+        left = sympify(expr.left())
+        right = sympify(expr.right())
+        op = expr.op()
 
-        match expr.op:
+        match op:
             case Graphs.TokenType.PLUS:
                 return left + right
             case Graphs.TokenType.MINUS:
@@ -126,11 +128,11 @@ def sympify(expr):
             case Graphs.TokenType.CARET:
                 return left ** right
             case _:
-                raise ValueError(f"unsupported binary operator: {expr.op}")
+                raise ValueError(f"unsupported binary operator: {op}")
 
     elif isinstance(expr, Graphs.FunctionExpression):
-        arg = sympify(expr.arg)
-        ident = expr.ident
+        arg = sympify(expr.arg())
+        ident = expr.ident()
 
         with contextlib.suppress(KeyError):
             return FUNCTION_MAPPING[ident](arg)
@@ -146,10 +148,13 @@ def sympify(expr):
                 raise ValueError(f"unsupported function identifier: {ident}")
 
     elif isinstance(expr, Graphs.PostfixExpression):
-        match expr.op:
+        arg = sympify(expr.expr())
+        op = expr.op()
+
+        match op:
             case Graphs.TokenType.FACTORIAL:
-                return sympy.factorial(sympify(expr.expr))
+                return sympy.factorial(arg)
             case _:
-                raise ValueError(f"unsupported postfix operator: {expr.op}")
+                raise ValueError(f"unsupported postfix operator: {op}")
 
     raise TypeError(f"unknown expression type: {type(expr)}")

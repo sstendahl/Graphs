@@ -33,7 +33,7 @@ namespace Graphs.MathParser {
         private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
 
         private void variable (VariableExpression expr) throws MathError {
-            builder.append (expr.name.down ());
+            builder.append (expr.name ().down ());
         }
 
         private void constant (ConstantExpression expr) throws MathError {
@@ -42,7 +42,7 @@ namespace Graphs.MathParser {
                 return;
             }
 
-            switch (expr.constant) {
+            switch (expr.constant ()) {
                 case Ident.PI: builder.append ("pi"); return;
                 case Ident.E: builder.append_c ('e'); return;
                 case Ident.INF: builder.append ("inf"); return;
@@ -51,7 +51,7 @@ namespace Graphs.MathParser {
         }
 
         private void number (NumberExpression expr) throws MathError {
-            double v = expr.val;
+            double v = expr.val ();
 
             if (prettify) {
                 // check if it is a multiple of pi
@@ -83,19 +83,19 @@ namespace Graphs.MathParser {
         }
 
         private void unary (UnaryExpression expr) throws MathError {
-            if (expr.op == TokenType.MINUS) builder.append_c ('-');
-            emit (expr.expr);
+            if (expr.op () == TokenType.MINUS) builder.append_c ('-');
+            emit (expr.expr ());
         }
 
         private void binary (BinaryExpression expr) throws MathError {
-            bool need_parens_left = expr.left is BinaryExpression;
-            bool need_parens_right = expr.right is BinaryExpression;
+            bool need_parens_left = expr.left () is BinaryExpression;
+            bool need_parens_right = expr.right () is BinaryExpression;
 
             if (need_parens_left) builder.append_c ('(');
-            emit (expr.left);
+            emit (expr.left ());
             if (need_parens_left) builder.append_c (')');
 
-            switch (expr.op) {
+            switch (expr.op ()) {
                 case TokenType.PLUS: builder.append (" + "); break;
                 case TokenType.MINUS: builder.append (" - "); break;
                 case TokenType.STAR: builder.append (" * "); break;
@@ -108,14 +108,14 @@ namespace Graphs.MathParser {
             }
 
             if (need_parens_right) builder.append_c ('(');
-            emit (expr.right);
+            emit (expr.right ());
             if (need_parens_right) builder.append_c (')');
         }
 
         private void postfix (PostfixExpression expr) throws MathError {
-            emit (expr.expr);
+            emit (expr.expr ());
 
-            switch (expr.op) {
+            switch (expr.op ()) {
                 case TokenType.FACT:
                     builder.append_c ('!');
                     break;
@@ -124,18 +124,18 @@ namespace Graphs.MathParser {
         }
 
         private void function (FunctionExpression expr) throws MathError {
-            Ident id = expr.ident;
+            Ident id = expr.ident ();
 
             if (prettify) {
                 builder.append (id.to_string ()[13:].down ());
                 builder.append_c ('(');
-                emit (expr.arg);
+                emit (expr.arg ());
                 builder.append_c (')');
                 return;
             }
 
             function_pre (id);
-            emit (expr.arg);
+            emit (expr.arg ());
             function_post (id);
         }
 
