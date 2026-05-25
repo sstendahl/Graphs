@@ -55,11 +55,12 @@ namespace Graphs {
     /**
      * Evaluate an AST to a double array.
      */
-    public static double[] evaluate_expression_array (Expression expression, double[] xdata, string variable = "x") throws MathError {
-        var program = MathParser.Compiler.instance ().compile (expression, variable);
-        double[] ydata = new double[xdata.length];
-        MathParser.eval_array (program, xdata, ydata, xdata.length);
-        return ydata;
+    public static double[] evaluate_expression_array (Expression expression, double[] input, string variable = "x") throws MathError {
+        double[] data;
+        OpCode[] program = MathParser.Compiler.instance ().compile (expression, out data, variable);
+        double[] output = new double[input.length];
+        MathParser.eval_array (program, data, input, output , input.length);
+        return output ;
     }
 
     namespace MathParser {
@@ -80,7 +81,9 @@ namespace Graphs {
         [CCode (cname = "eval_array", cheader_filename = "math_parser/array_evaluator.h")]
         private extern void eval_array (
             [CCode (array_length = true)]
-            Instruction[] program,
+            OpCode[] program,
+            [CCode (array_length = false)]
+            double[] data,
             [CCode (array_length = false)]
             double[] xdata,
             [CCode (array_length = false)]

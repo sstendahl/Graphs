@@ -31,16 +31,10 @@ typedef enum
   END_OP
 } OpCode;
 
-typedef struct
-{
-  OpCode op;
-  double value;
-} Instruction;
-
 double factorial (double x);
 
 double ipow (double base, int exp);
 
-void eval_array (const Instruction *program, size_t plen,
+void eval_array (const OpCode *program, size_t plen, const double *data,
                  const double *restrict xdata, double *restrict ydata,
                  size_t n);

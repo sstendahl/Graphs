@@ -31,7 +31,7 @@ ipow (double base, int exp)
 }
 
 void
-eval_array (const Instruction *program, size_t plen,
+eval_array (const OpCode *program, size_t plen, const double *data,
             const double *restrict xdata, double *restrict ydata, size_t n)
 {
 #pragma omp parallel for schedule(static)
@@ -43,19 +43,18 @@ eval_array (const Instruction *program, size_t plen,
 
       double x = xdata[i];
 
+      int dc = 0;
 #pragma omp simd
       for (size_t pc = 0; pc < plen; pc++)
         {
 
-          Instruction ins = program[pc];
-
           double a, b;
 
-          switch (ins.op)
+          switch (program[pc])
             {
 
             case PUSH_CONST:
-              stack[sp++] = ins.value;
+              stack[sp++] = data[dc++];
               break;
 
             case PUSH_X:

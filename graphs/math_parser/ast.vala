@@ -194,13 +194,4 @@ namespace Graphs {
 
         END
     }
-
-    public struct Instruction {
-        public OpCode op;
-        public double val;
-    }
-
-    public class CompiledExpression {
-
-    }
 }
