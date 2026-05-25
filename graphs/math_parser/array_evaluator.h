@@ -5,9 +5,11 @@
 /* This is a copy of the enum in ast.vala */
 typedef enum
 {
+  // control
   PUSH_CONST,
   PUSH_X,
 
+  // basic operands
   ADD,
   SUB,
   MUL,
@@ -15,26 +17,32 @@ typedef enum
   POW,
   IPOW,
 
+  // pre and postfix
   NEG,
+  INV,
   FACT,
 
+  // trig
   SIN,
   COS,
   TAN,
-  LOG,
+  ASIN,
+  ACOS,
+  ATAN,
+
+  // misc
+  LN,
   LOG2,
   LOG10,
   SQRT,
   EXP,
-  ABS,
-
-  END_OP
+  ABS
 } OpCode;
 
 double factorial (double x);
 
 double ipow (double base, int exp);
 
-void eval_array (const OpCode *program, size_t plen, const double *data,
+void eval_array (const OpCode *program, const double *data, size_t plen,
                  const double *restrict xdata, double *restrict ydata,
                  size_t n);

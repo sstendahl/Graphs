@@ -13,7 +13,7 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Compiler (); });
         }
 
-        public OpCode[] compile (Expression expr, out double[] data, string variable = "x") throws MathError {
+        public int compile (Expression expr, out OpCode[] program, out double[] data, string variable = "x") throws MathError {
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
@@ -22,13 +22,13 @@ namespace Graphs.MathParser {
 
             emit (expr);
 
-            add_instruction (OpCode.END);
-
-            program.resize (n_ops);
-            data.resize (n_data);
-
+            /* At this point program may have more memory allocated than we
+             * actually use. Since we only ever use this in the array
+             * evaluator we do not need to shrink here */
+            program = (owned) this.program;
             data = (owned) this.data;
-            return (owned) program;
+
+            return n_ops;
         }
 
         private void add_instruction (OpCode op) {
@@ -41,6 +41,8 @@ namespace Graphs.MathParser {
             if (n_data >= data.length) data.resize (data.length * 2);
 
             data[n_data++] = constant;
+
+            add_instruction (OpCode.PUSH_CONST);
         }
 
         private void emit (Expression expr) throws MathError {
@@ -63,12 +65,10 @@ namespace Graphs.MathParser {
         }
 
         private void constant (ConstantExpression expr) throws MathError {
-            add_instruction (OpCode.PUSH_CONST);
             add_constant (expr.val ());
         }
 
         private void number (NumberExpression expr) throws MathError {
-            add_instruction (OpCode.PUSH_CONST);
             add_constant (expr.val ());
         }
 
@@ -105,6 +105,55 @@ namespace Graphs.MathParser {
             }
         }
 
+        private const double DEGREES_TO_RAD = Math.PI / 180;
+        private const double RAD_TO_DEGREES = 180 / Math.PI;
+
+        private void to_degrees () {
+            add_constant (RAD_TO_DEGREES);
+            add_instruction (OpCode.MUL);
+        }
+
+        private void to_rad () {
+            add_constant (DEGREES_TO_RAD);
+            add_instruction (OpCode.MUL);
+        }
+
+        private void cot () {
+            // cot(x) = 1 / tan(x)
+            add_instruction (OpCode.TAN);
+            add_instruction (OpCode.INV);
+        }
+
+        private void sec () {
+            // sec(x) = 1 / cos(x)
+            add_instruction (OpCode.COS);
+            add_instruction (OpCode.INV);
+        }
+
+        private void csc () {
+            // csc(x) = 1 / sin(x)
+            add_instruction (OpCode.SIN);
+            add_instruction (OpCode.INV);
+        }
+
+        private void acot () {
+            // acot(x) = atan(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ATAN);
+        }
+
+        private void asec () {
+            // asec(x) = acos(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ACOS);
+        }
+
+        private void acsc () {
+            // acsc(x) = asin(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ASIN);
+        }
+
         private void function (FunctionExpression expr) throws MathError {
             emit (expr.arg ());
 
@@ -112,7 +161,32 @@ namespace Graphs.MathParser {
                 case Ident.SIN: add_instruction (OpCode.SIN); return;
                 case Ident.COS: add_instruction (OpCode.COS); return;
                 case Ident.TAN: add_instruction (OpCode.TAN); return;
-                case Ident.LOG: add_instruction (OpCode.LOG); return;
+                case Ident.COT: cot (); return;
+                case Ident.SEC: sec (); return;
+                case Ident.CSC: csc (); return;
+
+                case Ident.SIND: to_rad (); add_instruction (OpCode.SIN); return;
+                case Ident.COSD: to_rad (); add_instruction (OpCode.COS); return;
+                case Ident.TAND: to_rad (); add_instruction (OpCode.TAN); return;
+                case Ident.COTD: to_rad (); cot (); return;
+                case Ident.SECD: to_rad (); sec (); return;
+                case Ident.CSCD: to_rad (); csc (); return;
+
+                case Ident.ASIN: add_instruction (OpCode.ASIN); return;
+                case Ident.ACOS: add_instruction (OpCode.ACOS); return;
+                case Ident.ATAN: add_instruction (OpCode.ATAN); return;
+                case Ident.ACOT: acot (); return;
+                case Ident.ASEC: asec (); return;
+                case Ident.ACSC: acsc (); return;
+
+                case Ident.ASIND: add_instruction (OpCode.ASIN); to_degrees (); return;
+                case Ident.ACOSD: add_instruction (OpCode.ACOS); to_degrees (); return;
+                case Ident.ATAND: add_instruction (OpCode.ATAN); to_degrees (); return;
+                case Ident.ACOTD: acot (); to_degrees (); return;
+                case Ident.ASECD: asec (); to_degrees (); return;
+                case Ident.ACSCD: acsc (); to_degrees (); return;
+
+                case Ident.LN: add_instruction (OpCode.LN); return;
                 case Ident.LOG2: add_instruction (OpCode.LOG2); return;
                 case Ident.LOG10: add_instruction (OpCode.LOG10); return;
                 case Ident.SQRT: add_instruction (OpCode.SQRT); return;

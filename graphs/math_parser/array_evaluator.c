@@ -31,7 +31,7 @@ ipow (double base, int exp)
 }
 
 void
-eval_array (const OpCode *program, size_t plen, const double *data,
+eval_array (const OpCode *program, const double *data, size_t plen,
             const double *restrict xdata, double *restrict ydata, size_t n)
 {
 #pragma omp parallel for schedule(static)
@@ -39,11 +39,11 @@ eval_array (const OpCode *program, size_t plen, const double *data,
     {
 
       double stack[STACK_MAX] = { 0 };
-      int sp = 0;
+      size_t sp = 0;
 
       double x = xdata[i];
 
-      int dc = 0;
+      size_t dc = 0;
 #pragma omp simd
       for (size_t pc = 0; pc < plen; pc++)
         {
@@ -101,6 +101,9 @@ eval_array (const OpCode *program, size_t plen, const double *data,
               stack[sp - 1] = -stack[sp - 1];
               break;
 
+            case INV:
+              stack[sp - 1] = 1 / stack[sp - 1];
+
             case FACT:
               stack[sp - 1] = factorial (stack[sp - 1]);
               break;
@@ -117,7 +120,19 @@ eval_array (const OpCode *program, size_t plen, const double *data,
               stack[sp - 1] = tan (stack[sp - 1]);
               break;
 
-            case LOG:
+            case ASIN:
+              stack[sp - 1] = asin (stack[sp - 1]);
+              break;
+
+            case ACOS:
+              stack[sp - 1] = acos (stack[sp - 1]);
+              break;
+
+            case ATAN:
+              stack[sp - 1] = atan (stack[sp - 1]);
+              break;
+
+            case LN:
               stack[sp - 1] = log (stack[sp - 1]);
               break;
 
@@ -139,10 +154,6 @@ eval_array (const OpCode *program, size_t plen, const double *data,
 
             case ABS:
               stack[sp - 1] = fabs (stack[sp - 1]);
-              break;
-
-            case END_OP:
-              pc = plen;
               break;
             }
         }

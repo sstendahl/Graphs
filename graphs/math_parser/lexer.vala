@@ -308,12 +308,13 @@ namespace Graphs.MathParser {
 
                     // l
                     case 70:
-                        if (c == 'o') state = 71;
+                        if (c == 'n') { current_ident = Ident.LN; state = 200; }
+                        else if (c == 'o') state = 71;
                         else fail_identifier (ref state); break;
 
                     // lo
                     case 71:
-                        if (c == 'g') { current_ident = Ident.LOG; state = 72; }
+                        if (c == 'g') { current_ident = Ident.LN; state = 72; }
                         else fail_identifier (ref state); break;
 
                     // log

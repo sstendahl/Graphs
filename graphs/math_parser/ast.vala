@@ -33,7 +33,7 @@ namespace Graphs {
         ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
 
         // misc math
-        LOG,
+        LN,
         LOG2,
         LOG10,
         SQRT,
@@ -169,9 +169,11 @@ namespace Graphs {
     }
 
     public enum OpCode {
+        // control
         PUSH_CONST,
         PUSH_X,
 
+        // basic operands
         ADD,
         SUB,
         MUL,
@@ -179,19 +181,25 @@ namespace Graphs {
         POW,
         IPOW,
 
+        // pre and postfix
         NEG,
+        INV,
         FACT,
 
+        // trig
         SIN,
         COS,
         TAN,
-        LOG,
+        ASIN,
+        ACOS,
+        ATAN,
+
+        // misc
+        LN,
         LOG2,
         LOG10,
         SQRT,
         EXP,
-        ABS,
-
-        END
+        ABS
     }
 }

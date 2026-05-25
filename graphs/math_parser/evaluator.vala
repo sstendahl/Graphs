@@ -116,7 +116,7 @@ namespace Graphs.MathParser {
                 case Ident.ACSCD: return Math.asin (1d / x) * RADIANS_TO_DEGREES;
 
                 // misc
-                case Ident.LOG: return Math.log (x);
+                case Ident.LN: return Math.log (x);
                 case Ident.LOG2: return Math.log2 (x);
                 case Ident.LOG10: return Math.log10 (x);
                 case Ident.SQRT: return Math.sqrt (x);
