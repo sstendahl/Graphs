@@ -191,6 +191,8 @@ class CommonOperations():
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
+        new_xdata = numpy.array(new_xdata)
+        new_ydata = numpy.array(new_ydata)
         idx = numpy.argsort(new_xdata)
         data.add_items([
             DataItem.new(
