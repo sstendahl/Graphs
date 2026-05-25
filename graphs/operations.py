@@ -714,7 +714,7 @@ class DataOperations():
         discard: bool = False,
     ) -> _return:
         """Perform custom transformation."""
-        vars = {
+        ld = {
             "x_min": min(xdata),
             "x_max": max(xdata),
             "y_min": min(ydata),
@@ -729,8 +729,9 @@ class DataOperations():
             "x_sum": sum(xdata),
             "y_sum": sum(ydata),
         }
-        expr_x = ast.sympify(Graphs.expression_to_ast(input_x)).subs(vars)
-        expr_y = ast.sympify(Graphs.expression_to_ast(input_y)).subs(vars)
+
+        expr_x = ast.sympify(Graphs.expression_to_ast(input_x)).subs(ld)
+        expr_y = ast.sympify(Graphs.expression_to_ast(input_y)).subs(ld)
 
         f_x = sympy.lambdify((misc.X, misc.Y), expr_x, modules="scipy")
         f_y = sympy.lambdify((misc.X, misc.Y), expr_y, modules="scipy")
