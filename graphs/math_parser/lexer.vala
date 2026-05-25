@@ -167,6 +167,14 @@ namespace Graphs.MathParser {
             state = 200;
         }
 
+        private static inline bool is_superscript (unichar c) {
+            switch (c) {
+                case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
+                case '⁶': case '⁷': case '⁸': case '⁹': return true;
+                default: return false;
+            }
+        }
+
         private void handle_identifier () throws MathError {
             current_type = TokenType.IDENT;
             current_ident = Ident.CUSTOM;

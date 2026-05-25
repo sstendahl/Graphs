@@ -65,14 +65,6 @@ namespace Graphs {
     }
 
     namespace MathParser {
-        private static inline bool is_superscript (unichar c) {
-            switch (c) {
-                case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
-                case '⁶': case '⁷': case '⁸': case '⁹': return true;
-                default: return false;
-            }
-        }
-
         [CCode (cname = "factorial", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double factorial (double x);
 

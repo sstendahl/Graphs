@@ -78,6 +78,22 @@ namespace Graphs.MathParser {
             emit (expr.expr ());
         }
 
+        private static inline unichar to_superscript (int i) throws MathError {
+            switch (i) {
+                case 0: return '⁰';
+                case 1: return '¹';
+                case 2: return '²';
+                case 3: return '³';
+                case 4: return '⁴';
+                case 5: return '⁵';
+                case 6: return '⁶';
+                case 7: return '⁷';
+                case 8: return '⁸';
+                case 9: return '⁹';
+                default: throw new MathError.SYNTAX ("invalid superscript");
+            }
+        }
+
         private void binary (BinaryExpression expr) throws MathError {
             bool need_parens_left = expr.left () is BinaryExpression;
             bool need_parens_right = expr.right () is BinaryExpression;
@@ -91,9 +107,12 @@ namespace Graphs.MathParser {
                 case TokenType.MINUS: builder.append (" - "); break;
                 case TokenType.STAR: builder.append (" * "); break;
                 case TokenType.SLASH: builder.append (" / "); break;
-                case TokenType.CARET:
-                case TokenType.SUPERSCRIPT: builder.append_c ('^'); break;
-                default: assert_not_reached ();
+                case TokenType.CARET: builder.append_c ('^'); break;
+                case TokenType.SUPERSCRIPT:
+                    double exp = ((NumberExpression) expr.right ()).val ();
+                    builder.append_unichar (to_superscript ((int) exp));
+                    return;
+                default: throw new MathError.SYNTAX ("invalid binary expression");
             }
 
             if (need_parens_right) builder.append_c ('(');
@@ -105,10 +124,8 @@ namespace Graphs.MathParser {
             emit (expr.expr ());
 
             switch (expr.op ()) {
-                case TokenType.FACT:
-                    builder.append_c ('!');
-                    break;
-                default: assert_not_reached ();
+                case TokenType.FACT: builder.append_c ('!'); break;
+                default: throw new MathError.SYNTAX ("invalid postfix expression");
             }
         }
 
