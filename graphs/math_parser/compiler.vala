@@ -96,6 +96,7 @@ namespace Graphs.MathParser {
                 case TokenType.STAR: i.op = OpCode.MUL; break;
                 case TokenType.SLASH: i.op = OpCode.DIV; break;
                 case TokenType.CARET: i.op = OpCode.POW; break;
+                case TokenType.SUPERSCRIPT: i.op = OpCode.IPOW; break;
                 default: throw new MathError.UNKNOWN_FUNCTION ("invalid binary operator");
             }
 

@@ -113,17 +113,17 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    public static double[] evaluate_expression (Expression expr, int length, string variable) {
+    public static double[] evaluate_expression (Expression expr, int length, string variable) throws MathError {
         double[] input = arange (length);
         return evaluate_expression_array (expr, input, variable);
     }
 
-    public static Bytes evaluate_expression_b (Expression expr, int length, string variable) {
+    public static Bytes evaluate_expression_b (Expression expr, int length, string variable) throws MathError {
         double[] output = evaluate_expression (expr, length, variable);
         return new Bytes.take ((uint8[]) output);
     }
 
-    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) {
+    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
         double[] xdata = new double[steps];
         CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
         double[] ydata = evaluate_expression_array (equation, xdata);
@@ -145,6 +145,26 @@ namespace Graphs.MathTools {
         try {
             return validate_expression (expression_to_ast (equation));
         } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public bool minmax_equation (
+        Expression equation,
+        double xstart,
+        double xstop,
+        Scale scale,
+        out double min,
+        out double max
+    ) {
+        double[] xdata = new double[5000];
+        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
+        try {
+            double[] ydata = evaluate_expression_array (equation, xdata);
+            return CUtilities.array_minmax (ydata, scale.is_nonzero (), out min, out max);
+        } catch (MathError e) {
+            min = 0;
+            max = 0;
             return false;
         }
     }

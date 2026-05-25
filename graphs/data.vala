@@ -657,16 +657,9 @@ namespace Graphs {
 
                 if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
 
-                DataHolder holder = MathTools.equation_to_data (
-                    equation,
-                    min_x,
-                    max_x,
-                    5000,
-                    axes[xindex].scale
-                );
-
                 double min_y, max_y;
-                if (!CUtilities.array_minmax (holder.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
+                if (!MathTools.minmax_equation (equation, min_x, max_x, axes[xindex].scale, out min_y, out max_y)) continue;
+
                 axes[yindex].update_min_max (min_y, max_y);
             }
 

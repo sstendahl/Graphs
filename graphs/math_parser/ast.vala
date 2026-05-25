@@ -177,6 +177,7 @@ namespace Graphs {
         MUL,
         DIV,
         POW,
+        IPOW,
 
         NEG,
         FACT,

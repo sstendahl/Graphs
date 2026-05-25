@@ -127,6 +127,8 @@ def sympify(expr):
                 return left / right
             case Graphs.TokenType.CARET:
                 return left ** right
+            case Graphs.TokenType.SUPERSCRIPT:
+                return left ** right
             case _:
                 raise ValueError(f"unsupported binary operator: {op}")
 

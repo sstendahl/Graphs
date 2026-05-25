@@ -68,7 +68,7 @@ namespace Graphs.MathParser {
                 case TokenType.FACT:
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
-                    return factorial ((int) v);
+                    return factorial (v);
                 default: throw new MathError.SYNTAX ("invalid postfix operator");
             }
         }

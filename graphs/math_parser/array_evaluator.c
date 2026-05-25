@@ -5,13 +5,27 @@
 
 #define STACK_MAX 128
 
-static inline double
+double
 factorial (double x)
 {
   if (x < 0.0)
     return NAN;
 
   return tgamma (x + 1.0);
+}
+
+double
+ipow (double base, int exp)
+{
+  double result = 1;
+
+  while (exp > 0) {
+      if (exp & 1) result *= base;
+      base *= base;
+      exp >>= 1;
+  }
+
+  return result;
 }
 
 void
@@ -77,6 +91,12 @@ eval_array (const Instruction *program, int plen, const double *restrict xdata,
               b = stack[--sp];
               a = stack[--sp];
               stack[sp++] = pow (a, b);
+              break;
+
+            case IPOW:
+              b = stack[--sp];
+              a = stack[--sp];
+              stack[sp++] = ipow (a, b);
               break;
 
             case NEG:

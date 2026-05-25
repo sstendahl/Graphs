@@ -49,7 +49,7 @@ namespace Graphs {
      * Convert an AST to a string
      */
     public static string ast_to_expression (Expression expression) throws MathError {
-        return MathParser.Printer.instance ().print (expression, true);
+        return MathParser.Printer.instance ().print (expression);
     }
 
     /**
@@ -63,27 +63,6 @@ namespace Graphs {
     }
 
     namespace MathParser {
-        private static inline long factorial (int n) {
-            long r = 1;
-            for (int i = 2; i <= n; i++)
-                r *= i;
-            return r;
-        }
-
-        private static inline double ipow (double bas, int exp) {
-            double result = 1;
-            double b = bas;
-            int e = exp;
-
-            while (e > 0) {
-                if ((e & 1) == 1) result *= b;
-                b = b * b;
-                e >>= 1;
-            }
-
-            return result;
-        }
-
         private static inline bool is_superscript (unichar c) {
             switch (c) {
                 case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
@@ -91,6 +70,12 @@ namespace Graphs {
                 default: return false;
             }
         }
+
+        [CCode (cname = "factorial", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern double factorial (double x);
+
+        [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern double ipow (double base, int exp);
 
         [CCode (cname = "eval_array", cheader_filename = "math_parser/array_evaluator.h")]
         private extern void eval_array (

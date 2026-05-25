@@ -11,6 +11,7 @@ typedef enum
   MUL,
   DIV,
   POW,
+  IPOW,
 
   NEG,
   FACT,
@@ -33,6 +34,10 @@ typedef struct
   OpCode op;
   double value;
 } Instruction;
+
+double factorial (double x);
+
+double ipow (double base, int exp);
 
 void eval_array (const Instruction *program, int plen,
                  const double *restrict xdata, int xn, double *restrict ydata,
