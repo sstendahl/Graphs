@@ -202,4 +202,22 @@ namespace Graphs {
         EXP,
         ABS
     }
+
+    public class Program {
+        private OpCode[] _program;
+        private double[] _data;
+        private int _plen;
+
+        public Program (owned OpCode[] program, owned double[] data, int plen) {
+            this._program = (owned) program;
+            this._data = (owned) data;
+            this._plen = plen;
+        }
+
+        public double[] eval (double[] input) {
+            double[] output = new double[input.length];
+            MathParser.eval_array (_program, _data, _plen, input, output, input.length);
+            return output;
+        }
+    }
 }

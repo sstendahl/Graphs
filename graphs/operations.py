@@ -152,15 +152,7 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
-                holder = Graphs.math_tools_equation_to_data(
-                    item.get_ast(),
-                    lims[0],
-                    lims[1],
-                    5000,
-                    Graphs.Scale.LINEAR,
-                )
-                xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
-                ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
+                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
@@ -233,15 +225,7 @@ class CommonOperations():
             startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                holder = Graphs.math_tools_equation_to_data(
-                    item.get_ast(),
-                    startx,
-                    stopx,
-                    5000,
-                    Graphs.Scale.LINEAR,
-                )
-                xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
-                ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
+                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
@@ -454,15 +438,10 @@ class EquationOperations():
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
-        holder = Graphs.math_tools_equation_to_data(
+        xdata, ydata = utilities.equation_to_data(
             Graphs.expression_to_ast(equation),
-            limits[0],
-            limits[1],
-            5000,
-            Graphs.Scale.LINEAR,
+            limits,
         )
-        xdata = utilities.bytes_to_ndarray(holder.get_xdata_b())
-        ydata = utilities.bytes_to_ndarray(holder.get_ydata_b())
         local_dict = {
             "x": xdata,
             "y": ydata,

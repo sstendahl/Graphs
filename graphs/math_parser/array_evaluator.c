@@ -103,6 +103,7 @@ eval_array (const OpCode *program, const double *data, size_t plen,
 
             case INV:
               stack[sp - 1] = 1 / stack[sp - 1];
+              break;
 
             case FACT:
               stack[sp - 1] = factorial (stack[sp - 1]);

@@ -53,15 +53,10 @@ namespace Graphs {
     }
 
     /**
-     * Evaluate an AST to a double array.
+     * Convert an AST to an executable array program.
      */
-    public static double[] evaluate_expression_array (Expression expression, double[] input, string variable = "x") throws MathError {
-        OpCode[] program;
-        double[] data;
-        int plen = MathParser.Compiler.instance ().compile (expression, out program, out data, variable);
-        double[] output = new double[input.length];
-        MathParser.eval_array (program, data, plen, input, output , input.length);
-        return output ;
+    public static Program ast_to_program (Expression expression, string variable = "x") throws MathError {
+        return MathParser.Compiler.instance ().compile (expression, variable);
     }
 
     namespace MathParser {

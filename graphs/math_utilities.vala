@@ -115,7 +115,7 @@ namespace Graphs.MathTools {
 
     public static double[] evaluate_expression (Expression expr, int length, string variable) throws MathError {
         double[] input = arange (length);
-        return evaluate_expression_array (expr, input, variable);
+        return ast_to_program (expr, variable).eval (input);
     }
 
     public static Bytes evaluate_expression_b (Expression expr, int length, string variable) throws MathError {
@@ -123,10 +123,10 @@ namespace Graphs.MathTools {
         return new Bytes.take ((uint8[]) output);
     }
 
-    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+    public static DataHolder program_to_data (Program program, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
         double[] xdata = new double[steps];
         CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
-        double[] ydata = evaluate_expression_array (equation, xdata);
+        double[] ydata = program.eval (xdata);
 
         int filtered_size = CUtilities.filter_nonfinite (xdata, ydata, xdata.length);
         if (filtered_size < xdata.length) {
@@ -136,11 +136,15 @@ namespace Graphs.MathTools {
         return new DataHolder ((owned) xdata, (owned) ydata, null, null);
     }
 
+    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+        return program_to_data (ast_to_program (equation), xstart, xstop, steps, scale);
+    }
+
     private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public static bool validate_expression (Expression expression) {
         try {
-            double[] ydata = evaluate_expression_array (expression, XDATA);
+            double[] ydata = ast_to_program (expression).eval (XDATA);
             return CUtilities.finite_double (ydata);
         } catch (MathError e) {
             return false;
@@ -166,7 +170,7 @@ namespace Graphs.MathTools {
         double[] xdata = new double[5000];
         CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
         try {
-            double[] ydata = evaluate_expression_array (equation, xdata);
+            double[] ydata = ast_to_program (equation).eval (xdata);
             return CUtilities.array_minmax (ydata, scale.is_nonzero (), out min, out max);
         } catch (MathError e) {
             min = 0;

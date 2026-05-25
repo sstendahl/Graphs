@@ -13,7 +13,7 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Compiler (); });
         }
 
-        public int compile (Expression expr, out OpCode[] program, out double[] data, string variable = "x") throws MathError {
+        public Program compile (Expression expr, string variable = "x") throws MathError {
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
@@ -25,10 +25,7 @@ namespace Graphs.MathParser {
             /* At this point program may have more memory allocated than we
              * actually use. Since we only ever use this in the array
              * evaluator we do not need to shrink here */
-            program = (owned) this.program;
-            data = (owned) this.data;
-
-            return n_ops;
+            return new Program ((owned) this.program, (owned) this.data, n_ops);
         }
 
         private void add_instruction (OpCode op) {
