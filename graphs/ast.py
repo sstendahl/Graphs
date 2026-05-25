@@ -152,7 +152,7 @@ def sympify(expr):
         op = expr.op()
 
         match op:
-            case Graphs.TokenType.FACTORIAL:
+            case Graphs.TokenType.FACT:
                 return sympy.factorial(arg)
             case _:
                 raise ValueError(f"unsupported postfix operator: {op}")

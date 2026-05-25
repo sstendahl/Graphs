@@ -118,7 +118,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             return numexpr.evaluate(equation, dict(zip(variables, params)))
 
         try:
-            symbolic = ast.sympify(expression, locals=sym_params_map)
+            symbolic = ast.sympify(expression)
             params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.get_p0(),

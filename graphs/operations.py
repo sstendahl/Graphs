@@ -717,8 +717,8 @@ class DataOperations():
         }
         input_x = Graphs.expression_to_ast(input_x)
         input_x = Graphs.ast_to_numexpr(input_x)
-        input_y = Graphs.expression_to_ast(input_x)
-        input_y = Graphs.ast_to_numexpr(input_x)
+        input_y = Graphs.expression_to_ast(input_y)
+        input_y = Graphs.ast_to_numexpr(input_y)
         # Add array of zeros to return values, such that output remains a list
         # of the correct size, even when a float is given as input.
         return (
