@@ -61,6 +61,7 @@ configure_file(
 config_dep = valac.find_library('config',
   dirs: join_paths(meson.project_source_root(), 'graphs'),
 )
+source_include = include_directories('.')
 graphs_lib = shared_library('graphs',
   files(
     'file_import/parsers/columns/main.vala',
@@ -111,7 +112,7 @@ graphs_lib = shared_library('graphs',
   ), gresource,
              vala_gir: 'Graphs-1.gir',
          dependencies: dependencies + config_dep,
-  include_directories: include_directories('.'),
+  include_directories: source_include,
             link_args: ['-lm'],
             link_with: c_helpers,
             vala_args: ['--pkg=posix'],
