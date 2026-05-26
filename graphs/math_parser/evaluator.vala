@@ -1,143 +1,81 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs.MathParser {
     private class Evaluator {
-        private Lexer lexer = new Lexer ();
-
         private static Once<Evaluator> _instance;
 
         public static unowned Evaluator instance () {
             return _instance.once (() => { return new Evaluator (); });
         }
 
-        public double parse (string src, unichar decimal_separator = '.') throws MathError {
-            lexer.start_lexing (src, decimal_separator);
-            double result = expr ();
-            lexer.expect_end ();
-            return result;
+        public double eval (Expression expr) throws MathError {
+            if (expr is VariableExpression) return variable ((VariableExpression) expr);
+            if (expr is NumberExpression) return number ((NumberExpression) expr);
+            if (expr is ConstantExpression) return constant ((ConstantExpression) expr);
+            if (expr is UnaryExpression) return unary ((UnaryExpression) expr);
+            if (expr is BinaryExpression) return binary ((BinaryExpression) expr);
+            if (expr is FunctionExpression) return function ((FunctionExpression) expr);
+            if (expr is PostfixExpression) return postfix ((PostfixExpression) expr);
+
+            assert_not_reached ();
         }
 
-        /* Grammar:
-           expr    -> term ((+|-) term)*
-           term    -> power ((*|/) power)*
-           term    -> power expr
-           power   -> unary ((^|**) power)?
-           unary   -> (- unary) | postfix
-           postfix -> primary (!)*
-           primary -> number | constant | func | '(' expr ')'
-        */
+        private double number (NumberExpression expr) throws MathError {
+            return expr.val ();
+        }
 
-        private double expr () throws MathError {
-            double v = term ();
-            TokenType t;
-            while (true) {
-                t = lexer.current_type;
-                if (!(t == TokenType.PLUS || t == TokenType.MINUS)) break;
-                lexer.next ();
-                double r = term ();
-                v = (t == TokenType.PLUS) ? v + r : v - r;
+        private double constant (ConstantExpression expr) throws MathError {
+            return expr.val ();
+        }
+
+        private double variable (VariableExpression expr) throws MathError {
+            throw new MathError.UNKNOWN_FUNCTION ("variables not allowed");
+        }
+
+        private double unary (UnaryExpression expr) throws MathError {
+            double v = eval (expr.expr ());
+
+            switch (expr.op ()) {
+                case TokenType.MINUS: return -v;
+                case TokenType.PLUS: return v;
+                default: throw new MathError.SYNTAX ("invalid unary operator");
             }
-            return v;
         }
 
-        private double term () throws MathError {
-            double v = power ();
+        private double binary (BinaryExpression expr) throws MathError {
+            double l = eval (expr.left ());
+            double r = eval (expr.right ());
 
-            while (true) {
-                TokenType t = lexer.current_type;
-                // explicit * or /
-                if (t == TokenType.STAR || t == TokenType.SLASH) {
-                    lexer.next ();
-                    double r = power ();
-                    if (t == TokenType.SLASH && r == 0)
+            switch (expr.op ()) {
+                case TokenType.PLUS: return l + r;
+                case TokenType.MINUS: return l - r;
+                case TokenType.STAR: return l * r;
+                case TokenType.CARET: return Math.pow (l, r);
+                case TokenType.SUPERSCRIPT: return ipow (l, (int) r);
+
+                case TokenType.SLASH:
+                    if (r == 0)
                         throw new MathError.DIV_ZERO ("division by zero");
-                    v = (t == TokenType.STAR) ? v * r : v / r;
-                    continue;
-                }
+                    return l / r;
 
-                // implicit multiplication
-                if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    v *= power ();
-                    continue;
-                }
-                break;
+                default: throw new MathError.SYNTAX ("invalid binary operator");
             }
-
-            return v;
         }
 
-        private double power () throws MathError {
-            double v = unary ();
-            if (lexer.current_type == TokenType.CARET) {
-                lexer.next ();
-                v = Math.pow (v, power ());
-            }
-            return v;
-        }
+        private double postfix (PostfixExpression expr) throws MathError {
+            double v = eval (expr.expr ());
 
-        private double unary () throws MathError {
-            if (lexer.current_type == TokenType.MINUS) {
-                lexer.next ();
-                return -postfix ();
-            } else if (lexer.current_type == TokenType.PLUS) {
-                lexer.next ();
-            }
-            return postfix ();
-        }
-
-        private double postfix () throws MathError {
-            double v = primary ();
-
-            while (true) {
-                if (lexer.current_type == TokenType.FACT) {
+            switch (expr.op ()) {
+                case TokenType.FACT:
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
-                    v = factorial ((int) v);
-                    lexer.next ();
-                    continue;
-                }
-
-                if (lexer.current_type == TokenType.SUPERSCRIPT) {
-                    int exp = (int) lexer.current_val;
-                    lexer.next ();
-                    v = ipow (v, exp);
-                    continue;
-                }
-
-                break;
+                    return factorial ((int) v);
+                default: throw new MathError.SYNTAX ("invalid postfix operator");
             }
-            return v;
         }
 
-        private double primary () throws MathError {
-            switch (lexer.current_type) {
-                case TokenType.NUMBER:
-                    double v = lexer.current_val;
-                    lexer.next ();
-                    return v;
-                case TokenType.IDENT:
-                    Ident id = lexer.current_ident;
-                    lexer.next ();
-
-                    switch (id) {
-                        case Ident.PI: return Math.PI;
-                        case Ident.E: return Math.E;
-                        case Ident.INF: return double.INFINITY;
-                        default: break;
-                    }
-
-                    lexer.expect (TokenType.LPAREN);
-                    double arg = expr ();
-                    lexer.expect (TokenType.RPAREN);
-
-                    return call_function (id, arg);
-                case TokenType.LPAREN:
-                    lexer.next ();
-                    double v = expr ();
-                    lexer.expect (TokenType.RPAREN);
-                    return v;
-                default:
-                    throw new MathError.SYNTAX ("unexpected token");
-            }
+        private double function (FunctionExpression expr) throws MathError {
+            double x = eval (expr.arg ());
+            return call_function (expr.ident (), x);
         }
 
         private const double DEGREES_TO_RADIANS = 0.017453292519943295; // pi/180

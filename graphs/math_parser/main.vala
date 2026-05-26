@@ -6,7 +6,8 @@ namespace Graphs {
      */
     public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
         try {
-            result = MathParser.Evaluator.instance ().parse (expression, decimal_separator);
+            var ast = MathParser.Parser.instance ().parse (expression, decimal_separator);
+            result = MathParser.Evaluator.instance ().eval (ast);
             return true;
         } catch (Error e) {
             result = 0;
@@ -23,7 +24,8 @@ namespace Graphs {
      * Evaluate a string to a double.
      */
     public static double evaluate_string (string expression) throws MathError {
-        return MathParser.Evaluator.instance ().parse (expression);
+        var ast = MathParser.Parser.instance ().parse (expression);
+        return MathParser.Evaluator.instance ().eval (ast);
     }
 
     // This method exists separately as optional arguments are not automatically
@@ -32,72 +34,32 @@ namespace Graphs {
      * Evaluate a string to a double with given decimal separator.
      */
     public static double evaluate_string_with_separator (string expression, unichar separator) throws MathError {
-        return MathParser.Evaluator.instance ().parse (expression, separator);
+        var ast = MathParser.Parser.instance ().parse (expression, separator);
+        return MathParser.Evaluator.instance ().eval (ast);
     }
 
     /**
-     * Preprocess an equation to be compatible with numexpr syntax.
+     * Parse an Expression from string to an AST.
      */
-    public static string preprocess_equation (string equation) throws MathError {
-        return MathParser.Preprocessor.instance ().preprocess (equation);
+    public static Expression expression_to_ast (string expression) throws MathError {
+        return MathParser.Parser.instance ().parse (expression);
     }
 
     /**
-     * Return an equation in a prettier, more humanly readable, format.
+     * Convert an AST to a string
      */
-    public static string prettify_equation (string equation) throws MathError {
-        string result = MathParser.Preprocessor.instance ().preprocess (equation, true);
-
-        // remove asterisk between parentheses
-        result = result.replace (")*(", "()");
-
-        return result;
+    public static string ast_to_expression (Expression expression) throws MathError {
+        return MathParser.Printer.instance ().print (expression, true);
     }
 
-    public errordomain MathError {
-        SYNTAX,
-        UNKNOWN_FUNCTION,
-        DOMAIN,
-        DIV_ZERO
+    /**
+     * Convert an AST to a string compatible with numexpr syntax
+     */
+    public static string ast_to_numexpr (Expression expression) throws MathError {
+        return MathParser.Printer.instance ().print (expression, false);
     }
 
     namespace MathParser {
-        private enum TokenType {
-            NUMBER,
-            IDENT,
-            PLUS, MINUS, STAR, SLASH,
-            CARET,
-            FACT,
-            SUPERSCRIPT,
-            LPAREN, RPAREN,
-            END
-        }
-
-        private enum Ident {
-            // constants
-            PI,
-            E,
-            INF,
-
-            // trig
-            SIN, COS, TAN, COT, SEC, CSC,
-            SIND, COSD, TAND, COTD, SECD, CSCD,
-
-            // inverse trig
-            ASIN, ACOS, ATAN, ACOT, ASEC, ACSC,
-            ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
-
-            // misc math
-            LOG,
-            LOG2,
-            LOG10,
-            SQRT,
-            EXP,
-            ABS,
-
-            CUSTOM
-        }
-
         private static inline long factorial (int n) {
             long r = 1;
             for (int i = 2; i <= n; i++)

@@ -653,7 +653,7 @@ namespace Graphs {
                 double min_x = axes[xindex].min_value;
                 double max_x = axes[xindex].max_value;
 
-                string equation = item.get_preprocessed_equation ();
+                Expression equation = item.get_ast ();
 
                 if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
 
