@@ -276,8 +276,9 @@ class SpreadsheetParser(Parser):
 
             if item_settings.single_column:
                 xlabel = ""
+                equation = Graphs.expression_to_ast(item_settings.equation)
                 xdata = numexpr.evaluate(
-                    Graphs.preprocess_equation(item_settings.equation),
+                    Graphs.ast_to_numexpr(equation),
                     local_dict={"n": numpy.arange(len(ydata))},
                 )
                 if xdata.ndim == 0:

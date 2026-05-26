@@ -26,8 +26,11 @@ namespace Graphs {
         }
 
         protected signal DataHolder equation_to_data_request (string equation, double xstart, double xstop, int steps, Scale scale);
-        public static DataHolder equation_to_data (string equation, double xstart, double xstop, int steps, Scale scale) {
-            return instance.equation_to_data_request.emit (equation, xstart, xstop, steps, scale);
+        public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps, Scale scale) {
+            try {
+                string preprocessed = ast_to_numexpr (equation);
+                return instance.equation_to_data_request.emit (preprocessed, xstart, xstop, steps, scale);
+            } catch (MathError e) { assert_not_reached (); }
         }
 
         private static double[] _evaluate_expression_result;
@@ -35,8 +38,8 @@ namespace Graphs {
         protected static void set_evaluate_expression_result (double[] result) {
             _evaluate_expression_result = result;
         }
-        public static double[] evaluate_expression (string equation, int steps, string variable = "x") throws MathError {
-            if (!instance.evaluate_expression_request.emit (equation, steps, variable))
+        public static double[] evaluate_expression (Expression equation, int steps, string variable = "x") throws MathError {
+            if (!instance.evaluate_expression_request.emit (ast_to_numexpr (equation), steps, variable))
                 throw new MathError.SYNTAX ("invalid equation");
             return (owned) _evaluate_expression_result;
         }
@@ -54,8 +57,8 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
-        public signal bool has_singularities_request (string equation, double xstart, double xstop);
-        public static bool has_singularities (string equation, double xstart, double xstop) {
+        public signal bool has_singularities_request (Expression equation, double xstart, double xstop);
+        public static bool has_singularities (Expression equation, double xstart, double xstop) {
             return instance.has_singularities_request.emit (equation, xstart, xstop);
         }
 
@@ -69,15 +72,18 @@ namespace Graphs {
             instance.python_method_request.emit (object, method);
         }
 
-        protected signal string simplify_equation_request (string input);
-        public static string simplify_equation (string input) {
-            return instance.simplify_equation_request.emit (input);
+        protected signal string simplify_equation_request (Expression input);
+        public static Expression simplify_equation (Expression input) {
+            try {
+                return expression_to_ast (instance.simplify_equation_request.emit (input));
+            } catch (MathError e) { assert_not_reached (); }
         }
 
         protected signal bool validate_equation_request (string input);
         public static bool validate_equation (string input) {
             try {
-                return instance.validate_equation_request.emit (preprocess_equation (input));
+                Expression ast = expression_to_ast (input);
+                return instance.validate_equation_request.emit (ast_to_numexpr (ast));
             } catch (MathError e) {
                 return false;
             }

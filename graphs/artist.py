@@ -6,7 +6,7 @@ Provides GObject based wrappers for mpl artists.
 """
 from gi.repository import GObject, Graphs
 
-from graphs import misc, utilities
+from graphs import ast, misc, utilities
 
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
@@ -354,9 +354,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        equation = item.get_preprocessed_equation()
-        self._equation = equation
-        self._expr = sympy.sympify(equation)
+        expression = item.get_ast()
+        self._equation = Graphs.ast_to_numexpr(expression)
+        self._expr = ast.sympify(expression)
         self._axis = axis
         self._view_change_timeout_id = None
         axis.callbacks.connect("xlim_changed", self._on_view_change)
@@ -395,8 +395,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     @equation.setter
     def equation(self, equation: str) -> None:
         self._singularities_cache.clear()
-        self._equation = Graphs.preprocess_equation(equation)
-        self._expr = sympy.sympify(self._equation)
+        expression = Graphs.expression_to_ast(equation)
+        self._equation = Graphs.ast_to_numexpr(expression)
+        self._expr = ast.sympify(expression)
         self._generate_data()
 
     @GObject.Property(type=int, default=1)

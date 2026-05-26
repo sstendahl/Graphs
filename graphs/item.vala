@@ -180,7 +180,7 @@ namespace Graphs {
         public Scale scale { get; set; default = Scale.LINEAR; }
 
         private string _equation = "";
-        private string _preprocessed_equation = "";
+        private Expression _ast;
         public string equation {
             get { return _equation; }
             set {
@@ -189,7 +189,7 @@ namespace Graphs {
 
                 _equation = value;
                 try {
-                    _preprocessed_equation = preprocess_equation (value);
+                    _ast = expression_to_ast (value);
                 } catch (MathError e) { assert_not_reached (); }
 
                 if ("Y = " + old_equation == name)
@@ -211,7 +211,7 @@ namespace Graphs {
         private void regenerate () {
             try {
                 data = PythonHelper.equation_to_data (
-                    _preprocessed_equation,
+                    _ast,
                     evaluate_string (xstart),
                     evaluate_string (xstop),
                     steps, scale);
@@ -224,7 +224,7 @@ namespace Graphs {
         public double linewidth { get; set; default = 3; }
 
         private string _equation = "";
-        private string _preprocessed_equation = "";
+        private Expression _ast;
         public string equation {
             get { return _equation; }
             set {
@@ -233,7 +233,7 @@ namespace Graphs {
 
                 _equation = value;
                 try {
-                    _preprocessed_equation = preprocess_equation (value);
+                    _ast = expression_to_ast (value);
                 } catch (MathError e) { assert_not_reached (); }
 
                 if ("Y = " + old_equation == name)
@@ -245,8 +245,22 @@ namespace Graphs {
             typename = _("Equation");
         }
 
-        public string get_preprocessed_equation () {
-            return _preprocessed_equation;
+        public unowned Expression get_ast () {
+            return _ast;
+        }
+
+        public void set_ast (Expression ast) {
+            string old_equation = _equation;
+
+            try {
+                _equation = ast_to_expression (ast);
+            } catch (MathError e) { assert_not_reached (); }
+            _ast = ast;
+
+            if ("Y = " + old_equation == name)
+                name = "Y = " + _equation;
+
+            notify_property ("equation");
         }
     }
 

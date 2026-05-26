@@ -3,6 +3,7 @@
 from gi.repository import Gio, Graphs
 
 from graphs import (
+    ast,
     curve_fitting,
     export_items,
     file_io,
@@ -149,7 +150,7 @@ class PythonHelper(Graphs.PythonHelper):
         xstop: float,
     ) -> None:
         domain = sympy.Interval(xstart, xstop)
-        return singularities(sympy.sympify(equation), misc.X, domain)
+        return singularities(ast.sympify(equation), misc.X, domain)
 
     @staticmethod
     def _on_perform_operation_request(
@@ -165,7 +166,7 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_simplify_equation_request(self, equation: str) -> str:
-        return str(sympy.simplify(equation))
+        return str(sympy.simplify(ast.sympify(equation)))
 
     @staticmethod
     def _on_validate_equation_request(self, equation: str) -> bool:

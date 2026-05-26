@@ -222,9 +222,9 @@ namespace Graphs {
         private void on_simplify () {
             try {
                 string equation_str = equation.get_text ();
-                equation_str = preprocess_equation (equation_str);
-                equation_str = PythonHelper.simplify_equation (equation_str);
-                equation_str = prettify_equation (equation_str);
+                Expression ast = expression_to_ast (equation_str);
+                ast = PythonHelper.simplify_equation (ast);
+                equation_str = ast_to_expression (ast);
 
                 equation.set_text (equation_str);
                 item.equation = equation_str;

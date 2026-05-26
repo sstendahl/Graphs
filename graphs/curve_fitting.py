@@ -4,7 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import canvas
+from graphs import ast, canvas
 from graphs.item import DataItem, FillItem
 
 import numexpr
@@ -110,14 +110,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         variables = ["x"] + free_vars
         sym_params_map = dict(zip(variables, sympy.symbols(variables)))
         x_data, y_data = self._data
-        equation = self.get_equation_string()
+        expression = self.get_ast()
+        equation = Graphs.ast_to_numexpr(expression)
         settings = self.get_settings()
 
         def func(*params) -> numpy.ndarray:
             return numexpr.evaluate(equation, dict(zip(variables, params)))
 
         try:
-            symbolic = sympy.sympify(equation, locals=sym_params_map)
+            symbolic = ast.sympify(expression)
             params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.get_p0(),
@@ -152,7 +153,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         # Substitute each free variables with the calculated value.
         values = dict(zip(free_vars, params))
         fitted_eq = str(sympy.simplify(symbolic.subs(values)))
-        fitted_eq = Graphs.prettify_equation(fitted_eq)
+        fitted_eq = Graphs.expression_to_ast(fitted_eq)
+        fitted_eq = Graphs.ast_to_expression(fitted_eq)
         self.props.fitted_equation_string = fitted_eq
 
         x_fit = self._x_fit

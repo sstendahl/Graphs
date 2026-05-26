@@ -128,7 +128,7 @@ namespace Graphs {
 
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; protected set; }
-        protected string equation_string { get; private set; }
+        protected Expression ast { get; private set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
 
@@ -375,8 +375,8 @@ namespace Graphs {
             }
 
             try {
-                equation_string = preprocess_equation (equation);
-                free_vars = MathTools.get_free_variables (equation_string);
+                ast = expression_to_ast (equation);
+                free_vars = MathTools.get_free_variables (equation);
 
                 if (free_vars.length == 0) {
                     set_results (CurveFittingError.EQUATION);
