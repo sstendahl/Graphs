@@ -248,7 +248,7 @@ filter_nonfinite (double *xdata, double *ydata, size_t n)
       return 0;
     }
 
-  /* Build a mask for finite values */
+    /* Build a mask for finite values */
 #pragma omp parallel for
   for (size_t i = 0; i < n; ++i)
     {
@@ -263,7 +263,7 @@ filter_nonfinite (double *xdata, double *ydata, size_t n)
       count += mask[i];
     }
 
-  /* Compact data in place */
+    /* Compact data in place */
 #pragma omp parallel for
   for (size_t i = 0; i < n; ++i)
     {
