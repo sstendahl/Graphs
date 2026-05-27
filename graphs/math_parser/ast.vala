@@ -33,7 +33,7 @@ namespace Graphs {
         ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
 
         // misc math
-        LOG,
+        LN,
         LOG2,
         LOG10,
         SQRT,
@@ -165,6 +165,59 @@ namespace Graphs {
 
         public TokenType op () {
             return _op;
+        }
+    }
+
+    public enum OpCode {
+        // control
+        PUSH_CONST,
+        PUSH_X,
+
+        // basic operands
+        ADD,
+        SUB,
+        MUL,
+        DIV,
+        POW,
+        IPOW,
+
+        // pre and postfix
+        NEG,
+        INV,
+        FACT,
+
+        // trig
+        SIN,
+        COS,
+        TAN,
+        ASIN,
+        ACOS,
+        ATAN,
+
+        // misc
+        LN,
+        LOG2,
+        LOG10,
+        SQRT,
+        EXP,
+        ABS
+    }
+
+    public class Program {
+        private OpCode[] _program;
+        private double[] _data;
+        private int _plen;
+
+        public Program (owned OpCode[] program, owned double[] data, int plen) {
+            this._program = (owned) program;
+            this._data = (owned) data;
+            this._plen = plen;
+        }
+
+        public double[] eval (double[] input) {
+            double[] output = new double[input.length];
+            MathParser.eval_array (_program, _data, _plen, input, output, input.length);
+            return output;
         }
     }
 }

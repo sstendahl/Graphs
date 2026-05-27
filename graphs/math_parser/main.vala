@@ -49,44 +49,35 @@ namespace Graphs {
      * Convert an AST to a string
      */
     public static string ast_to_expression (Expression expression) throws MathError {
-        return MathParser.Printer.instance ().print (expression, true);
+        return MathParser.Printer.instance ().print (expression);
     }
 
     /**
-     * Convert an AST to a string compatible with numexpr syntax
+     * Convert an AST to an executable array program.
      */
-    public static string ast_to_numexpr (Expression expression) throws MathError {
-        return MathParser.Printer.instance ().print (expression, false);
+    public static Program ast_to_program (Expression expression, string variable = "x") throws MathError {
+        return MathParser.Compiler.instance ().compile (expression, variable);
     }
 
     namespace MathParser {
-        private static inline long factorial (int n) {
-            long r = 1;
-            for (int i = 2; i <= n; i++)
-                r *= i;
-            return r;
-        }
+        [CCode (cname = "factorial", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern double factorial (double x);
 
-        private static inline double ipow (double bas, int exp) {
-            double result = 1;
-            double b = bas;
-            int e = exp;
+        [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern double ipow (double base, int exp);
 
-            while (e > 0) {
-                if ((e & 1) == 1) result *= b;
-                b = b * b;
-                e >>= 1;
-            }
-
-            return result;
-        }
-
-        private static inline bool is_superscript (unichar c) {
-            switch (c) {
-                case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
-                case '⁶': case '⁷': case '⁸': case '⁹': return true;
-                default: return false;
-            }
-        }
+        [CCode (cname = "eval_array", cheader_filename = "math_parser/array_evaluator.h")]
+        private extern void eval_array (
+            [CCode (array_length = false)]
+            OpCode[] program,
+            [CCode (array_length = false)]
+            double[] data,
+            size_t plen,
+            [CCode (array_length = false)]
+            double[] xdata,
+            [CCode (array_length = false)]
+            double[] ydata,
+            size_t n
+        );
     }
 }

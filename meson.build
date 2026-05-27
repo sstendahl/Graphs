@@ -37,7 +37,6 @@ python = import('python').find_installation('python3',
     'numpy',
     'scipy',
     'matplotlib',
-    'numexpr',
     'sympy',
     'gio_pyio'
   ],

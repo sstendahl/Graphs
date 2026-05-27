@@ -7,8 +7,6 @@ from gi.repository import Gio, Graphs
 from graphs import ast, canvas
 from graphs.item import DataItem, FillItem
 
-import numexpr
-
 import numpy
 
 from scipy.optimize import _minpack, curve_fit
@@ -108,17 +106,15 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         """Handle fit curve request."""
         free_vars = self.get_free_vars()
         variables = ["x"] + free_vars
-        sym_params_map = dict(zip(variables, sympy.symbols(variables)))
+        sym_vars = sympy.symbols(variables)
+        sym_params_map = dict(zip(variables, sym_vars))
         x_data, y_data = self._data
         expression = self.get_ast()
-        equation = Graphs.ast_to_numexpr(expression)
         settings = self.get_settings()
-
-        def func(*params) -> numpy.ndarray:
-            return numexpr.evaluate(equation, dict(zip(variables, params)))
 
         try:
             symbolic = ast.sympify(expression)
+            func = sympy.lambdify(sym_vars, symbolic, modules="scipy")
             params, param_cov = curve_fit(
                 func, x_data, y_data,
                 p0=self.get_p0(),
@@ -166,13 +162,13 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
-        local_dict = {"x": x_fit} | values
         jacobian = numpy.column_stack([
             numpy.full(x_fit.size, g) if numpy.ndim(
-                g := numexpr.evaluate(
-                    str(sympy.diff(symbolic, sym_params_map[name])),
-                    local_dict,
-                ),
+                g := sympy.lambdify(
+                    sym_vars,
+                    sympy.diff(symbolic, sym_params_map[name]),
+                    modules="scipy",
+                )(x_fit, *params),
             ) == 0 else g for name in free_vars
         ])
         variance = numpy.sum(jacobian * (jacobian @ param_cov), axis=1)

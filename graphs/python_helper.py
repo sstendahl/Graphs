@@ -9,13 +9,10 @@ from graphs import (
     file_io,
     misc,
     operations,
-    utilities,
 )
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
-
-import numexpr
 
 import numpy
 
@@ -26,15 +23,12 @@ _REQUESTS = (
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
-    "equation-to-data",
-    "evaluate-expression",
     "export-figure",
     "export-items",
     "has-singularities",
     "perform-operation",
     "python-method",
     "simplify-equation",
-    "validate-equation",
 )
 
 XDATA = numpy.linspace(0, 10, 10)
@@ -67,40 +61,6 @@ class PythonHelper(Graphs.PythonHelper):
         item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
-
-    @staticmethod
-    def _on_equation_to_data_request(
-        self,
-        equation: str,
-        xstart: float,
-        xstop: float,
-        steps: int,
-        scale: Graphs.Scale,
-    ) -> Graphs.DataHolder:
-        xdata, ydata = utilities.equation_to_data(
-            equation,
-            [xstart, xstop],
-            steps,
-            scale,
-        )
-        return Graphs.DataHolder.new(xdata, ydata, None, None)
-
-    @staticmethod
-    def _on_evaluate_expression_request(
-        self,
-        equation: str,
-        steps: int,
-        var: str,
-    ) -> bool:
-        local_dict = {var: numpy.arange(steps)}
-        try:
-            data = numexpr.evaluate(equation, local_dict=local_dict)
-            if data.ndim == 0:
-                data = numpy.full(steps, data)
-            self.set_evaluate_expression_result(data)
-            return True
-        except (KeyError, SyntaxError, ValueError, TypeError):
-            return False
 
     @staticmethod
     def _on_export_items_request(
@@ -167,11 +127,3 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_simplify_equation_request(self, equation: str) -> str:
         return str(sympy.simplify(ast.sympify(equation)))
-
-    @staticmethod
-    def _on_validate_equation_request(self, equation: str) -> bool:
-        try:
-            ydata = numexpr.evaluate(equation, local_dict={"x": XDATA})
-            return numpy.isfinite(ydata).any()
-        except (KeyError, SyntaxError, ValueError, TypeError):
-            return False
