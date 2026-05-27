@@ -127,6 +127,8 @@ def sympify(expr):
                 return left / right
             case Graphs.TokenType.CARET:
                 return left ** right
+            case Graphs.TokenType.SUPERSCRIPT:
+                return left ** right
             case _:
                 raise ValueError(f"unsupported binary operator: {op}")
 
@@ -138,8 +140,8 @@ def sympify(expr):
             return FUNCTION_MAPPING[ident](arg)
 
         match ident:
-            case Graphs.Ident.LOG:
-                return sympy.log(arg, 10)
+            case Graphs.Ident.LN:
+                return sympy.log(arg)
             case Graphs.Ident.LOG2:
                 return sympy.log(arg, 2)
             case Graphs.Ident.LOG10:

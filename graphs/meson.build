@@ -47,6 +47,7 @@ python.install_sources(
 
 c_helpers = static_library('c_helpers',
   files(
+    'math_parser/array_evaluator.c',
     'utilities.c',
   ),
   include_directories: include_directories('.'),
@@ -75,6 +76,7 @@ graphs_lib = shared_library('graphs',
     'file_import/dialog.vala',
     'file_import/file_import.vala',
     'math_parser/ast.vala',
+    'math_parser/compiler.vala',
     'math_parser/evaluator.vala',
     'math_parser/lexer.vala',
     'math_parser/main.vala',

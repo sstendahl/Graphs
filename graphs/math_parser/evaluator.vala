@@ -68,21 +68,18 @@ namespace Graphs.MathParser {
                 case TokenType.FACT:
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
-                    return factorial ((int) v);
+                    return factorial (v);
                 default: throw new MathError.SYNTAX ("invalid postfix operator");
             }
-        }
-
-        private double function (FunctionExpression expr) throws MathError {
-            double x = eval (expr.arg ());
-            return call_function (expr.ident (), x);
         }
 
         private const double DEGREES_TO_RADIANS = 0.017453292519943295; // pi/180
         private const double RADIANS_TO_DEGREES = 57.29577951308232; // 180/pi
 
-        private static double call_function (Ident id, double x) {
-            switch (id) {
+        private double function (FunctionExpression expr) throws MathError {
+            double x = eval (expr.arg ());
+
+            switch (expr.ident ()) {
                 // trig radians
                 case Ident.SIN: return Math.sin (x);
                 case Ident.COS: return Math.cos (x);
@@ -116,14 +113,14 @@ namespace Graphs.MathParser {
                 case Ident.ACSCD: return Math.asin (1d / x) * RADIANS_TO_DEGREES;
 
                 // misc
-                case Ident.LOG: return Math.log (x);
+                case Ident.LN: return Math.log (x);
                 case Ident.LOG2: return Math.log2 (x);
                 case Ident.LOG10: return Math.log10 (x);
                 case Ident.SQRT: return Math.sqrt (x);
                 case Ident.EXP: return Math.exp (x);
                 case Ident.ABS: return Math.fabs (x);
 
-                default: assert_not_reached ();
+                default: throw new MathError.SYNTAX ("invalid function");
             }
         }
     }

@@ -9,8 +9,6 @@ from gi.repository import Gio, Graphs
 from graphs import ast, misc, utilities
 from graphs.item import DataItem
 
-import numexpr
-
 import numpy
 
 import scipy
@@ -154,8 +152,7 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
-                eq = Graphs.ast_to_numexpr(item.get_ast())
-                xdata, ydata = utilities.equation_to_data(eq, lims)
+                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
@@ -228,8 +225,7 @@ class CommonOperations():
             startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                equation = Graphs.ast_to_numexpr(item.get_ast())
-                xdata, ydata = utilities.equation_to_data(equation, lims)
+                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
@@ -310,9 +306,6 @@ class CommonOperations():
         return True
 
 
-XDATA = numpy.linspace(0, 10, 10)
-
-
 class EquationOperations():
     """Operations to be performed on equation items."""
 
@@ -336,16 +329,13 @@ class EquationOperations():
             equation = ast.sympify(item.get_ast())
             equation = callback(equation, *args)
             equation = Graphs.expression_to_ast(str(sympy.simplify(equation)))
-            try:
-                preprocessed = Graphs.ast_to_numexpr(equation)
-                numexpr.evaluate(preprocessed, local_dict={"x": XDATA})
-            except (KeyError, SyntaxError, ValueError, TypeError) as e:
+            if not Graphs.math_tools_validate_expression(equation):
                 raise misc.InvalidEquationError(
                     _(
                         "The operation on {name} "
                         "did not result in a plottable equation",
                     ).format(name=item.get_name()),
-                ) from e
+                )
             item.set_ast(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
@@ -376,8 +366,8 @@ class EquationOperations():
     @staticmethod
     def normalize(equation, limits) -> str:
         """Normalize all selected data."""
-        ydata = utilities.equation_to_data(equation, limits)[1]
-        return equation / max(ydata)
+        domain = sympy.Interval(*limits)
+        return equation / sympy.maximum(equation, misc.X, domain)
 
     @staticmethod
     def center(equation, limits, center_maximum: int) -> str:
@@ -448,7 +438,10 @@ class EquationOperations():
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
-        xdata, ydata = utilities.equation_to_data(equation, limits)
+        xdata, ydata = utilities.equation_to_data(
+            Graphs.expression_to_ast(equation),
+            limits,
+        )
         local_dict = {
             "x": xdata,
             "y": ydata,
@@ -700,9 +693,7 @@ class DataOperations():
         discard: bool = False,
     ) -> _return:
         """Perform custom transformation."""
-        local_dict = {
-            "x": xdata,
-            "y": ydata,
+        ld = {
             "x_min": min(xdata),
             "x_max": max(xdata),
             "y_min": min(ydata),
@@ -717,15 +708,14 @@ class DataOperations():
             "x_sum": sum(xdata),
             "y_sum": sum(ydata),
         }
-        input_x = Graphs.expression_to_ast(input_x)
-        input_x = Graphs.ast_to_numexpr(input_x)
-        input_y = Graphs.expression_to_ast(input_y)
-        input_y = Graphs.ast_to_numexpr(input_y)
-        # Add array of zeros to return values, such that output remains a list
-        # of the correct size, even when a float is given as input.
-        return (
-            numexpr.evaluate(input_x + "+ 0*x", local_dict),
-            numexpr.evaluate(input_y + "+ 0*y", local_dict),
-            True,
-            discard,
-        )
+
+        expr_x = ast.sympify(Graphs.expression_to_ast(input_x)).subs(ld)
+        expr_y = ast.sympify(Graphs.expression_to_ast(input_y)).subs(ld)
+
+        f_x = sympy.lambdify((misc.X, misc.Y), expr_x, modules="scipy")
+        f_y = sympy.lambdify((misc.X, misc.Y), expr_y, modules="scipy")
+
+        out_x = f_x(xdata, ydata)
+        out_y = f_y(xdata, ydata)
+
+        return out_x, out_y, True, discard
