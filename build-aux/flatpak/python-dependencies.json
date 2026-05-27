@@ -455,31 +455,6 @@
             ]
         },
         {
-            "name": "python-numexpr",
-            "buildsystem": "simple",
-            "build-commands": [],
-            "modules": [
-                {
-                    "name": "numexpr",
-                    "buildsystem": "simple",
-                    "build-commands": [
-                        "pip3 install --verbose --exists-action=i --no-index --find-links=\"file://${PWD}\" --prefix=${FLATPAK_DEST} --no-build-isolation \"numexpr\""
-                    ],
-                    "sources": [
-                        {
-                            "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/cb/2f/fdba158c9dbe5caca9c3eca3eaffffb251f2fb8674bf8e2d0aed5f38d319/numexpr-2.14.1.tar.gz",
-                            "sha256": "4be00b1086c7b7a5c32e31558122b7b80243fe098579b170967da83f3152b48b",
-                            "x-checker-data": {
-                                "type": "pypi",
-                                "name": "numexpr"
-                            }
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "name": "python-sympy",
             "buildsystem": "simple",
             "build-commands": [],

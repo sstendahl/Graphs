@@ -167,6 +167,14 @@ namespace Graphs.MathParser {
             state = 200;
         }
 
+        private static inline bool is_superscript (unichar c) {
+            switch (c) {
+                case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
+                case '⁶': case '⁷': case '⁸': case '⁹': return true;
+                default: return false;
+            }
+        }
+
         private void handle_identifier () throws MathError {
             current_type = TokenType.IDENT;
             current_ident = Ident.CUSTOM;
@@ -308,12 +316,13 @@ namespace Graphs.MathParser {
 
                     // l
                     case 70:
-                        if (c == 'o') state = 71;
+                        if (c == 'n') { current_ident = Ident.LN; state = 200; }
+                        else if (c == 'o') state = 71;
                         else fail_identifier (ref state); break;
 
                     // lo
                     case 71:
-                        if (c == 'g') { current_ident = Ident.LOG; state = 72; }
+                        if (c == 'g') { current_ident = Ident.LN; state = 72; }
                         else fail_identifier (ref state); break;
 
                     // log

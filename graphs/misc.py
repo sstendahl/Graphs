@@ -20,6 +20,7 @@ class InvalidEquationError(Exception):
 
 
 X = sympy.Symbol("x")
+Y = sympy.Symbol("y")
 
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
 MARKERSTYLES = [

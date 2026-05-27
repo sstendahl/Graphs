@@ -164,7 +164,7 @@ namespace Graphs {
                     xlabel = "";
                     try {
                         Expression equation = expression_to_ast (item_settings.equation);
-                        xdata = PythonHelper.evaluate_expression (equation, ydata.length, "n");
+                        xdata = MathTools.evaluate_expression (equation, ydata.length, "n");
                     } catch (MathError e) {
                         throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
                     }

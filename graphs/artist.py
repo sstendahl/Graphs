@@ -355,8 +355,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         super().__init__()
 
         expression = item.get_ast()
-        self._equation = Graphs.ast_to_numexpr(expression)
         self._expr = ast.sympify(expression)
+        self._program = Graphs.ast_to_program(expression, "x")
         self._axis = axis
         self._view_change_timeout_id = None
         axis.callbacks.connect("xlim_changed", self._on_view_change)
@@ -394,10 +394,10 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     @equation.setter
     def equation(self, equation: str) -> None:
-        self._singularities_cache.clear()
+        self._singularities_cache = False
         expression = Graphs.expression_to_ast(equation)
-        self._equation = Graphs.ast_to_numexpr(expression)
         self._expr = ast.sympify(expression)
+        self._program = Graphs.ast_to_program(expression, "x")
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
@@ -423,10 +423,16 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
         upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
-        limits = (lower, upper)
 
-        data = utilities.equation_to_data(self._equation, limits, scale=scale)
-        singularities = self._find_singularities(limits)
+        holder = Graphs.math_tools_program_to_data(
+            self._program,
+            lower,
+            upper,
+            5000,
+            scale,
+        )
+        data = utilities.get_xy_data(holder)
+        singularities = self._find_singularities(lower, upper)
         if singularities:
             data = self._insert_singularity_points(data, singularities)
 
@@ -434,10 +440,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         if self._axis.figure.parent is not None:
             self._axis.figure.parent.queue_draw()
 
-    def _find_singularities(self, limits):
-        lower, upper = limits
-
-        cached = self._singularities_cache.get(self._equation)
+    def _find_singularities(self, lower, upper):
+        cached = self._singularities_cache
         if cached:
             cached_min, cached_max = cached["limits"]
 
@@ -454,7 +458,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         domain = sympy.Interval(x_min, x_max)
         all_singularities = find_singularities(self._expr, misc.X, domain)
 
-        self._singularities_cache[self._equation] = {
+        self._singularities_cache = {
             "limits": (x_min, x_max),
             "singularities": all_singularities,
         }

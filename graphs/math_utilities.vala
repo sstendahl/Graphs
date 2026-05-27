@@ -106,4 +106,76 @@ namespace Graphs.MathTools {
 
         return strings.to_array ();
     }
+
+    public static double[] arange (int steps) {
+        double[] result = new double[steps];
+        CUtilities.arange (result);
+        return result;
+    }
+
+    public static double[] evaluate_expression (Expression expr, int length, string variable) throws MathError {
+        double[] input = arange (length);
+        return ast_to_program (expr, variable).eval (input);
+    }
+
+    public static Bytes evaluate_expression_b (Expression expr, int length, string variable) throws MathError {
+        double[] output = evaluate_expression (expr, length, variable);
+        return new Bytes.take ((uint8[]) output);
+    }
+
+    public static DataHolder program_to_data (Program program, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+        double[] xdata = new double[steps];
+        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
+        double[] ydata = program.eval (xdata);
+
+        int filtered_size = CUtilities.filter_nonfinite (xdata, ydata, xdata.length);
+        if (filtered_size < xdata.length) {
+            xdata.resize (filtered_size);
+            ydata.resize (filtered_size);
+        }
+        return new DataHolder ((owned) xdata, (owned) ydata, null, null);
+    }
+
+    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+        return program_to_data (ast_to_program (equation), xstart, xstop, steps, scale);
+    }
+
+    private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+    public static bool validate_expression (Expression expression) {
+        try {
+            double[] ydata = ast_to_program (expression).eval (XDATA);
+            return CUtilities.finite_double (ydata);
+        } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public static bool validate_equation (string equation) {
+        try {
+            return validate_expression (expression_to_ast (equation));
+        } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public bool minmax_equation (
+        Expression equation,
+        double xstart,
+        double xstop,
+        Scale scale,
+        out double min,
+        out double max
+    ) {
+        double[] xdata = new double[5000];
+        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
+        try {
+            double[] ydata = ast_to_program (equation).eval (xdata);
+            return CUtilities.array_minmax (ydata, scale.is_nonzero (), out min, out max);
+        } catch (MathError e) {
+            min = 0;
+            max = 0;
+            return false;
+        }
+    }
 }

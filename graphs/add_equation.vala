@@ -45,7 +45,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_change () {
-            if (PythonHelper.validate_equation (equation.get_text ())) {
+            if (MathTools.validate_equation (equation.get_text ())) {
                 equation.remove_css_class ("error");
                 confirm_button.set_sensitive (true);
             } else {

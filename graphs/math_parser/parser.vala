@@ -130,7 +130,7 @@ namespace Graphs.MathParser {
                         string name = lexer.get_current_token_as_string ();
                         lexer.next ();
 
-                        return new VariableExpression (name);
+                        return new VariableExpression (name.strip ().down ());
                     }
 
                     lexer.next ();
