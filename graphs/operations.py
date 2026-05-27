@@ -151,7 +151,6 @@ class CommonOperations():
                 continue
 
             lims = get_selected_limits(settings, mode, item.get_xposition())
-            xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
                 eq = Graphs.ast_to_numexpr(item.get_ast())
@@ -170,18 +169,18 @@ class CommonOperations():
                     xdata, ydata = xdata[mask], ydata[mask]
 
                 if item.has_xerr() and new_xerr is not None:
-                    new_xerr.extend(item.get_xerr())
+                    new_xerr.append(item.get_xerr())
                     some_x = True
                 else:
                     new_xerr = None
                 if item.has_yerr() and new_yerr is not None:
-                    new_yerr.extend(item.get_yerr())
+                    new_yerr.append(item.get_yerr())
                     some_y = True
                 else:
                     new_yerr = None
 
-            new_xdata.extend(xdata)
-            new_ydata.extend(ydata)
+            new_xdata.append(xdata)
+            new_ydata.append(ydata)
 
         if not new_xdata or not new_ydata:
             window.add_toast_string(_("No data found in highlighted area"))
@@ -191,16 +190,16 @@ class CommonOperations():
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
-        new_xdata = numpy.array(new_xdata)
-        new_ydata = numpy.array(new_ydata)
+        new_xdata = numpy.concatenate(new_xdata)
+        new_ydata = numpy.concatenate(new_ydata)
         idx = numpy.argsort(new_xdata)
         data.add_items([
             DataItem.new(
                 data.get_selected_style_params(),
                 new_xdata[idx],
                 new_ydata[idx],
-                xerr=new_xerr,
-                yerr=new_yerr,
+                xerr=None if new_xerr is None else new_xerr[idx],
+                yerr=None if new_yerr is None else new_yerr[idx],
                 name=_("Combined Data"),
             ),
         ])
