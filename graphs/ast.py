@@ -59,7 +59,7 @@ def _log(base, name):
     return _disable_rewrite(F, name)
 
 
-class Factorial(Function):
+class _Factorial(Function):
     @classmethod
     def eval(cls, x):
         if x.is_Number:
@@ -175,7 +175,7 @@ def sympify(expr):
 
         match op:
             case Graphs.TokenType.FACT:
-                return Factorial(arg)
+                return _Factorial(arg)
             case _:
                 raise ValueError(f"unsupported postfix operator: {op}")
 
