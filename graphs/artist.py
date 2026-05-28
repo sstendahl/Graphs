@@ -4,6 +4,8 @@ Wrapper classes for mpl artists.
 
 Provides GObject based wrappers for mpl artists.
 """
+from itertools import islice
+
 from gi.repository import GObject, Graphs
 
 from graphs import ast, misc, utilities
@@ -321,16 +323,17 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         # combinations with error bars on either or both axes.
         bar_iter = iter(self._bars)
         cap_iter = iter(self._caps)
+
         if xerr is not None:
             self._xbar = next(bar_iter)
-            self._xcaps = tuple(cap_iter)
+            self._xcaps = tuple(islice(cap_iter, 2))
             if not item.get_showxerr():
                 self._xbar.set_visible(False)
                 for cap in self._xcaps:
                     cap.set_visible(False)
         if yerr is not None:
             self._ybar = next(bar_iter)
-            self._ycaps = tuple(cap_iter)
+            self._ycaps = tuple(islice(cap_iter, 2))
             if not item.get_showyerr():
                 self._ybar.set_visible(False)
                 for cap in self._ycaps:
