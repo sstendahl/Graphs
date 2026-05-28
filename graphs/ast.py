@@ -1,7 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Sympify an AST."""
-import contextlib
-
 from gi.repository import Graphs
 
 import sympy
@@ -47,6 +45,33 @@ def _deg_inv_trig(sympy_func, name):
     return _disable_rewrite(F, name)
 
 
+def _log(base, name):
+    class F(Function):
+        @classmethod
+        def eval(cls, x):
+            if x.is_Number:
+                return sympy.log(x, base)
+
+        def _eval_rewrite_as_sympy(self, *_args):
+            x = self.args[0]
+            return sympy.log(x, base)
+
+    return _disable_rewrite(F, name)
+
+
+class Factorial(Function):
+    @classmethod
+    def eval(cls, x):
+        if x.is_Number:
+            return sympy.factorial(x)
+
+    def _eval_simplify(self, **_kwargs):
+        return self
+
+    def _sympystr(self, printer):
+        return f"{printer.doprint(self.args[0])}!"
+
+
 FUNCTION_MAPPING = {
     Graphs.Ident.SIN: sympy.sin,
     Graphs.Ident.COS: sympy.cos,
@@ -72,6 +97,9 @@ FUNCTION_MAPPING = {
     Graphs.Ident.ACOTD: _deg_inv_trig(sympy.acot, "acotd"),
     Graphs.Ident.ASECD: _deg_inv_trig(sympy.asec, "asecd"),
     Graphs.Ident.ACSCD: _deg_inv_trig(sympy.acsc, "acscd"),
+    Graphs.Ident.LN: sympy.log,
+    Graphs.Ident.LOG2: _log(2, "log2"),
+    Graphs.Ident.LOG10: _log(10, "log10"),
     Graphs.Ident.SQRT: sympy.sqrt,
     Graphs.Ident.EXP: sympy.exp,
     Graphs.Ident.ABS: sympy.Abs,
@@ -136,18 +164,10 @@ def sympify(expr):
         arg = sympify(expr.arg())
         ident = expr.ident()
 
-        with contextlib.suppress(KeyError):
+        try:
             return FUNCTION_MAPPING[ident](arg)
-
-        match ident:
-            case Graphs.Ident.LN:
-                return sympy.log(arg)
-            case Graphs.Ident.LOG2:
-                return sympy.log(arg, 2)
-            case Graphs.Ident.LOG10:
-                return sympy.log(arg, 10)
-            case _:
-                raise ValueError(f"unsupported function identifier: {ident}")
+        except KeyError:
+            raise ValueError(f"unsupported function identifier: {ident}")
 
     elif isinstance(expr, Graphs.PostfixExpression):
         arg = sympify(expr.expr())
@@ -155,7 +175,7 @@ def sympify(expr):
 
         match op:
             case Graphs.TokenType.FACT:
-                return sympy.factorial(arg)
+                return Factorial(arg)
             case _:
                 raise ValueError(f"unsupported postfix operator: {op}")
 
