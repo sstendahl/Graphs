@@ -141,7 +141,7 @@ class CommonOperations():
         mode = window.get_mode()
         settings = data.get_figure_settings()
 
-        new_xdata, new_ydata, new_xerr, new_yerr = [], [], [], []
+        new_xdata, new_ydata, xerr, yerr = [], [], [], []
         some_x, some_y = False, False
 
         for item in data:
@@ -149,11 +149,10 @@ class CommonOperations():
                 continue
 
             lims = get_selected_limits(settings, mode, item.get_xposition())
-            xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
                 xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
-                new_xerr, new_yerr = None, None
+                xerr, yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if mode == Graphs.Mode.SELECT:
@@ -166,38 +165,37 @@ class CommonOperations():
                     mask &= numpy.less_equal(xdata, stopx)
                     xdata, ydata = xdata[mask], ydata[mask]
 
-                if item.has_xerr() and new_xerr is not None:
-                    new_xerr.extend(item.get_xerr())
+                if item.has_xerr() and xerr is not None:
+                    xerr.append(item.get_xerr())
                     some_x = True
                 else:
-                    new_xerr = None
-                if item.has_yerr() and new_yerr is not None:
-                    new_yerr.extend(item.get_yerr())
+                    xerr = None
+                if item.has_yerr() and yerr is not None:
+                    yerr.append(item.get_yerr())
                     some_y = True
                 else:
-                    new_yerr = None
+                    yerr = None
 
-            new_xdata.extend(xdata)
-            new_ydata.extend(ydata)
+            new_xdata.append(xdata)
+            new_ydata.append(ydata)
 
         if not new_xdata or not new_ydata:
             window.add_toast_string(_("No data found in highlighted area"))
             return False
 
-        if (some_x and new_xerr is None) or (some_y and new_yerr is None):
+        if (some_x and xerr is None) or (some_y and xerr is None):
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
-        new_xdata = numpy.array(new_xdata)
-        new_ydata = numpy.array(new_ydata)
+        new_xdata = numpy.concatenate(new_xdata)
         idx = numpy.argsort(new_xdata)
         data.add_items([
             DataItem.new(
                 data.get_selected_style_params(),
                 new_xdata[idx],
-                new_ydata[idx],
-                xerr=new_xerr,
-                yerr=new_yerr,
+                numpy.concatenate(new_ydata)[idx],
+                xerr=None if xerr is None else numpy.concatenate(xerr)[idx],
+                yerr=None if yerr is None else numpy.concatenate(yerr)[idx],
                 name=_("Combined Data"),
             ),
         ])
