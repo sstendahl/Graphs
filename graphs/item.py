@@ -164,7 +164,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     def new(
         cls,
         style: tuple[RcParams, dict],
-        equation: str,
+        equation: Graphs.Expression,
         xstart: str,
         xstop: str,
         steps: int,
@@ -182,6 +182,12 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
             **kwargs,
         )
 
+    def to_dict(self) -> dict:
+        """Convert item to dict."""
+        dictionary = super().to_dict()
+        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
+        return dictionary
+
 
 class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     """EquationItem."""
@@ -197,13 +203,24 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     }
 
     @classmethod
-    def new(cls, style: tuple[RcParams, dict], equation: str, **kwargs):
+    def new(
+        cls,
+        style: tuple[RcParams, dict],
+        equation: Graphs.Expression,
+        **kwargs,
+    ):
         """Create new EquationItem."""
         return cls(
             equation=equation,
             **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
+
+    def to_dict(self) -> dict:
+        """Convert item to dict."""
+        dictionary = super().to_dict()
+        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
+        return dictionary
 
 
 class TextItem(Graphs.TextItem, _PythonItemMixin):
@@ -292,17 +309,22 @@ class ItemFactory(Graphs.ItemFactory):
             case "GeneratedDataItem":
                 dictionary.pop("type")
                 dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+                equation = Graphs.expression_to_ast(dictionary["equation"])
+                dictionary["equation"] = equation
                 return GeneratedDataItem(**dictionary)
             case "EquationItem":
-                cls = EquationItem
+                dictionary.pop("type")
+                equation = Graphs.expression_to_ast(dictionary["equation"])
+                dictionary["equation"] = equation
+                return GeneratedDataItem(**dictionary)
             case "TextItem":
-                cls = TextItem
+                dictionary.pop("type")
+                return TextItem(**dictionary)
             case "FillItem":
-                cls = FillItem
+                dictionary.pop("type")
+                return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
-        dictionary.pop("type")
-        return cls(**dictionary)
 
     @staticmethod
     def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:

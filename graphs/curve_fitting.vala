@@ -418,10 +418,14 @@ namespace Graphs {
             settings.set_enum ("equation", (int) equation.get_selected ());
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
-            Item item = ItemFactory.new_equation_item (window.data, fitted_equation_string);
-            item.name = "Y = " + fitted_equation_string;
-            Item[] items = {item};
-            window.data.add_items (items);
+            try {
+                Expression ast = expression_to_ast (fitted_equation_string);
+                Item item = ItemFactory.new_equation_item (window.data, ast);
+                item.name = "Y = " + fitted_equation_string;
+                Item[] items = {item};
+                window.data.add_items (items);
+            } catch (MathError e) { assert_not_reached (); }
+
             window.data.optimize_limits ();
             close ();
         }

@@ -152,7 +152,8 @@ class CommonOperations():
             xdata, ydata = None, None
 
             if isinstance(item, Graphs.EquationItem):
-                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
+                equation = item.get_equation()
+                xdata, ydata = utilities.equation_to_data(equation, lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
@@ -225,7 +226,8 @@ class CommonOperations():
             startx, stopx = lims
             scale = right_scale if item.get_yposition() else left_scale
             if isinstance(item, Graphs.EquationItem):
-                xdata, ydata = utilities.equation_to_data(item.get_ast(), lims)
+                equation = item.get_equation()
+                xdata, ydata = utilities.equation_to_data(equation, lims)
             elif isinstance(item, Graphs.DataItem):
                 xdata, ydata = item.get_xydata()
                 if interaction_mode == Graphs.Mode.SELECT:
@@ -279,16 +281,14 @@ class CommonOperations():
                 continue
             shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
             if isinstance(item, Graphs.EquationItem):
-                equation = ast.sympify(item.get_ast())
+                equation = ast.sympify(item.get_equation())
                 if scale == Graphs.Scale.LOG:
                     equation = equation * 10 ** shift_value
                 elif scale == Graphs.Scale.LOG2:
                     equation = equation * 2 ** shift_value
                 else:
                     equation = equation + shift_value
-                equation = str(sympy.simplify(equation))
-                equation = Graphs.ast_to_expression(equation)
-                item.set_ast(equation)
+                item.set_equation(Graphs.expression_to_ast(str(equation)))
                 continue
             if isinstance(item, Graphs.DataItem):
                 if scale == Graphs.Scale.LOG:
@@ -326,9 +326,9 @@ class EquationOperations():
                     old_limits[item.get_xposition()],
                     old_limits[item.get_yposition() + 1],
                 )] + list(args)
-            equation = ast.sympify(item.get_ast())
+            equation = ast.sympify(item.get_equation())
             equation = callback(equation, *args)
-            equation = Graphs.expression_to_ast(str(sympy.simplify(equation)))
+            equation = Graphs.expression_to_ast(str(equation))
             if not Graphs.math_tools_validate_expression(equation):
                 raise misc.InvalidEquationError(
                     _(
@@ -336,7 +336,7 @@ class EquationOperations():
                         "did not result in a plottable equation",
                     ).format(name=item.get_name()),
                 )
-            item.set_ast(equation)
+            item.set_equation(equation)
         except misc.InvalidEquationError as error:
             return False, error.message
         except (NotImplementedError, AttributeError, KeyError):

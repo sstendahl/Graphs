@@ -34,19 +34,19 @@ namespace Graphs {
         }
 
         protected signal DataItem data_item_request (Data data, DataHolder holder);
-        protected signal GeneratedDataItem generated_data_item_request (Data data, string equation, string xstart, string xstop, int steps, Scale scale);
-        protected signal EquationItem equation_item_request (Data data, string equation);
+        protected signal GeneratedDataItem generated_data_item_request (Data data, Expression equation, string xstart, string xstop, int steps, Scale scale);
+        protected signal EquationItem equation_item_request (Data data, Expression equation);
         protected signal TextItem text_item_request (Data data, double xanchor, double yanchor, string text);
 
         public static DataItem new_data_item (Data data, double[] xdata, double[] ydata, double[]? xerr = null, double[]? yerr = null) {
             return instance.data_item_request.emit (data, new DataHolder (xdata, ydata, xerr, yerr));
         }
 
-        public static GeneratedDataItem new_generated_data_item (Data data, string equation, string xstart, string xstop, int steps, Scale scale) {
+        public static GeneratedDataItem new_generated_data_item (Data data, Expression equation, string xstart, string xstop, int steps, Scale scale) {
             return instance.generated_data_item_request.emit (data, equation, xstart, xstop, steps, scale);
         }
 
-        public static EquationItem new_equation_item (Data data, string equation) {
+        public static EquationItem new_equation_item (Data data, Expression equation) {
             return instance.equation_item_request.emit (data, equation);
         }
 
@@ -82,7 +82,7 @@ namespace Graphs {
     }
 
     public interface EquationBasedItem : Item {
-        public abstract string equation { get; set; }
+        public abstract Expression equation { get; set; }
     }
 
     public class DataHolder : Object {
@@ -179,21 +179,16 @@ namespace Graphs {
         public int steps { get; set; default = 100; }
         public Scale scale { get; set; default = Scale.LINEAR; }
 
-        private string _equation = "";
-        private Expression _ast;
-        public string equation {
+        private Expression _equation;
+        public Expression equation {
             get { return _equation; }
             set {
-                string old_equation = _equation;
-                if (old_equation == value) return;
-
-                _equation = value;
                 try {
-                    _ast = expression_to_ast (value);
-                } catch (MathError e) { assert_not_reached (); }
+                    if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
+                        name = "Y = " + ast_to_expression (value);
 
-                if ("Y = " + old_equation == name)
-                    name = "Y = " + value;
+                    _equation = value;
+                } catch (MathError e) { assert_not_reached (); }
 
                 regenerate ();
             }
@@ -211,7 +206,7 @@ namespace Graphs {
         private void regenerate () {
             try {
                 data = MathTools.equation_to_data (
-                    _ast,
+                    _equation,
                     evaluate_string (xstart),
                     evaluate_string (xstop),
                     steps, scale);
@@ -223,44 +218,21 @@ namespace Graphs {
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 
-        private string _equation = "";
-        private Expression _ast;
-        public string equation {
+        private Expression _equation;
+        public Expression equation {
             get { return _equation; }
             set {
-                string old_equation = _equation;
-                if (old_equation == value) return;
-
-                _equation = value;
                 try {
-                    _ast = expression_to_ast (value);
-                } catch (MathError e) { assert_not_reached (); }
+                    if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
+                        name = "Y = " + ast_to_expression (value);
 
-                if ("Y = " + old_equation == name)
-                    name = "Y = " + value;
+                    _equation = value;
+                } catch (MathError e) { assert_not_reached (); }
             }
         }
 
         construct {
             typename = _("Equation");
-        }
-
-        public unowned Expression get_ast () {
-            return _ast;
-        }
-
-        public void set_ast (Expression ast) {
-            string old_equation = _equation;
-
-            try {
-                _equation = ast_to_expression (ast);
-            } catch (MathError e) { assert_not_reached (); }
-            _ast = ast;
-
-            if ("Y = " + old_equation == name)
-                name = "Y = " + _equation;
-
-            notify_property ("equation");
         }
     }
 

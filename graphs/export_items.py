@@ -57,7 +57,7 @@ def _save_item(
             limits = [limits[0], limits[1]]
         else:
             limits = [limits[2], limits[3]]
-        xdata, ydata = utilities.equation_to_data(item.get_ast(), limits)
+        xdata, ydata = utilities.equation_to_data(item.get_equation(), limits)
 
     n_cols = 2 + (xerr is not None) + (yerr is not None)
     fmt = delimiter.join(["%.12e"] * n_cols)
