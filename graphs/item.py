@@ -316,7 +316,7 @@ class ItemFactory(Graphs.ItemFactory):
                 dictionary.pop("type")
                 equation = Graphs.expression_to_ast(dictionary["equation"])
                 dictionary["equation"] = equation
-                return GeneratedDataItem(**dictionary)
+                return EquationItem(**dictionary)
             case "TextItem":
                 dictionary.pop("type")
                 return TextItem(**dictionary)
