@@ -143,7 +143,7 @@ for style_path in args.styles:
     preview_element.text = str(out_path.relative_to(build_dir))
     styles.append([
         stylename,
-        main_prefix + style_file.name,
+        main_prefix + "styles/" + style_file.name,
         main_prefix + out_path.name,
     ])
 styles.sort(key=lambda x: x[0].casefold())
