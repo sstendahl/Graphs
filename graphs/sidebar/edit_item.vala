@@ -199,7 +199,9 @@ namespace Graphs {
 
         public void setup (EquationBasedItem item) {
             this.item = item;
-            equation.set_text (item.equation);
+            try {
+                equation.set_text (ast_to_expression (item.equation));
+            } catch (MathError e) { assert_not_reached (); }
         }
 
         [GtkCallback]
@@ -215,19 +217,24 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_equation_apply () {
-            item.equation = equation.get_text ();
+            try {
+                Expression ast = expression_to_ast (equation.get_text ());
+                equation.set_text (ast_to_expression (ast));
+                item.equation = ast;
+            } catch (MathError e) { assert_not_reached (); }
+
+            // workaround button not disappearing when pressed
+            equation.set_show_apply_button (false);
+            equation.set_show_apply_button (true);
         }
 
         [GtkCallback]
         private void on_simplify () {
             try {
-                string equation_str = equation.get_text ();
-                Expression ast = expression_to_ast (equation_str);
+                Expression ast = expression_to_ast (equation.get_text ());
                 ast = PythonHelper.simplify_equation (ast);
-                equation_str = ast_to_expression (ast);
-
-                equation.set_text (equation_str);
-                item.equation = equation_str;
+                equation.set_text (ast_to_expression (ast));
+                item.equation = ast;
             } catch (MathError e) {}
         }
     }

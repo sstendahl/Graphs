@@ -653,12 +653,10 @@ namespace Graphs {
                 double min_x = axes[xindex].min_value;
                 double max_x = axes[xindex].max_value;
 
-                Expression equation = item.get_ast ();
-
-                if (PythonHelper.has_singularities (equation, min_x, max_x)) continue;
+                if (PythonHelper.has_singularities (item.equation, min_x, max_x)) continue;
 
                 double min_y, max_y;
-                if (!MathTools.minmax_equation (equation, min_x, max_x, axes[xindex].scale, out min_y, out max_y)) continue;
+                if (!MathTools.minmax_equation (item.equation, min_x, max_x, axes[xindex].scale, out min_y, out max_y)) continue;
 
                 axes[yindex].update_min_max (min_y, max_y);
             }

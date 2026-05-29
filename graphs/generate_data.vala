@@ -69,12 +69,16 @@ namespace Graphs {
             this.settings.set_enum ("scale", scale);
 
             string name = item_name.get_text ();
-            if (name == "") name = "Y = " + equation;
+            try {
+                Expression expression = expression_to_ast (equation);
+                if (name == "") name = "Y = " + ast_to_expression (expression);
 
-            Item item = ItemFactory.new_generated_data_item (window.data, equation, xstart, xstop, steps, scale);
-            item.name = name;
-            Item[] items = {item};
-            window.data.add_items (items);
+                Item item = ItemFactory.new_generated_data_item (window.data, expression, xstart, xstop, steps, scale);
+                item.name = name;
+                Item[] items = {item};
+                window.data.add_items (items);
+            } catch (MathError e) { assert_not_reached (); }
+
             window.data.optimize_limits ();
             close ();
         }
