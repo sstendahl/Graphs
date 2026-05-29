@@ -34,11 +34,17 @@ namespace Graphs {
             string equation_str = this.equation.get_text ();
             this.settings.set_string ("equation", equation_str);
             string name = item_name.get_text ();
-            if (name == "") name = "Y = " + equation_str;
-            Item item = ItemFactory.new_equation_item (window.data, equation_str);
-            item.name = name;
-            Item[] items = {item};
-            window.data.add_items (items);
+
+            try {
+                Expression expression = expression_to_ast (equation_str);
+                if (name == "") name = "Y = " + ast_to_expression (expression);
+
+                Item item = ItemFactory.new_equation_item (window.data, expression);
+                item.name = name;
+                Item[] items = {item};
+                window.data.add_items (items);
+            } catch (MathError e) { assert_not_reached (); }
+
             window.data.optimize_limits ();
             close ();
         }

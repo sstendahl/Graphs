@@ -357,9 +357,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        expression = item.get_ast()
-        self._expr = ast.sympify(expression)
-        self._program = Graphs.ast_to_program(expression, "x")
+        equation = item.get_equation()
+        self._expr = ast.sympify(equation)
+        self._program = Graphs.ast_to_program(equation, "x")
         self._axis = axis
         self._view_change_timeout_id = None
         axis.callbacks.connect("xlim_changed", self._on_view_change)
@@ -376,6 +376,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         for prop in ("selected", "linewidth"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
+
+        item.connect("notify::equation", self._on_equation_change)
+
         self._set_properties(None, None)
         self._generate_data()
 
@@ -391,16 +394,12 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._view_change_timeout_id = \
             GObject.timeout_add(100, self._timeout_callback)
 
-    @GObject.Property(type=str, flags=2)
-    def equation(self) -> None:
-        """Write-only property, ignored."""
-
-    @equation.setter
-    def equation(self, equation: str) -> None:
+    # We cannot have a Property of type Graphs.Expression
+    def _on_equation_change(self, item, _pspec) -> None:
+        equation = item.get_equation()
         self._singularities_cache = False
-        expression = Graphs.expression_to_ast(equation)
-        self._expr = ast.sympify(expression)
-        self._program = Graphs.ast_to_program(expression, "x")
+        self._expr = ast.sympify(equation)
+        self._program = Graphs.ast_to_program(equation, "x")
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
