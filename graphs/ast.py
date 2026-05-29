@@ -69,7 +69,7 @@ class _Factorial(Function):
         return self
 
     def _sympystr(self, printer):
-        return f"{printer.doprint(self.args[0])}!"
+        return f"({printer.doprint(self.args[0])})!"
 
 
 FUNCTION_MAPPING = {
@@ -132,9 +132,7 @@ def sympify(expr):
         op = expr.op()
 
         match op:
-            case Graphs.TokenType.PLUS:
-                return inner
-            case Graphs.TokenType.MINUS:
+            case Graphs.Operator.SUB:
                 return -inner
             case _:
                 raise ValueError(f"unsupported unary operator: {op}")
@@ -145,17 +143,17 @@ def sympify(expr):
         op = expr.op()
 
         match op:
-            case Graphs.TokenType.PLUS:
+            case Graphs.Operator.ADD:
                 return left + right
-            case Graphs.TokenType.MINUS:
+            case Graphs.Operator.SUB:
                 return left - right
-            case Graphs.TokenType.STAR:
+            case Graphs.Operator.MUL:
                 return left * right
-            case Graphs.TokenType.SLASH:
+            case Graphs.Operator.DIV:
                 return left / right
-            case Graphs.TokenType.CARET:
+            case Graphs.Operator.POW:
                 return left ** right
-            case Graphs.TokenType.SUPERSCRIPT:
+            case Graphs.Operator.SUPERSCRIPT:
                 return left ** right
             case _:
                 raise ValueError(f"unsupported binary operator: {op}")
@@ -174,7 +172,7 @@ def sympify(expr):
         op = expr.op()
 
         match op:
-            case Graphs.TokenType.FACT:
+            case Graphs.Operator.FACT:
                 return _Factorial(arg)
             case _:
                 raise ValueError(f"unsupported postfix operator: {op}")
