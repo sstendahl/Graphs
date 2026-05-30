@@ -203,6 +203,7 @@ gresource_xml = custom_target('gresource_xml',
         output: application_id + '.gresource.xml',
   depend_files: [style_io, gresource_generator],
        command: [
+    python,
     gresource_generator,
     '@OUTPUT@',
     meson.current_build_dir(),
