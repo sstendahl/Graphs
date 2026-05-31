@@ -156,7 +156,7 @@ with open(args.styles_out, "wt") as out:
     out.write("namespace Graphs {\n")
     out.write("private const StyleInfo[] STYLES = {\n")
     for name, style, preview in styles:
-        out.write(f"{{ \"{name}\", \"{style}\", \"{preview}\" }},\n")
+        out.write(f'{{ "{name}", "{style}", "{preview}" }},\n')
     out.write("};\n}")
 
 
