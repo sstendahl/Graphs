@@ -21,17 +21,6 @@ XLSX_MAIN_NAMESPACE = \
 class OdsParser:
     """ODS file parser."""
 
-    def get_sheet_names(self, file: Gio.File) -> list[str]:
-        """Get sheet names from ODS file."""
-        with file_io.open(file, "rb") as file_obj, \
-             zipfile.ZipFile(file_obj) as zip_file, \
-             zip_file.open("content.xml") as content_file:
-            root = xml.etree.ElementTree.parse(content_file).getroot()
-            namespaces = {"table": ODS_TABLE_NAMESPACE}
-            sheets = root.findall(".//table:table", namespaces)
-            attribute_name = f"{{{namespaces['table']}}}name"
-            return [sheet.get(attribute_name) for sheet in sheets]
-
     def parse_file(
         self,
         file: Gio.File,
@@ -80,16 +69,6 @@ class OdsParser:
 
 class XlsxParser:
     """XLSX file parser."""
-
-    def get_sheet_names(self, file: Gio.File) -> list[str]:
-        """Get sheet names from XLSX file."""
-        with file_io.open(file, "rb") as file_obj, \
-             zipfile.ZipFile(file_obj) as zip_file, \
-             zip_file.open("xl/workbook.xml") as workbook_file:
-            root = xml.etree.ElementTree.parse(workbook_file).getroot()
-            namespaces = {"main": XLSX_MAIN_NAMESPACE}
-            sheets = root.findall(f".//{{{namespaces['main']}}}sheet")
-            return [sheet.get("name") for sheet in sheets]
 
     def parse_file(
         self,
@@ -207,19 +186,11 @@ class SpreadsheetParser(Parser):
     @staticmethod
     def init_settings(settings: Graphs.ImportSettings) -> bool:
         """Init settings with default spreadsheet sheet selection."""
-        parser = Graphs.SpreadsheetParser(settings)
-        print(parser.get_sheet_names())
-
-
-        file = settings.get_file()
-        parser = \
-            OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
         try:
-            sheet_names = parser.get_sheet_names(file)
-            string_list = Gtk.StringList.new(sheet_names)
-            settings.set_item("sheet-names", string_list)
+            parser = Graphs.SpreadsheetParser.new(settings.get_file())
+            settings.set_item("parser", parser)
             return True
-        except zipfile.BadZipFile:
+        except GLib.GError:
             return False
 
     @staticmethod
@@ -228,7 +199,7 @@ class SpreadsheetParser(Parser):
         box: Gtk.Box,
     ) -> None:
         """Append Spreadsheet-specific settings widgets."""
-        if not settings.get_item("sheet-names"):
+        if not settings.get_item("parser"):
             return
         box.append(Graphs.SpreadsheetGroup.new(settings))
         box.append(Graphs.SpreadsheetBox.new(settings))

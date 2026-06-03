@@ -87,7 +87,8 @@ class DataImporter(Graphs.DataImporter):
         parser = parsers.get_parser(settings.get_mode())
         try:
             return parser.init_settings(settings)
-        except Exception:
+        except Exception as e:
+            logging.exception("parser failed to init settings.")
             return False
 
     @staticmethod
