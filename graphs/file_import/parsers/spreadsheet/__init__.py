@@ -207,6 +207,10 @@ class SpreadsheetParser(Parser):
     @staticmethod
     def init_settings(settings: Graphs.ImportSettings) -> bool:
         """Init settings with default spreadsheet sheet selection."""
+        parser = Graphs.SpreadsheetParser(settings)
+        print(parser.get_sheet_names())
+
+
         file = settings.get_file()
         parser = \
             OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
