@@ -130,6 +130,8 @@ namespace Graphs {
     }
 
     private class XLSXParser : SpreadsheetParserInternal {
+        private Gee.HashSet<string> shared_strings = new Gee.HashSet<string> ();
+
         public XLSXParser (File file) throws Error {
             base (file);
         }
@@ -140,12 +142,12 @@ namespace Graphs {
             char* data = workbook.read ((size_t) workbook.size, null);
             Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) workbook.size);
 
-            var names = new Gee.HashSet<string> ();
-
             Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
             ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
 
             Xml.XPath.Object* result = ctx->eval_expression ("//main:sheet");
+
+            var names = new Gee.HashSet<string> ();
 
             if (result != null && result->nodesetval != null) {
                 var nodes = result->nodesetval;
@@ -162,7 +164,41 @@ namespace Graphs {
             return names.to_array ();
         }
 
+        private void load_shared_strings (int sheet_index) {
+            var shared_strings_file = input.child_by_aname ({"xl", "sharedStrings.xml"});
+
+            char* data = shared_strings_file.read ((size_t) shared_strings_file.size, null);
+            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) shared_strings_file.size);
+
+            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
+            ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+
+            Xml.XPath.Object* result = ctx->eval_expression ("//main:t");
+
+            if (result != null && result->nodesetval != null) {
+                var nodes = result->nodesetval;
+
+                for (int i = 0; i < nodes->length (); i++) {
+                    shared_strings.add (nodes->item (i)->get_prop ("name"));
+                }
+            }
+
+            delete result;
+            delete ctx;
+            delete doc;
+        }
+
         public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) {
+            load_shared_strings (sheet_index);
+
+            string sheet_name = "sheet%d.xml".printf (sheet_index + 1);
+            var worksheet = input.child_by_aname ({"xl", "worksheets", sheet_name});
+
+            char* data = worksheet.read ((size_t) worksheet.size, null);
+            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) worksheet.size);
+
+            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
+            ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
         }
     }
 
