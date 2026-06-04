@@ -2,69 +2,16 @@
 """Module for parsing spreadsheet files (ODS/XLSX)."""
 import xml.etree.ElementTree
 import zipfile
-from gettext import gettext as _
 from gettext import pgettext as C_
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import file_io, utilities
+from graphs import file_io
 from graphs.file_import.parsers import Parser
-from graphs.item import DataItem
-from graphs.misc import ParseError
 
 # XML Namespaces
-ODS_TABLE_NAMESPACE = "urn:oasis:names:tc:opendocument:xmlns:table:1.0"
 XLSX_MAIN_NAMESPACE = \
     "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-
-
-class OdsParser:
-    """ODS file parser."""
-
-    def parse_file(
-        self,
-        file: Gio.File,
-        columns: set[int],
-        sheet_index: int,
-    ) -> list[tuple[str, list[float]]]:
-        """Parse ODS file and return list of requested columns."""
-        with file_io.open(file, "rb") as file_obj, \
-             zipfile.ZipFile(file_obj) as zip_file, \
-             zip_file.open("content.xml") as content_file:
-            root = xml.etree.ElementTree.parse(content_file).getroot()
-            namespaces = {"table": ODS_TABLE_NAMESPACE}
-            repeat_key = f"{{{namespaces['table']}}}number-columns-repeated"
-            sheets = root.findall(".//table:table", namespaces)
-
-            max_col = max(columns)
-            raw_columns = {col_index: [[], ""] for col_index in columns}
-
-            table_rows = sheets[sheet_index].findall(
-                "table:table-row",
-                namespaces,
-            )
-            for table_row in table_rows:
-                cells = table_row.findall("table:table-cell", namespaces)
-                current_col = 0
-
-                for table_cell in cells:
-                    repeat_count = int(table_cell.get(repeat_key, 1))
-                    cell_value = "".join(table_cell.itertext())
-                    for _count in range(repeat_count):
-                        if current_col > max_col:
-                            break
-                        if current_col in columns:
-                            try:
-                                val = Graphs.evaluate_string(cell_value)
-                                raw_columns[current_col][0].append(val)
-                            except GLib.Error:
-                                if len(raw_columns[current_col][0]) == 0:
-                                    raw_columns[current_col][1] = \
-                                        cell_value.strip()
-                                else:
-                                    break
-                        current_col += 1
-            return raw_columns
 
 
 class XlsxParser:
@@ -211,68 +158,4 @@ class SpreadsheetParser(Parser):
         data: Graphs.Data,
     ) -> None:
         """Import data from ODS or XLSX file."""
-        style = data.get_selected_style_params()
-        file = settings.get_file()
-        sheet_index = settings.get_int("sheet-index")
-
-        column_indices = set()
-        item_settings_list = []
-        variant = settings.get_value("items")
-        for i in range(variant.n_children()):
-            item_settings = Graphs.ColumnsItemSettings()
-            item_settings.load_from_variant(variant.get_child_value(i))
-            item_settings_list.append(item_settings)
-
-            column_indices.add(item_settings.column_y)
-            if not item_settings.single_column:
-                column_indices.add(item_settings.column_x)
-            if item_settings.use_xerr:
-                column_indices.add(item_settings.xerr_index)
-            if item_settings.use_yerr:
-                column_indices.add(item_settings.yerr_index)
-
-        file_parser = \
-            OdsParser() if file.get_path().endswith(".ods") else XlsxParser()
-        parsed_columns = file_parser.parse_file(
-            file,
-            column_indices,
-            sheet_index,
-        )
-
-        for item_settings in item_settings_list:
-            ydata, ylabel = parsed_columns[item_settings.column_y]
-
-            if len(ydata) == 0:
-                raise ParseError(_("No numeric data found in column."))
-
-            if item_settings.single_column:
-                xlabel = ""
-                equation = Graphs.expression_to_ast(item_settings.equation)
-                xdata_b = Graphs.math_tools_evaluate_expression_b(
-                    equation,
-                    len(ydata),
-                    "n",
-                )
-                xdata = utilities.bytes_to_ndarray(xdata_b)
-            else:
-                xdata, xlabel = parsed_columns[item_settings.column_x]
-                if len(xdata) != len(ydata):
-                    raise ParseError(_("Columns do not have the same length."))
-
-            xerr, _label = parsed_columns[item_settings.xerr_index] \
-                if item_settings.use_xerr else (None, None)
-            yerr, _label = parsed_columns[item_settings.yerr_index] \
-                if item_settings.use_yerr else (None, None)
-
-            items.add(
-                DataItem.new(
-                    style,
-                    xdata,
-                    ydata,
-                    xerr=xerr,
-                    yerr=yerr,
-                    xlabel=xlabel,
-                    ylabel=ylabel,
-                    name=settings.get_filename(),
-                ),
-            )
+        settings.get_item("parser").parse(settings, data, items)

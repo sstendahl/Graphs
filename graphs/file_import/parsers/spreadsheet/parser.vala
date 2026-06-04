@@ -11,7 +11,7 @@ namespace Graphs {
         }
 
         public abstract string[] get_sheet_names () throws Error;
-        public abstract void parse () throws Error;
+        public abstract void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error;
     }
 
     private class ODSParser : SpreadsheetParserInternal {
@@ -30,24 +30,102 @@ namespace Graphs {
             Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
             ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
 
-            Xml.XPath.Object* result = ctx->eval_expression ("//table:table");
+            Xml.XPath.Object* tables = ctx->eval_expression ("//table:table");
 
-            if (result != null && result->nodesetval != null) {
-                var nodes = result->nodesetval;
+            if (tables != null && tables->nodesetval != null) {
+                var nodes = tables->nodesetval;
 
                 for (int i = 0; i < nodes->length (); i++) {
                     names.add (nodes->item (i)->get_ns_prop ("name", ODS_TABLE_NAMESPACE));
                 }
             }
 
-            delete result;
+            delete tables;
             delete ctx;
             delete doc;
 
             return names.to_array ();
         }
 
-        public override void parse () {
+        private string extract_cell_text (Xml.Node* cell) {
+            var result = new StringBuilder();
+            for (Xml.Node* node = cell->children; node != null; node = node->next) {
+                if (node->type == Xml.ElementType.TEXT_NODE && node->content != null) {
+                    result.append(node->content);
+                } else if (node->type == Xml.ElementType.ELEMENT_NODE) {
+                    result.append(extract_cell_text(node));
+                }
+            }
+            return result.free_and_steal ();
+        }
+
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) {
+            var content = input.child_by_name ("content.xml");
+
+            char* data = content.read ((size_t) content.size, null);
+            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
+
+            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
+            ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
+
+            Xml.XPath.Object* tables = ctx->eval_expression ("//table:table");
+
+            Xml.Node* sheet = tables->nodesetval->item (sheet_index);
+
+            int array_size = columns[0].data.length;
+            int value_size = 0;
+            int current_col, repeat_count;
+            unowned Column column;
+            string cell_text;
+
+            for (Xml.Node* row = sheet->children; row != null; row = row->next) {
+                if (row->type != Xml.ElementType.ELEMENT_NODE) continue;
+                if (row->name != "table-row") continue;
+
+                current_col = 0;
+
+                // if we reach capacity, grow the arrays.
+                if (value_size == array_size) {
+                    array_size *= 2;
+                    columns.for_each ((key, column) => {
+                        column.data.resize (array_size);
+                    });
+                }
+
+                for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
+                    if (cell->type != Xml.ElementType.ELEMENT_NODE) continue;
+                    if (cell->name != "table-cell") continue;
+
+                    // Get repeat count
+                    string? repeat_str = cell->get_prop ("number-columns-repeated");
+                    repeat_count = repeat_str != null ? int.parse (repeat_str) : 1;
+
+                    cell_text = extract_cell_text (cell);
+
+                    // Process repeated cells
+                    for (int count = 0; count < repeat_count; count++) {
+                        if (current_col > max_columns) break;
+
+                        if (columns.contains (current_col)) {
+                            column = columns.lookup (current_col);
+                            if (!try_evaluate_string (cell_text, out column.data[value_size])) {
+                                if (value_size == 0) {
+                                    column.header = cell_text.strip ();
+                                } else {
+                                    break;
+                                }
+                            }
+                        }
+                        current_col++;
+                    }
+                }
+
+                value_size++;
+            }
+
+            columns.for_each ((key, column) => {
+                column.data.resize (value_size);
+            });
         }
     }
 
@@ -84,13 +162,15 @@ namespace Graphs {
             return names.to_array ();
         }
 
-        public override void parse () {
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) {
         }
     }
 
     public class SpreadsheetParser : Object {
         private SpreadsheetParserInternal parser;
         private string[] sheet_names;
+        private HashTable<uint, Column> columns;
+        private uint n_used_indices;
 
         public SpreadsheetParser (File file) throws Error {
             if (file.get_path ().has_suffix (".ods")) {
@@ -100,11 +180,67 @@ namespace Graphs {
             }
 
             this.sheet_names = parser.get_sheet_names ();
+            columns = new HashTable<uint, Column> (null, null);
         }
 
         public unowned string[] get_sheet_names () {
             return sheet_names;
         }
 
+        private void request_column (uint index) {
+            if (!columns.contains (index)) columns.insert (index, new Column ());
+
+            columns[index].requests++;
+            n_used_indices = uint.max (n_used_indices, index);
+        }
+
+        public void parse (ImportSettings settings, Data data, ItemList itemlist) throws Error {
+            ColumnsItemSettings item_settings = ColumnsItemSettings ();
+            var items = settings.get_value ("items");
+
+            var iter = items.iterator ();
+            for (int i = 0; i < iter.n_children (); i++) {
+                item_settings.load_from_variant (iter.next_value ());
+
+                request_column (item_settings.column_y);
+                if (!item_settings.single_column) request_column (item_settings.column_x);
+                if (item_settings.use_yerr) request_column (item_settings.yerr_index);
+                if (item_settings.use_xerr) request_column (item_settings.xerr_index);
+            }
+
+            parser.parse (settings.get_int ("sheet-index"), n_used_indices, columns);
+
+            iter = items.iterator ();
+            for (int i = 0; i < iter.n_children (); i++) {
+                item_settings.load_from_variant (iter.next_value ());
+
+                string ylabel = columns[item_settings.column_y].header;
+                double[] ydata = columns[item_settings.column_y].get_data ();
+
+                double[]? xerr = item_settings.use_xerr ? columns[item_settings.xerr_index].get_data () : null;
+                double[]? yerr = item_settings.use_yerr ? columns[item_settings.yerr_index].get_data () : null;
+
+                string xlabel;
+                double[] xdata;
+                if (item_settings.single_column) {
+                    xlabel = "";
+                    try {
+                        Expression equation = expression_to_ast (item_settings.equation);
+                        xdata = MathTools.evaluate_expression (equation, ydata.length, "n");
+                    } catch (MathError e) {
+                        throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
+                    }
+                } else {
+                    xlabel = columns[item_settings.column_x].header;
+                    xdata = columns[item_settings.column_x].get_data ();
+                }
+
+                Item item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+                item.xlabel = xlabel;
+                item.ylabel = ylabel;
+                item.name = settings.filename;
+                itemlist.add (item);
+            }
+        }
     }
 }
