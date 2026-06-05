@@ -118,11 +118,6 @@ namespace Graphs.MathTools {
         return ast_to_program (expr, variable).eval (input);
     }
 
-    public static Bytes evaluate_expression_b (Expression expr, int length, string variable) throws MathError {
-        double[] output = evaluate_expression (expr, length, variable);
-        return new Bytes.take ((uint8[]) output);
-    }
-
     public static DataHolder program_to_data (Program program, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
         double[] xdata = new double[steps];
         CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);

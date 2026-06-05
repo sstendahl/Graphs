@@ -72,8 +72,7 @@ namespace Graphs {
 
             Xml.Node* sheet = tables->nodesetval->item (sheet_index);
 
-            int array_size = columns[0].data.length;
-            int value_size = 0;
+            int array_size = columns[0].data.length, value_size = 0;
             int current_col, repeat_count;
             unowned Column column;
             string cell_text;
@@ -201,8 +200,8 @@ namespace Graphs {
 
             Xml.XPath.Object* sheet = ctx->eval_expression ("//main:row");
 
-            int array_size = columns[0].data.length;
-            int current_row = 0, current_col;
+            int array_size = columns[0].data.length, value_size = 0;
+            int current_col;
             unowned Column column;
             string? r;
             string cell_text = "";
@@ -210,11 +209,8 @@ namespace Graphs {
             for (int i = 0; i < sheet->nodesetval->length (); i++) {
                 Xml.Node* row = sheet->nodesetval->item (i);
 
-                r = row->get_prop ("r");
-                current_row = int.parse (r) - 1;
-
                 // if we reach capacity, grow the arrays.
-                if (current_row == array_size) {
+                if (value_size == array_size) {
                     array_size *= 2;
                     columns.for_each ((key, column) => {
                         column.data.resize (array_size);
@@ -230,7 +226,7 @@ namespace Graphs {
                     }
                     current_col = Tools.alpha_to_int (builder.free_and_steal ());
 
-                    if (!columns.contains (current_col));
+                    if (!columns.contains (current_col)) continue;
 
                     for (Xml.Node* child = cell->children; child != null; child = child->next) {
                         if (child->name == "v") {
@@ -245,14 +241,16 @@ namespace Graphs {
                     }
 
                     column = columns.lookup (current_col);
-                    if (!try_evaluate_string (cell_text, out column.data[current_row])) {
-                        if (current_row == 0) {
+                    if (!try_evaluate_string (cell_text, out column.data[value_size])) {
+                        if (value_size == 0) {
                             column.header = cell_text.strip ();
                         } else {
                             break;
                         }
                     }
                 }
+
+                value_size++;
             }
 
             delete sheet;
@@ -260,7 +258,7 @@ namespace Graphs {
             delete doc;
 
             columns.for_each ((key, column) => {
-                column.data.resize (current_row);
+                column.data.resize (value_size);
             });
         }
     }
@@ -334,7 +332,7 @@ namespace Graphs {
                     xdata = columns[item_settings.column_x].get_data ();
                 }
 
-                Item item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+                Item item = ItemFactory.new_data_item (data, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
                 item.xlabel = xlabel;
                 item.ylabel = ylabel;
                 item.name = settings.filename;
