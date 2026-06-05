@@ -26,6 +26,10 @@ parser.add_argument(
     help="the output file",
 )
 parser.add_argument(
+    "styles_out",
+    help="the styles output file",
+)
+parser.add_argument(
     "build_dir",
     help="Path to build directory. Generated Files will be put there.",
 )
@@ -115,7 +119,6 @@ styles_gresource = ElementTree.SubElement(
     "gresource",
     attrib={"prefix": main_prefix},
 )
-style_list = Path(build_dir, "styles.txt")
 for style_path in args.styles:
     style_file = Path(style_path).resolve()
     style_element = ElementTree.SubElement(
@@ -147,16 +150,14 @@ for style_path in args.styles:
         main_prefix + out_path.name,
     ])
 styles.sort(key=lambda x: x[0].casefold())
-with open(style_list, "wt") as style_list_file:
-    style_list_file.writelines(";".join(x) + "\n" for x in styles)
-style_list_element = ElementTree.SubElement(
-    main_gresource,
-    "file",
-    attrib={
-        "compressed": "True",
-    },
-)
-style_list_element.text = str(style_list.relative_to(build_dir))
+
+# Generate a vala file with style info
+with open(args.styles_out, "wt") as out:
+    out.write("namespace Graphs {\n")
+    out.write("private const StyleInfo[] STYLES = {\n")
+    for name, style, preview in styles:
+        out.write(f'{{ "{name}", "{style}", "{preview}" }},\n')
+    out.write("};\n}")
 
 
 def _to_array(file_path):
