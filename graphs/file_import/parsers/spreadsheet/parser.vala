@@ -130,7 +130,7 @@ namespace Graphs {
     }
 
     private class XLSXParser : SpreadsheetParserInternal {
-        private Gee.HashSet<string> shared_strings = new Gee.HashSet<string> ();
+        string[] shared_strings;
 
         public XLSXParser (File file) throws Error {
             base (file);
@@ -175,12 +175,11 @@ namespace Graphs {
 
             Xml.XPath.Object* result = ctx->eval_expression ("//main:t");
 
-            if (result != null && result->nodesetval != null) {
-                var nodes = result->nodesetval;
+            int n_strings = result->nodesetval->length ();
+            shared_strings = new string[n_strings];
 
-                for (int i = 0; i < nodes->length (); i++) {
-                    shared_strings.add (nodes->item (i)->get_prop ("name"));
-                }
+            for (int i = 0; i < n_strings; i++) {
+                shared_strings[i] = result->nodesetval->item (i)->children->content;
             }
 
             delete result;
@@ -199,6 +198,70 @@ namespace Graphs {
 
             Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
             ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+
+            Xml.XPath.Object* sheet = ctx->eval_expression ("//main:row");
+
+            int array_size = columns[0].data.length;
+            int current_row = 0, current_col;
+            unowned Column column;
+            string? r;
+            string cell_text = "";
+
+            for (int i = 0; i < sheet->nodesetval->length (); i++) {
+                Xml.Node* row = sheet->nodesetval->item (i);
+
+                r = row->get_prop ("r");
+                current_row = int.parse (r) - 1;
+
+                // if we reach capacity, grow the arrays.
+                if (current_row == array_size) {
+                    array_size *= 2;
+                    columns.for_each ((key, column) => {
+                        column.data.resize (array_size);
+                    });
+                }
+
+                for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
+                    r = cell->get_prop ("r");
+
+                    StringBuilder builder = new StringBuilder ();
+                    for (int j = 0; j < r.length; j++) {
+                        if (!r[j].isdigit ()) builder.append_c (r[j]);
+                    }
+                    current_col = Tools.alpha_to_int (builder.free_and_steal ());
+
+                    if (!columns.contains (current_col));
+
+                    for (Xml.Node* child = cell->children; child != null; child = child->next) {
+                        if (child->name == "v") {
+                            cell_text = child->children->content;
+                            break;
+                        }
+                    }
+
+                    string? t = cell->get_prop ("t");
+                    if (t != null && t == "s") {
+                        cell_text = shared_strings[int.parse (cell_text)];
+                    }
+
+                    column = columns.lookup (current_col);
+                    if (!try_evaluate_string (cell_text, out column.data[current_row])) {
+                        if (current_row == 0) {
+                            column.header = cell_text.strip ();
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            delete sheet;
+            delete ctx;
+            delete doc;
+
+            columns.for_each ((key, column) => {
+                column.data.resize (current_row);
+            });
         }
     }
 
