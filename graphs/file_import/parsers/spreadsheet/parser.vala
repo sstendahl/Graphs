@@ -48,12 +48,12 @@ namespace Graphs {
         }
 
         private string extract_cell_text (Xml.Node* cell) {
-            var result = new StringBuilder();
+            var result = new StringBuilder ();
             for (Xml.Node* node = cell->children; node != null; node = node->next) {
                 if (node->type == Xml.ElementType.TEXT_NODE && node->content != null) {
-                    result.append(node->content);
+                    result.append (node->content);
                 } else if (node->type == Xml.ElementType.ELEMENT_NODE) {
-                    result.append(extract_cell_text(node));
+                    result.append (extract_cell_text (node));
                 }
             }
             return result.free_and_steal ();
