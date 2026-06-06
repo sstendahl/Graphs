@@ -45,7 +45,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            string filename = C_("filename", "Exported Figure");
+            unowned string filename = C_("filename", "Exported Figure");
             string old_suffix = settings.get_string ("file-format");
             settings.set_enum ("file-format", (int) file_format.get_selected ());
             string suffix = settings.get_string ("file-format");
