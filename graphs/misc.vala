@@ -42,7 +42,7 @@ namespace Graphs {
         public static Scale from_string (string str) {
             EnumClass enumc = (EnumClass) typeof (Scale).class_ref ();
             unowned EnumValue? eval = enumc.get_value_by_nick (str);
-		    return (Scale) eval.value;
+            return (Scale) eval.value;
         }
 
         public unowned string friendly_string () {
@@ -80,7 +80,7 @@ namespace Graphs {
         public static LegendPosition from_string (string str) {
             EnumClass enumc = (EnumClass) typeof (LegendPosition).class_ref ();
             unowned EnumValue? eval = enumc.get_value_by_nick (str);
-		    return (LegendPosition) eval.value;
+            return (LegendPosition) eval.value;
         }
 
         public unowned string friendly_string () {

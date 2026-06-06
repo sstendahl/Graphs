@@ -24,7 +24,7 @@ namespace Graphs {
         public static ColumnsDelimiter parse (string delimiter) {
             EnumClass enumc = (EnumClass) typeof (ColumnsDelimiter).class_ref ();
             unowned EnumValue? eval = enumc.get_value_by_nick (delimiter);
-		    return (ColumnsDelimiter) eval.value;
+            return (ColumnsDelimiter) eval.value;
         }
 
         public unowned string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
@@ -64,7 +64,7 @@ namespace Graphs {
         public static ColumnsSeparator parse (string separator) {
             EnumClass enumc = (EnumClass) typeof (ColumnsSeparator).class_ref ();
             unowned EnumValue? eval = enumc.get_value_by_nick (separator);
-		    return (ColumnsSeparator) eval.value;
+            return (ColumnsSeparator) eval.value;
         }
     }
 
