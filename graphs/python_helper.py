@@ -2,14 +2,7 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs
 
-from graphs import (
-    ast,
-    curve_fitting,
-    export_items,
-    file_io,
-    misc,
-    operations,
-)
+from graphs import ast, curve_fitting, file_io, misc, operations
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
@@ -24,7 +17,6 @@ _REQUESTS = (
     "create-window",
     "curve-fitting-dialog",
     "export-figure",
-    "export-items",
     "has-singularities",
     "perform-operation",
     "python-method",
@@ -61,18 +53,6 @@ class PythonHelper(Graphs.PythonHelper):
         item: Graphs.Item,
     ) -> None:
         return curve_fitting.CurveFittingDialog(window, item)
-
-    @staticmethod
-    def _on_export_items_request(
-        self,
-        window: Graphs.Window,
-        mode: str,
-        file: Gio.File,
-        items: list[Graphs.Item],
-        _n_items: int,
-    ) -> None:
-        figure_settings = window.get_data().get_figure_settings()
-        return export_items.export_items(mode, file, items, figure_settings)
 
     @staticmethod
     def _on_export_figure_request(
