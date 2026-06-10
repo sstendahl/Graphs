@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
-"POT-Creation-Date: 2026-03-27 13:37+0000\n"
-"PO-Revision-Date: 2026-04-02 14:04+0200\n"
+"POT-Creation-Date: 2026-05-30 07:32+0000\n"
+"PO-Revision-Date: 2026-06-09 15:41+0200\n"
 "Last-Translator: Марко Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <Serbian>\n"
 "Language: sr\n"
@@ -26,289 +26,2221 @@ msgstr ""
 "Превод на српски језик https://гном.срб"
 
 #. (itstool) path: page/title
-#: C/curve_fitting.page:8
+#: C/curve-fitting.page:7
 msgid "Curve Fitting"
 msgstr "Прилагођавање криве"
 
+#. (itstool) path: page/p
+#: C/curve-fitting.page:8
+msgid ""
+"Curve fitting allows for powerful analysis of imported datasets by finding "
+"the parameters of a mathematical model that best describes the data. The "
+"following topics are covered in this page:"
+msgstr "Прилагођавање криве омогућава моћну анализу увезених скупова података проналажењем параметара математичког модела који најбоље описује податке. На овој страници су обрађене следеће теме:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:11
+msgid "<link xref=\"#fitting\">Fitting Data</link>: Set up and run a fit."
+msgstr "<link xref=\"#fitting\">Прилагођавање података</link>: Подесите и покрените прилагођавање."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:15
+msgid "<link xref=\"#bounds\">Bounds</link>: Constrain fitting parameters."
+msgstr "<link xref=\"#bounds\">Границе</link>: Ограничите параметре прилагођавања."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:19
+msgid "<link xref=\"#results\">Results</link>: Interpreting the output."
+msgstr "<link xref=\"#results\">Резултати</link>: Тумачење излаза."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:23
+msgid ""
+"<link xref=\"#residuals\">Residuals</link>: Inspect the quality of the fit."
+msgstr "<link xref=\"#residuals\">Остаци</link>: Прегледајте квалитет прилагођавања."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:27
+msgid ""
+"<link xref=\"#algorithms\">Fitting Algorithms</link>: Choose the right "
+"algorithm for your data."
+msgstr "<link xref=\"#algorithms\">Алгоритми прилагођавања</link>: Изаберите одговарајући алгоритам за ваше податке."
+
 #. (itstool) path: section/title
-#: C/curve_fitting.page:10
-msgid "Fitting data"
+#: C/curve-fitting.page:32
+#| msgid "Fitting data"
+msgid "Fitting Data"
 msgstr "Прилагођавање података"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:11
+#: C/curve-fitting.page:33
+#| msgid ""
+#| "Curve fitting allows for a powerful analysis method for your imported "
+#| "data. To start curve fitting on a data set, press the three vertical dots "
+#| "on the item you want to fit to, and choose \"Curve Fitting\". This brings "
+#| "up the Curve Fitting dialog for the selected data set. An extensive list "
+#| "of predefined equations can be chosen from the dropdown. The "
+#| "corresponding mathematical formula is shown in the same card."
 msgid ""
-"Curve fitting allows for a powerful analysis method for your imported data. "
-"To start curve fitting on a data set, press the three vertical dots on the "
-"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
-"Curve Fitting dialog for the selected data set. An extensive list of "
-"predefined equations can be chosen from the dropdown. The corresponding "
-"mathematical formula is shown in the same card."
-msgstr "Прилагођавање криве омогућава моћну методу анализе за ваше увезене податке. Да бисте започели прилагођавање криве на скупу података, притисните три усправне тачке на ставци коју желите да прилагодите и изаберите „Прилагођавање криве“. Ово отвара прозорче за прилагођавање криве за изабрани скуп података. Опсежан списак унапред одређених једначина се може изабрати из падајућег менија. Одговарајућа математичка формула је приказана на истој картици."
+"To start curve fitting on a dataset, press the three vertical dots on the "
+"item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve "
+"Fitting dialog. The fit and its confidence band are previewed live as "
+"parameters are adjusted."
+msgstr "Да бисте покренули прилагођавање криве на скупу података, притисните три усправне тачке на ставци коју желите да прилагодите и изаберите <em>Прилагођавање криве</em>. Овим се отвара прозорче за прилагођавање криве. Прилагођавање и његова трака поверења приказују се уживо док се параметри подешавају."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/curve_fitting.page:19
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/curve-fitting.page:34
 msgid ""
-"external ref='media/curve_fitting_light.png' "
-"md5='d33b620c42f2c1cf82c94998adf4a670'"
-msgstr "external ref='media/curve_fitting_light.png' md5='d33b620c42f2c1cf82c94998adf4a670'"
+"An equation to fit against is chosen from the dropdown. The following "
+"predefined equations are available, with their formula shown as a subtitle:"
+msgstr "Једначина за прилагођавање бира се из падајућег менија. Следеће унапред одређене једначине су доступне, а њихове формуле су приказане као поднаслови:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:37 C/figure-settings.page:22
+msgid "Linear"
+msgstr "Линеарно"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:38
+msgid "<code>a·x + b</code>"
+msgstr "<code>a·x + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:42
+msgid "Quadratic"
+msgstr "Квадратно"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:43
+msgid "<code>a·x² + b·x + c</code>"
+msgstr "<code>a·x² + b·x + c</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:47
+msgid "Exponential"
+msgstr "Експонент"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:48
+msgid "<code>a·exp(b·x)</code>"
+msgstr "<code>a·exp(b·x)</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:52
+msgid "Power Law"
+msgstr "Степени закон"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:53
+msgid "<code>a·x^b</code>"
+msgstr "<code>a·x^b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:57
+msgid "Logarithmic"
+msgstr "Логаритамски"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:58
+msgid "<code>a·log(x) + b</code>"
+msgstr "<code>a·log(x) + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:62
+msgid "Sigmoid Logistic"
+msgstr "Сигмоидна логистика"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:63
+msgid "<code>L / (1 + exp(-k·(x - b)))</code>"
+msgstr "<code>L / (1 + exp(-k·(x - b)))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:67
+msgid "Gaussian"
+msgstr "Гаус"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:68
+msgid "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+msgstr "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:72
+msgid "Custom"
+msgstr "Прилагођено"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:73
+msgid ""
+"Enter any equation using <code>x</code> as the independent variable. Any "
+"other variable names that are not functions (such as sin(x) or exp(x)) are "
+"automatically detected and treated as free parameters to be fitted."
+msgstr "Унесите било коју једначину користећи <code>x</code> као независну променљиву. Сваки други назив променљиве који није функција (као што су sin(x) или exp(x)) самостално се препознаје и третира као слободан параметар који треба прилагодити."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:76
+msgid ""
+"Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the "
+"resulting curve as a new equation in the project, with the fitted parameter "
+"values substituted into the expression."
+msgstr "Када се пронађе задовољавајуће прилагођавање, притисните <em>Додај прилагођавање подацима</em> да бисте додали добијену криву као нову једначину у пројекат, при чему су вредности прилагођених параметара уврштене у израз."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:23
+#: C/curve-fitting.page:79
 msgid "Bounds"
 msgstr "Границе"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:24
+#: C/curve-fitting.page:80
 msgid ""
-"Each detected parameter in the formula will be shown in the sidebar. Here an "
-"initial guess can be set for the fit, as well as the minimum and maximum "
-"value for this parameter. Make sure that the initial guess is in between the "
-"bounds, and that the minimum bound is smaller than the maximum bound. If you "
-"don't want to use any bounds for the parameter, you can set the bounds to "
-"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
-"maximum bound respectively."
-msgstr "Сваки откривени параметар у формули ће бити приказан у бочној површи. Овде се може поставити почетна претпоставка за прилагођавање, као и најмања и највећа вредност за овај параметар. Уверите се да је почетна претпоставка између граница, и да је доња граница мања од горње границе. Ако не желите да користите никакве границе за параметар, можете поставити границе на бесконачно користећи <code>-inf</code> и <code>inf</code> за доњу и горњу границу."
+"Each free parameter detected in the equation is shown in the sidebar with "
+"three fields: an initial guess, a minimum bound, and a maximum bound. The "
+"initial guess is the starting value used by the algorithm. Using a good "
+"initial guess close to the expected value will help the fit converge. The "
+"bounds constrain the range of values the parameter is allowed to take."
+msgstr "Сваки слободан параметар препознат у једначини приказује се у бочној траци са три поља: почетном проценом, доњом границом и горњом границом. Почетна процена је почетна вредност коју користи алгоритам. Употреба добре почетне процене блиске очекиваној вредности помоћи ће прилагођавању да конвергира. Границе ограничавају опсег вредности које параметар може имати."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:81
+msgid ""
+"The bounds fields default to <code>-inf</code> and <code>inf</code>, meaning "
+"no constraints are applied. To restrict a parameter, enter the desired "
+"minimum and maximum values."
+msgstr "Поља за границе подразумевају <code>-inf</code> и <code>inf</code>, што значи да никаква ограничења нису примењена. Да бисте ограничили параметар, унесите жељене најмање и највише вредности."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:82
+msgid ""
+"Note that bounds fields are only shown when an algorithm that supports them "
+"is selected. When using Levenberg-Marquardt, bounds are hidden as that "
+"algorithm does not support them. See <link xref=\"#algorithms\"/>for details."
+msgstr "Напомена: поља за границе се приказују само када је изабран алгоритам који их подржава. Приликом коришћења Levenberg-Marquardt методе, границе су сакривене јер тај алгоритам њих не подржава. За појединости погледајте <link xref=\"#algorithms\"/>."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:36
+#: C/curve-fitting.page:86
 msgid "Results"
 msgstr "Резултати"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:37
+#: C/curve-fitting.page:87
 msgid ""
-"Below the fitting parameters, a box is shown with the resulting parameters "
-"of the fit. Apart of the final results, a margin is shown as well for each "
-"parameter as well as the sum of R² indicating the goodness of the fit. The "
-"margin can be set using the primary menu in the Curve Fitting dialog as a "
-"multiple of the standard deviation, corresponding to an uncertainty margin "
-"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
-msgstr "Испод параметара прилагођавања, приказано је поље са резултујућим параметрима прилагођавања. Поред коначних резултата, приказана је и маргина за сваки параметар, као и збир R² који указује на доброту прилагођавања. Маргина се може поставити коришћењем главног менија у прозорчету за прилагођавање криве као умножак стандардног одступања, што одговара маргини несигурности од 65, 95 или 99,7% за стандардно одступање од 1σ, 2σ или 3σ."
+"After a successful fit the results panel shows two sections: Parameters and "
+"Statistics."
+msgstr "Након успешног уклопања, окно за резултате приказује два дела: Параметри и Статистика."
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:45
+#: C/curve-fitting.page:88
 msgid ""
-"Please note that like all fits, that this standard deviation is mostly a "
-"measure of how well the data agrees with the corresponding model. Factors "
-"such as whether this model is actually physically correct, if there's any "
-"systemic errors in the measurements, and if the parameters are correlated to "
-"each other is not taken into account when fitting data. This is an inherent "
-"property of all curve fitting, and a common point of confusion, leading to "
-"misleading error bars on data points even in scientifically published data."
-msgstr "Имајте на уму да је, као и код свих прилагођавања, ово стандардно одступање углавном мера тога колико се подаци слажу са одговарајућим моделом. Фактори као што су да ли је овај модел заиста физички исправан, да ли постоје системске грешке у мерењима и да ли су параметри узајамно повезани, не узимају се у обзир приликом прилагођавања података. Ово је својство својствено сваком прилагођавању криве и честа тачка забуне, што доводи до обмањујућих трака грешака на тачкама података чак и у научно објављеним подацима."
+"The Parameters section lists each fitted parameter with its value. If a "
+"confidence level other than None is selected, a margin is shown next to each "
+"value in the form <code>± error</code>, where the error is the standard "
+"deviation of that parameter multiplied by the selected confidence factor. So "
+"for a confidence level of 1σ the error is equal to the standard deviation, "
+"and for 2σ and 3σ the error is equal to twice and three times the standard "
+"deviation respectively. The confidence level can be set from the primary "
+"menu:"
+msgstr "Одељак Параметри наводи сваки уклопљени параметар са његовом вредношћу. Ако је изабран ниво поверења другачији од Ништа, поред сваке вредности приказује се маргина у облику <code>± грешка</code>, где је грешка стандардна девијација тог параметра помножена изабраним фактором поверења. Тако је за ниво поверења 1σ грешка једнака стандардној девијацији, а за 2σ и 3σ грешка је једнака два и три пута стандардне девијације, односно. Ниво поверења се може поставити из примарног менија:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:91
+msgid "<em>None</em>: no margin shown."
+msgstr "<em>Ништа</em>: маргина се не приказује."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:94
+msgid "<em>1σ: 68% Confidence</em>"
+msgstr "<em>1σ: 68% поверења</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:98
+msgid "<em>2σ: 95% Confidence</em>"
+msgstr "<em>2σ: 95% поверења</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:102
+msgid "<em>3σ: 99.7% Confidence</em>"
+msgstr "<em>3σ: 99.7% поверења</em>"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:106
+msgid ""
+"The corresponding confidence band is also drawn as a shaded region around "
+"the fitted curve."
+msgstr "Одговарајућа трака поверења такође је исцртана као засенчена област око прилагођене криве."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:107
+msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgstr "Одељак Статистика приказује две мере квалитета прилагођавања: R² и RMSE."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:108
+msgid ""
+"For a linear fit, R² measures how what proportion of the variation can be "
+"explained by the model. A value of 1 means the model explains all variation "
+"perfectly, while a value of 0 means it explains none. Note that for non-"
+"linear fits, the R² loses its physical meaning of what proportion of the "
+"variance is explained. It can still be somewhat useful to assess the "
+"goodness-of-fit, but the value itself becomes somewhat arbitrary."
+msgstr "При линеарном прилагођавању, R² мере који удео варијације модел може објаснити. Вредност 1 значи да модел савршено објашњава сву варијацију, док вредност 0 значи да не објашњава ништа. Напомена: при нелинеарним прилагођавањима, R² губи своје физичко значење о томе који удео варијансе је објашњен. Може и даље бити одређено корисно за процену квалитета прилагођавања, али сама вредност постаје помало произвољна."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:109
+msgid ""
+"RMSE (Root Mean Square Error) measures the typical size of the residuals "
+"(the differences between the data points and the fitted curve) in the same "
+"units as the Y data. Unlike R², RMSE gives an absolute sense of how far off "
+"the predictions are on average, which makes it useful when the physical "
+"magnitude of the error matters."
+msgstr "RMSE (корен средње квадратне грешке) мере типичну величину остатака (разлика између тачака података и прилагођене криве) у истим јединицама као и Y подаци. За разлику од R², RMSE даје апсолутну представу о томе колико су предвиђања у просеку одступила, што га чини корисним када је физичка величина грешке значајна."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:110
+#| msgid ""
+#| "Please note that like all fits, that this standard deviation is mostly a "
+#| "measure of how well the data agrees with the corresponding model. Factors "
+#| "such as whether this model is actually physically correct, if there's any "
+#| "systemic errors in the measurements, and if the parameters are correlated "
+#| "to each other is not taken into account when fitting data. This is an "
+#| "inherent property of all curve fitting, and a common point of confusion, "
+#| "leading to misleading error bars on data points even in scientifically "
+#| "published data."
+msgid ""
+"Note that both statistics reflect only how well the data agrees with the "
+"chosen model, not whether the model is physically correct. Factors such as "
+"systematic measurement errors and correlations between parameters are not "
+"accounted for. This is an inherent limitation of curve fitting, and a common "
+"source of misleading uncertainty estimates even in published scientific work."
+msgstr "Напомена: обе статистике одражавају само то колико се подаци слажу са изабраним моделом, а не да ли је модел физички исправан. Фактори као што су систематске грешке мерења и корелације између параметара нису узети у обзир. Ово је суштинско ограничење прилагођавања криве и чест извор погрешних процена неизвесности, чак и у објављеним научним радовима."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:57
-msgid "Fitting algorithms"
+#: C/curve-fitting.page:113
+msgid "Residuals"
+msgstr "Остаци"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:114
+msgid ""
+"The residuals plot can be shown by enabling <em>Show Residuals</em> from "
+"within the primary menu. This displays a second plot below the main one "
+"showing the difference between each data point and the fitted curve at that "
+"x-value. A dashed line at zero is shown for reference."
+msgstr "Нацрт остатка се може приказати омогућавањем опције <em>Прикажи остаке</em> у примарном менију. Ово приказује други нацрт испод главног, који приказује разлику између сваке тачке података и прилагођене криве на тој x-вредности. Искидана линија на нули је приказана за референцу."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:115
+msgid ""
+"A good fit will show residuals scattered randomly around zero with no "
+"visible pattern. A systematic pattern in the residuals, such as a curve or a "
+"trend suggests that the chosen model may not be appropriate for the data."
+msgstr "Добар прилагођај ће показати остатке насумично расуте око нуле, без видљивог образаца. Системски образац у остацима, као што је крива или тренд, указује на то да изабрани модел можда није одговарајући за податке."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:118
+msgid "Error Messages"
+msgstr "Поруке грешака"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:119
+msgid ""
+"If the fit cannot be completed, an error message is shown in the results "
+"panel instead of the parameter values. The following errors can occur:"
+msgstr "Ако прилагођавање не може бити завршено, у површи за резултате се приказује порука о грешци уместо вредности параметара. Могу се јавити следеће грешке:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:122
+msgid "Invalid equation"
+msgstr "Неисправна једначина"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:123
+msgid ""
+"The equation contains a syntax error or uses unsupported variables. Check "
+"that the expression is valid."
+msgstr "Једначина садржи синтаксну грешку или користи неподржане променљиве. Проверите да ли је израз исправан."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:126
+msgid "Constraint error"
+msgstr "Грешка ограничења"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:127
+msgid ""
+"The initial guess does not lie within the specified bounds, or the minimum "
+"bound is not smaller than the maximum. Ensure that Lower &lt; Initial &lt; "
+"Upper for each parameter."
+msgstr "Почетна процена се не налази унутар задатих граница, или најнижа граница није мања од највише. Осигурајте да је Доњи &lt; Почетни &lt; Горњи за сваки параметар."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:130
+msgid "Domain error"
+msgstr "Грешка домена"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:131
+msgid ""
+"The equation is not valid over the range of the data, for example due to a "
+"logarithm of a negative number or a division by zero."
+msgstr "Једначина није исправна у опсегу података, на пример због логаритма негативног броја или дељења нулом."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:134
+msgid "Fit failed: max iterations reached"
+msgstr "Неуспешно уклопање: достигнут највиши број понављања"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:135
+msgid ""
+"The algorithm did not converge within the allowed number of iterations. Try "
+"adjusting the initial guesses to be closer to the expected values, or choose "
+"a different algorithm."
+msgstr "Алгоритам није конвергирао у оквиру дозвољеног броја понављања. Покушајте да прилагодите почетне процене тако да буду ближе очекиваним вредностима, или изаберите други алгоритам."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:138
+msgid "Matrix error"
+msgstr "Грешка матрице"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:139
+msgid ""
+"The data is insufficient for the chosen model. This can happen for example "
+"when there are fewer data points than free parameters, or if the data does "
+"not constrain the model well enough to determine a unique solution."
+msgstr "Подаци су недовољни за изабрани модел. То се може десити, на пример, када има мање тачака података него слободних параметара, или ако подаци не ограничавају модел довољно да се одреди јединствено решење."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:142
+msgid "Confidence band error"
+msgstr "Грешка траке поверења"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:143
+msgid ""
+"The covariance matrix is unstable, so the confidence band cannot be computed "
+"reliably."
+msgstr "Матрица коваријансе је нестабилна, па се група поверења не може поуздано израчунати."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:148
+#| msgid "Fitting algorithms"
+msgid "Fitting Algorithms"
 msgstr "Алгоритми прилагођавања"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:58
+#: C/curve-fitting.page:149
 msgid ""
-"When performing a fit, there are three different fitting algorithms to "
-"choose from, these can be set from the primary menu."
-msgstr "Приликом извођења прилагођавања, постоје три различита алгоритма прилагођавања која можете изабрати, а они се могу поставити из главног менија."
+"Three fitting algorithms are available, selectable from the primary menu "
+"under <em>Optimization Method</em>:"
+msgstr "Доступна су три алгоритма прилагођавања, која се могу ибрати у основном менију под <em>Метода оптимизације</em>:"
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:64
+#: C/curve-fitting.page:152
 msgid "Levenberg-Marquardt"
 msgstr "Левенберг-Маркар"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:65
+#: C/curve-fitting.page:153
 msgid ""
-"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
-"algorithm that performs very efficiently. However, it does not handle bounds "
-"for the fitting parameters."
-msgstr "Левенберг-Маркаров алгоритам је традиционално релативно популаран алгоритам који ради веома ефикасно. Међутим, он не подржава границе за параметре прилагођавања."
+"A widely used algorithm that performs efficiently for most problems. Does "
+"not support parameter bounds, the minimum and maximum fields are hidden when "
+"this method is selected."
+msgstr "Широко коришћен алгоритам који ефикасно ради за већину проблема. Не подржава границе параметара; поља за најмање и највише вредности су сакривена када је ова метода изабрана."
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:68
-msgid "Trust Region"
-msgstr "Област поверења"
+#: C/curve-fitting.page:156
+msgid "Trust Region Reflective"
+msgstr "Рефлексивни алгоритам области поверења"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:69
+#: C/curve-fitting.page:157
 msgid ""
-"The Trust Region Reflective algorithm is well-suited for solving large "
-"problems with bounds. This method generally performs well for most cases and "
-"should probably be used for most cases."
-msgstr "Рефлексивни алгоритам области поверења је добро прилагођен за решавање великих проблема са границама. Ова метода углавном ради добро у већини случајева и вероватно би је требало користити у већини случајева."
+"Handles bounds well and performs reliably across a wide range of problems. A "
+"good default choice for most use cases."
+msgstr "Добро рукује границама и поуздано ради код широкого опсега проблема. Добар подразумевани избор за већину случајева употребе."
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:72
+#: C/curve-fitting.page:160
 msgid "Dogbox"
 msgstr "Догбокс"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:73
+#: C/curve-fitting.page:161
+#| msgid ""
+#| "The Dogbox algorithm uses rectangular trust regions and typically works "
+#| "well with small problems involving bounds."
 msgid ""
-"The Dogbox algorithm uses rectangular trust regions and typically works well "
-"with small problems involving bounds."
-msgstr "Догбокс алгоритам користи правоугаоне области поверења и обично добро ради са малим проблемима који укључују границе."
+"Uses rectangular trust regions and is well suited to smaller problems where "
+"bounds are required."
+msgstr "Користи правоугаоне регије поверења и добро је прилагођен мањим проблемима где су потребне границе."
 
 #. (itstool) path: page/title
+#: C/edit-item.page:7
+msgid "Editing Items"
+msgstr "Уређивање ставки"
+
+#. (itstool) path: page/p
+#: C/edit-item.page:8
+msgid ""
+"Each item in the sidebar can be edited by clicking on it. The edit panel "
+"varies depending on the item type, but all items share a common set of "
+"properties at the top."
+msgstr "Сваку ставку у бочној површи можно је уредити кликом на њу. Површ за уређивање се разликује у зависности од врсте ставке, али све ставке деле заједнички скуп својстава на врху."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:10
+msgid "Name and Position"
+msgstr "Назив и положај"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:11
+msgid ""
+"All items have a name, which is shown in the legend and the sidebar, and can "
+"be changed freely. Note that the naming does support LaTeX notation with the "
+"help of dollar signs. So for instance $\\mu_0$ will provide the Greek letter "
+"μ with a 0 as subscript. Each item can also be assigned to a specific axis: "
+"the X position can be set to either the bottom or top axis, and the Y "
+"position to either the left or right axis. This allows multiple datasets "
+"with different scales to be displayed on the same figure."
+msgstr "Све ставке имају назив који се приказује у легенди и бочној површи и који се може слободно мењати. Напомена: називање подржава LaTeX нотацију помоћу знакова долара. Тако ће, на пример, $\\\\mu_0$ пружити грчко слово μ са 0 као индексом. Свакој ставки такође се може доделити одређена оса: положај по X-оси се може поставити на доњу или горњу осу, а положај по Y-оси на леву или десну осу. Ово омогућава приказивање вишеструких скупова података са различитим размерама на истој слици."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:14
+msgid "Datasets: Line and Markers"
+msgstr "Скупови података: линија и маркери"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:15
+msgid ""
+"For datasets and generated datasets, the following appearance options are "
+"available:"
+msgstr "За скупове података и генерисане скупове података, доступне су следеће могућности изгледа:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:18 C/edit-style.page:52
+msgid "Linestyle"
+msgstr "Стил линије"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:19
+msgid ""
+"The style of the line connecting data points. Options are None, Solid, "
+"Dotted, Dashed, and Dashdot. When set to None, no line is drawn between "
+"points."
+msgstr "Стил линије која повезује тачке података. Могућности су Ништа, Пуна, Тачкаста, Искидана и Црта-тачка. Када је постављено на Ништа, између тачака се не црта линија."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:22
+msgid "Linewidth"
+msgstr "Дебљина линије"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:23
+msgid ""
+"The thickness of the line. Only enabled when a linestyle other than None is "
+"selected."
+msgstr "Дебљина линије. Омогућено је само када је изабран стил линије који није Ништа."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:26 C/edit-style.page:60
+msgid "Markers"
+msgstr "Обилеживачи"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:27
+msgid ""
+"The shape drawn at each data point. A wide range of marker shapes is "
+"available, including circles, squares, triangles, stars, diamonds, and more. "
+"Set to None to draw no markers."
+msgstr "Облик који се црта на свакој тачки података. Доступен је широк опсег облика обележивача, укључујући кругове, квадрате, троуглове, звезде, каро и остале. Поставите на Ништа да не били цртани никакви обележивачи."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:30 C/edit-style.page:64
+msgid "Marker Size"
+msgstr "Величина обележивача"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:31
+msgid ""
+"The size of the markers. Only enabled when a marker style other than None is "
+"selected."
+msgstr "Величина обележивача. Омогућено је само када је изабран стил обележивача који није Ништа."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:36
+msgid "Equations: Line and Equation"
+msgstr "Једначине: Линија и једначина"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:37
+msgid ""
+"Equation items expose the equation itself for editing directly in the edit "
+"panel. A <em>Simplify</em> button is available to simplify the expression "
+"algebraically. The available line options are the same as for datasets, "
+"except that markers are not supported for equations."
+msgstr "Ставке једначина омогућавају уређивање саме једначине директно у површи за уређивање. Доступно је дугме <em>Поједностави</em> за алгебрајско поједностављење израза. Доступне могућности линије су исте као за скупове података, осим што обележивачи нису подржани за једначине."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:40
+msgid "Generated Data: Equation and Range"
+msgstr "Генерисани подаци: једначина и опсег"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:41
+msgid ""
+"Generated datasets have the same options as regular datasets. Additionally, "
+"they expose the same equation field as equation items, along with controls "
+"for the X range and resolution. The <em>X Start</em> and <em>X Stop</em> "
+"fields define the bounds of the generated data. The <em>Steps</em> field "
+"controls how many data points are generated. The <em>Scale</em> setting "
+"determines the spacing between those points, with the following options "
+"available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, "
+"Square Root, and Inverse."
+msgstr "Генерисани скупови података имају исте могућности као и обични скупови података. Додатно, они омогућавају исто поље једначине као и ставке једначина, заједно са контролама за X опсег и резолуцију. Поља <em>X почетак</em> и <em>X крај</em> одређују границе генерисаних података. Поље <em>Кораци</em> контролише колико се тачака података генерише. Подешавање <em>Размера</em> одређује размак између тих тачака, при чему су доступне следеће могућности: Линеарно, Логаритамски (основа 10), Логаритамски (основа 2), Радијани, Квадратни корен и Инверзно."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:44 C/edit-style.page:70 C/import.page:45
+msgid "Error Bars"
+msgstr "Траке грешке"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:45
+msgid ""
+"For datasets that have error bar data, the appearance of the error bars can "
+"be configured in the <em>Error Bars</em> section:"
+msgstr "За скупове података који имају податке о тракама грешака, изглед трака грешака се може подесити у одељку <em>Траке грешака</em>:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:48
+msgid "Show Horizontal / Show Vertical"
+msgstr "Прикажи водоравно / Прикажи усправно"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:49
+msgid ""
+"Toggle the visibility of horizontal (X) and vertical (Y) error bars "
+"independently."
+msgstr "Окини видљивост водоравних (X) и усправних (Y) трака грешке независно."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:52 C/edit-style.page:86
+msgid "Draw Above Data"
+msgstr "Цртај изнад података"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:53 C/edit-style.page:87
+msgid ""
+"When enabled, error bars are drawn on top of the data line and markers "
+"rather than beneath them."
+msgstr "Када је омогућено, траке грешке се цртају изнад линије података и обележивача, уместо испод њих."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:56
+msgid "Color"
+msgstr "Боја"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:57
+msgid "The color of the error bars, set independently from the line color."
+msgstr "Боја трака грешке, постављена независно од боје линије."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:60 C/edit-style.page:74
+msgid "Cap Length"
+msgstr "Дужина капице"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:61 C/edit-style.page:75
+msgid "The length of the horizontal cap at the end of each error bar."
+msgstr "Дужина водоравне капе на крају сваке траке грешке."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:64 C/edit-style.page:78
+msgid "Cap Thickness"
+msgstr "Дебљина капице"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:65 C/edit-style.page:79
+msgid "The thickness of the cap lines."
+msgstr "Дебљина линија капа."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:68 C/edit-style.page:56 C/edit-style.page:82
+msgid "Line Width"
+msgstr "Ширина линије"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:69 C/edit-style.page:83
+msgid "The thickness of the error bar lines."
+msgstr "Дебљина линија трака грешака."
+
+#. (itstool) path: page/title
+#: C/edit-style.page:7
+msgid "Styles"
+msgstr "Стилови"
+
+#. (itstool) path: page/p
+#: C/edit-style.page:8
+msgid ""
+"Styles control the overall appearance of the plots, including colors, fonts, "
+"line widths, ticks, grid, and more. Graphs comes with a selection of built-"
+"in styles to choose from, and you can create and edit your own to get "
+"exactly the look you want."
+msgstr "Стилови управљају укупним изгледом графикова, укључујући боје, фонтове, дебљине линија, цртице, мрежу и остало. Графици нуде избор уграђених стилова из којих можете одабрати, а можете и направити и уредити своје како бисте добили тачно онакав изглед какав желите."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:10
+msgid "Applying a Style"
+msgstr "Примена стила"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:11
+msgid ""
+"The active style is selected from the Figure Settings panel, accessible in "
+"the sidebar in the top corner. See <link xref=\"figure-settings\"/>for more "
+"information. In the Appearance section, the current style name is shown. "
+"Clicking it opens the style picker, which displays all available styles as "
+"previews. Click any style to apply it to the figure immediately. When "
+"switching styles, item colors, markers and line widths are automatically "
+"remapped to match the new style's color cycle. Any item properties that were "
+"changed previously, however, are preserved when changing styles."
+msgstr "Активни стил се изабира у површи Подешавања фигуре, доступној у горњем углу бочне површи. Видите <link xref=\"figure-settings\"/>за више података. У одељку Изглед приказан је назив тренутног стила. Кликтањем на њега отвара се бирач стилова, који приказује све доступне стилове као прегледе. Кликните на било који стил да га одмах примените на фигуру. При пребацивању стилова, боје ставки, обележивачи и ширина линија се самостално поново мапирају како би одговарали циклусу боја новог стила. Међутим, било која својства ставки која су раније промењена остају зачувана при промени стилова."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:15
+msgid "Creating and Managing Styles"
+msgstr "Стварање и управљање стиловима"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:16
+msgid ""
+"To manage styles, press the <em>Manage</em> button on the style picker page, "
+"or open the Style Editor from the application menu. The Style Editor shows "
+"all available styles as previews."
+msgstr "За управљање стиловима, притисните дугме <em>Управљај</em> на страници бирача стилова, или отворите Уређивача стилова из менија програма. Уређивач стилова приказује све доступне стилове као прегледе."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:17
+msgid ""
+"To create a new style, press <em>Create Style…</em>, choose an existing "
+"style as a starting template, and give it a name. Your new style opens in "
+"the editor immediately, ready to customize. Changes are shown automatically "
+"in the preview as you edit."
+msgstr "За стварање новог стила, притисните <em>Направи стил…</em>, изаберите постојећи стил као почетни шаблон и дајте му назив. Ваш нови стил се одмах отвара у уређивачу, спреман за прилагођавање. Измене се самостално приказују у прегледу док уређујете."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:20
+msgid "Importing and Exporting Styles"
+msgstr "Увоз и извоз стилова"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:21
+msgid ""
+"Custom styles can be shared and loaded by saving them to and loading them "
+"from files in the Style Editor. To save a style, simply open your custom "
+"style and choose <em>Save Style as…</em> from the primary menu. You can "
+"import new styles using <em>Import File…</em> in the Style Editor, or open "
+"new styles for editing using the <em>Open File…</em> option."
+msgstr "Прилагођени стилови се могу делити и учитавати чувањем у датотеке и учитавањем из датотека у Уређивачу стилова. Да бисте сачували стил, једноставно отворите свој прилагођени стил и изаберите <em>Сачувај стил као…</em> из примарног менија. Нове стилове можете увести помоћу могућности <em>Увези датотеку…</em> у Уређивачу стилова, или отворити нове стилове за уређивање помоћу могућности <em>Отвори датотеку…</em>."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:24
+msgid "Changing a Style"
+msgstr "Мењање стила"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:25
+msgid "When changing a style, the following options can be set:"
+msgstr "При мењању стила, могу се подесити следеће могућности:"
+
+#. (itstool) path: section/title
+#: C/edit-style.page:27
+msgid "General"
+msgstr "Опште"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:30
+msgid "Style Name"
+msgstr "Назив стила"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:31
+msgid "The name of the style as it appears in the style picker."
+msgstr "Назив стила како се појављује у бирачу стилова."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:34
+msgid "Font"
+msgstr "Фонт"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:35
+msgid ""
+"The font used for all text in the figure, including axis labels, tick "
+"labels, the title, and the legend."
+msgstr "Фонт који се користи за сав текст на слици, укључујући натписе оса, натписе деоница, наслов и легенду."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:38
+msgid "Title Size"
+msgstr "Величина наслова"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:39
+msgid "The size of the figure title relative to the base text size."
+msgstr "Величина наслова слике у односу на основну величину текста."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:42
+msgid "Label Size"
+msgstr "Величина натписа"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:43
+msgid "The size of axis labels relative to the base text size."
+msgstr "Величина ознака оса у односу на основну величину текста."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:48
+msgid "Lines"
+msgstr "Линија"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:49
+msgid ""
+"These settings define the default appearance for new items. They can be "
+"overridden per item in the item editor."
+msgstr "Ова подешавања одређују подразумевани изглед за нове ставке. Могу се заменити за сваку ставку у уређивачу ставки."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:53
+msgid ""
+"The default line style for new items: None, Solid, Dotted, Dashed, or "
+"Dashdot. Line width is only configurable when a style other than None is "
+"selected."
+msgstr "Подразумевани стил линије за нове ставке: ништа, пуна, тачкаста, искидана или црта-тачка. Ширина линије је подесива само када је изабран стил који није ништа."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:57
+msgid "The default thickness of lines."
+msgstr "Подразумевана дебљина линија."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:61
+msgid ""
+"The default marker shape drawn at each data point. A wide range of shapes is "
+"available. Marker size is only configurable when a marker other than None is "
+"selected."
+msgstr "Подразумевани облик обележивача који се црта на свакој тачки података. Доступан је широк опсег облика. Величина обележивача се може подесити само када је изабран обележивач који није Ништа."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:65
+msgid "The default size of markers."
+msgstr "Подразумевана величина обележивача."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:71
+msgid ""
+"Default appearance settings for error bars, applied to new items. These can "
+"be overridden per item in the item editor."
+msgstr "Подразумевана подешавања изгледа за барове грешака, која се примењују на нове ставке. Ова подешавања се могу заменити по ставкама у уређивачу ставки."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:92
+msgid "Axes"
+msgstr "Осе"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:95
+msgid "Axis Width"
+msgstr "Ширина осе"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:96
+msgid "The thickness of the axis lines."
+msgstr "Дебљина линија оса."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:99
+msgid "Draw Frame"
+msgstr "Исцртај оквир"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:100
+msgid ""
+"When enabled, a full rectangular frame is drawn around the plot area. When "
+"disabled, only the axes that are in use are shown."
+msgstr "Када је омогућено, око области цртања се црта цео правоугаони кадар. Када је онемогућено, приказују се само осе које су у употреби."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:105
+msgid "Ticks"
+msgstr "Врхови"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:108
+msgid "Tick Direction"
+msgstr "Смер ознака"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:109
+msgid "Whether tick marks point inwards or outwards."
+msgstr "Да ли су ознаке усмерене ка унутра или ка споља."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:112
+msgid "Minor Ticks"
+msgstr "Мале цртице"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:113
+msgid ""
+"When enabled, minor tick marks are shown between the major ticks. Minor tick "
+"width and length become configurable when this is on."
+msgstr "Када је омогућено, споредне ознаке се приказују између главних ознака. Ширина и дужина споредних ознака постају подешљиве када је ово укључено."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:116
+msgid "Major Tick Width / Length"
+msgstr "Ширина / дужина главних ознака"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:117
+msgid "The thickness and length of major tick marks."
+msgstr "Дебљина и дужина главних ознака."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:120
+msgid "Minor Tick Width / Length"
+msgstr "Ширина / дужина малих цртица"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:121
+msgid "The thickness and length of minor tick marks."
+msgstr "Дебљина и дужина малих цртица."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:124
+msgid "Show Tick Labels on all Axes"
+msgstr "Прикажи ознаке цртица на свим осама"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:125
+msgid ""
+"When enabled, tick labels are shown on all visible axes with ticks rather "
+"than only the axes with data. To show tick labels on both sides of each "
+"axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
+msgstr "Када је омогућено, натписи цртица се приказују на свим видљивим осама са цртицама, уместо само на осима са подацима. Да бисте приказали натписе цртица са обе стране сваке осе, уверите се да је <em>Цртај оквир</em> означено како би се осе исцртале."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:128
+msgid "Ticks on Bottom / Top / Left / Right Axis"
+msgstr "Цртице на доњој / горњој / левој / десној оси"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:129
+msgid "Each axis can have its tick marks toggled on or off independently."
+msgstr "За сваку осу се може независно укључити или искључити приказ цртица."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:134
+msgid "Grid"
+msgstr "Мрежа"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:137
+msgid "Show Grid"
+msgstr "Прикажи мрежу"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:138
+msgid "Toggles the visibility of the background grid."
+msgstr "Мења видљивост позадинске мреже."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:141
+msgid "Grid Width"
+msgstr "Ширина мреже"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:142
+msgid ""
+"The thickness of grid lines. Only configurable when the grid is enabled."
+msgstr "Дебљина линија мреже. Може се подешавати само када је мрежа омогућена."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:145
+msgid "Grid Opacity"
+msgstr "Непровидност мреже"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:146
+msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgstr "Провидност линија мреже, од 0 (невидљиво) до 1 (потпуно непровидно)."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:151
+msgid "Padding"
+msgstr "Попуна"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:154
+msgid "Value Padding"
+msgstr "Попуна вредности"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:155
+msgid "The spacing between the axes and the tick value labels."
+msgstr "Размак између оса и ознака вредности."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:158
+msgid "Label Padding"
+msgstr "Попуна натписа"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:159
+msgid "The spacing between the axes and the axis labels."
+msgstr "Размак између оса и ознака оса."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:162
+msgid "Title Padding"
+msgstr "Попуна наслова"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:163
+msgid "The spacing between the plot area and the figure title."
+msgstr "Размак између области нацрта и наслова фигуре."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:168
+msgid "Colors"
+msgstr "Боје"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:169
+msgid ""
+"The following figure colors can each be set independently: Text, Ticks, "
+"Axes, Grid, Background, and Outline."
+msgstr "Следеће боје фигуре могу се појединачно подешавати: Текст, Цртице, Осе, Мрежа, Позадина и Оквир."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:172
+msgid "Line Colors and Error Bar Colors"
+msgstr "Боје линија и боје трака грешке"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:173
+msgid ""
+"The line color cycle defines the sequence of colors automatically assigned "
+"to new items as they are added to the figure. Colors can be added using the "
+"<em>Add Color</em> button, removed individually, and reordered by dragging. "
+"A separate color cycle is available for error bars."
+msgstr "Циклус боја линија дефинише низ боја које се самостално додељују новим ставкама како се оне додају у фигуру. Боје се могу додати помоћу дугмета <em>Додај боју</em>, појединачно уклонити или редоследом променити превлачењем. Засебан циклус боја је доступан за траке грешке."
+
+#. (itstool) path: page/title
+#: C/export.page:7
+msgid "Exporting"
+msgstr "Извозим"
+
+#. (itstool) path: page/p
+#: C/export.page:8
+msgid ""
+"Graphs can export both the figure as an image and the underlying data as "
+"files. Both options are available from the application menu."
+msgstr "Графици могу извезти и фигуру као слику и основне податке као датотеке. Обе могућности су доступне у менију програма."
+
+#. (itstool) path: section/title
+#: C/export.page:10
+msgid "Exporting the Figure"
+msgstr "Извоз слике"
+
+#. (itstool) path: section/p
+#: C/export.page:11
+msgid ""
+"To export the figure as an image, open the application menu and choose "
+"<em>Export Figure…</em>. The export dialog offers the following options:"
+msgstr "Да бисте извезли фигуру као слику, отворите мени програма и изаберите <em>Извези фигуру…</em>. Прозорче за извоз нуди следеће могућности:"
+
+#. (itstool) path: item/title
+#: C/export.page:14
+msgid "File Format"
+msgstr "Запис датотеке"
+
+#. (itstool) path: item/p
+#: C/export.page:15
+msgid ""
+"The image format to export to. The following formats are supported: PNG, "
+"JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most "
+"purposes PNG is a good choice. SVG and PDF produce vector output that scales "
+"to any size without loss of quality, making them well suited for use in "
+"publications and presentations."
+msgstr "Формат слике за извоз. Подржани су следећи формати: PNG, JPEG, WebP, SVG, PDF, PostScript и Encapsulated PostScript. За већину намена PNG је добар избор. SVG и PDF производе векторски излаз који се скалира на било коју величину без губитка квалитета, што их чини погодним за употребу у публикацијама и презентацијама."
+
+#. (itstool) path: item/title
+#: C/export.page:18
+msgid "Transparent Background"
+msgstr "Провидна позадина"
+
+#. (itstool) path: item/p
+#: C/export.page:19
+msgid ""
+"When enabled, the figure background is exported as transparent rather than "
+"filled with the style's background color. This is useful when embedding the "
+"figure into a document or presentation with its own background."
+msgstr "Када је омогућено, позадина фигуре се извози као провидна уместо да буде попуњена бојом позадине стила. Ово је корисно при уградњи фигуре у документ или презентацију са сопственом позадином."
+
+#. (itstool) path: item/title
+#: C/export.page:22
+msgid "Width and Height"
+msgstr "Ширина и висина"
+
+#. (itstool) path: item/p
+#: C/export.page:23
+msgid ""
+"The pixel dimensions of the exported image, between 100 and 7680 pixels wide "
+"and 100 and 4320 pixels tall. Press <em>Use Same Size as App</em> to "
+"automatically fill in the current size of the canvas as it appears on screen."
+msgstr "Димензије у тачкицама извезене слике, између 100 и 7680 тачкица ширине и 100 и 4320 тачкица висине. Притисни <em>Употреби исту величину као програм</em> да би се самостално попунила тренутна величина платна онако како се приказује на екрану."
+
+#. (itstool) path: section/title
+#: C/export.page:29
+#| msgid "Importing Data"
+msgid "Exporting Data"
+msgstr "Извоз података"
+
+#. (itstool) path: section/p
+#: C/export.page:30
+msgid ""
+"To export the underlying dataset values to a file, open the application menu "
+"and choose <em>Export Data…</em>. This exports the current data for all "
+"items in the project."
+msgstr "Да бисте вредности основног скупа података извезли у датотеку, отворите мени програма и изаберите <em>Извези податке…</em>. Ово извози тренутне податке за све ставке у пројекту."
+
+#. (itstool) path: page/title
+#. (itstool) path: section/title
+#: C/figure-settings.page:7 C/window.page:68
+msgid "Figure Settings"
+msgstr "Подешавања фигуре"
+
+#. (itstool) path: page/p
+#: C/figure-settings.page:8
+msgid ""
+"The Figure Settings panel controls the labels, axis limits, scaling, and "
+"general appearance of the figure. It can be opened by pressing the settings "
+"button in the top right of the sidebar. The current settings can be saved as "
+"the default for all new projects using the <em>Set as Default</em> button at "
+"the bottom of the panel."
+msgstr "Површ за подешавања слике контролише натписе, ограничења осе, размеру и општи изглед слике. Може се отворити притиском на дугме за подешавања у горњем десном углу бочне површи. Тренутна подешавања могу се сачувати као подразумевана за све нове пројекте помоћу дугмета <em>Постави као подразумевано</em> на дну површи."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:10
+msgid "Labels"
+msgstr "Натписи"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:11
+msgid ""
+"A title can be set for the figure, and a label can be set for each axis "
+"independently. Only the labels for axes that are currently in use are shown. "
+"Labels and the title can also be edited directly on the canvas by clicking "
+"on them."
+msgstr "За фигуру може бити постављен наслов, а за сваку осу се независно може поставити ознака. Приказују се само ознаке за осе које су тренутно у употреби. Ознаке и наслов такође се могу уредити директно на платну кликом на њих."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:14
+msgid "Axis Limits"
+msgstr "Ограничења осе"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:15
+msgid ""
+"The minimum and maximum values for each axis can be set manually. Only the "
+"limits for axes that are currently in use are shown. Leaving a limit field "
+"empty allows Graphs to determine the range automatically based on the data. "
+"The view can also be reset to fit all data at any time using the "
+"<em>Optimize Limits</em> action."
+msgstr "Најмање и највише вредности за сваку осу могу се ручно поставити. Приказују се само ограничења за осе које су тренутно у употреби. Ако поље за ограничење оставите празно, Графици ће самостално одредити опсег на основу података. Преглед се такође у било ком тренутку може вратити како би се уклопили сви подаци помоћу радње <em>Оптимизуј ограничења</em>."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:18
+msgid "Scaling"
+msgstr "Размера"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:19
+msgid "Each axis can be set to one of the following scales independently:"
+msgstr "За сваку осу се независно може поставити једна од следећих размера:"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:23
+msgid "Equal spacing between values. The default scale for most data."
+msgstr "Једнаки размаци између вредности. Подразумевана размера за већину података."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:26
+msgid "Logarithmic (Base 10)"
+msgstr "Логаритамска (основа 10)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:27
+msgid ""
+"Spacing based on powers of 10. Useful for data spanning several orders of "
+"magnitude."
+msgstr "Размак заснован на степенима броја 10. Корисно за податке који обухватају неколико редова величине."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:30
+msgid "Logarithmic (Base 2)"
+msgstr "Логаритамска (основа 2)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:31
+msgid "Spacing based on powers of 2."
+msgstr "Размак заснован на степенима броја 2."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:34
+msgid "Radians"
+msgstr "Радијани"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:35
+msgid "Axis ticks are expressed as multiples of π."
+msgstr "Цртице на оси су изражене као вишеструкости π."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:38
+msgid "Square Root"
+msgstr "Квадратни корен"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:39
+msgid "Spacing based on the square root of values."
+msgstr "Размак заснован на квадратном корену вредности."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:42
+msgid "Inverse"
+msgstr "Инверзна"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:43
+msgid "Spacing based on the reciprocal of values."
+msgstr "Размак заснован на реципрокнум вредностима."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:48
+msgid "Appearance"
+msgstr "Изглед"
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:51
+msgid "Show Legend"
+msgstr "Прикажи легенду"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:52
+msgid ""
+"Toggles the visibility of the legend. When enabled, the legend position can "
+"be set to one of several locations on the figure, or left on Auto to let "
+"Graphs choose the least obstructive position."
+msgstr "Промења видљивост легенде. Када је омогућено, положај легенде се може поставити на једно од неколико места на слици, или оставити на Самостално како би Графици изабрали најмање ометајући положај."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:55
+msgid "Hide Unselected Items"
+msgstr "Сакриј неизабране ставке"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:56
+msgid ""
+"When enabled, only items that are currently selected in the sidebar are "
+"shown on the canvas. This is useful for focusing on a subset of the data "
+"without deleting anything."
+msgstr "Када је омогућено, на платну се приказују само ствари које су тренутно изабране у бочној површи. Ово је корисно за фокусирање на подскуп података без брисања било чега."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:59
+msgid "Style"
+msgstr "Стил"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:60
+msgid ""
+"Shows the currently active style and opens the style picker when clicked. "
+"See <link xref=\"edit-style\"/>for details on creating and editing styles."
+msgstr "Приказује тренутно активни стил и отвара бирач стилова када се кликне. Видите <link xref=\"edit-style\"/> за појединости о стварању и уређивању стилова."
+
+#. (itstool) path: page/title
+#: C/import.page:7
+#| msgid "Importing Data"
+msgid "Adding Data"
+msgstr "Додавање података"
+
+#. (itstool) path: page/p
 #: C/import.page:8
-msgid "Importing Data"
-msgstr "Увоз података"
+msgid "There are three different types of data items in Graphs:"
+msgstr "У Графицима постоје три различите врсте ствари података:"
 
-#. (itstool) path: page/p
-#: C/import.page:9
+#. (itstool) path: item/p
+#: C/import.page:11
 msgid ""
-"There are two primary ways to import new data in Graphs, importing data "
-"directly by file or generating new data using an equation."
-msgstr "Постоје два главна начина за увоз нових података у Графике: увоз података директно из датотеке или стварање нових података помоћу једначине."
+"<link xref=\"#dataset\"> <em>Dataset</em> </link>: Data imported from a file "
+"or database."
+msgstr "<link xref=\"#dataset\"> <em>Скуп података</em> </link>: Подаци увезени из датотеке или базе података."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:14
-msgctxt "_"
-msgid ""
-"external ref='media/add_data_light.png' "
-"md5='5246da95eb47c74c7488f9b9016dde3d'"
-msgstr "external ref='media/add_data_light.png' md5='5246da95eb47c74c7488f9b9016dde3d'"
-
-#. (itstool) path: page/p
+#. (itstool) path: item/p
 #: C/import.page:16
 msgid ""
-"A wide array of filetypes are supported when importing data by file. Graphs "
-"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
-"files that are saved in a column format such as most .csv files, .dat "
-"files, .xy files or plain text. Finally, data from other Graphs projects can "
-"be imported into the current project as well, simply by adding new data as "
-"usual, but by selecting a project file instead."
-msgstr "Широк спектар врста датотека је подржан приликом увоза података из датотеке. Графици тренутно подржавају Panalytical .xrdml датотеке, Leybold .xry датотеке, као и датотеке које су сачуване у формату колона, као што је већина .csv датотека, .dat датотека, .xy датотека или обичан текст. Коначно, подаци из других пројеката Графика се такође могу увести у тренутни пројекат, једноставним додавањем нових података као и обично, али избором датотеке пројекта уместо тога."
+"<link xref=\"#generated\"> <em>Generated Dataset</em> </link>: Data "
+"generated from an equation over a fixed set of points."
+msgstr "<link xref=\"#generated\"> <em>Генерисани скуп података</em> </link>: Подаци генерисани из једначине на утврђеном скупу тачака."
 
-#. (itstool) path: page/p
-#: C/import.page:25
+#. (itstool) path: item/p
+#: C/import.page:21
 msgid ""
-"When using a custom delimiter during the import, an extra field will be "
-"visible to enter the delimiter of choice. This field recognizes regular "
-"expressions. For example, to choose a delimiter that looks for whitespace, "
-"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
-"code> denotes that the delimiter is a whitespace character, and the <code>+</"
-"code> denotes that at least one or more whitespace is required. Thus this "
-"input looks for any amount of whitespaces including tabs. Note that this "
-"particular input is equivalent to the default Whitespace option."
-msgstr "Када користите произвољни граничник током увоза, биће видљиво додатно поље за унос жељеног граничника. Ово поље препознаје регуларне изразе. На пример, да бисте изабрали граничник који тражи празнине, можете унети <code>\\s+</code> као граничник. У овом примеру, <code>\\s</code> означава да је граничник знак празнине, а <code>+</code> означава да је потребна барем једна или више празнина. Тако овај унос тражи било коју количину празнина, укључујући табулаторе. Имајте на уму да је овај конкретни унос еквивалентан подразумеваној опцији „Празнина“."
+"<link xref=\"#equation\"> <em>Equation</em> </link>: A mathematical "
+"expression rendered continuously across the entire canvas."
+msgstr "<link xref=\"#equation\"> <em>Једначина</em> </link>: Математички израз који је континуирано приказан широм целог платна."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:36
-msgctxt "_"
+#. (itstool) path: section/title
+#: C/import.page:27
+msgid "Dataset"
+msgstr "Скуп података"
+
+#. (itstool) path: section/p
+#: C/import.page:28
 msgid ""
-"external ref='media/add_equation_light.png' "
-"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
-msgstr "external ref='media/add_equation_light.png' md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+"A dataset is data imported from an external source. Graphs supports column-"
+"based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods "
+"and .xlsx), SQLite database files, Panalytical .xrdml files, and "
+"Leybold .xry files. Data from other Graphs projects can also be imported by "
+"selecting a project file."
+msgstr "Скуп података су подаци увезени из спољашњег извора. Графици подржавају датотеке засноване на колонама (као што су .csv, .dat, .xy и обичан текст), таблице (.ods и .xlsx), датотеке SQLite базе података, Паналитикал .xrdml датотеке и Лајболд .xry датотеке. Подаци из других пројеката у Графицима такође се могу увезти одабиром датотеке пројекта."
 
-#. (itstool) path: page/p
+#. (itstool) path: section/p
+#: C/import.page:29
+msgid ""
+"To import data, press the <em>Add</em> button in the top left of the sidebar "
+"and choose <em>Add Data from File…</em>. Multiple files can be added in a "
+"single import session by using the add button in the top left of the import "
+"dialog. Each file appears in the sidebar of the dialog, where it can be "
+"selected to review and adjust its settings. Graphs will attempt to guess the "
+"appropriate settings for each file automatically. Once everything looks "
+"right, press <em>Import</em> to add all files to the project."
+msgstr "Да бисте увезли податке, притисните дугме <em>Додај</em> у горњем левом углу бочне површи и одаберите <em>Додај податке из датотеке…</em>. Више датотека се може додати у једној сесији увоза коришћењем дугмета за додавање у горњем левом углу прозорчета за увоз. Свака датотека се појављује у бочној површи прозорчета, где се може одабрати за преглед и прилагођавање подешавања. Графици ће покушати да самостално одреде одговарајућа подешавања за сваку датотеку. Када све изгледа исправно, притисните <em>Увези</em> да бисте додали све датотеке у пројекат."
+
+#. (itstool) path: section/p
+#: C/import.page:30
+msgid ""
+"The <em>Import Mode</em> determines how a file is parsed, and is set "
+"automatically based on the file type. The available modes are described "
+"below."
+msgstr "<em>Режим увоза</em> одређује како се датотека анализира и самостално се поставља на основу врсте датотеке. Доступни режими су описани испод."
+
+#. (itstool) path: section/title
+#: C/import.page:32
+msgid "Column-based Files"
+msgstr "Датотеке засноване на колонама"
+
+#. (itstool) path: section/p
+#: C/import.page:33
+msgid ""
+"Column-based files store data as rows of values separated by a delimiter "
+"such as a comma, tab, or whitespace. Graphs detects the delimiter "
+"automatically in most cases. When using a custom delimiter, an extra field "
+"appears where a delimiter of your choice can be entered. This field "
+"recognizes regular expressions. Using <code>\\s+</code> matches any amount "
+"of whitespace including tabs, for example, and is equivalent to the default "
+"Whitespace option."
+msgstr "Датотеке засноване на колонама чувају податке у видеу редова вредности одвојених граничником као што су запета, језичак или белина. Графици у већини случајева самостално откривају граничник. При употреби прилагођеног граничника, појављује се додатно поље у које се може унети граничник по вашем избору. Ово поље препознаје регуларне изразе. Употреба <code>\\\\s+</code>, на пример, подудара се са било којом количином белине укључујући језичке, и еквивалентна је подразумеваној могућности Белина."
+
+#. (itstool) path: section/p
+#: C/import.page:34
+msgid ""
+"If a file only contains a single column of Y values, the <em>Single Column</"
+"em> option can be enabled to generate X values automatically from a "
+"configurable equation, where <code>n</code> represents the row index "
+"starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while "
+"<code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…"
+msgstr "Ако датотека садржи само једну колону Y вредности, могућност <em>Једна колона</em> може се омогући како би се X вредности самостално направиле на основу једначине која се може подесити, где <code>n</code> представља индекс редова почев од нуле. На пример, <code>n</code> даје 0, 1, 2, 3…, док <code>n*0.5</code> даје 0, 0.5, 1.0, 1.5…"
+
+#. (itstool) path: section/title
+#: C/import.page:37
+msgid "Spreadsheets"
+msgstr "Таблице"
+
+#. (itstool) path: section/p
 #: C/import.page:38
 msgid ""
-"The other way to import data is to generate data directly using an equation. "
-"This can be done using the \"Add Equation\" button found in the top-left "
-"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
-"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
-"quadratic equation could for instance be created using <code>x²+5</code> as "
-"input. Be aware that trigonometric functions are using radians by default. "
-"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
-"function. For instance <code>cosd(x)</code> generates a cosine where the x "
-"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
-"with the x-coordinate in radians."
-msgstr "Други начин за увоз података је стварање података директно помоћу једначине. Ово се може урадити помоћу дугмета „Додај једначину“ које се налази у горњем левом углу, или притиском на <cmd>Ctrl+Alt+N</cmd>. Већина уобичајено коришћене синтаксе је прихваћена, при чему <code>x</code> означава x-координату. Једноставна квадратна једначина би се, на пример, могла направити коришћењем <code>x²+5</code> као уноса. Будите свесни да тригонометријске функције подразумевано користе радијане. Ако желите да користите степене, једноставно додајте <code>d</code> тригонометријској функцији. На пример, <code>cosd(x)</code> ствара косинус где је x-координата дата у степенима, док <code>cos(x)</code> ствара косинус са x-координатом у радијанима."
+"Graphs supports importing data from .ods and .xlsx spreadsheet files. The X "
+"and Y columns are selected by their alphabetical column index, starting from "
+"zero. As with column-based files, the <em>Single Column</em> option can be "
+"used to generate X values automatically when only Y data is available. "
+"Multiple items can be configured from the same spreadsheet in a single "
+"import session by using the <em>Add Item</em> button, each with its own "
+"column selection."
+msgstr "Графици подржавају увоз подака из табелних датотека .ods и .xlsx. X и Y колоне се изабирају према њиховом азбучном индексу колоне, почев од нуле. Као и код датотека заснованих на колонама, могућност <em>Једна колона</em> се може користити за самостално генерисање X вредности када су доступни само Y подаци. Више ставки се може конфигурисати из исте табеле у једној сесији увоза коришћењем дугмета <em>Додај ставку</em>, при чему свака има свој избор колоне."
+
+#. (itstool) path: section/title
+#: C/import.page:41
+msgid "Databases"
+msgstr "Базе података"
+
+#. (itstool) path: section/p
+#: C/import.page:42
+msgid ""
+"SQLite database files are also supported. When importing a database file, "
+"the available tables are shown in a dropdown. Once a table is selected, the "
+"X and Y columns can each be chosen from the numeric columns available in "
+"that table. If a table contains no numeric columns, a warning is shown."
+msgstr "Датотеке SQLite база података су такође подржане. При увозу датотеке базе података, доступне табеле се приказују у падајућем менију. Када се табела изабере, X и Y колоне се могу изабрати из нумеричких колона доступних у тој табели. Ако табела не садржи нумеричке колоне, приказује се упозорење."
+
+#. (itstool) path: section/p
+#: C/import.page:46
+msgid ""
+"Datasets support optional X and Y error bars. For spreadsheet and database "
+"imports, error bars can be enabled per axis using the corresponding toggle, "
+"after which an additional column selector appears to specify which column "
+"contains the error values. Column-based file formats that natively include "
+"error bar data, such as .xrdml files, will have them imported automatically."
+msgstr "Скупови података подржавају необавезне X и Y траке грешака. При увозу из табела и база података, траке грешака се могу омогућити по оси помоћу одговарајућег окинића, након чега се појављује додатни изаборник колона да се наведе која колона садржи вредности грешака. Формати датотека засновани на колонама који природно садрже податке о тракама грешака, као што су .xrdml датотеке, имаће их самостално увезено."
+
+#. (itstool) path: section/p
+#: C/import.page:47
+msgid ""
+"Once imported, error bars are preserved through most operations. When "
+"combining multiple datasets, error bars are carried over only if all "
+"selected items have them in the output."
+msgstr "Након увоза, траке грешака се задржавају током већине радњи. При комбиновању више скупова података, траке грешака се преносе само ако све изабране ставке их имају у излазу."
+
+#. (itstool) path: section/title
+#: C/import.page:51
+msgid "Generated Datasets"
+msgstr "Генерисани скупови података"
+
+#. (itstool) path: section/p
+#: C/import.page:52
+msgid ""
+"Generated datasets create data by evaluating an equation over a range of X "
+"values. To add one, press the <em>Add</em> button in the sidebar and choose "
+"<em>Generate Data…</em>. The following parameters can be configured:"
+msgstr "Генерисани скупови података праве податке израчунавањем једначине у опсегу X вредности. Да бисте додали један, притисните дугме <em>Додај</em> у бочној површи и изаберите <em>Направи податке…</em>. Могу се подесити следећи параметри:"
+
+#. (itstool) path: item/title
+#. (itstool) path: section/title
+#: C/import.page:55 C/import.page:74
+msgid "Equation"
+msgstr "Једначина"
+
+#. (itstool) path: item/p
+#: C/import.page:56
+msgid ""
+"The mathematical expression to evaluate, using <code>x</code> as the "
+"variable."
+msgstr "Математички израз за израчунавање, уз коришћење <code>x</code> као променљиве."
+
+#. (itstool) path: item/title
+#: C/import.page:59
+msgid "X Start and X Stop"
+msgstr "Икс почетак и Икс заустављање"
+
+#. (itstool) path: item/p
+#: C/import.page:60
+msgid "The lower and upper bounds of the x-range to generate data over."
+msgstr "Доње и горње границе опсега оси Х за генерисање података."
+
+#. (itstool) path: item/title
+#: C/import.page:63
+msgid "Steps"
+msgstr "Кораци"
+
+#. (itstool) path: item/p
+#: C/import.page:64
+msgid "The number of data points to generate."
+msgstr "Број тачака података за генерисање."
+
+#. (itstool) path: item/title
+#: C/import.page:67
+msgid "Scale"
+msgstr "Размера"
+
+#. (itstool) path: item/p
+#: C/import.page:68
+msgid ""
+"Determines the spacing between data points. Linear spacing places points at "
+"equal intervals. Other options such as Logarithmic, Square Root, and Inverse "
+"are useful when the data or the axis it will be plotted on follows a non-"
+"linear scale."
+msgstr "Одређује размак између тачака података. Линеарни размак поставља тачке у једнаким интервалима. Друге могућности, као што су логаритамски, квадратни корен и инверзна, корисне су када подаци или оса на којој ће се приказивати прате нелинеарну размеру."
+
+#. (itstool) path: section/p
+#: C/import.page:71
+msgid ""
+"Generated datasets are treated the same as imported data for most purposes. "
+"However, unlike a regular dataset, the parameters used to generate the data "
+"can be changed at any time from the item editor, and the data will be "
+"regenerated accordingly."
+msgstr "Направљени скупови података се за већину намена третирају исто као и увезени подаци. Међутим, за разлику од обичног скупа података, параметри који се користе за прављење података могу се у било ком тренутку променити у уређивачу ставки, а подаци ће затим бити одговарајуће поново направљени."
+
+#. (itstool) path: section/p
+#: C/import.page:75
+msgid ""
+"Equation items render a mathematical expression directly and continuously "
+"across the entire canvas. To add one, press the <em>Add</em> button in the "
+"sidebar and choose <em>Add Equation…</em>, or press <keyseq> <key>Ctrl</key> "
+"<key>Alt</key> <key>N</key> </keyseq>."
+msgstr "Ставке једначина директно и непрекидно приказују математички израз широм целог платна. Да бисте додали једну, притисните дугме <em>Додај</em> у бочној траци и изаберите <em>Додај једначину…</em>, или притисните <keyseq> <key>Ctrl</key> <key>Alt</key> <key>N</key> </keyseq>."
+
+#. (itstool) path: section/p
+#: C/import.page:82
+msgid ""
+"The expression uses <code>x</code> as the variable. Most commonly used "
+"mathematical syntax is accepted. For example, a simple quadratic can be "
+"entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or "
+"<code>1/(x+1)</code> work as expected. Trigonometric functions use radians "
+"by default. To use degrees instead, add a <code>d</code> to the function "
+"name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> "
+"uses radians."
+msgstr "Израз користи <code>x</code> као променљиву. Прихваћена је најчешће коришћена математичка синтакса. На пример, једноставни квадратни израз може се унети као <code>x²+5</code>, а изрази попут <code>sin(x)*x</code> или <code>1/(x+1)</code> раде као и очекивано. Тригонометрске функције подразумевано користе радијане. Да бисте уместо тога користили степене, додајте <code>d</code> у назив функције. Употреба <code>cosd(x)</code> ће користити степене, док <code>cos(x)</code> користи радијане."
+
+#. (itstool) path: section/p
+#: C/import.page:83
+msgid ""
+"One important distinction between equation items and datasets is that "
+"operations are performed analytically rather than numerically. For instance, "
+"taking the derivative of <code>x²+5</code> produces the equation <code>2·x</"
+"code> rather than a set of numerically computed slope values."
+msgstr "Једна важна разлика између ставки једначина и скупова података јесте то што се операције извршавају аналитички, а не нумерички. На пример, израчунавање извода за <code>x²+5</code> даје једначину <code>2·x</code>, уместо скупа нумерички израчунатих вредности нагиба."
 
 #. (itstool) path: info/desc
-#: C/index.page:8
+#: C/index.page:5
 msgid "Plot and manipulate data"
 msgstr "Нацртајте и обрадите податке"
 
 #. (itstool) path: page/title
-#: C/index.page:11
-msgid "<_:media-1/> Graphs"
-msgstr "<_:media-1/> Графици"
+#: C/index.page:7
+#| msgid "<_:media-1/> Graphs"
+msgid "<_:media-1/>Graphs"
+msgstr "<_:media-1/>Графици"
+
+#. (itstool) path: page/p
+#: C/index.page:9
+msgid ""
+"Graphs is a GNOME Circle application for plotting and manipulating "
+"scientific data. Import datasets from files or sqlite database files, "
+"generate data from equations, apply mathematical operations, fit curves, and "
+"export publication-ready figures, all within a clean, native interface."
+msgstr "Графици је програм Гномовог круга за цртање и обраду научних података. Увезите скупове података из датотека или датотека sqlite базе података, направите податке из једначина, примените математичке операције, уклопите кривуље и извезите слике спремне за објављивање, и све то унутар чистог, изворног прочеља."
+
+#. (itstool) path: page/p
+#: C/index.page:10
+msgid "Use the topics below to learn how to use Graphs."
+msgstr "Употребите теме испод да сазнајте како се користе Графици."
 
 #. (itstool) path: section/title
-#: C/index.page:17
-msgid "How to"
-msgstr "Како да"
-
-#. (itstool) path: section/p
-#: C/index.page:18
-msgid ""
-"There's multiple how-to guides available for Graphs. These can be found here."
-msgstr "Доступно је више водича „како да“ за Графике. Они се могу наћи овде."
+#: C/index.page:12
+msgid "Topics"
+msgstr "Теме"
 
 #. (itstool) path: page/title
-#: C/manipulate.page:8
+#: C/manipulate.page:7
 msgid "Manipulating Data"
 msgstr "Управљање подацима"
 
 #. (itstool) path: page/p
-#: C/manipulate.page:10
+#: C/manipulate.page:8
+#| msgid ""
+#| "There are many different ways to manipulate data using Graphs. All data "
+#| "is treated the same using Graphs, independent what file it is imported "
+#| "from, or if it's a generated equation. When selecting a part of the "
+#| "canvas using the Highlight tool, only the highlight area will be "
+#| "manipulated."
 msgid ""
-"There are many different ways to manipulate data using Graphs. All data is "
-"treated the same using Graphs, independent what file it is imported from, or "
-"if it's a generated equation. When selecting a part of the canvas using the "
-"Highlight tool, only the highlight area will be manipulated."
-msgstr "Постоји много различитих начина за управљање подацима помоћу Графика. Сви подаци се третирају исто помоћу Графика, без обзира на то из које датотеке су увезени или да ли је у питању генерисана једначина. Када изаберете део платна помоћу алатке за истицање, само истакнута област ће бити обрађена."
+"Graphs provides a wide range of operations for manipulating data. All "
+"operations work the same regardless of whether the item was imported from a "
+"file or generated from an equation. When a region of the canvas is selected "
+"using the Select tool, only data within that region will be affected."
+msgstr "Графици нуде широк опсег операција за обраду података. Све операције раде на исти начин, без обзира на то да ли је ставка увезена из датотеке или направљена из једначине. Када је област платна означена помоћу алата Изабери, само подаци унутар те области биће промењени."
 
-#. (itstool) path: section/title
-#: C/manipulate.page:18
-msgid "Smoothening"
-msgstr "Ублажавање"
+#. (itstool) path: item/p
+#: C/manipulate.page:11
+msgid ""
+"<link xref=\"#translate\">Translate</link>: Shift data along the X or Y axis."
+msgstr "<link xref=\"#translate\">Транслација</link>: Померите податке дуж осе X или Y."
 
-#. (itstool) path: section/p
+#. (itstool) path: item/p
+#: C/manipulate.page:15
+msgid ""
+"<link xref=\"#multiply\">Multiply</link>: Scale data along the X or Y axis."
+msgstr "<link xref=\"#multiply\">Множење</link>: Скалирајте податке дуж осе X или Y."
+
+#. (itstool) path: item/p
 #: C/manipulate.page:19
 msgid ""
-"The smoothening action has two different modes, a rolling average or the "
-"Savitzky-Galov filter. The moving average simply works iterating through the "
-"data set, and replacing each point by the average of the last few data "
-"points that were encountered, this way sharp outliers are ignored but "
-"details may be lost. Sudden actual changes in the data may also be detected "
-"later when a smoothening has been applied. Another way to smoothen the data "
-"is the Savitzky-Galov. The difference with the moving average, is that not a "
-"simple average is used for the last data points, but instead a polynomial "
-"function is fitted between the data points. This makes it possible to filter "
-"the underlaying signal still quite nicely out of very noisy data."
-msgstr "Радња ублажавања има два различита режима, покретни просек или Савицки–Голеј филтер. Покретни просек једноставно ради тако што пролази кроз скуп података и замењује сваку тачку просеком последњих неколико тачака на које је наишао; на овај начин се занемарују оштре екстремне вредности, али се детаљи могу изгубити. Нагле стварне промене у подацима такође могу бити откривене касније када се примени ублажавање. Други начин за ублажавање података је Савицки–Голеј. Разлика у односу на покретни просек је у томе што се за последње тачке података не користи обичан просек, већ се уместо тога полиномна функција уклапа између тачака података. Ово омогућава да се основни сигнал и даље прилично лепо филтрира из веома бучних података."
+"<link xref=\"#normalize\">Normalize</link>: Scale Y values relative to the "
+"maximum."
+msgstr "<link xref=\"#normalize\">Нормализација</link>: Скалирајте Y вредности релативно у односу на највишу."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:23
+msgid ""
+"<link xref=\"#center\">Center</link>: Shift data so it is centered on the X "
+"axis."
+msgstr "<link xref=\"#center\">Центрирање</link>: Померите податке тако да буду центрирани на X оси."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:27
+msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgstr "<link xref=\"#smoothening\">Ублажавање</link>: Умањите шум у скупу података."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:31
+msgid "<link xref=\"#derivative\">Derivative</link>: Compute the derivative."
+msgstr "<link xref=\"#derivative\">Извод</link>: Израчунај извод."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:35
+msgid ""
+"<link xref=\"#integral\">Integral</link>: Compute the cumulative integral."
+msgstr "<link xref=\"#integral\">Интеграл</link>: Израчунај збирни интеграл."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:39
+msgid ""
+"<link xref=\"#fft\">Fourier Transform</link>: Transform data to the "
+"frequency domain."
+msgstr "<link xref=\"#fft\">Фуријеов преображај</link>: Пребаци податке у домен учесталости."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:43
+msgid ""
+"<link xref=\"#combine\">Combine</link>: Merge multiple datasets into one."
+msgstr "<link xref=\"#combine\">Комбинуј</link>: Споји више скупа података у један."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:47
+msgid ""
+"<link xref=\"#shift\">Shift</link>: Automatically offset datasets so they do "
+"not overlap."
+msgstr "<link xref=\"#shift\">Померај</link>: Самостално помери скупове података тако да се не преклапају."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:51
+msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgstr "<link xref=\"#cut\">Исеци</link>: Уклоните податке унутар изабране области."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:55
+msgid ""
+"<link xref=\"#custom\">Custom Transformations</link>: Apply an arbitrary "
+"equation to the X and Y coordinates."
+msgstr "<link xref=\"#custom\">Прилагођени преображаји</link>: Примените произвољну једначину на X и Y координате."
 
 #. (itstool) path: section/title
-#: C/manipulate.page:34
+#: C/manipulate.page:60
+msgid "Translate"
+msgstr "Преведи"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:61
+msgid ""
+"Translates all selected data by a fixed offset along the X or Y axis. Enter "
+"the desired offset in the corresponding entry field and apply the operation."
+msgstr "Помера све изабране податке за утврђени померај дуж X или Y осе. Унесите жељени померај у одговарајуће поље за унос и примените радњу."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:64
+msgid "Multiply"
+msgstr "Множење"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:65
+msgid ""
+"Multiplies all selected data by a fixed factor along the X or Y axis. Enter "
+"the desired multiplier in the corresponding entry field and apply the "
+"operation."
+msgstr "Множи све изабране податке утврђеним фактором дуж X или Y осе. Унесите жељени множилац у одговарајуће поље за унос и примените радњу."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:68
+msgid "Normalize"
+msgstr "Нормализуј"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:69
+msgid ""
+"Scales the Y values of all selected data so that the maximum value becomes "
+"1. All other values are divided by that maximum accordingly."
+msgstr "Скалира Y вредности свих изабраних података тако да највиша вредност постане 1. Све остале вредности се одговарајуће деле том највишом вредношћу."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:72
+msgid "Center"
+msgstr "Средина"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:73
+msgid ""
+"Shifts data along the X axis so that it is centered. Two modes are "
+"available: centering on the maximum Y value, which shifts the peak of the "
+"data to zero, and centering on the middle of the X range. The mode can be "
+"configured in the smoothen settings."
+msgstr "Помера податке дуж Х-осе тако да буду усредштени. Доступна су два режима: центрирање на највишу Y-вредност, што помера врх података на нулу, и центрирање на средину Х-опсега. Режим се може подесити у подешавањима за ублаживање."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:76
+msgid "Smoothen"
+msgstr "Ублажи"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:77
+msgid ""
+"The smoothen operation reduces noise in a dataset. Two modes are available, "
+"configurable via the smoothen settings dialog."
+msgstr "Радња ублаживања смањује шум у скупу података. Доступна су два режима, која се могу подесити преко прозорчета за подешавања ублаживања."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:78
+msgid ""
+"The Savitzky-Golay filter fits a polynomial through the surrounding data "
+"points rather than taking a simple average. This makes it possible to "
+"recover the underlying signal more faithfully from noisy data, and is the "
+"recommended choice in most cases."
+msgstr "Савицки-Голеј филтер уклапа полином кроз околне тачке података уместо да израчуна обичан просек. Ово омогућава верније враћање основног сигнала из шумних података и препоручени је избор у већини случајева."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:79
+msgid ""
+"The moving average replaces each point with the average of a surrounding "
+"window of points. This is simpler but may blur sharp features and cause "
+"changes in the data to appear shifted."
+msgstr "Покретни просек замењује сваку тачку просеком околног прозора тачака. Ово је једноставније, али може замући оштре одлике и учинити да измене у подацима изгледају померено."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:82
+msgid "Derivative"
+msgstr "Извод"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:83
+msgid ""
+"Computes the numerical derivative of the selected data, replacing the Y "
+"values with the rate of change with respect to X. For equations, the "
+"derivative is calculated analytically."
+msgstr "Рачуна нумерички извод изабраних података, замењујући Y-вредности брзином промене у односу на X. За једначине, извод се израчунава аналитички."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:86
+msgid "Integral"
+msgstr "Интеграл"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:87
+msgid ""
+"Computes the cumulative integral of the selected data using the trapezoidal "
+"method, replacing the Y values with the running area under the curve. For "
+"equations, the integral is calculated analytically."
+msgstr "Израчунава збирни интеграл означених података помоћу трапезоидне методе, замењујући Y вредности текућом површином испод криве. За једначине, интеграл се израчунава аналитички."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:90
+msgid "Fourier Transform"
+msgstr "Фуријеови редови"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:91
+msgid ""
+"Transforms the selected data from the time or spatial domain into the "
+"frequency domain using the Fast Fourier Transform. An inverse transform is "
+"also available to convert back."
+msgstr "Преобразује означене податке из временског или просторног домена у домен учесталости помоћу Брзог Фуријевог преображаја. Доступен је и инверзни преображај за повратак назад."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:94
+msgid "Combine"
+msgstr "Комбинуј"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:95
+msgid ""
+"Merges all selected datasets into a single new dataset. The resulting data "
+"is sorted by X value. If all selected items have error bars, those are "
+"preserved in the combined output."
+msgstr "Спојањује све означене скупове података у један нови скуп података. Резултујући подаци су поређани по X вредности. Ако све означене ставке имају интервале грешака, они се задржавају у спојеном излазу."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:98
+msgid "Shift"
+msgstr "Померај"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:99
+msgid ""
+"Automatically offsets each selected dataset along the Y axis so that the "
+"items are spread out and do not overlap one each other. The shift amount is "
+"calculated based on the range of each dataset and respects the current axis "
+"scale, including logarithmic scales."
+msgstr "Самостално помера сваки означен скуп података дуж Y осе тако да су ставке раздвојене и не преклапају се. Количина помераја се израчунава на основу опсега сваког скупа података и поштује тренутну размеру осе, укључујући логаритамске размере."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:102
+msgid "Cut"
+msgstr "Исеци"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:103
+msgid ""
+"Removes all data points within the currently selected region. This operation "
+"requires the Select tool to be active and a region to be highlighted on the "
+"canvas."
+msgstr "Уклања све тачке података унутар тренутно означене области. Ова радња захтева да алат Изабери буде активен и да област буде истакнута на платну."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:106
 msgid "Custom Transformations"
 msgstr "Произвољни преображаји"
 
 #. (itstool) path: section/p
-#: C/manipulate.page:35
+#: C/manipulate.page:107
+#| msgid ""
+#| "Another way to manipulate the data is by using custom transformations. "
+#| "This field transforms both X and Y coordinate piece by piece according to "
+#| "an equation of choice. For instance, to take the square of all Y-"
+#| "coordinates, simply set <code>Y = Y²</code> on the y-data field, and "
+#| "<code>X = X</code> on the x-data field. Note that the input coordinates "
+#| "are not case-sensitive."
 msgid ""
-"Another way to manipulate the data is by using custom transformations. This "
-"field transforms both X and Y coordinate piece by piece according to an "
-"equation of choice. For instance, to take the square of all Y-coordinates, "
-"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
-"on the x-data field. Note that the input coordinates are not case-sensitive."
-msgstr "Још један начин за управљање подацима је коришћење произвољних преображаја. Ово поље преображава и X и Y координату део по део према изабраној једначини. На пример, да бисте израчунали квадрат свих Y-координата, једноставно поставите <code>Y = Y²</code> у поље за y-податке и <code>X = X</code> у поље за x-податке. Имајте на уму да улазне координате не разликују мала и велика слова."
+"Custom transformations let you modify the X and Y coordinates of a dataset "
+"point by point using equations of your choice. For instance, to square all Y "
+"values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code> "
+"in the X field. Coordinate names are not case-sensitive."
+msgstr "Прилагођени преображаји вам омогућавају да измените X и Y координате скупа података тачку по тачку, користећи једначине по вашем избору. На пример, да бисте подигли све вредности Y на квадрат, подесите <code>Y = Y²</code> у пољу Y и оставите <code>X = X</code> у пољу X. Имена координата нису осетљива на величину слова."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/manipulate.page:42
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/manipulate.page:109
 msgid ""
-"external ref='media/custom_transform_light.png' "
-"md5='311f5286f3372e5fea1431dd6a63d666'"
-msgstr "external ref='media/custom_transform_light.png' md5='311f5286f3372e5fea1431dd6a63d666'"
+"<b>The following extra variables are available for custom transformations:</"
+"b>"
+msgstr "<b>Следеће додатне променљиве су доступне за прилагођене преображаје:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:111
+msgid "<b>General:</b>"
+msgstr "<b>Опште:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:113
+msgid "<code>x</code>, <code>y</code>: original coordinate values"
+msgstr "<code>x</code>, <code>y</code>: изворне вредности координата"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:114
+msgid "<code>counts</code>: total number of data points"
+msgstr "<code>counts</code>: укупан број тачака података"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:115
+msgid "<b>X-Axis:</b>"
+msgstr "<b>X-оса:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:117
+msgid "<code>x_min</code>, <code>x_max</code>: minimum and maximum"
+msgstr "<code>x_min</code>, <code>x_max</code>: најмања и највећа вредности"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:118
+msgid "<code>x_mean</code>, <code>x_median</code>: average and median"
+msgstr "<code>x_mean</code>, <code>x_median</code>: просек и симетрала"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:119
+msgid "<code>x_std</code>, <code>x_sum</code>: standard deviation and sum"
+msgstr "<code>x_std</code>, <code>x_sum</code>: стандардна девијација и збир"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:120
+msgid "<b>Y-Axis:</b>"
+msgstr "<b>Y-оса:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:122
+msgid "<code>y_min</code>, <code>y_max</code>: minimum and maximum"
+msgstr "<code>y_min</code>, <code>y_max</code>: најмање и највише"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:123
+msgid "<code>y_mean</code>, <code>y_median</code>: average and median"
+msgstr "<code>y_mean</code>, <code>y_median</code>: просек и симетрала"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:124
+msgid "<code>y_std</code>, <code>y_sum</code>: standard deviation and sum"
+msgstr "<code>y_std</code>, <code>y_sum</code>: стандардана девијација и збир"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:125
+msgid ""
+"Trigonometric functions use radians by default. Append <b>d</b> to use "
+"degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>."
+msgstr "Тригонометријске функције по подразумеваном користе радијане. Додајте <b>d</b> да бисте користили степење, нпр. <code>sind(x)</code> или <code>cosd(x)</code>."
+
+#. (itstool) path: page/title
+#: C/projects.page:7
+msgid "Projects"
+msgstr "Пројекти"
+
+#. (itstool) path: page/p
+#: C/projects.page:8
+msgid ""
+"A Graphs project file saves the complete state of your work so you can close "
+"it and pick up exactly where you left off. All project actions are available "
+"from the application menu."
+msgstr "Датотека пројекта Графици чува целокупно стање вашег рада како бисте могли да је затворите и наставите тачно тамо где сте стали. Све радње пројекта доступне су у менију програма."
+
+#. (itstool) path: section/title
+#: C/projects.page:10
+msgid "What Is Saved"
+msgstr "Шта је сачувано"
+
+#. (itstool) path: section/p
+#: C/projects.page:11
+msgid ""
+"A project file preserves everything about the current session: all items and "
+"their data and appearance settings, all figure settings including labels, "
+"axis scales and limits, legend configuration, and the active style. The full "
+"undo and redo history is also saved, so you can continue undoing changes "
+"after reopening a project. The view history is saved as well."
+msgstr "Датотека пројекта чува све из тренутне сесије: све ставке и њихове податке и подешавања изгледа, сва подешавања слике укључујући натписе, размере и ограничења оса, поставку легенде и активни стил. Потпуна историја поништавања и понављања је такође сачувана, тако да можете наставити да поништавате измене након поновног отварања пројекта. Историја прегледа је такође сачувана."
+
+#. (itstool) path: section/title
+#: C/projects.page:14
+msgid "Saving a Project"
+msgstr "Чување пројекта"
+
+#. (itstool) path: section/p
+#: C/projects.page:15
+msgid ""
+"To save the current project, choose <em>Save Project…</em> from the "
+"application menu. If the project has been saved before, <em>Save Project…</"
+"em> overwrites the existing file. To save a copy under a different name or "
+"location, use <em>Save Project As…</em>."
+msgstr "Да бисте сачували тренутни пројекат, изаберите <em>Сачувај пројекат…</em> у менију програма. Ако је пројекат већ раније сачуван, <em>Сачувај пројекат…</em> ће прегази постојећу датотеку. Да бисте сачували копију под другим називом или на другом месту, употребите <em>Сачувај пројекат као…</em>"
+
+#. (itstool) path: section/title
+#: C/projects.page:18
+msgid "Opening a Project"
+msgstr "Отварање пројекта"
+
+#. (itstool) path: section/p
+#: C/projects.page:19
+msgid ""
+"To open a previously saved project, choose <em>Open Project…</em> from the "
+"application menu and select the project file. The project opens in the "
+"current window, replacing whatever was there before. To work on two projects "
+"at the same time, open a new window first using <em>New Project</em>, then "
+"open the second project there."
+msgstr "Да бисте отворили раније сачувани пројекат, изаберите <em>Отвори пројекат…</em> у менију програма и одаберите датотеку пројекта. Пројекат се отвара у тренутном прозору, замењујући све што је дотад било у њему. Да бисте истовремено радили на два пројекта, прво отворите нови прозор помоћу опције <em>Нови пројекат</em>, а затим тамо отворите други пројекат."
+
+#. (itstool) path: section/p
+#: C/projects.page:20
+msgid ""
+"A project file can also be imported as data into an existing project by "
+"using <em>Add Data from File…</em> and selecting the project file. This adds "
+"the items from the saved project into the current one without replacing "
+"anything."
+msgstr "Датотеку пројекта такође можете увезти као податке у постојећи пројекат помоћу опције <em>Додај податке из датотеке…</em> и одабиром датотеке пројекта. Ово додаје ставке из сачуваног пројекта у тренутни, без замењевања било чега."
+
+#. (itstool) path: section/title
+#: C/projects.page:23
+msgid "Closing a Project"
+msgstr "Затварање пројекта"
+
+#. (itstool) path: section/p
+#: C/projects.page:24
+msgid ""
+"To close the current project and return to an empty state, choose <em>Close "
+"Project</em> from the application menu."
+msgstr "Да бисте затворили тренутни пројекат и вратили се у празно стање, изаберите <em>Затвори пројекат</em> у менију програма."
+
+#. (itstool) path: section/title
+#: C/projects.page:28
+msgid "Version Compatibility"
+msgstr "Усаглашеност издања"
+
+#. (itstool) path: section/p
+#: C/projects.page:29
+msgid ""
+"Project files saved by older versions of Graphs are automatically migrated "
+"when opened. Projects saved by a newer incompatible version of Graphs cannot "
+"be opened in an older version."
+msgstr "Датотеке пројекта сачуване у старијим издањима Графица самостално се мигрисују при отварању. Пројекти сачувани у новијем неусаглашеном издању Графица не могу се отворити у старијем издању."
+
+#. (itstool) path: page/title
+#: C/window.page:7
+msgid "Main Window"
+msgstr "Главни прозор"
+
+#. (itstool) path: page/p
+#: C/window.page:8
+msgid ""
+"The Graphs main window is split into two areas: a sidebar on the left "
+"containing the item list and controls, and a canvas on the right where the "
+"figure is displayed."
+msgstr "Главни прозор Графица подељен је на две области: бочну површ лево која садржи списак ставки и контроле, и платно десно где се приказује слика."
+
+#. (itstool) path: section/title
+#: C/window.page:10
+msgid "Sidebar"
+msgstr "Бочна површ"
+
+#. (itstool) path: section/p
+#: C/window.page:11
+msgid ""
+"The sidebar contains everything related to managing items and interacting "
+"with the figure."
+msgstr "Бочна површ садржи све што је повезано са управљањем ставкама и интеракцијом са сликом."
+
+#. (itstool) path: section/title
+#: C/window.page:13
+msgid "Header buttons"
+msgstr "Дугмад заглавља"
+
+#. (itstool) path: section/p
+#: C/window.page:14
+msgid ""
+"At the top of the sidebar, we have the header with a button to add data, a "
+"button to open the figure settings, and a button with the primary menu. At "
+"the top, the <em>Add</em> button opens a menu with three options:"
+msgstr "На врху бочног панела налази се заглавље са дугметом за додавање података, дугметом за отварање подешавања слике и дугметом за примарни мени. На врху, дугме <em>Додај</em> отвара мени са три могућности:"
+
+#. (itstool) path: item/title
+#: C/window.page:17
+msgid "Add Data from File…"
+msgstr "Додај податке из датотеке…"
+
+#. (itstool) path: item/p
+#: C/window.page:18
+msgid ""
+"Opens the import dialog to load a dataset from a file or database. See <link "
+"xref=\"import\"/>for details on the supported formats and import options."
+msgstr "Отвора прозорче за увоз за учитавање скупа података из датотеке или базе података. Видите <link xref=\"import\"/> за детаље о подржаним записима и могућностима увоза."
+
+#. (itstool) path: item/title
+#: C/window.page:22
+msgid "Add Equation…"
+msgstr "Додај једначину…"
+
+#. (itstool) path: item/p
+#: C/window.page:23
+msgid ""
+"Opens a dialog to add a new equation item, rendered continuously on the "
+"canvas."
+msgstr "Отвора прозорче за додавање нове ставке једначине, која се непрекидно приказује на платну."
+
+#. (itstool) path: item/title
+#: C/window.page:26
+msgid "Generate Data…"
+msgstr "Генериши податке…"
+
+#. (itstool) path: item/p
+#: C/window.page:27
+msgid ""
+"Opens a dialog to generate a fixed dataset from an equation over a "
+"configurable x-range."
+msgstr "Отвора прозорче за прављење утврђеног скупа података из једначине у опсегу x који се може подесити."
+
+#. (itstool) path: section/title
+#: C/window.page:32
+msgid "Primary Menu"
+msgstr "Главни мени"
+
+#. (itstool) path: section/p
+#: C/window.page:33
+msgid ""
+"The primary menu in the top right provides access to some general options:"
+msgstr "Примарни мени горе десно омогућава приступ неким општим могућностима:"
+
+#. (itstool) path: item/title
+#: C/window.page:36
+msgid "New Project"
+msgstr "Нови пројекат"
+
+#. (itstool) path: item/p
+#: C/window.page:37
+msgid "Opens a new empty project in a new window."
+msgstr "Отвора нов празан пројекат у новом прозору."
+
+#. (itstool) path: item/title
+#: C/window.page:40
+msgid "Save Project / Save Project As…"
+msgstr "Сачувај пројекат / Сачувај пројекат као…"
+
+#. (itstool) path: item/p
+#: C/window.page:41
+msgid ""
+"Saves the current project to a file, preserving all items, figure settings, "
+"and the full undo and view history."
+msgstr "Сачува тренутни пројекат у датотеку, чувајући све ствари, подешавања фигуре и потпуну историју опозива и прегледа."
+
+#. (itstool) path: item/title
+#: C/window.page:44
+msgid "Open Project…"
+msgstr "Отвори пројекат…"
+
+#. (itstool) path: item/p
+#: C/window.page:45
+msgid "Opens a previously saved project file."
+msgstr "Отвара претходно сачувану датотеку пројекта."
+
+#. (itstool) path: item/title
+#: C/window.page:48
+msgid "Close Project"
+msgstr "Затвори пројекат"
+
+#. (itstool) path: item/p
+#: C/window.page:49
+msgid "Closes the current project and returns to an empty state."
+msgstr "Затвара тренутни пројекат и враћа у празно стање."
+
+#. (itstool) path: item/title
+#: C/window.page:52
+msgid "Export Data…"
+msgstr "Извези податке…"
+
+#. (itstool) path: item/p
+#: C/window.page:53
+msgid "Exports the current datasets to a file."
+msgstr "Извози тренутне скупове података у датотеку."
+
+#. (itstool) path: item/title
+#: C/window.page:56
+msgid "Export Figure…"
+msgstr "Извези фигуру…"
+
+#. (itstool) path: item/p
+#: C/window.page:57
+msgid "Exports the figure as an image."
+msgstr "Извози фигуру као слику."
+
+#. (itstool) path: item/title
+#: C/window.page:60
+msgid "Style Editor"
+msgstr "Уређивач стилова"
+
+#. (itstool) path: item/p
+#: C/window.page:61
+msgid ""
+"Opens the style editor window. See <link xref=\"edit-style\"/>for details."
+msgstr "Отвора прозор уређивача стила. Видите <link xref=\"edit-style\"/> за појединости."
+
+#. (itstool) path: section/p
+#: C/window.page:66
+msgid ""
+"The item list shows all items currently in the project. Each item can be "
+"selected or deselected by clicking the checkbox next to it. Only selected "
+"items are affected by data operations. Clicking the item name opens the edit "
+"panel for that item. Items can be deleted, and their order can be changed by "
+"dragging."
+msgstr "Листа ставки приказује све ставке које су тренутно у пројекту. Сваку ставку је могуће изабрати или одзебрати кликом на кућицу за избор поред ње. Само изабране ставке су под утицајем радњи са подацима. Клик на назив ставке отвара површ за уређивање те ставке. Ставке се могу обрисати, а њихов редослед се може променити превлачењем."
+
+#. (itstool) path: section/p
+#: C/window.page:69
+msgid ""
+"The figure settings button in the top right of the sidebar opens the Figure "
+"Settings panel, where the figure title, axis labels, axis limits, axis "
+"scales, legend visibility and position, and the active style can all be "
+"configured. Axis labels and limits are only shown for the axes that are "
+"currently in use. The current figure settings can be saved as the default "
+"for new projects using the <em>Set as Default</em> button at the bottom of "
+"the panel."
+msgstr "Дугме за подешавања фигуре у горњем десном углу бочне површи отвара површ за подешавања фигуре, где се могу подесити наслов фигуре, натписи оса, ограниченја осе, размере оса, видљивост и положај легенде, као и активни стил. Натписи и ограниченја оса приказују се само за осе које су тренутно у употреби. Тренутна подешавања фигуре могу се сачувати као подразумевана за нове пројекте помоћу дугмета <em>Постави као подразумевано</em> на дну површи."
+
+#. (itstool) path: section/title
+#: C/window.page:72
+msgid "Canvas Modes"
+msgstr "Режими платна"
+
+#. (itstool) path: section/p
+#: C/window.page:73
+msgid "Below the item list, three canvas interaction modes are available:"
+msgstr "Испод списка ставки доступна су три режима интеракције са платном:"
+
+#. (itstool) path: item/title
+#: C/window.page:76
+msgid "Pan"
+msgstr "Помери"
+
+#. (itstool) path: item/p
+#: C/window.page:77
+msgid "Click and drag on the canvas to pan the view. This is the default mode."
+msgstr "Кликните и превуците по платну да бисте померили преглед. Ово је подразумевани режим."
+
+#. (itstool) path: item/title
+#: C/window.page:80
+msgid "Zoom"
+msgstr "Зумирање"
+
+#. (itstool) path: item/p
+#: C/window.page:81
+msgid ""
+"Click and drag to draw a rectangle on the canvas to zoom into that area."
+msgstr "Кликните и превуците да нацртате правоугаоник на платну како бисте увећали ту област."
+
+#. (itstool) path: item/title
+#: C/window.page:84
+msgid "Select"
+msgstr "Изабери"
+
+#. (itstool) path: item/p
+#: C/window.page:85
+msgid ""
+"Click and drag to highlight a region of the data. Data operations will only "
+"affect the data within the highlighted area when this mode is active."
+msgstr "Кликните и превуците да истакнете област података. Радње са подацима ће утицати само на податке унутар истакнуте области док је овај режим активен."
+
+#. (itstool) path: section/title
+#: C/window.page:90
+msgid "Operations"
+msgstr "Радње"
+
+#. (itstool) path: section/p
+#: C/window.page:91
+msgid ""
+"Below the canvas mode buttons, the operations panel provides quick access to "
+"all data manipulation actions. These act on all selected items. See <link "
+"xref=\"manipulate\"/>for a full description of each operation."
+msgstr "Испод дугмада за режим платна, површ радњи омогућава брзи приступ свим радњама за манипулацију подацима. Оне делују на све изабране ствари. Видите <link xref=\"manipulate\"/> за цео опис сваке радње."
+
+#. (itstool) path: section/title
+#: C/window.page:96
+msgid "Canvas"
+msgstr "Платно"
+
+#. (itstool) path: section/p
+#: C/window.page:97
+msgid ""
+"The canvas shows the plot containing all active items. Clicking once on the "
+"label, limits or opens the Figure Settings, focused on the clicked item, "
+"allowing for quick adjustments."
+msgstr "Платно приказује график који садржи све активне ствари. Једном кликнуто на ознаку или границе отвара Подешавања фигуре, фокусирано на кликнуту ствар, што омогућава брза прилагођавања."
+
+#. (itstool) path: section/p
+#: C/window.page:98
+msgid ""
+"On the top left we have the undo and redo button. On the top right of the "
+"canvas there's the view buttons. The back-arrow moves you to the previous "
+"view after having changed the limits while the forward-arrow moves you to "
+"the next view after having clicked the back-arrow. Finally the Optimize "
+"Limits button will try and adjust the limits automatically to fit all "
+"visible items in the canvas. For equations, only the y-range is taken into "
+"account, as the x-data spans an infinite range."
+msgstr "Горе лево налазе се дугмад за опозав и понављање. Горе десно на платну су дугмад за преглед. Стрелица назад враћа на претходни преглед након промене граница, док стрелица напред води на следећи преглед након клика на стрелицу назад. На крају, дугме Оптимизуј границе ће покушати да самостално прилагоди границе како би уклопиле све видљиве ствари на платну. Код једначина, узима се у обзир само y-опсег, јер x-подаци обухватају бесконачни опсег."
 
 #. (itstool) path: p/link
 #: C/legal.xml:3
@@ -316,6 +2248,6 @@ msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
 msgstr "Creative Commons Ауторство—Истоветно дељење 4.0 међународна лиценца"
 
 #. (itstool) path: license/p
-#: C/legal.xml:3
+#: C/legal.xml:2
 msgid "This work is licensed under a <_:link-1/>."
 msgstr "Овај рад је лиценциран под <_:link-1/>."
