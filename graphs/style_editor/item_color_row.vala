@@ -26,11 +26,11 @@ namespace Graphs {
             );
         }
 
-        public StyleItemColorRow (StyleColorManager color_manager, int index, string color) {
+        public StyleItemColorRow (StyleColorManager color_manager, int index, owned string color) {
             Object (index: index);
             this.set_title (_("Color %d").printf (index + 1));
             this.color_manager = color_manager;
-            this.color = color;
+            this.color = (owned) color;
             load_color ();
         }
 

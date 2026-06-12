@@ -62,16 +62,13 @@ namespace Graphs {
 
             for (int i = 0; i < item_count; i++) {
                 unowned XryColumn column = columns[i];
-                if (column.first_val != 0)
-                    column.data = column.data[column.first_val:];
-                if (column.last_val != column.data.length - 1 + column.first_val)
-                    column.data.resize (column.last_val - column.first_val + 1);
 
                 string name = settings.filename;
                 if (item_count > 1) name = "%s - %d".printf (name, i + 1);
 
                 double[] xdata = this.xdata[column.first_val:column.last_val + 1];
-                DataItem item = ItemFactory.new_data_item (data, xdata, column.data);
+                double[] ydata = column.data[column.first_val:column.last_val + 1];
+                DataItem item = ItemFactory.new_data_item (data, (owned) xdata, (owned) ydata);
                 item.name = name;
                 item.xlabel = _("β (°)");
                 item.ylabel = _("R (1/s)");

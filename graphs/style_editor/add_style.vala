@@ -26,7 +26,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_template_changed () {
             string[] stylenames = StyleManager.list_stylenames ();
-            string template = stylenames[style_templates.get_selected ()];
+            unowned string template = stylenames[style_templates.get_selected ()];
             new_style_name.set_text (Tools.get_duplicate_string (template, stylenames));
         }
 
