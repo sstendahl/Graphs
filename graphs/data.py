@@ -66,7 +66,8 @@ class Data(Graphs.Data):
                 try:
                     validate = None
                     if style.get_mutable():
-                        validate = style_manager.get_system_style_params()
+                        params = style_manager.get_system_style_params()
+                        validate = params.as_tuple()
 
                     params = style_io.parse(style.get_file(), validate)
                     params = StyleParameters(params)

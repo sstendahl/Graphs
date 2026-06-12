@@ -20,7 +20,7 @@ def _generate_preview(params: tuple[RcParams, dict]) -> Gdk.Texture:
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
 
 
-def _params_for_bundled_style(name: str) -> tuple[RcParams, dict]:
+def _params_for_bundled_style(name: str) -> Graphs.StyleParameters:
     filename = Graphs.filename_from_stylename(name)
     uri = "resource:///se/sjoerd/Graphs/styles/" + filename
     params = style_io.parse(Gio.File.new_for_uri(uri))
@@ -39,6 +39,10 @@ class StyleParameters(Graphs.StyleParameters):
         )
         self.style_params = params[0]
         self.graphs_params = params[1]
+
+    def as_tuple(self) -> tuple[RcParams, dict]:
+        """Return params as tuple."""
+        return self.style_params, self.graphs_params
 
 
 class StyleManager(Graphs.StyleManager):
@@ -72,10 +76,9 @@ class StyleManager(Graphs.StyleManager):
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
         try:
-            params = style_io.parse(
-                file,
-                self.get_system_style_params(),
-            )
+            system_params = self.get_system_style_params()
+            validate = system_params.style_params, system_params.graphs_params
+            params = style_io.parse(file, validate)
             style_params, graphs_params = params
             name = graphs_params["name"]
             preview = _generate_preview(params)
@@ -102,7 +105,7 @@ class StyleManager(Graphs.StyleManager):
         """Copy a style."""
         style_params, graphs_params = style_io.parse(
             template.get_file(),
-            self.get_system_style_params(),
+            self.get_system_style_params().as_tuple(),
         )
         graphs_params["name"] = new_name
         style_io.write(destination, style_params, graphs_params)

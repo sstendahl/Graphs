@@ -35,7 +35,7 @@ namespace Graphs {
         public string[] errorbar_cycle { get; protected set; }
     }
 
-    private const string CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
+    private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
 
     /**
      * Style manager
@@ -173,7 +173,7 @@ namespace Graphs {
 
         private async void on_system_style () {
             var style_params = get_system_style_params ();
-            string css = CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
+            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
             css_provider.load_from_string (css);
         }
 
