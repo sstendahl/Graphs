@@ -102,11 +102,11 @@ namespace Graphs {
 
             window.data.bind_property ("selected_stylename", style_name, "label", BindingFlags.SYNC_CREATE);
 
-            bool[] visible_axes = window.data.get_used_positions ();
+            unowned bool[] visible_axes = window.data.get_used_positions ();
             bool both_x = visible_axes[0] && visible_axes[1];
             bool both_y = visible_axes[2] && visible_axes[3];
 
-            string direction;
+            unowned string direction;
 
             if (visible_axes[0]) {
                 direction = XPosition.BOTTOM.friendly_string ();
@@ -217,29 +217,30 @@ namespace Graphs {
             window.push_sidebar_page (style_page);
         }
 
+        private const string[] STRINGS = {
+            "custom-style", "title",
+            "bottom-label", "left-label", "top-label", "right-label"
+        };
+        private const string[] BOOLS = {"hide-unselected", "legend", "use-custom-style"};
+        private const string[] ENUMS = {
+            "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
+        };
+
         [GtkCallback]
         private void set_as_default () {
             GLib.Settings settings = Application.get_settings_child ("figure");
-            string[] strings = {
-                "custom-style", "title",
-                "bottom-label", "left-label", "top-label", "right-label"
-            };
-            string[] bools = {"hide-unselected", "legend", "use-custom-style"};
-            string[] enums = {
-                "legend-position", "top-scale", "bottom-scale", "left-scale", "right-scale"
-            };
             FigureSettings figure_settings = window.data.figure_settings;
-            foreach (string key in strings) {
+            foreach (unowned string key in STRINGS) {
                 string val;
                 figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_string (key, val);
             }
-            foreach (string key in bools) {
+            foreach (unowned string key in BOOLS) {
                 bool val;
                 figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_boolean (key, val);
             }
-            foreach (string key in enums) {
+            foreach (unowned string key in ENUMS) {
                 int val;
                 figure_settings.get (key.replace ("-", "_"), out val);
                 settings.set_enum (key, val);

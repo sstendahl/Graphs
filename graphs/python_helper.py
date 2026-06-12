@@ -28,7 +28,7 @@ _REQUESTS = (
     "has-singularities",
     "perform-operation",
     "python-method",
-    "simplify-equation",
+    "simplify-expression",
 )
 
 XDATA = numpy.linspace(0, 10, 10)
@@ -125,5 +125,5 @@ class PythonHelper(Graphs.PythonHelper):
         getattr(obj, method)()
 
     @staticmethod
-    def _on_simplify_equation_request(self, equation: str) -> str:
-        return str(sympy.simplify(ast.sympify(equation)))
+    def _on_simplify_expression_request(self, expression: str) -> str:
+        return str(sympy.simplify(ast.sympify(expression)))

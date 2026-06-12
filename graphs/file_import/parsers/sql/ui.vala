@@ -37,7 +37,7 @@ namespace Graphs {
         }
 
         private void setup_ui () throws IOError {
-            string[] tables = db_reader.table_names;
+            unowned string[] tables = db_reader.table_names;
             string table_name = settings.get_string ("table-name");
 
             var table_model = new StringList (tables);

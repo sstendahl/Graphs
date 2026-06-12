@@ -7,15 +7,36 @@ namespace Graphs {
         DIV_ZERO
     }
 
-    public enum TokenType {
+    private enum TokenType {
         NUMBER,
+        OPERATOR,
         IDENT,
-        PLUS, MINUS, STAR, SLASH,
-        CARET,
-        FACT,
-        SUPERSCRIPT,
-        LPAREN, RPAREN,
+        LPAREN,
+        RPAREN,
         END
+    }
+
+    public enum Operator {
+        MUL,
+        DIV,
+        ADD,
+        SUB,
+        POW,
+        FACT,
+        SUPERSCRIPT;
+
+        public int precedence () {
+            switch (this) {
+                case SUPERSCRIPT: return 0;
+                case FACT: return 0;
+                case POW: return 0;
+                case MUL: return 0;
+                case DIV: return 0;
+                case ADD: return 1;
+                case SUB: return 1;
+                default: assert_not_reached ();
+            }
+        }
     }
 
     public enum Ident {
@@ -81,25 +102,25 @@ namespace Graphs {
     public class VariableExpression : Expression {
         private string _name;
 
-        public VariableExpression (string n) {
-            this._name = n;
+        public VariableExpression (owned string n) {
+            this._name = (owned) n;
         }
 
-        public string name () {
+        public unowned string name () {
             return _name;
         }
     }
 
     public class UnaryExpression : Expression {
-        private TokenType _op;
+        private Operator _op;
         private Expression _expr;
 
-        public UnaryExpression (TokenType op, Expression e) {
+        public UnaryExpression (Operator op, Expression e) {
             this._op = op;
             this._expr = e;
         }
 
-        public TokenType op () {
+        public Operator op () {
             return _op;
         }
 
@@ -109,17 +130,17 @@ namespace Graphs {
     }
 
     public class BinaryExpression : Expression {
-        private TokenType _op;
+        private Operator _op;
         private Expression _left;
         private Expression _right;
 
-        public BinaryExpression (Expression l, TokenType op, Expression r) {
+        public BinaryExpression (Expression l, Operator op, Expression r) {
             this._left = l;
             this._op = op;
             this._right = r;
         }
 
-        public TokenType op () {
+        public Operator op () {
             return _op;
         }
 
@@ -152,9 +173,9 @@ namespace Graphs {
 
     public class PostfixExpression : Expression {
         private Expression _expr;
-        private TokenType _op;
+        private Operator _op;
 
-        public PostfixExpression (Expression e, TokenType op) {
+        public PostfixExpression (Expression e, Operator op) {
             this._expr = e;
             this._op = op;
         }
@@ -163,7 +184,7 @@ namespace Graphs {
             return _expr;
         }
 
-        public TokenType op () {
+        public Operator op () {
             return _op;
         }
     }
