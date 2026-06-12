@@ -61,7 +61,7 @@ namespace Graphs {
                 return true;
             } catch (ProjectParseError e) {
                 // Handle warnings & general error
-                string dialog_name;
+                unowned string dialog_name;
                 ProjectParseFlags new_flags;
                 switch (e.code) {
                     case ProjectParseError.LEGACY_MIGRATION_DISALLOWED:
@@ -79,7 +79,7 @@ namespace Graphs {
                         return false;
                     }
                 var dialog = (Adw.AlertDialog) Tools.build_dialog (dialog_name);
-                var response = yield dialog.choose (window, null);
+                unowned string response = yield dialog.choose (window, null);
                 if (response != "continue") return false;
                 return yield load (window, data, file, new_flags);
             }

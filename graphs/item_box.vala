@@ -48,7 +48,7 @@ namespace Graphs {
             var action_group = new SimpleActionGroup ();
             var delete_action = new SimpleAction ("delete", null);
             delete_action.activate.connect (() => {
-                string name = item.name;
+                unowned string name = item.name;
                 Item[] list = {item};
                 window.data.delete_items (list);
                 window.add_undo_toast (_("Deleted %s").printf (name));
@@ -79,7 +79,7 @@ namespace Graphs {
         }
 
         private void on_color_change () {
-            string c = item.color;
+            unowned string c = item.color;
             string o = item.alpha.to_string ();
             provider.load_from_string (@"button { color: $c; opacity: $o; }");
         }

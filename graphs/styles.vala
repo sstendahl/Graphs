@@ -77,12 +77,13 @@ namespace Graphs {
                     false
                 )
             );
-            foreach (StyleInfo info in STYLES) {
+            for (uint i = 0; i < STYLES.length; i++) {
+                StyleInfo* info = &STYLES[i];
                 style_model.append (
                     new Style (
-                        info.name,
-                        File.new_for_uri ("resource://" + info.style_path),
-                        Gdk.Texture.from_resource (info.preview_path),
+                        info->name,
+                        File.new_for_uri ("resource://" + info->style_path),
+                        Gdk.Texture.from_resource (info->preview_path),
                         false
                     )
                 );
