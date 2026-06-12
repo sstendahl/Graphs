@@ -49,10 +49,6 @@ namespace Graphs.MathParser {
                 // explicit * or /
                 if (t == TokenType.STAR || t == TokenType.SLASH) {
                     lexer.next ();
-                    /*
-                    if (t == TokenType.SLASH && r == 0)
-                        throw new MathError.DIV_ZERO ("division by zero");
-                    */
                     expr = new BinaryExpression (expr, t, power ());
                     continue;
                 }
@@ -95,10 +91,6 @@ namespace Graphs.MathParser {
 
             while (true) {
                 if (lexer.current_type == TokenType.FACT) {
-                    /*
-                    if (v < 0 || v != Math.floor (v))
-                        throw new MathError.DOMAIN ("invalid factorial");
-                    */
                     expr = new PostfixExpression (expr, TokenType.FACT);
                     lexer.next ();
                     continue;
@@ -130,7 +122,7 @@ namespace Graphs.MathParser {
                         string name = lexer.get_current_token_as_string ();
                         lexer.next ();
 
-                        return new VariableExpression (name.strip ().down ());
+                        return new VariableExpression ((owned) name);
                     }
 
                     lexer.next ();
