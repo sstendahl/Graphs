@@ -73,7 +73,7 @@ namespace Graphs.MathParser {
             emit (expr.expr ());
 
             switch (expr.op ()) {
-                case TokenType.MINUS: add_instruction (OpCode.NEG); return;
+                case Operator.SUB: add_instruction (OpCode.NEG); return;
                 default: throw new MathError.UNKNOWN_FUNCTION ("invalid unary operator");
             }
         }
@@ -83,12 +83,12 @@ namespace Graphs.MathParser {
             emit (expr.right ());
 
             switch (expr.op ()) {
-                case TokenType.PLUS: add_instruction (OpCode.ADD); return;
-                case TokenType.MINUS: add_instruction (OpCode.SUB); return;
-                case TokenType.STAR: add_instruction (OpCode.MUL); return;
-                case TokenType.SLASH: add_instruction (OpCode.DIV); return;
-                case TokenType.CARET: add_instruction (OpCode.POW); return;
-                case TokenType.SUPERSCRIPT: add_instruction (OpCode.IPOW); return;
+                case Operator.ADD: add_instruction (OpCode.ADD); return;
+                case Operator.SUB: add_instruction (OpCode.SUB); return;
+                case Operator.MUL: add_instruction (OpCode.MUL); return;
+                case Operator.DIV: add_instruction (OpCode.DIV); return;
+                case Operator.POW: add_instruction (OpCode.POW); return;
+                case Operator.SUPERSCRIPT: add_instruction (OpCode.IPOW); return;
                 default: throw new MathError.UNKNOWN_FUNCTION ("invalid binary operator");
             }
         }
@@ -97,7 +97,7 @@ namespace Graphs.MathParser {
             emit (expr.expr ());
 
             switch (expr.op ()) {
-                case TokenType.FACT: add_instruction (OpCode.FACT); return;
+                case Operator.FACT: add_instruction (OpCode.FACT); return;
                 default: throw new MathError.UNKNOWN_FUNCTION ("invalid postfix operator");
             }
         }

@@ -53,10 +53,10 @@ namespace Graphs {
             instance.python_method_request.emit (object, method);
         }
 
-        protected signal string simplify_equation_request (Expression input);
-        public static Expression simplify_equation (Expression input) {
+        protected signal string simplify_expression_request (Expression input);
+        public static Expression simplify_expression (Expression input) {
             try {
-                return expression_to_ast (instance.simplify_equation_request.emit (input));
+                return expression_to_ast (instance.simplify_expression_request.emit (input));
             } catch (MathError e) { assert_not_reached (); }
         }
     }

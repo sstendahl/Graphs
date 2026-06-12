@@ -56,7 +56,8 @@ namespace Graphs {
      * Convert an AST to an executable array program.
      */
     public static Program ast_to_program (Expression expression, string variable = "x") throws MathError {
-        return MathParser.Compiler.instance ().compile (expression, variable);
+        Expression simplified = PythonHelper.simplify_expression (expression);
+        return MathParser.Compiler.instance ().compile (simplified, variable);
     }
 
     namespace MathParser {

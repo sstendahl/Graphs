@@ -35,8 +35,7 @@ namespace Graphs.MathParser {
             double v = eval (expr.expr ());
 
             switch (expr.op ()) {
-                case TokenType.MINUS: return -v;
-                case TokenType.PLUS: return v;
+                case Operator.SUB: return -v;
                 default: throw new MathError.SYNTAX ("invalid unary operator");
             }
         }
@@ -46,13 +45,13 @@ namespace Graphs.MathParser {
             double r = eval (expr.right ());
 
             switch (expr.op ()) {
-                case TokenType.PLUS: return l + r;
-                case TokenType.MINUS: return l - r;
-                case TokenType.STAR: return l * r;
-                case TokenType.CARET: return Math.pow (l, r);
-                case TokenType.SUPERSCRIPT: return ipow (l, (int) r);
+                case Operator.ADD: return l + r;
+                case Operator.SUB: return l - r;
+                case Operator.MUL: return l * r;
+                case Operator.POW: return Math.pow (l, r);
+                case Operator.SUPERSCRIPT: return ipow (l, (int) r);
 
-                case TokenType.SLASH:
+                case Operator.DIV:
                     if (r == 0)
                         throw new MathError.DIV_ZERO ("division by zero");
                     return l / r;
@@ -65,7 +64,7 @@ namespace Graphs.MathParser {
             double v = eval (expr.expr ());
 
             switch (expr.op ()) {
-                case TokenType.FACT:
+                case Operator.FACT:
                     if (v < 0 || v != Math.floor (v))
                         throw new MathError.DOMAIN ("invalid factorial");
                     return factorial (v);
