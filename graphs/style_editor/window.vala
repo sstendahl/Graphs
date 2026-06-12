@@ -135,7 +135,7 @@ namespace Graphs {
 
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
-                string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
+                unowned string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
                 var builder = new Builder.from_resource (path);
                 var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (this);
@@ -228,7 +228,7 @@ namespace Graphs {
                 var delete_action = new SimpleAction ("delete", null);
                 delete_action.activate.connect (() => {
                     var dialog = (Adw.AlertDialog) Tools.build_dialog ("delete_style");
-                    string msg = _("Are you sure you want to delete %s?");
+                    unowned string msg = _("Are you sure you want to delete %s?");
                     dialog.set_body (msg.printf (style.name));
                     dialog.response.connect ((d, response) => {
                         if (response != "delete") return;
