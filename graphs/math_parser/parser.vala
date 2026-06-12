@@ -30,12 +30,15 @@ namespace Graphs.MathParser {
             Expression expr = term ();
 
             TokenType t;
+            Operator op;
             while (true) {
                 t = lexer.current_type;
-                if (!(t == TokenType.PLUS || t == TokenType.MINUS)) break;
+                if (t != TokenType.OPERATOR) break;
+                op = lexer.current_op;
+                if (!(op == Operator.ADD || op == Operator.SUB)) break;
                 lexer.next ();
 
-                expr = new BinaryExpression (expr, t, term ());
+                expr = new BinaryExpression (expr, op, term ());
             }
 
             return expr;
@@ -44,18 +47,25 @@ namespace Graphs.MathParser {
         private Expression term () throws MathError {
             Expression expr = power ();
 
+            TokenType t;
+            Operator op;
             while (true) {
-                TokenType t = lexer.current_type;
-                // explicit * or /
-                if (t == TokenType.STAR || t == TokenType.SLASH) {
-                    lexer.next ();
-                    expr = new BinaryExpression (expr, t, power ());
-                    continue;
-                }
+                t = lexer.current_type;
 
                 // implicit multiplication
                 if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    expr = new BinaryExpression (expr, TokenType.STAR, power ());
+                    expr = new BinaryExpression (expr, Operator.MUL, power ());
+                    continue;
+                }
+
+                if (t != TokenType.OPERATOR) break;
+
+                op = lexer.current_op;
+
+                // explicit * or /
+                if (op == Operator.MUL || op == Operator.DIV) {
+                    lexer.next ();
+                    expr = new BinaryExpression (expr, op, power ());
                     continue;
                 }
                 break;
@@ -67,20 +77,22 @@ namespace Graphs.MathParser {
         private Expression power () throws MathError {
             Expression expr = unary ();
 
-            if (lexer.current_type == TokenType.CARET) {
+            if (lexer.current_type == TokenType.OPERATOR && lexer.current_op == Operator.POW) {
                 lexer.next ();
-                expr = new BinaryExpression (expr, TokenType.CARET, power ());
+                expr = new BinaryExpression (expr, Operator.POW, power ());
             }
 
             return expr;
         }
 
         private Expression unary () throws MathError {
-            if (lexer.current_type == TokenType.MINUS) {
-                lexer.next ();
-                return new UnaryExpression (TokenType.MINUS, postfix ());
-            } else if (lexer.current_type == TokenType.PLUS) {
-                lexer.next ();
+            if (lexer.current_type == TokenType.OPERATOR) {
+                if (lexer.current_op == Operator.SUB) {
+                    lexer.next ();
+                    return new UnaryExpression (Operator.SUB, postfix ());
+                } else if (lexer.current_op == Operator.ADD) {
+                    lexer.next ();
+                }
             }
 
             return postfix ();
@@ -90,16 +102,18 @@ namespace Graphs.MathParser {
             Expression expr = primary ();
 
             while (true) {
-                if (lexer.current_type == TokenType.FACT) {
-                    expr = new PostfixExpression (expr, TokenType.FACT);
+                if (lexer.current_type != TokenType.OPERATOR) break;
+
+                if (lexer.current_op == Operator.FACT) {
+                    expr = new PostfixExpression (expr, Operator.FACT);
                     lexer.next ();
                     continue;
                 }
 
-                if (lexer.current_type == TokenType.SUPERSCRIPT) {
+                if (lexer.current_op == Operator.SUPERSCRIPT) {
                     var exp = new NumberExpression (lexer.current_val);
                     lexer.next ();
-                    expr = new BinaryExpression (expr, TokenType.SUPERSCRIPT, exp);
+                    expr = new BinaryExpression (expr, Operator.SUPERSCRIPT, exp);
                     continue;
                 }
 
