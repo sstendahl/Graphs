@@ -15,6 +15,8 @@ namespace Graphs {
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
+        public StyleParameters selected_style_params { get; protected set; }
+        public StyleParameters old_selected_style_params { get; protected set; }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
@@ -36,9 +38,7 @@ namespace Graphs {
         private bool[] _used_positions;
         private Item[] _items = new Item[8];
         private int _n_items = 0;
-        private string[] _color_cycle;
         private string[] _used_colors;
-        private string[] _errbar_color_cycle;
         private string[] _used_errbar_colors;
         private GLib.Settings _settings;
         private bool _notify_selection_changed = true;
@@ -57,8 +57,6 @@ namespace Graphs {
         protected signal void figure_settings_changed (string prop);
 
         construct {
-            this._color_cycle = {};
-            this._errbar_color_cycle = {};
             items_changed.connect (_update_used_positions);
             this._settings = Application.get_settings_child ("figure");
             this.style_selection_model = new SingleSelection (StyleManager.style_model);
@@ -322,16 +320,16 @@ namespace Graphs {
 
         private void append_used_color (string color) {
             if (color in _used_colors) return;
-            if (!(color in _color_cycle)) return;
+            if (!(color in selected_style_params.color_cycle)) return;
             _used_colors += color;
-            if (_used_colors.length == _color_cycle.length) _used_colors = {};
+            if (_used_colors.length == selected_style_params.color_cycle.length) _used_colors = {};
         }
 
         private void append_used_errbar_color (string color) {
             if (color in _used_errbar_colors) return;
-            if (!(color in _errbar_color_cycle)) return;
+            if (!(color in selected_style_params.errorbar_cycle)) return;
             _used_errbar_colors += color;
-            if (_used_errbar_colors.length == _errbar_color_cycle.length) _used_errbar_colors = {};
+            if (_used_errbar_colors.length == selected_style_params.errorbar_cycle.length) _used_errbar_colors = {};
         }
 
         /**
@@ -346,10 +344,10 @@ namespace Graphs {
             _used_colors = {};
             _used_errbar_colors = {};
             foreach (Item item in this) {
-                if (item.color in _color_cycle) append_used_color (item.color);
+                if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     string errcolor = ((DataItem) item).errcolor;
-                    if (errcolor in _errbar_color_cycle) append_used_errbar_color (errcolor);
+                    if (errcolor in selected_style_params.errorbar_cycle) append_used_errbar_color (errcolor);
                 }
             }
             string[] used_names = get_names ();
@@ -359,7 +357,7 @@ namespace Graphs {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
-                    foreach (string color in _color_cycle) {
+                    foreach (string color in selected_style_params.color_cycle) {
                         if (!(color in _used_colors)) {
                             append_used_color (color);
                             item.color = color;
@@ -370,7 +368,7 @@ namespace Graphs {
                 if (item is DataItem) {
                     string errcolor = ((DataItem) item).errcolor;
                     if (errcolor == "") {
-                        foreach (string color in _errbar_color_cycle) {
+                        foreach (string color in selected_style_params.errorbar_cycle) {
                             if (!(color in _used_errbar_colors)) {
                                 append_used_errbar_color (color);
                                 item.set ("errcolor", color);
@@ -463,20 +461,13 @@ namespace Graphs {
 
         private async void handle_style_change (bool recolor_items = false) {
             notify_property ("selected_stylename");
+            old_selected_style_params = selected_style_params;
             run_python_method ("_update_selected_style");
             style_changed.emit (recolor_items);
         }
 
         protected Style get_selected_style () {
             return (Style) style_selection_model.get_selected_item ();
-        }
-
-        protected void set_color_cycle (string[] color_cycle) {
-            this._color_cycle = color_cycle;
-        }
-
-        protected void set_errbar_color_cycle (string[] color_cycle) {
-            this._errbar_color_cycle = color_cycle;
         }
 
         // End section style

@@ -129,7 +129,7 @@ namespace Graphs {
             return names.data;
         }
 
-        public string parse (ItemList items, ImportSettings settings, Data data) throws IOError {
+        public string parse (ItemList items, ImportSettings settings, StyleParameters style) throws IOError {
             string table_name = settings.get_string ("table-name");
             if (get_numeric_columns (table_name).length == 0) {
                 string msg = _("Could not import data from table \"%s\", no numeric columns were found");
@@ -150,7 +150,7 @@ namespace Graphs {
             if (settings.get_boolean ("use-yerr"))
                 yerr = get_column_data (table_name, settings.get_string ("yerr-column"));
 
-            DataItem item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+            DataItem item = ItemFactory.new_data_item (style, xdata, ydata, xerr, yerr);
             item.xlabel = x_column;
             item.ylabel = y_column;
             item.name = x_column + " vs " + y_column;

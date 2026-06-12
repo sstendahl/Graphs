@@ -4,8 +4,6 @@ from gi.repository import GObject, Graphs
 
 from graphs import misc, utilities
 
-from matplotlib import RcParams
-
 import numpy
 
 
@@ -13,15 +11,15 @@ class _PythonItemMixin:
 
     def reset(
         self,
-        old_style: tuple[RcParams, dict],
-        new_style: tuple[RcParams, dict],
+        old_style: Graphs.StyleParameters,
+        new_style: Graphs.StyleParameters,
     ) -> None:
         """Reset all properties."""
         if not hasattr(self, "_style_properties"):
             return
         # Combine rcparams and graphs_params into single dict:
-        old_style = old_style[0] | old_style[1]
-        new_style = new_style[0] | new_style[1]
+        old_style = old_style.style_params | old_style.graphs_params
+        new_style = new_style.style_params | new_style.graphs_params
         for prop, (key, function) in self._style_properties.items():
             old_value = old_style[key]
             new_value = new_style[key]
@@ -33,13 +31,13 @@ class _PythonItemMixin:
 
     def override(
         self,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
     ) -> None:
         """Override all properties."""
         if not hasattr(self, "_style_properties"):
             return
         # Combine rcparams and graphs_params into single dict:
-        style = style[0] | style[1]
+        style = style.style_params | style.graphs_params
         for prop, (key, function) in self._style_properties.items():
             value = style[key] if function is None else function(style[key])
             self.set_property(prop, value)
@@ -47,10 +45,11 @@ class _PythonItemMixin:
     @staticmethod
     def _extract_params(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         kwargs: dict,
     ) -> dict:
-        style = style[0] | style[1]  # Add graphs_params to style dict
+        # Combine rcparams and graphs_params into single dict:
+        style = style.style_params | style.graphs_params
         return {
             prop: style[key] if function is None else function(style[key])
             for prop, (key, function) in cls._style_properties.items()
@@ -86,7 +85,7 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         xdata: list[float] = None,
         ydata: list[float] = None,
         xerr: list[float] = None,
@@ -100,7 +99,7 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     @classmethod
     def new_with_data(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         data: Graphs.DataHolder,
         **kwargs,
     ):
@@ -163,7 +162,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     @classmethod
     def new(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         equation: Graphs.Expression,
         xstart: str,
         xstop: str,
@@ -205,7 +204,7 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         equation: Graphs.Expression,
         **kwargs,
     ):
@@ -236,7 +235,7 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        style: tuple[RcParams, dict],
+        style: Graphs.StyleParameters,
         xanchor: float = 0,
         yanchor: float = 0,
         text: str = "",
@@ -262,7 +261,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     @classmethod
     def new(
         cls,
-        _params: tuple[RcParams, dict],
+        _params: Graphs.StyleParameters,
         data: tuple[list[float], list[float], list[float]],
         **kwargs,
     ):
@@ -327,6 +326,6 @@ class ItemFactory(Graphs.ItemFactory):
                 raise ValueError(f"could not find type {dictionary['type']}")
 
     @staticmethod
-    def _on_request(self, data: Graphs.Data, *args) -> Graphs.Item:
+    def _on_request(self, *args) -> Graphs.Item:
         *args, callback = args
-        return callback(data.get_selected_style_params(), *args)
+        return callback(*args)

@@ -73,7 +73,7 @@ namespace Graphs {
                 Expression expression = expression_to_ast (equation);
                 if (name == "") name = "Y = " + ast_to_expression (expression);
 
-                Item item = ItemFactory.new_generated_data_item (window.data, expression, xstart, xstop, steps, scale);
+                Item item = ItemFactory.new_generated_data_item (window.data.selected_style_params, expression, xstart, xstop, steps, scale);
                 item.name = name;
                 Item[] items = {item};
                 window.data.add_items (items);

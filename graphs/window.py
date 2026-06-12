@@ -60,10 +60,10 @@ class PythonWindow(Graphs.Window):
         old_style = data.get_old_selected_style_params()
         new_style = data.get_selected_style_params()
 
-        old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
-        new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
-        old_err_cycle = old_style[1]["errorbar.color_cycle"].by_key()["color"]
-        new_err_cycle = new_style[1]["errorbar.color_cycle"].by_key()["color"]
+        old_cycle = old_style.get_color_cycle()
+        new_cycle = new_style.get_color_cycle()
+        old_err_cycle = old_style.get_errorbar_cycle()
+        new_err_cycle = new_style.get_errorbar_cycle()
 
         count = 0
         errbar_count = 0
@@ -135,8 +135,8 @@ class PythonWindow(Graphs.Window):
         # Set headerbar color and contrast
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
-            background_color=params[0]["figure.facecolor"],
-            color=params[0]["text.color"],
+            background_color=params.style_params["figure.facecolor"],
+            color=params.style_params["text.color"],
         )
         self.props.css_provider.load_from_string(css)
 

@@ -11,7 +11,7 @@ from gi.repository import GObject, Gio, Graphs, Gtk
 
 from graphs import artist, misc
 
-from matplotlib import RcParams, figure, pyplot
+from matplotlib import figure, pyplot
 
 
 def _ellipsize(text: str, max_chars: int) -> str:
@@ -26,7 +26,7 @@ class Figure(GObject.Object, figure.Figure):
 
     def __init__(
         self,
-        style_params: tuple[RcParams, dict],
+        style_params: Graphs.StyleParameters,
         items: Gio.ListModel,
         parent=None,
         figure_settings: Graphs.FigureSettings = None,
@@ -35,7 +35,7 @@ class Figure(GObject.Object, figure.Figure):
         self._style_params = style_params
         self._items = items
         self.parent = parent
-        pyplot.rcParams.update(self._style_params[0])  # apply style_params
+        pyplot.rcParams.update(self._style_params.style_params)
         figure.Figure.__init__(self, tight_layout=True)
 
         self.axis = self.add_subplot(111)
@@ -131,7 +131,8 @@ class Figure(GObject.Object, figure.Figure):
             used_axes = (True, False, False, False)  # self.axis visible
             self._legend_axis = self.axis
 
-        params, graphs_params = self._style_params
+        params = self._style_params.style_params
+        graphs_params = self._style_params.graphs_params
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \

@@ -71,7 +71,7 @@ namespace Graphs {
                 if (item_count > 1) name = "%s - %d".printf (name, i + 1);
 
                 double[] xdata = this.xdata[column.first_val:column.last_val + 1];
-                DataItem item = ItemFactory.new_data_item (data, xdata, column.data);
+                DataItem item = ItemFactory.new_data_item (data.selected_style_params, xdata, column.data);
                 item.name = name;
                 item.xlabel = _("β (°)");
                 item.ylabel = _("R (1/s)");
@@ -87,7 +87,7 @@ namespace Graphs {
                 double yanchor = evaluate_string (values[6]);
                 string text = string.joinv (" ", values[7:]);
 
-                TextItem item = ItemFactory.new_text_item (data, xanchor, yanchor, text);
+                TextItem item = ItemFactory.new_text_item (data.selected_style_params, xanchor, yanchor, text);
                 item.name = text;
                 items.add (item);
             }

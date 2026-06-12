@@ -3,18 +3,11 @@
 import io
 import os
 
-from gi.repository import Adw, GLib, Gdk, Gio, Graphs, Gtk
+from gi.repository import GLib, Gdk, Gio, Graphs, Gtk
 
 from graphs import style_io
 
 from matplotlib import RcParams
-
-CSS_TEMPLATE = """
-.system-canvas-view {{
-    background-color: {background_color};
-    color: {color};
-}}
-"""
 
 
 def _is_style_bright(params: RcParams):
@@ -30,7 +23,22 @@ def _generate_preview(params: tuple[RcParams, dict]) -> Gdk.Texture:
 def _params_for_bundled_style(name: str) -> tuple[RcParams, dict]:
     filename = Graphs.filename_from_stylename(name)
     uri = "resource:///se/sjoerd/Graphs/styles/" + filename
-    return style_io.parse(Gio.File.new_for_uri(uri))
+    params = style_io.parse(Gio.File.new_for_uri(uri))
+    return StyleParameters(params)
+
+
+class StyleParameters(Graphs.StyleParameters):
+    """Custom Style Parameters class."""
+
+    def __init__(self, params: tuple[RcParams, dict]):
+        super().__init__(
+            color=params[0]["text.color"],
+            background_color=params[0]["figure.facecolor"],
+            color_cycle=params[0]["axes.prop_cycle"].by_key()["color"],
+            errorbar_cycle=params[1]["errorbar.color_cycle"].by_key()["color"],
+        )
+        self.style_params = params[0]
+        self.graphs_params = params[1]
 
 
 class StyleManager(Graphs.StyleManager):
@@ -53,14 +61,12 @@ class StyleManager(Graphs.StyleManager):
         super().__init__()
         self.connect("style-request", self._on_style_request)
         self.connect("create-style-request", self._on_create_style_request)
-        Adw.StyleManager.get_default().connect("notify", self._on_system_style)
 
-        self._system_style_light_params = \
+        self.props.system_style_light_params = \
             _params_for_bundled_style(system_style_name)
-        self._system_style_dark_params = \
+        self.props.system_style_dark_params = \
             _params_for_bundled_style(system_style_name + " Dark")
 
-        self._on_system_style()
         self.setup(system_style_name.lower())
 
     @staticmethod
@@ -85,21 +91,6 @@ class StyleManager(Graphs.StyleManager):
             preview=preview,
             light=light,
         )
-
-    def get_system_style_params(self) -> tuple[RcParams, dict]:
-        """Get the system style properties."""
-        if Adw.StyleManager.get_default().get_dark():
-            return self._system_style_dark_params
-        else:
-            return self._system_style_light_params
-
-    def _on_system_style(self, *_args) -> None:
-        params = self.get_system_style_params()
-        css = CSS_TEMPLATE.format(
-            background_color=params[0]["figure.facecolor"],
-            color=params[0]["text.color"],
-        )
-        self.props.css_provider.load_from_string(css)
 
     @staticmethod
     def _on_create_style_request(

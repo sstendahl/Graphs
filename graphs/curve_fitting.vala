@@ -420,7 +420,7 @@ namespace Graphs {
 
             try {
                 Expression ast = expression_to_ast (fitted_equation_string);
-                Item item = ItemFactory.new_equation_item (window.data, ast);
+                Item item = ItemFactory.new_equation_item (window.data.selected_style_params, ast);
                 item.name = "Y = " + fitted_equation_string;
                 Item[] items = {item};
                 window.data.add_items (items);

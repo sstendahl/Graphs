@@ -12,7 +12,7 @@ from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
 
 from graphs.figure import Figure
 
-from matplotlib import RcParams, backend_tools as tools
+from matplotlib import backend_tools as tools
 from matplotlib.backend_bases import (
     FigureCanvasBase,
     MouseEvent,
@@ -31,7 +31,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
 
     def __init__(
         self,
-        style_params: tuple[RcParams, dict],
+        style_params: Graphs.StyleParameters,
         items: Gio.ListModel,
         interactive: bool = True,
         figure_settings: Graphs.FigureSettings = None,

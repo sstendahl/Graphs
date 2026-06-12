@@ -149,7 +149,7 @@ namespace Graphs {
             stream.close ();
         }
 
-        public void add_items (Data data, ItemList itemlist) throws Error {
+        public void add_items (StyleParameters style, ItemList itemlist) throws Error {
             foreach (var item_settings in items) {
                 uint yrank = get_rank (item_settings.column_y);
                 string ylabel = columns[yrank].header;
@@ -174,7 +174,7 @@ namespace Graphs {
                     xdata = columns[xrank].get_data ();
                 }
 
-                Item item = ItemFactory.new_data_item (data, xdata, ydata, xerr, yerr);
+                Item item = ItemFactory.new_data_item (style, xdata, ydata, xerr, yerr);
                 item.xlabel = xlabel;
                 item.ylabel = ylabel;
                 item.name = settings.filename;
