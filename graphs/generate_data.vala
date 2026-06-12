@@ -56,9 +56,9 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            string equation = this.equation.get_text ();
-            string xstart = this.xstart.get_text ();
-            string xstop = this.xstop.get_text ();
+            unowned string equation = this.equation.get_text ();
+            unowned string xstart = this.xstart.get_text ();
+            unowned string xstop = this.xstop.get_text ();
             int steps = (int) this.steps.get_value ();
             Scale scale = (Scale) this.scale.get_selected ();
 
@@ -68,13 +68,16 @@ namespace Graphs {
             this.settings.set_int ("steps", steps);
             this.settings.set_enum ("scale", scale);
 
-            string name = item_name.get_text ();
+            unowned string name = item_name.get_text ();
             try {
                 Expression expression = expression_to_ast (equation);
-                if (name == "") name = "Y = " + ast_to_expression (expression);
 
                 Item item = ItemFactory.new_generated_data_item (window.data, expression, xstart, xstop, steps, scale);
-                item.name = name;
+                if (name == "") {
+                    item.name = "Y = " + ast_to_expression (expression);
+                } else {
+                    item.name = name;
+                }
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }

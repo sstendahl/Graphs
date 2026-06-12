@@ -150,7 +150,10 @@ namespace Graphs.MathParser {
         private void function (FunctionExpression expr) throws MathError {
             Ident id = expr.ident ();
 
-            builder.append (id.to_string ()[13:].down ());
+            EnumClass enumc = (EnumClass) typeof (Ident).class_ref ();
+            unowned EnumValue? val = enumc.get_value (id);
+
+            builder.append (val.value_nick);
             builder.append_c ('(');
             emit (expr.arg ());
             builder.append_c (')');

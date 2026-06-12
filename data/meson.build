@@ -202,9 +202,10 @@ style_io = files('../graphs/style_io.py')
 gresource_generator = files('generate_gresource.py')
 gresource_xml = custom_target('gresource_xml',
          input: [blueprints, styles, icons, other],
-        output: application_id + '.gresource.xml',
+        output: [application_id + '.gresource.xml', 'style_list.vala'],
   depend_files: [style_io, gresource_generator],
        command: [
+    python,
     gresource_generator,
     '@OUTPUT@',
     meson.current_build_dir(),
@@ -217,7 +218,7 @@ gresource_xml = custom_target('gresource_xml',
   ],
 )
 
-gresource = gnome.compile_resources(application_id, gresource_xml,
+gresource = gnome.compile_resources(application_id, gresource_xml[0],
   source_dir: meson.current_build_dir(),
       c_name: 'graphs',
 )

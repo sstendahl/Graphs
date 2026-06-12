@@ -113,7 +113,7 @@ namespace Graphs {
          * Reset a settings instance to default values.
          */
         public void reset_settings (GLib.Settings settings) {
-            foreach (string key in settings.settings_schema.list_keys ()) {
+            foreach (unowned string key in settings.settings_schema.list_keys ()) {
                 settings.reset (key);
             }
         }
@@ -238,7 +238,7 @@ namespace Graphs {
             var file_filter = new FileFilter () { name = name };
             var l = va_list ();
             while (true) {
-                string? suffix = l.arg ();
+                unowned string? suffix = l.arg ();
                 if (suffix == null) break;
                 file_filter.add_suffix (suffix);
             }
@@ -282,7 +282,7 @@ namespace Graphs {
             }
 
             string path = Uri.unescape_string (parsed.get_path ());
-            string host = parsed.get_host ();
+            unowned string host = parsed.get_host ();
             string full_path = Path.build_filename (host + path);
             string filepath = Path.get_dirname (full_path);
 
@@ -316,7 +316,7 @@ namespace Graphs {
             if (filepath.has_prefix ("/var/home")) {
                 filepath = filepath.substring (4);
             }
-            string home = Environment.get_home_dir ();
+            unowned string home = Environment.get_home_dir ();
             if (filepath.has_prefix (home)) {
                 filepath = "~" + filepath.substring (home.length);
                 if (filepath == "~") {

@@ -28,12 +28,16 @@ namespace Graphs.MathParser {
 
         public void next () throws MathError {
             current_start = current_end;
-            do {
-                if (src.get_next_char (ref current_end, out c)) continue;
+            while (true) {
+                if (src.get_next_char (ref current_end, out c)) {
+                    if (!c.isspace ()) break;
+                    current_start = current_end;
+                    continue;
+                }
                 if (current_end == 0) throw new MathError.SYNTAX ("empty expression");
                 current_type = TokenType.END;
                 return;
-            } while (c.isspace ());
+            }
 
             // Number
             if (c.isdigit () || c == decimal_separator) {
@@ -475,7 +479,12 @@ namespace Graphs.MathParser {
         }
 
         public string get_current_token_as_string () {
-            return src.substring (current_start, current_end - current_start);
+            char[] chars = new char[current_end - current_start];
+            int j = 0;
+            for (int i = current_start; i < current_end; i++) {
+                chars[j++] = src[i].tolower ();
+            }
+            return (string) ((owned) chars);
         }
     }
 }

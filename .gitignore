@@ -7,3 +7,4 @@ data/gschemas.compiled
 .flatpak/
 # Python
 __pycache__/
+tests/.pytest_cache/

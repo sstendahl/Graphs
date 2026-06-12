@@ -22,6 +22,12 @@ namespace Graphs {
         return ((Style) style).file != null;
     }
 
+    private struct StyleInfo {
+        public string name;
+        public string style_path;
+        public string preview_path;
+    }
+
     /**
      * Style manager
      */
@@ -71,22 +77,17 @@ namespace Graphs {
                     false
                 )
             );
-            File style_list = File.new_for_uri ("resource:///se/sjoerd/Graphs/styles.txt");
-            try {
-                var stream = new DataInputStream (style_list.read ());
-                string line;
-                while ((line = stream.read_line (null)) != null) {
-                    string[] strings = line.chomp ().split (";", 3);
-                    style_model.append (
-                        new Style (
-                            strings[0],
-                            File.new_for_uri ("resource://" + strings[1]),
-                            Gdk.Texture.from_resource (strings[2]),
-                            false
-                        )
-                    );
-                }
-            } catch { assert_not_reached (); }
+            for (uint i = 0; i < STYLES.length; i++) {
+                StyleInfo* info = &STYLES[i];
+                style_model.append (
+                    new Style (
+                        info->name,
+                        File.new_for_uri ("resource://" + info->style_path),
+                        Gdk.Texture.from_resource (info->preview_path),
+                        false
+                    )
+                );
+            }
             try {
                 FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",

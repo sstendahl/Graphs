@@ -5,7 +5,7 @@ namespace Graphs.MathParser {
         private int n_ops;
         private double[] data;
         private int n_data;
-        private string variable_name;
+        private unowned string variable_name;
 
         private static Once<Compiler> _instance;
 

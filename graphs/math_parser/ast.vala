@@ -102,11 +102,11 @@ namespace Graphs {
     public class VariableExpression : Expression {
         private string _name;
 
-        public VariableExpression (string n) {
-            this._name = n;
+        public VariableExpression (owned string n) {
+            this._name = (owned) n;
         }
 
-        public string name () {
+        public unowned string name () {
             return _name;
         }
     }

@@ -105,10 +105,6 @@ namespace Graphs.MathParser {
                 if (lexer.current_type != TokenType.OPERATOR) break;
 
                 if (lexer.current_op == Operator.FACT) {
-                    /*
-                    if (v < 0 || v != Math.floor (v))
-                        throw new MathError.DOMAIN ("invalid factorial");
-                    */
                     expr = new PostfixExpression (expr, Operator.FACT);
                     lexer.next ();
                     continue;
@@ -140,7 +136,7 @@ namespace Graphs.MathParser {
                         string name = lexer.get_current_token_as_string ();
                         lexer.next ();
 
-                        return new VariableExpression (name.strip ().down ());
+                        return new VariableExpression ((owned) name);
                     }
 
                     lexer.next ();
