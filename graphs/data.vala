@@ -277,7 +277,7 @@ namespace Graphs {
                 used_positions[item.xposition] = true;
                 used_positions[item.yposition + 2] = true;
             }
-            _used_positions = used_positions;
+            _used_positions = (owned) used_positions;
         }
 
         private void _connect_to_item (Item item) {
@@ -346,7 +346,7 @@ namespace Graphs {
             foreach (Item item in this) {
                 if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
-                    string errcolor = ((DataItem) item).errcolor;
+                    unowned string errcolor = ((DataItem) item).errcolor;
                     if (errcolor in selected_style_params.errorbar_cycle) append_used_errbar_color (errcolor);
                 }
             }
@@ -357,7 +357,7 @@ namespace Graphs {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
-                    foreach (string color in selected_style_params.color_cycle) {
+                    foreach (unowned string color in selected_style_params.color_cycle) {
                         if (!(color in _used_colors)) {
                             append_used_color (color);
                             item.color = color;
@@ -366,9 +366,9 @@ namespace Graphs {
                     }
                 }
                 if (item is DataItem) {
-                    string errcolor = ((DataItem) item).errcolor;
+                    unowned string errcolor = ((DataItem) item).errcolor;
                     if (errcolor == "") {
-                        foreach (string color in selected_style_params.errorbar_cycle) {
+                        foreach (unowned string color in selected_style_params.errorbar_cycle) {
                             if (!(color in _used_errbar_colors)) {
                                 append_used_errbar_color (color);
                                 item.set ("errcolor", color);
@@ -420,12 +420,12 @@ namespace Graphs {
             add_history_state ();
         }
 
-        public void set_items (Item[] items) {
+        public void set_items (owned Item[] items) {
             uint removed = _n_items;
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
-            _items = items;
+            _items = (owned) items;
             _n_items = items.length;
             _update_used_positions ();
             items_changed.emit (0, removed, _n_items);
@@ -531,7 +531,7 @@ namespace Graphs {
 
         // Section misc
 
-        protected string get_version () {
+        protected unowned string get_version () {
             return Config.VERSION;
         }
 
@@ -539,7 +539,7 @@ namespace Graphs {
             return _n_items == 0;
         }
 
-        public Item[] get_items () {
+        public unowned Item[] get_items () {
             return _items[:_n_items];
         }
 
@@ -558,7 +558,7 @@ namespace Graphs {
             assert_not_reached ();
         }
 
-        public bool[] get_used_positions () {
+        public unowned bool[] get_used_positions () {
             return _used_positions;
         }
 
@@ -577,8 +577,8 @@ namespace Graphs {
             position_changed.emit (index1, index2);
         }
 
-        struct AxisInfo {
-            string direction;
+        private struct AxisInfo {
+            unowned string direction;
             bool used;
             double min_value;
             double max_value;
@@ -653,16 +653,16 @@ namespace Graphs {
             }
 
             for (int i = 0; i < axes.length; i++) {
-                if (!axes[i].used) continue;
+                AxisInfo* axis = &axes[i];
+                if (!axis->used) continue;
 
                 // 0.05 padding on y-axis, 0.015 padding on x-axis
                 double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
 
-                double min_all = axes[i].min_value;
-                double max_all = axes[i].max_value;
+                double min_all = axis->min_value;
+                double max_all = axis->max_value;
 
-                Scale scale = axes[i].scale;
-                if (scale.is_logarithmic ()) {
+                if (axis->scale.is_logarithmic ()) {
                     double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
                     double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
                     double log_span = log_max - log_min;
@@ -675,14 +675,14 @@ namespace Graphs {
                     max_all += padding_factor * span;
 
                     // For inverse scale, calculate padding using a factor
-                    if (scale == Scale.INVERSE) {
+                    if (axis->scale == Scale.INVERSE) {
                         min_all *= 0.99;
                     } else {
                         min_all -= padding_factor * span;
                     }
                 }
 
-                string direction = axes[i].direction;
+                string direction = axis->direction;
                 figure_settings.set ("min_" + direction, min_all);
                 figure_settings.set ("max_" + direction, max_all);
             }
@@ -760,8 +760,8 @@ namespace Graphs {
             return _view_history_pos;
         }
 
-        protected void set_view_history (int pos, Limits[] history) {
-            _view_history_states = new ArrayList<Limits>.wrap (history);
+        protected void set_view_history (int pos, owned Limits[] history) {
+            _view_history_states = new ArrayList<Limits>.wrap ((owned) history);
             _view_history_pos = pos;
 
             this.can_view_back = _view_history_pos.abs () < _view_history_states.size;

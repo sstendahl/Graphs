@@ -4,15 +4,26 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
-    public class FittingParameter : Object {
-        public string name { get; construct set; }
-        public double initial { get; construct set; }
-        // properties cannot assume infinite values
+    public class FittingParameter {
+        private string name;
+        private double initial = 1d;
         private double lower_bound = -double.INFINITY;
         private double upper_bound = double.INFINITY;
 
-        public FittingParameter (string name) {
-            Object (name: name, initial: 1d);
+        public FittingParameter (owned string name) {
+            this.name = (owned) name;
+        }
+
+        public unowned string get_name () {
+            return name;
+        }
+
+        public double get_initial () {
+            return initial;
+        }
+
+        public void set_initial (double initial) {
+            this.initial = initial;
         }
 
         public double get_lower_bound () {
@@ -32,24 +43,24 @@ namespace Graphs {
         }
     }
 
-    public class FitResult : Object {
+    public class FitResult {
         private double[] parameters;
         private double[] diag_covars;
         private double r2;
         private double rmse;
 
-        public FitResult (double[] parameters, double[] diag_covars, double r2, double rmse) {
-            this.parameters = parameters;
-            this.diag_covars = diag_covars;
+        public FitResult (owned double[] parameters, owned double[] diag_covars, double r2, double rmse) {
+            this.parameters = (owned) parameters;
+            this.diag_covars = (owned) diag_covars;
             this.r2 = r2;
             this.rmse = rmse;
         }
 
-        public double[] get_parameters () {
+        public unowned double[] get_parameters () {
             return parameters;
         }
 
-        public double[] get_diag_covars () {
+        public unowned double[] get_diag_covars () {
             return diag_covars;
         }
 
@@ -69,7 +80,7 @@ namespace Graphs {
         EQUATION,
         CONFIDENCE;
 
-        public string to_text () {
+        public unowned string to_text () {
             switch (this) {
                 case VALUE: return _("Please enter valid \nnumeric parameters.");
                 case BOUNDS: return _("Constraint error: ensure \nLower < Initial < Upper.");
@@ -205,7 +216,7 @@ namespace Graphs {
             int idx = 0;
             while (iterator.has_next ()) {
                 iterator.next ();
-                result[idx++] = iterator.get_value ().initial;
+                result[idx++] = iterator.get_value ().get_initial ();
             }
             return result;
         }
@@ -224,7 +235,7 @@ namespace Graphs {
             }
         }
 
-        protected string[] get_free_vars () {
+        protected unowned string[] get_free_vars () {
             return free_vars;
         }
 
@@ -251,8 +262,8 @@ namespace Graphs {
 
             buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
 
-            double[] diag_covars = fit_result.get_diag_covars ();
-            double[] parameters = fit_result.get_parameters ();
+            unowned double[] diag_covars = fit_result.get_diag_covars ();
+            unowned double[] parameters = fit_result.get_parameters ();
             int conf_level = settings.get_enum ("confidence");
 
             int n = free_vars.length;
@@ -322,7 +333,7 @@ namespace Graphs {
             }
 
             var param = row.param;
-            param.initial = init;
+            param.set_initial (init);
             param.set_lower_bound (low);
             param.set_upper_bound (high);
             PythonHelper.run_method (this, "_fit_curve");
@@ -351,7 +362,7 @@ namespace Graphs {
         private void set_equation_from_selection () {
             int selected = (int) equation.get_selected ();
 
-            string new_equation;
+            unowned string new_equation;
             if (selected != 7) {
                 // Preset equation
                 new_equation = EQUATIONS[selected];
@@ -386,7 +397,7 @@ namespace Graphs {
                 var new_map = new HashMap<string, FittingParameter> ();
                 FittingParameter param;
                 bool use_bounds = settings.get_enum ("optimization") > 0;
-                foreach (string variable in free_vars) {
+                foreach (unowned string variable in free_vars) {
                     if (fitting_parameters.has_key (variable)) {
                         param = fitting_parameters.get (variable);
                     } else {
@@ -450,9 +461,9 @@ namespace Graphs {
 
         public FittingParameterBox (FittingParameter param) {
             this.param = param;
-            string msg = _("Fitting Parameters for %s").printf (param.name);
+            string msg = _("Fitting Parameters for %s").printf (param.get_name ());
             label.set_markup (@"<b> $msg: </b>");
-            initial.set_text (param.initial.to_string ());
+            initial.set_text (param.get_initial ().to_string ());
         }
 
         public void set_bounds_visible (bool visible) {

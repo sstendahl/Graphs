@@ -38,8 +38,8 @@ namespace Graphs {
         protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
 
-        public static DataItem new_data_item (StyleParameters parameters, double[] xdata, double[] ydata, double[]? xerr = null, double[]? yerr = null) {
-            return instance.data_item_request.emit (parameters, new DataHolder (xdata, ydata, xerr, yerr));
+        public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
+            return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
         }
 
         public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
@@ -91,11 +91,11 @@ namespace Graphs {
         private double[]? _xerr;
         private double[]? _yerr;
 
-        public DataHolder (double[] xdata, double[] ydata, double[]? xerr, double[]? yerr) {
-            _xdata = xdata;
-            _ydata = ydata;
-            _xerr = xerr;
-            _yerr = yerr;
+        public DataHolder (owned double[] xdata, owned double[] ydata, owned double[]? xerr, owned double[]? yerr) {
+            _xdata = (owned) xdata;
+            _ydata = (owned) ydata;
+            _xerr = (owned) xerr;
+            _yerr = (owned) yerr;
         }
 
         public DataHolder.empty () {

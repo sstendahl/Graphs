@@ -93,7 +93,7 @@ namespace Graphs {
 
             var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
             foreach (string mode in modes) {
-                string current_mode = mode;
+                unowned string current_mode = mode;
                 var action = new SimpleAction (@"mode-$current_mode", null);
                 action.activate.connect (() => {
                     window.canvas.mode = (Mode) modes.index_of (current_mode);
@@ -104,7 +104,7 @@ namespace Graphs {
 
             string[] settings_actions = {"center", "smoothen"};
             GLib.Settings actions_settings = Application.get_settings_child ("actions");
-            foreach (string settings_action in settings_actions) {
+            foreach (unowned string settings_action in settings_actions) {
                 window.add_action (actions_settings.create_action (settings_action));
             }
 

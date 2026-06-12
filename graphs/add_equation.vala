@@ -31,16 +31,19 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            string equation_str = this.equation.get_text ();
+            unowned string equation_str = this.equation.get_text ();
             this.settings.set_string ("equation", equation_str);
-            string name = item_name.get_text ();
+            unowned string name = item_name.get_text ();
 
             try {
                 Expression expression = expression_to_ast (equation_str);
-                if (name == "") name = "Y = " + ast_to_expression (expression);
 
                 Item item = ItemFactory.new_equation_item (window.data.selected_style_params, expression);
-                item.name = name;
+                if (name == "") {
+                    item.name = "Y = " + ast_to_expression (expression);
+                } else {
+                    item.name = name;
+                }
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }
