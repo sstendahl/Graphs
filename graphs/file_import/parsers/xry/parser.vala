@@ -23,7 +23,7 @@ namespace Graphs {
             for (int i = 0; i < n; i++) input.read_line ();
         }
 
-        public void parse (Data data, ImportSettings settings, ItemList items) throws Error {
+        public void parse (StyleParameters style, ImportSettings settings, ItemList items) throws Error {
             var converter = new CharsetConverter ("UTF-8", "ISO-8859-1");
             var conv_stream = new ConverterInputStream (settings.file.read (), converter);
             this.input = new DataInputStream (conv_stream);
@@ -62,16 +62,13 @@ namespace Graphs {
 
             for (int i = 0; i < item_count; i++) {
                 unowned XryColumn column = columns[i];
-                if (column.first_val != 0)
-                    column.data = column.data[column.first_val:];
-                if (column.last_val != column.data.length - 1 + column.first_val)
-                    column.data.resize (column.last_val - column.first_val + 1);
 
                 string name = settings.filename;
                 if (item_count > 1) name = "%s - %d".printf (name, i + 1);
 
                 double[] xdata = this.xdata[column.first_val:column.last_val + 1];
-                DataItem item = ItemFactory.new_data_item (data.selected_style_params, xdata, column.data);
+                double[] ydata = column.data[column.first_val:column.last_val + 1];
+                DataItem item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata);
                 item.name = name;
                 item.xlabel = _("β (°)");
                 item.ylabel = _("R (1/s)");
@@ -87,7 +84,7 @@ namespace Graphs {
                 double yanchor = evaluate_string (values[6]);
                 string text = string.joinv (" ", values[7:]);
 
-                TextItem item = ItemFactory.new_text_item (data.selected_style_params, xanchor, yanchor, text);
+                TextItem item = ItemFactory.new_text_item (style, xanchor, yanchor, text);
                 item.name = text;
                 items.add (item);
             }

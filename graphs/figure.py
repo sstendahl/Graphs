@@ -95,7 +95,8 @@ class Figure(GObject.Object, figure.Figure):
             self._hide_unselected = figure_settings.get_hide_unselected()
             self._legend = figure_settings.get_legend()
             pos = figure_settings.get_legend_position()
-            self._legend_position = Graphs.legend_position_to_string(pos)
+            legend_position = Graphs.legend_position_to_string(pos)
+            self._legend_position = legend_position.replace("-", " ")
         else:
             self._hide_unselected = False
             self._legend = True
@@ -244,11 +245,13 @@ class Figure(GObject.Object, figure.Figure):
     )
     def legend_position(self) -> int:
         """Legend Position."""
-        return Graphs.LegendPosition.from_string(self._legend_position)
+        legend_position = self.legend_position.replace(" ", "-")
+        return Graphs.LegendPosition.from_string(legend_position)
 
     @legend_position.setter
     def legend_position(self, pos: Graphs.LegendPosition) -> None:
-        self._legend_position = Graphs.legend_position_to_string(pos)
+        legend_position = Graphs.legend_position_to_string(pos)
+        self._legend_position = legend_position.replace("-", " ")
         self.update_legend()
 
     @GObject.Property(type=str)

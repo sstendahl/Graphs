@@ -6,6 +6,7 @@ namespace Graphs.MathParser {
         private unichar decimal_separator;
 
         public TokenType current_type;
+        public Operator current_op;
         public Ident current_ident;
         public double current_val;
 
@@ -17,6 +18,12 @@ namespace Graphs.MathParser {
             this.current_end = 0;
             this.decimal_separator = decimal_separator;
             next ();
+        }
+
+        private inline void set_superscript (int val) {
+            current_type = TokenType.OPERATOR;
+            current_op = Operator.SUPERSCRIPT;
+            current_val = val;
         }
 
         public void next () throws MathError {
@@ -50,9 +57,13 @@ namespace Graphs.MathParser {
                 if (!src.get_next_char (ref tmp_idx, out c))
                     throw new MathError.SYNTAX ("expected token");
                 if (c == '*') {
-                    current_type = TokenType.CARET;
+                    current_type = TokenType.OPERATOR;
+                    current_op = Operator.POW;
                     current_end = tmp_idx;
-                } else current_type = TokenType.STAR;
+                } else {
+                    current_type = TokenType.OPERATOR;
+                    current_op = Operator.MUL;
+                }
                 return;
             }
 
@@ -69,28 +80,29 @@ namespace Graphs.MathParser {
                     else if (c != '+') break;
                     current_end = tmp_idx;
                 }
-                current_type = plus ? TokenType.PLUS : TokenType.MINUS;
+                current_type = TokenType.OPERATOR;
+                current_op = plus ? Operator.ADD : Operator.SUB;
                 return;
             }
 
             // Single-character token
             switch (c) {
-                case '/': current_type = TokenType.SLASH; break;
-                case '^': current_type = TokenType.CARET; break;
-                case '!': current_type = TokenType.FACT; break;
+                case '/': current_type = TokenType.OPERATOR; current_op = Operator.DIV; break;
+                case '^': current_type = TokenType.OPERATOR; current_op = Operator.POW; break;
+                case '!': current_type = TokenType.OPERATOR; current_op = Operator.FACT; break;
                 case '(': current_type = TokenType.LPAREN; break;
                 case ')': current_type = TokenType.RPAREN; break;
                 // Superscript
-                case '⁰': current_type = TokenType.SUPERSCRIPT; current_val = 0; break;
-                case '¹': current_type = TokenType.SUPERSCRIPT; current_val = 1; break;
-                case '²': current_type = TokenType.SUPERSCRIPT; current_val = 2; break;
-                case '³': current_type = TokenType.SUPERSCRIPT; current_val = 3; break;
-                case '⁴': current_type = TokenType.SUPERSCRIPT; current_val = 4; break;
-                case '⁵': current_type = TokenType.SUPERSCRIPT; current_val = 5; break;
-                case '⁶': current_type = TokenType.SUPERSCRIPT; current_val = 6; break;
-                case '⁷': current_type = TokenType.SUPERSCRIPT; current_val = 7; break;
-                case '⁸': current_type = TokenType.SUPERSCRIPT; current_val = 8; break;
-                case '⁹': current_type = TokenType.SUPERSCRIPT; current_val = 9; break;
+                case '⁰': set_superscript (0); break;
+                case '¹': set_superscript (1); break;
+                case '²': set_superscript (2); break;
+                case '³': set_superscript (3); break;
+                case '⁴': set_superscript (4); break;
+                case '⁵': set_superscript (5); break;
+                case '⁶': set_superscript (6); break;
+                case '⁷': set_superscript (7); break;
+                case '⁸': set_superscript (8); break;
+                case '⁹': set_superscript (9); break;
                 default: throw new MathError.SYNTAX ("invalid token");
             }
         }

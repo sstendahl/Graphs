@@ -34,7 +34,7 @@ namespace Graphs {
             while (stmt.step () == Sqlite.ROW) {
                 columns.append_val (stmt.column_text (1));
             }
-            return columns.data;
+            return (owned) columns.data;
         }
 
         public string[] get_numeric_columns (string table_name) throws IOError {
@@ -48,14 +48,14 @@ namespace Graphs {
                 );
             }
             while (stmt.step () == Sqlite.ROW) {
-                string col_name = stmt.column_text (1);
+                unowned string col_name = stmt.column_text (1);
                 string col_type = stmt.column_text (2).up ();
 
                 if (is_numeric_type (col_type)) {
                     columns.append_val (col_name);
                 }
             }
-            return columns.data;
+            return (owned) columns.data;
         }
 
         private bool is_numeric_type (string type) {
@@ -71,7 +71,7 @@ namespace Graphs {
             if (table_names.length == 0) {
                 throw new IOError.FAILED ("No tables found in database");
             }
-            string first_table = table_names[0];
+            unowned string first_table = table_names[0];
             string[] columns = get_numeric_columns (first_table);
 
             settings.set_string ("table-name", first_table);
@@ -126,13 +126,13 @@ namespace Graphs {
             while (stmt.step () == Sqlite.ROW) {
                 names.append_val (stmt.column_text (0));
             }
-            return names.data;
+            return (owned) names.data;
         }
 
         public string parse (ItemList items, ImportSettings settings, StyleParameters style) throws IOError {
             string table_name = settings.get_string ("table-name");
             if (get_numeric_columns (table_name).length == 0) {
-                string msg = _("Could not import data from table \"%s\", no numeric columns were found");
+                unowned string msg = _("Could not import data from table \"%s\", no numeric columns were found");
                 return msg.printf (table_name);
             }
 
@@ -150,7 +150,7 @@ namespace Graphs {
             if (settings.get_boolean ("use-yerr"))
                 yerr = get_column_data (table_name, settings.get_string ("yerr-column"));
 
-            DataItem item = ItemFactory.new_data_item (style, xdata, ydata, xerr, yerr);
+            DataItem item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
             item.xlabel = x_column;
             item.ylabel = y_column;
             item.name = x_column + " vs " + y_column;

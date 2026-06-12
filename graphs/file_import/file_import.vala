@@ -11,6 +11,8 @@ namespace Graphs {
         public string[] file_suffixes { get; construct set; }
     }
 
+    private const string[] ASCII_SUFFIXES = {"xy", "dat", "txt", "csv"};
+
     public class DataImporter : Object {
         public static GLib.ListStore file_filters { get; private set; }
 
@@ -26,8 +28,8 @@ namespace Graphs {
 
         private static DataImporter instance;
 
-        protected void setup (Parser[] parsers) {
-            DataImporter.parsers = parsers;
+        protected void setup (owned Parser[] parsers) {
+            DataImporter.parsers = (owned) parsers;
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
@@ -48,8 +50,7 @@ namespace Graphs {
 
             // columns
             var ascii_filter = new FileFilter () { name = C_("file-filter", "ASCII files") };
-            string[] ascii_suffixes = {"xy", "dat", "txt", "csv"};
-            foreach (string suffix in ascii_suffixes) {
+            foreach (unowned string suffix in ASCII_SUFFIXES) {
                 ascii_filter.add_suffix (suffix);
                 supported_filter.add_suffix (suffix);
             }
@@ -59,7 +60,7 @@ namespace Graphs {
                 if (parser.name == "columns") continue;
 
                 var filter = new FileFilter () { name = parser.filetype_name };
-                foreach (string suffix in parser.file_suffixes) {
+                foreach (unowned string suffix in parser.file_suffixes) {
                     filter.add_suffix (suffix);
                     supported_filter.add_suffix (suffix);
                 }
@@ -88,7 +89,7 @@ namespace Graphs {
         }
 
         public static void set_as_default (ImportSettings settings) {
-            string name = parsers[settings.mode].name;
+            unowned string name = parsers[settings.mode].name;
             if (!(name in mode_settings_list)) return;
             settings.set_as_default (mode_settings.get_child (name));
         }
@@ -108,7 +109,7 @@ namespace Graphs {
 
         private static bool init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
-            string name = parsers[settings.mode].name;
+            unowned string name = parsers[settings.mode].name;
             settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
             return instance.init_import_settings_request.emit (settings);
         }
@@ -142,13 +143,13 @@ namespace Graphs {
 
             var keys = default_settings.settings_schema.list_keys ();
             has_schema = keys.length > 0;
-            foreach (string key in keys) {
+            foreach (unowned string key in keys) {
                 set_value (key, default_settings.get_value (key));
             }
         }
 
         public void set_as_default (GLib.Settings settings) {
-            foreach (string key in settings.settings_schema.list_keys ()) {
+            foreach (unowned string key in settings.settings_schema.list_keys ()) {
                 settings.set_value (key, get_value (key));
             }
         }
@@ -174,7 +175,7 @@ namespace Graphs {
             set_value (key, new Variant.string (val));
         }
 
-        public string get_string (string key) {
+        public unowned string get_string (string key) {
             return get_value (key).get_string ();
         }
 

@@ -74,8 +74,13 @@ namespace Graphs.MathParser {
         }
 
         private void unary (UnaryExpression expr) throws MathError {
-            if (expr.op () == TokenType.MINUS) builder.append_c ('-');
+            bool need_parens = expr.expr () is BinaryExpression;
+
+            if (expr.op () == Operator.SUB) builder.append_c ('-');
+
+            if (need_parens) builder.append_c ('(');
             emit (expr.expr ());
+            if (need_parens) builder.append_c (')');
         }
 
         private static inline unichar to_superscript (int i) throws MathError {
@@ -94,21 +99,30 @@ namespace Graphs.MathParser {
             }
         }
 
+        private static bool need_parens (Expression expr, Expression parent) {
+            if (!(expr is BinaryExpression)) return false;
+            if (!(parent is BinaryExpression)) return true;
+
+            return ((BinaryExpression) expr).op ().precedence () > ((BinaryExpression) parent).op ().precedence ();
+        }
+
         private void binary (BinaryExpression expr) throws MathError {
-            bool need_parens_left = expr.left () is BinaryExpression;
-            bool need_parens_right = expr.right () is BinaryExpression;
+            bool need_parens_left = need_parens (expr.left (), expr);
+            bool need_parens_right = need_parens (expr.right (), expr);
 
             if (need_parens_left) builder.append_c ('(');
             emit (expr.left ());
             if (need_parens_left) builder.append_c (')');
 
             switch (expr.op ()) {
-                case TokenType.PLUS: builder.append (" + "); break;
-                case TokenType.MINUS: builder.append (" - "); break;
-                case TokenType.STAR: builder.append (" * "); break;
-                case TokenType.SLASH: builder.append (" / "); break;
-                case TokenType.CARET: builder.append_c ('^'); break;
-                case TokenType.SUPERSCRIPT:
+                case Operator.ADD: builder.append (" + "); break;
+                case Operator.SUB: builder.append (" - "); break;
+                case Operator.DIV: builder.append (" / "); break;
+                case Operator.POW: builder.append_c ('^'); break;
+                case Operator.MUL:
+                    builder.append (need_parens_left && need_parens_right ? " " : " * ");
+                    break;
+                case Operator.SUPERSCRIPT:
                     double exp = ((NumberExpression) expr.right ()).val ();
                     builder.append_unichar (to_superscript ((int) exp));
                     return;
@@ -121,10 +135,14 @@ namespace Graphs.MathParser {
         }
 
         private void postfix (PostfixExpression expr) throws MathError {
+            bool need_parens = expr.expr () is BinaryExpression;
+
+            if (need_parens) builder.append_c ('(');
             emit (expr.expr ());
+            if (need_parens) builder.append_c (')');
 
             switch (expr.op ()) {
-                case TokenType.FACT: builder.append_c ('!'); break;
+                case Operator.FACT: builder.append_c ('!'); break;
                 default: throw new MathError.SYNTAX ("invalid postfix expression");
             }
         }
@@ -132,7 +150,10 @@ namespace Graphs.MathParser {
         private void function (FunctionExpression expr) throws MathError {
             Ident id = expr.ident ();
 
-            builder.append (id.to_string ()[13:].down ());
+            EnumClass enumc = (EnumClass) typeof (Ident).class_ref ();
+            unowned EnumValue? val = enumc.get_value (id);
+
+            builder.append (val.value_nick);
             builder.append_c ('(');
             emit (expr.arg ());
             builder.append_c (')');

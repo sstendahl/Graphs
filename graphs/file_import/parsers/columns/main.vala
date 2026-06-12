@@ -15,24 +15,19 @@ namespace Graphs {
         PERIOD,
         CUSTOM;
 
-        public string friendly_string () {
-            return this.to_string ()[25:].down ();
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (ColumnsDelimiter).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
         }
 
         public static ColumnsDelimiter parse (string delimiter) {
-            switch (delimiter) {
-                case "whitespace": return ColumnsDelimiter.WHITESPACE;
-                case "tab": return ColumnsDelimiter.TAB;
-                case "colon": return ColumnsDelimiter.COLON;
-                case "semicolon": return ColumnsDelimiter.SEMICOLON;
-                case "comma": return ColumnsDelimiter.COMMA;
-                case "period": return ColumnsDelimiter.PERIOD;
-                case "custom": return ColumnsDelimiter.CUSTOM;
-                default: assert_not_reached ();
-            }
+            EnumClass enumc = (EnumClass) typeof (ColumnsDelimiter).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (delimiter);
+            return (ColumnsDelimiter) eval.value;
         }
 
-        public string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
+        public unowned string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
             switch (this) {
                 case WHITESPACE: return "\\s+";
                 case TAB: return "\\t";
@@ -56,8 +51,10 @@ namespace Graphs {
         COMMA,
         PERIOD;
 
-        public string friendly_string () {
-            return this.to_string ()[25:].down ();
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (ColumnsSeparator).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
         }
 
         public unichar as_unichar () {
@@ -65,11 +62,9 @@ namespace Graphs {
         }
 
         public static ColumnsSeparator parse (string separator) {
-            switch (separator) {
-                case "comma": return ColumnsSeparator.COMMA;
-                case "period": return ColumnsSeparator.PERIOD;
-                default: assert_not_reached ();
-            }
+            EnumClass enumc = (EnumClass) typeof (ColumnsSeparator).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (separator);
+            return (ColumnsSeparator) eval.value;
         }
     }
 

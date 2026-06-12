@@ -10,7 +10,7 @@ namespace Graphs {
         public unowned Box items_box { get; }
 
         private ImportSettings settings;
-        private Gee.List<ColumnsItemSettings?> items;
+        private Gee.List<ColumnsItemSettings?> items = new ArrayList<ColumnsItemSettings?> ();
 
         public ColumnsBox (ImportSettings settings) {
             this.settings = settings;
@@ -19,12 +19,11 @@ namespace Graphs {
 
             var iter = settings.get_value ("items").iterator ();
             size_t n_items = iter.n_children ();
-            ColumnsItemSettings?[] item_settings_list = new ColumnsItemSettings?[n_items];
             for (int i = 0; i < n_items; i++) {
-                item_settings_list[i] = ColumnsItemSettings ();
-                item_settings_list[i].load_from_variant (iter.next_value ());
+                var item_settings = ColumnsItemSettings ();
+                item_settings.load_from_variant (iter.next_value ());
+                items.add (item_settings);
             }
-            items = new ArrayList<ColumnsItemSettings?>.wrap (item_settings_list);
 
             reload_item_groups ();
         }
@@ -163,7 +162,7 @@ namespace Graphs {
             item_settings.column_x = (int) column_x.get_value ();
             item_settings.column_y = (int) column_y.get_value ();
             item_settings.single_column = single_column.get_active ();
-            item_settings.equation = equation.get_text ().replace (";", "");
+            item_settings.equation = equation.get_text ();
             item_settings.use_xerr = use_xerr.get_active ();
             item_settings.use_yerr = use_yerr.get_active ();
             item_settings.xerr_index = (int) column_xerr.get_value ();
