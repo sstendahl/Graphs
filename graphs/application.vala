@@ -117,7 +117,7 @@ namespace Graphs {
 
             var val = options.lookup_value (OPTION_REMAINING, VariantType.STRING_ARRAY);
             if (val != null) {
-                string[] remaining = val.get_strv ();
+                var remaining = val.get_strv ();
                 File[] files = new File[remaining.length];
                 for (int i = 0; i < remaining.length; i++) {
                     files[i] = command_line.create_file_for_arg (remaining[i]);
@@ -161,7 +161,7 @@ namespace Graphs {
          */
         public static GLib.Settings get_settings_child (string path) {
             GLib.Settings settings_child = settings;
-            foreach (string child_name in path.split ("/")) {
+            foreach (unowned string child_name in path.split ("/")) {
                 settings_child = settings_child.get_child (child_name);
             }
             return settings_child;

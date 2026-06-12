@@ -11,12 +11,12 @@ namespace Graphs {
     public class Limits {
         private double[] _values;
 
-        public Limits (double[] values)
+        public Limits (owned double[] values)
             requires (values.length = 8) {
-            _values = values;
+            _values = (owned) values;
         }
 
-        public double[] values () {
+        public unowned double[] values () {
             return _values;
         }
 
