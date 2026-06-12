@@ -56,6 +56,9 @@ gettext_package = 'graphs'
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
   add_project_arguments(['--define=DEBUG'], language: 'vala')
+  debug_str = 'True'
+else
+  debug_str = 'False'
 endif
 
 conf = configuration_data()
@@ -71,7 +74,7 @@ conf.set('ISSUE_URL', issue_url)
 conf.set('HELP_URL', help_url)
 conf.set('TRANSLATION_URL', translation_url)
 conf.set('CONTRIBUTE_URL', contribute_url)
-conf.set('DEBUG', debug)
+conf.set('DEBUG', debug_str)
 
 vala_conf = configuration_data()
 vala_conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
