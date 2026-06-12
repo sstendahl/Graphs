@@ -74,7 +74,7 @@ namespace Graphs {
             }
 
             var delimiter_enum = ColumnsDelimiter.parse (settings.get_string ("delimiter"));
-            string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
+            unowned string pattern = delimiter_enum.to_regex_pattern (settings.get_string ("custom-delimiter"));
 
             try {
                 this.delimiter_regex = new Regex (pattern);
@@ -134,7 +134,7 @@ namespace Graphs {
                             _("Cannot import from file, bad value on line %d").printf (line_number)
                         );
                     }
-                    columns[column_rank++].header = str_values[column_index];
+                    columns[column_rank++].header = (owned) str_values[column_index];
                     // prevent leading 0 in data
                     value_size = -1;
                 } while (bitset_iter.next (out column_index));
@@ -152,7 +152,7 @@ namespace Graphs {
         public void add_items (Data data, ItemList itemlist) throws Error {
             foreach (var item_settings in items) {
                 uint yrank = get_rank (item_settings.column_y);
-                string ylabel = columns[yrank].header;
+                string ylabel = (owned) columns[yrank].header;
                 double[] ydata = columns[yrank].get_data ();
 
                 double[]? xerr = item_settings.use_xerr ? columns[get_rank (item_settings.xerr_index)].get_data () : null;
@@ -170,7 +170,7 @@ namespace Graphs {
                     }
                 } else {
                     uint xrank = get_rank (item_settings.column_x);
-                    xlabel = columns[xrank].header;
+                    xlabel = (owned) columns[xrank].header;
                     xdata = columns[xrank].get_data ();
                 }
 

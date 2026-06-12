@@ -44,18 +44,19 @@ namespace Graphs {
         private bool entries_sensitive = false;
         private bool cut_sensitive = false;
 
+        private const string[] ACTION_NAMES = {
+            "multiply_x",
+            "multiply_y",
+            "translate_x",
+            "translate_y"
+        };
+
         public Operations (Window window) {
             this._window = window;
 
             window.notify["mode"].connect (on_mode_change);
 
-            string[] action_names = {
-                "multiply_x",
-                "multiply_y",
-                "translate_x",
-                "translate_y"
-            };
-            foreach (string action_name in action_names) {
+            foreach (unowned string action_name in ACTION_NAMES) {
                 Entry entry;
                 Button button;
                 get (action_name + "_entry", out entry);
