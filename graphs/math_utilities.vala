@@ -98,7 +98,7 @@ namespace Graphs.MathTools {
             if (lexer.current_type == TokenType.IDENT
                 && lexer.current_ident == Ident.CUSTOM) {
                 string token = lexer.get_current_token_as_string ();
-                if (token.down () != "x") strings.add (token);
+                if (token != "x") strings.add (token);
             }
 
             lexer.next ();
