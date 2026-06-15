@@ -55,12 +55,9 @@ if __name__ == "__main__":
         logging.debug("Begin Application startup")
 
         import gettext
-        import locale
         localedir = "@LOCALEDIR@"
         if os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR"):
             localedir = os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR")
-        locale.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
-        locale.textdomain("@GETTEXT_PACKAGE@")
         gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
         gettext.textdomain("@GETTEXT_PACKAGE@")
 

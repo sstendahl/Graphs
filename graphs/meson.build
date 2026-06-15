@@ -133,7 +133,7 @@ graphs_typelib = custom_target('graphs typelib',
       command: [
         find_program('g-ir-compiler'),
         '--shared-library',
-        'libgraphs.so',
+        graphs_lib,
         '--output',
         '@OUTPUT@',
         join_paths(meson.current_build_dir(), 'Graphs-1.gir'),
