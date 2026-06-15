@@ -26,7 +26,6 @@ python.install_sources(
     'canvas.py',
     'curve_fitting.py',
     'data.py',
-    'export_items.py',
     'figure.py',
     'file_io.py',
     'item.py',

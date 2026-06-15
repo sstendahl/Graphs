@@ -25,14 +25,6 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
-        protected signal void export_items_request (Window window, string mode, File file, Item[] items);
-        public static void export_items (Window window, string mode, File file, Item[] items) {
-            instance.export_items_request.emit (window, mode, file, items);
-            window.add_toast_string_with_file (
-                _("Exported Data"), file
-            );
-        }
-
         public signal void export_figure_request (File file, GLib.Settings settings, Data data);
         public static void export_figure (File file, GLib.Settings settings, Data data) {
             instance.export_figure_request.emit (file, settings, data);
