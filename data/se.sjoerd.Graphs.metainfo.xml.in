@@ -92,16 +92,26 @@
   </description>
 
   <releases>
+    <release version="2.0.3" date="2026-06-15">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix the combine operation not working</li>
+          <li>Fix error bar rendering when both x and y error bars are present</li>
+          <li>Fix bundled styles not loading correctly</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.2" date="2026-05-20">
       <description>
         <p>Fixes a bug where changing the style would break when error bars are present on the canvas</p>
       </description>
-    </release>    
+    </release>
     <release version="2.0.1" date="2026-05-18">
       <description>
         <p>Fixes a bug where the canvas was not refreshed when setting the minimum value on the left-axis</p>
       </description>
-    </release>  
+    </release>
     <release version="2.0.0" date="2026-05-15">
       <description>
         <p>Version 2.0 of Graphs is a major update, introducing several new features such as proper equation support and a completely redesigned style editor.</p>
