@@ -151,6 +151,7 @@ namespace Graphs {
 
             on_items_changed ();
             on_unsaved_change ();
+            on_style_changed (data, false);
 
 #if DEBUG
             add_css_class ("devel");

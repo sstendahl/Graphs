@@ -35,8 +35,6 @@ class PythonWindow(Graphs.Window):
         zoom_out_action = self.lookup_action("zoom-out")
         zoom_out_action.connect("activate", self._on_zoom_out)
 
-        self._reload_canvas()
-
     def _reset_items(self) -> None:
         """Reset items to match new style."""
         old_style = self.props.data.get_old_selected_style_params()
