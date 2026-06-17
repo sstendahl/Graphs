@@ -50,7 +50,7 @@ namespace Graphs {
 
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
-        protected signal StyleParameters params_request (File file);
+        protected signal StyleParameters params_request (File file, StyleParameters? validate);
 
         public static StyleManager instance { get; private set; }
 
@@ -195,6 +195,10 @@ namespace Graphs {
             return Adw.StyleManager.get_default ().get_dark () ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
+        public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
+            return instance.params_request.emit (style.file, validate);
+        }
+
         /**
          * List all stylenames
          *
@@ -236,7 +240,7 @@ namespace Graphs {
 
         private StyleParameters params_for_system_style (string name) {
             File file = File.new_for_uri (@"resource:///se/sjoerd/Graphs/styles/$name.mplstyle");
-            return params_request.emit (file);
+            return params_request.emit (file, null);
         }
     }
 

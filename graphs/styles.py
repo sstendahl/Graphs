@@ -78,8 +78,13 @@ class StyleManager(Graphs.StyleManager):
         )
 
     @staticmethod
-    def _on_params_request(self, file: Gio.File) -> Graphs.StyleParameters:
-        return StyleParameters(style_io.parse(file))
+    def _on_params_request(
+        self,
+        file: Gio.File,
+        validate: Graphs.StyleParameters,
+    ) -> Graphs.StyleParameters:
+        validate = None if validate is None else validate.as_tuple()
+        return StyleParameters(style_io.parse(file, validate))
 
     @staticmethod
     def _on_create_style_request(
