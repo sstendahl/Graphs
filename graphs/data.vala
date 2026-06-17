@@ -464,7 +464,7 @@ namespace Graphs {
 
         private async void update_selected_style () {
             old_selected_style_params = selected_style_params;
-            StyleParameters system_params = StyleManager.get_system_style_params();
+            StyleParameters system_params = StyleManager.get_system_style_params ();
 
             if (figure_settings.use_custom_style) {
                 Style style = get_selected_style ();
