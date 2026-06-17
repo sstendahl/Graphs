@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for style utilities."""
 import io
-import os
 
-from gi.repository import GLib, Gdk, Gio, Graphs, Gtk
+from gi.repository import GLib, Gdk, Gio, Graphs
 
 from graphs import style_io
 
@@ -18,13 +17,6 @@ def _generate_preview(params: tuple[RcParams, dict]) -> Gdk.Texture:
     buffer = io.BytesIO()
     style_io.create_preview(buffer, params, "png", 31)
     return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
-
-
-def _params_for_bundled_style(name: str) -> Graphs.StyleParameters:
-    filename = Graphs.filename_from_stylename(name)
-    uri = "resource:///se/sjoerd/Graphs/styles/" + filename
-    params = style_io.parse(Gio.File.new_for_uri(uri))
-    return StyleParameters(params)
 
 
 class StyleParameters(Graphs.StyleParameters):
@@ -56,22 +48,12 @@ class StyleManager(Graphs.StyleManager):
     __gtype_name__ = "GraphsPythonStyleManager"
 
     def __init__(self):
-        # Check for Ubuntu
-        gtk_theme = Gtk.Settings.get_default().get_property("gtk-theme-name")
-        system_style_name = "Yaru" \
-            if "SNAP" in os.environ \
-            and gtk_theme.lower().startswith("yaru") \
-            else "Adwaita"
         super().__init__()
+        self.connect("params-request", self._on_params_request)
         self.connect("style-request", self._on_style_request)
         self.connect("create-style-request", self._on_create_style_request)
 
-        self.props.system_style_light_params = \
-            _params_for_bundled_style(system_style_name)
-        self.props.system_style_dark_params = \
-            _params_for_bundled_style(system_style_name + " Dark")
-
-        self.setup(system_style_name.lower())
+        self.setup()
 
     @staticmethod
     def _on_style_request(self, file: Gio.File) -> Graphs.Style:
@@ -94,6 +76,10 @@ class StyleManager(Graphs.StyleManager):
             preview=preview,
             light=light,
         )
+
+    @staticmethod
+    def _on_params_request(self, file: Gio.File) -> Graphs.StyleParameters:
+        return StyleParameters(style_io.parse(file))
 
     @staticmethod
     def _on_create_style_request(
