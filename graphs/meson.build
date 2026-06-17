@@ -132,8 +132,6 @@ graphs_typelib = custom_target('graphs typelib',
   install_dir: join_paths(libdir, 'girepository-1.0'),
       command: [
         find_program('g-ir-compiler'),
-        '--shared-library',
-        graphs_lib,
         '--output',
         '@OUTPUT@',
         join_paths(meson.current_build_dir(), 'Graphs-1.gir'),
