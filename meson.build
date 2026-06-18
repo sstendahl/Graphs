@@ -54,6 +54,7 @@ localedir = join_paths(prefix, get_option('localedir'))
 mandir = join_paths(prefix, get_option('mandir'))
 debug = get_option('buildtype') == 'debug'
 gettext_package = 'graphs'
+is_linux = host_machine.system() == 'linux'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
@@ -61,6 +62,10 @@ if debug
   debug_str = 'True'
 else
   debug_str = 'False'
+endif
+
+if is_linux
+  add_project_arguments(['--define=LINUX'], language: 'vala')
 endif
 
 conf = configuration_data()
@@ -103,6 +108,6 @@ meson.add_devenv(devenv)
 gnome.post_install(
      glib_compile_schemas: true,
     gtk_update_icon_cache: true,
-  update_desktop_database: true,
+  update_desktop_database: is_linux,
      update_mime_database: true,
 )

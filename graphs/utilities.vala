@@ -286,6 +286,7 @@ namespace Graphs {
             string full_path = Path.build_filename (host + path);
             string filepath = Path.get_dirname (full_path);
 
+#if LINUX
             // Check if this is a document portal path and query the real host path from the file itself
             int uid = (int) Posix.getuid ();
             string doc_portal = @"/run/user/$uid/doc/";
@@ -323,6 +324,8 @@ namespace Graphs {
                     filepath = "~/";
                 }
             }
+#endif
+
             return filepath;
         }
 
