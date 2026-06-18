@@ -2,7 +2,7 @@
 """Style editor."""
 from gettext import gettext as _
 
-from gi.repository import Gio, GLib, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs.canvas import Canvas
 from graphs.item import DataItem
