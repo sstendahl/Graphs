@@ -148,10 +148,11 @@ namespace Graphs {
             data.selection_changed.connect (on_selection_changed);
             data.notify["unsaved"].connect (on_unsaved_change);
             data.style_changed.connect (on_style_changed);
+            data.style_selection_model.selection_changed.connect (reset_items);
 
             on_items_changed ();
             on_unsaved_change ();
-            on_style_changed (data, false);
+            on_style_changed ();
 
 #if DEBUG
             add_css_class ("devel");
@@ -274,10 +275,11 @@ namespace Graphs {
             export_data_action.set_enabled (items_selected);
         }
 
-        private void on_style_changed (Data data, bool recolor_items) {
-            if (recolor_items)
-                PythonHelper.run_method (this, "_reset_items");
+        private void reset_items () {
+            PythonHelper.run_method (this, "_reset_items");
+        }
 
+        private void on_style_changed () {
             var style_params = data.selected_style_params;
             string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.color, style_params.background_color);
             css_provider.load_from_string (css);
