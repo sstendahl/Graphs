@@ -91,7 +91,6 @@ graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
 graphs/export_figure.vala
-graphs/export_items.py
 graphs/export_items.vala
 graphs/figure.py
 graphs/figure_settings.vala

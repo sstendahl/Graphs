@@ -136,17 +136,17 @@ private void test_invalid_factorial_fractional () {
     }
 }
 
-private void test_syntax_errors () {
-    string[] invalid = {
-        "",
-        "1+",
-        "(1+2",
-        "sin()",
-        "*2",
-        "2^^3"
-    };
+private const string[] INVALID_SYNTAX = {
+    "",
+    "1+",
+    "(1+2",
+    "sin()",
+    "*2",
+    "2^^3"
+};
 
-    foreach (var expr in invalid) {
+private void test_syntax_errors () {
+    foreach (unowned string expr in INVALID_SYNTAX) {
         try {
             evaluate_string (expr);
             assert_not_reached ();

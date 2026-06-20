@@ -30,13 +30,9 @@ if __name__ == "__main__":
     gi.require_version("Gtk", "4.0")
     gi.require_version("Graphs", "1")
 
-    import asyncio
     import os
     import signal
     import sys
-
-    from gi.events import GLibEventLoopPolicy
-    asyncio.set_event_loop_policy(GLibEventLoopPolicy())
 
     graph_path_dir = "@PKGDATADIR@"
     if os.environ.get("GRAPHS_DEVEL_PATH"):
@@ -55,14 +51,14 @@ if __name__ == "__main__":
         logging.debug("Begin Application startup")
 
         import gettext
-        import locale
         localedir = "@LOCALEDIR@"
         if os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR"):
             localedir = os.environ.get("GRAPHS_OVERRIDE_LOCALEDIR")
-        locale.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
-        locale.textdomain("@GETTEXT_PACKAGE@")
         gettext.bindtextdomain("@GETTEXT_PACKAGE@", localedir)
         gettext.textdomain("@GETTEXT_PACKAGE@")
+
+        import matplotlib
+        matplotlib.use("Gtk4Cairo", force=True)
 
         from matplotlib import font_manager
         _ = gettext.gettext
