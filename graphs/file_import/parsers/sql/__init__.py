@@ -25,11 +25,11 @@ class SqlParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        data: Graphs.Data,
+        style: Graphs.StyleParameters,
     ) -> None:
         """Import data from sqlite database file."""
         db_reader = settings.get_item("db-reader")
-        msg = db_reader.parse(items, settings, data)
+        msg = db_reader.parse(items, settings, style)
         if msg != "":
             raise ParseError(msg)
 

@@ -9,10 +9,8 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import misc, project, style_io
+from graphs import misc, project
 from graphs.item import ItemFactory
-
-from matplotlib import RcParams
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
@@ -26,7 +24,6 @@ class Data(Graphs.Data):
     __gtype_name__ = "GraphsPythonData"
 
     def __init__(self):
-        self._selected_style_params = None, {}
         super().__init__()
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
@@ -54,67 +51,6 @@ class Data(Graphs.Data):
     def __getitem__(self, pos: int):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
-
-    def get_old_selected_style_params(self) -> tuple[RcParams, dict]:
-        """Get the old selected style properties."""
-        return self._old_style_params
-
-    def get_selected_style_params(self) -> tuple[RcParams, dict]:
-        """Get the selected style properties."""
-        return self._selected_style_params
-
-    def _update_selected_style(self) -> None:
-        figure_settings = self.props.figure_settings
-        style_manager = Graphs.StyleManager.get_instance()
-        error_msg = None
-        if figure_settings.get_use_custom_style():
-            stylename = figure_settings.get_custom_style()
-            for style in self.props.style_selection_model.get_model():
-                if stylename == style.get_name():
-                    try:
-                        validate = None
-                        if style.get_mutable():
-                            validate = style_manager.get_system_style_params()
-                        self._old_style_params = self._selected_style_params
-
-                        style_params, graphs_params = style_io.parse(
-                            style.get_file(),
-                            validate,
-                        )
-                        self._selected_style_params = \
-                            style_params, graphs_params
-
-                        self.set_color_cycle(
-                            style_params["axes.prop_cycle"].by_key()["color"],
-                        )
-                        self.set_errbar_color_cycle(
-                            graphs_params["errorbar.color_cycle"].by_key()
-                            ["color"],
-                        )
-                        return
-                    except (ValueError, SyntaxError, AttributeError):
-                        error_msg = _(
-                            "Could not parse style {stylename}, loading "
-                            "system preferred style",
-                        ).format(stylename=stylename)
-                    break
-            error_msg = _(
-                "Style {stylename} does not exist, "
-                "loading system preferred style",
-            ).format(stylename=stylename)
-
-        if error_msg is not None:
-            figure_settings.set_use_custom_style(False)
-            logging.warning(error_msg)
-
-        self._old_style_params = self._selected_style_params
-        self._selected_style_params = style_manager.get_system_style_params()
-        color_cycle = self._selected_style_params[0]["axes.prop_cycle"]
-        self.set_color_cycle(color_cycle.by_key()["color"])
-        graphs_params = self._selected_style_params[1]
-        self.set_errbar_color_cycle(
-            graphs_params["errorbar.color_cycle"].by_key()["color"],
-        )
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()

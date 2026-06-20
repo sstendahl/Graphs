@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Style editor."""
-import asyncio
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs.canvas import Canvas
 from graphs.item import DataItem
 from graphs.style_editor.editor_box import StyleEditorBox
+from graphs.styles import StyleParameters
 
 import numpy
 
@@ -41,9 +41,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
 
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor),
-        )
+        self._reload_source = None
+        self._reload_canvas(style_editor)
 
     def _initialize_test_items(self):
         """Initialize example test items with predefined preview data."""
@@ -68,35 +67,43 @@ class PythonStyleEditor(Graphs.StyleEditor):
             )
 
     def _on_params_changed(self, style_editor, changes_unsaved=True):
-        self._background_task.cancel()
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, changes_unsaved, 0.5),
+        if self._reload_source is not None:
+            GLib.source_remove(self._reload_source)
+            self._reload_source = None
+
+        self._reload_source = GLib.timeout_add(
+            200,
+            self._timeout_callback,
+            style_editor,
+            changes_unsaved,
         )
 
-    async def _reload_canvas(
+    def _timeout_callback(self, style_editor, changes_unsaved):
+        self._reload_canvas(style_editor, changes_unsaved)
+        self._reload_source = None
+
+    def _reload_canvas(
         self,
         style_editor: StyleEditorBox,
         changes_unsaved: bool = False,
-        timeout: int = 0,
     ) -> None:
-        await asyncio.sleep(timeout)
         if style_editor.params is None:
-            style_manager = Graphs.StyleManager.get_instance()
-            params, graphs_params = style_manager.get_system_style_params()
+            params = \
+                Graphs.StyleManager.get_instance().get_system_style_params()
         else:
-            params = style_editor.params
-            graphs_params = style_editor.graphs_params
+            params = StyleParameters(
+                (style_editor.params, style_editor.graphs_params))
             self.set_stylename(style_editor.graphs_params["name"])
 
-        color_cycle = params["axes.prop_cycle"].by_key()["color"]
+        style_params, graphs_params = params.as_tuple()
+        color_cycle = style_params["axes.prop_cycle"].by_key()["color"]
         errbar_cycle = graphs_params["errorbar.color_cycle"].by_key()["color"]
         for index, item in enumerate(self._test_items):
             item.set_color(color_cycle[index % len(color_cycle)])
             item.set_errcolor(errbar_cycle[index % len(errbar_cycle)])
-            item.override((params, graphs_params))
+            item.override(params)
 
-        all_params = params, graphs_params
-        canvas = Canvas(all_params, self._test_items, False)
+        canvas = Canvas(params, self._test_items, False)
         canvas.figure.props.title = _("Title")
         canvas.figure.props.bottom_label = _("X Label")
         canvas.figure.props.left_label = _("Y Label")
@@ -105,9 +112,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
         # Set headerbar color
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
-            background_color=params["figure.facecolor"],
-            color=params["text.color"],
-        )
+            background_color=style_params["figure.facecolor"],
+            color=style_params["text.color"])
         self.props.css_provider.load_from_string(css)
 
         if changes_unsaved:
@@ -119,9 +125,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         style_editor = self.get_editor_box()
         name = style_editor.load_style(file)
         self.set_title(name)
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, False, 0),
-        )
+        self._reload_canvas(style_editor, False)
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:

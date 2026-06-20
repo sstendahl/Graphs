@@ -291,7 +291,7 @@ namespace Graphs {
             n_used_indices = uint.max (n_used_indices, index);
         }
 
-        public void parse (ImportSettings settings, Data data, ItemList itemlist) throws Error {
+        public void parse (ImportSettings settings, StyleParameters style, ItemList itemlist) throws Error {
             ColumnsItemSettings item_settings = ColumnsItemSettings ();
             var items = settings.get_value ("items");
 
@@ -332,7 +332,7 @@ namespace Graphs {
                     xdata = columns[item_settings.column_x].get_data ();
                 }
 
-                Item item = ItemFactory.new_data_item (data, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
+                Item item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
                 item.xlabel = xlabel;
                 item.ylabel = ylabel;
                 item.name = settings.filename;

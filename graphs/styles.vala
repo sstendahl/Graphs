@@ -10,7 +10,7 @@ namespace Graphs {
         return strcmp (a.name.down (), b.name.down ());
     }
 
-    public string filename_from_stylename (string name) {
+    private string filename_from_stylename (string name) {
         var filename = name.replace (" ", "-");
         filename = filename.replace ("(", "");
         filename = filename.replace (")", "");
@@ -28,6 +28,15 @@ namespace Graphs {
         public string preview_path;
     }
 
+    public class StyleParameters : Object {
+        public string color { get; protected set; }
+        public string background_color { get; protected set; }
+        public string[] color_cycle { get; protected set; }
+        public string[] errorbar_cycle { get; protected set; }
+    }
+
+    private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
+
     /**
      * Style manager
      */
@@ -38,12 +47,16 @@ namespace Graphs {
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
-        protected CssProvider css_provider { get; private set; }
 
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
+        protected signal StyleParameters params_request (File file, StyleParameters? validate);
 
         public static StyleManager instance { get; private set; }
+
+        private CssProvider css_provider;
+        private StyleParameters system_style_light_params;
+        private StyleParameters system_style_dark_params;
 
         construct {
             this.css_provider = new CssProvider ();
@@ -52,21 +65,33 @@ namespace Graphs {
             );
         }
 
-        protected void setup (string system_style) {
+        protected void setup () {
             StyleManager.instance = this;
+
+            string gtk_theme = Gtk.Settings.get_default ().gtk_theme_name.down ();
+            bool ubuntu = Environment.get_variable ("SNAP") != null && gtk_theme.has_prefix ("yaru");
+
+            unowned string system_style = ubuntu ? "yaru" : "adwaita";
+
+            system_style_light_params = params_for_system_style (system_style);
+            system_style_dark_params = params_for_system_style (system_style + "-dark");
+
+            Adw.StyleManager.get_default ().notify.connect (on_system_style);
+            on_system_style.begin ();
+
             style_model = new GLib.ListStore (typeof (Style));
             filtered_style_model = new FilterListModel (
                 style_model, new CustomFilter (filter_system_style)
             );
+
             try {
                 File config_dir = Tools.get_config_directory ();
                 style_dir = config_dir.get_child_for_display_name ("styles");
                 if (!style_dir.query_exists ()) {
                     style_dir.make_directory_with_parents ();
                 }
-            } catch {
-                assert_not_reached ();
-            }
+            } catch { assert_not_reached (); }
+
             style_model.append (
                 new Style (
                     _("System"),
@@ -77,6 +102,7 @@ namespace Graphs {
                     false
                 )
             );
+
             for (uint i = 0; i < STYLES.length; i++) {
                 StyleInfo* info = &STYLES[i];
                 style_model.append (
@@ -88,6 +114,7 @@ namespace Graphs {
                     )
                 );
             }
+
             try {
                 FileEnumerator enumerator = style_dir.enumerate_children (
                     "standard::*",
@@ -116,7 +143,7 @@ namespace Graphs {
                 );
                 style_monitor.changed.connect (on_file_change);
                 style_monitor.ref ();
-            } catch { assert_not_reached (); }
+            } catch {}
         }
 
         private async static void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
@@ -158,6 +185,20 @@ namespace Graphs {
             }
         }
 
+        private async void on_system_style () {
+            var style_params = get_system_style_params ();
+            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
+            css_provider.load_from_string (css);
+        }
+
+        public static StyleParameters get_system_style_params () {
+            return Adw.StyleManager.get_default ().get_dark () ? instance.system_style_dark_params : instance.system_style_light_params;
+        }
+
+        public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
+            return instance.params_request.emit (style.file, validate);
+        }
+
         /**
          * List all stylenames
          *
@@ -195,6 +236,11 @@ namespace Graphs {
             }
             style = null;
             return -1;
+        }
+
+        private StyleParameters params_for_system_style (string name) {
+            File file = File.new_for_uri (@"resource:///se/sjoerd/Graphs/styles/$name.mplstyle");
+            return params_request.emit (file, null);
         }
     }
 

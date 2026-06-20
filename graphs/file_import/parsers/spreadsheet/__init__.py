@@ -43,7 +43,7 @@ class SpreadsheetParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        data: Graphs.Data,
+        style: Graphs.StyleParameters,
     ) -> None:
         """Import data from ODS or XLSX file."""
-        settings.get_item("parser").parse(settings, data, items)
+        settings.get_item("parser").parse(settings, style, items)

@@ -15,6 +15,8 @@ namespace Graphs {
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
+        public StyleParameters selected_style_params { get; private set; }
+        public StyleParameters old_selected_style_params { get; private set; }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
@@ -29,23 +31,21 @@ namespace Graphs {
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
                 value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
                 _update_used_positions ();
-                handle_style_change.begin ();
+                _on_use_custom_style.begin ();
             }
         }
 
         private bool[] _used_positions;
         private Item[] _items = new Item[8];
         private int _n_items = 0;
-        private string[] _color_cycle;
         private string[] _used_colors;
-        private string[] _errbar_color_cycle;
         private string[] _used_errbar_colors;
         private GLib.Settings _settings;
         private bool _notify_selection_changed = true;
         private Gee.List<Limits> _view_history_states = new ArrayList<Limits> ();
         private int _view_history_pos = -1;
 
-        public signal void style_changed (bool recolor_items);
+        public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
         protected signal bool add_history_state_request ();
 
@@ -57,8 +57,6 @@ namespace Graphs {
         protected signal void figure_settings_changed (string prop);
 
         construct {
-            this._color_cycle = {};
-            this._errbar_color_cycle = {};
             items_changed.connect (_update_used_positions);
             this._settings = Application.get_settings_child ("figure");
             this.style_selection_model = new SingleSelection (StyleManager.style_model);
@@ -107,9 +105,6 @@ namespace Graphs {
             });
             _view_history_states.add (figure_settings.get_limits ());
             run_python_method ("_init_history_states");
-            if (figure_settings.use_custom_style) {
-                _on_custom_style.begin ();
-            }
         }
 
         private void run_python_method (string method) {
@@ -266,7 +261,7 @@ namespace Graphs {
             }
         }
 
-        protected void _update_used_positions () {
+        private void _update_used_positions () {
             if (_n_items == 0) {
                 _used_positions = {true, false, true, false};
                 return;
@@ -322,16 +317,16 @@ namespace Graphs {
 
         private void append_used_color (string color) {
             if (color in _used_colors) return;
-            if (!(color in _color_cycle)) return;
+            if (!(color in selected_style_params.color_cycle)) return;
             _used_colors += color;
-            if (_used_colors.length == _color_cycle.length) _used_colors = {};
+            if (_used_colors.length == selected_style_params.color_cycle.length) _used_colors = {};
         }
 
         private void append_used_errbar_color (string color) {
             if (color in _used_errbar_colors) return;
-            if (!(color in _errbar_color_cycle)) return;
+            if (!(color in selected_style_params.errorbar_cycle)) return;
             _used_errbar_colors += color;
-            if (_used_errbar_colors.length == _errbar_color_cycle.length) _used_errbar_colors = {};
+            if (_used_errbar_colors.length == selected_style_params.errorbar_cycle.length) _used_errbar_colors = {};
         }
 
         /**
@@ -346,10 +341,10 @@ namespace Graphs {
             _used_colors = {};
             _used_errbar_colors = {};
             foreach (Item item in this) {
-                if (item.color in _color_cycle) append_used_color (item.color);
+                if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
-                    if (errcolor in _errbar_color_cycle) append_used_errbar_color (errcolor);
+                    if (errcolor in selected_style_params.errorbar_cycle) append_used_errbar_color (errcolor);
                 }
             }
             string[] used_names = get_names ();
@@ -359,7 +354,7 @@ namespace Graphs {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
-                    foreach (unowned string color in _color_cycle) {
+                    foreach (unowned string color in selected_style_params.color_cycle) {
                         if (!(color in _used_colors)) {
                             append_used_color (color);
                             item.color = color;
@@ -370,7 +365,7 @@ namespace Graphs {
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
                     if (errcolor == "") {
-                        foreach (unowned string color in _errbar_color_cycle) {
+                        foreach (unowned string color in selected_style_params.errorbar_cycle) {
                             if (!(color in _used_errbar_colors)) {
                                 append_used_errbar_color (color);
                                 item.set ("errcolor", color);
@@ -427,8 +422,8 @@ namespace Graphs {
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
-            _items = (owned) items;
             _n_items = items.length;
+            _items = (owned) items;
             _update_used_positions ();
             items_changed.emit (0, removed, _n_items);
         }
@@ -461,22 +456,37 @@ namespace Graphs {
 
         // Section style
 
-        private async void handle_style_change (bool recolor_items = false) {
+        private async void handle_style_change () {
             notify_property ("selected_stylename");
-            run_python_method ("_update_selected_style");
-            style_changed.emit (recolor_items);
+            yield update_selected_style ();
+            style_changed.emit ();
         }
 
-        protected Style get_selected_style () {
+        private async void update_selected_style () {
+            old_selected_style_params = selected_style_params;
+            StyleParameters system_params = StyleManager.get_system_style_params ();
+
+            if (figure_settings.use_custom_style) {
+                Style style = get_selected_style ();
+
+                StyleParameters validate = style.mutable ? system_params : null;
+                StyleParameters parameters = StyleManager.get_style_params (style, validate);
+
+                if (parameters != null) {
+                    selected_style_params = parameters;
+                    return;
+                }
+
+                unowned string error_msg = _("Could not parse style %s, defaulting to system style");
+                warning (error_msg.printf (figure_settings.custom_style));
+                figure_settings.use_custom_style = false;
+            }
+
+            selected_style_params = system_params;
+        }
+
+        private Style get_selected_style () {
             return (Style) style_selection_model.get_selected_item ();
-        }
-
-        protected void set_color_cycle (owned string[] color_cycle) {
-            this._color_cycle = (owned) color_cycle;
-        }
-
-        protected void set_errbar_color_cycle (owned string[] color_cycle) {
-            this._errbar_color_cycle = (owned) color_cycle;
         }
 
         // End section style
@@ -824,7 +834,7 @@ namespace Graphs {
                 yield _on_custom_style ();
             } else {
                 style_selection_model.set_selected (0);
-                yield handle_style_change (true);
+                yield handle_style_change ();
             }
         }
 
@@ -835,10 +845,13 @@ namespace Graphs {
                 Style style = (Style) style_model.get_item (i);
                 if (style.name == figure_settings.custom_style) {
                     style_selection_model.set_selected (i);
-                    break;
+                    yield handle_style_change ();
+                    return;
                 }
             }
-            yield handle_style_change (true);
+            unowned string error_msg = _("Could not find style %s, defaulting to system style");
+            warning (error_msg.printf (figure_settings.custom_style));
+            figure_settings.use_custom_style = false;
         }
 
         // End section listeners

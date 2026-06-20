@@ -4,6 +4,8 @@ using Gdk;
 using Gtk;
 
 namespace Graphs {
+    private const string WINDOW_CSS_TEMPLATE = ".canvas-view#%s {color: %s; background-color: %s;}";
+
     /**
      * Main window
      */
@@ -35,7 +37,7 @@ namespace Graphs {
         private unowned Revealer drag_revealer { get; }
 
         [GtkChild]
-        protected unowned Adw.ToolbarView content_view { get; }
+        private unowned Adw.ToolbarView content_view { get; }
 
         [GtkChild]
         private unowned Adw.NavigationView sidebar_navigation_view { get; }
@@ -48,7 +50,6 @@ namespace Graphs {
 
 
         public Data data { get; construct set; }
-        protected CssProvider css_provider { get; private set; }
         protected EventControllerKey key_controller { get; private set; }
 
         public Mode mode {
@@ -72,6 +73,7 @@ namespace Graphs {
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
         private FigureSettingsPage figure_settings_page;
+        private CssProvider css_provider;
 
         construct {
             this.css_provider = new CssProvider ();
@@ -145,9 +147,12 @@ namespace Graphs {
             data.items_changed.connect (on_items_changed);
             data.selection_changed.connect (on_selection_changed);
             data.notify["unsaved"].connect (on_unsaved_change);
+            data.style_changed.connect (on_style_changed);
+            data.style_selection_model.selection_changed.connect (reset_items);
 
             on_items_changed ();
             on_unsaved_change ();
+            on_style_changed ();
 
 #if DEBUG
             add_css_class ("devel");
@@ -268,6 +273,18 @@ namespace Graphs {
             main_page.operations.set_cut_sensitivity (data_items_selected && mode == Mode.SELECT);
             main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
+        }
+
+        private void reset_items () {
+            PythonHelper.run_method (this, "_reset_items");
+        }
+
+        private void on_style_changed () {
+            var style_params = data.selected_style_params;
+            string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.color, style_params.background_color);
+            css_provider.load_from_string (css);
+
+            PythonHelper.run_method (this, "_reload_canvas");
         }
 
         private void append_item_row (Item item, uint index, bool is_data_item) {
