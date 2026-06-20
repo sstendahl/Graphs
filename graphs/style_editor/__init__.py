@@ -88,11 +88,11 @@ class PythonStyleEditor(Graphs.StyleEditor):
         changes_unsaved: bool = False,
     ) -> None:
         if style_editor.params is None:
-            params = Graphs.StyleManager.get_instance().get_system_style_params()
+            params = \
+                Graphs.StyleManager.get_instance().get_system_style_params()
         else:
             params = StyleParameters(
-                            (style_editor.params, style_editor.graphs_params),
-                        )
+                (style_editor.params, style_editor.graphs_params))
             self.set_stylename(style_editor.graphs_params["name"])
 
         style_params, graphs_params = params.as_tuple()
@@ -113,8 +113,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
             background_color=style_params["figure.facecolor"],
-            color=style_params["text.color"],
-         )
+            color=style_params["text.color"])
         self.props.css_provider.load_from_string(css)
 
         if changes_unsaved:
