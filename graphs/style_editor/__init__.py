@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Style editor."""
-import asyncio
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs.canvas import Canvas
 from graphs.item import DataItem
@@ -41,9 +40,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
 
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor),
-        )
+        self._reload_source = None
+        self._reload_canvas(style_editor)
 
     def _initialize_test_items(self):
         """Initialize example test items with predefined preview data."""
@@ -68,18 +66,26 @@ class PythonStyleEditor(Graphs.StyleEditor):
             )
 
     def _on_params_changed(self, style_editor, changes_unsaved=True):
-        self._background_task.cancel()
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, changes_unsaved, 0.5),
+        if self._reload_source is not None:
+            GLib.source_remove(self._reload_source)
+            self._reload_source = None
+
+        self._reload_source = GLib.timeout_add(
+            200,
+            self._timeout_callback,
+            style_editor,
+            changes_unsaved,
         )
 
-    async def _reload_canvas(
+    def _timeout_callback(self, style_editor, changes_unsaved):
+        self._reload_canvas(style_editor, changes_unsaved)
+        self._reload_source = None
+
+    def _reload_canvas(
         self,
         style_editor: StyleEditorBox,
         changes_unsaved: bool = False,
-        timeout: int = 0,
     ) -> None:
-        await asyncio.sleep(timeout)
         if style_editor.params is None:
             style_manager = Graphs.StyleManager.get_instance()
             params, graphs_params = style_manager.get_system_style_params()
@@ -119,9 +125,7 @@ class PythonStyleEditor(Graphs.StyleEditor):
         style_editor = self.get_editor_box()
         name = style_editor.load_style(file)
         self.set_title(name)
-        self._background_task = asyncio.create_task(
-            self._reload_canvas(style_editor, False, 0),
-        )
+        self._reload_canvas(style_editor, False)
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:
