@@ -24,8 +24,8 @@ class XryParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        data: Graphs.Data,
+        style: Graphs.StyleParameters,
     ) -> None:
         """Import data from .xry files used by Leybold X-ray apparatus."""
         parser = Graphs.XryParser.new()
-        parser.parse(data, settings, items)
+        parser.parse(style, settings, items)

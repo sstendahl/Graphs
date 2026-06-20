@@ -38,7 +38,7 @@ namespace Graphs {
             try {
                 Expression expression = expression_to_ast (equation_str);
 
-                Item item = ItemFactory.new_equation_item (window.data, expression);
+                Item item = ItemFactory.new_equation_item (window.data.selected_style_params, expression);
                 if (name == "") {
                     item.name = "Y = " + ast_to_expression (expression);
                 } else {

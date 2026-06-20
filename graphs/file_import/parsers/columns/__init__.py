@@ -23,14 +23,14 @@ class ColumnsParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        data: Graphs.Data,
+        style: Graphs.StyleParameters,
     ) -> None:
         """Import data from columns file."""
         parser = Graphs.ColumnsParser.new(settings)
 
         try:
             parser.parse()
-            parser.add_items(data, items)
+            parser.add_items(style, items)
         except GLib.Error as e:
             raise ParseError(e.message) from e
 

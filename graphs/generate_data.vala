@@ -72,7 +72,7 @@ namespace Graphs {
             try {
                 Expression expression = expression_to_ast (equation);
 
-                Item item = ItemFactory.new_generated_data_item (window.data, expression, xstart, xstop, steps, scale);
+                Item item = ItemFactory.new_generated_data_item (window.data.selected_style_params, expression, xstart, xstop, steps, scale);
                 if (name == "") {
                     item.name = "Y = " + ast_to_expression (expression);
                 } else {

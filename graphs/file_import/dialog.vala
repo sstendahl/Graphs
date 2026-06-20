@@ -152,7 +152,7 @@ namespace Graphs {
             ItemList itemlist = new ItemList ();
             for (uint i = 0; i < settings_list.get_n_items (); i++) {
                 var settings = (ImportSettings) settings_list.get_item (i);
-                string message = DataImporter.parse (itemlist, settings, window.data);
+                string message = DataImporter.parse (itemlist, settings, window.data.selected_style_params);
                 if (message.length != 0) {
                     window.add_toast_string (message);
                 }

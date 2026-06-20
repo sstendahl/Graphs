@@ -28,6 +28,15 @@ namespace Graphs {
         public string preview_path;
     }
 
+    public class StyleParameters : Object {
+        public string color { get; protected set; }
+        public string background_color { get; protected set; }
+        public string[] color_cycle { get; protected set; }
+        public string[] errorbar_cycle { get; protected set; }
+    }
+
+    private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
+
     /**
      * Style manager
      */
@@ -38,12 +47,15 @@ namespace Graphs {
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
-        protected CssProvider css_provider { get; private set; }
+        protected StyleParameters system_style_light_params { get; set; }
+        protected StyleParameters system_style_dark_params { get; set; }
 
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
 
         public static StyleManager instance { get; private set; }
+
+        private CssProvider css_provider;
 
         construct {
             this.css_provider = new CssProvider ();
@@ -54,6 +66,8 @@ namespace Graphs {
 
         protected void setup (string system_style) {
             StyleManager.instance = this;
+            Adw.StyleManager.get_default ().notify.connect (on_system_style);
+            on_system_style.begin ();
             style_model = new GLib.ListStore (typeof (Style));
             filtered_style_model = new FilterListModel (
                 style_model, new CustomFilter (filter_system_style)
@@ -156,6 +170,16 @@ namespace Graphs {
                 default:
                     return;
             }
+        }
+
+        private async void on_system_style () {
+            var style_params = get_system_style_params ();
+            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
+            css_provider.load_from_string (css);
+        }
+
+        public static StyleParameters get_system_style_params () {
+            return Adw.StyleManager.get_default ().get_dark () ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
         /**
