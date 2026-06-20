@@ -25,7 +25,7 @@ namespace Graphs {
         RIGHT;
 
         public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (XPosition).class_ref ();
+            EnumClass enumc = (EnumClass) typeof (YPosition).class_ref ();
             unowned EnumValue? eval = enumc.get_value (this);
             return eval.value_nick;
         }
