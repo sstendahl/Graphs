@@ -42,8 +42,6 @@ class PythonStyleEditor(Graphs.StyleEditor):
         self.connect("save_request", self._on_save_request)
 
         self._reload_source = None
-        import pdb
-        pdb.set_trace()
         self._reload_canvas(style_editor)
 
     def _initialize_test_items(self):
