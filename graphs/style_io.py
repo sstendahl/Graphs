@@ -26,7 +26,7 @@ STYLE_IGNORELIST = [
     "savefig.facecolor",
     "savefig.edgecolor",
     "savefig.format",
-    "savefix.bbox",
+    "savefig.bbox",
     "savefig.pad_inches",
     "savefig.transparent",
     "savefig.orientation",
@@ -245,5 +245,5 @@ def create_preview(
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA1)
         axis.plot(_PREVIEW_XDATA, _PREVIEW_YDATA2)
         axis.set_xlabel(_("X Label"))
-        axis.set_xlabel(_("Y Label"))
+        axis.set_ylabel(_("Y Label"))
         figure.savefig(file, format=file_format, dpi=dpi)
