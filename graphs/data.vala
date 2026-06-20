@@ -15,8 +15,8 @@ namespace Graphs {
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
-        public StyleParameters selected_style_params { get; protected set; }
-        public StyleParameters old_selected_style_params { get; protected set; }
+        public StyleParameters selected_style_params { get; private set; }
+        public StyleParameters old_selected_style_params { get; private set; }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
@@ -31,7 +31,7 @@ namespace Graphs {
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
                 value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
                 _update_used_positions ();
-                handle_style_change.begin ();
+                _on_use_custom_style.begin ();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Graphs {
         private Gee.List<Limits> _view_history_states = new ArrayList<Limits> ();
         private int _view_history_pos = -1;
 
-        public signal void style_changed (bool recolor_items);
+        public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
         protected signal bool add_history_state_request ();
 
@@ -105,9 +105,6 @@ namespace Graphs {
             });
             _view_history_states.add (figure_settings.get_limits ());
             run_python_method ("_init_history_states");
-            if (figure_settings.use_custom_style) {
-                _on_custom_style.begin ();
-            }
         }
 
         private void run_python_method (string method) {
@@ -264,7 +261,7 @@ namespace Graphs {
             }
         }
 
-        protected void _update_used_positions () {
+        private void _update_used_positions () {
             if (_n_items == 0) {
                 _used_positions = {true, false, true, false};
                 return;
@@ -459,14 +456,36 @@ namespace Graphs {
 
         // Section style
 
-        private async void handle_style_change (bool recolor_items = false) {
+        private async void handle_style_change () {
             notify_property ("selected_stylename");
-            old_selected_style_params = selected_style_params;
-            run_python_method ("_update_selected_style");
-            style_changed.emit (recolor_items);
+            yield update_selected_style ();
+            style_changed.emit ();
         }
 
-        protected Style get_selected_style () {
+        private async void update_selected_style () {
+            old_selected_style_params = selected_style_params;
+            StyleParameters system_params = StyleManager.get_system_style_params ();
+
+            if (figure_settings.use_custom_style) {
+                Style style = get_selected_style ();
+
+                StyleParameters validate = style.mutable ? system_params : null;
+                StyleParameters parameters = StyleManager.get_style_params (style, validate);
+
+                if (parameters != null) {
+                    selected_style_params = parameters;
+                    return;
+                }
+
+                unowned string error_msg = _("Could not parse style %s, defaulting to system style");
+                warning (error_msg.printf (figure_settings.custom_style));
+                figure_settings.use_custom_style = false;
+            }
+
+            selected_style_params = system_params;
+        }
+
+        private Style get_selected_style () {
             return (Style) style_selection_model.get_selected_item ();
         }
 
@@ -815,7 +834,7 @@ namespace Graphs {
                 yield _on_custom_style ();
             } else {
                 style_selection_model.set_selected (0);
-                yield handle_style_change (true);
+                yield handle_style_change ();
             }
         }
 
@@ -826,10 +845,13 @@ namespace Graphs {
                 Style style = (Style) style_model.get_item (i);
                 if (style.name == figure_settings.custom_style) {
                     style_selection_model.set_selected (i);
-                    break;
+                    yield handle_style_change ();
+                    return;
                 }
             }
-            yield handle_style_change (true);
+            unowned string error_msg = _("Could not find style %s, defaulting to system style");
+            warning (error_msg.printf (figure_settings.custom_style));
+            figure_settings.use_custom_style = false;
         }
 
         // End section listeners

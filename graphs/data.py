@@ -9,9 +9,8 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import misc, project, style_io
+from graphs import misc, project
 from graphs.item import ItemFactory
-from graphs.styles import StyleParameters
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
@@ -25,7 +24,6 @@ class Data(Graphs.Data):
     __gtype_name__ = "GraphsPythonData"
 
     def __init__(self):
-        self._selected_style_params = None, {}
         super().__init__()
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
@@ -53,43 +51,6 @@ class Data(Graphs.Data):
     def __getitem__(self, pos: int):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
-
-    def _update_selected_style(self) -> None:
-        figure_settings = self.props.figure_settings
-        style_manager = Graphs.StyleManager.get_instance()
-        error_msg = None
-        if figure_settings.get_use_custom_style():
-            stylename = figure_settings.get_custom_style()
-            for style in self.props.style_selection_model.get_model():
-                if stylename != style.get_name():
-                    continue
-                try:
-                    validate = None
-                    if style.get_mutable():
-                        params = style_manager.get_system_style_params()
-                        validate = params.as_tuple()
-
-                    params = style_io.parse(style.get_file(), validate)
-                    params = StyleParameters(params)
-                    self.props.selected_style_params = params
-                    return
-                except (ValueError, SyntaxError, AttributeError):
-                    error_msg = _(
-                        "Could not parse style {stylename}, loading "
-                        "system preferred style",
-                    ).format(stylename=stylename)
-                break
-            error_msg = _(
-                "Style {stylename} does not exist, "
-                "loading system preferred style",
-            ).format(stylename=stylename)
-
-        if error_msg is not None:
-            figure_settings.set_use_custom_style(False)
-            logging.warning(error_msg)
-
-        self.props.selected_style_params = \
-            style_manager.get_system_style_params()
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
