@@ -7,6 +7,7 @@ from gi.repository import GLib, Gio, Graphs
 from graphs.canvas import Canvas
 from graphs.item import DataItem
 from graphs.style_editor.editor_box import StyleEditorBox
+from graphs.styles import StyleParameters
 
 import numpy
 
@@ -87,22 +88,22 @@ class PythonStyleEditor(Graphs.StyleEditor):
         changes_unsaved: bool = False,
     ) -> None:
         if style_editor.params is None:
-            style_manager = Graphs.StyleManager.get_instance()
-            params, graphs_params = style_manager.get_system_style_params()
+            params = \
+                Graphs.StyleManager.get_instance().get_system_style_params()
         else:
-            params = style_editor.params
-            graphs_params = style_editor.graphs_params
+            params = StyleParameters(
+                (style_editor.params, style_editor.graphs_params))
             self.set_stylename(style_editor.graphs_params["name"])
 
-        color_cycle = params["axes.prop_cycle"].by_key()["color"]
+        style_params, graphs_params = params.as_tuple()
+        color_cycle = style_params["axes.prop_cycle"].by_key()["color"]
         errbar_cycle = graphs_params["errorbar.color_cycle"].by_key()["color"]
         for index, item in enumerate(self._test_items):
             item.set_color(color_cycle[index % len(color_cycle)])
             item.set_errcolor(errbar_cycle[index % len(errbar_cycle)])
-            item.override((params, graphs_params))
+            item.override(params)
 
-        all_params = params, graphs_params
-        canvas = Canvas(all_params, self._test_items, False)
+        canvas = Canvas(params, self._test_items, False)
         canvas.figure.props.title = _("Title")
         canvas.figure.props.bottom_label = _("X Label")
         canvas.figure.props.left_label = _("Y Label")
@@ -111,9 +112,8 @@ class PythonStyleEditor(Graphs.StyleEditor):
         # Set headerbar color
         css = CSS_TEMPLATE.format(
             name=self.props.content_view.get_name(),
-            background_color=params["figure.facecolor"],
-            color=params["text.color"],
-        )
+            background_color=style_params["figure.facecolor"],
+            color=style_params["text.color"])
         self.props.css_provider.load_from_string(css)
 
         if changes_unsaved:

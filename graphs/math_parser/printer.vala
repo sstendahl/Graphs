@@ -99,16 +99,24 @@ namespace Graphs.MathParser {
             }
         }
 
-        private static bool need_parens (Expression expr, Expression parent) {
+        private static bool need_parens (Expression expr, Expression parent, bool is_right_child) {
             if (!(expr is BinaryExpression)) return false;
             if (!(parent is BinaryExpression)) return true;
 
-            return ((BinaryExpression) expr).op ().precedence () > ((BinaryExpression) parent).op ().precedence ();
+            int child_prec = ((BinaryExpression) expr).op ().precedence ();
+            Operator parent_op = ((BinaryExpression) parent).op ();
+            int parent_prec = parent_op.precedence ();
+
+            if (child_prec != parent_prec) return child_prec < parent_prec;
+
+            if (is_right_child)
+                return parent_op == Operator.SUB || parent_op == Operator.DIV;
+            return parent_op == Operator.POW;
         }
 
         private void binary (BinaryExpression expr) throws MathError {
-            bool need_parens_left = need_parens (expr.left (), expr);
-            bool need_parens_right = need_parens (expr.right (), expr);
+            bool need_parens_left = need_parens (expr.left (), expr, false);
+            bool need_parens_right = need_parens (expr.right (), expr, true);
 
             if (need_parens_left) builder.append_c ('(');
             emit (expr.left ());
