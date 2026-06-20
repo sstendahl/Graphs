@@ -8,12 +8,6 @@ from graphs.data import Data
 
 from matplotlib import rcParams, rcParamsDefault
 
-CSS_TEMPLATE = """
-.canvas-view#{name} {{
-    background-color: {background_color};
-    color: {color};
-}}
-"""
 _SCALES = [f"{d}_scale" for d in misc.DIRECTIONS]
 _LABELS = [f"{d}_label" for d in misc.DIRECTIONS]
 _LIMITS = [lim.replace("-", "_") for lim in misc.LIMITS]
@@ -32,10 +26,6 @@ class PythonWindow(Graphs.Window):
 
     def __init__(self):
         super().__init__(data=Data())
-        self.props.data.connect(
-            "style-changed",
-            self._on_style_changed,
-        )
         key_controller = self.props.key_controller
         key_controller.connect("key-pressed", self._on_key_press_event)
         key_controller.connect("key-released", self._on_key_release_event)
@@ -45,29 +35,19 @@ class PythonWindow(Graphs.Window):
         zoom_out_action = self.lookup_action("zoom-out")
         zoom_out_action.connect("activate", self._on_zoom_out)
 
-        self._reload_canvas()
+    def _reset_items(self) -> None:
+        """Reset items to match new style."""
+        old_style = self.props.data.get_old_selected_style_params()
+        new_style = self.props.data.get_selected_style_params()
 
-    def _on_style_changed(
-        self,
-        data: Graphs.Data,
-        recolor_items: bool,
-    ) -> None:
-        """Handle style change."""
-        if not recolor_items:
-            self._reload_canvas()
-            return
-
-        old_style = data.get_old_selected_style_params()
-        new_style = data.get_selected_style_params()
-
-        old_cycle = old_style[0]["axes.prop_cycle"].by_key()["color"]
-        new_cycle = new_style[0]["axes.prop_cycle"].by_key()["color"]
-        old_err_cycle = old_style[1]["errorbar.color_cycle"].by_key()["color"]
-        new_err_cycle = new_style[1]["errorbar.color_cycle"].by_key()["color"]
+        old_cycle = old_style.get_color_cycle()
+        new_cycle = new_style.get_color_cycle()
+        old_err_cycle = old_style.get_errorbar_cycle()
+        new_err_cycle = new_style.get_errorbar_cycle()
 
         count = 0
         errbar_count = 0
-        for item in data:
+        for item in self.props.data:
             item.reset(old_style, new_style)
 
             if not isinstance(item, (Graphs.DataItem, Graphs.EquationItem)) \
@@ -86,8 +66,6 @@ class PythonWindow(Graphs.Window):
             errbar_count %= len(new_err_cycle)
             item.set_errcolor(new_err_cycle[errbar_count])
             errbar_count += 1
-
-        self._reload_canvas()
 
     def _on_key_press_event(self, *args) -> None:
         """Handle key press event."""
@@ -131,13 +109,5 @@ class PythonWindow(Graphs.Window):
 
         canvas.connect("edit-request", self._on_edit_request)
         canvas.connect("view-changed", self._on_view_changed)
-
-        # Set headerbar color and contrast
-        css = CSS_TEMPLATE.format(
-            name=self.props.content_view.get_name(),
-            background_color=params[0]["figure.facecolor"],
-            color=params[0]["text.color"],
-        )
-        self.props.css_provider.load_from_string(css)
 
         self.set_canvas(canvas)

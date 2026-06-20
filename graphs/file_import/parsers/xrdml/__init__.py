@@ -29,7 +29,7 @@ class XrdmlParser(Parser):
     def parse(
         items: Graphs.ItemList,
         settings: Graphs.ImportSettings,
-        data: Graphs.Data,
+        style: Graphs.StyleParameters,
     ) -> None:
         """Import data from xrdml file."""
         content = file_io.parse_xml(settings.get_file())
@@ -58,7 +58,7 @@ class XrdmlParser(Parser):
                 xdata = numpy.linspace(start_pos, end_pos, len(ydata))
         items.add(
             DataItem.new(
-                data.get_selected_style_params(),
+                style,
                 xdata,
                 ydata,
                 name=settings.get_filename(),
