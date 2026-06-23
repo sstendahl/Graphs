@@ -1,0 +1,55 @@
+
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemFill: Box {
+
+  Adw.PreferencesGroup {
+  title: _("Fill");
+
+    Adw.SwitchRow fill_enabled {
+      title: _("Fill");
+    }
+
+    Adw.ComboRow fill_direction {
+      title: _("Direction");
+      sensitive: bind fill_enabled.active;
+      //notify::selected => $on_fill_direction();
+
+      model: StringList {
+        strings [
+          C_("fill_direction", "Above"),
+          C_("fill_direction", "Below"),
+          C_("fill_direction", "Between"),
+        ]
+      };
+    }
+
+    Adw.ComboRow fill_item_row {
+      title: _("Reference Item");
+      visible: false;
+      sensitive: bind fill_enabled.active;
+    }
+
+    $GraphsStyleColorRow fill_color_row {
+      title: _("Fill Color");
+      sensitive: bind fill_enabled.active;
+    }
+
+    Adw.ActionRow {
+      title: _("Fill Opacity");
+      sensitive: bind fill_enabled.active;
+
+      Scale fill_alpha_scale {
+        draw-value: true;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+          step-increment: 0.01;
+        };
+      }
+    }
+  }
+}

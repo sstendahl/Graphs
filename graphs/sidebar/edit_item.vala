@@ -28,6 +28,8 @@ namespace Graphs {
             } else if (item is EquationItem) {
                 edit_item_box.append (new EditItemEquationItemBox ((EquationItem) item));
             }
+
+            edit_item_box.append (new EditItemFill (item));
         }
     }
 
@@ -333,6 +335,13 @@ namespace Graphs {
             } else {
                 return Gtk.INPUT_ERROR;
             }
+        }
+    }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/fill.ui")]
+    public class EditItemFill : Box {
+
+        public EditItemFill (Item item) {
         }
     }
 }
