@@ -149,7 +149,7 @@ namespace Graphs {
 
                         // Process repeated cells
                         for (int count = 0; count < repeat_count; count++) {
-                            if (current_col >= max_columns) break;
+                            if (current_col > max_columns) break;
 
                             if (columns.contains (current_col)) {
                                 column = columns.lookup (current_col);
@@ -233,103 +233,143 @@ namespace Graphs {
             }
         }
 
-        private void load_shared_strings (int sheet_index) {
-            var shared_strings_file = input.child_by_aname ({"xl", "sharedStrings.xml"});
+        private void load_shared_strings (int sheet_index) throws Error {
+            Xml.Doc* doc = null;
+            Xml.XPath.Context* ctx = null;
+            Xml.XPath.Object* result = null;
 
-            char* data = shared_strings_file.read ((size_t) shared_strings_file.size, null);
-            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) shared_strings_file.size);
+            try {
+                var shared_strings_file = input.child_by_aname ({"xl", "sharedStrings.xml"});
+                if (shared_strings_file == null)
+                    throw new IOError.NOT_FOUND ("ODS file does not contain xl/sharedStrings.xml");
 
-            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
-            ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+                char* data = shared_strings_file.read ((size_t) shared_strings_file.size, null);
+                if (data == null)
+                    throw new IOError.FAILED ("Failed to read xl/sharedStrings.xml");
 
-            Xml.XPath.Object* result = ctx->eval_expression ("//main:t");
+                doc = Xml.Parser.parse_memory ((string) data, (int) shared_strings_file.size);
+                if (doc == null)
+                    throw new ParseError.INVALID ("xl/sharedStrings.xml is not valid xml");
 
-            int n_strings = result->nodesetval->length ();
-            shared_strings = new string[n_strings];
+                ctx = new Xml.XPath.Context (doc);
+                if (ctx == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-            for (int i = 0; i < n_strings; i++) {
-                shared_strings[i] = result->nodesetval->item (i)->children->content;
+                ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+
+                result = ctx->eval_expression ("//main:t");
+                if (result == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
+
+                var nodes = result->nodesetval;
+                if (nodes == null)
+                    throw new ParseError.INVALID ("XLSX file does not contain shared strings");
+
+                int n_strings = nodes->length ();
+                shared_strings = new string[n_strings];
+
+                for (int i = 0; i < n_strings; i++) {
+                    shared_strings[i] = nodes->item (i)->children->content;
+                }
+            } finally {
+                if (result != null) delete result;
+                if (ctx != null) delete ctx;
+                if (doc != null) delete doc;
             }
-
-            delete result;
-            delete ctx;
-            delete doc;
         }
 
-        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) {
-            load_shared_strings (sheet_index);
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error {
+            Xml.Doc* doc = null;
+            Xml.XPath.Context* ctx = null;
+            Xml.XPath.Object* sheet = null;
 
-            string sheet_name = "sheet%d.xml".printf (sheet_index + 1);
-            var worksheet = input.child_by_aname ({"xl", "worksheets", sheet_name});
+            try {
+                load_shared_strings (sheet_index);
 
-            char* data = worksheet.read ((size_t) worksheet.size, null);
-            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) worksheet.size);
+                string sheet_name = "sheet%d.xml".printf (sheet_index + 1);
+                var worksheet = input.child_by_aname ({"xl", "worksheets", sheet_name});
+                if (worksheet == null)
+                    throw new IOError.NOT_FOUND ("XLSX file does not contain xl/worksheets/%s".printf (sheet_name));
 
-            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
-            ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+                char* data = worksheet.read ((size_t) worksheet.size, null);
+                if (data == null)
+                    throw new IOError.FAILED ("Failed to read xl/worksheets/%s".printf (sheet_name));
 
-            Xml.XPath.Object* sheet = ctx->eval_expression ("//main:row");
+                doc = Xml.Parser.parse_memory ((string) data, (int) worksheet.size);
+                if (doc == null)
+                    throw new ParseError.INVALID ("xl/sharedStrings.xml is not valid xml");
 
-            int array_size = columns[0].data.length, value_size = 0;
-            int current_col;
-            unowned Column column;
-            string? r;
-            string cell_text = "";
+                ctx = new Xml.XPath.Context (doc);
+                if (ctx == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-            for (int i = 0; i < sheet->nodesetval->length (); i++) {
-                Xml.Node* row = sheet->nodesetval->item (i);
+                ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
 
-                // if we reach capacity, grow the arrays.
-                if (value_size == array_size) {
-                    array_size *= 2;
-                    columns.for_each ((key, column) => {
-                        column.data.resize (array_size);
-                    });
-                }
+                sheet = ctx->eval_expression ("//main:row");
+                if (sheet == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-                for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
-                    r = cell->get_prop ("r");
+                int array_size = columns[0].data.length, value_size = 0;
+                int current_col;
+                unowned Column column;
+                string? r;
+                string cell_text = "";
 
-                    StringBuilder builder = new StringBuilder ();
-                    for (int j = 0; j < r.length; j++) {
-                        if (!r[j].isdigit ()) builder.append_c (r[j]);
+                for (int i = 0; i < sheet->nodesetval->length (); i++) {
+                    Xml.Node* row = sheet->nodesetval->item (i);
+
+                    // if we reach capacity, grow the arrays.
+                    if (value_size == array_size) {
+                        array_size *= 2;
+                        columns.for_each ((key, column) => {
+                            column.data.resize (array_size);
+                        });
                     }
-                    current_col = Tools.alpha_to_int (builder.free_and_steal ());
 
-                    if (!columns.contains (current_col)) continue;
+                    for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
+                        r = cell->get_prop ("r");
 
-                    for (Xml.Node* child = cell->children; child != null; child = child->next) {
-                        if (child->name == "v") {
-                            cell_text = child->children->content;
-                            break;
+                        StringBuilder builder = new StringBuilder ();
+                        for (int j = 0; j < r.length; j++) {
+                            if (!r[j].isdigit ()) builder.append_c (r[j]);
+                        }
+                        current_col = Tools.alpha_to_int (builder.free_and_steal ());
+
+                        if (!columns.contains (current_col)) continue;
+
+                        for (Xml.Node* child = cell->children; child != null; child = child->next) {
+                            if (child->name == "v") {
+                                cell_text = child->children->content;
+                                break;
+                            }
+                        }
+
+                        string? t = cell->get_prop ("t");
+                        if (t != null && t == "s") {
+                            cell_text = shared_strings[int.parse (cell_text)];
+                        }
+
+                        column = columns.lookup (current_col);
+                        if (!try_evaluate_string (cell_text, out column.data[value_size])) {
+                            if (value_size == 0) {
+                                column.header = cell_text.strip ();
+                            } else {
+                                break;
+                            }
                         }
                     }
 
-                    string? t = cell->get_prop ("t");
-                    if (t != null && t == "s") {
-                        cell_text = shared_strings[int.parse (cell_text)];
-                    }
-
-                    column = columns.lookup (current_col);
-                    if (!try_evaluate_string (cell_text, out column.data[value_size])) {
-                        if (value_size == 0) {
-                            column.header = cell_text.strip ();
-                        } else {
-                            break;
-                        }
-                    }
+                    value_size++;
                 }
 
-                value_size++;
+                columns.for_each ((key, column) => {
+                    column.data.resize (value_size);
+                });
+            } finally {
+                if (sheet != null) delete sheet;
+                if (ctx != null) delete ctx;
+                if (doc != null) delete doc;
             }
-
-            delete sheet;
-            delete ctx;
-            delete doc;
-
-            columns.for_each ((key, column) => {
-                column.data.resize (value_size);
-            });
         }
     }
 
