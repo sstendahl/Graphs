@@ -55,7 +55,7 @@ namespace Graphs {
                         "help:graphs",
                         application.active_window.get_display ().get_app_launch_context ()
                     );
-                } catch { assert_not_reached (); }
+                } catch {}
             });
             application.add_action (help_action);
             application.set_accels_for_action ("app.help", {"F1"});
