@@ -313,7 +313,7 @@ namespace Graphs {
                 int current_col;
                 unowned Column column;
                 string? r;
-                string cell_text = "";
+                unowned string cell_text = "";
 
                 for (int i = 0; i < sheet->nodesetval->length (); i++) {
                     Xml.Node* row = sheet->nodesetval->item (i);
@@ -421,13 +421,13 @@ namespace Graphs {
             for (int i = 0; i < iter.n_children (); i++) {
                 item_settings.load_from_variant (iter.next_value ());
 
-                string ylabel = columns[item_settings.column_y].header;
+                unowned string ylabel = columns[item_settings.column_y].header;
                 double[] ydata = columns[item_settings.column_y].get_data ();
 
                 double[]? xerr = item_settings.use_xerr ? columns[item_settings.xerr_index].get_data () : null;
                 double[]? yerr = item_settings.use_yerr ? columns[item_settings.yerr_index].get_data () : null;
 
-                string xlabel;
+                unowned string xlabel;
                 double[] xdata;
                 if (item_settings.single_column) {
                     xlabel = "";
