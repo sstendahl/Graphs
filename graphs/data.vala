@@ -427,8 +427,8 @@ namespace Graphs {
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
-            _items = items;
             _n_items = items.length;
+            _items = items;
             _update_used_positions ();
             items_changed.emit (0, removed, _n_items);
         }
