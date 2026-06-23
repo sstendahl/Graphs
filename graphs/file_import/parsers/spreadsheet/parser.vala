@@ -20,8 +20,6 @@ namespace Graphs {
         }
 
         public override string[] get_sheet_names () throws Error {
-            var names = new Gee.HashSet<string> ();
-
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* tables = null;
@@ -49,23 +47,22 @@ namespace Graphs {
                 if (tables == null)
                     throw new ParseError.INVALID ("failed to parse xml");
 
-                if (tables->nodesetval == null)
+                var nodes = tables->nodesetval;
+                if (nodes == null)
                     throw new ParseError.INVALID ("ODS file does not contain sheets");
 
-                var nodes = tables->nodesetval;
+                int n_nodes = nodes->length ();
+                string[] names = new string[n_nodes];
 
-                for (int i = 0; i < nodes->length (); i++) {
-                    names.add (nodes->item (i)->get_ns_prop ("name", ODS_TABLE_NAMESPACE));
+                for (int i = 0; i < n_nodes; i++) {
+                    names[i] = nodes->item (i)->get_ns_prop ("name", ODS_TABLE_NAMESPACE);
                 }
 
-                return names.to_array ();
+                return (owned) names;
             } finally {
-                if (tables != null)
-                    delete tables;
-                if (ctx != null)
-                    delete ctx;
-                if (doc != null)
-                    delete doc;
+                if (tables != null) delete tables;
+                if (ctx != null) delete ctx;
+                if (doc != null) delete doc;
             }
         }
 
@@ -175,12 +172,9 @@ namespace Graphs {
                     column.data.resize (value_size);
                 });
             } finally {
-                if (tables != null)
-                    delete tables;
-                if (ctx != null)
-                    delete ctx;
-                if (doc != null)
-                    delete doc;
+                if (tables != null) delete tables;
+                if (ctx != null) delete ctx;
+                if (doc != null) delete doc;
             }
         }
     }
@@ -193,31 +187,50 @@ namespace Graphs {
         }
 
         public override string[] get_sheet_names () throws Error {
-            var workbook = input.child_by_aname ({"xl", "workbook.xml"});
+            Xml.Doc* doc = null;
+            Xml.XPath.Context* ctx = null;
+            Xml.XPath.Object* result = null;
 
-            char* data = workbook.read ((size_t) workbook.size, null);
-            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) workbook.size);
+            try {
+                var workbook = input.child_by_aname ({"xl", "workbook.xml"});
+                if (workbook == null)
+                    throw new IOError.NOT_FOUND ("ODS file does not contain xl/workbook.xml");
 
-            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
-            ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+                char* data = workbook.read ((size_t) workbook.size, null);
+                if (data == null)
+                    throw new IOError.FAILED ("Failed to read xl/workbook.xml");
 
-            Xml.XPath.Object* result = ctx->eval_expression ("//main:sheet");
+                doc = Xml.Parser.parse_memory ((string) data, (int) workbook.size);
+                if (doc == null)
+                    throw new ParseError.INVALID ("xl/workbook.xml is not valid xml");
 
-            var names = new Gee.HashSet<string> ();
+                ctx = new Xml.XPath.Context (doc);
+                if (ctx == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-            if (result != null && result->nodesetval != null) {
+                ctx->register_ns ("main", XLSX_MAIN_NAMESPACE);
+
+                result = ctx->eval_expression ("//main:sheet");
+                if (result == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
+
                 var nodes = result->nodesetval;
+                if (nodes == null)
+                    throw new ParseError.INVALID ("XLSX file does not contain sheets");
 
-                for (int i = 0; i < nodes->length (); i++) {
-                    names.add (nodes->item (i)->get_prop ("name"));
+                int n_nodes = nodes->length ();
+                string[] names = new string[n_nodes];
+
+                for (int i = 0; i < n_nodes; i++) {
+                    names[i] = nodes->item (i)->get_prop ("name");
                 }
+
+                return (owned) names;
+            } finally {
+                if (result != null) delete result;
+                if (ctx != null) delete ctx;
+                if (doc != null) delete doc;
             }
-
-            delete result;
-            delete ctx;
-            delete doc;
-
-            return names.to_array ();
         }
 
         private void load_shared_strings (int sheet_index) {
