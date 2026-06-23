@@ -96,7 +96,6 @@
       <description>
         <p>Bug fixes:</p>
         <ul>
-          <li>Fixed a bug where x-position in the figure settings did not appear</li>
           <li>Fixed a bug where import from projects did not work</li>
           <li>Fixed a bug where project import did not load all items properly</li>
           <li>Fixed an issue where the y-label of the previews was not set properly</li>
