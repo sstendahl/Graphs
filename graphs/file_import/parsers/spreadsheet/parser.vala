@@ -20,31 +20,53 @@ namespace Graphs {
         }
 
         public override string[] get_sheet_names () throws Error {
-            var content = input.child_by_name ("content.xml");
-
-            char* data = content.read ((size_t) content.size, null);
-            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
-
             var names = new Gee.HashSet<string> ();
 
-            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
-            ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
+            Xml.Doc* doc = null;
+            Xml.XPath.Context* ctx = null;
+            Xml.XPath.Object* tables = null;
 
-            Xml.XPath.Object* tables = ctx->eval_expression ("//table:table");
+            try {
+                var content = input.child_by_name ("content.xml");
+                if (content == null)
+                    throw new IOError.NOT_FOUND ("ODS file does not contain content.xml");
 
-            if (tables != null && tables->nodesetval != null) {
+                char* data = content.read ((size_t) content.size, null);
+                if (data == null)
+                    throw new IOError.FAILED ("Failed to read content.xml");
+
+                doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
+                if (doc == null)
+                    throw new ParseError.INVALID ("content.xml is not valid xml");
+
+                ctx = new Xml.XPath.Context (doc);
+                if (ctx == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
+
+                ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
+
+                tables = ctx->eval_expression ("//table:table");
+                if (tables == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
+
+                if (tables->nodesetval == null)
+                    throw new ParseError.INVALID ("ODS file does not contain sheets");
+
                 var nodes = tables->nodesetval;
 
                 for (int i = 0; i < nodes->length (); i++) {
                     names.add (nodes->item (i)->get_ns_prop ("name", ODS_TABLE_NAMESPACE));
                 }
+
+                return names.to_array ();
+            } finally {
+                if (tables != null)
+                    delete tables;
+                if (ctx != null)
+                    delete ctx;
+                if (doc != null)
+                    delete doc;
             }
-
-            delete tables;
-            delete ctx;
-            delete doc;
-
-            return names.to_array ();
         }
 
         private string extract_cell_text (Xml.Node* cell) {
@@ -59,72 +81,107 @@ namespace Graphs {
             return result.free_and_steal ();
         }
 
-        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) {
-            var content = input.child_by_name ("content.xml");
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error {
+            Xml.Doc* doc = null;
+            Xml.XPath.Context* ctx = null;
+            Xml.XPath.Object* tables = null;
 
-            char* data = content.read ((size_t) content.size, null);
-            Xml.Doc* doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
+            try {
+                var content = input.child_by_name ("content.xml");
+                if (content == null)
+                    throw new IOError.NOT_FOUND ("ODS file does not contain content.xml");
 
-            Xml.XPath.Context* ctx = new Xml.XPath.Context (doc);
-            ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
+                char* data = content.read ((size_t) content.size, null);
+                if (data == null)
+                    throw new IOError.FAILED ("Failed to read content.xml");
 
-            Xml.XPath.Object* tables = ctx->eval_expression ("//table:table");
+                doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
+                if (doc == null)
+                    throw new ParseError.INVALID ("content.xml is not valid xml");
 
-            Xml.Node* sheet = tables->nodesetval->item (sheet_index);
+                ctx = new Xml.XPath.Context (doc);
+                if (ctx == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-            int array_size = columns[0].data.length, value_size = 0;
-            int current_col, repeat_count;
-            unowned Column column;
-            string cell_text;
+                ctx->register_ns ("table", ODS_TABLE_NAMESPACE);
 
-            for (Xml.Node* row = sheet->children; row != null; row = row->next) {
-                if (row->type != Xml.ElementType.ELEMENT_NODE) continue;
-                if (row->name != "table-row") continue;
+                tables = ctx->eval_expression ("//table:table");
+                if (tables == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-                current_col = 0;
+                var sheets = tables->nodesetval;
+                if (sheets == null)
+                    throw new ParseError.INVALID ("ODS file does not contain sheets");
 
-                // if we reach capacity, grow the arrays.
-                if (value_size == array_size) {
-                    array_size *= 2;
-                    columns.for_each ((key, column) => {
-                        column.data.resize (array_size);
-                    });
-                }
+                if (sheet_index > sheets->length ())
+                    throw new ParseError.INVALID ("sheet index out of range");
 
-                for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
-                    if (cell->type != Xml.ElementType.ELEMENT_NODE) continue;
-                    if (cell->name != "table-cell") continue;
+                Xml.Node* sheet = sheets->item (sheet_index);
+                if (sheet == null)
+                    throw new ParseError.INVALID ("failed to parse xml");
 
-                    // Get repeat count
-                    string? repeat_str = cell->get_prop ("number-columns-repeated");
-                    repeat_count = repeat_str != null ? int.parse (repeat_str) : 1;
+                int array_size = columns[0].data.length, value_size = 0;
+                int current_col, repeat_count;
+                unowned Column column;
+                string cell_text;
 
-                    cell_text = extract_cell_text (cell);
+                for (Xml.Node* row = sheet->children; row != null; row = row->next) {
+                    if (row->type != Xml.ElementType.ELEMENT_NODE) continue;
+                    if (row->name != "table-row") continue;
 
-                    // Process repeated cells
-                    for (int count = 0; count < repeat_count; count++) {
-                        if (current_col > max_columns) break;
+                    current_col = 0;
 
-                        if (columns.contains (current_col)) {
-                            column = columns.lookup (current_col);
-                            if (!try_evaluate_string (cell_text, out column.data[value_size])) {
-                                if (value_size == 0) {
-                                    column.header = cell_text.strip ();
-                                } else {
-                                    break;
+                    // if we reach capacity, grow the arrays.
+                    if (value_size == array_size) {
+                        array_size *= 2;
+                        columns.for_each ((key, column) => {
+                            column.data.resize (array_size);
+                        });
+                    }
+
+                    for (Xml.Node* cell = row->children; cell != null; cell = cell->next) {
+                        if (cell->type != Xml.ElementType.ELEMENT_NODE) continue;
+                        if (cell->name != "table-cell") continue;
+
+                        // Get repeat count
+                        string? repeat_str = cell->get_prop ("number-columns-repeated");
+                        repeat_count = repeat_str != null ? int.parse (repeat_str) : 1;
+                        if (repeat_count <= 0) repeat_count = 1;
+
+                        cell_text = extract_cell_text (cell);
+
+                        // Process repeated cells
+                        for (int count = 0; count < repeat_count; count++) {
+                            if (current_col >= max_columns) break;
+
+                            if (columns.contains (current_col)) {
+                                column = columns.lookup (current_col);
+                                if (!try_evaluate_string (cell_text, out column.data[value_size])) {
+                                    if (value_size == 0) {
+                                        column.header = cell_text.strip ();
+                                    } else {
+                                        break;
+                                    }
                                 }
                             }
+                            current_col++;
                         }
-                        current_col++;
                     }
+
+                    value_size++;
                 }
 
-                value_size++;
+                columns.for_each ((key, column) => {
+                    column.data.resize (value_size);
+                });
+            } finally {
+                if (tables != null)
+                    delete tables;
+                if (ctx != null)
+                    delete ctx;
+                if (doc != null)
+                    delete doc;
             }
-
-            columns.for_each ((key, column) => {
-                column.data.resize (value_size);
-            });
         }
     }
 
