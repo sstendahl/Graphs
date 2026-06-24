@@ -134,5 +134,6 @@ executable('graphs', files('graphs.c'),
   dependencies: dependencies + python.dependency(embed: true),
      link_with: graphs_lib,
        install: true,
+   install_dir: bindir,
 )
 devenv.prepend('PATH', meson.current_build_dir())
