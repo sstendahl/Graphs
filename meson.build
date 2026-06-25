@@ -19,7 +19,7 @@ dependencies = [
 valac = meson.get_compiler('vala')
 
 devenv = environment()
-devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
+devenv.prepend('PYTHONPATH', meson.current_source_dir())
 
 application_id = 'se.sjoerd.Graphs'
 copyright = '2022 - 2026'
@@ -57,9 +57,6 @@ is_linux = host_machine.system() == 'linux'
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
   add_project_arguments(['--define=DEBUG'], language: 'vala')
-  debug_str = 'True'
-else
-  debug_str = 'False'
 endif
 
 if is_linux
@@ -79,7 +76,6 @@ conf.set('ISSUE_URL', issue_url)
 conf.set('HELP_URL', help_url)
 conf.set('TRANSLATION_URL', translation_url)
 conf.set('CONTRIBUTE_URL', contribute_url)
-conf.set('DEBUG', debug_str)
 
 vala_conf = configuration_data()
 vala_conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
@@ -89,6 +85,8 @@ vala_conf.set_quoted('VERSION', version)
 vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
 vala_conf.set_quoted('ISSUE_URL', issue_url)
 vala_conf.set_quoted('COPYRIGHT', copyright)
+vala_conf.set_quoted('PKGDATADIR', pkgdatadir)
+vala_conf.set('DEBUG', debug)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + gettext_package + '"',
