@@ -15,26 +15,11 @@ namespace Graphs {
         }
     }
 
-    // This method exists primarily to be used on the python side. Do note that
-    // the potential MathError is intentional here as returning double? or using
-    // an out variable leads to issues when automatically generating a binding.
-    // with the compromise being, that the MathError has to be handled on the
-    // python side when consuming this method.
     /**
      * Evaluate a string to a double.
      */
     public static double evaluate_string (string expression) throws MathError {
         var ast = MathParser.Parser.instance ().parse (expression);
-        return MathParser.Evaluator.instance ().eval (ast);
-    }
-
-    // This method exists separately as optional arguments are not automatically
-    // bound by python
-    /**
-     * Evaluate a string to a double with given decimal separator.
-     */
-    public static double evaluate_string_with_separator (string expression, unichar separator) throws MathError {
-        var ast = MathParser.Parser.instance ().parse (expression, separator);
         return MathParser.Evaluator.instance ().eval (ast);
     }
 
