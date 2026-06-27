@@ -4,6 +4,10 @@ using Gee;
 using Gtk;
 
 namespace Graphs {
+    public errordomain ParseError {
+        INVALID;
+    }
+
     public class Parser : Object {
         public string name { get; construct set; }
         public string ui_name { get; construct set; }

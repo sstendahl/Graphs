@@ -14,6 +14,8 @@ dependencies = [
   dependency('libadwaita-1', version: '>= 1.8.0'),
   dependency('gee-0.8'),
   dependency('sqlite3'),
+  dependency('libxml-2.0'),
+  dependency('libgsf-1'),
 ]
 
 valac = meson.get_compiler('vala')

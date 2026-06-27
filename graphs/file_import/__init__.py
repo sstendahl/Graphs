@@ -77,7 +77,7 @@ class DataImporter(Graphs.DataImporter):
     def _on_init_import_settings_request(
         self,
         settings: Graphs.ImportSettings,
-    ) -> None:
+    ) -> bool:
         """
         Init import settings.
 
@@ -88,6 +88,7 @@ class DataImporter(Graphs.DataImporter):
         try:
             return parser.init_settings(settings)
         except Exception:
+            logging.exception("parser failed to init settings.")
             return False
 
     @staticmethod
@@ -95,10 +96,13 @@ class DataImporter(Graphs.DataImporter):
         self,
         settings: Graphs.ImportSettings,
         settings_box: Gtk.Box,
-    ) -> Gtk.Widget:
+    ) -> None:
         """Load the UI settings."""
         parser = parsers.get_parser(settings.get_mode())
-        parser.init_settings_widgets(settings, settings_box)
+        try:
+            parser.init_settings_widgets(settings, settings_box)
+        except Exception:
+            logging.exception("parser failed to init settings widgets.")
 
     @staticmethod
     def _on_parse_request(

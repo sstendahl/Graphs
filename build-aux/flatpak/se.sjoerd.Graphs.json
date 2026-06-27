@@ -18,6 +18,7 @@
     "modules": [
         "python-dependencies.json",
         "python-tests.json",
+        "libgsf.json",
         {
             "name": "graphs",
             "buildsystem": "meson",
