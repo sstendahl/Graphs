@@ -83,8 +83,12 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
         index = self.index(item)
-        value = item.get_property(prop) if prop != "data" \
-            else item.get_data_tuple()
+        if prop == "data":
+            value = item.get_data_tuple()
+        elif prop == "equation":
+            value = Graphs.ast_to_expression(item.get_property(prop))
+        else:
+            value = item.get_property(prop)
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
@@ -214,6 +218,11 @@ class Data(Graphs.Data):
                             selected.add(index)
                     elif prop == "data":
                         self[index].set_data_tuple(value)
+                    elif prop == "equation":
+                        self[index].set_property(
+                            prop,
+                            Graphs.expression_to_ast(value),
+                        )
                     else:
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
@@ -256,6 +265,11 @@ class Data(Graphs.Data):
                             selected.add(index)
                     elif prop == "data":
                         self[index].set_data_tuple(value)
+                    elif prop == "equation":
+                        self[index].set_property(
+                            prop,
+                            Graphs.expression_to_ast(value),
+                        )
                     else:
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
