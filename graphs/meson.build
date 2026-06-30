@@ -41,7 +41,7 @@ c_helpers = static_library('c_helpers',
                   pic: true,
 )
 
-config_h = configure_file(
+configure_file(
          output: 'config.h',
   configuration: vala_conf,
 )
