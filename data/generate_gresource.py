@@ -195,15 +195,16 @@ ui_gresource = ElementTree.SubElement(
     attrib={"prefix": main_prefix},
 )
 for ui_file in args.ui:
-    path = Path(build_dir, ui_file)
+    path = str(Path(ui_file).resolve().relative_to(build_dir))
     ui_file_element = ElementTree.SubElement(
         ui_gresource,
         "file",
         attrib={
             "preprocess": "xml-stripblanks",
+            "alias": path.replace('_', '/'),
         },
     )
-    ui_file_element.text = str(path.relative_to(build_dir))
+    ui_file_element.text = path
 # End ui section
 
 # Begin icon section
