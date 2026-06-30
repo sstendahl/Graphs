@@ -49,7 +49,7 @@ config_dep = valac.find_library('config',
   dirs: join_paths(meson.project_source_root(), 'graphs'),
 )
 source_include = include_directories('.')
-graphs_lib = shared_library('libgraphs',
+graphs_lib = shared_library('graphs',
   files(
     'file_import/parsers/columns/main.vala',
     'file_import/parsers/columns/parser.vala',
