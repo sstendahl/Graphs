@@ -201,7 +201,7 @@ for ui_file in args.ui:
         "file",
         attrib={
             "preprocess": "xml-stripblanks",
-            "alias": path.replace('_', '/'),
+            "alias": path.replace("_", "/"),
         },
     )
     ui_file_element.text = path
