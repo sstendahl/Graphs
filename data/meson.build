@@ -79,7 +79,7 @@ configure_file(
     install_dir: join_paths(mandir, 'man1'),
 )
 
-blueprint_files = [
+blueprint_files = files(
   'ui/dialogs/beta-disallowed.blp',
   'ui/dialogs/delete-style.blp',
   'ui/dialogs/invalid-project.blp',
@@ -124,24 +124,28 @@ blueprint_files = [
   'ui/transform.blp',
   'ui/window.blp',
   'ui/window-shortcuts.blp',
-]
+)
+
+blueprint_compiler = find_program('blueprint-compiler')
 
 blueprints_ui = []
+blueprints = []
 foreach b : blueprint_files
-  blueprints_ui += b.replace('.blp', '.ui')
-endforeach
+  ui_file = b.replace('.blp', '.ui').underscorify()
 
-blueprints = custom_target('blueprints',
-    input: files(blueprint_files),
-   output: 'ui',
-  command: [
-    find_program('blueprint-compiler'),
-    'batch-compile',
-    meson.current_build_dir(),
-    '@CURRENT_SOURCE_DIR@',
-    '@INPUT@',
-  ],
-)
+  blueprints += custom_target(ui_file,
+    input: b,
+    output: ui_file,
+    command: [
+      blueprint_compiler,
+      'compile',
+      '--output',
+      '@OUTPUT@',
+      '@INPUT@',
+    ],
+  )
+  blueprints_ui += ui_file
+endforeach
 
 styles = files(
   'styles/adwaita.mplstyle',

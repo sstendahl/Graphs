@@ -6,7 +6,7 @@ from gettext import pgettext as C_
 from gi.repository import Graphs
 
 from graphs import file_io
-from graphs.file_import.parsers import Parser
+from graphs.file_import import Parser
 from graphs.item import DataItem
 
 import numpy

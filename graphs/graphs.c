@@ -6,7 +6,7 @@
 #include <Python.h>
 
 #include "config.h"
-#include "graphs.h"
+#include "libgraphs.h"
 
 static void
 handle_sigint (int sig)

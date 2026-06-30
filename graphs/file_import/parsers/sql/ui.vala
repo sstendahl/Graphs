@@ -29,14 +29,14 @@ namespace Graphs {
         private ImportSettings settings;
         private bool is_initial_setup = true;
 
-        public SqlGroup (ImportSettings settings) throws IOError {
+        public SqlGroup (ImportSettings settings) throws ParseError {
             this.db_reader = (DatabaseReader) settings.get_item ("db-reader");
             this.settings = settings;
 
             setup_ui ();
         }
 
-        private void setup_ui () throws IOError {
+        private void setup_ui () throws ParseError {
             unowned string[] tables = db_reader.table_names;
             string table_name = settings.get_string ("table-name");
 
@@ -58,7 +58,7 @@ namespace Graphs {
             settings.set_string ("table-name", selected_item.get_string ());
             try {
                 update_columns ();
-            } catch (IOError e) {
+            } catch (ParseError e) {
                 warning ("Could not update columns: %s", e.message);
             }
         }
@@ -90,7 +90,7 @@ namespace Graphs {
             }
         }
 
-        private void update_columns () throws IOError {
+        private void update_columns () throws ParseError {
             string x_column = settings.get_string ("x-column");
             string y_column = settings.get_string ("y-column");
             string xerr_column = settings.get_string ("xerr-column");

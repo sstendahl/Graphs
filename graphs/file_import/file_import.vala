@@ -5,14 +5,52 @@ using Gtk;
 
 namespace Graphs {
     public errordomain ParseError {
-        INVALID;
+        INVALID,
+        INVALID_CONFIGURATION,
+        PARSE_ERROR;
     }
 
-    public class Parser : Object {
+    public abstract class Parser : Object {
         public string name { get; construct set; }
         public string ui_name { get; construct set; }
         public string filetype_name { get; construct set; }
         public string[] file_suffixes { get; construct set; }
+
+        public virtual void init_import_settings (ImportSettings settings) throws ParseError {}
+        public virtual void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) throws ParseError {}
+        public abstract ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError;
+    }
+
+    public class PythonParser : Parser {
+        protected signal string init_import_settings_request (ImportSettings settings);
+        protected signal string append_settings_widgets_request (ImportSettings settings, Gtk.Box settings_box);
+        protected signal string parse_request (ItemList itemlist, ImportSettings settings, StyleParameters style);
+
+        public PythonParser (string name, string ui_name, string filetype_name, string[] file_suffixes) {
+            Object (
+                name: name,
+                ui_name: ui_name,
+                filetype_name: filetype_name,
+                file_suffixes: file_suffixes
+            );
+        }
+
+        public override void init_import_settings (ImportSettings settings) throws ParseError {
+            string message = init_import_settings_request.emit (settings);
+            if (message != "") throw new ParseError.INVALID (message);
+        }
+
+        public override void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) throws ParseError {
+            string message = append_settings_widgets_request.emit (settings, settings_box);
+            if (message != "") throw new ParseError.INVALID (message);
+        }
+
+        public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
+            ItemList items = new ItemList ();
+            string message = parse_request.emit (items, settings, style);
+            if (message != "") throw new ParseError.INVALID (message);
+            return items;
+        }
     }
 
     private const string[] ASCII_SUFFIXES = {"xy", "dat", "txt", "csv"};
@@ -20,20 +58,13 @@ namespace Graphs {
     public class DataImporter : Object {
         public static GLib.ListStore file_filters { get; private set; }
 
-        protected signal uint guess_import_mode_request (ImportSettings settings);
-        protected signal bool init_import_settings_request (ImportSettings settings);
-        protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
-        protected signal string parse_request (ItemList itemlist, ImportSettings settings, StyleParameters style);
-
         private static GLib.Settings mode_settings;
         private static string[] mode_settings_list;
         private static Parser[] parsers;
         private static StringList parser_names = new StringList (null);
 
-        private static DataImporter instance;
-
-        protected void setup (owned Parser[] parsers) {
-            DataImporter.parsers = (owned) parsers;
+        public DataImporter (Parser[] parsers) {
+            DataImporter.parsers = parsers;
             foreach (Parser parser in parsers) {
                 parser_names.append (parser.ui_name);
             }
@@ -42,8 +73,6 @@ namespace Graphs {
             mode_settings_list = mode_settings.settings_schema.list_children ();
 
             init_file_filters ();
-
-            DataImporter.instance = this;
         }
 
         private static void init_file_filters () {
@@ -74,8 +103,12 @@ namespace Graphs {
             file_filters.append (Tools.create_all_filter ());
         }
 
-        public static Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
-            return instance.append_settings_widgets_request.emit (settings, settings_box);
+        public static void append_settings_widgets (ImportSettings settings, Box settings_box) {
+            try {
+                parsers[settings.mode].append_settings_widgets (settings, settings_box);
+            } catch (ParseError e) {
+                settings.is_valid = false;
+            }
         }
 
         public static StringList get_parser_names () {
@@ -84,7 +117,7 @@ namespace Graphs {
 
         public static ImportSettings get_settings_for_file (File file) {
             var settings = new ImportSettings (file);
-            settings.mode = instance.guess_import_mode_request.emit (settings);
+            settings.mode = guess_import_mode (settings);
             settings.is_valid = init_import_settings (settings);
             settings.notify["mode"].connect (() => {
                 settings.is_valid = init_import_settings (settings);
@@ -99,7 +132,7 @@ namespace Graphs {
         }
 
         public static void reset (ImportSettings settings) {
-            uint guessed_mode = instance.guess_import_mode_request.emit (settings);
+            uint guessed_mode = guess_import_mode (settings);
             if (guessed_mode == settings.mode) {
                 init_import_settings (settings);
             } else {
@@ -107,15 +140,38 @@ namespace Graphs {
             }
         }
 
-        public static string parse (ItemList itemlist, ImportSettings settings, StyleParameters style) {
-            return instance.parse_request.emit (itemlist, settings, style);
+        public static ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
+            return parsers[settings.mode].parse (settings, style);
         }
 
         private static bool init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             unowned string name = parsers[settings.mode].name;
             settings.load_from_settings (name in mode_settings_list ? mode_settings.get_child (name) : null);
-            return instance.init_import_settings_request.emit (settings);
+            try {
+                parsers[settings.mode].init_import_settings (settings);
+                return true;
+            } catch (ParseError e) {
+                return false;
+            }
+        }
+
+        private static uint guess_import_mode (ImportSettings settings) {
+            string filename = Tools.get_filename (settings.file);
+
+            int dot = filename.last_index_of (".");
+            if ((dot <= 0 || dot + 1 >= filename.length)) return 0;
+
+            string file_suffix = filename.substring (dot + 1).down ();
+
+            // At index 0 is columns which we use by default
+            for (uint index = 1; index < parsers.length; index++) {
+                foreach (unowned string suffix in parsers[index].file_suffixes) {
+                    if (file_suffix == suffix) return index;
+                }
+            }
+
+            return 0; // columns
         }
     }
 
