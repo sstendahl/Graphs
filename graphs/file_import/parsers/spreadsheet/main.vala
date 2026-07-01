@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     public class SpreadsheetParser : Parser {
-        private const string[] SPREADSHEET_FILE_SUFFIXES = {"ods", "xlsx"};
+        private const string[] SPREADSHEET_FILE_SUFFIXES = {"ods", "xlsx", null};
 
         public SpreadsheetParser () {
             Object (
@@ -25,9 +25,7 @@ namespace Graphs {
 
         public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
             var reader = (SpreadsheetReader) settings.get_item ("reader");
-            ItemList items = new ItemList ();
-            reader.parse (settings, style, items);
-            return items;
+            return reader.parse (settings, style);
         }
     }
 }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     public class SqlParser : Parser {
-        private const string[] SQL_FILE_SUFFIXES = {"db", "sqlite", "sqlite3"};
+        private const string[] SQL_FILE_SUFFIXES = {"db", "sqlite", "sqlite3", null};
 
         public SqlParser () {
             Object (
@@ -27,9 +27,7 @@ namespace Graphs {
 
         public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
             var reader = (DatabaseReader) settings.get_item ("reader");
-            ItemList items = new ItemList ();
-            reader.parse (items, settings, style);
-            return items;
+            return reader.parse (settings, style);
         }
     }
 }

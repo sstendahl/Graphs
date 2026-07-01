@@ -114,11 +114,9 @@ namespace Graphs {
         }
 
         public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
-            var items = new ItemList ();
             var reader = new ColumnsReader (settings);
             reader.parse ();
-            reader.add_items (style, items);
-            return items;
+            return reader.add_items (style);
         }
     }
 }

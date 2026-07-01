@@ -157,7 +157,9 @@ namespace Graphs {
             }
         }
 
-        public void add_items (StyleParameters style, ItemList itemlist) throws ParseError {
+        public ItemList add_items (StyleParameters style) throws ParseError {
+            var itemlist = new ItemList ();
+
             foreach (var item_settings in items) {
                 uint yrank = get_rank (item_settings.column_y);
                 string ylabel = (owned) columns[yrank].header;
@@ -188,6 +190,8 @@ namespace Graphs {
                 item.name = settings.filename;
                 itemlist.add (item);
             }
+
+            return itemlist;
         }
 
         private uint get_rank (uint val) {

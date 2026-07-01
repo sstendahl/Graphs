@@ -15,7 +15,7 @@ namespace Graphs {
      * Reader class for parsing xry files
      */
     public class XryParser : Parser {
-        private const string[] XRY_FILE_SUFFIXES = {"xry"};
+        private const string[] XRY_FILE_SUFFIXES = {"xry", null};
 
         public XryParser () {
             Object (

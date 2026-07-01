@@ -405,7 +405,7 @@ namespace Graphs {
             n_used_indices = uint.max (n_used_indices, index);
         }
 
-        public void parse (ImportSettings settings, StyleParameters style, ItemList itemlist) throws ParseError {
+        public ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
             ColumnsItemSettings item_settings = ColumnsItemSettings ();
             var items = settings.get_value ("items");
 
@@ -420,6 +420,8 @@ namespace Graphs {
             }
 
             parser.parse (settings.get_int ("sheet-index"), n_used_indices, columns);
+
+            var itemlist = new ItemList ();
 
             iter = items.iterator ();
             for (int i = 0; i < iter.n_children (); i++) {
@@ -452,6 +454,8 @@ namespace Graphs {
                 item.name = settings.filename;
                 itemlist.add (item);
             }
+
+            return itemlist;
         }
     }
 }

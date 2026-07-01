@@ -129,11 +129,11 @@ namespace Graphs {
             return (owned) names.data;
         }
 
-        public string parse (ItemList items, ImportSettings settings, StyleParameters style) throws ParseError {
+        public ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
             string table_name = settings.get_string ("table-name");
             if (get_numeric_columns (table_name).length == 0) {
                 unowned string msg = _("Could not import data from table \"%s\", no numeric columns were found");
-                return msg.printf (table_name);
+                throw new ParseError.INVALID (msg.printf (table_name));
             }
 
             string x_column = settings.get_string ("x-column");
@@ -141,7 +141,7 @@ namespace Graphs {
             double[] xdata = get_column_data (table_name, x_column);
             double[] ydata = get_column_data (table_name, y_column);
 
-            if (xdata.length == 0) return _("No data found in table column");
+            if (xdata.length == 0) throw new ParseError.INVALID (_("No data found in table column"));
 
             double[]? xerr = null;
             double[]? yerr = null;
@@ -150,12 +150,13 @@ namespace Graphs {
             if (settings.get_boolean ("use-yerr"))
                 yerr = get_column_data (table_name, settings.get_string ("yerr-column"));
 
+            ItemList items = new ItemList ();
             DataItem item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
             item.xlabel = x_column;
             item.ylabel = y_column;
             item.name = x_column + " vs " + y_column;
             items.add (item);
-            return "";
+            return items;
         }
     }
 }

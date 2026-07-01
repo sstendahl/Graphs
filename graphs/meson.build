@@ -52,10 +52,10 @@ source_include = include_directories('.')
 graphs_lib = shared_library('graphs',
   files(
     'file_import/parsers/columns/main.vala',
-    'file_import/parsers/columns/parser.vala',
+    'file_import/parsers/columns/reader.vala',
     'file_import/parsers/columns/ui.vala',
     'file_import/parsers/spreadsheet/main.vala',
-    'file_import/parsers/spreadsheet/parser.vala',
+    'file_import/parsers/spreadsheet/reader.vala',
     'file_import/parsers/spreadsheet/ui.vala',
     'file_import/parsers/sql/main.vala',
     'file_import/parsers/sql/reader.vala',
