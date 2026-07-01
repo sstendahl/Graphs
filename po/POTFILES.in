@@ -46,11 +46,11 @@ data/ui/transform.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
 graphs/file_import/parsers/columns/main.vala
-graphs/file_import/parsers/columns/parser.vala
+graphs/file_import/parsers/columns/reader.vala
 graphs/file_import/parsers/columns/ui.vala
 graphs/file_import/parsers/project/__init__.py
 graphs/file_import/parsers/spreadsheet/main.vala
-graphs/file_import/parsers/spreadsheet/parser.vala
+graphs/file_import/parsers/spreadsheet/reader.vala
 graphs/file_import/parsers/spreadsheet/ui.vala
 graphs/file_import/parsers/sql/main.vala
 graphs/file_import/parsers/sql/reader.vala
