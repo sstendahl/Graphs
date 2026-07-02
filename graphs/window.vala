@@ -59,11 +59,6 @@ namespace Graphs {
 
         public Canvas canvas {
             get { return (Canvas) toast_overlay.get_child (); }
-            set {
-                value.bind_property ("mode", this, "mode", 2);
-                toast_overlay.set_child (value);
-                value.grab_focus ();
-            }
         }
 
         public bool is_main_view {
@@ -290,8 +285,11 @@ namespace Graphs {
             });
             canvas.view_changed.connect (data.add_view_history_state);
 
-            if (canvas != null)
-                this.canvas = canvas;
+            if (canvas == null) return;
+
+            canvas.bind_property ("mode", this, "mode", 2);
+            toast_overlay.set_child (canvas);
+            canvas.grab_focus ();
         }
 
         private void append_item_row (Item item, uint index, bool is_data_item) {
