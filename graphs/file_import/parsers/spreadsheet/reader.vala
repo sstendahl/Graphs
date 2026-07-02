@@ -6,20 +6,24 @@ namespace Graphs {
     private abstract class SpreadsheetParserInternal {
         protected Gsf.InfileZip input;
 
-        protected SpreadsheetParserInternal (File file) throws Error {
-            this.input = new Gsf.InfileZip (new Gsf.InputGio (file));
+        protected SpreadsheetParserInternal (File file) throws ParseError {
+            try {
+                this.input = new Gsf.InfileZip (new Gsf.InputGio (file));
+            } catch (Error e) {
+                throw new ParseError.PARSE_ERROR (_("Failed to open File."));
+            }
         }
 
-        public abstract string[] get_sheet_names () throws Error;
-        public abstract void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error;
+        public abstract string[] get_sheet_names () throws ParseError;
+        public abstract void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws ParseError;
     }
 
     private class ODSParser : SpreadsheetParserInternal {
-        public ODSParser (File file) throws Error {
+        public ODSParser (File file) throws ParseError {
             base (file);
         }
 
-        public override string[] get_sheet_names () throws Error {
+        public override string[] get_sheet_names () throws ParseError {
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* tables = null;
@@ -27,11 +31,11 @@ namespace Graphs {
             try {
                 var content = input.child_by_name ("content.xml");
                 if (content == null)
-                    throw new IOError.NOT_FOUND ("ODS file does not contain content.xml");
+                    throw new ParseError.PARSE_ERROR ("ODS file does not contain content.xml");
 
                 char* data = content.read ((size_t) content.size, null);
                 if (data == null)
-                    throw new IOError.FAILED ("Failed to read content.xml");
+                    throw new ParseError.PARSE_ERROR ("Failed to read content.xml");
 
                 doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
                 if (doc == null)
@@ -78,7 +82,7 @@ namespace Graphs {
             return result.free_and_steal ();
         }
 
-        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error {
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws ParseError {
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* tables = null;
@@ -86,11 +90,11 @@ namespace Graphs {
             try {
                 var content = input.child_by_name ("content.xml");
                 if (content == null)
-                    throw new IOError.NOT_FOUND ("ODS file does not contain content.xml");
+                    throw new ParseError.PARSE_ERROR ("ODS file does not contain content.xml");
 
                 char* data = content.read ((size_t) content.size, null);
                 if (data == null)
-                    throw new IOError.FAILED ("Failed to read content.xml");
+                    throw new ParseError.PARSE_ERROR ("Failed to read content.xml");
 
                 doc = Xml.Parser.parse_memory ((string) data, (int) content.size);
                 if (doc == null)
@@ -182,11 +186,11 @@ namespace Graphs {
     private class XLSXParser : SpreadsheetParserInternal {
         string[] shared_strings;
 
-        public XLSXParser (File file) throws Error {
+        public XLSXParser (File file) throws ParseError {
             base (file);
         }
 
-        public override string[] get_sheet_names () throws Error {
+        public override string[] get_sheet_names () throws ParseError {
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* result = null;
@@ -194,11 +198,11 @@ namespace Graphs {
             try {
                 var workbook = input.child_by_aname ({"xl", "workbook.xml"});
                 if (workbook == null)
-                    throw new IOError.NOT_FOUND ("ODS file does not contain xl/workbook.xml");
+                    throw new ParseError.PARSE_ERROR ("ODS file does not contain xl/workbook.xml");
 
                 char* data = workbook.read ((size_t) workbook.size, null);
                 if (data == null)
-                    throw new IOError.FAILED ("Failed to read xl/workbook.xml");
+                    throw new ParseError.PARSE_ERROR ("Failed to read xl/workbook.xml");
 
                 doc = Xml.Parser.parse_memory ((string) data, (int) workbook.size);
                 if (doc == null)
@@ -233,7 +237,7 @@ namespace Graphs {
             }
         }
 
-        private void load_shared_strings (int sheet_index) throws Error {
+        private void load_shared_strings (int sheet_index) throws ParseError {
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* result = null;
@@ -241,11 +245,11 @@ namespace Graphs {
             try {
                 var shared_strings_file = input.child_by_aname ({"xl", "sharedStrings.xml"});
                 if (shared_strings_file == null)
-                    throw new IOError.NOT_FOUND ("ODS file does not contain xl/sharedStrings.xml");
+                    throw new ParseError.PARSE_ERROR ("ODS file does not contain xl/sharedStrings.xml");
 
                 char* data = shared_strings_file.read ((size_t) shared_strings_file.size, null);
                 if (data == null)
-                    throw new IOError.FAILED ("Failed to read xl/sharedStrings.xml");
+                    throw new ParseError.PARSE_ERROR ("Failed to read xl/sharedStrings.xml");
 
                 doc = Xml.Parser.parse_memory ((string) data, (int) shared_strings_file.size);
                 if (doc == null)
@@ -278,7 +282,7 @@ namespace Graphs {
             }
         }
 
-        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws Error {
+        public override void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws ParseError {
             Xml.Doc* doc = null;
             Xml.XPath.Context* ctx = null;
             Xml.XPath.Object* sheet = null;
@@ -289,11 +293,11 @@ namespace Graphs {
                 string sheet_name = "sheet%d.xml".printf (sheet_index + 1);
                 var worksheet = input.child_by_aname ({"xl", "worksheets", sheet_name});
                 if (worksheet == null)
-                    throw new IOError.NOT_FOUND ("XLSX file does not contain xl/worksheets/%s".printf (sheet_name));
+                    throw new ParseError.PARSE_ERROR ("XLSX file does not contain xl/worksheets/%s".printf (sheet_name));
 
                 char* data = worksheet.read ((size_t) worksheet.size, null);
                 if (data == null)
-                    throw new IOError.FAILED ("Failed to read xl/worksheets/%s".printf (sheet_name));
+                    throw new ParseError.PARSE_ERROR ("Failed to read xl/worksheets/%s".printf (sheet_name));
 
                 doc = Xml.Parser.parse_memory ((string) data, (int) worksheet.size);
                 if (doc == null)
@@ -373,13 +377,13 @@ namespace Graphs {
         }
     }
 
-    public class SpreadsheetParser : Object {
+    public class SpreadsheetReader : Object {
         private SpreadsheetParserInternal parser;
         private string[] sheet_names;
         private HashTable<uint, Column> columns;
         private uint n_used_indices;
 
-        public SpreadsheetParser (File file) throws Error {
+        public SpreadsheetReader (File file) throws ParseError {
             if (file.get_path ().has_suffix (".ods")) {
                 this.parser = new ODSParser (file);
             } else {
@@ -401,7 +405,7 @@ namespace Graphs {
             n_used_indices = uint.max (n_used_indices, index);
         }
 
-        public void parse (ImportSettings settings, StyleParameters style, ItemList itemlist) throws Error {
+        public ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
             ColumnsItemSettings item_settings = ColumnsItemSettings ();
             var items = settings.get_value ("items");
 
@@ -416,6 +420,8 @@ namespace Graphs {
             }
 
             parser.parse (settings.get_int ("sheet-index"), n_used_indices, columns);
+
+            var itemlist = new ItemList ();
 
             iter = items.iterator ();
             for (int i = 0; i < iter.n_children (); i++) {
@@ -435,7 +441,7 @@ namespace Graphs {
                         Expression equation = expression_to_ast (item_settings.equation);
                         xdata = MathTools.evaluate_expression (equation, ydata.length, "n");
                     } catch (MathError e) {
-                        throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
+                        throw new ParseError.PARSE_ERROR (e.message);
                     }
                 } else {
                     xlabel = columns[item_settings.column_x].header;
@@ -448,6 +454,8 @@ namespace Graphs {
                 item.name = settings.filename;
                 itemlist.add (item);
             }
+
+            return itemlist;
         }
     }
 }

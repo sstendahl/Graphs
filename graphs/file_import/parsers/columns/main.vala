@@ -1,11 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    public errordomain ColumnsParseError {
-        INDEX_ERROR,
-        IMPORT_ERROR,
-        INVALID_CONFIGURATION
-    }
-
     enum ColumnsDelimiter {
         WHITESPACE,
         TAB,
@@ -27,7 +21,7 @@ namespace Graphs {
             return (ColumnsDelimiter) eval.value;
         }
 
-        public unowned string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
+        public unowned string to_regex_pattern (string custom_delimiter) throws ParseError {
             switch (this) {
                 case WHITESPACE: return "\\s+";
                 case TAB: return "\\t";
@@ -37,7 +31,7 @@ namespace Graphs {
                 case PERIOD: return "\\.";
                 case CUSTOM:
                     if (custom_delimiter.length == 0) {
-                        throw new ColumnsParseError.INVALID_CONFIGURATION (
+                        throw new ParseError.INVALID_CONFIGURATION (
                             _("Custom delimiter cannot be empty")
                         );
                     }
@@ -102,6 +96,27 @@ namespace Graphs {
                 use_yerr,
                 equation
             );
+        }
+    }
+
+    public class ColumnsParser : Parser {
+        public ColumnsParser () {
+            Object (
+                name: "columns",
+                ui_name: C_("import-mode", "Columns"),
+                filetype_name: null,
+                file_suffixes: null
+            );
+        }
+
+        public override void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) throws ParseError {
+            settings_box.append (new ColumnsBox (settings));
+        }
+
+        public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
+            var reader = new ColumnsReader (settings);
+            reader.parse ();
+            return reader.add_items (style);
         }
     }
 }

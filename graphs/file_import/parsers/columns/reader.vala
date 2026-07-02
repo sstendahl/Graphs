@@ -20,7 +20,7 @@ namespace Graphs {
     /**
      * Reader class for parsing column-based text files
      */
-    public class ColumnsParser : Object {
+    public class ColumnsReader {
         private ImportSettings settings;
         private unichar separator;
         private Regex delimiter_regex;
@@ -31,7 +31,7 @@ namespace Graphs {
         private Column[] columns;
         private int value_size = 0;
 
-        public ColumnsParser (ImportSettings settings) throws Error {
+        public ColumnsReader (ImportSettings settings) throws ParseError {
             this.settings = settings;
             var separator = ColumnsSeparator.parse (settings.get_string ("separator"));
             this.separator = separator.as_unichar ();
@@ -79,77 +79,87 @@ namespace Graphs {
             try {
                 this.delimiter_regex = new Regex (pattern);
             } catch (RegexError e) {
-                throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
+                throw new ParseError.PARSE_ERROR (e.message);
             }
         }
 
-        public void parse () throws Error {
+        public void parse () throws ParseError {
             int skip_rows = settings.get_int ("skip-rows");
             int max_index = (int) used_indices.get_maximum ();
 
-            var stream = new DataInputStream (settings.file.read ());
+            DataInputStream stream = null;
 
-            string? line;
-            int line_number = 0;
-            var bitset_iter = BitsetIter ();
-            uint column_index;
-            uint column_rank;
-            double val;
+            try {
+                stream = new DataInputStream (settings.file.read ());
 
-            int array_size = columns[0].data.length;
+                string? line;
+                int line_number = 0;
+                var bitset_iter = BitsetIter ();
+                uint column_index;
+                uint column_rank;
+                double val;
 
-            while ((line = stream.read_line ()) != null) {
-                if (++line_number <= skip_rows || line.strip ().length == 0) continue;
+                int array_size = columns[0].data.length;
 
-                string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
-                if (str_values.length < max_index + 1 && value_size > 0) {
-                    throw new ColumnsParseError.INDEX_ERROR (
-                        _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
-                        .printf (settings.filename, max_index, line_number, str_values.length)
-                    );
-                }
+                while ((line = stream.read_line ()) != null) {
+                    if (++line_number <= skip_rows || line.strip ().length == 0) continue;
 
-                // if we reach capacity, grow the arrays.
-                if (value_size == array_size) {
-                    array_size *= 2;
-                    foreach (weak Column column in columns) {
-                        column.data.resize (array_size);
-                    }
-                }
-
-                // We assume, that we have at least one valid index
-                bitset_iter.init_first (used_indices, out column_index);
-                column_rank = 0;
-                do {
-                    if (column_index >= str_values.length) break;
-                    if (try_evaluate_string (str_values[column_index], out val, separator)) {
-                        columns[column_rank++].data[value_size] = val;
-                        continue;
-                    };
-
-                    // If the data cannot be parsed, treat as header.
-                    // But only if there is not already data present
-                    if (value_size > 0) {
-                        throw new ColumnsParseError.IMPORT_ERROR (
-                            _("Cannot import from file, bad value on line %d").printf (line_number)
+                    string[] str_values = delimiter_regex.split_full (line, -1, 0, 0, (int) max_index + 2);
+                    if (str_values.length < max_index + 1 && value_size > 0) {
+                        throw new ParseError.PARSE_ERROR (
+                            _("Index error in %s, cannot access index %d on line %d, only %d columns were found")
+                            .printf (settings.filename, max_index, line_number, str_values.length)
                         );
                     }
-                    columns[column_rank++].header = (owned) str_values[column_index];
-                    // prevent leading 0 in data
-                    value_size = -1;
-                } while (bitset_iter.next (out column_index));
-                value_size++;
-            }
 
-            // shrink to actual size
-            foreach (weak Column column in columns) {
-                column.data.resize (value_size);
-            }
+                    // if we reach capacity, grow the arrays.
+                    if (value_size == array_size) {
+                        array_size *= 2;
+                        foreach (weak Column column in columns) {
+                            column.data.resize (array_size);
+                        }
+                    }
 
-            stream.close ();
+                    // We assume, that we have at least one valid index
+                    bitset_iter.init_first (used_indices, out column_index);
+                    column_rank = 0;
+                    do {
+                        if (column_index >= str_values.length) break;
+                        if (try_evaluate_string (str_values[column_index], out val, separator)) {
+                            columns[column_rank++].data[value_size] = val;
+                            continue;
+                        };
+
+                        // If the data cannot be parsed, treat as header.
+                        // But only if there is not already data present
+                        if (value_size > 0) {
+                            throw new ParseError.PARSE_ERROR (
+                                _("Cannot import from file, bad value on line %d").printf (line_number)
+                            );
+                        }
+                        columns[column_rank++].header = (owned) str_values[column_index];
+                        // prevent leading 0 in data
+                        value_size = -1;
+                    } while (bitset_iter.next (out column_index));
+                    value_size++;
+                }
+
+                // shrink to actual size
+                foreach (weak Column column in columns) {
+                    column.data.resize (value_size);
+                }
+
+                stream.close ();
+            } catch (ParseError e) {
+                throw e;
+            } catch (Error e) {
+                throw new ParseError.PARSE_ERROR (_("Failed to parse file."));
+            }
         }
 
-        public void add_items (StyleParameters style, ItemList itemlist) throws Error {
+        public ItemList add_items (StyleParameters style) throws ParseError {
+            var itemlist = new ItemList ();
+
             foreach (var item_settings in items) {
                 uint yrank = get_rank (item_settings.column_y);
                 string ylabel = (owned) columns[yrank].header;
@@ -166,7 +176,7 @@ namespace Graphs {
                         Expression equation = expression_to_ast (item_settings.equation);
                         xdata = MathTools.evaluate_expression (equation, ydata.length, "n");
                     } catch (MathError e) {
-                        throw new ColumnsParseError.INVALID_CONFIGURATION (e.message);
+                        throw new ParseError.INVALID (e.message);
                     }
                 } else {
                     uint xrank = get_rank (item_settings.column_x);
@@ -180,6 +190,8 @@ namespace Graphs {
                 item.name = settings.filename;
                 itemlist.add (item);
             }
+
+            return itemlist;
         }
 
         private uint get_rank (uint val) {

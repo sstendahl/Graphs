@@ -10,8 +10,10 @@ gi.require_version("Graphs", "1")
 
 def startup(debug: bool, localedir: str, gettext_package: str) -> None:
     """Handle Application setup."""
+    from gi.repository import Graphs
+
     from graphs import scales
-    from graphs.file_import import DataImporter
+    from graphs.file_import.parsers import project, xrdml
     from graphs.item import ItemFactory
     from graphs.python_helper import PythonHelper
     from graphs.styles import StyleManager
@@ -42,5 +44,14 @@ def startup(debug: bool, localedir: str, gettext_package: str) -> None:
 
     PythonHelper()
     StyleManager()
-    DataImporter()
     ItemFactory()
+
+    parsers = [
+        Graphs.ColumnsParser.new(),
+        project.ProjectParser(),
+        Graphs.SqlParser.new(),
+        Graphs.SpreadsheetParser.new(),
+        xrdml.XrdmlParser(),
+        Graphs.XryParser.new(),
+    ]
+    Graphs.DataImporter.new(parsers)
