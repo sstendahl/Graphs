@@ -286,9 +286,9 @@ namespace Graphs {
         }
 
         private void on_params_changed () {
-            if (_reload_source != 0) Source.remove(_reload_source);
+            if (_reload_source != 0) Source.remove (_reload_source);
 
-            _reload_source = Timeout.add_once(200, () => {
+            _reload_source = Timeout.add_once (200, () => {
                 reload_canvas ();
                 _reload_source = 0;
             });
