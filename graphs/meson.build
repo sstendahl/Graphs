@@ -1,13 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 python.install_sources(
   files(
-    'file_import/parsers/__init__.py',
-    'file_import/parsers/columns/__init__.py',
-    'file_import/parsers/sql/__init__.py',
-    'file_import/parsers/spreadsheet/__init__.py',
     'file_import/parsers/project/__init__.py',
     'file_import/parsers/xrdml/__init__.py',
-    'file_import/parsers/xry/__init__.py',
     'file_import/__init__.py',
     'style_editor/__init__.py',
     'style_editor/editor_box.py',
@@ -57,11 +52,13 @@ source_include = include_directories('.')
 graphs_lib = shared_library('graphs',
   files(
     'file_import/parsers/columns/main.vala',
-    'file_import/parsers/columns/parser.vala',
+    'file_import/parsers/columns/reader.vala',
     'file_import/parsers/columns/ui.vala',
-    'file_import/parsers/sql/reader.vala',
-    'file_import/parsers/spreadsheet/parser.vala',
+    'file_import/parsers/spreadsheet/main.vala',
+    'file_import/parsers/spreadsheet/reader.vala',
     'file_import/parsers/spreadsheet/ui.vala',
+    'file_import/parsers/sql/main.vala',
+    'file_import/parsers/sql/reader.vala',
     'file_import/parsers/sql/ui.vala',
     'file_import/parsers/xry/parser.vala',
     'file_import/dialog.vala',
