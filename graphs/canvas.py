@@ -43,13 +43,13 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         style context. Bind `items` to `data.items` and all figure settings
         attributes to their respective values.
         """
-        figure = Figure(style_params, items, self, figure_settings)
         Graphs.Canvas.__init__(
             self,
-            figure=figure,
             hexpand=True,
             vexpand=True,
         )
+        figure = Figure(style_params, items, self, figure_settings)
+        self.props.figure = figure
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
         FigureCanvasBase.__init__(self, figure=figure)
