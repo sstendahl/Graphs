@@ -148,7 +148,6 @@ namespace Graphs {
             data.selection_changed.connect (on_selection_changed);
             data.notify["unsaved"].connect (on_unsaved_change);
             data.style_changed.connect (on_style_changed);
-            data.style_selection_model.selection_changed.connect (reset_items);
 
             on_items_changed ();
             on_unsaved_change ();
@@ -273,10 +272,6 @@ namespace Graphs {
             main_page.operations.set_cut_sensitivity (data_items_selected && mode == Mode.SELECT);
             main_page.operations.set_entry_sensitivity (items_selected);
             export_data_action.set_enabled (items_selected);
-        }
-
-        private void reset_items () {
-            PythonHelper.run_method (this, "_reset_items");
         }
 
         private void on_style_changed () {

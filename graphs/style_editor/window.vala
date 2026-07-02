@@ -297,7 +297,7 @@ namespace Graphs {
         private void reload_canvas () {
             Graphs.StyleParameters style;
             if (editor_box.parameters == null) {
-                style = StyleManager.instance.get_system_style_params ();
+                style = StyleManager.get_system_style_params ();
             } else {
                 style = editor_box.parameters;
                 stylename = style.name;
