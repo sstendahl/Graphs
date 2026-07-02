@@ -106,11 +106,7 @@ namespace Graphs {
             });
 
             _view_history_states.add (figure_settings.get_limits ());
-            run_python_method ("_init_history_states");
-        }
-
-        private void run_python_method (string method) {
-            PythonHelper.run_method (this, method);
+            PythonHelper.run_method (this, "_init_history_states");
         }
 
         // Section ListModel
@@ -249,7 +245,7 @@ namespace Graphs {
             this.figure_settings = new FigureSettings (_settings);
             _view_history_states.clear ();
             _view_history_states.add (figure_settings.get_limits ());
-            run_python_method ("_init_history_states");
+            PythonHelper.run_method (this, "_init_history_states");
             this.file = null;
             this.unsaved = false;
             notify_property ("unsaved");
@@ -724,12 +720,12 @@ namespace Graphs {
         }
 
         public void undo () {
-            run_python_method ("_undo");
+            PythonHelper.run_method (this, "_undo");
             add_view_history_state ();
         }
 
         public void redo () {
-            run_python_method ("_redo");
+            PythonHelper.run_method (this, "_redo");
             add_view_history_state ();
         }
 
@@ -794,7 +790,7 @@ namespace Graphs {
         // Section save & load
 
         public void save () {
-            run_python_method ("_save");
+            PythonHelper.run_method (this, "_save");
             this.unsaved = false;
             notify_property ("unsaved");
         }
