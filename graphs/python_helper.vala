@@ -10,6 +10,11 @@ namespace Graphs {
             instance = this;
         }
 
+        protected signal Canvas create_canvas_request (StyleParameters parameters, ListModel items, bool interactive, FigureSettings? figure_settings);
+        public static Canvas create_canvas (StyleParameters parameters, ListModel items, bool interactive = false, FigureSettings? figure_settings = null) {
+            return instance.create_canvas_request.emit (parameters, items, interactive, figure_settings);
+        }
+
         protected signal StyleEditor create_style_editor_request ();
         public static StyleEditor create_style_editor () {
             return instance.create_style_editor_request.emit ();

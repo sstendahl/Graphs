@@ -3,9 +3,12 @@
 from gi.repository import Gio, Graphs
 
 from graphs import ast, curve_fitting, file_io, misc, operations
+from graphs.canvas import Canvas
 from graphs.figure import Figure
 from graphs.style_editor import PythonStyleEditor
 from graphs.window import PythonWindow
+
+from matplotlib import rcParams, rcParamsDefault
 
 import numpy
 
@@ -13,6 +16,7 @@ import sympy
 from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
+    "create-canvas",
     "create-style-editor",
     "create-window",
     "curve-fitting-dialog",
@@ -21,6 +25,13 @@ _REQUESTS = (
     "perform-operation",
     "python-method",
     "simplify-expression",
+)
+
+FIGURE_IGNORELIST = (
+    "custom_style",
+    "use_custom_style",
+    "min_selected",
+    "max_selected",
 )
 
 XDATA = numpy.linspace(0, 10, 10)
@@ -37,6 +48,25 @@ class PythonHelper(Graphs.PythonHelper):
                 request,
                 getattr(self, "_on_" + request.replace("-", "_")),
             )
+
+    @staticmethod
+    def _on_create_canvas_request(
+        self,
+        params: Graphs.StyleParameters,
+        items: Gio.ListModel,
+        interactive: bool,
+        figure_settings: Graphs.FigureSettings,
+    ) -> Graphs.Canvas:
+        rcParams.update(rcParamsDefault)
+        canvas = Canvas(params, items, interactive, figure_settings)
+
+        if interactive:
+            for prop in dir(figure_settings.props):
+                if prop in FIGURE_IGNORELIST:
+                    continue
+                figure_settings.bind_property(prop, canvas.figure, prop, 1)
+
+        return canvas
 
     @staticmethod
     def _on_create_style_editor_request(self) -> Graphs.StyleEditor:

@@ -2,21 +2,7 @@
 """Main window."""
 from gi.repository import Graphs
 
-from graphs import misc
-from graphs.canvas import Canvas
 from graphs.data import Data
-
-from matplotlib import rcParams, rcParamsDefault
-
-_SCALES = [f"{d}_scale" for d in misc.DIRECTIONS]
-_LABELS = [f"{d}_label" for d in misc.DIRECTIONS]
-_LIMITS = [lim.replace("-", "_") for lim in misc.LIMITS]
-_FIGURE_PROPERTIES = [
-    "title",
-    "legend",
-    "legend_position",
-    "hide_unselected",
-] + _SCALES + _LABELS + _LIMITS
 
 
 class PythonWindow(Graphs.Window):
@@ -77,14 +63,6 @@ class PythonWindow(Graphs.Window):
         if self.props.canvas is not None:
             self.props.canvas.key_release_event(*args)
 
-    def _on_edit_request(self, _canvas, label_id: str) -> None:
-        """Handle edit request."""
-        self.open_figure_settings(label_id)
-
-    def _on_view_changed(self, _canvas) -> None:
-        """Handle view change."""
-        self.props.data.add_view_history_state()
-
     def _on_zoom_in(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1.15, False)
@@ -92,22 +70,3 @@ class PythonWindow(Graphs.Window):
     def _on_zoom_out(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1 / 1.15, False)
-
-    def _reload_canvas(self) -> None:
-        """Reload the canvas."""
-        rcParams.update(rcParamsDefault)
-        params = self.props.data.get_selected_style_params()
-
-        figure_settings = self.props.data.get_figure_settings()
-        canvas = Canvas(params, self.props.data, True, figure_settings)
-
-        for prop in _FIGURE_PROPERTIES:
-            figure_settings.bind_property(prop, canvas.figure, prop, 1)
-
-        for prop in ("min_selected", "max_selected"):
-            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-
-        canvas.connect("edit-request", self._on_edit_request)
-        canvas.connect("view-changed", self._on_view_changed)
-
-        self.set_canvas(canvas)

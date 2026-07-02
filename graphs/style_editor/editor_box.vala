@@ -132,7 +132,7 @@ namespace Graphs {
         [GtkChild]
         protected unowned Adw.SwitchRow errorbar_barsabove { get; }
 
-        public signal void params_changed ();
+        public StyleParameters parameters { get; protected set; }
 
         protected StyleColorManager color_manager { get; set; }
         protected StyleColorManager errbar_color_manager { get; set; }

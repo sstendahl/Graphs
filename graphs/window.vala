@@ -284,7 +284,19 @@ namespace Graphs {
             string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.color, style_params.background_color);
             css_provider.load_from_string (css);
 
-            PythonHelper.run_method (this, "_reload_canvas");
+            var figure_settings = data.figure_settings;
+            var canvas = PythonHelper.create_canvas (data.selected_style_params, data, true, figure_settings);
+
+            figure_settings.bind_property ("min-selected", canvas, "min-selected", 1 | 2);
+            figure_settings.bind_property ("max-selected", canvas, "max-selected", 1 | 2);
+
+            canvas.edit_request.connect ((cv, label_id) => {
+                open_figure_settings (label_id);
+            });
+            canvas.view_changed.connect (data.add_view_history_state);
+
+            if (canvas != null)
+                this.canvas = canvas;
         }
 
         private void append_item_row (Item item, uint index, bool is_data_item) {

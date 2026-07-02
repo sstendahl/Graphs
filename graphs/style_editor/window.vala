@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 using Adw;
 using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -10,6 +9,8 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/window.ui")]
     public class StyleEditor : Adw.ApplicationWindow {
 
+        private const string CSS_TEMPLATE = ".canvas-view#%s {background-color: %s; color: %s; }";
+
         [GtkChild]
         private unowned Adw.Bin editor_bin { get; }
 
@@ -17,22 +18,23 @@ namespace Graphs {
         private unowned Adw.Bin canvas_bin { get; }
 
         [GtkChild]
-        private unowned Stack stack { get; }
+        private unowned Gtk.Stack stack { get; }
 
         [GtkChild]
-        private unowned GridView style_grid { get; }
+        private unowned Gtk.GridView style_grid { get; }
 
         [GtkChild]
         protected unowned Adw.ToolbarView content_view { get; }
 
-        protected Gtk.Box editor_box {
-            get { return (Gtk.Box) editor_bin.get_child (); }
-            set { editor_bin.set_child (value); }
+        protected StyleEditorBox editor_box {
+            get { return (StyleEditorBox) editor_bin.get_child (); }
+            set {
+                editor_bin.set_child (value);
+                value.notify["parameters"].connect (on_params_changed);
+                reload_canvas ();
+            }
         }
-        protected Canvas canvas {
-            get { return (Canvas) canvas_bin.get_child (); }
-            set { canvas_bin.set_child (value); }
-        }
+
         protected string stylename {
             set {
                 this._stylename = value;
@@ -43,29 +45,33 @@ namespace Graphs {
                     application.uninhibit (_inhibit_cookie);
                     _inhibit_cookie = application.inhibit (
                         this,
-                        ApplicationInhibitFlags.LOGOUT,
+                        Gtk.ApplicationInhibitFlags.LOGOUT,
                         value
                     );
                 }
             }
         }
 
-        protected CssProvider css_provider { get; private set; }
-        protected bool unsaved { get; set; default = false; }
+        protected ListStore test_items { get; private set; }
+        private Gtk.CssProvider css_provider;
+        private bool unsaved = false;
         private File _file;
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
         private string _stylename;
+        private uint _reload_source = 0;
 
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
         construct {
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new Gtk.CssProvider ();
+            Gtk.StyleContext.add_provider_for_display (
+                Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             content_view.set_name (Application.get_next_css_name ());
+
+            test_items = new ListStore (typeof (Item));
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
@@ -78,7 +84,7 @@ namespace Graphs {
             var save_as_action = new SimpleAction ("save-style-as", null);
             save_as_action.activate.connect (() => {
                 if (_file == null) return;
-                var dialog = new FileDialog ();
+                var dialog = new Gtk.FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.set_initial_name (_("Style") + ".mplstyle");
                 dialog.save.begin (this, null, (d, response) => {
@@ -92,7 +98,7 @@ namespace Graphs {
 
             var open_action = new SimpleAction ("open-style", null);
             open_action.activate.connect (() => {
-                var dialog = new FileDialog ();
+                var dialog = new Gtk.FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.open.begin (this, null, (d, response) => {
                     try {
@@ -136,7 +142,7 @@ namespace Graphs {
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
                 unowned string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
-                var builder = new Builder.from_resource (path);
+                var builder = new Gtk.Builder.from_resource (path);
                 var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (this);
             });
@@ -162,7 +168,7 @@ namespace Graphs {
                 if (unsaved) {
                     if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                         this,
-                        ApplicationInhibitFlags.LOGOUT,
+                        Gtk.ApplicationInhibitFlags.LOGOUT,
                         _stylename
                     );
                     save_action.set_enabled (true);
@@ -175,16 +181,17 @@ namespace Graphs {
                 }
             });
 
-            var factory = new SignalListItemFactory ();
+            var factory = new Gtk.SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-            style_grid.set_model (new NoSelection (StyleManager.filtered_style_model));
+            style_grid.set_model (new Gtk.NoSelection (StyleManager.filtered_style_model));
         }
 
         public void load (File file) {
             this._file = file;
             load_request.emit (file);
+            reload_canvas ();
             stack.get_pages ().select_item (1, true);
         }
 
@@ -200,12 +207,12 @@ namespace Graphs {
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = (ListItem) object;
+            var item = (Gtk.ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = (ListItem) object;
+            var item = (Gtk.ListItem) object;
             StylePreview preview = (StylePreview) item.get_child ();
             Style style = (Style) item.get_item ();
             preview.style = style;
@@ -220,7 +227,7 @@ namespace Graphs {
                 action_group.add_action (open_action);
                 var open_with_action = new SimpleAction ("open_with", null);
                 open_with_action.activate.connect (() => {
-                    var launcher = new FileLauncher (style.file);
+                    var launcher = new Gtk.FileLauncher (style.file);
                     launcher.set_always_ask (true);
                     launcher.launch.begin (this, null);
                 });
@@ -276,6 +283,44 @@ namespace Graphs {
 
             application.on_style_editor_closed (this);
             return false;
+        }
+
+        private void on_params_changed () {
+            if (_reload_source != 0) Source.remove(_reload_source);
+
+            _reload_source = Timeout.add_once(200, () => {
+                reload_canvas ();
+                _reload_source = 0;
+            });
+        }
+
+        private void reload_canvas () {
+            Graphs.StyleParameters style;
+            if (editor_box.parameters == null) {
+                style = StyleManager.instance.get_system_style_params ();
+            } else {
+                style = editor_box.parameters;
+                stylename = style.name;
+            }
+
+            var color_cycle = style.color_cycle;
+            var errorbar_cycle = style.errorbar_cycle;
+            for (uint i = 0; i < test_items.get_n_items (); i++) {
+                var item = (DataItem) test_items.get_item (i);
+
+                item.color = color_cycle[i % color_cycle.length];
+                item.errcolor = errorbar_cycle[i % errorbar_cycle.length];
+                ItemFactory.override_item (item, style);
+            }
+
+            var canvas = PythonHelper.create_canvas (style, test_items);
+            canvas.figure.set ("title", _("Title"));
+            canvas.figure.set ("bottom_label", _("X Label"));
+            canvas.figure.set ("left_label", _("Y Label"));
+
+            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.background_color, style.color));
+
+            canvas_bin.set_child (canvas);
         }
     }
 }
