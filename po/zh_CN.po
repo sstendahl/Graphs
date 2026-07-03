@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-06-20 18:25+0000\n"
-"PO-Revision-Date: 2026-06-22 07:44+0800\n"
+"POT-Creation-Date: 2026-07-02 13:18+0000\n"
+"PO-Revision-Date: 2026-07-03 08:39+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1954,29 +1954,33 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "重做动作"
 
-#: graphs/file_import/parsers/columns/__init__.py:17
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr "自定义分隔符不能为空"
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "列"
 
-#: graphs/file_import/parsers/columns/main.vala:41
-msgid "Custom delimiter cannot be empty"
-msgstr "自定义分隔符不能为空"
-
-#: graphs/file_import/parsers/columns/parser.vala:107
+#: graphs/file_import/parsers/columns/reader.vala:110
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr "%1$s 中有索引错误，无法在第 %3$d 行访问索引 %2$d，仅找到 %4$d 栏"
 
-#: graphs/file_import/parsers/columns/parser.vala:134
+#: graphs/file_import/parsers/columns/reader.vala:137
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "无法从文件导入，在第 %d 行有坏值"
 
+#: graphs/file_import/parsers/columns/reader.vala:156
+msgid "Failed to parse file."
+msgstr "解析文件失败。"
+
 #: graphs/file_import/parsers/columns/ui.vala:40
-#: graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/spreadsheet/ui.vala:149
 #, c-format
 msgid "Item %d"
 msgstr "项目 %d"
@@ -1991,30 +1995,26 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:202
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "电子表格"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:203
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "电子表格"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:270
-msgid "No numeric data found in column."
-msgstr "表格栏内未发现数字数据。"
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+msgid "Failed to open File."
+msgstr "打开文件失败。"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:284
-msgid "Columns do not have the same length."
-msgstr "表格栏不具有相同的长度。"
-
-#: graphs/file_import/parsers/sql/__init__.py:19
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "数据库"
 
-#: graphs/file_import/parsers/sql/__init__.py:20
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite 数据库"
@@ -2042,35 +2042,48 @@ msgstr "PANalytical XRDML"
 msgid "Intensity (cps)"
 msgstr "强度 (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:18
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/parser.vala:73
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/parser.vala:74
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:117
+#: graphs/file_import/parsers/xry/parser.vala:104
+#: graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "导入失败"
 
-#: graphs/file_import/file_import.vala:48
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr "解析器初始化设置失败。"
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr "解析器初始化设置部件失败。"
+
+#: graphs/file_import/dialog.vala:134
+msgid "Defaults updated"
+msgstr "默认值已更新"
+
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "支持的文件"
 
 #. columns
-#: graphs/file_import/file_import.vala:52
+#: graphs/file_import/file_import.vala:85
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
@@ -2141,6 +2154,11 @@ msgstr "Graphs 样式编辑器 — %s"
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "无法加载 {font}"
 
 #: graphs/actions.vala:30
 msgid "The Graphs Developers"
@@ -2246,7 +2264,7 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:343
+#: graphs/data.py:357
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
@@ -2281,10 +2299,6 @@ msgstr "已导出数据"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "文本文件"
-
-#: graphs/graphs.in:69
-msgid "Could not load {font}"
-msgstr "无法加载 {font}"
 
 #: graphs/item.vala:156
 msgid "Dataset"
@@ -2456,6 +2470,12 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:393
 msgid "Open Location"
 msgstr "打开位置"
+
+#~ msgid "No numeric data found in column."
+#~ msgstr "表格栏内未发现数字数据。"
+
+#~ msgid "Columns do not have the same length."
+#~ msgstr "表格栏不具有相同的长度。"
 
 #, python-brace-format
 #~ msgid "Style {stylename} does not exist, loading system preferred style"
