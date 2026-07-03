@@ -79,70 +79,7 @@ configure_file(
     install_dir: join_paths(mandir, 'man1'),
 )
 
-blueprint_files = [
-  'ui/dialogs/beta-disallowed.blp',
-  'ui/dialogs/delete-style.blp',
-  'ui/dialogs/invalid-project.blp',
-  'ui/dialogs/legacy-migration-disallowed.blp',
-  'ui/dialogs/reset-import-settings.blp',
-  'ui/dialogs/save-project-changes.blp',
-  'ui/dialogs/save-style-changes.blp',
-  'ui/import/columns/box.blp',
-  'ui/import/columns/item-group.blp',
-  'ui/import/columns/main-group.blp',
-  'ui/import/spreadsheet/box.blp',
-  'ui/import/spreadsheet/main-group.blp',
-  'ui/import/spreadsheet/item-group.blp',
-  'ui/import/sql/main-group.blp',
-  'ui/import/dialog.blp',
-  'ui/import/file-row.blp',
-  'ui/sidebar/edit-item/base.blp',
-  'ui/sidebar/edit-item/data.blp',
-  'ui/sidebar/edit-item/equation.blp',
-  'ui/sidebar/edit-item/equation-group.blp',
-  'ui/sidebar/edit-item/errorbar-group.blp',
-  'ui/sidebar/edit-item/fill.blp',
-  'ui/sidebar/edit-item/generated-data.blp',
-  'ui/sidebar/edit-item/page.blp',
-  'ui/sidebar/figure-settings/settings-page.blp',
-  'ui/sidebar/figure-settings/style-page.blp',
-  'ui/sidebar/main.blp',
-  'ui/sidebar/operations.blp',
-  'ui/style-editor/add-style.blp',
-  'ui/style-editor/color-row.blp',
-  'ui/style-editor/editor-box.blp',
-  'ui/style-editor/item-color-row.blp',
-  'ui/style-editor/shortcuts.blp',
-  'ui/style-editor/window.blp',
-  'ui/add-equation.blp',
-  'ui/curve-fitting.blp',
-  'ui/export-figure.blp',
-  'ui/fitting-parameters.blp',
-  'ui/generate-data.blp',
-  'ui/item-box.blp',
-  'ui/smoothen-settings.blp',
-  'ui/style-preview.blp',
-  'ui/transform.blp',
-  'ui/window.blp',
-  'ui/window-shortcuts.blp',
-]
-
-blueprints_ui = []
-foreach b : blueprint_files
-  blueprints_ui += b.replace('.blp', '.ui')
-endforeach
-
-blueprints = custom_target('blueprints',
-    input: files(blueprint_files),
-   output: 'ui',
-  command: [
-    find_program('blueprint-compiler'),
-    'batch-compile',
-    meson.current_build_dir(),
-    '@CURRENT_SOURCE_DIR@',
-    '@INPUT@',
-  ],
-)
+subdir('ui')
 
 styles = files(
   'styles/adwaita.mplstyle',
@@ -213,7 +150,7 @@ gresource_xml = custom_target('gresource_xml',
     meson.current_source_dir(),
     style_io,
     '--styles', styles,
-    '--ui', blueprints_ui,
+    '--ui', blueprints,
     '--icons', icons,
     '--other', other,
   ],

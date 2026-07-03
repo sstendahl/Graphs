@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-06-20 18:25+0000\n"
-"PO-Revision-Date: 2026-06-20 21:40+0300\n"
+"POT-Creation-Date: 2026-07-02 13:18+0000\n"
+"PO-Revision-Date: 2026-07-02 20:04+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1982,16 +1982,16 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повторити дію"
 
-#: graphs/file_import/parsers/columns/__init__.py:17
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr "Нетиповий роздільник не може бути порожнім"
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: graphs/file_import/parsers/columns/main.vala:41
-msgid "Custom delimiter cannot be empty"
-msgstr "Нетиповий роздільник не може бути порожнім"
-
-#: graphs/file_import/parsers/columns/parser.vala:107
+#: graphs/file_import/parsers/columns/reader.vala:110
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -2000,13 +2000,18 @@ msgstr ""
 "Помилка індексу у %s, не вдалося отримати доступ до індексу %d у рядку %d, "
 "знайдено лише %d стовпчиків"
 
-#: graphs/file_import/parsers/columns/parser.vala:134
+#: graphs/file_import/parsers/columns/reader.vala:137
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Не вдалося імпортувати дані з файла, помилкове значення у рядку %d"
 
+#: graphs/file_import/parsers/columns/reader.vala:156
+#| msgid "Failed to parse project file"
+msgid "Failed to parse file."
+msgstr "Не вдалося обробити файл."
+
 #: graphs/file_import/parsers/columns/ui.vala:40
-#: graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/spreadsheet/ui.vala:149
 #, c-format
 msgid "Item %d"
 msgstr "Елемент %d"
@@ -2021,30 +2026,27 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:202
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Електронна таблиця"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:203
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Електронна таблиця"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:270
-msgid "No numeric data found in column."
-msgstr "У стовпчику не знайдено числових даних."
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+#| msgid "Failed to parse project file"
+msgid "Failed to open File."
+msgstr "Не вдалося відкрити файл."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:284
-msgid "Columns do not have the same length."
-msgstr "Довжина стовпчиків є різною."
-
-#: graphs/file_import/parsers/sql/__init__.py:19
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "База даних"
 
-#: graphs/file_import/parsers/sql/__init__.py:20
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "База даних SQLite"
@@ -2074,35 +2076,49 @@ msgstr "XRDML PANalytical"
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:18
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "xry Leybold"
 
-#: graphs/file_import/parsers/xry/parser.vala:73
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/parser.vala:74
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:117
+#: graphs/file_import/parsers/xry/parser.vala:104
+#: graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "Імпортування зазнало невдачі"
 
-#: graphs/file_import/file_import.vala:48
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr "обробнику не вдалося ініціалізувати параметри."
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr "обробнику не вдалося ініціалізувати віджети параметрів."
+
+#: graphs/file_import/dialog.vala:134
+#| msgid "Defaults Updated"
+msgid "Defaults updated"
+msgstr "Оновлено типові значення"
+
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
 #. columns
-#: graphs/file_import/file_import.vala:52
+#: graphs/file_import/file_import.vala:85
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
@@ -2173,6 +2189,11 @@ msgstr "Редактор стилю графіка – %s"
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "Не вдалося завантажити {font}"
 
 #: graphs/actions.vala:30
 msgid "The Graphs Developers"
@@ -2276,25 +2297,23 @@ msgstr "КСКП"
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:343
+#: graphs/data.py:357
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
 #: graphs/data.vala:480
 #, c-format
-#| msgid "Could not parse style {stylename}, loading system preferred style"
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
-"Не вдалося обробити стиль %s — повертаємося до типового загальносистемного"
-" стилю"
+"Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
+"стилю"
 
 #: graphs/data.vala:852
 #, c-format
-#| msgid "Could not parse style {stylename}, loading system preferred style"
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
-"Не вдалося знайти стиль %s — повертаємося до типового загальносистемного"
-" стилю"
+"Не вдалося знайти стиль %s — повертаємося до типового загальносистемного "
+"стилю"
 
 #: graphs/export_figure.vala:48
 msgctxt "filename"
@@ -2317,10 +2336,6 @@ msgstr "Експортовані дані"
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
-
-#: graphs/graphs.in:69
-msgid "Could not load {font}"
-msgstr "Не вдалося завантажити {font}"
 
 #: graphs/item.vala:156
 msgid "Dataset"
@@ -2497,6 +2512,12 @@ msgstr "Графіки — %s"
 #: graphs/window.vala:393
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "No numeric data found in column."
+#~ msgstr "У стовпчику не знайдено числових даних."
+
+#~ msgid "Columns do not have the same length."
+#~ msgstr "Довжина стовпчиків є різною."
 
 #, python-brace-format
 #~ msgid "Style {stylename} does not exist, loading system preferred style"

@@ -9,7 +9,7 @@ namespace Graphs {
         private unowned Adw.ComboRow sheet_selector;
 
         public SpreadsheetGroup (ImportSettings settings) {
-            var parser = (SpreadsheetParser) settings.get_item ("parser");
+            var parser = (SpreadsheetReader) settings.get_item ("reader");
 
             var string_list = new Gtk.StringList (parser.get_sheet_names ());
             sheet_selector.set_model (string_list);

@@ -1,5 +1,7 @@
-#VSCode
+# VSCode
 .vscode/
+# Jetbrains
+.idea
 # Meson
 _build/
 data/gschemas.compiled

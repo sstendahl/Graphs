@@ -328,15 +328,12 @@ class EquationOperations():
             equation = callback(equation, *args)
             equation = Graphs.expression_to_ast(str(equation))
             if not Graphs.math_tools_validate_expression(equation):
-                raise misc.InvalidEquationError(
-                    _(
-                        "The operation on {name} "
-                        "did not result in a plottable equation",
-                    ).format(name=item.get_name()),
-                )
+                message = _(
+                    "The operation on {name} "
+                    "did not result in a plottable equation",
+                ).format(name=item.get_name())
+                return False, message
             item.set_equation(equation)
-        except misc.InvalidEquationError as error:
-            return False, error.message
         except (NotImplementedError, AttributeError, KeyError):
             return False, _("Operation not supported for equations.")
         return True, ""
