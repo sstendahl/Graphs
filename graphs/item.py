@@ -60,7 +60,7 @@ class _PythonItemMixin:
         """Convert item to dict."""
         dictionary = {
             key: self.get_property(key)
-            for key in dir(self.props) if key != "typename"
+            for key in dir(self.props) if key not in ("typename", "fill")
         }
         dictionary["type"] = self.__gtype_name__[12:]
         return dictionary
@@ -290,6 +290,7 @@ class ItemFactory(Graphs.ItemFactory):
         "generated-data-item": GeneratedDataItem.new,
         "equation-item": EquationItem.new,
         "text-item": TextItem.new,
+        "fill-item": FillItem,
     }
 
     def __init__(self):

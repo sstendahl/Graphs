@@ -6,7 +6,7 @@ Provides GObject based wrappers for mpl artists.
 """
 from itertools import islice
 
-from gi.repository import GObject, Graphs
+from gi.repository import GObject, Gio, Graphs
 
 from graphs import ast, misc, utilities
 
@@ -36,13 +36,15 @@ def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
         cls = TextItemArtistWrapper
     elif isinstance(item, Graphs.FillItem):
         cls = FillItemArtistWrapper
-    artist_wrapper = cls(
-        fig.axes[item.get_yposition() * 2 + item.get_xposition()],
-        item,
-    )
+    axis = fig.axes[item.get_yposition() * 2 + item.get_xposition()]
+    artist_wrapper = cls(axis, item)
+    if isinstance(artist_wrapper, FillArtistMixin):
+        artist_wrapper.setup_fill(axis, item, fig._items)
+    bindings = []
     for prop in dir(artist_wrapper.props):
         if not (prop == "label" and artist_wrapper.legend):
-            item.bind_property(prop, artist_wrapper, prop, 0)
+            bindings.append(item.bind_property(prop, artist_wrapper, prop, 0))
+    artist_wrapper._bindings = bindings
     artist_wrapper.connect("notify", lambda _x, _y: fig.update_legend())
     return artist_wrapper
 
@@ -52,6 +54,13 @@ class ItemArtistWrapper(GObject.Object):
 
     __gtype_name__ = "GraphsItemArtistWrapper"
     legend = False
+    _bindings = ()
+
+    def release(self) -> None:
+        """Disconnect from the item so the wrapper can be collected."""
+        for binding in self._bindings:
+            binding.unbind()
+        self._bindings = ()
 
     def get_artist(self) -> artist:
         """Get underlying mpl artist."""
@@ -88,13 +97,172 @@ class ItemArtistWrapper(GObject.Object):
         self._artist.set_alpha(alpha)
 
 
-class DataItemArtistWrapper(ItemArtistWrapper):
+class FillArtistMixin:
+    """Mixin providing a fill for the items."""
+
+    _fill_ready = False
+    _fill_bindings = ()
+    _fill_ref_item = None
+    _fill_ref_handler = None
+    _FILL_PROPERTIES = (
+        "fillenabled",
+        "filldirection",
+        "fillreference",
+        "fillcolor",
+        "fillalpha",
+    )
+
+    def release(self) -> None:
+        """Disconnect from the item so the wrapper can be collected."""
+        self._watch_reference(None)
+        for binding in self._fill_bindings:
+            binding.unbind()
+        self._fill_bindings = ()
+        super().release()
+
+    def setup_fill(
+        self,
+        axis: pyplot.axis,
+        item: Graphs.Item,
+        items: Gio.ListModel,
+    ) -> None:
+        """Initialize the fill for an item."""
+        self._fill_axis = axis
+        self._fill_item = item
+        self._fill_items = items
+
+        self._fill = item.get_fill()
+        self._fill.set_color(item.get_fillcolor() or item.get_color())
+        self._fill.set_alpha(item.get_fillalpha())
+        self._fill_wrapper = FillItemArtistWrapper(axis, self._fill)
+        self._fill_bindings = [
+            self._fill.bind_property(prop, self._fill_wrapper, prop, 0)
+            for prop in ("data", "color", "alpha")
+        ]
+
+        for prop in self._FILL_PROPERTIES:
+            self.set_property(prop, item.get_property(prop))
+            self.connect(f"notify::{prop}", self._on_fill_prop_changed)
+        self._fill_ready = True
+        axis.callbacks.connect("ylim_changed", self._on_fill_limits_changed)
+        self._update_fill()
+
+    def _get_fill_xydata(self) -> tuple:
+        """Get the curve data the fill is attached to."""
+        raise NotImplementedError
+
+    def _on_fill_prop_changed(self, *_args) -> None:
+        self._update_fill()
+
+    def _watch_reference(self, item: Graphs.Item) -> None:
+        """Update the fill when the reference item's data changes."""
+        if item is self._fill_ref_item:
+            return
+        if self._fill_ref_handler is not None:
+            self._fill_ref_item.disconnect(self._fill_ref_handler)
+            self._fill_ref_handler = None
+        self._fill_ref_item = item
+        if item is not None:
+            prop = "data" if isinstance(item, Graphs.DataItem) \
+                else "equation"
+            self._fill_ref_handler = item.connect(
+                f"notify::{prop}",
+                lambda *_args: self._update_fill(),
+            )
+
+    def _on_fill_limits_changed(self, *_args) -> None:
+        if self.props.fillenabled \
+                and self.props.filldirection != Graphs.FillDirection.BETWEEN:
+            self._update_fill()
+
+    def _get_reference_ydata(self, xdata: numpy.ndarray) -> numpy.ndarray:
+        """Get the ydata of the reference item, interpolated onto xdata."""
+        index = self.props.fillreference
+        if index < 0 or index >= self._fill_items.get_n_items():
+            self._watch_reference(None)
+            return None
+        item = self._fill_items.get_item(index)
+        if item is self._fill_item \
+                or not isinstance(
+                    item,
+                    (Graphs.DataItem, Graphs.EquationItem),
+                ):
+            self._watch_reference(None)
+            return None
+        self._watch_reference(item)
+        if isinstance(item, Graphs.DataItem):
+            data = item.props.data
+            ref_x = utilities.bytes_to_ndarray(data.get_xdata_b())
+            ref_y = utilities.bytes_to_ndarray(data.get_ydata_b())
+        else:
+            scale = Graphs.scale_from_string(self._fill_axis.get_xscale())
+            ref_x, ref_y = utilities.equation_to_data(
+                item.get_equation(),
+                (xdata.min(), xdata.max()),
+                xdata.size,
+                scale,
+            )
+        if ref_x is None or len(ref_x) < 2:
+            return None
+        order = numpy.argsort(ref_x)
+        return numpy.interp(xdata, ref_x[order], ref_y[order])
+
+    def _get_fill_data(self) -> tuple:
+        """Get the fill data tuple, or None if nothing should be drawn."""
+        if not self.props.fillenabled:
+            return None
+        xdata, ydata = self._get_fill_xydata()
+        xdata = numpy.asarray(xdata, dtype=float)
+        ydata = numpy.asarray(ydata, dtype=float)
+        if xdata.size == 0:
+            return None
+        ymin, ymax = sorted(self._fill_axis.get_ylim())
+        if self.props.filldirection == Graphs.FillDirection.ABOVE:
+            y2 = ymax
+        elif self.props.filldirection == Graphs.FillDirection.BELOW:
+            y2 = ymin
+        else:
+            y2 = self._get_reference_ydata(xdata)
+        if self.props.filldirection != Graphs.FillDirection.BETWEEN:
+            self._watch_reference(None)
+        if y2 is None:
+            return None
+        return xdata, ydata, y2
+
+    def _update_fill(self) -> None:
+        """Update the internal fill item to match the current state."""
+        if not self._fill_ready:
+            return
+        data = self._get_fill_data()
+        if data is None:
+            self._watch_reference(None)
+        else:
+            alpha = self.props.fillalpha
+            if not self.props.selected:
+                alpha *= 0.35
+            self._fill.set_color(
+                self.props.fillcolor
+                if self.props.fillcolor else self.props.color,
+            )
+            self._fill.set_alpha(alpha)
+            self._fill.props.data = data
+        self._fill_wrapper.get_artist().set_visible(data is not None)
+        if self._fill_axis.figure.parent is not None:
+            self._fill_axis.figure.parent.queue_draw()
+
+
+class DataItemArtistWrapper(FillArtistMixin, ItemArtistWrapper):
     """Wrapper for DataItem."""
 
     __gtype_name__ = "GraphsDataItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
+    fillenabled = GObject.Property(type=bool, default=False)
+    filldirection = GObject.Property(type=int, default=0)
+    fillreference = GObject.Property(type=int, default=-1)
+    fillcolor = GObject.Property(type=str, default="")
+    fillalpha = GObject.Property(type=float, default=0.25)
     legend = True
 
     @GObject.Property(type=Graphs.DataHolder)
@@ -121,6 +289,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._ybar.set_segments(numpy.stack((start, end), axis=1))
             self._ycaps[0].set_data(xdata, ydata - yerr)
             self._ycaps[1].set_data(xdata, ydata + yerr)
+
+        self._update_fill()
 
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
@@ -237,6 +407,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             markersize *= 0.35
         self._data.set_linewidth(linewidth)
         self._data.set_markersize(markersize)
+        self._update_fill()
+
+    def _get_fill_xydata(self) -> tuple:
+        """Get the curve data the fill is attached to."""
+        return self._data.get_data()
 
     @staticmethod
     def _handle_singularities(data: Graphs.DataHolder) -> tuple:
@@ -342,15 +517,21 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         for prop in ("selected", "linewidth", "markersize"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
+        self.props.legend = item.get_legend()
         self._set_properties()
 
 
-class EquationItemArtistWrapper(ItemArtistWrapper):
+class EquationItemArtistWrapper(FillArtistMixin, ItemArtistWrapper):
     """Wrapper for EquationItem."""
 
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
+    fillenabled = GObject.Property(type=bool, default=False)
+    filldirection = GObject.Property(type=int, default=0)
+    fillreference = GObject.Property(type=int, default=-1)
+    fillcolor = GObject.Property(type=str, default="")
+    fillalpha = GObject.Property(type=float, default=0.25)
     legend = True
     _singularities_cache = {}
 
@@ -376,11 +557,24 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         for prop in ("selected", "linewidth"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
+        self.props.legend = item.get_legend()
 
-        item.connect("notify::equation", self._on_equation_change)
+        self._item = item
+        self._equation_handler = \
+            item.connect("notify::equation", self._on_equation_change)
 
         self._set_properties(None, None)
         self._generate_data()
+
+    def release(self) -> None:
+        """Disconnect from the item so the wrapper can be collected."""
+        if self._equation_handler is not None:
+            self._item.disconnect(self._equation_handler)
+            self._equation_handler = None
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        super().release()
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None
@@ -417,6 +611,11 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         if not self.props.selected:
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
+        self._update_fill()
+
+    def _get_fill_xydata(self) -> tuple:
+        """Get the curve data the fill is attached to."""
+        return self._artist.get_data()
 
     def _generate_data(self):
         """Generate new data for the artist."""
@@ -439,6 +638,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             data = self._insert_singularity_points(data, singularities)
 
         self._artist.set_data(*data)
+        self._update_fill()
         if self._axis.figure.parent is not None:
             self._axis.figure.parent.queue_draw()
 

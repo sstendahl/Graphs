@@ -176,6 +176,8 @@ class Figure(GObject.Object, figure.Figure):
         self.axis.get_yaxis().set_visible(visible_axes[2])
         self.right_axis.get_yaxis().set_visible(visible_axes[3])
 
+        for wrapper in self._artists:
+            wrapper.release()
         self._artists = [
             artist.new_for_item(self, item)
             for item in reversed(drawable_items)

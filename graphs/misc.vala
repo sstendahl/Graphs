@@ -31,6 +31,18 @@ namespace Graphs {
         }
     }
 
+    public enum FillDirection {
+        ABOVE,
+        BELOW,
+        BETWEEN;
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (FillDirection).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+    }
+
     public enum Scale {
         LINEAR,
         LOG,

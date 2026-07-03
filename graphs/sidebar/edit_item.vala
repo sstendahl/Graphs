@@ -341,7 +341,126 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/fill.ui")]
     public class EditItemFill : Box {
 
+        [GtkChild]
+        private unowned Adw.SwitchRow fill_enabled { get; }
+
+        [GtkChild]
+        private unowned Adw.ComboRow fill_direction { get; }
+
+        [GtkChild]
+        private unowned Adw.ComboRow fill_item_row { get; }
+
+        [GtkChild]
+        private unowned StyleColorRow fill_color_row { get; }
+
+        [GtkChild]
+        private unowned Gtk.Scale fill_alpha_scale { get; }
+
+        private Item item;
+        private Gtk.SignalListItemFactory direction_factory;
+        private Item[] reference_items = {};
+        private uint[] reference_indices = {};
+        private bool updating_references = false;
+
         public EditItemFill (Item item) {
+            this.item = item;
+
+            item.bind_property (
+                "fillenabled",
+                fill_enabled,
+                "active",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "filldirection",
+                fill_direction,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "fillalpha",
+                fill_alpha_scale.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+
+            string color = item.fillcolor == "" ? item.color : item.fillcolor;
+            fill_color_row.color = Tools.hex_to_rgba (color);
+            fill_color_row.notify["color"].connect (() => {
+                item.fillcolor = Tools.rgba_to_hex (fill_color_row.color);
+            });
+
+            direction_factory = new Gtk.SignalListItemFactory ();
+            direction_factory.setup.connect ((object) => {
+                var list_item = (Gtk.ListItem) object;
+                list_item.set_child (new Gtk.Label ("") { xalign = 0 });
+            });
+            direction_factory.bind.connect (on_direction_factory_bind);
+            fill_direction.set_list_factory (direction_factory);
+
+            fill_item_row.notify["selected"].connect (on_reference_change);
+            map.connect (populate_reference_items);
+        }
+
+        private void populate_reference_items () {
+            var window = get_root () as Window;
+            if (window == null) return;
+
+            updating_references = true;
+            var names = new StringList (null);
+            reference_items = {};
+            reference_indices = {};
+            bool found = false;
+            uint selected = 0;
+            uint index = 0;
+            foreach (Item reference in window.data.get_items ()) {
+                if (reference != item
+                        && (reference is DataItem || reference is EquationItem)) {
+                    if ((int) index == item.fillreference) {
+                        found = true;
+                        selected = names.get_n_items ();
+                    }
+                    names.append (reference.name);
+                    reference_items += reference;
+                    reference_indices += index;
+                }
+                index++;
+            }
+            fill_item_row.set_model (names);
+            if (found) fill_item_row.set_selected (selected);
+            updating_references = false;
+
+            fill_direction.set_list_factory (null);
+            fill_direction.set_list_factory (direction_factory);
+
+            on_fill_direction ();
+        }
+
+        private void on_reference_change () {
+            uint selected = fill_item_row.get_selected ();
+            if (updating_references || selected == Gtk.INVALID_LIST_POSITION) return;
+            if (selected >= reference_indices.length) return;
+            item.fillreference = (int) reference_indices[selected];
+        }
+
+        private void on_direction_factory_bind (Object object) {
+            var list_item = (Gtk.ListItem) object;
+            var label = (Gtk.Label) list_item.get_child ();
+            label.set_label (((Gtk.StringObject) list_item.get_item ()).get_string ());
+            bool insensitive = list_item.get_position () == FillDirection.BETWEEN
+                && reference_items.length == 0;
+            list_item.set_selectable (!insensitive);
+            list_item.set_activatable (!insensitive);
+            label.set_sensitive (!insensitive);
+        }
+
+        [GtkCallback]
+        private void on_fill_direction () {
+            bool between = (FillDirection) fill_direction.get_selected () == FillDirection.BETWEEN;
+            fill_item_row.set_visible (between && reference_items.length > 0);
+            if (between && item.fillreference == -1 && reference_indices.length > 0) {
+                item.fillreference = (int) reference_indices[fill_item_row.get_selected ()];
+            }
         }
     }
 }

@@ -37,6 +37,7 @@ namespace Graphs {
         protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
+        protected signal FillItem fill_item_request ();
 
         public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
             return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
@@ -53,6 +54,10 @@ namespace Graphs {
         public static TextItem new_text_item (StyleParameters parameters, double xanchor, double yanchor, string text) {
             return instance.text_item_request.emit (parameters, xanchor, yanchor, text);
         }
+
+        public static FillItem new_fill_item () {
+            return instance.fill_item_request.emit ();
+        }
     }
 
     /**
@@ -68,6 +73,19 @@ namespace Graphs {
         public string ylabel { get; set; default = ""; }
         public XPosition xposition { get; set; default = XPosition.BOTTOM; }
         public YPosition yposition { get; set; default = YPosition.LEFT; }
+        public bool fillenabled { get; set; default = false; }
+        public FillDirection filldirection { get; set; default = FillDirection.ABOVE; }
+        public int fillreference { get; set; default = -1; }
+        public string fillcolor { get; set; default = ""; }
+        public double fillalpha { get; set; default = 0.25; }
+
+        private FillItem? _fill = null;
+        public FillItem fill {
+            get {
+                if (_fill == null) _fill = ItemFactory.new_fill_item ();
+                return _fill;
+            }
+        }
 
         public Gdk.RGBA get_rgba () {
             Gdk.RGBA rgba = Tools.hex_to_rgba (color);

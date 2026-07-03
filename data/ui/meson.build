@@ -21,6 +21,7 @@ blueprint_files = [
   'sidebar/edit-item/equation.blp',
   'sidebar/edit-item/equation-group.blp',
   'sidebar/edit-item/errorbar-group.blp',
+  'sidebar/edit-item/fill.blp',
   'sidebar/edit-item/generated-data.blp',
   'sidebar/edit-item/page.blp',
   'sidebar/figure-settings/settings-page.blp',
