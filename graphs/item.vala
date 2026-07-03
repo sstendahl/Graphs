@@ -69,6 +69,7 @@ namespace Graphs {
         public string color { get; set; default = ""; }
         public float alpha { get; set; default = 1; }
         public bool selected { get; set; default = true; }
+        public bool legend { get; set; default = true; }
         public string xlabel { get; set; default = ""; }
         public string ylabel { get; set; default = ""; }
         public XPosition xposition { get; set; default = XPosition.BOTTOM; }

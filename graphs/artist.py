@@ -263,7 +263,7 @@ class DataItemArtistWrapper(FillArtistMixin, ItemArtistWrapper):
     fillreference = GObject.Property(type=int, default=-1)
     fillcolor = GObject.Property(type=str, default="")
     fillalpha = GObject.Property(type=float, default=0.25)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -532,7 +532,7 @@ class EquationItemArtistWrapper(FillArtistMixin, ItemArtistWrapper):
     fillreference = GObject.Property(type=int, default=-1)
     fillcolor = GObject.Property(type=str, default="")
     fillalpha = GObject.Property(type=float, default=0.25)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):

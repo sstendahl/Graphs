@@ -40,6 +40,9 @@ namespace Graphs {
         private unowned Adw.EntryRow name_entry { get; }
 
         [GtkChild]
+        private unowned Adw.SwitchRow legend { get; }
+
+        [GtkChild]
         private unowned Adw.ComboRow xposition { get; }
 
         [GtkChild]
@@ -50,6 +53,12 @@ namespace Graphs {
                 "name",
                 name_entry,
                 "text",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "legend",
+                legend,
+                "active",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
             item.bind_property (
