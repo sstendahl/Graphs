@@ -1,14 +1,4 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-configure_file(
-          input: 'graphs.in',
-         output: 'graphs',
-  configuration: conf,
-        install: true,
-   install_mode: 'rwxr-xr-x',
-    install_dir: bindir,
-)
-devenv.prepend('PATH', meson.current_build_dir())
-
 python.install_sources(
   files(
     'file_import/parsers/__init__.py',
@@ -21,6 +11,7 @@ python.install_sources(
     'file_import/__init__.py',
     'style_editor/__init__.py',
     'style_editor/editor_box.py',
+    '__init__.py',
     'artist.py',
     'ast.py',
     'canvas.py',
@@ -69,6 +60,7 @@ graphs_lib = shared_library('graphs',
     'file_import/parsers/columns/parser.vala',
     'file_import/parsers/columns/ui.vala',
     'file_import/parsers/sql/reader.vala',
+    'file_import/parsers/spreadsheet/parser.vala',
     'file_import/parsers/spreadsheet/ui.vala',
     'file_import/parsers/sql/ui.vala',
     'file_import/parsers/xry/parser.vala',
@@ -138,3 +130,11 @@ graphs_typelib = custom_target('graphs typelib',
       ],
  )
 devenv.set('GI_TYPELIB_PATH', meson.current_build_dir())
+
+executable('graphs', files('graphs.c'),
+  dependencies: dependencies + python.dependency(embed: true),
+     link_with: graphs_lib,
+       install: true,
+   install_dir: bindir,
+)
+devenv.prepend('PATH', meson.current_build_dir())

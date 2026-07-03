@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
 using Gtk;
 using Gee;
 
@@ -8,7 +9,9 @@ namespace Graphs {
         private unowned Adw.ComboRow sheet_selector;
 
         public SpreadsheetGroup (ImportSettings settings) {
-            var string_list = (Gtk.StringList) settings.get_item ("sheet-names");
+            var parser = (SpreadsheetParser) settings.get_item ("parser");
+
+            var string_list = new Gtk.StringList (parser.get_sheet_names ());
             sheet_selector.set_model (string_list);
             sheet_selector.set_selected (settings.get_int ("sheet-index"));
 
