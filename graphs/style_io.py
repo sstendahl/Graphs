@@ -50,6 +50,9 @@ STYLE_CUSTOM_PARAMS = [
     "errorbar.linewidth",
     "errorbar.barsabove",
     "errorbar.color_cycle",
+    "fill.enabled",
+    "fill.direction",
+    "fill.alpha",
 ]
 
 

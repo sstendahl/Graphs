@@ -15,6 +15,7 @@ X = sympy.Symbol("x")
 Y = sympy.Symbol("y")
 
 LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
+FILLDIRECTIONS = ["above", "below", "between"]
 MARKERSTYLES = [
     "none",
     ".",

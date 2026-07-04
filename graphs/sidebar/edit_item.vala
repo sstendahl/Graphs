@@ -408,7 +408,9 @@ namespace Graphs {
             fill_direction.set_list_factory (direction_factory);
 
             fill_item_row.notify["selected"].connect (on_reference_change);
+            fill_enabled.notify["active"].connect (update_reference_sensitivity);
             map.connect (populate_reference_items);
+            update_reference_sensitivity ();
         }
 
         private void populate_reference_items () {
@@ -463,10 +465,17 @@ namespace Graphs {
             label.set_sensitive (!insensitive);
         }
 
+        private void update_reference_sensitivity () {
+            bool between = (FillDirection) fill_direction.get_selected () == FillDirection.BETWEEN;
+            fill_item_row.set_sensitive (
+                fill_enabled.get_active () && between && reference_items.length > 0
+            );
+        }
+
         [GtkCallback]
         private void on_fill_direction () {
+            update_reference_sensitivity ();
             bool between = (FillDirection) fill_direction.get_selected () == FillDirection.BETWEEN;
-            fill_item_row.set_visible (between && reference_items.length > 0);
             if (between && item.fillreference == -1 && reference_indices.length > 0) {
                 item.fillreference = (int) reference_indices[fill_item_row.get_selected ()];
             }

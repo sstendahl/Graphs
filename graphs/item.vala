@@ -75,7 +75,7 @@ namespace Graphs {
         public XPosition xposition { get; set; default = XPosition.BOTTOM; }
         public YPosition yposition { get; set; default = YPosition.LEFT; }
         public bool fillenabled { get; set; default = false; }
-        public FillDirection filldirection { get; set; default = FillDirection.ABOVE; }
+        public FillDirection filldirection { get; set; default = FillDirection.BELOW; }
         public int fillreference { get; set; default = -1; }
         public string fillcolor { get; set; default = ""; }
         public double fillalpha { get; set; default = 0.25; }

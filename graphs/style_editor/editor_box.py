@@ -53,6 +53,9 @@ STYLE_DICT = {
     "grid_opacity": ["grid.alpha"],
     "background_color": ["axes.facecolor"],
     "outline_color": ["figure.facecolor", "figure.edgecolor"],
+    "fill_enabled": ["fill.enabled"],
+    "fill_direction": ["fill.direction"],
+    "fill_alpha": ["fill.alpha"],
     "errorbar_capsize": ["errorbar.capsize"],
     "errorbar_capthick": ["errorbar.capthick"],
     "errorbar_linewidth": ["errorbar.linewidth"],
@@ -62,6 +65,7 @@ VALUE_DICT = {
     "linestyle": misc.LINESTYLES,
     "markers": misc.MARKERSTYLES,
     "tick_direction": ["in", "out"],
+    "fill_direction": ["above", "below"],
 }
 FONT_STYLE_DICT = {
     0: "normal",

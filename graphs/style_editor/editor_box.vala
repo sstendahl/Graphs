@@ -132,6 +132,15 @@ namespace Graphs {
         [GtkChild]
         protected unowned Adw.SwitchRow errorbar_barsabove { get; }
 
+        [GtkChild]
+        protected unowned Adw.SwitchRow fill_enabled { get; }
+
+        [GtkChild]
+        protected unowned Adw.ComboRow fill_direction { get; }
+
+        [GtkChild]
+        protected unowned Gtk.Scale fill_alpha { get; }
+
         public signal void params_changed ();
 
         protected StyleColorManager color_manager { get; set; }

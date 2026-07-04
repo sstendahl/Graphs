@@ -196,6 +196,44 @@ template $GraphsStyleEditorBox: Box {
   }
 
   Adw.PreferencesGroup {
+    title: _("Fill");
+
+    Adw.SwitchRow fill_enabled {
+      title: _("Fill");
+    }
+
+    Adw.ComboRow fill_direction {
+      title: _("Direction");
+      sensitive: bind fill_enabled.active;
+
+      model: StringList {
+        strings [
+          C_("fill_direction", "Above"),
+          C_("fill_direction", "Below"),
+        ]
+      };
+    }
+
+    Adw.ActionRow {
+      title: _("Fill Opacity");
+      sensitive: bind fill_enabled.active;
+
+      Scale fill_alpha {
+        draw-value: true;
+        digits: 2;
+        width-request: 200;
+        valign: center;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+          step-increment: 0.01;
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
     title: _("Axes");
 
     Adw.ActionRow {

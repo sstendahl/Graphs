@@ -73,6 +73,9 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     _style_properties = {
         "errbarsabove": ("errorbar.barsabove", None),
+        "fillenabled": ("fill.enabled", None),
+        "filldirection": ("fill.direction", misc.FILLDIRECTIONS.index),
+        "fillalpha": ("fill.alpha", None),
         "errcapsize": ("errorbar.capsize", None),
         "errcapthick": ("errorbar.capthick", None),
         "errlinewidth": ("errorbar.linewidth", None),
@@ -199,6 +202,9 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
             lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
         ),
         "linewidth": ("lines.linewidth", None),
+        "fillenabled": ("fill.enabled", None),
+        "filldirection": ("fill.direction", misc.FILLDIRECTIONS.index),
+        "fillalpha": ("fill.alpha", None),
     }
 
     @classmethod

@@ -6,6 +6,9 @@
 #~graphs errorbar.linewidth: 1.75
 #~graphs errorbar.barsabove: False
 #~graphs errorbar.color_cycle: 657B83
+#~graphs fill.enabled: False
+#~graphs fill.direction: below
+#~graphs fill.alpha: 0.25
 
 # font
 font.family: sans-serif
