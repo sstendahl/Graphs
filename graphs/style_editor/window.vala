@@ -11,6 +11,17 @@ namespace Graphs {
 
         private const string CSS_TEMPLATE = ".canvas-view#%s {background-color: %s; color: %s; }";
 
+        // [0, 10]
+        private const double PREVIEW_XDATA[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        // [0, e^10]
+        private const double PREVIEW_YDATA1[] = {0, 2202.646579, 4405.293159, 6607.939738, 8810.586318, 11013.232897, 13215.879477, 15418.526056, 17621.172636, 19823.819215, 22026.465795};
+        // [0, 5]
+        private const double PREVIEW_XERR1[] = {0.1, 0.14, 0.18, 0.22, 0.26, 0.30, 0.34, 0.38, 0.42, 0.46, 0.50};
+        // [500, 2500]
+        private const double PREVIEW_YERR1[] = {500, 700, 900, 1100, 1300, 1500, 1700, 1900, 2100, 2300, 2500};
+        // [1, e^x]
+        private const double PREVIEW_YDATA2[] = {1, 2.718282, 7.389056, 20.085537, 54.598150, 148.413159, 403.428793, 1096.633158, 2980.957987, 8103.083928, 22026.465795};
+
         [GtkChild]
         private unowned Adw.Bin editor_bin { get; }
 
@@ -52,7 +63,14 @@ namespace Graphs {
             );
             content_view.set_name (Application.get_next_css_name ());
 
+            var parameters = StyleManager.get_system_style_params ();
             test_items = new ListStore (typeof (Item));
+            var test_item_a = ItemFactory.new_data_item (parameters, PREVIEW_XDATA, PREVIEW_YDATA1, PREVIEW_XERR1, PREVIEW_YERR1);
+            test_item_a.name = _("Example Item");
+            test_items.append (test_item_a);
+            var test_item_b = ItemFactory.new_data_item (parameters, PREVIEW_XDATA, PREVIEW_YDATA2);
+            test_item_b.name = _("Example Item");
+            test_items.append (test_item_b);
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {
