@@ -35,23 +35,6 @@ namespace Graphs {
             }
         }
 
-        private string stylename {
-            set {
-                this._stylename = value;
-                // Translators: Window title that will be formatted with the stylename.
-                set_title (_("Graphs Style Editor — %s").printf (value));
-
-                if (_inhibit_cookie > 0) {
-                    application.uninhibit (_inhibit_cookie);
-                    _inhibit_cookie = application.inhibit (
-                        this,
-                        Gtk.ApplicationInhibitFlags.LOGOUT,
-                        value
-                    );
-                }
-            }
-        }
-
         protected ListStore test_items { get; private set; }
         private Gtk.CssProvider css_provider;
         private bool unsaved = false;
@@ -300,7 +283,19 @@ namespace Graphs {
                 style = StyleManager.get_system_style_params ();
             } else {
                 style = editor_box.parameters;
-                stylename = style.name;
+                this._stylename = style.name;
+
+                // Translators: Window title that will be formatted with the stylename.
+                set_title (_("Graphs Style Editor — %s").printf (_stylename));
+
+                if (_inhibit_cookie > 0) {
+                    application.uninhibit (_inhibit_cookie);
+                    _inhibit_cookie = application.inhibit (
+                        this,
+                        Gtk.ApplicationInhibitFlags.LOGOUT,
+                        _stylename
+                    );
+                }
             }
 
             var color_cycle = style.color_cycle;
