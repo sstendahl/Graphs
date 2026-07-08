@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Gtk, Graphs
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import ast, curve_fitting, file_io, misc, operations
 from graphs.canvas import Canvas
