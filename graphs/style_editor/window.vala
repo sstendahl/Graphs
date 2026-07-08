@@ -37,16 +37,8 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToolbarView content_view { get; }
 
-        protected StyleEditorBox editor_box {
-            get { return (StyleEditorBox) editor_bin.get_child (); }
-            set {
-                editor_bin.set_child (value);
-                value.notify["parameters"].connect (on_params_changed);
-                reload_canvas ();
-            }
-        }
-
-        protected ListStore test_items { get; private set; }
+        private StyleEditorBox editor_box;
+        private ListStore test_items;
         private Gtk.CssProvider css_provider;
         private bool unsaved = false;
         private bool loading = false;
@@ -57,6 +49,10 @@ namespace Graphs {
         private uint _reload_source = 0;
 
         construct {
+            editor_box = PythonHelper.create_style_editor_box (this);
+            editor_bin.set_child (editor_box);
+            editor_box.notify["parameters"].connect (on_params_changed);
+
             this.css_provider = new Gtk.CssProvider ();
             Gtk.StyleContext.add_provider_for_display (
                 Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -167,6 +163,8 @@ namespace Graphs {
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
             style_grid.set_model (new Gtk.NoSelection (StyleManager.filtered_style_model));
+
+            reload_canvas ();
         }
 
         public void load (File file) {
