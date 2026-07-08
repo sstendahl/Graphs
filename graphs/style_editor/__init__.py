@@ -2,7 +2,7 @@
 """Style editor."""
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import Graphs
 
 from graphs.item import DataItem
 from graphs.style_editor.editor_box import StyleEditorBox
@@ -26,8 +26,6 @@ class PythonStyleEditor(Graphs.StyleEditor):
         super().__init__()
 
         self._initialize_test_items()
-        self.connect("load_request", self._on_load_request)
-        self.connect("save_request", self._on_save_request)
 
         self.set_editor_box(StyleEditorBox(self))
 
@@ -53,15 +51,3 @@ class PythonStyleEditor(Graphs.StyleEditor):
                     errcolor="#000000",
                 ),
             )
-
-    @staticmethod
-    def _on_load_request(self, file: Gio.File) -> None:
-        """Load a style."""
-        style_editor = self.get_editor_box()
-        name = style_editor.load_style(file)
-        self.set_title(name)
-
-    @staticmethod
-    def _on_save_request(self, file: Gio.File) -> None:
-        """Save current style."""
-        self.get_editor_box().save_style(file)

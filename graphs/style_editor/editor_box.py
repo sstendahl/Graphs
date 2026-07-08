@@ -82,7 +82,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
     def __init__(self, window):
         super().__init__(window=window)
-        self.params = None
+        self.params, self.graphs_params = None, None
 
         # Setup Widgets
         for key, _value in STYLE_DICT.items():
@@ -122,9 +122,13 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             self._on_errbar_colors_changed,
         )
 
-    def load_style(self, file: Gio.File) -> None:
+        self.connect("load_request", self._on_load_request)
+        self.connect("save_request", self._on_save_request)
+
+    @staticmethod
+    def _on_load_request(self, file: Gio.File) -> None:
         """Load style params from file."""
-        self.params = None
+        self.params, self.graphs_params = None, None
         system = Graphs.StyleManager.get_instance().get_system_style_params()
         style_params, graphs_params = style_io.parse(
             file,
@@ -188,11 +192,11 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         )
 
         self.params, self.graphs_params = style_params, graphs_params
+
         self._update_params()
 
-        return stylename
-
-    def save_style(self, file: Gio.File) -> None:
+    @staticmethod
+    def _on_save_request(self, file: Gio.File) -> None:
         """Save style params to file."""
         style_io.write(file, self.params, self.graphs_params)
 

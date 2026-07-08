@@ -277,6 +277,8 @@ namespace Graphs {
             var figure_settings = data.figure_settings;
             var canvas = PythonHelper.create_canvas (data.selected_style_params, data, true, figure_settings);
 
+            if (canvas == null) return;
+
             figure_settings.bind_property ("min-selected", canvas, "min-selected", 1 | 2);
             figure_settings.bind_property ("max-selected", canvas, "max-selected", 1 | 2);
 
@@ -284,8 +286,6 @@ namespace Graphs {
                 open_figure_settings (label_id);
             });
             canvas.view_changed.connect (data.add_view_history_state);
-
-            if (canvas == null) return;
 
             canvas.bind_property ("mode", this, "mode", 2);
             toast_overlay.set_child (canvas);

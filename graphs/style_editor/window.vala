@@ -24,7 +24,7 @@ namespace Graphs {
         private unowned Gtk.GridView style_grid { get; }
 
         [GtkChild]
-        protected unowned Adw.ToolbarView content_view { get; }
+        private unowned Adw.ToolbarView content_view { get; }
 
         protected StyleEditorBox editor_box {
             get { return (StyleEditorBox) editor_bin.get_child (); }
@@ -35,7 +35,7 @@ namespace Graphs {
             }
         }
 
-        protected string stylename {
+        private string stylename {
             set {
                 this._stylename = value;
                 // Translators: Window title that will be formatted with the stylename.
@@ -55,14 +55,12 @@ namespace Graphs {
         protected ListStore test_items { get; private set; }
         private Gtk.CssProvider css_provider;
         private bool unsaved = false;
+        private bool loading = false;
         private File _file;
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
         private string _stylename;
         private uint _reload_source = 0;
-
-        protected signal void load_request (File file);
-        protected signal void save_request (File file);
 
         construct {
             this.css_provider = new Gtk.CssProvider ();
@@ -163,24 +161,6 @@ namespace Graphs {
             });
             add_action (create_action);
 
-             // Inhibit session end when there is unsaved data present
-            notify["unsaved"].connect (() => {
-                if (unsaved) {
-                    if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
-                        this,
-                        Gtk.ApplicationInhibitFlags.LOGOUT,
-                        _stylename
-                    );
-                    save_action.set_enabled (true);
-                } else {
-                    if (_inhibit_cookie > 0) {
-                        application.uninhibit (_inhibit_cookie);
-                        _inhibit_cookie = 0;
-                    }
-                    save_action.set_enabled (false);
-                }
-            });
-
             var factory = new Gtk.SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
@@ -190,14 +170,24 @@ namespace Graphs {
 
         public void load (File file) {
             this._file = file;
-            load_request.emit (file);
+            this.loading = true;
+            editor_box.load (file);
+            set_title (editor_box.parameters.name);
             reload_canvas ();
             stack.get_pages ().select_item (1, true);
+            this.unsaved = false;
+            this.loading = false;
         }
 
         public void save () {
-            save_request.emit (_file);
+            editor_box.save (_file);
             this.unsaved = false;
+            if (_inhibit_cookie > 0) {
+                application.uninhibit (_inhibit_cookie);
+                _inhibit_cookie = 0;
+            }
+            var save_action = (SimpleAction) lookup_action ("save-style");
+            save_action.set_enabled (false);
         }
 
         public void close_style () {
@@ -286,8 +276,18 @@ namespace Graphs {
         }
 
         private void on_params_changed () {
-            if (_reload_source != 0) Source.remove (_reload_source);
+            if (loading) return;
 
+            if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
+                this,
+                Gtk.ApplicationInhibitFlags.LOGOUT,
+                _stylename
+            );
+            var save_action = (SimpleAction) lookup_action ("save-style");
+            save_action.set_enabled (true);
+            this.unsaved = true;
+
+            if (_reload_source != 0) Source.remove (_reload_source);
             _reload_source = Timeout.add_once (200, () => {
                 reload_canvas ();
                 _reload_source = 0;
