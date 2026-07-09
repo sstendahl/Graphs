@@ -34,19 +34,19 @@ namespace Graphs {
         }
 
         protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
-        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
-        protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
+        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale);
+        protected signal EquationItem equation_item_request (StyleParameters parameters, Ast equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
 
         public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
             return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
         }
 
-        public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
+        public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale) {
             return instance.generated_data_item_request.emit (parameters, equation, xstart, xstop, steps, scale);
         }
 
-        public static EquationItem new_equation_item (StyleParameters parameters, Expression equation) {
+        public static EquationItem new_equation_item (StyleParameters parameters, Ast equation) {
             return instance.equation_item_request.emit (parameters, equation);
         }
 
@@ -82,7 +82,7 @@ namespace Graphs {
     }
 
     public interface EquationBasedItem : Item {
-        public abstract Expression equation { get; set; }
+        public abstract Ast equation { get; owned set; }
     }
 
     public class DataHolder : Object {
@@ -179,15 +179,15 @@ namespace Graphs {
         public int steps { get; set; default = 100; }
         public Scale scale { get; set; default = Scale.LINEAR; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        public Ast equation {
             get { return _equation; }
-            set {
+            owned set {
                 try {
                     if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
                         name = "Y = " + ast_to_expression (value);
 
-                    _equation = value;
+                    _equation = (owned) value;
                 } catch (MathError e) { assert_not_reached (); }
 
                 regenerate ();
@@ -218,15 +218,15 @@ namespace Graphs {
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        public Ast equation {
             get { return _equation; }
-            set {
+            owned set {
                 try {
                     if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
                         name = "Y = " + ast_to_expression (value);
 
-                    _equation = value;
+                    _equation = (owned) value;
                 } catch (MathError e) { assert_not_reached (); }
             }
         }

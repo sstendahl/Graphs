@@ -64,128 +64,112 @@ namespace Graphs {
         CUSTOM
     }
 
-    public abstract class Expression {}
+    public enum ExpressionType {
+        NUMBER,
+        CONSTANT,
+        VARIABLE,
+        UNARY,
+        BINARY,
+        POSTFIX,
+        FUNCTION;
+    }
 
-    public class NumberExpression : Expression {
+    //[Compact (opaque = true)]
+    public class Expression {
+        private ExpressionType _type;
+
+        private Expression _left;
+        private Expression _right;
+
+        private uint _enum;
         private double _val;
+        private string _name;
 
-        public NumberExpression (double v) {
+        public Expression.number (double v) {
+            this._type = ExpressionType.NUMBER;
             this._val = v;
         }
 
-        public double val () {
-            return _val;
-        }
-    }
-
-    public class ConstantExpression : Expression {
-        private Ident _constant;
-
-        public ConstantExpression (Ident c) {
-            this._constant = c;
+        public Expression.constant (Ident c) {
+            this._type = ExpressionType.CONSTANT;
+            this._enum = c;
         }
 
-        public Ident constant () {
-            return _constant;
+        public Expression.variable (owned string n) {
+            this._type = ExpressionType.VARIABLE;
+            this._name = (owned) n;
+        }
+
+        public Expression.unary (Operator op, owned Expression e) {
+            this._type = ExpressionType.UNARY;
+            this._enum = op;
+            this._right = (owned) e;
+        }
+
+        public Expression.binary (owned Expression l, Operator op, owned Expression r) {
+            this._type = ExpressionType.BINARY;
+            this._left = (owned) l;
+            this._enum = op;
+            this._right = (owned) r;
+        }
+
+        public Expression.postfix (owned Expression e, Operator op) {
+            this._type = ExpressionType.POSTFIX;
+            this._left = (owned) e;
+            this._enum = op;
+        }
+
+        public Expression.function (Ident id, owned Expression arg) {
+            this._type = ExpressionType.FUNCTION;
+            this._enum = id;
+            this._right = (owned) arg;
+        }
+
+        public ExpressionType type () {
+            return _type;
+        }
+
+        public unowned Expression left () {
+            return _left;
+        }
+
+        public unowned Expression right () {
+            return _right;
         }
 
         public double val () throws MathError {
-            switch (_constant) {
+            if (_type == ExpressionType.NUMBER) return _val;
+
+            switch (_enum) {
                 case Ident.PI: return Math.PI;
                 case Ident.E: return Math.E;
                 case Ident.INF: return double.INFINITY;
                 default: throw new MathError.UNKNOWN_FUNCTION ("invalid constant");
             }
         }
-    }
-
-    public class VariableExpression : Expression {
-        private string _name;
-
-        public VariableExpression (owned string n) {
-            this._name = (owned) n;
-        }
 
         public unowned string name () {
             return _name;
         }
-    }
-
-    public class UnaryExpression : Expression {
-        private Operator _op;
-        private Expression _expr;
-
-        public UnaryExpression (Operator op, Expression e) {
-            this._op = op;
-            this._expr = e;
-        }
 
         public Operator op () {
-            return _op;
-        }
-
-        public Expression expr () {
-            return _expr;
-        }
-    }
-
-    public class BinaryExpression : Expression {
-        private Operator _op;
-        private Expression _left;
-        private Expression _right;
-
-        public BinaryExpression (Expression l, Operator op, Expression r) {
-            this._left = l;
-            this._op = op;
-            this._right = r;
-        }
-
-        public Operator op () {
-            return _op;
-        }
-
-        public Expression left () {
-            return _left;
-        }
-
-        public Expression right () {
-            return _right;
-        }
-    }
-
-    public class FunctionExpression : Expression {
-        private Ident _ident;
-        private Expression _arg;
-
-        public FunctionExpression (Ident id, Expression arg) {
-            this._ident = id;
-            this._arg = arg;
+            return _enum;
         }
 
         public Ident ident () {
-            return _ident;
-        }
-
-        public Expression arg () {
-            return _arg;
+            return _enum;
         }
     }
 
-    public class PostfixExpression : Expression {
-        private Expression _expr;
-        private Operator _op;
+    public class Ast : Object {
+        private Expression _root;
 
-        public PostfixExpression (Expression e, Operator op) {
-            this._expr = e;
-            this._op = op;
+        public Ast (owned Expression root) {
+            this._root = (owned) root;
         }
 
-        public Expression expr () {
-            return _expr;
-        }
-
-        public Operator op () {
-            return _op;
+        public unowned Expression root () {
+            return _root;
         }
     }
 

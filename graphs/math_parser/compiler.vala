@@ -13,14 +13,14 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Compiler (); });
         }
 
-        public Program compile (Expression expr, string variable = "x") throws MathError {
+        public Program compile (Ast expr, string variable = "x") throws MathError {
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
             this.n_data = 0;
             this.variable_name = variable;
 
-            emit (expr);
+            emit (expr.root ());
 
             /* At this point program may have more memory allocated than we
              * actually use. Since we only ever use this in the array
@@ -43,34 +43,29 @@ namespace Graphs.MathParser {
         }
 
         private void emit (Expression expr) throws MathError {
-            if (expr is NumberExpression) { number ((NumberExpression) expr); return; }
-            if (expr is ConstantExpression) { constant ((ConstantExpression) expr); return; }
-            if (expr is VariableExpression) { variable ((VariableExpression) expr); return; }
-            if (expr is UnaryExpression) { unary ((UnaryExpression) expr); return; }
-            if (expr is BinaryExpression) { binary ((BinaryExpression) expr); return; }
-            if (expr is FunctionExpression) { function ((FunctionExpression) expr); return; }
-            if (expr is PostfixExpression) { postfix ((PostfixExpression) expr); return; }
-
-            assert_not_reached ();
+            switch (expr.type ()) {
+                case ExpressionType.NUMBER:
+                case ExpressionType.CONSTANT:
+                    add_constant (expr.val ());
+                    return;
+                case ExpressionType.VARIABLE: variable (expr); return;
+                case ExpressionType.UNARY: unary (expr); return;
+                case ExpressionType.BINARY: binary (expr); return;
+                case ExpressionType.POSTFIX: postfix (expr); return;
+                case ExpressionType.FUNCTION: function (expr); return;
+                default: assert_not_reached ();
+            }
         }
 
-        private void variable (VariableExpression expr) throws MathError {
+        private void variable (Expression expr) throws MathError {
             if (expr.name () != variable_name)
                 throw new MathError.UNKNOWN_FUNCTION ("invalid variable: " + expr.name ());
 
             add_instruction (OpCode.PUSH_X);
         }
 
-        private void constant (ConstantExpression expr) throws MathError {
-            add_constant (expr.val ());
-        }
-
-        private void number (NumberExpression expr) throws MathError {
-            add_constant (expr.val ());
-        }
-
-        private void unary (UnaryExpression expr) throws MathError {
-            emit (expr.expr ());
+        private void unary (Expression expr) throws MathError {
+            emit (expr.right ());
 
             switch (expr.op ()) {
                 case Operator.SUB: add_instruction (OpCode.NEG); return;
@@ -78,7 +73,7 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void binary (BinaryExpression expr) throws MathError {
+        private void binary (Expression expr) throws MathError {
             emit (expr.left ());
             emit (expr.right ());
 
@@ -93,8 +88,8 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void postfix (PostfixExpression expr) throws MathError {
-            emit (expr.expr ());
+        private void postfix (Expression expr) throws MathError {
+            emit (expr.left ());
 
             switch (expr.op ()) {
                 case Operator.FACT: add_instruction (OpCode.FACT); return;
@@ -151,8 +146,8 @@ namespace Graphs.MathParser {
             add_instruction (OpCode.ASIN);
         }
 
-        private void function (FunctionExpression expr) throws MathError {
-            emit (expr.arg ());
+        private void function (Expression expr) throws MathError {
+            emit (expr.right ());
 
             switch (expr.ident ()) {
                 case Ident.SIN: add_instruction (OpCode.SIN); return;

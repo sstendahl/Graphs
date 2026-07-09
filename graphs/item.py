@@ -163,7 +163,7 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     def new(
         cls,
         style: Graphs.StyleParameters,
-        equation: Graphs.Expression,
+        equation: Graphs.Ast,
         xstart: str,
         xstop: str,
         steps: int,
@@ -205,7 +205,7 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     def new(
         cls,
         style: Graphs.StyleParameters,
-        equation: Graphs.Expression,
+        equation: Graphs.Ast,
         **kwargs,
     ):
         """Create new EquationItem."""
