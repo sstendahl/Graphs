@@ -74,13 +74,15 @@ namespace Graphs {
         FUNCTION;
     }
 
-    //[Compact (opaque = true)]
+    [Compact (opaque = true)]
     public class Expression {
         private ExpressionType _type;
 
         private Expression _left;
         private Expression _right;
 
+        // This value will either be an Ident or an Operator, but as we only
+        // need one at a time, save space reserving just a single uint.
         private uint _enum;
         private double _val;
         private string _name;
@@ -140,7 +142,7 @@ namespace Graphs {
         public double val () throws MathError {
             if (_type == ExpressionType.NUMBER) return _val;
 
-            switch (_enum) {
+            switch ((Ident) _enum) {
                 case Ident.PI: return Math.PI;
                 case Ident.E: return Math.E;
                 case Ident.INF: return double.INFINITY;
@@ -153,15 +155,15 @@ namespace Graphs {
         }
 
         public Operator op () {
-            return _enum;
+            return (Operator) _enum;
         }
 
         public Ident ident () {
-            return _enum;
+            return (Ident) _enum;
         }
     }
 
-    public class Ast : Object {
+    public class Ast {
         private Expression _root;
 
         public Ast (owned Expression root) {

@@ -82,7 +82,7 @@ namespace Graphs {
     }
 
     public interface EquationBasedItem : Item {
-        public abstract Ast equation { get; owned set; }
+        public abstract Ast equation { get; set; }
     }
 
     public class DataHolder : Object {
@@ -182,12 +182,12 @@ namespace Graphs {
         private Ast _equation;
         public Ast equation {
             get { return _equation; }
-            owned set {
+            set {
                 try {
                     if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
                         name = "Y = " + ast_to_expression (value);
 
-                    _equation = (owned) value;
+                    _equation = value;
                 } catch (MathError e) { assert_not_reached (); }
 
                 regenerate ();
@@ -221,12 +221,12 @@ namespace Graphs {
         private Ast _equation;
         public Ast equation {
             get { return _equation; }
-            owned set {
+            set {
                 try {
                     if (_equation != null && "Y = " + ast_to_expression (_equation) == name)
                         name = "Y = " + ast_to_expression (value);
 
-                    _equation = (owned) value;
+                    _equation = value;
                 } catch (MathError e) { assert_not_reached (); }
             }
         }
