@@ -3,24 +3,16 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-typedef enum
-{
-  SCALE_LINEAR = 0,
-  SCALE_LOG,
-  SCALE_LOG2,
-  SCALE_RADIANS,
-  SCALE_SQUAREROOT,
-  SCALE_INVERSE,
-} Scale;
+#include "graphs.h"
 
-bool array_minmax (const double *data, size_t len, bool ignore_zero,
-                   double *out_min, double *out_max);
+gboolean array_minmax (const gdouble *data, gsize len, gboolean ignore_zero,
+                       gdouble *out_min, gdouble *out_max);
 
-bool finite_double (const double *data, size_t len);
+gboolean finite_double (const gdouble *data, gsize len);
 
-bool arange (double *out, size_t steps);
+gboolean arange (gdouble *out, gsize steps);
 
-bool create_equidistant_data (double start, double stop, Scale scale,
-                              double *out, size_t steps);
+gboolean create_equidistant_data (gdouble start, gdouble stop,
+                                  GraphsScale scale, gdouble *out, gsize steps);
 
-size_t filter_nonfinite (double *xdata, double *ydata, size_t n);
+gsize filter_nonfinite (gdouble *xdata, gdouble *ydata, gsize n);

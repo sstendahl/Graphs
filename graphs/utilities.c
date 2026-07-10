@@ -10,16 +10,16 @@
 /*
  * Small helper to find the min and max value of a double array.
  */
-bool
-array_minmax (const double *restrict data, size_t len, bool ignore_zero,
-              double *restrict out_min, double *restrict out_max)
+gboolean
+array_minmax (const gdouble *restrict data, gsize len, gboolean ignore_zero,
+              gdouble *restrict out_min, gdouble *restrict out_max)
 {
   if (!data || !out_min || !out_max || len == 0)
-    return false;
+    return FALSE;
 
-  double minv = INFINITY;
-  double maxv = -INFINITY;
-  bool found = false;
+  gdouble minv = INFINITY;
+  gdouble maxv = -INFINITY;
+  gboolean found = FALSE;
 
 /*
  * OpenMP SIMD reductions:
@@ -29,9 +29,9 @@ array_minmax (const double *restrict data, size_t len, bool ignore_zero,
  * We cannot safely reduce a bool, so track validity separately.
  */
 #pragma omp simd reduction(min : minv) reduction(max : maxv)
-  for (size_t i = 0; i < len; i++)
+  for (gsize i = 0; i < len; i++)
     {
-      double v = data[i];
+      gdouble v = data[i];
 
       if (!isfinite (v) || (ignore_zero && v == 0.0))
         continue;
@@ -50,83 +50,83 @@ array_minmax (const double *restrict data, size_t len, bool ignore_zero,
  * This keeps the SIMD loop vectorizable.
  */
 #pragma omp simd reduction(|| : found)
-  for (size_t i = 0; i < len; i++)
+  for (gsize i = 0; i < len; i++)
     {
-      double v = data[i];
+      gdouble v = data[i];
 
       if (!isfinite (v) || (ignore_zero && v == 0.0))
         continue;
 
-      found = true;
+      found = TRUE;
     }
 
   if (!found)
-    return false;
+    return FALSE;
 
   *out_min = minv;
   *out_max = maxv;
 
-  return true;
+  return TRUE;
 }
 
-bool
-finite_double (const double *restrict data, size_t len)
+gboolean
+finite_double (const gdouble *restrict data, gsize len)
 {
-  bool found = false;
+  gboolean found = FALSE;
 
 #pragma omp simd reduction(|| : found)
-  for (size_t i = 0; i < len; i++)
+  for (gsize i = 0; i < len; i++)
     {
       if (!isfinite (data[i]))
         continue;
 
-      found = true;
+      found = TRUE;
     }
 
   return found;
 }
 
-bool
-arange (double *restrict out, size_t steps)
+gboolean
+arange (gdouble *restrict out, gsize steps)
 {
   if (steps == 0)
-    return false;
+    return FALSE;
 
 #pragma omp parallel for simd
-  for (size_t i = 0; i < steps; i++)
+  for (gsize i = 0; i < steps; i++)
     {
       out[i] = i;
     }
 
-  return true;
+  return TRUE;
 }
 
-static inline double
-clamp_log_lower (double x)
+static inline gdouble
+clamp_log_lower (gdouble x)
 {
   return x < MIN_LOG_VALUE ? MIN_LOG_VALUE : x;
 }
 
-bool
-create_equidistant_data (double start, double stop, Scale scale, double *out,
-                         size_t steps)
+gboolean
+create_equidistant_data (gdouble start, gdouble stop, GraphsScale scale,
+                         gdouble *out, gsize steps)
 {
   if (steps < 2)
-    return false;
+    return FALSE;
 
-  const double inv_steps = 1.0 / (double)(steps - 1);
+  const gdouble inv_steps = 1.0 / (gdouble)(steps - 1);
 
   switch (scale)
     {
 
-    case SCALE_LINEAR:
-    case SCALE_RADIANS:
+    case GRAPHS_SCALE_LINEAR:
+    case GRAPHS_SCALE_RADIANS:
       {
 
-        const double delta = stop - start;
+        const gdouble delta = stop - start;
 
 #pragma omp parallel for simd
-        for (size_t i = 0; i < steps; i++)
+        for (gsize i = 0; i < steps; i++)
           {
             const double t = (double)i * inv_steps;
             out[i] = start + t * delta;
@@ -135,7 +135,7 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         break;
       }
 
-    case SCALE_LOG:
+    case GRAPHS_SCALE_LOG:
       {
 
         start = clamp_log_lower (start);
@@ -143,15 +143,15 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         if (!isfinite (stop))
           stop = MAX_LOG_VALUE;
 
-        const double log_start = log10 (start);
-        const double log_stop = log10 (stop);
-        const double delta = log_stop - log_start;
+        const gdouble log_start = log10 (start);
+        const gdouble log_stop = log10 (stop);
+        const gdouble delta = log_stop - log_start;
 
 #pragma omp parallel for simd
-        for (size_t i = 0; i < steps; i++)
+        for (gsize i = 0; i < steps; i++)
           {
 
-            const double t = (double)i * inv_steps;
+            const gdouble t = (gdouble)i * inv_steps;
 
             out[i] = pow (10.0, log_start + t * delta);
           }
@@ -159,7 +159,7 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         break;
       }
 
-    case SCALE_LOG2:
+    case GRAPHS_SCALE_LOG2:
       {
 
         start = clamp_log_lower (start);
@@ -167,15 +167,15 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         if (!isfinite (stop))
           stop = MAX_LOG_VALUE;
 
-        const double log_start = log2 (start);
-        const double log_stop = log2 (stop);
-        const double delta = log_stop - log_start;
+        const gdouble log_start = log2 (start);
+        const gdouble log_stop = log2 (stop);
+        const gdouble delta = log_stop - log_start;
 
 #pragma omp parallel for simd
-        for (size_t i = 0; i < steps; i++)
+        for (gsize i = 0; i < steps; i++)
           {
 
-            const double t = (double)i * inv_steps;
+            const gdouble t = (gdouble)i * inv_steps;
 
             out[i] = exp2 (log_start + t * delta);
           }
@@ -183,22 +183,22 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         break;
       }
 
-    case SCALE_SQUAREROOT:
+    case GRAPHS_SCALE_SQUAREROOT:
       {
 
         start = clamp_log_lower (start);
 
-        const double sqrt_start = sqrt (start);
-        const double sqrt_stop = sqrt (stop);
-        const double delta = sqrt_stop - sqrt_start;
+        const gdouble sqrt_start = sqrt (start);
+        const gdouble sqrt_stop = sqrt (stop);
+        const gdouble delta = sqrt_stop - sqrt_start;
 
 #pragma omp parallel for simd
-        for (size_t i = 0; i < steps; i++)
+        for (gsize i = 0; i < steps; i++)
           {
 
-            const double t = (double)i * inv_steps;
+            const gdouble t = (double)i * inv_steps;
 
-            const double v = sqrt_start + t * delta;
+            const gdouble v = sqrt_start + t * delta;
 
             out[i] = v * v;
           }
@@ -206,18 +206,18 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
         break;
       }
 
-    case SCALE_INVERSE:
+    case GRAPHS_SCALE_INVERSE:
       {
 
-        const double inv_start = 1.0 / start;
-        const double inv_stop = 1.0 / stop;
-        const double delta = inv_stop - inv_start;
+        const gdouble inv_start = 1.0 / start;
+        const gdouble inv_stop = 1.0 / stop;
+        const gdouble delta = inv_stop - inv_start;
 
 #pragma omp parallel for simd
-        for (size_t i = 0; i < steps; i++)
+        for (gsize i = 0; i < steps; i++)
           {
 
-            const double t = (double)i * inv_steps;
+            const gdouble t = (double)i * inv_steps;
 
             out[i] = 1.0 / (inv_start + t * delta);
           }
@@ -226,20 +226,20 @@ create_equidistant_data (double start, double stop, Scale scale, double *out,
       }
 
     default:
-      return false;
+      return FALSE;
     }
 
-  return out;
+  return TRUE;
 }
 
-size_t
-filter_nonfinite (double *xdata, double *ydata, size_t n)
+gsize
+filter_nonfinite (gdouble *xdata, gdouble *ydata, gsize n)
 {
   if (!xdata || !ydata || n == 0)
     return 0;
 
-  char *mask = (char *)malloc (n * sizeof (char));
-  size_t *prefix = (size_t *)malloc (n * sizeof (size_t));
+  gchar *mask = (gchar *)g_malloc_n (n, sizeof (gchar));
+  gsize *prefix = (gsize *)g_malloc_n (n, sizeof (gsize));
 
   if (!mask || !prefix)
     {
@@ -250,14 +250,14 @@ filter_nonfinite (double *xdata, double *ydata, size_t n)
 
     /* Build a mask for finite values */
 #pragma omp parallel for
-  for (size_t i = 0; i < n; ++i)
+  for (gsize i = 0; i < n; ++i)
     {
       mask[i] = isfinite (ydata[i]) ? 1 : 0;
     }
 
   /* Build a prefix sum - carries loop depenency */
   int count = 0;
-  for (size_t i = 0; i < n; ++i)
+  for (gsize i = 0; i < n; ++i)
     {
       prefix[i] = count;
       count += mask[i];
@@ -265,18 +265,18 @@ filter_nonfinite (double *xdata, double *ydata, size_t n)
 
     /* Compact data in place */
 #pragma omp parallel for
-  for (size_t i = 0; i < n; ++i)
+  for (gsize i = 0; i < n; ++i)
     {
       if (mask[i])
         {
-          size_t dst = prefix[i];
+          gsize dst = prefix[i];
           xdata[dst] = xdata[i];
           ydata[dst] = ydata[i];
         }
     }
 
-  free (mask);
-  free (prefix);
+  g_free (mask);
+  g_free (prefix);
 
   return count;
 }
