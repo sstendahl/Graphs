@@ -7,6 +7,7 @@ namespace Graphs {
      */
     public class Canvas : DrawingArea {
         public Mode mode { get; set; default = Mode.PAN; }
+        public Object figure { get; protected set; }
 
         public double min_selected { get; set; default = 0; }
         public double max_selected { get; set; default = 0; }

@@ -29,6 +29,7 @@ namespace Graphs {
     }
 
     public class StyleParameters : Object {
+        public string name { get; protected set; }
         public string color { get; protected set; }
         public string background_color { get; protected set; }
         public string[] color_cycle { get; protected set; }

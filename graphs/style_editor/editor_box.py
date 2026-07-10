@@ -7,6 +7,7 @@ from cycler import cycler
 from gi.repository import Adw, Gio, Graphs, Gtk, Pango
 
 from graphs import misc, style_io
+from graphs.styles import StyleParameters
 
 STYLE_DICT = {
     "linestyle": ["lines.linestyle"],
@@ -81,7 +82,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
     def __init__(self, window):
         super().__init__(window=window)
-        self.params = None
+        self.params, self.graphs_params = None, None
 
         # Setup Widgets
         for key, _value in STYLE_DICT.items():
@@ -121,9 +122,13 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             self._on_errbar_colors_changed,
         )
 
-    def load_style(self, file: Gio.File) -> None:
+        self.connect("load_request", self._on_load_request)
+        self.connect("save_request", self._on_save_request)
+
+    @staticmethod
+    def _on_load_request(self, file: Gio.File) -> None:
         """Load style params from file."""
-        self.params = None
+        self.params, self.graphs_params = None, None
         system = Graphs.StyleManager.get_instance().get_system_style_params()
         style_params, graphs_params = style_io.parse(
             file,
@@ -188,11 +193,17 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
         self.params, self.graphs_params = style_params, graphs_params
 
-        return stylename
+        self._update_params()
 
-    def save_style(self, file: Gio.File) -> None:
+    @staticmethod
+    def _on_save_request(self, file: Gio.File) -> None:
         """Save style params to file."""
         style_io.write(file, self.params, self.graphs_params)
+
+    def _update_params(self) -> None:
+        """Update the style parameters."""
+        self.props.parameters = \
+            StyleParameters((self.params, self.graphs_params))
 
     def _on_line_colors_changed(
         self,
@@ -204,7 +215,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         line_colors = color_manager.get_colors()
         self.params["axes.prop_cycle"] = cycler(color=line_colors)
         self.params["patch.facecolor"] = line_colors[0]
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_errbar_colors_changed(
         self,
@@ -215,7 +226,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             return
         err_colors = color_manager.get_colors()
         self.graphs_params["errorbar.color_cycle"] = cycler(color=err_colors)
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_font_change(self, chooser: Gtk.FontChooser, _param) -> None:
         if self.params is None:
@@ -244,7 +255,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             FONT_STYLE_DICT[font_description.get_style()]
         self.params["font.variant"] = \
             FONT_VARIANT_DICT[font_description.get_variant()]
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_titlesize_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
@@ -252,20 +263,20 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         titlesize = round(entry.get_value() / 2 * self.font_size, 1)
         self.params["figure.titlesize"] = titlesize
         self.params["axes.titlesize"] = titlesize
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_labelsize_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
             return
         labelsize = round(entry.get_value() / 2 * self.font_size, 1)
         self.params["axes.labelsize"] = labelsize
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_name_change(self, entry: Gtk.Entry) -> None:
         if self.params is None:
             return
         self.graphs_params["name"] = entry.get_text()
-        self.emit("params-changed")
+        self._update_params()
 
     def _apply_value(self, key: str, value) -> None:
         if self.params is None:
@@ -278,7 +289,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             else:
                 self.params[item] = value
 
-        self.emit("params-changed")
+        self._update_params()
 
     def _on_color_change(
         self,

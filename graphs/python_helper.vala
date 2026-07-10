@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Python Helper - Vala Part
-using Gtk;
-
 namespace Graphs {
     public class PythonHelper : Object {
         private static PythonHelper instance;
@@ -10,9 +8,14 @@ namespace Graphs {
             instance = this;
         }
 
-        protected signal StyleEditor create_style_editor_request ();
-        public static StyleEditor create_style_editor () {
-            return instance.create_style_editor_request.emit ();
+        protected signal Canvas create_canvas_request (StyleParameters parameters, ListModel items, bool interactive, FigureSettings? figure_settings);
+        public static Canvas create_canvas (StyleParameters parameters, ListModel items, bool interactive = false, FigureSettings? figure_settings = null) {
+            return instance.create_canvas_request.emit (parameters, items, interactive, figure_settings);
+        }
+
+        protected signal StyleEditorBox create_style_editor_box_request (Gtk.Window window);
+        public static StyleEditorBox create_style_editor_box (Gtk.Window window) {
+            return instance.create_style_editor_box_request.emit (window);
         }
 
         protected signal Window create_window_request ();
