@@ -75,7 +75,7 @@ namespace Graphs.MathParser {
         }
 
         private void unary (Expression expr) throws MathError {
-            unowned Expression child = expr.left ();
+            unowned Expression child = expr.right ();
             bool need_parens = child.type () == ExpressionType.BINARY;
 
             if (expr.op () == Operator.SUB) builder.append_c ('-');
