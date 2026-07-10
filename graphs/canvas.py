@@ -48,12 +48,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             hexpand=True,
             vexpand=True,
         )
+        figure = Figure(style_params, items, self, figure_settings)
+        self.props.figure = figure
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
-        FigureCanvasBase.__init__(
-            self,
-            figure=Figure(style_params, items, self, figure_settings),
-        )
+        FigureCanvasBase.__init__(self, figure=figure)
         self._rubberband_rect = None
 
         self.connect("notify::scale-factor", self._update_device_pixel_ratio)

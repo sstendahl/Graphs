@@ -132,11 +132,14 @@ namespace Graphs {
         [GtkChild]
         protected unowned Adw.SwitchRow errorbar_barsabove { get; }
 
-        public signal void params_changed ();
+        public StyleParameters parameters { get; protected set; }
 
         protected StyleColorManager color_manager { get; set; }
         protected StyleColorManager errbar_color_manager { get; set; }
         protected Gtk.Window window { get; set; }
+
+        protected signal void load_request (File file);
+        protected signal void save_request (File file);
 
         construct {
             this.color_manager = new StyleColorManager (line_colors_box);
@@ -144,6 +147,14 @@ namespace Graphs {
 
             titlesize.set_format_value_func (title_format_function);
             labelsize.set_format_value_func (title_format_function);
+        }
+
+        public void load (File file) {
+            load_request.emit (file);
+        }
+
+        public void save (File file) {
+            save_request.emit (file);
         }
 
         protected void check_contrast () {

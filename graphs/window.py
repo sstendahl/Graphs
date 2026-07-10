@@ -2,21 +2,7 @@
 """Main window."""
 from gi.repository import Graphs
 
-from graphs import misc
-from graphs.canvas import Canvas
 from graphs.data import Data
-
-from matplotlib import rcParams, rcParamsDefault
-
-_SCALES = [f"{d}_scale" for d in misc.DIRECTIONS]
-_LABELS = [f"{d}_label" for d in misc.DIRECTIONS]
-_LIMITS = [lim.replace("-", "_") for lim in misc.LIMITS]
-_FIGURE_PROPERTIES = [
-    "title",
-    "legend",
-    "legend_position",
-    "hide_unselected",
-] + _SCALES + _LABELS + _LIMITS
 
 
 class PythonWindow(Graphs.Window):
@@ -35,38 +21,6 @@ class PythonWindow(Graphs.Window):
         zoom_out_action = self.lookup_action("zoom-out")
         zoom_out_action.connect("activate", self._on_zoom_out)
 
-    def _reset_items(self) -> None:
-        """Reset items to match new style."""
-        old_style = self.props.data.get_old_selected_style_params()
-        new_style = self.props.data.get_selected_style_params()
-
-        old_cycle = old_style.get_color_cycle()
-        new_cycle = new_style.get_color_cycle()
-        old_err_cycle = old_style.get_errorbar_cycle()
-        new_err_cycle = new_style.get_errorbar_cycle()
-
-        count = 0
-        errbar_count = 0
-        for item in self.props.data:
-            item.reset(old_style, new_style)
-
-            if not isinstance(item, (Graphs.DataItem, Graphs.EquationItem)) \
-                    or item.get_color() not in old_cycle:
-                continue
-
-            count %= len(new_cycle)
-            item.set_color(new_cycle[count])
-            count += 1
-
-            if not isinstance(item, Graphs.DataItem) \
-                    or not item.has_xerr() and not item.has_yerr() \
-                    or item.get_errcolor() not in old_err_cycle:
-                continue
-
-            errbar_count %= len(new_err_cycle)
-            item.set_errcolor(new_err_cycle[errbar_count])
-            errbar_count += 1
-
     def _on_key_press_event(self, *args) -> None:
         """Handle key press event."""
         if self.props.canvas is not None:
@@ -77,14 +31,6 @@ class PythonWindow(Graphs.Window):
         if self.props.canvas is not None:
             self.props.canvas.key_release_event(*args)
 
-    def _on_edit_request(self, _canvas, label_id: str) -> None:
-        """Handle edit request."""
-        self.open_figure_settings(label_id)
-
-    def _on_view_changed(self, _canvas) -> None:
-        """Handle view change."""
-        self.props.data.add_view_history_state()
-
     def _on_zoom_in(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1.15, False)
@@ -92,22 +38,3 @@ class PythonWindow(Graphs.Window):
     def _on_zoom_out(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1 / 1.15, False)
-
-    def _reload_canvas(self) -> None:
-        """Reload the canvas."""
-        rcParams.update(rcParamsDefault)
-        params = self.props.data.get_selected_style_params()
-
-        figure_settings = self.props.data.get_figure_settings()
-        canvas = Canvas(params, self.props.data, True, figure_settings)
-
-        for prop in _FIGURE_PROPERTIES:
-            figure_settings.bind_property(prop, canvas.figure, prop, 1)
-
-        for prop in ("min_selected", "max_selected"):
-            figure_settings.bind_property(prop, canvas, prop, 1 | 2)
-
-        canvas.connect("edit-request", self._on_edit_request)
-        canvas.connect("view-changed", self._on_view_changed)
-
-        self.set_canvas(canvas)

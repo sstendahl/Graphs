@@ -16,7 +16,6 @@ namespace Graphs {
         public bool unsaved { get; set; default = false; }
         public SingleSelection style_selection_model { get; private set; }
         public StyleParameters selected_style_params { get; private set; }
-        public StyleParameters old_selected_style_params { get; private set; }
 
         public string selected_stylename {
             get { return this.get_selected_style ().name; }
@@ -44,6 +43,7 @@ namespace Graphs {
         private bool _notify_selection_changed = true;
         private Gee.List<Limits> _view_history_states = new ArrayList<Limits> ();
         private int _view_history_pos = -1;
+        private StyleParameters old_selected_style_params;
 
         public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
@@ -102,13 +102,11 @@ namespace Graphs {
                         figure_settings.use_custom_style = true;
                     }
                 }
+                reset_items.begin ();
             });
-            _view_history_states.add (figure_settings.get_limits ());
-            run_python_method ("_init_history_states");
-        }
 
-        private void run_python_method (string method) {
-            PythonHelper.run_method (this, method);
+            _view_history_states.add (figure_settings.get_limits ());
+            PythonHelper.run_method (this, "_init_history_states");
         }
 
         // Section ListModel
@@ -247,7 +245,7 @@ namespace Graphs {
             this.figure_settings = new FigureSettings (_settings);
             _view_history_states.clear ();
             _view_history_states.add (figure_settings.get_limits ());
-            run_python_method ("_init_history_states");
+            PythonHelper.run_method (this, "_init_history_states");
             this.file = null;
             this.unsaved = false;
             notify_property ("unsaved");
@@ -722,12 +720,12 @@ namespace Graphs {
         }
 
         public void undo () {
-            run_python_method ("_undo");
+            PythonHelper.run_method (this, "_undo");
             add_view_history_state ();
         }
 
         public void redo () {
-            run_python_method ("_redo");
+            PythonHelper.run_method (this, "_redo");
             add_view_history_state ();
         }
 
@@ -792,7 +790,7 @@ namespace Graphs {
         // Section save & load
 
         public void save () {
-            run_python_method ("_save");
+            PythonHelper.run_method (this, "_save");
             this.unsaved = false;
             notify_property ("unsaved");
         }
@@ -852,6 +850,32 @@ namespace Graphs {
             unowned string error_msg = _("Could not find style %s, defaulting to system style");
             warning (error_msg.printf (figure_settings.custom_style));
             figure_settings.use_custom_style = false;
+        }
+
+        private async void reset_items () {
+            var old_cycle = old_selected_style_params.color_cycle;
+            var new_cycle = selected_style_params.color_cycle;
+            var old_err_cycle = old_selected_style_params.errorbar_cycle;
+            var new_err_cycle = selected_style_params.errorbar_cycle;
+
+            uint count = 0;
+            uint errbar_count = 0;
+
+            foreach (var item in this) {
+                ItemFactory.reset_item (item, old_selected_style_params, selected_style_params);
+
+                if (!(item is DataItem || item is EquationItem)) continue;
+                if (!(item.color in old_cycle)) continue;
+
+                item.color = new_cycle[count++ % new_cycle.length];
+
+                if (!(item is DataItem)) continue;
+                var data_item = (DataItem) item;
+                if (!data_item.has_xerr () && !data_item.has_yerr ()) continue;
+                if (!(data_item.errcolor in old_err_cycle)) continue;
+
+                data_item.errcolor = new_err_cycle[errbar_count++ % new_err_cycle.length];
+            }
         }
 
         // End section listeners
