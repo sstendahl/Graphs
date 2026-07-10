@@ -3,17 +3,17 @@
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
 # Álvaro Burns <>, 2025.
-# Rafael Fontenelle <rafaelff@gnome.org>, 2024-2026.
 # Juliano de Souza Camargo <julianosc@pm.me>, 2024-2026.
 # Luiggi R. Cardoso <luiggicardoso@outlook.com>, 2026.
+# Rafael Fontenelle <rafaelff@gnome.org>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-06-20 18:25+0000\n"
-"PO-Revision-Date: 2026-06-21 09:32-0300\n"
-"Last-Translator: Luiggi R. Cardoso <luiggicardoso@outlook.com>\n"
+"POT-Creation-Date: 2026-07-03 07:20+0000\n"
+"PO-Revision-Date: 2026-07-09 22:16-0300\n"
+"Last-Translator: Rafael Fontenelle <rafaelff@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 "X-DL-Module: Graphs\n"
 "X-DL-Branch: main\n"
 "X-DL-Domain: po\n"
-"X-DL-State: None\n"
+"X-DL-State: Translating\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
 #: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
@@ -1980,16 +1980,16 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Refaz ação"
 
-#: graphs/file_import/parsers/columns/__init__.py:17
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr "Delimitador personalizado não pode ser vazio"
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Colunas"
 
-#: graphs/file_import/parsers/columns/main.vala:41
-msgid "Custom delimiter cannot be empty"
-msgstr "Delimitador personalizado não pode ser vazio"
-
-#: graphs/file_import/parsers/columns/parser.vala:107
+#: graphs/file_import/parsers/columns/reader.vala:110
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -1998,13 +1998,17 @@ msgstr ""
 "Erro de índice em %s, não pode acessar o índice %d na linha  %d, só %d "
 "colunas foram encontradas"
 
-#: graphs/file_import/parsers/columns/parser.vala:134
+#: graphs/file_import/parsers/columns/reader.vala:137
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Não pode importar do arquivo, valor incorreto na linha %d"
 
+#: graphs/file_import/parsers/columns/reader.vala:156
+msgid "Failed to parse file."
+msgstr "Falha ao analisar o arquivo."
+
 #: graphs/file_import/parsers/columns/ui.vala:40
-#: graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/spreadsheet/ui.vala:149
 #, c-format
 msgid "Item %d"
 msgstr "Item %d"
@@ -2019,30 +2023,26 @@ msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Arquivo de projeto do Gráficos"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:202
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Planilha"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:203
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Planilha"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:270
-msgid "No numeric data found in column."
-msgstr "Nenhum dado numérico encontrado na coluna."
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+msgid "Failed to open File."
+msgstr "Falha ao abrir o arquivo."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:284
-msgid "Columns do not have the same length."
-msgstr "As colunas não têm o mesmo comprimento."
-
-#: graphs/file_import/parsers/sql/__init__.py:19
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Base de dados"
 
-#: graphs/file_import/parsers/sql/__init__.py:20
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Base de dados SQLite"
@@ -2072,35 +2072,48 @@ msgstr "PANalytical XRDML"
 msgid "Intensity (cps)"
 msgstr "Intensidade (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:18
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/parser.vala:73
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/parser.vala:74
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:117
+#: graphs/file_import/parsers/xry/parser.vala:104
+#: graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "A importação falhou"
 
-#: graphs/file_import/file_import.vala:48
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr "Analisador falhou ao inicializar configurações."
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr "Analisador falhou ao inicializar o widget de configurações."
+
+#: graphs/file_import/dialog.vala:134
+msgid "Defaults updated"
+msgstr "Padrões atualizados"
+
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Arquivos suportados"
 
 #. columns
-#: graphs/file_import/file_import.vala:52
+#: graphs/file_import/file_import.vala:85
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Arquivos ASCII"
@@ -2171,6 +2184,11 @@ msgstr "Editor de estilo de Gráficos — %s"
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Tem certeza de que deseja excluir %s?"
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "Não foi possível carregar {font}"
 
 #: graphs/actions.vala:30
 msgid "The Graphs Developers"
@@ -2278,7 +2296,7 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "Ajustando parâmetros para %s"
 
-#: graphs/data.py:343
+#: graphs/data.py:357
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
@@ -2320,10 +2338,6 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Arquivos de texto"
 
-#: graphs/graphs.in:69
-msgid "Could not load {font}"
-msgstr "Não foi possível carregar {font}"
-
 #: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Conjunto de dados"
@@ -2363,29 +2377,29 @@ msgstr "Alguns itens não possuem barras de erro; eles serão descartados"
 msgid "Combined Data"
 msgstr "Dados combinados"
 
-#: graphs/operations.py:333
+#: graphs/operations.py:332
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "A operação em {name} não resultou em uma equação plotável"
 
-#: graphs/operations.py:341
+#: graphs/operations.py:338
 msgid "Operation not supported for equations."
 msgstr "Operação não suportada para equações."
 
-#: graphs/operations.py:495 graphs/operations.py:499
+#: graphs/operations.py:492 graphs/operations.py:496
 msgid "No data found within the highlighted area"
 msgstr "Nenhum dado encontrado na área destacada"
 
-#: graphs/operations.py:508
+#: graphs/operations.py:505
 msgid "Operation not supported for data items"
 msgstr "Operação não suportada para itens de dados"
 
-#: graphs/operations.py:511
+#: graphs/operations.py:508
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Erro ao executar a operação"
 
-#: graphs/operations.py:519
+#: graphs/operations.py:516
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Os dados que estavam fora da área destacada foram descartados"
 
@@ -2498,6 +2512,12 @@ msgstr "Gráficos — %s"
 #: graphs/window.vala:393
 msgid "Open Location"
 msgstr "Abrir local"
+
+#~ msgid "No numeric data found in column."
+#~ msgstr "Nenhum dado numérico encontrado na coluna."
+
+#~ msgid "Columns do not have the same length."
+#~ msgstr "As colunas não têm o mesmo comprimento."
 
 # Aqui, parece haver um erro na string original.
 #, python-brace-format
