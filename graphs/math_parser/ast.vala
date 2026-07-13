@@ -4,7 +4,7 @@ namespace Graphs {
         SYNTAX,
         UNKNOWN_FUNCTION,
         DOMAIN,
-        DIV_ZERO
+        INVALID
     }
 
     private enum TokenType {
@@ -139,14 +139,14 @@ namespace Graphs {
             return _right;
         }
 
-        public double val () throws MathError {
+        public double val () {
             if (_type == ExpressionType.NUMBER) return _val;
 
             switch ((Ident) _enum) {
                 case Ident.PI: return Math.PI;
                 case Ident.E: return Math.E;
                 case Ident.INF: return double.INFINITY;
-                default: throw new MathError.UNKNOWN_FUNCTION ("invalid constant");
+                default: assert_not_reached ();
             }
         }
 
