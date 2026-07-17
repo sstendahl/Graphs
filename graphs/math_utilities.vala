@@ -153,24 +153,4 @@ namespace Graphs.MathTools {
             return false;
         }
     }
-
-    public bool minmax_equation (
-        Expression equation,
-        double xstart,
-        double xstop,
-        Scale scale,
-        out double min,
-        out double max
-    ) {
-        double[] xdata = new double[5000];
-        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
-        try {
-            double[] ydata = ast_to_program (equation).eval (xdata);
-            return CUtilities.array_minmax (ydata, scale.is_nonzero (), out min, out max);
-        } catch (MathError e) {
-            min = 0;
-            max = 0;
-            return false;
-        }
-    }
 }

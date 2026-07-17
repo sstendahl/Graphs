@@ -594,12 +594,14 @@ namespace Graphs {
             position_changed.emit (index1, index2);
         }
 
-        private struct AxisInfo {
-            unowned string direction;
-            bool used;
-            double min_value;
-            double max_value;
-            Scale scale;
+        [Compact]
+        private class AxisInfo {
+            public unowned string direction;
+            public bool used;
+            public double min_value;
+            public double max_value;
+            public Scale scale;
+            public double[] xdata;
 
             public AxisInfo.for_direction (FigureSettings figure_settings, string direction) {
                 this.direction = direction;
@@ -607,9 +609,14 @@ namespace Graphs {
                 figure_settings.get ("min_" + direction, out min_value);
                 figure_settings.get ("max_" + direction, out max_value);
                 figure_settings.get (direction + "_scale", out scale);
+                xdata = null;
             }
 
-            public void update_min_max (double min_value, double max_value) {
+            public void update_min_max (double[] data) {
+                double min_value, max_value;
+
+                if (!CUtilities.array_minmax (data, scale.is_nonzero (), out min_value, out max_value)) return;
+
                 if (used) {
                     this.min_value = double.min (this.min_value, min_value);
                     this.max_value = double.max (this.max_value, max_value);
@@ -619,20 +626,32 @@ namespace Graphs {
                     used = true;
                 }
             }
+
+            public unowned double[] get_xdata () {
+                if (xdata == null) {
+                    xdata = new double[5000];
+                    CUtilities.create_equidistant_data (min_value, max_value, scale, xdata);
+                }
+
+                return xdata;
+            }
         }
 
         public void optimize_limits () {
+            var figure_settings = this.figure_settings;
+            bool hide_unselected = figure_settings.hide_unselected;
+
             AxisInfo[] axes = {
-                AxisInfo.for_direction (figure_settings, "bottom"),
-                AxisInfo.for_direction (figure_settings, "left"),
-                AxisInfo.for_direction (figure_settings, "top"),
-                AxisInfo.for_direction (figure_settings, "right"),
+                new AxisInfo.for_direction (figure_settings, "bottom"),
+                new AxisInfo.for_direction (figure_settings, "left"),
+                new AxisInfo.for_direction (figure_settings, "top"),
+                new AxisInfo.for_direction (figure_settings, "right"),
             };
 
             var equation_items = new Gee.ArrayList<EquationItem> ();
 
             foreach (Item item in this) {
-                if (!item.selected && figure_settings.hide_unselected) continue;
+                if (!item.selected && hide_unselected) continue;
 
                 if (item is EquationItem) {
                     equation_items.add ((EquationItem) item);
@@ -645,41 +664,33 @@ namespace Graphs {
                 int xindex = item.xposition * 2;
                 int yindex = item.yposition * 2 + 1;
 
-                double min_x, max_x, min_y, max_y;
-
-                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].scale.is_nonzero (), out min_x, out max_x)) continue;
-                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
-
-                axes[xindex].update_min_max (min_x, max_x);
-                axes[yindex].update_min_max (min_y, max_y);
+                axes[xindex].update_min_max (data_item.get_xdata ());
+                axes[yindex].update_min_max (data_item.get_ydata ());
             }
 
             foreach (EquationItem item in equation_items) {
                 int xindex = item.xposition * 2;
                 int yindex = item.yposition * 2 + 1;
 
-                double min_x = axes[xindex].min_value;
-                double max_x = axes[xindex].max_value;
+                if (PythonHelper.has_singularities (item.equation, axes[xindex].min_value, axes[xindex].max_value)) continue;
 
-                if (PythonHelper.has_singularities (item.equation, min_x, max_x)) continue;
+                unowned double[] xdata = axes[xindex].get_xdata ();
+                double[] ydata = item.get_program ().eval (xdata);
 
-                double min_y, max_y;
-                if (!MathTools.minmax_equation (item.equation, min_x, max_x, axes[xindex].scale, out min_y, out max_y)) continue;
-
-                axes[yindex].update_min_max (min_y, max_y);
+                axes[yindex].update_min_max (ydata);
             }
 
             for (int i = 0; i < axes.length; i++) {
-                AxisInfo* axis = &axes[i];
-                if (!axis->used) continue;
+                unowned AxisInfo axis = axes[i];
+                if (!axis.used) continue;
 
                 // 0.05 padding on y-axis, 0.015 padding on x-axis
                 double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
 
-                double min_all = axis->min_value;
-                double max_all = axis->max_value;
+                double min_all = axis.min_value;
+                double max_all = axis.max_value;
 
-                if (axis->scale.is_logarithmic ()) {
+                if (axis.scale.is_logarithmic ()) {
                     double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
                     double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
                     double log_span = log_max - log_min;
@@ -692,14 +703,14 @@ namespace Graphs {
                     max_all += padding_factor * span;
 
                     // For inverse scale, calculate padding using a factor
-                    if (axis->scale == Scale.INVERSE) {
+                    if (axis.scale == Scale.INVERSE) {
                         min_all *= 0.99;
                     } else {
                         min_all -= padding_factor * span;
                     }
                 }
 
-                string direction = axis->direction;
+                unowned string direction = axis.direction;
                 figure_settings.set ("min_" + direction, min_all);
                 figure_settings.set ("max_" + direction, max_all);
             }

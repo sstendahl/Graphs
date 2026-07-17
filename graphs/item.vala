@@ -230,6 +230,7 @@ namespace Graphs {
         public double linewidth { get; set; default = 3; }
 
         private Expression _equation;
+        private Program _program;
         public Expression equation {
             get { return _equation; }
             set {
@@ -238,12 +239,17 @@ namespace Graphs {
                         name = "Y = " + ast_to_expression (value);
 
                     _equation = value;
+                    _program = ast_to_program (value);
                 } catch (MathError e) { assert_not_reached (); }
             }
         }
 
         construct {
             typename = _("Equation");
+        }
+
+        public unowned Program get_program () {
+            return _program;
         }
     }
 

@@ -224,6 +224,7 @@ namespace Graphs {
         ABS
     }
 
+    [Compact (opaque = true)]
     public class Program {
         private OpCode[] _program;
         private double[] _data;
