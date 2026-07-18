@@ -29,11 +29,44 @@ namespace Graphs {
     }
 
     public class StyleParameters : Object {
-        public string name { get; protected set; }
-        public string color { get; protected set; }
-        public string background_color { get; protected set; }
-        public string[] color_cycle { get; protected set; }
-        public string[] errorbar_cycle { get; protected set; }
+        private HashTable<string, Value?> parameters = new HashTable<string, Value?> (str_hash, str_equal);
+        private HashTable<string, Value?> graphs_parameters = new HashTable<string, Value?> (str_hash, str_equal);
+
+        public void set_param (string key, Value? val, bool graphs_param = false) {
+            if (val == null) return;
+
+            if (graphs_param)
+                graphs_parameters.set (key, val);
+            else
+                parameters.set (key, val);
+        }
+
+        public Value get_param (string key, bool graphs_param = false) {
+            if (graphs_param)
+                return graphs_parameters.get (key);
+            else
+                return parameters.get (key);
+        }
+
+        public unowned string get_name () {
+            return (string) graphs_parameters.get ("name");
+        }
+
+        public unowned string get_color () {
+            return (string) parameters.get ("text.color");
+        }
+
+        public unowned string get_background_color () {
+            return (string) parameters.get ("figure.facecolor");
+        }
+
+        public unowned string[] get_color_cycle () {
+            return (string[]) parameters.get ("axes.prop_cycle");
+        }
+
+        public unowned string[] get_errorbar_cycle () {
+            return (string[]) graphs_parameters.get ("errorbar.color_cycle");
+        }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
@@ -188,7 +221,7 @@ namespace Graphs {
 
         private async void on_system_style () {
             var style_params = get_system_style_params ();
-            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
+            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.get_color (), style_params.get_background_color ());
             css_provider.load_from_string (css);
         }
 

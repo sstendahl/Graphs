@@ -315,16 +315,18 @@ namespace Graphs {
 
         private void append_used_color (string color) {
             if (color in _used_colors) return;
-            if (!(color in selected_style_params.color_cycle)) return;
+            var color_cycle = selected_style_params.get_color_cycle ();
+            if (!(color in color_cycle)) return;
             _used_colors += color;
-            if (_used_colors.length == selected_style_params.color_cycle.length) _used_colors = {};
+            if (_used_colors.length == color_cycle.length) _used_colors = {};
         }
 
         private void append_used_errbar_color (string color) {
             if (color in _used_errbar_colors) return;
-            if (!(color in selected_style_params.errorbar_cycle)) return;
+            var errorbar_cycle = selected_style_params.get_errorbar_cycle ();
+            if (!(color in errorbar_cycle)) return;
             _used_errbar_colors += color;
-            if (_used_errbar_colors.length == selected_style_params.errorbar_cycle.length) _used_errbar_colors = {};
+            if (_used_errbar_colors.length == errorbar_cycle.length) _used_errbar_colors = {};
         }
 
         /**
@@ -336,13 +338,15 @@ namespace Graphs {
          * match the items label, they get moved to another axis.
          */
         public void add_items (Item[] items) {
+            var color_cycle = selected_style_params.get_color_cycle ();
+            var errorbar_cycle = selected_style_params.get_errorbar_cycle ();
             _used_colors = {};
             _used_errbar_colors = {};
             foreach (Item item in this) {
-                if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
+                if (item.color in color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
-                    if (errcolor in selected_style_params.errorbar_cycle) append_used_errbar_color (errcolor);
+                    if (errcolor in errorbar_cycle) append_used_errbar_color (errcolor);
                 }
             }
             string[] used_names = get_names ();
@@ -352,7 +356,7 @@ namespace Graphs {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
-                    foreach (unowned string color in selected_style_params.color_cycle) {
+                    foreach (unowned string color in color_cycle) {
                         if (!(color in _used_colors)) {
                             append_used_color (color);
                             item.color = color;
@@ -363,7 +367,7 @@ namespace Graphs {
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
                     if (errcolor == "") {
-                        foreach (unowned string color in selected_style_params.errorbar_cycle) {
+                        foreach (unowned string color in errorbar_cycle) {
                             if (!(color in _used_errbar_colors)) {
                                 append_used_errbar_color (color);
                                 item.set ("errcolor", color);
@@ -853,10 +857,10 @@ namespace Graphs {
         }
 
         private async void reset_items () {
-            var old_cycle = old_selected_style_params.color_cycle;
-            var new_cycle = selected_style_params.color_cycle;
-            var old_err_cycle = old_selected_style_params.errorbar_cycle;
-            var new_err_cycle = selected_style_params.errorbar_cycle;
+            var old_cycle = old_selected_style_params.get_color_cycle ();
+            var new_cycle = selected_style_params.get_color_cycle ();
+            var old_err_cycle = old_selected_style_params.get_errorbar_cycle ();
+            var new_err_cycle = selected_style_params.get_errorbar_cycle ();
 
             uint count = 0;
             uint errbar_count = 0;

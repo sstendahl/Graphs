@@ -171,7 +171,7 @@ namespace Graphs {
             this._file = file;
             this.loading = true;
             editor_box.load (file);
-            set_title (editor_box.parameters.name);
+            set_title (editor_box.parameters.get_name ());
             reload_canvas ();
             stack.get_pages ().select_item (1, true);
             this.unsaved = false;
@@ -299,7 +299,7 @@ namespace Graphs {
                 style = StyleManager.get_system_style_params ();
             } else {
                 style = editor_box.parameters;
-                this._stylename = style.name;
+                this._stylename = style.get_name ();
 
                 // Translators: Window title that will be formatted with the stylename.
                 set_title (_("Graphs Style Editor — %s").printf (_stylename));
@@ -314,8 +314,8 @@ namespace Graphs {
                 }
             }
 
-            var color_cycle = style.color_cycle;
-            var errorbar_cycle = style.errorbar_cycle;
+            var color_cycle = style.get_color_cycle ();
+            var errorbar_cycle = style.get_errorbar_cycle ();
             for (uint i = 0; i < test_items.get_n_items (); i++) {
                 var item = (DataItem) test_items.get_item (i);
 
@@ -329,7 +329,7 @@ namespace Graphs {
             canvas.figure.set ("bottom_label", _("X Label"));
             canvas.figure.set ("left_label", _("Y Label"));
 
-            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.background_color, style.color));
+            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.get_background_color (), style.get_color ()));
 
             canvas_bin.set_child (canvas);
         }

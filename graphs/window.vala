@@ -271,7 +271,7 @@ namespace Graphs {
 
         private void on_style_changed () {
             var style_params = data.selected_style_params;
-            string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.color, style_params.background_color);
+            string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.get_color (), style_params.get_background_color ());
             css_provider.load_from_string (css);
 
             var figure_settings = data.figure_settings;

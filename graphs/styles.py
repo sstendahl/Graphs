@@ -2,7 +2,7 @@
 """Module for style utilities."""
 import io
 
-from gi.repository import GLib, Gdk, Gio, Graphs
+from gi.repository import GLib, Gdk, Gio, Graphs, GObject
 
 from graphs import style_io
 
@@ -23,15 +23,23 @@ class StyleParameters(Graphs.StyleParameters):
     """Custom Style Parameters class."""
 
     def __init__(self, params: tuple[RcParams, dict]):
-        super().__init__(
-            name=params[1]["name"],
-            color=params[0]["text.color"],
-            background_color=params[0]["figure.facecolor"],
-            color_cycle=params[0]["axes.prop_cycle"].by_key()["color"],
-            errorbar_cycle=params[1]["errorbar.color_cycle"].by_key()["color"],
-        )
+        super().__init__()
         self.style_params = params[0]
         self.graphs_params = params[1]
+
+        for key, val in self.style_params.items():
+            if key == "axes.prop_cycle":
+                value = GObject.Value(GObject.TYPE_STRV)
+                value.set_boxed(val.by_key()["color"])
+                val = value
+            self.set_param(key, val, False)
+
+        for key, val in self.graphs_params.items():
+            if key == "errorbar.color_cycle":
+                value = GObject.Value(GObject.TYPE_STRV)
+                value.set_boxed(val.by_key()["color"])
+                val = value
+            self.set_param(key, val, True)
 
     def as_tuple(self) -> tuple[RcParams, dict]:
         """Return params as tuple."""
