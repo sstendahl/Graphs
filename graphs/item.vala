@@ -40,6 +40,7 @@ namespace Graphs {
         protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
+        protected signal FillItem fill_item_request (StyleParameters parameters, FillHolder data);
 
         public static void reset_item (Item item, StyleParameters old_style, StyleParameters new_style) {
             instance.reset_request.emit (item, old_style, new_style);
@@ -63,6 +64,10 @@ namespace Graphs {
 
         public static TextItem new_text_item (StyleParameters parameters, double xanchor, double yanchor, string text) {
             return instance.text_item_request.emit (parameters, xanchor, yanchor, text);
+        }
+
+        public static FillItem new_fill_item (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
+            return instance.fill_item_request (parameters, new FillHolder ((owned) xdata, (owned) lower, (owned) upper));
         }
     }
 
@@ -259,7 +264,51 @@ namespace Graphs {
         }
     }
 
+    public class FillHolder : Object {
+        private double[] _xdata;
+        private double[] _lower;
+        private double[] _upper;
+
+        public FillHolder (owned double[] xdata, owned double[] lower, owned double[] upper) {
+            _xdata = (owned) xdata;
+            _lower = (owned) lower;
+            _upper = (owned) upper;
+        }
+
+        public FillHolder.empty () {
+            _xdata = new double[0];
+            _lower = new double[0];
+            _upper = new double[0];
+        }
+
+        public unowned double[] get_xdata () {
+            return _xdata;
+        }
+
+        public unowned double[] get_lower () {
+            return _lower;
+        }
+
+        public unowned double[] get_upper () {
+            return _upper;
+        }
+
+        public GLib.Bytes get_xdata_b () {
+            return new Bytes ((uint8[]) _xdata);
+        }
+
+        public GLib.Bytes get_lower_b () {
+            return new Bytes ((uint8[]) _lower);
+        }
+
+        public GLib.Bytes get_upper_b () {
+            return new Bytes ((uint8[]) _upper);
+        }
+    }
+
     public class FillItem : Item {
+        public FillHolder data { get; set; default = new FillHolder.empty (); }
+
         construct {
             typename = _("Fill");
         }
