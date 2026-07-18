@@ -184,7 +184,7 @@ namespace Graphs {
                     xdata = columns[xrank].get_data ();
                 }
 
-                Item item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
+                Item item = new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
                 item.xlabel = xlabel;
                 item.ylabel = ylabel;
                 item.name = settings.filename;

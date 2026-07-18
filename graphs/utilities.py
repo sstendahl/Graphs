@@ -12,6 +12,13 @@ def bytes_to_ndarray(b: GLib.Bytes) -> numpy.ndarray:
     return numpy.frombuffer(b.get_data(), dtype=numpy.float64)
 
 
+def bytes_to_list(b: GLib.Bytes) -> list[float]:
+    ndarray = bytes_to_ndarray(b)
+    if ndarray is None:
+        return None
+    return ndarray.tolist()
+
+
 def get_xy_data(
     holder: Graphs.DataHolder,
 ) -> tuple[numpy.ndarray, numpy.ndarray]:
@@ -19,6 +26,25 @@ def get_xy_data(
     xdata = bytes_to_ndarray(holder.get_xdata_b())
     ydata = bytes_to_ndarray(holder.get_ydata_b())
     return xdata, ydata
+
+
+def data_holder_to_tuple(holder: Graphs.DataHolder) -> tuple[list, list, list, list]:
+    """Get the data as a picklable tuple."""
+    return (
+        bytes_to_list(holder.get_xdata_b()),
+        bytes_to_list(holder.get_ydata_b()),
+        bytes_to_list(holder.get_xerr_b()),
+        bytes_to_list(holder.get_yerr_b()),
+    )
+
+
+def fill_holder_to_tuple(holder: Graphs.FillHolder) -> tuple[list, list, list]:
+    """Get the data as a picklable tuple."""
+    return (
+        bytes_to_list(holder.get_xdata_b()),
+        bytes_to_list(holder.get_lower_b()),
+        bytes_to_list(holder.get_upper_b()),
+    )
 
 
 def equation_to_data(

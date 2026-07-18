@@ -7,7 +7,6 @@ from gi.repository import Graphs
 
 from graphs import file_io
 from graphs.file_import import Parser
-from graphs.item import DataItem
 
 import numpy
 
@@ -57,9 +56,9 @@ class XrdmlParser(Parser):
                 end_pos = float(end_pos[0].firstChild.data)
                 xdata = numpy.linspace(start_pos, end_pos, len(ydata))
 
-        item = DataItem.new(style, xdata, ydata)
+        item = Graphs.DataItem.new(style, xdata, ydata, None, None)
         item.set_name(settings.get_filename())
         item.set_xlabel(f"{scan_axis} ({unit})")
-        item.set_ylabel("Intensity (cps)")
+        item.set_ylabel(_("Intensity (cps)"))
 
         items.add(item)

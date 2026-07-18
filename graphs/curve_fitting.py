@@ -4,8 +4,7 @@ from gettext import gettext as _
 
 from gi.repository import Gio, Graphs
 
-from graphs import ast, canvas
-from graphs.item import DataItem, FillItem
+from graphs import ast, canvas, utilities
 
 import numpy
 
@@ -29,7 +28,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
-        xdata, ydata = item.get_xydata()
+        xdata, ydata = utilities.get_xy_data(item.get_data())
         self._data = xdata, ydata
         x_min, x_max = min(xdata), max(xdata)
         padding = (x_max - x_min) * 0.025
@@ -37,22 +36,22 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._x_fit = numpy.linspace(*self._xlim, 5000)
 
         style = Graphs.StyleManager.get_instance().get_system_style_params()
-        self.data_curve = DataItem.new(style, xdata=xdata, ydata=ydata)
+        self.data_curve = Graphs.DataItem.new(style, xdata=xdata, ydata=ydata)
         self.data_curve.set_name(item.get_name())
         self.data_curve.set_color(DATA_COLOR)
         self.data_curve.set_linestyle(LINE_STYLE)
         self.data_curve.set_markerstyle(MARKER_STYLE)
-        self.data_curve.set_marksersize(MARKER_SIZE)
-        self.fitted_curve = DataItem.new(style, xdata=[], ydata=[])
+        self.data_curve.set_markersize(MARKER_SIZE)
+        self.fitted_curve = Graphs.DataItem.new(style, xdata=[], ydata=[])
         self.fitted_curve.set_color(FIT_COLOR)
-        self.fill = FillItem.new(style, ([], [], []))
+        self.fill = Graphs.FillItem.new(style, [], [], [])
         self.fill.set_color(FILL_COLOR)
         self.fill.set_alpha(FILL_ALPHA)
-        self.residuals_item = DataItem.new(style, xdata=[], ydata=[])
+        self.residuals_item = Graphs.DataItem.new(style, xdata=[], ydata=[])
         self.residuals_item.set_color(DATA_COLOR)
         self.residuals_item.set_linestyle(LINE_STYLE)
         self.residuals_item.set_markerstyle(MARKER_STYLE)
-        self.residuals_item.set_marksersize(MARKER_SIZE)
+        self.residuals_item.set_markersize(MARKER_SIZE)
 
         super().__init__(window=window)
         self.present(window)

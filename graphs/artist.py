@@ -612,8 +612,11 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
+        data = item.get_data()
         self._artist = axis.fill_between(
-            *item.get_data_tuple(),
+            utilities.bytes_to_ndarray(data.get_xdata_b()),
+            utilities.bytes_to_ndarray(data.get_lower_b()),
+            utilities.bytes_to_ndarray(data.get_upper_b()),
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),

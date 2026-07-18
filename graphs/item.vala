@@ -23,43 +23,6 @@ namespace Graphs {
         }
     }
 
-    /**
-     * Item factory for creating Python items.
-     */
-    public class ItemFactory : Object {
-        private static ItemFactory instance;
-
-        construct {
-            instance = this;
-        }
-
-        protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
-        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
-        protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
-        protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
-        protected signal FillItem fill_item_request (StyleParameters parameters, FillHolder data);
-
-        public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
-            return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
-        }
-
-        public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
-            return instance.generated_data_item_request.emit (parameters, equation, xstart, xstop, steps, scale);
-        }
-
-        public static EquationItem new_equation_item (StyleParameters parameters, Expression equation) {
-            return instance.equation_item_request.emit (parameters, equation);
-        }
-
-        public static TextItem new_text_item (StyleParameters parameters, double xanchor, double yanchor, string text) {
-            return instance.text_item_request.emit (parameters, xanchor, yanchor, text);
-        }
-
-        public static FillItem new_fill_item (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
-            return instance.fill_item_request (parameters, new FillHolder ((owned) xdata, (owned) lower, (owned) upper));
-        }
-    }
-
     protected delegate Value StyleTransformFunc (Value val);
 
     protected struct StyleBinding {
@@ -231,6 +194,11 @@ namespace Graphs {
             typename = _("Dataset");
         }
 
+        public DataItem (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
+            Object (data: new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
+            override (parameters);
+        }
+
         public unowned double[] get_xdata () {
             return data.get_xdata ();
         }
@@ -278,6 +246,17 @@ namespace Graphs {
             }
         }
 
+        public GeneratedDataItem (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
+            Object (
+                equation: equation,
+                xstart: xstart,
+                xstop: xstop,
+                steps: steps,
+                scale: scale
+            );
+            override (parameters);
+        }
+
         private void regenerate () {
             try {
                 data = MathTools.equation_to_data (
@@ -322,6 +301,11 @@ namespace Graphs {
         construct {
             typename = _("Equation");
         }
+
+        public EquationItem (StyleParameters parameters, Expression equation) {
+            Object (equation: equation);
+            override (parameters);
+        }
     }
 
     public class TextItem : Item {
@@ -342,6 +326,15 @@ namespace Graphs {
 
         construct {
             typename = _("Label");
+        }
+
+        public TextItem (StyleParameters parameters, double xanchor, double yanchor, string text) {
+            Object (
+                xanchor: xanchor,
+                yanchor: yanchor,
+                text: text
+            );
+            override (parameters);
         }
     }
 
@@ -392,6 +385,11 @@ namespace Graphs {
 
         construct {
             typename = _("Fill");
+        }
+
+        public FillItem (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
+            Object (data: new FillHolder ((owned) xdata, (owned) lower, (owned) upper));
+            override (parameters);
         }
     }
 }
