@@ -70,14 +70,14 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            item.to_dict(),
+            ItemFactory.to_dict(item),
         ))
 
     @staticmethod
     def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, item.to_dict()),
+            (index, ItemFactory.to_dict(item)),
         ))
 
     @staticmethod
@@ -115,7 +115,7 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([item.to_dict() for item in self])
+        self._data_copy = copy.deepcopy([ItemFactory.to_dict(item) for item in self])
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -296,7 +296,7 @@ class Data(Graphs.Data):
         view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
-            "data": [item.to_dict() for item in self],
+            "data": [ItemFactory.to_dict(item) for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)

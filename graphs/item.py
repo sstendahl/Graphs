@@ -7,18 +7,7 @@ from graphs import utilities
 import numpy
 
 
-class _PythonItemMixin:
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = {
-            key: self.get_property(key)
-            for key in dir(self.props) if key != "typename"
-        }
-        dictionary["type"] = self.__gtype_name__[12:]
-        return dictionary
-
-
-class DataItem(Graphs.DataItem, _PythonItemMixin):
+class DataItem(Graphs.DataItem):
     """DataItem."""
 
     __gtype_name__ = "GraphsPythonDataItem"
@@ -46,12 +35,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         inst = cls(data=data)
         inst.override(style)
         return inst
-
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["data"] = self.get_data_tuple()
-        return dictionary
 
     def get_data_tuple(self) -> tuple[list, list, list, list]:
         """Get the data as a picklable tuple."""
@@ -117,14 +100,8 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
         inst.override(style)
         return inst
 
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
-        return dictionary
 
-
-class EquationItem(Graphs.EquationItem, _PythonItemMixin):
+class EquationItem(Graphs.EquationItem):
     """EquationItem."""
 
     __gtype_name__ = "GraphsPythonEquationItem"
@@ -140,14 +117,8 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
         inst.override(style)
         return inst
 
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
-        return dictionary
 
-
-class TextItem(Graphs.TextItem, _PythonItemMixin):
+class TextItem(Graphs.TextItem):
     """TextItem."""
 
     __gtype_name__ = "GraphsPythonTextItem"
@@ -170,7 +141,7 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
         return inst
 
 
-class FillItem(Graphs.FillItem, _PythonItemMixin):
+class FillItem(Graphs.FillItem):
     """FillItem."""
 
     __gtype_name__ = "GraphsPythonFillItem"
@@ -251,6 +222,29 @@ class ItemFactory(Graphs.ItemFactory):
                 return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
+
+    @staticmethod
+    def to_dict(item: Graphs.Item) -> dict:
+        """Convert an item to a dict."""
+        dictionary = {
+            key: item.get_property(key)
+            for key in dir(item.props) if key != "typename"
+        }
+        item_type = item.__gtype_name__[12:]
+        dictionary["type"] = item_type
+        match item_type:
+            case "DataItem":
+                dictionary["data"] = item.get_data_tuple()
+            case "GeneratedDataItem":
+                dictionary["data"] = item.get_data_tuple()
+                equation = Graphs.ast_to_expression(item.props.equation)
+                dictionary["equation"] = equation
+            case "EquationItem":
+                equation = Graphs.ast_to_expression(item.props.equation)
+                dictionary["equation"] = equation
+            case "FillItem":
+                dictionary["data"] = item.get_data_tuple()
+        return dictionary
 
     @staticmethod
     def _on_request(self, *args) -> Graphs.Item:
