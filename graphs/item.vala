@@ -33,22 +33,11 @@ namespace Graphs {
             instance = this;
         }
 
-        protected signal void reset_request (Item item, StyleParameters old_style, StyleParameters new_style);
-        protected signal void override_request (Item item, StyleParameters parameters);
-
         protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
         protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
         protected signal FillItem fill_item_request (StyleParameters parameters, FillHolder data);
-
-        public static void reset_item (Item item, StyleParameters old_style, StyleParameters new_style) {
-            instance.reset_request.emit (item, old_style, new_style);
-        }
-
-        public static void override_item (Item item, StyleParameters parameters) {
-            instance.override_request.emit (item, parameters);
-        }
 
         public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
             return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
@@ -71,10 +60,19 @@ namespace Graphs {
         }
     }
 
+    protected delegate Value StyleTransformFunc (Value val);
+
+    protected struct StyleBinding {
+        string property;
+        string key;
+        bool graphs_param;
+        unowned StyleTransformFunc transform;
+    }
+
     /**
      * Base item class
      */
-    public class Item : Object {
+    public abstract class Item : Object {
         public string typename { get; construct set; }
         public string name { get; set; default = ""; }
         public string color { get; set; default = ""; }
@@ -94,6 +92,44 @@ namespace Graphs {
         public void set_rgba (Gdk.RGBA rgba) {
             this.color = Tools.rgba_to_hex (rgba);
             this.alpha = rgba.alpha;
+        }
+
+        protected virtual unowned StyleBinding[]? get_style_bindings () {
+            return null;
+        }
+
+        public void reset (StyleParameters old_style, StyleParameters new_style) {
+            unowned var style_bindings = get_style_bindings ();
+            if (style_bindings == null) return;
+
+            foreach (unowned StyleBinding binding in style_bindings) {
+                Value old_val = old_style.get_param (binding.key, binding.graphs_param);
+                Value new_val = new_style.get_param (binding.key, binding.graphs_param);
+
+                if (binding.transform != null) {
+                    old_val = binding.transform (old_val);
+                    new_val = binding.transform (new_val);
+                }
+
+                var klass = (ObjectClass) get_type ().class_ref ();
+                var pspec = klass.find_property (binding.property);
+                if (pspec.values_cmp (old_val, new_val) != 0)
+                    set_property (binding.property, new_val);
+            }
+        }
+
+        public void override (StyleParameters style) {
+            unowned var style_bindings = get_style_bindings ();
+            if (style_bindings == null) return;
+
+            foreach (unowned StyleBinding binding in style_bindings) {
+                Value val = style.get_param (binding.key, binding.graphs_param);
+
+                if (binding.transform != null)
+                    val = binding.transform (val);
+
+                set_property (binding.property, val);
+            }
         }
     }
 
@@ -161,12 +197,35 @@ namespace Graphs {
         public double errcapthick { get; set; default = 1; }
         public string errcolor { get; set; default = ""; }
         public double errlinewidth { get; set; default = 1; }
-        public int linestyle { get; set; default = 1; }
+        public Linestyle linestyle { get; set; default = Linestyle.SOLID; }
         public double linewidth { get; set; default = 3; }
-        public int markerstyle { get; set; default = 0; }
+        public Markerstyle markerstyle { get; set; default = Markerstyle.NONE; }
         public double markersize { get; set; default = 7; }
         public bool showxerr { get; set; default = true; }
         public bool showyerr { get; set; default = true; }
+
+        private static Value linestyle_transform (Value val) {
+            return Linestyle.from_string ((string) val);
+        }
+
+        private static Value markerstyle_transform (Value val) {
+            return Markerstyle.from_style ((string) val);
+        }
+
+        private const StyleBinding[] STYLE_BINDINGS = {
+            { "errbarsabove", "errorbar.barsabove", true, null },
+            { "errcapsize", "errorbar.capsize", true, null },
+            { "errcapthick", "errorbar.capthick", true, null },
+            { "errlinewidth", "errorbar.linewidth", true, null },
+            { "linestyle", "lines.linestyle", false, linestyle_transform },
+            { "linewidth", "lines.linewidth", false, null },
+            { "markerstyle", "lines.marker", false, markerstyle_transform },
+            { "markersize", "lines.markersize", false, null },
+        };
+
+        protected override unowned StyleBinding[]? get_style_bindings () {
+            return STYLE_BINDINGS;
+        }
 
         construct {
             typename = _("Dataset");
@@ -231,7 +290,7 @@ namespace Graphs {
     }
 
     public class EquationItem : Item, EquationBasedItem {
-        public int linestyle { get; set; default = 1; }
+        public EquationLinestyle linestyle { get; set; default = EquationLinestyle.SOLID; }
         public double linewidth { get; set; default = 3; }
 
         private Expression _equation;
@@ -247,6 +306,19 @@ namespace Graphs {
             }
         }
 
+        private static Value linestyle_transform (Value val) {
+            return EquationLinestyle.from_string ((string) val);
+        }
+
+        private const StyleBinding[] STYLE_BINDINGS = {
+            { "linestyle", "lines.linestyle", false, linestyle_transform },
+            { "linewidth", "lines.linewidth", false, null },
+        };
+
+        protected override unowned StyleBinding[]? get_style_bindings () {
+            return STYLE_BINDINGS;
+        }
+
         construct {
             typename = _("Equation");
         }
@@ -258,6 +330,15 @@ namespace Graphs {
         public string text { get; set; default = ""; }
         public double size { get; set; default = 12; }
         public int rotation { get; set; default = 0; }
+
+        private const StyleBinding[] STYLE_BINDINGS = {
+            { "size", "font.size", false, null },
+            { "color", "text.color", false, null },
+        };
+
+        protected override unowned StyleBinding[]? get_style_bindings () {
+            return STYLE_BINDINGS;
+        }
 
         construct {
             typename = _("Label");

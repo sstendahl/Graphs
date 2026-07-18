@@ -31,6 +31,86 @@ namespace Graphs {
         }
     }
 
+    public enum Markerstyle {
+        NONE,
+        POINT,
+        PIXEL,
+        CIRCLE,
+        TRIANGLE_DOWN,
+        TRIANGLE_UP,
+        TRIANGLE_LEFT,
+        TRIANGLE_RIGHT,
+        OCTAGON,
+        SQUARE,
+        PENTAGON,
+        STAR,
+        HEXAGON_1,
+        HEXAGON_2,
+        PLUS,
+        X,
+        DIAMOND,
+        THIN_DIAMOND,
+        VERTICAL_LINE,
+        HORIZONTAL_LINE,
+        FILLED_PLUS,
+        FILLED_X;
+
+        public static Markerstyle from_style (string str) {
+            switch (str) {
+                case "none": return NONE;
+                case ".": return POINT;
+                case ",": return PIXEL;
+                case "o": return CIRCLE;
+                case "v": return TRIANGLE_DOWN;
+                case "^": return TRIANGLE_UP;
+                case "<": return TRIANGLE_LEFT;
+                case ">": return TRIANGLE_RIGHT;
+                case "8": return OCTAGON;
+                case "s": return SQUARE;
+                case "p": return PENTAGON;
+                case "*": return STAR;
+                case "h": return HEXAGON_1;
+                case "H": return HEXAGON_2;
+                case "+": return PLUS;
+                case "x": return X;
+                case "D": return DIAMOND;
+                case "d": return THIN_DIAMOND;
+                case "|": return VERTICAL_LINE;
+                case "_": return HORIZONTAL_LINE;
+                case "P": return FILLED_PLUS;
+                case "X": return FILLED_X;
+                default: assert_not_reached ();
+            }
+        }
+    }
+
+    public enum Linestyle {
+        NONE,
+        SOLID,
+        DOTTED,
+        DASHED,
+        DASHDOT;
+
+        public static Linestyle from_string (string str) {
+            EnumClass enumc = (EnumClass) typeof (Linestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (str);
+            return (Linestyle) eval.value;
+        }
+    }
+
+    public enum EquationLinestyle {
+        SOLID,
+        DOTTED,
+        DASHED,
+        DASHDOT;
+
+        public static EquationLinestyle from_string (string str) {
+            EnumClass enumc = (EnumClass) typeof (EquationLinestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (str);
+            return (EquationLinestyle) eval.value;
+        }
+    }
+
     public enum Scale {
         LINEAR,
         LOG,

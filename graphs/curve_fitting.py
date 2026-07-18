@@ -37,37 +37,22 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._x_fit = numpy.linspace(*self._xlim, 5000)
 
         style = Graphs.StyleManager.get_instance().get_system_style_params()
-        self.data_curve = DataItem.new(
-            style,
-            xdata=xdata,
-            ydata=ydata,
-            name=item.get_name(),
-            color=DATA_COLOR,
-            linestyle=LINE_STYLE,
-            markerstyle=MARKER_STYLE,
-            markersize=MARKER_SIZE,
-        )
-        self.fitted_curve = DataItem.new(
-            style,
-            xdata=[],
-            ydata=[],
-            color=FIT_COLOR,
-        )
-        self.fill = FillItem.new(
-            style,
-            ([], [], []),
-            color=FILL_COLOR,
-            alpha=FILL_ALPHA,
-        )
-        self.residuals_item = DataItem.new(
-            style,
-            xdata=[],
-            ydata=[],
-            color=DATA_COLOR,
-            linestyle=LINE_STYLE,
-            markerstyle=MARKER_STYLE,
-            markersize=MARKER_SIZE,
-        )
+        self.data_curve = DataItem.new(style, xdata=xdata, ydata=ydata)
+        self.data_curve.set_name(item.get_name())
+        self.data_curve.set_color(DATA_COLOR)
+        self.data_curve.set_linestyle(LINE_STYLE)
+        self.data_curve.set_markerstyle(MARKER_STYLE)
+        self.data_curve.set_marksersize(MARKER_SIZE)
+        self.fitted_curve = DataItem.new(style, xdata=[], ydata=[])
+        self.fitted_curve.set_color(FIT_COLOR)
+        self.fill = FillItem.new(style, ([], [], []))
+        self.fill.set_color(FILL_COLOR)
+        self.fill.set_alpha(FILL_ALPHA)
+        self.residuals_item = DataItem.new(style, xdata=[], ydata=[])
+        self.residuals_item.set_color(DATA_COLOR)
+        self.residuals_item.set_linestyle(LINE_STYLE)
+        self.residuals_item.set_markerstyle(MARKER_STYLE)
+        self.residuals_item.set_marksersize(MARKER_SIZE)
 
         super().__init__(window=window)
         self.present(window)

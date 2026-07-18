@@ -2,60 +2,12 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
-from graphs import misc, utilities
+from graphs import utilities
 
 import numpy
 
 
 class _PythonItemMixin:
-
-    def reset(
-        self,
-        old_style: Graphs.StyleParameters,
-        new_style: Graphs.StyleParameters,
-    ) -> None:
-        """Reset all properties."""
-        if not hasattr(self, "_style_properties"):
-            return
-        # Combine rcparams and graphs_params into single dict:
-        old_style = old_style.style_params | old_style.graphs_params
-        new_style = new_style.style_params | new_style.graphs_params
-        for prop, (key, function) in self._style_properties.items():
-            old_value = old_style[key]
-            new_value = new_style[key]
-            if function is not None:
-                old_value = function(old_value)
-                new_value = function(new_value)
-            if self.get_property(prop) == old_value:
-                self.set_property(prop, new_value)
-
-    def override(
-        self,
-        style: Graphs.StyleParameters,
-    ) -> None:
-        """Override all properties."""
-        if not hasattr(self, "_style_properties"):
-            return
-        # Combine rcparams and graphs_params into single dict:
-        style = style.style_params | style.graphs_params
-        for prop, (key, function) in self._style_properties.items():
-            value = style[key] if function is None else function(style[key])
-            self.set_property(prop, value)
-
-    @staticmethod
-    def _extract_params(
-        cls,
-        style: Graphs.StyleParameters,
-        kwargs: dict,
-    ) -> dict:
-        # Combine rcparams and graphs_params into single dict:
-        style = style.style_params | style.graphs_params
-        return {
-            prop: style[key] if function is None else function(style[key])
-            for prop, (key, function) in cls._style_properties.items()
-            if prop not in kwargs
-        }
-
     def to_dict(self) -> dict:
         """Convert item to dict."""
         dictionary = {
@@ -71,17 +23,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonDataItem"
 
-    _style_properties = {
-        "errbarsabove": ("errorbar.barsabove", None),
-        "errcapsize": ("errorbar.capsize", None),
-        "errcapthick": ("errorbar.capthick", None),
-        "errlinewidth": ("errorbar.linewidth", None),
-        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
-        "linewidth": ("lines.linewidth", None),
-        "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
-        "markersize": ("lines.markersize", None),
-    }
-
     @classmethod
     def new(
         cls,
@@ -90,25 +31,21 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         ydata: list[float] = None,
         xerr: list[float] = None,
         yerr: list[float] = None,
-        **kwargs,
     ):
         """Create new DataItem."""
         data = Graphs.DataHolder.new(xdata, ydata, xerr, yerr)
-        return cls.new_with_data(style, data, **kwargs)
+        return cls.new_with_data(style, data)
 
     @classmethod
     def new_with_data(
         cls,
         style: Graphs.StyleParameters,
         data: Graphs.DataHolder,
-        **kwargs,
     ):
         """Create new DataItem with a DataHolder."""
-        return cls(
-            data=data,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
+        inst = cls(data=data)
+        inst.override(style)
+        return inst
 
     def to_dict(self) -> dict:
         """Convert item to dict."""
@@ -168,18 +105,17 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
         xstop: str,
         steps: int,
         scale: Graphs.Scale,
-        **kwargs,
     ):
         """Create new GeneratedDataItem."""
-        return cls(
+        inst = cls(
             equation=equation,
             xstart=xstart,
             xstop=xstop,
             steps=steps,
             scale=scale,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
         )
+        inst.override(style)
+        return inst
 
     def to_dict(self) -> dict:
         """Convert item to dict."""
@@ -193,27 +129,16 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonEquationItem"
 
-    _style_properties = {
-        "linestyle": (
-            "lines.linestyle",
-            lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
-        ),
-        "linewidth": ("lines.linewidth", None),
-    }
-
     @classmethod
     def new(
         cls,
         style: Graphs.StyleParameters,
         equation: Graphs.Expression,
-        **kwargs,
     ):
         """Create new EquationItem."""
-        return cls(
-            equation=equation,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
+        inst = cls(equation=equation)
+        inst.override(style)
+        return inst
 
     def to_dict(self) -> dict:
         """Convert item to dict."""
@@ -227,11 +152,6 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonTextItem"
 
-    _style_properties = {
-        "size": ("font.size", None),
-        "color": ("text.color", None),
-    }
-
     @classmethod
     def new(
         cls,
@@ -239,16 +159,15 @@ class TextItem(Graphs.TextItem, _PythonItemMixin):
         xanchor: float = 0,
         yanchor: float = 0,
         text: str = "",
-        **kwargs,
     ):
         """Create new textItem."""
-        return cls(
+        inst = cls(
             xanchor=xanchor,
             yanchor=yanchor,
             text=text,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
         )
+        inst.override(style)
+        return inst
 
 
 class FillItem(Graphs.FillItem, _PythonItemMixin):
@@ -261,21 +180,19 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         cls,
         params: Graphs.StyleParameters,
         data: tuple[list[float], list[float], list[float]],
-        **kwargs,
     ):
         """Create new FillItem."""
         data = Graphs.FillHolder.new(*data)
-        return cls.new_with_data(params, data, **kwargs)
+        return cls.new_with_data(params, data)
 
     @classmethod
     def new_with_data(
         cls,
         _params: Graphs.StyleParameters,
         data: Graphs.FillHolder,
-        **kwargs,
     ):
         """Create new FillItem."""
-        return cls(data=data, **kwargs)
+        return cls(data=data)
 
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
@@ -303,7 +220,6 @@ class ItemFactory(Graphs.ItemFactory):
 
     def __init__(self):
         super().__init__()
-        self.connect("override-request", self._on_override_request)
         for item, callback in self._constructors.items():
             self.connect(item + "-request", self._on_request, callback)
 
@@ -335,14 +251,6 @@ class ItemFactory(Graphs.ItemFactory):
                 return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
-
-    @staticmethod
-    def _on_override_request(
-        self,
-        item: Graphs.Item,
-        style: Graphs.StyleParameters,
-    ) -> None:
-        item.override(style)
 
     @staticmethod
     def _on_request(self, *args) -> Graphs.Item:

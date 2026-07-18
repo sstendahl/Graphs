@@ -866,7 +866,7 @@ namespace Graphs {
             uint errbar_count = 0;
 
             foreach (var item in this) {
-                ItemFactory.reset_item (item, old_selected_style_params, selected_style_params);
+                item.reset (old_selected_style_params, selected_style_params);
 
                 if (!(item is DataItem || item is EquationItem)) continue;
                 if (!(item.color in old_cycle)) continue;

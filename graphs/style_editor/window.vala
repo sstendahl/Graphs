@@ -321,7 +321,7 @@ namespace Graphs {
 
                 item.color = color_cycle[i % color_cycle.length];
                 item.errcolor = errorbar_cycle[i % errorbar_cycle.length];
-                ItemFactory.override_item (item, style);
+                item.override (style);
             }
 
             var canvas = PythonHelper.create_canvas (style, test_items);
