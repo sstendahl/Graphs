@@ -4,6 +4,7 @@ project('Graphs', 'c', 'vala',
     meson_version: '>= 1.2.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
           license: 'GPL-3.0-or-later',
+    license_files: ['LICENSE'],
 )
 
 dependencies = [
