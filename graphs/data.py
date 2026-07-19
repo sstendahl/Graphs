@@ -9,7 +9,7 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import misc, project
+from graphs import misc, project, utilities
 from graphs.item import ItemFactory
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
@@ -221,7 +221,11 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     elif prop == "data":
-                        self[index].set_data_tuple(value)
+                        item = self[index]
+                        if isinstance(item, Graphs.DataItem):
+                            item.set_data(Graphs.DataHolder.new(*value))
+                        elif isinstance(item, Graphs.FillItem):
+                            item.set_data(Graphs.FillHolder.new(*value))
                     elif prop == "equation":
                         self[index].set_property(
                             prop,
@@ -268,7 +272,11 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     elif prop == "data":
-                        self[index].set_data_tuple(value)
+                        item = self[index]
+                        if isinstance(item, Graphs.DataItem):
+                            item.set_data(Graphs.DataHolder.new(*value))
+                        elif isinstance(item, Graphs.FillItem):
+                            item.set_data(Graphs.FillHolder.new(*value))
                     elif prop == "equation":
                         self[index].set_property(
                             prop,

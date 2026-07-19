@@ -154,7 +154,8 @@ class CommonOperations():
                 xdata, ydata = utilities.equation_to_data(equation, lims)
                 xerr, yerr = None, None
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = item.get_xydata()
+                holder = item.get_data()
+                xdata, ydata = utilities.get_xy_data(holder)
                 if mode == Graphs.Mode.SELECT:
                     startx, stopx = lims
                     # If startx and stopx are not out of range, that is,
@@ -165,13 +166,15 @@ class CommonOperations():
                     mask &= numpy.less_equal(xdata, stopx)
                     xdata, ydata = xdata[mask], ydata[mask]
 
-                if item.has_xerr() and xerr is not None:
-                    xerr.append(item.get_xerr())
+                new_xerr, new_yerr = utilities.get_xy_err(holder)
+
+                if new_xerr is not None and xerr is not None:
+                    xerr.append(new_xerr)
                     some_x = True
                 else:
                     xerr = None
-                if item.has_yerr() and yerr is not None:
-                    yerr.append(item.get_yerr())
+                if new_yerr is not None and yerr is not None:
+                    yerr.append(new_yerr)
                     some_y = True
                 else:
                     yerr = None
@@ -226,7 +229,7 @@ class CommonOperations():
                 equation = item.get_equation()
                 xdata, ydata = utilities.equation_to_data(equation, lims)
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = item.get_xydata()
+                xdata, ydata = utilities.get_xy_data(item.get_data())
                 if interaction_mode == Graphs.Mode.SELECT:
                     # If startx and stopx are not out of range, that is,
                     # if the item data is within the highlight
@@ -249,7 +252,8 @@ class CommonOperations():
                 if isinstance(previous_item, Graphs.EquationItem):
                     prev_min, prev_max = startx, stopx
                 else:
-                    prev_xdata = previous_item.get_xdata()
+                    prev_holder = previous_item.get_data()
+                    prev_xdata, _y = utilities.get_xy_data(prev_holder)
                     prev_min, prev_max = min(prev_xdata), max(prev_xdata)
                     if interaction_mode == Graphs.Mode.SELECT:
                         prev_min = max(prev_min, startx)
@@ -295,10 +299,13 @@ class CommonOperations():
                 else:  # Apply linear scaling
                     new_ydata = ydata + shift_value
                 if interaction_mode == Graphs.Mode.SELECT:
-                    item_ydata = item.get_ydata().copy()
+                    item_ydata = utilities.bytes_to_nd_array(item.get_ydata_b())
+                    item_ydata = item_ydata.copy()
                     item_ydata[data_mask] = new_ydata
                     new_ydata = item_ydata
-                item.set_xydata((item.get_xdata(), new_ydata))
+                xerr, yerr = utilities.get_xy_err(item.get_data())
+                holder = Graphs.DataHolder.new(xdata, new_ydata, xerr, yerr)
+                item.set_data(holder)
                 continue
         return True
 
@@ -478,7 +485,8 @@ class DataOperations():
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
-        xdata, ydata = item.get_xydata()
+        holder = item.get_data()
+        xdata, ydata = utilities.get_xy_data(holder)
         if interaction_mode == Graphs.Mode.SELECT:
             startx, stopx = get_selected_limits(
                 figure_settings,
@@ -506,8 +514,7 @@ class DataOperations():
         except (RuntimeError, ValueError, KeyError, SyntaxError) as exception:
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
-        xerr = item.get_xerr()
-        yerr = item.get_yerr()
+        xerr, yerr = utilities.get_xy_err(holder)
         if interaction_mode == Graphs.Mode.SELECT:
             if discard:
                 logging.debug("Discard is true")
@@ -516,14 +523,15 @@ class DataOperations():
                     " been discarded",
                 )
             elif new_xdata is None:  # If cut action was performed
-                new_xdata = item.get_xdata()[~mask]
-                new_ydata = item.get_ydata()[~mask]
+                xdata, ydata = utilities.get_xy_data()
+                new_xdata = xdata[~mask]
+                new_ydata = ydata[~mask]
                 xerr = xerr[~mask] if xerr is not None else None
                 yerr = yerr[~mask] if yerr is not None else None
             else:
                 logging.debug("Discard is false")
-                xdata = item.get_xdata().copy()
-                ydata = item.get_ydata().copy()
+                xdata, ydata = utilities.get_xy_data()
+                xdata, ydata = xdata.copy(), ydata.copy()
                 xdata[mask] = new_xdata
                 ydata[mask] = new_ydata
                 new_xdata, new_ydata = xdata, ydata
@@ -531,7 +539,7 @@ class DataOperations():
             logging.debug("Sorting data")
             idx = numpy.argsort(new_xdata)
             new_xdata, new_ydata = new_xdata[idx], new_ydata[idx]
-        item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
+        item.set_data(Graphs.DataHolder.new(new_xdata, new_ydata, xerr, yerr))
         return True, message
 
     @staticmethod

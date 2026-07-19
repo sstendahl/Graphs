@@ -254,7 +254,11 @@ class ProjectValidator:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
                         if prop == "data":
-                            self.items[index].set_data_tuple(value)
+                            item = self.items[index]
+                            if isinstance(item, Graphs.DataItem):
+                                item.set_data(Graphs.DataHolder.new(*value))
+                            elif isinstance(item, Graphs.FillItem):
+                                item.set_data(Graphs.FillHolder.new(*value))
                         else:
                             self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:
@@ -275,7 +279,11 @@ class ProjectValidator:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
                         if prop == "data":
-                            self.items[index].set_data_tuple(value)
+                            item = self.items[index]
+                            if isinstance(item, Graphs.DataItem):
+                                item.set_data(Graphs.DataHolder.new(*value))
+                            elif isinstance(item, Graphs.FillItem):
+                                item.set_data(Graphs.FillHolder.new(*value))
                         else:
                             self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:

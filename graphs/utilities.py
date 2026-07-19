@@ -28,6 +28,15 @@ def get_xy_data(
     return xdata, ydata
 
 
+def get_xy_err(
+    holder: Graphs.DataHolder,
+) -> tuple[numpy.ndarray, numpy.ndarray]:
+    """Get x and y err in numpy format from a DataHolder."""
+    xerr = bytes_to_ndarray(holder.get_xerr_b())
+    yerr = bytes_to_ndarray(holder.get_yerr_b())
+    return xerr, yerr
+
+
 def data_holder_to_tuple(holder: Graphs.DataHolder) -> tuple[list, list, list, list]:
     """Get the data as a picklable tuple."""
     return (
