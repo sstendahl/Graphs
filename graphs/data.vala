@@ -472,7 +472,7 @@ namespace Graphs {
                 Style style = get_selected_style ();
 
                 StyleParameters validate = style.mutable ? system_params : null;
-                StyleParameters parameters = StyleManager.get_style_params (style, validate);
+                StyleParameters parameters = StyleManager.get_style_params (style.file, validate);
 
                 if (parameters != null) {
                     selected_style_params = parameters;

@@ -1,11 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 from graphs import ast, curve_fitting, file_io, misc, operations
 from graphs.canvas import Canvas
 from graphs.figure import Figure
-from graphs.style_editor.editor_box import StyleEditorBox
 from graphs.window import PythonWindow
 
 from matplotlib import rcParams, rcParamsDefault
@@ -17,7 +16,6 @@ from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
     "create-canvas",
-    "create-style-editor-box",
     "create-window",
     "curve-fitting-dialog",
     "export-figure",
@@ -67,13 +65,6 @@ class PythonHelper(Graphs.PythonHelper):
                 figure_settings.bind_property(prop, canvas.figure, prop, 1)
 
         return canvas
-
-    @staticmethod
-    def _on_create_style_editor_box_request(
-        self,
-        window: Gtk.Window,
-    ) -> Graphs.StyleEditorBox:
-        return StyleEditorBox(window)
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:

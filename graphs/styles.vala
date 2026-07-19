@@ -85,6 +85,7 @@ namespace Graphs {
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal Style style_request (File file);
         protected signal StyleParameters params_request (File file, StyleParameters? validate);
+        protected signal void save_request (StyleParameters parameters, File file);
 
         public static StyleManager instance { get; private set; }
 
@@ -229,8 +230,12 @@ namespace Graphs {
             return Adw.StyleManager.get_default ().get_dark () ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
-        public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
-            return instance.params_request.emit (style.file, validate);
+        public static StyleParameters get_style_params (File file, StyleParameters? validate = null) {
+            return instance.params_request.emit (file, validate);
+        }
+
+        public static void save_style_params (StyleParameters parameters, File file) {
+            instance.save_request.emit (parameters, file);
         }
 
         /**

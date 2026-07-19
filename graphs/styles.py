@@ -96,6 +96,14 @@ class StyleManager(Graphs.StyleManager):
         return StyleParameters(style_io.parse(file, validate))
 
     @staticmethod
+    def _on_save_request(
+        self,
+        params: Graphs.StyleParameters,
+        file: Gio.File,
+    ) -> None:
+        style_io.write(file, params.params, params.graphs_params)
+
+    @staticmethod
     def _on_create_style_request(
         self,
         template: Graphs.Style,
