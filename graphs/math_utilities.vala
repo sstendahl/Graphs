@@ -113,7 +113,7 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    public static double[] evaluate_expression (Expression expr, int length, string variable) throws MathError {
+    public static double[] evaluate_expression (Ast expr, int length, string variable) throws MathError {
         double[] input = arange (length);
         return ast_to_program (expr, variable).eval (input);
     }
@@ -131,13 +131,13 @@ namespace Graphs.MathTools {
         return new DataHolder ((owned) xdata, (owned) ydata, null, null);
     }
 
-    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+    public static DataHolder equation_to_data (Ast equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
         return program_to_data (ast_to_program (equation), xstart, xstop, steps, scale);
     }
 
     private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-    public static bool validate_expression (Expression expression) {
+    public static bool validate_expression (Ast expression) {
         try {
             double[] ydata = ast_to_program (expression).eval (XDATA);
             return CUtilities.finite_double (ydata);
@@ -155,7 +155,7 @@ namespace Graphs.MathTools {
     }
 
     public bool minmax_equation (
-        Expression equation,
+        Ast equation,
         double xstart,
         double xstop,
         Scale scale,

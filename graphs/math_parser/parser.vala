@@ -9,11 +9,11 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Parser (); });
         }
 
-        public Expression parse (string src, unichar decimal_separator = '.') throws MathError {
+        public Ast parse (string src, unichar decimal_separator = '.') throws MathError {
             lexer.start_lexing (src, decimal_separator);
             Expression result = expr ();
             lexer.expect_end ();
-            return result;
+            return new Ast ((owned) result);
         }
 
         /* Grammar:
@@ -38,10 +38,10 @@ namespace Graphs.MathParser {
                 if (!(op == Operator.ADD || op == Operator.SUB)) break;
                 lexer.next ();
 
-                expr = new BinaryExpression (expr, op, term ());
+                expr = new Expression.binary ((owned) expr, op, term ());
             }
 
-            return expr;
+            return (owned) expr;
         }
 
         private Expression term () throws MathError {
@@ -54,7 +54,7 @@ namespace Graphs.MathParser {
 
                 // implicit multiplication
                 if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    expr = new BinaryExpression (expr, Operator.MUL, power ());
+                    expr = new Expression.binary ((owned) expr, Operator.MUL, power ());
                     continue;
                 }
 
@@ -65,7 +65,7 @@ namespace Graphs.MathParser {
                 // explicit * or /
                 if (op == Operator.MUL || op == Operator.DIV) {
                     lexer.next ();
-                    expr = new BinaryExpression (expr, op, power ());
+                    expr = new Expression.binary ((owned) expr, op, power ());
                     continue;
                 }
                 break;
@@ -79,7 +79,7 @@ namespace Graphs.MathParser {
 
             if (lexer.current_type == TokenType.OPERATOR && lexer.current_op == Operator.POW) {
                 lexer.next ();
-                expr = new BinaryExpression (expr, Operator.POW, power ());
+                expr = new Expression.binary ((owned) expr, Operator.POW, power ());
             }
 
             return expr;
@@ -89,7 +89,7 @@ namespace Graphs.MathParser {
             if (lexer.current_type == TokenType.OPERATOR) {
                 if (lexer.current_op == Operator.SUB) {
                     lexer.next ();
-                    return new UnaryExpression (Operator.SUB, postfix ());
+                    return new Expression.unary (Operator.SUB, postfix ());
                 } else if (lexer.current_op == Operator.ADD) {
                     lexer.next ();
                 }
@@ -105,15 +105,15 @@ namespace Graphs.MathParser {
                 if (lexer.current_type != TokenType.OPERATOR) break;
 
                 if (lexer.current_op == Operator.FACT) {
-                    expr = new PostfixExpression (expr, Operator.FACT);
+                    expr = new Expression.postfix ((owned) expr, Operator.FACT);
                     lexer.next ();
                     continue;
                 }
 
                 if (lexer.current_op == Operator.SUPERSCRIPT) {
-                    var exp = new NumberExpression (lexer.current_val);
+                    var exp = new Expression.number (lexer.current_val);
                     lexer.next ();
-                    expr = new BinaryExpression (expr, Operator.SUPERSCRIPT, exp);
+                    expr = new Expression.binary ((owned) expr, Operator.SUPERSCRIPT, (owned) exp);
                     continue;
                 }
 
@@ -126,7 +126,7 @@ namespace Graphs.MathParser {
         private Expression primary () throws MathError {
             switch (lexer.current_type) {
                 case TokenType.NUMBER:
-                    var v = new NumberExpression (lexer.current_val);
+                    var v = new Expression.number (lexer.current_val);
                     lexer.next ();
                     return v;
                 case TokenType.IDENT:
@@ -136,7 +136,7 @@ namespace Graphs.MathParser {
                         string name = lexer.get_current_token_as_string ();
                         lexer.next ();
 
-                        return new VariableExpression ((owned) name);
+                        return new Expression.variable ((owned) name);
                     }
 
                     lexer.next ();
@@ -146,13 +146,13 @@ namespace Graphs.MathParser {
                         Expression arg = expr ();
                         lexer.expect (TokenType.RPAREN);
 
-                        return new FunctionExpression (id, arg);
+                        return new Expression.function (id, (owned) arg);
                     }
 
                     switch (id) {
-                        case Ident.PI: return new ConstantExpression (Ident.PI);
-                        case Ident.E: return new ConstantExpression (Ident.E);
-                        case Ident.INF: return new ConstantExpression (Ident.INF);
+                        case Ident.PI: return new Expression.constant (Ident.PI);
+                        case Ident.E: return new Expression.constant (Ident.E);
+                        case Ident.INF: return new Expression.constant (Ident.INF);
                         default: throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
                     }
                 case TokenType.LPAREN:

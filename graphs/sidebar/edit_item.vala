@@ -218,7 +218,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_equation_apply () {
             try {
-                Expression ast = expression_to_ast (equation.get_text ());
+                Ast ast = expression_to_ast (equation.get_text ());
                 equation.set_text (ast_to_expression (ast));
                 item.equation = ast;
             } catch (MathError e) { assert_not_reached (); }
@@ -231,7 +231,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_simplify () {
             try {
-                Expression ast = expression_to_ast (equation.get_text ());
+                Ast ast = expression_to_ast (equation.get_text ());
                 ast = PythonHelper.simplify_expression (ast);
                 equation.set_text (ast_to_expression (ast));
                 item.equation = ast;

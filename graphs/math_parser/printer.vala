@@ -9,33 +9,34 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Printer (); });
         }
 
-        public string print (Expression ast) throws MathError {
+        public string print (Ast ast) throws MathError {
             this.builder = new StringBuilder ();
-            emit (ast);
+            emit (ast.root ());
             return builder.free_and_steal ();
         }
 
         private void emit (Expression expr) throws MathError {
-            if (expr is NumberExpression) { number ((NumberExpression) expr); return; }
-            if (expr is ConstantExpression) { constant ((ConstantExpression) expr); return; }
-            if (expr is VariableExpression) { variable ((VariableExpression) expr); return; }
-            if (expr is UnaryExpression) { unary ((UnaryExpression) expr); return; }
-            if (expr is BinaryExpression) { binary ((BinaryExpression) expr); return; }
-            if (expr is FunctionExpression) { function ((FunctionExpression) expr); return; }
-            if (expr is PostfixExpression) { postfix ((PostfixExpression) expr); return; }
-
-            assert_not_reached ();
+            switch (expr.type ()) {
+                case ExpressionType.NUMBER: number (expr); return;
+                case ExpressionType.CONSTANT: constant (expr); return;
+                case ExpressionType.VARIABLE: variable (expr); return;
+                case ExpressionType.UNARY: unary (expr); return;
+                case ExpressionType.BINARY: binary (expr); return;
+                case ExpressionType.POSTFIX: postfix (expr); return;
+                case ExpressionType.FUNCTION: function (expr); return;
+                default: assert_not_reached ();
+            }
         }
 
         private const double PI_THRESH = 0.00010000314159265359; // 1e-4 + 1e-9 * pi
         private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
 
-        private void variable (VariableExpression expr) throws MathError {
+        private void variable (Expression expr) throws MathError {
             builder.append (expr.name ());
         }
 
-        private void constant (ConstantExpression expr) throws MathError {
-            switch (expr.constant ()) {
+        private void constant (Expression expr) throws MathError {
+            switch (expr.ident ()) {
                 case Ident.PI: builder.append ("pi"); return;
                 case Ident.E: builder.append_c ('e'); return;
                 case Ident.INF: builder.append ("inf"); return;
@@ -43,7 +44,7 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void number (NumberExpression expr) throws MathError {
+        private void number (Expression expr) throws MathError {
             double v = expr.val ();
 
             // check if it is a multiple of pi
@@ -73,13 +74,14 @@ namespace Graphs.MathParser {
             builder.append_printf ("%.15g", v);
         }
 
-        private void unary (UnaryExpression expr) throws MathError {
-            bool need_parens = expr.expr () is BinaryExpression;
+        private void unary (Expression expr) throws MathError {
+            unowned Expression child = expr.right ();
+            bool need_parens = child.type () == ExpressionType.BINARY;
 
             if (expr.op () == Operator.SUB) builder.append_c ('-');
 
             if (need_parens) builder.append_c ('(');
-            emit (expr.expr ());
+            emit (child);
             if (need_parens) builder.append_c (')');
         }
 
@@ -100,11 +102,11 @@ namespace Graphs.MathParser {
         }
 
         private static bool need_parens (Expression expr, Expression parent, bool is_right_child) {
-            if (!(expr is BinaryExpression)) return false;
-            if (!(parent is BinaryExpression)) return true;
+            if (!(expr.type () == ExpressionType.BINARY)) return false;
+            if (!(parent.type () == ExpressionType.BINARY)) return true;
 
-            int child_prec = ((BinaryExpression) expr).op ().precedence ();
-            Operator parent_op = ((BinaryExpression) parent).op ();
+            int child_prec = expr.op ().precedence ();
+            Operator parent_op = parent.op ();
             int parent_prec = parent_op.precedence ();
 
             if (child_prec != parent_prec) return child_prec < parent_prec;
@@ -114,7 +116,7 @@ namespace Graphs.MathParser {
             return parent_op == Operator.POW;
         }
 
-        private void binary (BinaryExpression expr) throws MathError {
+        private void binary (Expression expr) throws MathError {
             bool need_parens_left = need_parens (expr.left (), expr, false);
             bool need_parens_right = need_parens (expr.right (), expr, true);
 
@@ -131,7 +133,7 @@ namespace Graphs.MathParser {
                     builder.append (need_parens_left && need_parens_right ? " " : " * ");
                     break;
                 case Operator.SUPERSCRIPT:
-                    double exp = ((NumberExpression) expr.right ()).val ();
+                    double exp = expr.right ().val ();
                     builder.append_unichar (to_superscript ((int) exp));
                     return;
                 default: throw new MathError.SYNTAX ("invalid binary expression");
@@ -142,11 +144,12 @@ namespace Graphs.MathParser {
             if (need_parens_right) builder.append_c (')');
         }
 
-        private void postfix (PostfixExpression expr) throws MathError {
-            bool need_parens = expr.expr () is BinaryExpression;
+        private void postfix (Expression expr) throws MathError {
+            unowned Expression child = expr.left ();
+            bool need_parens = child.type () == ExpressionType.BINARY;
 
             if (need_parens) builder.append_c ('(');
-            emit (expr.expr ());
+            emit (child);
             if (need_parens) builder.append_c (')');
 
             switch (expr.op ()) {
@@ -155,7 +158,7 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void function (FunctionExpression expr) throws MathError {
+        private void function (Expression expr) throws MathError {
             Ident id = expr.ident ();
 
             EnumClass enumc = (EnumClass) typeof (Ident).class_ref ();
@@ -163,7 +166,7 @@ namespace Graphs.MathParser {
 
             builder.append (val.value_nick);
             builder.append_c ('(');
-            emit (expr.arg ());
+            emit (expr.right ());
             builder.append_c (')');
         }
     }

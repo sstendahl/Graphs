@@ -97,7 +97,7 @@ namespace Graphs {
     }
 
     public interface EquationBasedItem : Item {
-        public abstract Expression equation { get; set; }
+        public abstract Ast equation { get; set; }
     }
 
     public class DataHolder : Object {
@@ -222,8 +222,8 @@ namespace Graphs {
         public int steps { get; set; default = 100; }
         public Scale scale { get; set; default = Scale.LINEAR; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        public Ast equation {
             get { return _equation; }
             set {
                 try {
@@ -272,8 +272,8 @@ namespace Graphs {
         public EquationLinestyle linestyle { get; set; default = EquationLinestyle.SOLID; }
         public double linewidth { get; set; default = 3; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        public Ast equation {
             get { return _equation; }
             set {
                 try {
