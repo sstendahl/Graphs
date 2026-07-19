@@ -33,8 +33,8 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
-        public signal bool has_singularities_request (Expression equation, double xstart, double xstop);
-        public static bool has_singularities (Expression equation, double xstart, double xstop) {
+        public signal bool has_singularities_request (Ast equation, double xstart, double xstop);
+        public static bool has_singularities (Ast equation, double xstart, double xstop) {
             return instance.has_singularities_request.emit (equation, xstart, xstop);
         }
 
@@ -48,8 +48,8 @@ namespace Graphs {
             instance.python_method_request.emit (object, method);
         }
 
-        protected signal string simplify_expression_request (Expression input);
-        public static Expression simplify_expression (Expression input) {
+        protected signal string simplify_expression_request (Ast input);
+        public static Ast simplify_expression (Ast input) {
             try {
                 return expression_to_ast (instance.simplify_expression_request.emit (input));
             } catch (MathError e) { assert_not_reached (); }

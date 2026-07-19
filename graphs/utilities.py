@@ -22,7 +22,7 @@ def get_xy_data(
 
 
 def equation_to_data(
-    equation: Graphs.Expression,
+    equation: Graphs.Ast,
     limits: tuple[float, float],
     steps: int = 5000,
     scale: Graphs.Scale = Graphs.Scale.LINEAR,

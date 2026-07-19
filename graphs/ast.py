@@ -106,13 +106,15 @@ FUNCTION_MAPPING = {
 }
 
 
-def sympify(expr):
+def _sympify(expr):
     """Sympify an Expression."""
-    if isinstance(expr, Graphs.NumberExpression):
+    e_type = expr.type()
+
+    if e_type == Graphs.ExpressionType.NUMBER:
         return sympy.Float(expr.val())
 
-    if isinstance(expr, Graphs.ConstantExpression):
-        constant = expr.constant()
+    if e_type == Graphs.ExpressionType.CONSTANT:
+        constant = expr.ident()
 
         match constant:
             case Graphs.Ident.PI:
@@ -124,11 +126,11 @@ def sympify(expr):
             case _:
                 raise ValueError(f"unsupported constant operator: {constant}")
 
-    elif isinstance(expr, Graphs.VariableExpression):
+    if e_type == Graphs.ExpressionType.VARIABLE:
         return sympy.Symbol(expr.name())
 
-    elif isinstance(expr, Graphs.UnaryExpression):
-        inner = sympify(expr.expr())
+    if e_type == Graphs.ExpressionType.UNARY:
+        inner = _sympify(expr.right())
         op = expr.op()
 
         match op:
@@ -137,9 +139,9 @@ def sympify(expr):
             case _:
                 raise ValueError(f"unsupported unary operator: {op}")
 
-    elif isinstance(expr, Graphs.BinaryExpression):
-        left = sympify(expr.left())
-        right = sympify(expr.right())
+    if e_type == Graphs.ExpressionType.BINARY:
+        left = _sympify(expr.left())
+        right = _sympify(expr.right())
         op = expr.op()
 
         match op:
@@ -158,8 +160,8 @@ def sympify(expr):
             case _:
                 raise ValueError(f"unsupported binary operator: {op}")
 
-    elif isinstance(expr, Graphs.FunctionExpression):
-        arg = sympify(expr.arg())
+    if e_type == Graphs.ExpressionType.FUNCTION:
+        arg = _sympify(expr.right())
         ident = expr.ident()
 
         try:
@@ -167,8 +169,8 @@ def sympify(expr):
         except KeyError:
             raise ValueError(f"unsupported function identifier: {ident}")
 
-    elif isinstance(expr, Graphs.PostfixExpression):
-        arg = sympify(expr.expr())
+    if e_type == Graphs.ExpressionType.POSTFIX:
+        arg = _sympify(expr.left())
         op = expr.op()
 
         match op:
@@ -178,3 +180,8 @@ def sympify(expr):
                 raise ValueError(f"unsupported postfix operator: {op}")
 
     raise TypeError(f"unknown expression type: {type(expr)}")
+
+
+def sympify(expression: Graphs.Ast):
+    """Sympify an Expression."""
+    return _sympify(expression.root())

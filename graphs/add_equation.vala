@@ -36,7 +36,7 @@ namespace Graphs {
             unowned string name = item_name.get_text ();
 
             try {
-                Expression expression = expression_to_ast (equation_str);
+                Ast expression = expression_to_ast (equation_str);
 
                 Item item = ItemFactory.new_equation_item (window.data.selected_style_params, expression);
                 if (name == "") {
