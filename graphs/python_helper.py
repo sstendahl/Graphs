@@ -1,11 +1,14 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs
+from gi.repository import Gio, Graphs, Gtk
 
 from graphs import ast, curve_fitting, file_io, misc, operations
+from graphs.canvas import Canvas
 from graphs.figure import Figure
-from graphs.style_editor import PythonStyleEditor
+from graphs.style_editor.editor_box import StyleEditorBox
 from graphs.window import PythonWindow
+
+from matplotlib import rcParams, rcParamsDefault
 
 import numpy
 
@@ -13,7 +16,8 @@ import sympy
 from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
-    "create-style-editor",
+    "create-canvas",
+    "create-style-editor-box",
     "create-window",
     "curve-fitting-dialog",
     "export-figure",
@@ -21,6 +25,13 @@ _REQUESTS = (
     "perform-operation",
     "python-method",
     "simplify-expression",
+)
+
+FIGURE_IGNORELIST = (
+    "custom_style",
+    "use_custom_style",
+    "min_selected",
+    "max_selected",
 )
 
 XDATA = numpy.linspace(0, 10, 10)
@@ -39,8 +50,30 @@ class PythonHelper(Graphs.PythonHelper):
             )
 
     @staticmethod
-    def _on_create_style_editor_request(self) -> Graphs.StyleEditor:
-        return PythonStyleEditor()
+    def _on_create_canvas_request(
+        self,
+        params: Graphs.StyleParameters,
+        items: Gio.ListModel,
+        interactive: bool,
+        figure_settings: Graphs.FigureSettings,
+    ) -> Graphs.Canvas:
+        rcParams.update(rcParamsDefault)
+        canvas = Canvas(params, items, interactive, figure_settings)
+
+        if interactive:
+            for prop in dir(figure_settings.props):
+                if prop in FIGURE_IGNORELIST:
+                    continue
+                figure_settings.bind_property(prop, canvas.figure, prop, 1)
+
+        return canvas
+
+    @staticmethod
+    def _on_create_style_editor_box_request(
+        self,
+        window: Gtk.Window,
+    ) -> Graphs.StyleEditorBox:
+        return StyleEditorBox(window)
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:

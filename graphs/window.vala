@@ -59,11 +59,6 @@ namespace Graphs {
 
         public Canvas canvas {
             get { return (Canvas) toast_overlay.get_child (); }
-            set {
-                value.bind_property ("mode", this, "mode", 2);
-                toast_overlay.set_child (value);
-                value.grab_focus ();
-            }
         }
 
         public bool is_main_view {
@@ -148,7 +143,6 @@ namespace Graphs {
             data.selection_changed.connect (on_selection_changed);
             data.notify["unsaved"].connect (on_unsaved_change);
             data.style_changed.connect (on_style_changed);
-            data.style_selection_model.selection_changed.connect (reset_items);
 
             on_items_changed ();
             on_unsaved_change ();
@@ -275,16 +269,27 @@ namespace Graphs {
             export_data_action.set_enabled (items_selected);
         }
 
-        private void reset_items () {
-            PythonHelper.run_method (this, "_reset_items");
-        }
-
         private void on_style_changed () {
             var style_params = data.selected_style_params;
             string css = WINDOW_CSS_TEMPLATE.printf (content_view.name, style_params.color, style_params.background_color);
             css_provider.load_from_string (css);
 
-            PythonHelper.run_method (this, "_reload_canvas");
+            var figure_settings = data.figure_settings;
+            var canvas = PythonHelper.create_canvas (data.selected_style_params, data, true, figure_settings);
+
+            if (canvas == null) return;
+
+            figure_settings.bind_property ("min-selected", canvas, "min-selected", 1 | 2);
+            figure_settings.bind_property ("max-selected", canvas, "max-selected", 1 | 2);
+
+            canvas.edit_request.connect ((cv, label_id) => {
+                open_figure_settings (label_id);
+            });
+            canvas.view_changed.connect (data.add_view_history_state);
+
+            canvas.bind_property ("mode", this, "mode", 2);
+            toast_overlay.set_child (canvas);
+            canvas.grab_focus ();
         }
 
         private void append_item_row (Item item, uint index, bool is_data_item) {

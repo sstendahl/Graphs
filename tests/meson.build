@@ -22,5 +22,10 @@ test_executable = executable('unittest', test_sources,
      build_by_default: false,
 )
 test('Run vala test suite', test_executable,
-  depends: [test_executable, graphs_lib],
+   depends: [test_executable, graphs_lib],
+  protocol: 'tap',
+       env: [
+         'G_TEST_SRCDIR=@0@'.format(meson.current_source_dir()),
+         'G_TEST_BUILDDIR=@0@'.format(meson.current_build_dir()),
+       ],
 )

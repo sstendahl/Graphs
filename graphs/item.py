@@ -294,6 +294,7 @@ class ItemFactory(Graphs.ItemFactory):
 
     def __init__(self):
         super().__init__()
+        self.connect("override-request", self._on_override_request)
         for item, callback in self._constructors.items():
             self.connect(item + "-request", self._on_request, callback)
 
@@ -324,6 +325,14 @@ class ItemFactory(Graphs.ItemFactory):
                 return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
+
+    @staticmethod
+    def _on_override_request(
+        self,
+        item: Graphs.Item,
+        style: Graphs.StyleParameters,
+    ) -> None:
+        item.override(style)
 
     @staticmethod
     def _on_request(self, *args) -> Graphs.Item:

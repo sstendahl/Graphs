@@ -24,6 +24,7 @@ class StyleParameters(Graphs.StyleParameters):
 
     def __init__(self, params: tuple[RcParams, dict]):
         super().__init__(
+            name=params[1]["name"],
             color=params[0]["text.color"],
             background_color=params[0]["figure.facecolor"],
             color_cycle=params[0]["axes.prop_cycle"].by_key()["color"],

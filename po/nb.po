@@ -1,15 +1,15 @@
 # Norwegian Bokmål translation for Graphs.
 # Copyright (C) 2026 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Kjartan Maraas <kjartan.maraas@proton.me>, 2026.
+# Kjartan Maraas <kmaraas@gnome.org>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-30 13:47+0000\n"
-"PO-Revision-Date: 2026-05-14 23:51+0200\n"
-"Last-Translator: Kjartan Maraas <kjartan.maraas@proton.me>\n"
+"POT-Creation-Date: 2026-06-25 11:18+0000\n"
+"PO-Revision-Date: 2026-07-10 13:24+0200\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "Language: nb\n"
 "MIME-Version: 1.0\n"
@@ -24,27 +24,27 @@ msgstr "Grafer"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
-msgstr ""
+msgstr "Plott og manipuler data"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:48
 msgid "Full support for light and dark mode"
-msgstr ""
+msgstr "Full støtte for lys og mørk modus"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:52
 msgid "Generate data from an equation"
-msgstr ""
+msgstr "Generer data fra en likning"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:56
 msgid "Manage plot stylesheets"
-msgstr ""
+msgstr "Håndter stilark for plott"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
-msgstr ""
+msgstr "Manipuler importerte data"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
-msgstr ""
+msgstr "Plott og manipuler data"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:82
 msgid ""
@@ -92,11 +92,11 @@ msgstr "Nytt vindu"
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
 #: graphs/application.vala:20
 msgid "Style Editor"
-msgstr ""
+msgstr "Stilredigering"
 
 #: data/ui/dialogs/beta-disallowed.blp:5
 msgid "Beta Project"
-msgstr ""
+msgstr "Betaprosjekt"
 
 #: data/ui/dialogs/beta-disallowed.blp:6
 msgid ""
@@ -112,11 +112,11 @@ msgstr "Fortsett"
 #: data/ui/dialogs/beta-disallowed.blp:10
 #: data/ui/dialogs/legacy-migration-disallowed.blp:10
 msgid "Abort"
-msgstr ""
+msgstr "Avbryt"
 
 #: data/ui/dialogs/delete-style.blp:5
 msgid "Delete Style?"
-msgstr ""
+msgstr "Slett stil?"
 
 #: data/ui/dialogs/delete-style.blp:8
 #: data/ui/dialogs/reset-import-settings.blp:9
@@ -134,7 +134,7 @@ msgstr "Slett"
 
 #: data/ui/dialogs/legacy-migration-disallowed.blp:5
 msgid "Legacy Project"
-msgstr ""
+msgstr "Gammelt prosjekt"
 
 #: data/ui/dialogs/legacy-migration-disallowed.blp:6
 msgid ""
@@ -216,7 +216,7 @@ msgstr ""
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:229
+#: graphs/item.vala:237
 msgid "Equation"
 msgstr "Ligning"
 
@@ -281,7 +281,7 @@ msgstr ""
 #: data/ui/import/columns/main-group.blp:13
 msgctxt "delimiter"
 msgid "Whitespace"
-msgstr ""
+msgstr "Mellomrom"
 
 #: data/ui/import/columns/main-group.blp:14
 msgctxt "delimiter"
@@ -319,7 +319,7 @@ msgstr ""
 
 #: data/ui/import/columns/main-group.blp:54
 msgid "Decimal Separator"
-msgstr ""
+msgstr "Desimalskilletegn"
 
 #: data/ui/import/columns/main-group.blp:58
 msgctxt "separator"
@@ -402,7 +402,7 @@ msgstr ""
 
 #: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
-msgstr ""
+msgstr "Navn og posisjon"
 
 #: data/ui/sidebar/edit-item/base.blp:9 data/ui/style-editor/add-style.blp:45
 msgid "Name"
@@ -493,13 +493,13 @@ msgstr "Ingen"
 #: data/ui/style-editor/editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
-msgstr ""
+msgstr "Punkt"
 
 #: data/ui/sidebar/edit-item/data.blp:49
 #: data/ui/style-editor/editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
-msgstr ""
+msgstr "Piksel"
 
 #: data/ui/sidebar/edit-item/data.blp:50
 #: data/ui/style-editor/editor-box.blp:102
@@ -553,7 +553,7 @@ msgstr ""
 #: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
-msgstr ""
+msgstr "Stjerne"
 
 #: data/ui/sidebar/edit-item/data.blp:59
 #: data/ui/style-editor/editor-box.blp:111
@@ -584,26 +584,26 @@ msgstr ""
 #: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
-msgstr ""
+msgstr "Diamant"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/sidebar/edit-item/data.blp:66
 #: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
-msgstr ""
+msgstr "Tynn diamant"
 
 #: data/ui/sidebar/edit-item/data.blp:67
 #: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
-msgstr ""
+msgstr "Vertikal linje"
 
 #: data/ui/sidebar/edit-item/data.blp:68
 #: data/ui/style-editor/editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
-msgstr ""
+msgstr "Horisontal linje"
 
 #: data/ui/sidebar/edit-item/data.blp:69
 #: data/ui/style-editor/editor-box.blp:121
@@ -624,7 +624,7 @@ msgstr ""
 
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
-msgstr ""
+msgstr "Linje"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
 #: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
@@ -645,33 +645,33 @@ msgstr ""
 msgid "Show Horizontal"
 msgstr "Vis horisontal"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Vis vertikal"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
-msgstr ""
+msgstr "Tegn over data"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Farge"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr ""
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr ""
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
 #: data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
-msgstr ""
+msgstr "Linjebredde"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:18 data/ui/generate-data.blp:72
 msgid "X Start"
@@ -683,7 +683,7 @@ msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/generate-data.blp:88
 msgid "Steps"
-msgstr ""
+msgstr "Steg"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:48
 #: data/ui/generate-data.blp:100
@@ -703,7 +703,7 @@ msgstr ""
 #: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
-msgstr ""
+msgstr "Lineær"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:54
 #: data/ui/sidebar/figure-settings/settings-page.blp:156
@@ -733,7 +733,7 @@ msgstr ""
 #: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
-msgstr ""
+msgstr "Radianer"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:57
 #: data/ui/sidebar/figure-settings/settings-page.blp:159
@@ -753,11 +753,11 @@ msgstr ""
 #: data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
-msgstr ""
+msgstr "Omvendt"
 
 #: data/ui/sidebar/edit-item/page.blp:5
 msgid "Edit Item"
-msgstr ""
+msgstr "Rediger oppføring"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -766,12 +766,12 @@ msgstr ""
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:26
 msgid "Labels"
-msgstr ""
+msgstr "Etiketter"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
 #: graphs/style_editor/__init__.py:100
 msgid "Title"
-msgstr ""
+msgstr "Tittel"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:34
 msgid "Bottom X Axis Label"
@@ -860,7 +860,7 @@ msgstr ""
 #: data/ui/sidebar/figure-settings/settings-page.blp:227
 msgctxt "legend-position"
 msgid "Auto"
-msgstr ""
+msgstr "Auto"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:228
 msgctxt "legend-position"
@@ -905,7 +905,7 @@ msgstr ""
 #: data/ui/sidebar/figure-settings/settings-page.blp:236
 msgctxt "legend-position"
 msgid "Center"
-msgstr ""
+msgstr "Senter"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:242
 msgid "Hide Unselected Items"
@@ -923,12 +923,12 @@ msgstr ""
 
 #: data/ui/sidebar/main.blp:13
 msgid "Add New Data"
-msgstr ""
+msgstr "Legg til nye data"
 
 #: data/ui/sidebar/main.blp:22 data/ui/style-editor/window.blp:74
 #: data/ui/style-editor/window.blp:245
 msgid "Open Application Menu"
-msgstr ""
+msgstr "Åpne programmenyen"
 
 #: data/ui/sidebar/main.blp:43
 msgid "No Data"
@@ -960,23 +960,23 @@ msgstr "Lagre prosjekt …"
 
 #: data/ui/sidebar/main.blp:129
 msgid "Save Project as…"
-msgstr ""
+msgstr "Lagre prosjekt som …"
 
 #: data/ui/sidebar/main.blp:130
 msgid "Open Project…"
-msgstr ""
+msgstr "Åpne prosjekt …"
 
 #: data/ui/sidebar/main.blp:131
 msgid "Close Project"
-msgstr ""
+msgstr "Lukk prosjekt"
 
 #: data/ui/sidebar/main.blp:135
 msgid "Export Data…"
-msgstr ""
+msgstr "Eksporter data …"
 
 #: data/ui/sidebar/main.blp:136
 msgid "Export Figure…"
-msgstr ""
+msgstr "Eksporter figur …"
 
 #: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:291
 #: data/ui/style-editor/window.blp:303
@@ -995,15 +995,15 @@ msgstr "Om Grafer"
 
 #: data/ui/sidebar/main.blp:152
 msgid "Add Data from File…"
-msgstr ""
+msgstr "Legg til data fra fil …"
 
 #: data/ui/sidebar/main.blp:153
 msgid "Add Equation…"
-msgstr ""
+msgstr "Legg til likning …"
 
 #: data/ui/sidebar/main.blp:154
 msgid "Generate Data…"
-msgstr ""
+msgstr "Generer data …"
 
 #: data/ui/sidebar/operations.blp:20
 msgid "Adjust"
@@ -1011,7 +1011,7 @@ msgstr "Juster"
 
 #: data/ui/sidebar/operations.blp:30
 msgid "Combine all selected data"
-msgstr ""
+msgstr "Kombiner alle valgte data"
 
 #: data/ui/sidebar/operations.blp:41
 msgid "Combine"
@@ -1019,11 +1019,11 @@ msgstr "Kombiner"
 
 #: data/ui/sidebar/operations.blp:46
 msgid "Cut selected data"
-msgstr ""
+msgstr "Klipp ut valgte data"
 
 #: data/ui/sidebar/operations.blp:57
 msgid "Cut"
-msgstr ""
+msgstr "Klipp ut"
 
 #: data/ui/sidebar/operations.blp:62
 msgid "Shift all data vertically with respect to each other"
@@ -1035,19 +1035,19 @@ msgstr ""
 
 #: data/ui/sidebar/operations.blp:79
 msgid "Normalize data"
-msgstr ""
+msgstr "Normaliser data"
 
 #: data/ui/sidebar/operations.blp:90
 msgid "Normalize"
-msgstr ""
+msgstr "Normaliser"
 
 #: data/ui/sidebar/operations.blp:96
 msgid "Smoothen data"
-msgstr ""
+msgstr "Jevn ut data"
 
 #: data/ui/sidebar/operations.blp:110
 msgid "Smoothen"
-msgstr ""
+msgstr "Jevn ut"
 
 #: data/ui/sidebar/operations.blp:116
 msgid "Center data"
@@ -1055,11 +1055,11 @@ msgstr ""
 
 #: data/ui/sidebar/operations.blp:129
 msgid "Center"
-msgstr ""
+msgstr "Sentrer"
 
 #: data/ui/sidebar/operations.blp:137 data/ui/transform.blp:23
 msgid "Transform"
-msgstr ""
+msgstr "Transformer"
 
 #: data/ui/sidebar/operations.blp:147
 msgid "Get the derivative of the data"
@@ -1075,7 +1075,7 @@ msgstr ""
 
 #: data/ui/sidebar/operations.blp:175
 msgid "Integral"
-msgstr ""
+msgstr "Integral"
 
 #: data/ui/sidebar/operations.blp:181
 msgid "Get the Fast Fourier Transform of the data"
@@ -1103,7 +1103,7 @@ msgstr ""
 
 #: data/ui/sidebar/operations.blp:237
 msgid "Modify"
-msgstr ""
+msgstr "Endre"
 
 #: data/ui/sidebar/operations.blp:267
 msgid "Translate X"
@@ -1139,35 +1139,35 @@ msgstr ""
 
 #: data/ui/sidebar/operations.blp:388
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Avanserte innstillinger"
 
 #: data/ui/style-editor/add-style.blp:6 data/ui/style-editor/window.blp:91
 msgid "Add New Style"
-msgstr ""
+msgstr "Legg til ny stil"
 
 #: data/ui/style-editor/add-style.blp:22 data/ui/add-equation.blp:23
 msgid "Add"
-msgstr ""
+msgstr "Legg til"
 
 #: data/ui/style-editor/add-style.blp:39
 msgid "Template"
-msgstr ""
+msgstr "Mal"
 
 #: data/ui/style-editor/color-row.blp:5
 msgid "Change Color"
-msgstr ""
+msgstr "Endre farge"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
-msgstr ""
+msgstr "Navn på stil"
 
 #: data/ui/style-editor/editor-box.blp:14
 msgid "Font"
-msgstr ""
+msgstr "Skrift"
 
 #: data/ui/style-editor/editor-box.blp:26
 msgid "Title Size"
-msgstr ""
+msgstr "Størrelse på tittel"
 
 #: data/ui/style-editor/editor-box.blp:27
 msgid "Title size in relation to text size"
@@ -1175,7 +1175,7 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:42
 msgid "Label Size"
-msgstr ""
+msgstr "Størrelse på etikett"
 
 #: data/ui/style-editor/editor-box.blp:43
 msgid "Label size in relation to text size"
@@ -1183,15 +1183,15 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:59
 msgid "Lines"
-msgstr ""
+msgstr "Linjer"
 
 #: data/ui/style-editor/editor-box.blp:77
 msgid "Line width"
-msgstr ""
+msgstr "Linjebredde"
 
 #: data/ui/style-editor/editor-box.blp:199
 msgid "Axes"
-msgstr ""
+msgstr "Akser"
 
 #: data/ui/style-editor/editor-box.blp:202
 msgid "Axis Width"
@@ -1259,11 +1259,11 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:322
 msgid "Grid"
-msgstr ""
+msgstr "Rutenett"
 
 #: data/ui/style-editor/editor-box.blp:325
 msgid "Show Grid"
-msgstr ""
+msgstr "Vis rutenett"
 
 #: data/ui/style-editor/editor-box.blp:329
 msgid "Grid Width"
@@ -1275,7 +1275,7 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:362
 msgid "Padding"
-msgstr ""
+msgstr "Fyll"
 
 #: data/ui/style-editor/editor-box.blp:363
 msgid "Padding for different parts of the figure"
@@ -1307,7 +1307,7 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:415
 msgid "Colors"
-msgstr ""
+msgstr "Farger"
 
 #: data/ui/style-editor/editor-box.blp:419
 msgid "Label text might be hard to read"
@@ -1319,7 +1319,7 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:447
 msgid "Text Color"
-msgstr ""
+msgstr "Tekstfarge"
 
 #: data/ui/style-editor/editor-box.blp:458
 msgid "Tick Color"
@@ -1331,11 +1331,11 @@ msgstr ""
 
 #: data/ui/style-editor/editor-box.blp:480
 msgid "Grid Color"
-msgstr ""
+msgstr "Farge på rutenett"
 
 #: data/ui/style-editor/editor-box.blp:491
 msgid "Background Color"
-msgstr ""
+msgstr "Bakgrunnsfarge"
 
 #: data/ui/style-editor/editor-box.blp:502
 msgid "Outline Color"
@@ -1348,7 +1348,7 @@ msgstr ""
 #: data/ui/style-editor/editor-box.blp:521
 #: data/ui/style-editor/editor-box.blp:550
 msgid "Add Color"
-msgstr ""
+msgstr "Legg til farge"
 
 #: data/ui/style-editor/editor-box.blp:538
 msgid "Error Bar Colors"
@@ -1356,32 +1356,32 @@ msgstr ""
 
 #: data/ui/style-editor/item-color-row.blp:18
 msgid "Edit"
-msgstr ""
+msgstr "Rediger"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
 msgid "General"
-msgstr ""
+msgstr "Generelt"
 
 #: data/ui/style-editor/shortcuts.blp:9 data/ui/window-shortcuts.blp:9
 msgctxt "shortcut window"
 msgid "Show Shortcuts"
-msgstr ""
+msgstr "Vis snarveier"
 
 #: data/ui/style-editor/shortcuts.blp:14 data/ui/window-shortcuts.blp:14
 msgctxt "shortcut window"
 msgid "Open Help"
-msgstr ""
+msgstr "Åpne hjelp"
 
 #: data/ui/style-editor/shortcuts.blp:19 data/ui/window-shortcuts.blp:24
 msgctxt "shortcut window"
 msgid "Close Application"
-msgstr ""
+msgstr "Lukk program"
 
 #: data/ui/style-editor/shortcuts.blp:24 data/ui/window-shortcuts.blp:29
 msgctxt "shortcut window"
 msgid "Close Application Window"
-msgstr ""
+msgstr "Lukk programvindu"
 
 #: data/ui/style-editor/shortcuts.blp:30
 msgctxt "shortcut window"
@@ -1391,17 +1391,17 @@ msgstr "Lagre"
 #: data/ui/style-editor/shortcuts.blp:33
 msgctxt "shortcut window"
 msgid "Save Style"
-msgstr ""
+msgstr "Lagre stil"
 
 #: data/ui/style-editor/shortcuts.blp:38
 msgctxt "shortcut window"
 msgid "Save Style As"
-msgstr ""
+msgstr "Lagre stil som"
 
 #: data/ui/style-editor/shortcuts.blp:43
 msgctxt "shortcut window"
 msgid "Open Style"
-msgstr ""
+msgstr "Åpne stil"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
 #: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
@@ -1410,11 +1410,11 @@ msgstr ""
 
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
 msgid "Import File…"
-msgstr ""
+msgstr "Importer fil …"
 
 #: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:311
 msgid "Create Style…"
-msgstr ""
+msgstr "Lag stil …"
 
 #: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
 msgid "Open File…"
@@ -1422,7 +1422,7 @@ msgstr "Åpne fil …"
 
 #: data/ui/style-editor/window.blp:211
 msgid "Open Preview"
-msgstr ""
+msgstr "Åpne forhåndsvisning"
 
 #: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
 #: data/ui/window.blp:349
@@ -1435,19 +1435,19 @@ msgstr "Åpne stil …"
 
 #: data/ui/style-editor/window.blp:281
 msgid "Save Style…"
-msgstr ""
+msgstr "Lagre stil …"
 
 #: data/ui/style-editor/window.blp:282
 msgid "Save Style as…"
-msgstr ""
+msgstr "Lagre stil som …"
 
 #: data/ui/style-editor/window.blp:283
 msgid "Close Style…"
-msgstr ""
+msgstr "Lukk stil …"
 
 #: data/ui/add-equation.blp:6
 msgid "Add Equation"
-msgstr ""
+msgstr "Legg til likning"
 
 #: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
@@ -1455,7 +1455,7 @@ msgstr ""
 
 #: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
 msgid "Name (optional)"
-msgstr ""
+msgstr "Navn (valgfritt)"
 
 #: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
 msgid "Curve Fitting"
@@ -1468,17 +1468,17 @@ msgstr ""
 #: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Linear"
-msgstr ""
+msgstr "Lineær"
 
 #: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Quadratic"
-msgstr ""
+msgstr "Kvadratisk"
 
 #: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Exponential"
-msgstr ""
+msgstr "Eksponesiell"
 
 #: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
@@ -1488,7 +1488,7 @@ msgstr ""
 #: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmisk"
 
 #: data/ui/curve-fitting.blp:84
 msgctxt "regression-type"
@@ -1503,7 +1503,7 @@ msgstr ""
 #: data/ui/curve-fitting.blp:86
 msgctxt "regression-type"
 msgid "Custom"
-msgstr ""
+msgstr "Egendefinert"
 
 #: data/ui/curve-fitting.blp:138
 msgid "Add Fit to Data"
@@ -1511,7 +1511,7 @@ msgstr ""
 
 #: data/ui/curve-fitting.blp:161
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Slå av/på sidelinje"
 
 #: data/ui/curve-fitting.blp:202
 msgid "Optimization Method"
@@ -1615,11 +1615,11 @@ msgstr "SVG"
 #: data/ui/export-figure.blp:56
 msgctxt "file-format"
 msgid "WebP"
-msgstr ""
+msgstr "WebP"
 
 #: data/ui/export-figure.blp:62
 msgid "Transparent Background"
-msgstr ""
+msgstr "Gjennomsiktig bakgrunn"
 
 #: data/ui/export-figure.blp:67
 msgid "Export Size"
@@ -1651,23 +1651,23 @@ msgstr ""
 
 #: data/ui/generate-data.blp:6
 msgid "Generate Data"
-msgstr ""
+msgstr "Generer data"
 
 #: data/ui/generate-data.blp:23
 msgid "Generate"
-msgstr ""
+msgstr "Generer"
 
 #: data/ui/item-box.blp:20
 msgid "Pick Color"
-msgstr ""
+msgstr "Velg farge"
 
 #: data/ui/item-box.blp:54
 msgid "Move Item"
-msgstr ""
+msgstr "Flytt oppføring"
 
 #: data/ui/item-box.blp:75
 msgid "Remove Item"
-msgstr ""
+msgstr "Fjern oppføring"
 
 #: data/ui/smoothen-settings.blp:7
 msgid "Smoothen Settings"
@@ -1695,19 +1695,19 @@ msgstr ""
 
 #: data/ui/style-preview.blp:52
 msgid "Open"
-msgstr ""
+msgstr "Åpne"
 
 #: data/ui/style-preview.blp:57
 msgid "Open With…"
-msgstr ""
+msgstr "Åpne med …"
 
 #: data/ui/style-preview.blp:62
 msgid "Delete…"
-msgstr ""
+msgstr "Slett …"
 
 #: data/ui/transform.blp:6
 msgid "Transform Data"
-msgstr ""
+msgstr "Transformer data"
 
 #: data/ui/transform.blp:41
 msgid ""
@@ -1743,15 +1743,15 @@ msgstr ""
 
 #: data/ui/window.blp:253
 msgid "Show Sidebar"
-msgstr ""
+msgstr "Vis sidelinje"
 
 #: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
 msgid "Undo"
-msgstr ""
+msgstr "Angre"
 
 #: data/ui/window.blp:269 data/ui/window.blp:316
 msgid "Redo"
-msgstr ""
+msgstr "Gjenopprett"
 
 #: data/ui/window.blp:277 data/ui/window.blp:324
 msgid "Optimize View Limits"
@@ -1759,11 +1759,11 @@ msgstr ""
 
 #: data/ui/window.blp:285 data/ui/window.blp:331
 msgid "Next View"
-msgstr ""
+msgstr "Neste visning"
 
 #: data/ui/window.blp:293 data/ui/window.blp:339
 msgid "Previous View"
-msgstr ""
+msgstr "Forrige visning"
 
 #: data/ui/window-shortcuts.blp:19
 msgctxt "shortcut window"
@@ -1793,12 +1793,12 @@ msgstr ""
 #: data/ui/window-shortcuts.blp:54
 msgctxt "shortcut window"
 msgid "New Data"
-msgstr ""
+msgstr "Nye data"
 
 #: data/ui/window-shortcuts.blp:57
 msgctxt "shortcut window"
 msgid "Add Data from File"
-msgstr ""
+msgstr "Legg til data fra fil"
 
 #: data/ui/window-shortcuts.blp:62
 msgctxt "shortcut window"
@@ -1808,62 +1808,62 @@ msgstr ""
 #: data/ui/window-shortcuts.blp:67
 msgctxt "shortcut window"
 msgid "Generate Data"
-msgstr ""
+msgstr "Generer data"
 
 #: data/ui/window-shortcuts.blp:72
 msgctxt "shortcut window"
 msgid "New Project"
-msgstr ""
+msgstr "Nytt prosjekt"
 
 #: data/ui/window-shortcuts.blp:77
 msgctxt "shortcut window"
 msgid "Open Project"
-msgstr ""
+msgstr "Åpne prosjekt"
 
 #: data/ui/window-shortcuts.blp:82
 msgctxt "shortcut window"
 msgid "Delete Selected Data"
-msgstr ""
+msgstr "Slett valgte data"
 
 #: data/ui/window-shortcuts.blp:88
 msgctxt "shortcut window"
 msgid "Save and Export"
-msgstr ""
+msgstr "Lagre og eksporter"
 
 #: data/ui/window-shortcuts.blp:91
 msgctxt "shortcut window"
 msgid "Export Data"
-msgstr ""
+msgstr "Eksporter data"
 
 #: data/ui/window-shortcuts.blp:96
 msgctxt "shortcut window"
 msgid "Export Figure"
-msgstr ""
+msgstr "Eksporter figur"
 
 #: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
 msgid "Save Project"
-msgstr ""
+msgstr "Lagre prosjekt"
 
 #: data/ui/window-shortcuts.blp:106
 msgctxt "shortcut window"
 msgid "Save Project As"
-msgstr ""
+msgstr "Lagre prosjekt som"
 
 #: data/ui/window-shortcuts.blp:112
 msgctxt "shortcut window"
 msgid "View"
-msgstr ""
+msgstr "Visning"
 
 #: data/ui/window-shortcuts.blp:115
 msgctxt "shortcut window"
 msgid "Previous View"
-msgstr ""
+msgstr "Forrige visning"
 
 #: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Next View"
-msgstr ""
+msgstr "Neste visning"
 
 #: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
@@ -1873,12 +1873,12 @@ msgstr ""
 #: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Zoom in"
-msgstr ""
+msgstr "Zoom inn"
 
 #: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
 msgid "Zoom out"
-msgstr ""
+msgstr "Zoom ut"
 
 #: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:159
 msgctxt "shortcut window"
@@ -1888,32 +1888,32 @@ msgstr ""
 #: data/ui/window-shortcuts.blp:145
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
-msgstr ""
+msgstr "Slå av/på sidelinje"
 
 #: data/ui/window-shortcuts.blp:151
 msgctxt "shortcut window"
 msgid "Actions"
-msgstr ""
+msgstr "Handlinger"
 
 #: data/ui/window-shortcuts.blp:154
 msgctxt "shortcut window"
 msgid "Select All"
-msgstr ""
+msgstr "Velg alle"
 
 #: data/ui/window-shortcuts.blp:164
 msgctxt "shortcut window"
 msgid "Undo Action"
-msgstr ""
+msgstr "Angre handling"
 
 #: data/ui/window-shortcuts.blp:169
 msgctxt "shortcut window"
 msgid "Redo Action"
-msgstr ""
+msgstr "Gjenopprett handling"
 
 #: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
-msgstr ""
+msgstr "Kolonner"
 
 #: graphs/file_import/parsers/columns/main.vala:46
 msgid "Custom delimiter cannot be empty"
@@ -1935,7 +1935,7 @@ msgstr ""
 #: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
-msgstr ""
+msgstr "Oppføring %d"
 
 #: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
@@ -1950,12 +1950,12 @@ msgstr ""
 #: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Regneark"
 
 #: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Regneark"
 
 #: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
@@ -1968,12 +1968,12 @@ msgstr ""
 #: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
-msgstr ""
+msgstr "Database"
 
 #: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
-msgstr ""
+msgstr "SQLite-database"
 
 #: graphs/file_import/parsers/sql/reader.vala:135
 #, c-format
@@ -1987,7 +1987,7 @@ msgstr ""
 #: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
-msgstr ""
+msgstr "xrdml"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
@@ -2018,18 +2018,18 @@ msgstr ""
 
 #: graphs/file_import/__init__.py:117
 msgid "Import failed"
-msgstr ""
+msgstr "Import feilet"
 
 #: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
-msgstr ""
+msgstr "Støttede filer"
 
 #. columns
 #: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
-msgstr ""
+msgstr "ASCII-filer"
 
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:137
@@ -2085,7 +2085,7 @@ msgstr ""
 #: graphs/style_editor/item_color_row.vala:31
 #, c-format
 msgid "Color %d"
-msgstr ""
+msgstr "Farge %d"
 
 #. Translators: Window title that will be formatted with the stylename.
 #: graphs/style_editor/window.vala:40
@@ -2104,20 +2104,20 @@ msgstr ""
 
 #: graphs/actions.vala:44
 msgid "translator-credits"
-msgstr ""
+msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
 #: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
-msgstr ""
+msgstr "Slettet %s"
 
 #: graphs/application.vala:19
 msgid "New window"
-msgstr ""
+msgstr "Nytt vindu"
 
 #: graphs/application.vala:21
 msgid "[FILE…]"
-msgstr ""
+msgstr "[FIL …]"
 
 #: graphs/curve_fitting.py:99
 msgid "Residuals"
@@ -2203,11 +2203,11 @@ msgstr ""
 #: graphs/export_figure.vala:48
 msgctxt "filename"
 msgid "Exported Figure"
-msgstr ""
+msgstr "Eksportert figur"
 
 #: graphs/export_figure.vala:74
 msgid "Exported Figure"
-msgstr ""
+msgstr "Eksportert figur"
 
 #: graphs/export_items.vala:9
 msgid "No data to export"
@@ -2218,23 +2218,23 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Tekstfiler"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr ""
 
 #: graphs/item.vala:156
 msgid "Dataset"
-msgstr ""
+msgstr "Datasett"
 
-#: graphs/item.vala:187
+#: graphs/item.vala:195
 msgid "Generated Dataset"
-msgstr ""
+msgstr "Generert datasett"
 
-#: graphs/item.vala:245
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Etikett"
 
-#: graphs/item.vala:251
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Fyll"
 
@@ -2247,41 +2247,41 @@ msgstr ""
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 
-#: graphs/operations.py:226
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr ""
 
-#: graphs/operations.py:230
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr ""
 
-#: graphs/operations.py:241
+#: graphs/operations.py:238
 msgid "Combined Data"
-msgstr ""
+msgstr "Kombinerte data"
 
-#: graphs/operations.py:384
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 
-#: graphs/operations.py:392
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr ""
 
-#: graphs/operations.py:555
+#: graphs/operations.py:552
 msgid "No data found within the highlighted area"
 msgstr ""
 
-#: graphs/operations.py:563
+#: graphs/operations.py:560
 msgid "Operation not supported for data items"
 msgstr ""
 
-#: graphs/operations.py:566
+#: graphs/operations.py:563
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr ""
 
-#: graphs/operations.py:574
+#: graphs/operations.py:571
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr ""
 
@@ -2319,7 +2319,7 @@ msgstr "Prosjekt"
 
 #: graphs/python_helper.vala:48
 msgid "Exported Data"
-msgstr ""
+msgstr "Eksporterte data"
 
 #: graphs/style_io.py:108
 #, python-brace-format

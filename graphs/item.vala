@@ -33,10 +33,21 @@ namespace Graphs {
             instance = this;
         }
 
+        protected signal void reset_request (Item item, StyleParameters old_style, StyleParameters new_style);
+        protected signal void override_request (Item item, StyleParameters parameters);
+
         protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
         protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale);
         protected signal EquationItem equation_item_request (StyleParameters parameters, Ast equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
+
+        public static void reset_item (Item item, StyleParameters old_style, StyleParameters new_style) {
+            instance.reset_request.emit (item, old_style, new_style);
+        }
+
+        public static void override_item (Item item, StyleParameters parameters) {
+            instance.override_request.emit (item, parameters);
+        }
 
         public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
             return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));

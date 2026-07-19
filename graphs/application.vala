@@ -143,7 +143,7 @@ namespace Graphs {
         }
 
         public StyleEditor create_style_editor () {
-            var style_editor = PythonHelper.create_style_editor ();
+            var style_editor = new StyleEditor ();
             style_editors.add (style_editor);
             add_window (style_editor);
             return style_editor;
