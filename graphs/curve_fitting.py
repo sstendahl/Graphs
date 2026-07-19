@@ -128,7 +128,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         r2 = 1 - (ss_res / ss_tot)
         rmse = numpy.sqrt(ss_res / y_data.size)
         self.props.fit_result = Graphs.FitResult.new(params, d_cov, r2, rmse)
-        self.residuals_item.set_xydata((x_data, residuals))
+        residual_holder = Graphs.DataHolder.new(x_data, residuals, None, None)
+        self.residuals_item.set_data(residual_holder)
 
         # Substitute each free variables with the calculated value.
         values = dict(zip(free_vars, params))
@@ -142,7 +143,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if numpy.ndim(y_fit) == 0:
             y_fit = numpy.full(x_fit.size, y_fit.item())
 
-        self.fitted_curve.set_xydata((x_fit, y_fit))
+        fit_holder = Graphs.DataHolder.new(x_fit, y_fit, None, None)
+        self.fitted_curve.set_data(fit_holder)
         self.fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
@@ -162,7 +164,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         y_upper = y_fit + confidence_band
         y_lower = y_fit - confidence_band
-        self.fill.set_data_tuple((x_fit, y_lower, y_upper))
+        self.fill.set_data(Graphs.FillHolder.new(x_fit, y_lower, y_upper))
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
