@@ -10,7 +10,6 @@ from operator import itemgetter
 from gi.repository import Gio, Graphs, Gtk
 
 from graphs import misc, project, utilities
-from graphs.item import ItemFactory
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
@@ -70,14 +69,14 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            ItemFactory.to_dict(item),
+            utilities.item_to_dict(item),
         ))
 
     @staticmethod
     def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, ItemFactory.to_dict(item)),
+            (index, utilities.item_to_dict(item)),
         ))
 
     @staticmethod
@@ -119,7 +118,8 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([ItemFactory.to_dict(item) for item in self])
+        items = list(map(utilities.item_to_dict, self))
+        self._data_copy = copy.deepcopy(items)
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -237,7 +237,7 @@ class Data(Graphs.Data):
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._insert_item(
-                        ItemFactory.new_from_dict(copy.deepcopy(change[1])),
+                        utilities.item_from_dict(copy.deepcopy(change[1])),
                         change[0],
                     )
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -286,7 +286,7 @@ class Data(Graphs.Data):
                         self[index].set_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
                     change = copy.deepcopy(change)
-                    self._add_item(ItemFactory.new_from_dict(change))
+                    self._add_item(utilities.item_from_dict(change))
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -308,7 +308,7 @@ class Data(Graphs.Data):
         view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
-            "data": [ItemFactory.to_dict(item) for item in self],
+            "data": list(map(utilities.item_to_dict, self)),
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
@@ -330,7 +330,7 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        items = list(map(ItemFactory.new_from_dict, project_dict["data"]))
+        items = list(map(utilities.item_from_dict, project_dict["data"]))
         self.set_items(items)
 
         # Set clipboard

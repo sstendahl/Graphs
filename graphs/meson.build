@@ -13,7 +13,6 @@ python.install_sources(
     'data.py',
     'figure.py',
     'file_io.py',
-    'item.py',
     'migrate.py',
     'misc.py',
     'operations.py',

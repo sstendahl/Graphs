@@ -14,7 +14,6 @@ def startup(debug: bool, localedir: str, gettext_package: str) -> None:
 
     from graphs import scales
     from graphs.file_import.parsers import project, xrdml
-    from graphs.item import ItemFactory
     from graphs.python_helper import PythonHelper
     from graphs.styles import StyleManager
 
@@ -44,7 +43,6 @@ def startup(debug: bool, localedir: str, gettext_package: str) -> None:
 
     PythonHelper()
     StyleManager()
-    ItemFactory()
 
     parsers = [
         Graphs.ColumnsParser.new(),

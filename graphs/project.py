@@ -8,8 +8,7 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs
 
-from graphs import file_io, migrate
-from graphs.item import ItemFactory
+from graphs import file_io, migrate, utilities
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -233,7 +232,7 @@ class ProjectValidator:
 
         # Validate items
         data = self.project_dict["data"]
-        self.items = [ItemFactory.new_from_dict(d) for d in data]
+        self.items = list(map(utilities.item_from_dict, data))
 
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
@@ -263,7 +262,7 @@ class ProjectValidator:
                             self.items[index].set_property(prop, value)
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
-                        self.items.append(ItemFactory.new_from_dict(data))
+                        self.items.append(utilities.item_from_dict(data))
                     case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
                     case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -290,7 +289,7 @@ class ProjectValidator:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:
                         data = copy.deepcopy(change[1])
-                        item = ItemFactory.new_from_dict(data)
+                        item = utilities.item_from_dict(data)
                         self.items.insert(change[0], item)
                     case Graphs.ChangeType.ITEMS_SWAPPED:
                         self.items.insert(change[0], self.items.pop(change[1]))

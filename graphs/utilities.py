@@ -56,6 +56,58 @@ def fill_holder_to_tuple(holder: Graphs.FillHolder) -> tuple[list, list, list]:
     )
 
 
+def item_from_dict(dictionary: dict) -> Graphs.Item:
+    """Instanciate item from dict."""
+    match dictionary["type"]:
+        case "DataItem":
+            dictionary.pop("type")
+            dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+            return Graphs.DataItem(**dictionary)
+        case "GeneratedDataItem":
+            dictionary.pop("type")
+            dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+            equation = Graphs.expression_to_ast(dictionary["equation"])
+            dictionary["equation"] = equation
+            return Graphs.GeneratedDataItem(**dictionary)
+        case "EquationItem":
+            dictionary.pop("type")
+            equation = Graphs.expression_to_ast(dictionary["equation"])
+            dictionary["equation"] = equation
+            return Graphs.EquationItem(**dictionary)
+        case "TextItem":
+            dictionary.pop("type")
+            return Graphs.TextItem(**dictionary)
+        case "FillItem":
+            dictionary.pop("type")
+            dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
+            return Graphs.FillItem(**dictionary)
+        case _:
+            raise ValueError(f"could not find type {dictionary['type']}")
+
+
+def item_to_dict(item: Graphs.Item) -> dict:
+    """Convert an item to a dict."""
+    dictionary = {
+        key: item.get_property(key)
+        for key in dir(item.props) if key != "typename"
+    }
+    item_type = item.__gtype__.name[6:]
+    dictionary["type"] = item_type
+    match item_type:
+        case "DataItem":
+            dictionary["data"] = data_holder_to_tuple(item.get_data())
+        case "GeneratedDataItem":
+            dictionary["data"] = data_holder_to_tuple(item.get_data())
+            equation = Graphs.ast_to_expression(item.props.equation)
+            dictionary["equation"] = equation
+        case "EquationItem":
+            equation = Graphs.ast_to_expression(item.props.equation)
+            dictionary["equation"] = equation
+        case "FillItem":
+            dictionary["data"] = fill_holder_to_tuple(item.get_data())
+    return dictionary
+
+
 def equation_to_data(
     equation: Graphs.Expression,
     limits: tuple[float, float],
