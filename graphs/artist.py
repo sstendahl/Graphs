@@ -394,7 +394,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._view_change_timeout_id = \
             GObject.timeout_add(100, self._timeout_callback)
 
-    # We cannot have a Property of type Graphs.Expression
+    # We cannot have a Property of type Graphs.Ast
     def _on_equation_change(self, item, _pspec) -> None:
         equation = item.get_equation()
         self._singularities_cache = False
