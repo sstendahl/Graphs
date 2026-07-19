@@ -139,7 +139,7 @@ namespace Graphs {
 
         public Window window { get; construct set; }
         protected GLib.Settings settings { get; protected set; }
-        protected Expression ast { get; private set; }
+        protected Ast ast { get; private owned set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
 
@@ -430,7 +430,7 @@ namespace Graphs {
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
             try {
-                Expression ast = expression_to_ast (fitted_equation_string);
+                Ast ast = expression_to_ast (fitted_equation_string);
                 Item item = ItemFactory.new_equation_item (window.data.selected_style_params, ast);
                 item.name = "Y = " + fitted_equation_string;
                 Item[] items = {item};

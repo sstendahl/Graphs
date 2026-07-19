@@ -70,7 +70,7 @@ namespace Graphs {
 
             unowned string name = item_name.get_text ();
             try {
-                Expression expression = expression_to_ast (equation);
+                Ast expression = expression_to_ast (equation);
 
                 Item item = ItemFactory.new_generated_data_item (window.data.selected_style_params, expression, xstart, xstop, steps, scale);
                 if (name == "") {
