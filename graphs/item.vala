@@ -246,7 +246,7 @@ namespace Graphs {
             }
         }
 
-        public GeneratedDataItem (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
+        public GeneratedDataItem (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale) {
             Object (
                 equation: equation,
                 xstart: xstart,
@@ -302,7 +302,7 @@ namespace Graphs {
             typename = _("Equation");
         }
 
-        public EquationItem (StyleParameters parameters, Expression equation) {
+        public EquationItem (StyleParameters parameters, Ast equation) {
             Object (equation: equation);
             override (parameters);
         }
