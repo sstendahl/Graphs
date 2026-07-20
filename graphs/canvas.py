@@ -574,7 +574,7 @@ class _Highlight(SpanSelector):
             lambda _x,
             _y: self.apply(canvas),
             "horizontal",
-            useblit=True,
+            useblit=False,
             props={
                 "facecolor": canvas.rubberband_fill_color,
                 "edgecolor": canvas.rubberband_edge_color,

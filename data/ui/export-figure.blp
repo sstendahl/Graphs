@@ -13,18 +13,14 @@ template $GraphsExportFigureDialog: Adw.Dialog {
 
       [start]
       Button {
-        label: _("Cancel");
+        icon-name: "cross-large-symbolic";
         action-name: "window.close";
       }
 
       [end]
       Button confirm_button {
-        label: _("Export");
+        icon-name: "checkmark-small-symbolic";
         clicked => $on_accept();
-
-        styles [
-          "suggested-action",
-        ]
       }
     }
 

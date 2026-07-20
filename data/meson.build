@@ -105,6 +105,8 @@ icons = files(
   'icons/axes-one-quadrant-symbolic.svg',
   'icons/center-symbolic.svg',
   'icons/check-round-outline-whole-symbolic.svg',
+  'icons/checkmark-small-symbolic.svg',
+  'icons/cross-large-symbolic.svg',
   'icons/color-picker-symbolic.svg',
   'icons/derivative2-symbolic.svg',
   'icons/fast-fourier-transform-symbolic.svg',
