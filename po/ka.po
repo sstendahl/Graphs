@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-07-03 07:20+0000\n"
-"PO-Revision-Date: 2026-07-04 07:40+0200\n"
+"POT-Creation-Date: 2026-07-19 17:03+0000\n"
+"PO-Revision-Date: 2026-07-23 08:42+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Graphs-ის პროგრამისტები"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -41,6 +45,56 @@ msgstr "ნახაზის სტილის ცხრილების ჩ
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "ადვილად შეცვალეთ შემოტანილ მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "გრაფიკები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "გრაფიკების ხატვა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "მეცნიერება"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "განტოლებები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "ვიზუალიზაცია"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "ჩატევა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+#| msgctxt "import-mode"
+#| msgid "xrdml"
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -188,7 +242,7 @@ msgstr "მხოლოდ Y მნიშვნელობები"
 msgid "Import only Y values, X values will be generated"
 msgstr "მხოლოდ Y-ის მნიშვნელობების შემოტანა. X-ის მნიშვნელობები დაგენერირდება"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:235
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:246
 msgid "Equation"
 msgstr "განტოლება"
 
@@ -672,7 +726,7 @@ msgstr "ფიგურის პარამეტრები"
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:107
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/window.vala:328
 msgid "Title"
 msgstr "სათაური"
 
@@ -814,7 +868,7 @@ msgstr "ცენტრი"
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:83
+#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:84
 msgid "Style"
 msgstr "სტილი"
 
@@ -1299,7 +1353,7 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "სტილის გახსნა"
 
-#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:194
 msgid "Graphs Style Editor"
 msgstr "გრაფიკების სტილის რედაქტორი"
 
@@ -1655,7 +1709,7 @@ msgstr "შემოსატანად აქ დააგდეთ"
 msgid "Show Sidebar"
 msgstr "გვერდითი ზოლის ჩვენება"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:403
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:408
 msgid "Undo"
 msgstr "დაბრუნება"
 
@@ -1989,42 +2043,38 @@ msgstr "Y-ღერძის ჭდე"
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/style_editor/__init__.py:63
-msgid "Example Item"
-msgstr "მაგალითი ელემენტი"
-
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:247
-msgid "X Label"
-msgstr "X ჭდე"
-
-#: graphs/style_editor/__init__.py:109 graphs/style_io.py:248
-msgid "Y Label"
-msgstr "Y ჭდე"
-
 #: graphs/style_editor/item_color_row.vala:31
 #, c-format
 msgid "Color %d"
 msgstr "ფერი %d"
 
+#: graphs/style_editor/window.vala:65 graphs/style_editor/window.vala:68
+msgid "Example Item"
+msgstr "მაგალითი ელემენტი"
+
+#: graphs/style_editor/window.vala:227
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "მართლა გნებავთ, წაშალოთ %s?"
+
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
+#: graphs/style_editor/window.vala:305
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "გრაფიკების სტილის რედაქტორი — %s"
 
-#: graphs/style_editor/window.vala:231
-#, c-format
-msgid "Are you sure you want to delete %s?"
-msgstr "მართლა გნებავთ, წაშალოთ %s?"
+#: graphs/style_editor/window.vala:329 graphs/style_io.py:247
+msgid "X Label"
+msgstr "X ჭდე"
+
+#: graphs/style_editor/window.vala:330 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "Y ჭდე"
 
 #: graphs/__init__.py:41
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font}-ის ჩატვირთვა შეუძლებელია"
-
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs-ის პროგრამისტები"
 
 #: graphs/actions.vala:44
 msgid "translator-credits"
@@ -2128,12 +2178,12 @@ msgstr "აპროქსიმაციის პარამეტრებ�
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
-#: graphs/data.vala:480
+#: graphs/data.vala:478
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/data.vala:852
+#: graphs/data.vala:850
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
@@ -2160,19 +2210,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/item.vala:156
+#: graphs/item.vala:167
 msgid "Dataset"
 msgstr "მონაცემების სეტი"
 
-#: graphs/item.vala:198
+#: graphs/item.vala:209
 msgid "Generated Dataset"
 msgstr "გენერირებული მონაცემების ნაკრები"
 
-#: graphs/item.vala:247
+#: graphs/item.vala:258
 msgid "Label"
 msgstr "ჭდე"
 
-#: graphs/item.vala:253
+#: graphs/item.vala:264
 msgid "Fill"
 msgstr "შევსება"
 
@@ -2295,7 +2345,7 @@ msgstr "{filename}-ის დამუშავება შეუძლებ�
 msgid "File {file}, does not contain name tag"
 msgstr "ფაილი {file} სახელის ჭდე არ შეიცავს"
 
-#: graphs/styles.vala:97
+#: graphs/styles.vala:98
 msgid "System"
 msgstr "სისტემური"
 
@@ -2307,25 +2357,25 @@ msgstr "ყველა ფაილი"
 msgid "Document Portal"
 msgstr "დოკუმენტის პორტალი"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:153
 msgid "Graphs (Development)"
 msgstr "Graphs (Development)"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:180
 msgid "Untitled Project"
 msgstr "უსახელო პროექტი"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:181
 msgid "Draft"
 msgstr "მონახაზი"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:187
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:393
+#: graphs/window.vala:398
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
@@ -2442,9 +2492,6 @@ msgstr "მდებარეობის გახსნა"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "აირჩიეთ, რომელი ელემენტი გნებავთ, ჩაასწოროთ"
-
-#~ msgid "Data"
-#~ msgstr "მონაცემები"
 
 #~ msgid "Line Properties"
 #~ msgstr "ხაზის თვისებები"
