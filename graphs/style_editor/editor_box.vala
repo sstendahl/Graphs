@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
-
 namespace Graphs {
     private string title_format_function (Gtk.Scale scale, double value) {
         // Format a float value as a percentage string (integer part only)
@@ -11,12 +7,12 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")]
-    public class StyleEditorBox : Box {
+    public class StyleEditorBox : Gtk.Box {
         [GtkChild]
         private unowned Adw.EntryRow style_name { get; }
 
         [GtkChild]
-        private unowned FontDialogButton font_chooser { get; }
+        private unowned Gtk.FontDialogButton font_chooser { get; }
 
         [GtkChild]
         private unowned Gtk.Scale titlesize { get; }
@@ -31,7 +27,7 @@ namespace Graphs {
         private unowned Gtk.Scale linewidth { get; }
 
         [GtkChild]
-        private unowned Adw.ComboRow markers { get; }
+        private unowned Adw.ComboRow markerstyle { get; }
 
         [GtkChild]
         private unowned Gtk.Scale markersize { get; }
@@ -112,13 +108,13 @@ namespace Graphs {
         private unowned StyleColorRow outline_color { get; }
 
         [GtkChild]
-        private unowned ListBox line_colors_box { get; }
+        private unowned Gtk.ListBox line_colors_box { get; }
 
         [GtkChild]
-        private unowned ListBox errbar_line_colors_box { get; }
+        private unowned Gtk.ListBox errbar_line_colors_box { get; }
 
         [GtkChild]
-        private unowned Box poor_contrast_warning { get; }
+        private unowned Gtk.Box poor_contrast_warning { get; }
 
         [GtkChild]
         private unowned Gtk.Scale errorbar_capsize { get; }
@@ -153,6 +149,7 @@ namespace Graphs {
         }
 
         public void load (File file) {
+            this.parameters = null;
             var parameters = StyleManager.get_style_params (file, StyleManager.get_system_style_params ());
 
             style_name.set_text (parameters.get_name ());
@@ -182,7 +179,7 @@ namespace Graphs {
             string linestyle = (string) parameters.get_param ("lines.linestyle");
             string markerstyle = (string) parameters.get_param ("lines.marker");
             this.linestyle.set_selected (Linestyle.from_string (linestyle));
-            this.markers.set_selected (Markerstyle.from_style (markerstyle));
+            this.markerstyle.set_selected (Markerstyle.from_style (markerstyle));
             linewidth.set_value ((double) parameters.get_param ("lines.linewidth"));
             markersize.set_value ((double) parameters.get_param ("lines.markersize"));
 
@@ -245,21 +242,116 @@ namespace Graphs {
             poor_contrast_warning.set_visible (contrast < 4.5);
         }
 
-        [GtkCallback]
-        private void on_linestyle () {
-            linewidth.set_sensitive (linestyle.get_selected () != 0);
+        private void update_params () {
+            PythonHelper.run_method (parameters, "update");
+            notify_property ("parameters");
         }
 
         [GtkCallback]
-        private void on_markers () {
-            markersize.set_sensitive (markers.get_selected () != 0);
+        private void on_name() {
+            if (parameters == null) return;
+
+            parameters.set_param ("name", style_name.get_text (), true);
+
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_font () {
+            var parameters = this.parameters;
+            if (parameters == null) return;
+
+            var font_desc = font_chooser.get_font_desc ();
+
+            parameters.set_param ("font.sans-serif", font_desc.get_family ());
+
+            font_size = font_desc.get_size () / Pango.SCALE;
+            parameters.set_param ("font.size", font_size);
+            parameters.set_param ("xtick.labelsize", font_size);
+            parameters.set_param ("ytick.labelsize", font_size);
+            parameters.set_param ("legend.fontsize", font_size);
+            parameters.set_param ("figure.labelsize", font_size);
+
+            int font_weight = font_desc.get_weight ();
+            parameters.set_param ("font.weight", font_weight);
+            parameters.set_param ("axes.titleweight", font_weight);
+            parameters.set_param ("axes.labelweight", font_weight);
+            parameters.set_param ("figure.titleweight", font_weight);
+            parameters.set_param ("figure.labelweight", font_weight);
+
+            EnumClass stylec = (EnumClass) typeof (Pango.Style).class_ref ();
+            unowned EnumValue? font_style = stylec.get_value (font_desc.get_style ());
+            parameters.set_param ("font.style", font_style.value_nick);
+
+            EnumClass variantc = (EnumClass) typeof (Pango.Variant).class_ref ();
+            unowned EnumValue? font_variant = variantc.get_value (font_desc.get_style ());
+            parameters.set_param ("font.style", font_variant.value_nick);
+
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_titlesize () {
+            var parameters = this.parameters;
+            if (parameters == null) return;
+
+            double titlesize = Math.round (titlesize.get_value () / 2 * font_size);
+            parameters.set_param ("figure.titlesize", titlesize);
+            parameters.set_param ("axes.titlesize", titlesize);
+
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_labelsize () {
+            var parameters = this.parameters;
+            if (parameters == null) return;
+
+            double labelsize = Math.round (labelsize.get_value () / 2 * font_size);
+            parameters.set_param ("axes.labelsize", labelsize);
+
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_linestyle () {
+            Linestyle linestyle = (Linestyle) linestyle.get_selected ();
+            linewidth.set_sensitive (linestyle != Linestyle.NONE);
+
+            if (parameters == null) return;
+            parameters.set_param ("lines.linestyle", linestyle.friendly_string ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_linewidth () {
+            if (parameters == null) return;
+            parameters.set_param ("lines.linewidth", linewidth.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_markerstyle () {
+            Markerstyle markerstyle = (Markerstyle) markerstyle.get_selected ();
+            markersize.set_sensitive (markerstyle != Markerstyle.NONE);
+
+            if (parameters == null) return;
+            parameters.set_param ("lines.marker", markerstyle.to_style ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_markersize () {
+            if (parameters == null) return;
+            parameters.set_param ("lines.markersize", markersize.get_value ());
+            update_params ();
         }
 
         [GtkCallback]
         private async void add_color () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                RGBA color = yield dialog.choose_rgba (window, null, null);
+                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
                 color_manager.add_color (hex);
             } catch {}
@@ -267,9 +359,9 @@ namespace Graphs {
 
         [GtkCallback]
         private async void add_errbar_color () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                RGBA color = yield dialog.choose_rgba (window, null, null);
+                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
                 errbar_color_manager.add_color (hex);
             } catch {}

@@ -67,6 +67,14 @@ namespace Graphs {
         public unowned string[] get_errorbar_cycle () {
             return (string[]) graphs_parameters.get ("errorbar.color_cycle");
         }
+
+        public string[] get_params () {
+            return parameters.get_keys_as_array ();
+        }
+
+        public string[] get_graphs_params () {
+            return graphs_parameters.get_keys_as_array ();
+        }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";

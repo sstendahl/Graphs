@@ -8,6 +8,7 @@ template $GraphsStyleEditorBox: Box {
   Adw.PreferencesGroup {
     Adw.EntryRow style_name {
       title: _("Style Name");
+      changed => $on_name();
     }
 
     Adw.ActionRow {
@@ -17,6 +18,7 @@ template $GraphsStyleEditorBox: Box {
       FontDialogButton font_chooser {
         valign: center;
         use-font: true;
+        notify::font-desc => $on_font();
 
         dialog: FontDialog {};
       }
@@ -30,6 +32,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_titlesize();
 
         adjustment: Adjustment {
           lower: 1;
@@ -46,6 +49,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_labelsize();
 
         adjustment: Adjustment {
           lower: 1;
@@ -82,6 +86,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_linewidth();
 
         adjustment: Adjustment {
           lower: 0;
@@ -90,9 +95,9 @@ template $GraphsStyleEditorBox: Box {
       }
     }
 
-    Adw.ComboRow markers {
+    Adw.ComboRow markerstyle {
       title: _("Markers");
-      notify::selected => $on_markers();
+      notify::selected => $on_markerstyle();
 
       model: StringList {
         strings [
@@ -133,6 +138,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_markersize();
 
         adjustment: Adjustment {
           lower: 0;

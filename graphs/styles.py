@@ -2,6 +2,8 @@
 """Module for style utilities."""
 import io
 
+from cycler import cycler
+
 from gi.repository import GLib, Gdk, Gio, Graphs, GObject
 
 from graphs import style_io
@@ -43,6 +45,23 @@ class StyleParameters(Graphs.StyleParameters):
                 val = value
             self.set_param(key, val, True)
 
+    def update(self):
+        for key in self.get_params():
+            val = self.get_param(key, False)
+            if key == "axes.prop_cycle":
+                val = cycler(color=val)
+            elif key == "font.sans-serif":
+                val = [val]
+            print(val)
+            self.style_params[key] = val
+
+        for key in self.get_graphs_params():
+            val = self.get_param(key, True)
+            if key == "errorbar.color_cycle":
+                val = cycler(color=val)
+            print(val)
+            self.graphs_params[key] = val
+
     def as_tuple(self) -> tuple[RcParams, dict]:
         """Return params as tuple."""
         return self.style_params, self.graphs_params
@@ -62,6 +81,7 @@ class StyleManager(Graphs.StyleManager):
         super().__init__()
         self.connect("params-request", self._on_params_request)
         self.connect("style-request", self._on_style_request)
+        self.connect("save-request", self._on_save_request)
         self.connect("create-style-request", self._on_create_style_request)
 
         self.setup()

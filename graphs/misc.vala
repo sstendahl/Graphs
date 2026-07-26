@@ -82,6 +82,34 @@ namespace Graphs {
                 default: assert_not_reached ();
             }
         }
+
+        public unowned string to_style () {
+            switch (this) {
+                case NONE: return "none";
+                case POINT: return ".";
+                case PIXEL: return ",";
+                case CIRCLE: return "o";
+                case TRIANGLE_DOWN: return "v";
+                case TRIANGLE_UP: return "^";
+                case TRIANGLE_LEFT: return "<";
+                case TRIANGLE_RIGHT: return ">";
+                case OCTAGON: return "8";
+                case SQUARE: return "s";
+                case PENTAGON: return "p";
+                case STAR: return "*";
+                case HEXAGON_1: return "h";
+                case HEXAGON_2: return "H";
+                case PLUS: return "+";
+                case X: return "x";
+                case DIAMOND: return "D";
+                case THIN_DIAMOND: return "d";
+                case VERTICAL_LINE: return "|";
+                case HORIZONTAL_LINE: return "_";
+                case FILLED_PLUS: return "P";
+                case FILLED_X: return "X";
+                default: assert_not_reached();
+            }
+        }
     }
 
     public enum Linestyle {
@@ -95,6 +123,12 @@ namespace Graphs {
             EnumClass enumc = (EnumClass) typeof (Linestyle).class_ref ();
             unowned EnumValue? eval = enumc.get_value_by_nick (str);
             return (Linestyle) eval.value;
+        }
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (Linestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
         }
     }
 
