@@ -15,7 +15,7 @@ namespace Graphs {
 
         private CssProvider provider = new CssProvider ();
         private string color;
-        public StyleColorManager color_manager;
+        public StyleColorGroup group;
 
         public signal void color_changed (string color);
         public signal void color_removed ();
@@ -26,10 +26,10 @@ namespace Graphs {
             );
         }
 
-        public StyleItemColorRow (StyleColorManager color_manager, int index, owned string color) {
+        public StyleItemColorRow (StyleColorGroup group, int index, owned string color) {
             Object (index: index);
             this.set_title (_("Color %d").printf (index + 1));
-            this.color_manager = color_manager;
+            this.group = group;
             this.color = (owned) color;
             load_color ();
         }

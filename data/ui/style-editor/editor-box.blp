@@ -540,61 +540,13 @@ template $GraphsStyleEditorBox: Box {
     }
   }
 
-  Adw.PreferencesGroup {
+  $GraphsStyleColorGroup line_colors {
     title: _("Line Colors");
-
-    header-suffix: Button {
-      clicked => $add_color();
-
-      styles [
-        "flat",
-      ]
-
-      Adw.ButtonContent {
-        halign: center;
-        icon-name: "list-add-symbolic";
-        label: _("Add Color");
-      }
-    };
-
-    ListBox line_colors_box {
-      vexpand: false;
-      valign: start;
-      hexpand: true;
-      selection-mode: none;
-
-      styles [
-        "boxed-list",
-      ]
-    }
+    colors-changed => $on_line_colors();
   }
 
-  Adw.PreferencesGroup {
+  $GraphsStyleColorGroup errorbar_colors {
     title: _("Error Bar Colors");
-
-    header-suffix: Button {
-      clicked => $add_errbar_color();
-
-      styles [
-        "flat",
-      ]
-
-      Adw.ButtonContent {
-        halign: center;
-        icon-name: "list-add-symbolic";
-        label: _("Add Color");
-      }
-    };
-
-    ListBox errbar_line_colors_box {
-      vexpand: false;
-      valign: start;
-      hexpand: true;
-      selection-mode: none;
-
-      styles [
-        "boxed-list",
-      ]
-    }
+    colors-changed => $on_errorbar_colors();
   }
 }

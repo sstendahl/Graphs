@@ -1,45 +1,39 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
-    public class StyleColorManager : Object {
-        private ListBox box;
-        private ArrayList<string> colors = new ArrayList<string> ();
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-group.ui")]
+    public class StyleColorGroup : Adw.PreferencesGroup {
+        [GtkChild]
+        private unowned Gtk.ListBox color_box { get; }
+
+        public Gtk.Window window { get; set; }
+
+        private Gee.ArrayList<string> colors = new Gee.ArrayList<string> ();
 
         public signal void colors_changed ();
 
-        public StyleColorManager (ListBox box) {
-            this.box = box;
-
+        construct {
             var drop_target = new Gtk.DropTarget (typeof (StyleItemColorRow), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = (StyleItemColorRow?) val.get_object ();
-                var target_row = (StyleItemColorRow?) box.get_row_at_y ((int) y);
+                var target_row = (StyleItemColorRow?) color_box.get_row_at_y ((int) y);
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
                 // Reject if the value row is not from this instance
-                if (value_row.color_manager != this) return false;
+                if (value_row.group != this) return false;
 
                 change_position (target_row.index, value_row.index);
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
 
                 return true;
             });
-            box.add_controller (drop_target);
+            color_box.add_controller (drop_target);
         }
 
         public void set_colors (string[] colors) {
             this.colors.clear ();
             this.colors.add_all_array (colors);
             reload_color_boxes ();
-        }
-
-        public void add_color (string color) {
-            this.colors.add (color);
-            append_style_color_box (this.colors.size - 1);
-            colors_changed.emit ();
         }
 
         public string[] get_colors () {
@@ -53,6 +47,18 @@ namespace Graphs {
             this.colors.insert (index1, color);
             reload_color_boxes ();
             colors_changed.emit ();
+        }
+
+        [GtkCallback]
+        private async void add_color () {
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
+            try {
+                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
+                string hex = Tools.rgba_to_hex (color);
+                this.colors.add (hex);
+                append_style_color_box (this.colors.size - 1);
+                colors_changed.emit ();
+            } catch {}
         }
 
         private void append_style_color_box (int index) {
@@ -106,15 +112,15 @@ namespace Graphs {
             });
 
             // Update row visuals during DnD operation
-            drop_controller.enter.connect (() => this.box.drag_highlight_row (row));
-            drop_controller.leave.connect (() => this.box.drag_unhighlight_row ());
+            drop_controller.enter.connect (() => this.color_box.drag_highlight_row (row));
+            drop_controller.leave.connect (() => this.color_box.drag_unhighlight_row ());
 
-            this.box.append (row);
+            this.color_box.append (row);
         }
 
         private void reload_color_boxes () {
             if (this.colors.is_empty) this.colors.add ("#000000");
-            this.box.remove_all ();
+            this.color_box.remove_all ();
             for (int i = 0; i < this.colors.size; i++) {
                 append_style_color_box (i);
             }

@@ -108,12 +108,6 @@ namespace Graphs {
         private unowned StyleColorRow outline_color { get; }
 
         [GtkChild]
-        private unowned Gtk.ListBox line_colors_box { get; }
-
-        [GtkChild]
-        private unowned Gtk.ListBox errbar_line_colors_box { get; }
-
-        [GtkChild]
         private unowned Gtk.Box poor_contrast_warning { get; }
 
         [GtkChild]
@@ -128,24 +122,24 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.SwitchRow errorbar_barsabove { get; }
 
-        public StyleParameters parameters { get; private set; }
+        [GtkChild]
+        private unowned StyleColorGroup line_colors { get; }
 
-        private StyleColorManager color_manager;
-        private StyleColorManager errbar_color_manager;
-        private Gtk.Window window;
+        [GtkChild]
+        private unowned StyleColorGroup errorbar_colors { get; }
+
+        public StyleParameters parameters { get; private set; }
 
         private int font_size;
 
         construct {
-            this.color_manager = new StyleColorManager (line_colors_box);
-            this.errbar_color_manager = new StyleColorManager (errbar_line_colors_box);
-
             titlesize.set_format_value_func (title_format_function);
             labelsize.set_format_value_func (title_format_function);
         }
 
         public StyleEditorBox (Gtk.Window window) {
-            this.window = window;
+            line_colors.window = window;
+            errorbar_colors.window = window;
         }
 
         public void load (File file) {
@@ -225,8 +219,8 @@ namespace Graphs {
             background_color.set_color_string ((string) parameters.get_param ("axes.facecolor"));
             outline_color.set_color_string ((string) parameters.get_param ("figure.facecolor"));
 
-            color_manager.set_colors (parameters.get_color_cycle ());
-            errbar_color_manager.set_colors (parameters.get_errorbar_cycle ());
+            line_colors.set_colors (parameters.get_color_cycle ());
+            errorbar_colors.set_colors (parameters.get_errorbar_cycle ());
 
             check_contrast ();
 
@@ -581,23 +575,19 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private async void add_color () {
-            var dialog = new Gtk.ColorDialog () { with_alpha = false };
-            try {
-                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
-                string hex = Tools.rgba_to_hex (color);
-                color_manager.add_color (hex);
-            } catch {}
+        private void on_line_colors () {
+            if (parameters == null) return;
+            string[] colors = line_colors.get_colors ();
+            parameters.set_param ("patch.facecolor", colors[0]);
+            parameters.set_param ("axes.prop_cycle", (owned) colors);
+            update_params ();
         }
 
         [GtkCallback]
-        private async void add_errbar_color () {
-            var dialog = new Gtk.ColorDialog () { with_alpha = false };
-            try {
-                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
-                string hex = Tools.rgba_to_hex (color);
-                errbar_color_manager.add_color (hex);
-            } catch {}
+        private void on_errorbar_colors () {
+            if (parameters == null) return;
+            parameters.set_param ("errorbar.color_cycle", errorbar_colors.get_colors ());
+            update_params ();
         }
     }
 }
