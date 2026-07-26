@@ -22,6 +22,10 @@ namespace Graphs {
             this.notify["color"].connect (on_color);
         }
 
+        public void set_color_string (string color) {
+            this.color = Tools.hex_to_rgba (color);
+        }
+
         private void on_color () {
             string hex = Tools.rgba_to_hex (color);
             this.provider.load_from_string (@"image { color: $hex; }");

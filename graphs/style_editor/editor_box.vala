@@ -159,7 +159,7 @@ namespace Graphs {
 
             // Font
             var font_desc = new Pango.FontDescription ();
-            font_size = (int) parameters.get_param ("font.size");
+            font_size = (int) parameters.get_param ("font.size").get_double ();
             var font_family = (string) parameters.get_param ("font.sans-serif");
             int font_weight = (int) parameters.get_param ("font.weight");
             Pango.Style font_style;
@@ -173,7 +173,67 @@ namespace Graphs {
             font_desc.set_variant (font_variant);
             font_chooser.set_font_desc (font_desc);
 
+            double title_size = (double) parameters.get_param ("figure.titlesize");
+            double label_size = (double) parameters.get_param ("axes.labelsize");
+            titlesize.set_value (Math.round (title_size * 2 / font_size));
+            labelsize.set_value (Math.round (label_size * 2 / font_size));
+
+            // Lines
+            string linestyle = (string) parameters.get_param ("lines.linestyle");
+            string markerstyle = (string) parameters.get_param ("lines.marker");
+            this.linestyle.set_selected (Linestyle.from_string (linestyle));
+            this.markers.set_selected (Markerstyle.from_style (markerstyle));
+            linewidth.set_value ((double) parameters.get_param ("lines.linewidth"));
+            markersize.set_value ((double) parameters.get_param ("lines.markersize"));
+
+            // Error Bars
+            errorbar_capsize.set_value ((double) parameters.get_param ("errorbar.capsize", true));
+            errorbar_capthick.set_value ((double) parameters.get_param ("errorbar.capthick", true));
+            errorbar_linewidth.set_value ((double) parameters.get_param ("errorbar.linewidth", true));
+            errorbar_barsabove.set_active ((bool) parameters.get_param ("errorbar.barsabove", true));
+
+            // Axes
+            axis_width.set_value ((double) parameters.get_param ("axes.linewidth"));
+            draw_frame.set_active ((bool) parameters.get_param ("axes.spines.bottom"));
+
+            // Ticks
+            string tick_direction = (string) parameters.get_param ("xtick.direction");
+            this.tick_direction.set_selected (TickDirection.from_string (tick_direction));
+            minor_ticks.set_active ((bool) parameters.get_param ("xtick.minor.visible"));
+            major_tick_width.set_value ((double) parameters.get_param ("xtick.major.width"));
+            minor_tick_width.set_value ((double) parameters.get_param ("xtick.minor.width"));
+            major_tick_length.set_value ((double) parameters.get_param ("xtick.major.size"));
+            minor_tick_length.set_value ((double) parameters.get_param ("xtick.minor.size"));
+            tick_labels.set_active ((bool) parameters.get_param ("ticklabels", true));
+            tick_bottom.set_active ((bool) parameters.get_param ("xtick.bottom"));
+            tick_left.set_active ((bool) parameters.get_param ("ytick.left"));
+            tick_top.set_active ((bool) parameters.get_param ("xtick.top"));
+            tick_right.set_active ((bool) parameters.get_param ("ytick.right"));
+
+            // Grid
+            show_grid.set_active ((bool) parameters.get_param ("axes.grid"));
+            grid_linewidth.set_value ((double) parameters.get_param ("grid.linewidth"));
+            grid_opacity.set_value ((double) parameters.get_param ("grid.alpha"));
+
+            // Padding
+            value_padding.set_value ((double) parameters.get_param ("xtick.major.pad"));
+            label_padding.set_value ((double) parameters.get_param ("axes.labelpad"));
+            title_padding.set_value ((double) parameters.get_param ("axes.titlepad"));
+
+            // Colors
+            text_color.set_color_string ((string) parameters.get_param ("text.color"));
+            tick_color.set_color_string ((string) parameters.get_param ("xtick.color"));
+            axis_color.set_color_string ((string) parameters.get_param ("axes.edgecolor"));
+            grid_color.set_color_string ((string) parameters.get_param ("grid.color"));
+            background_color.set_color_string ((string) parameters.get_param ("axes.facecolor"));
+            outline_color.set_color_string ((string) parameters.get_param ("figure.facecolor"));
+
+            color_manager.set_colors (parameters.get_color_cycle ());
+            errbar_color_manager.set_colors (parameters.get_errorbar_cycle ());
+
             check_contrast ();
+
+            this.parameters = parameters;
         }
 
         public void save (File file) {

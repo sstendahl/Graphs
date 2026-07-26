@@ -111,6 +111,17 @@ namespace Graphs {
         }
     }
 
+    public enum TickDirection {
+        IN,
+        OUT;
+
+        public static TickDirection from_string (string str) {
+            EnumClass enumc = (EnumClass) typeof (TickDirection).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (str);
+            return (TickDirection) eval.value;
+        }
+    }
+
     public enum Scale {
         LINEAR,
         LOG,

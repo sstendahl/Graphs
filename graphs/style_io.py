@@ -150,11 +150,17 @@ def parse(
                             )
                             continue
                         # Convert boolean-strings to boolean:
-                        bool_mapping = {"false": False, "true": True}
-                        value = bool_mapping.get(value.lower(), value)
+                        bool_mapping = {
+                            "false": False,
+                            "False": False,
+                            "true": True,
+                            "True": True,
+                        }
                         if key == "errorbar.color_cycle":
                             color = ["#" + c.strip() for c in value.split(",")]
                             value = cycler(color=color)
+                        elif value in bool_mapping:
+                            value = bool(bool_mapping[value])
                         else:
                             with contextlib.suppress(ValueError):
                                 value = float(value)

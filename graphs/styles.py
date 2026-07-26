@@ -32,6 +32,8 @@ class StyleParameters(Graphs.StyleParameters):
                 value = GObject.Value(GObject.TYPE_STRV)
                 value.set_boxed(val.by_key()["color"])
                 val = value
+            elif key == "font.sans-serif":
+                val = val[0]
             self.set_param(key, val, False)
 
         for key, val in self.graphs_params.items():
