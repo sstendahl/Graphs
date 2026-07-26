@@ -78,11 +78,11 @@ namespace Graphs {
 
                     double[] item_xdata = xdata[column.first_val:column.last_val + 1];
                     double[] ydata = column.data[column.first_val:column.last_val + 1];
-                    DataItem item = new DataItem (style, (owned) item_xdata, (owned) ydata);
-                    item.name = name;
-                    item.xlabel = _("β (°)");
-                    item.ylabel = _("R (1/s)");
-                    items.add (item);
+                    items.add (new DataItem (style, (owned) item_xdata, (owned) ydata) {
+                        name = name,
+                        xlabel = _("β (°)"),
+                        ylabel = _("R (1/s)")
+                    });
                 }
 
                 skip (input, 9 + item_count);
@@ -94,9 +94,9 @@ namespace Graphs {
                     double yanchor = evaluate_string (values[6]);
                     string text = string.joinv (" ", values[7:]);
 
-                    TextItem item = new TextItem (style, xanchor, yanchor, text);
-                    item.name = text;
-                    items.add (item);
+                    items.add (new TextItem (style, xanchor, yanchor, text) {
+                        name = text
+                    });
                 }
 
                 input.close ();

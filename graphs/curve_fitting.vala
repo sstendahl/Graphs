@@ -431,8 +431,9 @@ namespace Graphs {
 
             try {
                 Ast ast = expression_to_ast (fitted_equation_string);
-                Item item = new EquationItem (window.data.selected_style_params, ast);
-                item.name = "Y = " + fitted_equation_string;
+                Item item = new EquationItem (window.data.selected_style_params, ast) {
+                    name = "Y = " + fitted_equation_string
+                };
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }

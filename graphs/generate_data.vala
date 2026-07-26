@@ -72,12 +72,9 @@ namespace Graphs {
             try {
                 Ast expression = expression_to_ast (equation);
 
-                Item item = new GeneratedDataItem (window.data.selected_style_params, expression, xstart, xstop, steps, scale);
-                if (name == "") {
-                    item.name = "Y = " + ast_to_expression (expression);
-                } else {
-                    item.name = name;
-                }
+                Item item = new GeneratedDataItem (window.data.selected_style_params, expression, xstart, xstop, steps, scale) {
+                    name = name == "" ? "Y = " + ast_to_expression (expression) : name
+                };
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }

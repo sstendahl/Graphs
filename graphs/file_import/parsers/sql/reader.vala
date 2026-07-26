@@ -151,11 +151,11 @@ namespace Graphs {
                 yerr = get_column_data (table_name, settings.get_string ("yerr-column"));
 
             ItemList items = new ItemList ();
-            DataItem item = new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
-            item.xlabel = x_column;
-            item.ylabel = y_column;
-            item.name = x_column + " vs " + y_column;
-            items.add (item);
+            items.add (new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr) {
+                xlabel = x_column,
+                ylabel = y_column,
+                name = x_column + " vs " + y_column
+            });
             return items;
         }
     }

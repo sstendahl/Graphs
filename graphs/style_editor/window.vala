@@ -61,12 +61,12 @@ namespace Graphs {
 
             var parameters = StyleManager.get_system_style_params ();
             test_items = new ListStore (typeof (Item));
-            var test_item_a = new DataItem (parameters, PREVIEW_XDATA, PREVIEW_YDATA1, PREVIEW_XERR1, PREVIEW_YERR1);
-            test_item_a.name = _("Example Item");
-            test_items.append (test_item_a);
-            var test_item_b = new DataItem (parameters, PREVIEW_XDATA, PREVIEW_YDATA2);
-            test_item_b.name = _("Example Item");
-            test_items.append (test_item_b);
+            test_items.append (new DataItem (parameters, PREVIEW_XDATA, PREVIEW_YDATA1, PREVIEW_XERR1, PREVIEW_YERR1) {
+                name = _("Example Item")
+            });
+            test_items.append (new DataItem (parameters, PREVIEW_XDATA, PREVIEW_YDATA2) {
+                name = _("Example Item")
+            });
 
             var save_action = new SimpleAction ("save-style", null);
             save_action.activate.connect (() => {

@@ -184,11 +184,11 @@ namespace Graphs {
                     xdata = columns[xrank].get_data ();
                 }
 
-                Item item = new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
-                item.xlabel = xlabel;
-                item.ylabel = ylabel;
-                item.name = settings.filename;
-                itemlist.add (item);
+                itemlist.add (new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr) {
+                    xlabel = xlabel,
+                    ylabel = ylabel,
+                    name = settings.filename
+                });
             }
 
             return itemlist;

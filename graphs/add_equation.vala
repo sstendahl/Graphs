@@ -38,12 +38,9 @@ namespace Graphs {
             try {
                 Ast expression = expression_to_ast (equation_str);
 
-                Item item = new EquationItem (window.data.selected_style_params, expression);
-                if (name == "") {
-                    item.name = "Y = " + ast_to_expression (expression);
-                } else {
-                    item.name = name;
-                }
+                Item item = new EquationItem (window.data.selected_style_params, expression) {
+                    name = name == "" ? "Y = " + ast_to_expression (expression) : name
+                };
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }
