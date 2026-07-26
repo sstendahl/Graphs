@@ -474,6 +474,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow text_color {
           title: _("Text Color");
+          notify::color => $on_text_color();
         }
       }
 
@@ -485,6 +486,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow tick_color {
           title: _("Tick Color");
+          notify::color => $on_tick_color();
         }
       }
 
@@ -496,6 +498,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow axis_color {
           title: _("Axis Color");
+          notify::color => $on_axis_color();
         }
       }
 
@@ -507,6 +510,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow grid_color {
           title: _("Grid Color");
+          notify::color => $on_grid_color();
         }
       }
 
@@ -518,6 +522,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow background_color {
           title: _("Background Color");
+          notify::color => $on_background_color();
         }
       }
 
@@ -529,6 +534,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsStyleColorRow outline_color {
           title: _("Outline Color");
+          notify::color => $on_outline_color();
         }
       }
     }

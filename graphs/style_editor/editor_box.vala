@@ -528,6 +528,59 @@ namespace Graphs {
         }
 
         [GtkCallback]
+        private void on_text_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (text_color.color);
+            parameters.set_param ("text.color", color);
+            parameters.set_param ("axes.labelcolor", color);
+            parameters.set_param ("xtick.labelcolor", color);
+            parameters.set_param ("ytick.labelcolor", color);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (tick_color.color);
+            parameters.set_param ("xtick.color", color);
+            parameters.set_param ("ytick.color", color);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_axis_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (axis_color.color);
+            parameters.set_param ("axes.edgecolor", color);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_grid_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (grid_color.color);
+            parameters.set_param ("grid.color", color);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_background_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (background_color.color);
+            parameters.set_param ("axes.facecolor", color);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_outline_color () {
+            if (parameters == null) return;
+            string color = Tools.rgba_to_hex (outline_color.color);
+            parameters.set_param ("figure.facecolor", color);
+            parameters.set_param ("figure.edgecolor", color);
+            update_params ();
+        }
+
+        [GtkCallback]
         private async void add_color () {
             var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
