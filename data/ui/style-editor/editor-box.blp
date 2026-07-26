@@ -346,6 +346,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow show_grid {
       title: _("Show Grid");
+      notify::active => $on_show_grid();
     }
 
     Adw.ActionRow {
@@ -356,6 +357,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_grid_linewidth();
 
         adjustment: Adjustment {
           lower: 0;
@@ -372,6 +374,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_grid_opacity();
 
         adjustment: Adjustment {
           lower: 0;
@@ -393,6 +396,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_value_padding();
 
         adjustment: Adjustment {
           lower: 0;
@@ -409,6 +413,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_label_padding();
 
         adjustment: Adjustment {
           lower: 0;
@@ -425,6 +430,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_title_padding();
 
         adjustment: Adjustment {
           lower: 0;

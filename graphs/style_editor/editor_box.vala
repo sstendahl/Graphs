@@ -482,6 +482,52 @@ namespace Graphs {
         }
 
         [GtkCallback]
+        private void on_show_grid () {
+            if (parameters == null) return;
+            parameters.set_param ("axes.grid", show_grid.get_active ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_grid_linewidth () {
+            if (parameters == null) return;
+            parameters.set_param ("grid.linewidth", grid_linewidth.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_grid_opacity () {
+            if (parameters == null) return;
+            parameters.set_param ("grid.alpha", grid_opacity.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_value_padding () {
+            if (parameters == null) return;
+            double value_padding = value_padding.get_value ();
+            parameters.set_param ("xtick.major.pad", value_padding);
+            parameters.set_param ("xtick.minor.pad", value_padding);
+            parameters.set_param ("ytick.major.pad", value_padding);
+            parameters.set_param ("ytick.minor.pad", value_padding);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_label_padding () {
+            if (parameters == null) return;
+            parameters.set_param ("axes.labelpad", label_padding.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_title_padding () {
+            if (parameters == null) return;
+            parameters.set_param ("axes.titlepad", title_padding.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
         private async void add_color () {
             var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
