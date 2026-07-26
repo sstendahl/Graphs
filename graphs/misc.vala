@@ -112,6 +112,10 @@ namespace Graphs {
         }
     }
 
+    public string markerstyle_style (Markerstyle style) {
+        return style.to_style ();
+    }
+
     public enum Linestyle {
         NONE,
         SOLID,
@@ -132,6 +136,10 @@ namespace Graphs {
         }
     }
 
+    public string linestyle_style (Linestyle style) {
+        return style.friendly_string ();
+    }
+
     public enum EquationLinestyle {
         SOLID,
         DOTTED,
@@ -143,6 +151,16 @@ namespace Graphs {
             unowned EnumValue? eval = enumc.get_value_by_nick (str);
             return (EquationLinestyle) eval.value;
         }
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (EquationLinestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+    }
+
+    public string equation_linestyle_style (EquationLinestyle style) {
+        return style.friendly_string ();
     }
 
     public enum TickDirection {

@@ -149,22 +149,22 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
         """Get linestyle property."""
-        return misc.LINESTYLES.index(self._data.get_linestyle())
+        raise NotImplementedError
 
     @linestyle.setter
     def linestyle(self, linestyle: int) -> None:
         """Set linestyle property."""
-        self._data.set_linestyle(misc.LINESTYLES[linestyle])
+        self._data.set_linestyle(Graphs.linestyle_style(linestyle))
 
     @GObject.Property(type=int, default=1)
     def markerstyle(self) -> int:
         """Get markerstyle property."""
-        return misc.MARKERSTYLES.index(self._data.get_marker())
+        raise NotImplementedError
 
     @markerstyle.setter
     def markerstyle(self, markerstyle: int) -> None:
         """Set markerstyle property."""
-        self._data.set_marker(misc.MARKERSTYLES[markerstyle])
+        self._data.set_marker(Graphs.markerstyle_style(markerstyle))
 
     @GObject.Property(type=float, default=0)
     def errcapsize(self) -> float:
@@ -307,8 +307,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.get_linestyle()],
-            marker=misc.MARKERSTYLES[item.get_markerstyle()],
+            linestyle=Graphs.linestyle_style(item.get_linestyle()),
+            marker=Graphs.markerstyle_style(item.get_markerstyle()),
             capsize=item.get_errcapsize(),
             capthick=item.get_errcapthick(),
             elinewidth=item.get_errlinewidth(),
@@ -369,7 +369,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.get_linestyle() + 1],
+            linestyle=Graphs.equation_linestyle_style(item.get_linestyle()),
             marker="none",
         )[0]
         self._color_artist = self._artist
@@ -405,12 +405,12 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
         """Get linestyle property."""
-        return misc.LINESTYLES.index(self._artist.get_linestyle()) - 1
+        raise NotImplementedError
 
     @linestyle.setter
     def linestyle(self, linestyle: int) -> None:
         """Set linestyle property."""
-        self._artist.set_linestyle(misc.LINESTYLES[linestyle + 1])
+        self._artist.set_linestyle(Graphs.equation_linestyle_style(linestyle))
 
     def _set_properties(self, _x, _y) -> None:
         linewidth = self.props.linewidth
