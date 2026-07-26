@@ -28,39 +28,28 @@ class StyleParameters(Graphs.StyleParameters):
         super().__init__()
         self.style_params = params[0]
         self.graphs_params = params[1]
+        combined = params[0] | params[1]
 
-        for key, val in self.style_params.items():
-            if key == "axes.prop_cycle":
+        for key, val in combined.items():
+            if key in ("axes.prop_cycle", "errorbar.color_cycle"):
                 value = GObject.Value(GObject.TYPE_STRV)
                 value.set_boxed(val.by_key()["color"])
                 val = value
             elif key == "font.sans-serif":
                 val = val[0]
-            self.set_param(key, val, False)
-
-        for key, val in self.graphs_params.items():
-            if key == "errorbar.color_cycle":
-                value = GObject.Value(GObject.TYPE_STRV)
-                value.set_boxed(val.by_key()["color"])
-                val = value
-            self.set_param(key, val, True)
+            self.set_param(key, val)
 
     def update(self):
         for key in self.get_params():
-            val = self.get_param(key, False)
-            if key == "axes.prop_cycle":
+            val = self.get_param(key)
+            if key in ("axes.prop_cycle", "errorbar.color_cycle"):
                 val = cycler(color=val)
             elif key == "font.sans-serif":
                 val = [val]
-            print(val)
-            self.style_params[key] = val
-
-        for key in self.get_graphs_params():
-            val = self.get_param(key, True)
-            if key == "errorbar.color_cycle":
-                val = cycler(color=val)
-            print(val)
-            self.graphs_params[key] = val
+            if key in style_io.STYLE_CUSTOM_PARAMS:
+                self.graphs_params[key] = val
+            else:
+                self.style_params[key] = val
 
     def as_tuple(self) -> tuple[RcParams, dict]:
         """Return params as tuple."""

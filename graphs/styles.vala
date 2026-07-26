@@ -30,26 +30,18 @@ namespace Graphs {
 
     public class StyleParameters : Object {
         private HashTable<string, Value?> parameters = new HashTable<string, Value?> (str_hash, str_equal);
-        private HashTable<string, Value?> graphs_parameters = new HashTable<string, Value?> (str_hash, str_equal);
 
-        public void set_param (string key, Value? val, bool graphs_param = false) {
+        public void set_param (string key, Value? val) {
             if (val == null) return;
-
-            if (graphs_param)
-                graphs_parameters.set (key, val);
-            else
-                parameters.set (key, val);
+            parameters.set (key, val);
         }
 
-        public Value get_param (string key, bool graphs_param = false) {
-            if (graphs_param)
-                return graphs_parameters.get (key);
-            else
-                return parameters.get (key);
+        public Value get_param (string key) {
+            return parameters.get (key);
         }
 
         public unowned string get_name () {
-            return (string) graphs_parameters.get ("name");
+            return (string) parameters.get ("name");
         }
 
         public unowned string get_color () {
@@ -65,15 +57,11 @@ namespace Graphs {
         }
 
         public unowned string[] get_errorbar_cycle () {
-            return (string[]) graphs_parameters.get ("errorbar.color_cycle");
+            return (string[]) parameters.get ("errorbar.color_cycle");
         }
 
         public string[] get_params () {
             return parameters.get_keys_as_array ();
-        }
-
-        public string[] get_graphs_params () {
-            return graphs_parameters.get_keys_as_array ();
         }
     }
 

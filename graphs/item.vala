@@ -28,7 +28,6 @@ namespace Graphs {
     protected struct StyleBinding {
         string property;
         string key;
-        bool graphs_param;
         unowned StyleTransformFunc transform;
     }
 
@@ -66,8 +65,8 @@ namespace Graphs {
             if (style_bindings == null) return;
 
             foreach (unowned StyleBinding binding in style_bindings) {
-                Value old_val = old_style.get_param (binding.key, binding.graphs_param);
-                Value new_val = new_style.get_param (binding.key, binding.graphs_param);
+                Value old_val = old_style.get_param (binding.key);
+                Value new_val = new_style.get_param (binding.key);
 
                 if (binding.transform != null) {
                     old_val = binding.transform (old_val);
@@ -86,7 +85,7 @@ namespace Graphs {
             if (style_bindings == null) return;
 
             foreach (unowned StyleBinding binding in style_bindings) {
-                Value val = style.get_param (binding.key, binding.graphs_param);
+                Value val = style.get_param (binding.key);
 
                 if (binding.transform != null)
                     val = binding.transform (val);
@@ -176,14 +175,14 @@ namespace Graphs {
         }
 
         private const StyleBinding[] STYLE_BINDINGS = {
-            { "errbarsabove", "errorbar.barsabove", true, null },
-            { "errcapsize", "errorbar.capsize", true, null },
-            { "errcapthick", "errorbar.capthick", true, null },
-            { "errlinewidth", "errorbar.linewidth", true, null },
-            { "linestyle", "lines.linestyle", false, linestyle_transform },
-            { "linewidth", "lines.linewidth", false, null },
-            { "markerstyle", "lines.marker", false, markerstyle_transform },
-            { "markersize", "lines.markersize", false, null },
+            { "errbarsabove", "errorbar.barsabove", null },
+            { "errcapsize", "errorbar.capsize", null },
+            { "errcapthick", "errorbar.capthick", null },
+            { "errlinewidth", "errorbar.linewidth", null },
+            { "linestyle", "lines.linestyle", linestyle_transform },
+            { "linewidth", "lines.linewidth", null },
+            { "markerstyle", "lines.marker", markerstyle_transform },
+            { "markersize", "lines.markersize", null },
         };
 
         protected override unowned StyleBinding[]? get_style_bindings () {
@@ -290,8 +289,8 @@ namespace Graphs {
         }
 
         private const StyleBinding[] STYLE_BINDINGS = {
-            { "linestyle", "lines.linestyle", false, linestyle_transform },
-            { "linewidth", "lines.linewidth", false, null },
+            { "linestyle", "lines.linestyle", linestyle_transform },
+            { "linewidth", "lines.linewidth", null },
         };
 
         protected override unowned StyleBinding[]? get_style_bindings () {
@@ -316,8 +315,8 @@ namespace Graphs {
         public int rotation { get; set; default = 0; }
 
         private const StyleBinding[] STYLE_BINDINGS = {
-            { "size", "font.size", false, null },
-            { "color", "text.color", false, null },
+            { "size", "font.size", null },
+            { "color", "text.color", null },
         };
 
         protected override unowned StyleBinding[]? get_style_bindings () {

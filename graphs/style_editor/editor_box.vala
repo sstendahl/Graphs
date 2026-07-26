@@ -184,10 +184,10 @@ namespace Graphs {
             markersize.set_value ((double) parameters.get_param ("lines.markersize"));
 
             // Error Bars
-            errorbar_capsize.set_value ((double) parameters.get_param ("errorbar.capsize", true));
-            errorbar_capthick.set_value ((double) parameters.get_param ("errorbar.capthick", true));
-            errorbar_linewidth.set_value ((double) parameters.get_param ("errorbar.linewidth", true));
-            errorbar_barsabove.set_active ((bool) parameters.get_param ("errorbar.barsabove", true));
+            errorbar_capsize.set_value ((double) parameters.get_param ("errorbar.capsize"));
+            errorbar_capthick.set_value ((double) parameters.get_param ("errorbar.capthick"));
+            errorbar_linewidth.set_value ((double) parameters.get_param ("errorbar.linewidth"));
+            errorbar_barsabove.set_active ((bool) parameters.get_param ("errorbar.barsabove"));
 
             // Axes
             axis_width.set_value ((double) parameters.get_param ("axes.linewidth"));
@@ -201,7 +201,7 @@ namespace Graphs {
             minor_tick_width.set_value ((double) parameters.get_param ("xtick.minor.width"));
             major_tick_length.set_value ((double) parameters.get_param ("xtick.major.size"));
             minor_tick_length.set_value ((double) parameters.get_param ("xtick.minor.size"));
-            tick_labels.set_active ((bool) parameters.get_param ("ticklabels", true));
+            tick_labels.set_active ((bool) parameters.get_param ("ticklabels"));
             tick_bottom.set_active ((bool) parameters.get_param ("xtick.bottom"));
             tick_left.set_active ((bool) parameters.get_param ("ytick.left"));
             tick_top.set_active ((bool) parameters.get_param ("xtick.top"));
@@ -250,9 +250,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_name() {
             if (parameters == null) return;
-
-            parameters.set_param ("name", style_name.get_text (), true);
-
+            parameters.set_param ("name", style_name.get_text ());
             update_params ();
         }
 
@@ -350,28 +348,28 @@ namespace Graphs {
         [GtkCallback]
         private void on_errorbar_capsize () {
             if (parameters == null) return;
-            parameters.set_param ("errorbar.capsize", errorbar_capsize.get_value (), true);
+            parameters.set_param ("errorbar.capsize", errorbar_capsize.get_value ());
             update_params ();
         }
 
         [GtkCallback]
         private void on_errorbar_capthick () {
             if (parameters == null) return;
-            parameters.set_param ("errorbar.capthick", errorbar_capthick.get_value (), true);
+            parameters.set_param ("errorbar.capthick", errorbar_capthick.get_value ());
             update_params ();
         }
 
         [GtkCallback]
         private void on_errorbar_linewidth () {
             if (parameters == null) return;
-            parameters.set_param ("errorbar.linewidth", errorbar_linewidth.get_value (), true);
+            parameters.set_param ("errorbar.linewidth", errorbar_linewidth.get_value ());
             update_params ();
         }
 
         [GtkCallback]
         private void on_errorbar_barsabove () {
             if (parameters == null) return;
-            parameters.set_param ("errorbar.barsabove", errorbar_barsabove.get_active (), true);
+            parameters.set_param ("errorbar.barsabove", errorbar_barsabove.get_active ());
             update_params ();
         }
 
@@ -451,7 +449,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_tick_labels () {
             if (parameters == null) return;
-            parameters.set_param ("ticklabels", tick_labels.get_active (), true);
+            parameters.set_param ("ticklabels", tick_labels.get_active ());
             update_params ();
         }
 
