@@ -154,6 +154,12 @@ namespace Graphs {
             unowned EnumValue? eval = enumc.get_value_by_nick (str);
             return (TickDirection) eval.value;
         }
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (TickDirection).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
     }
 
     public enum Scale {

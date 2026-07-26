@@ -348,6 +348,142 @@ namespace Graphs {
         }
 
         [GtkCallback]
+        private void on_errorbar_capsize () {
+            if (parameters == null) return;
+            parameters.set_param ("errorbar.capsize", errorbar_capsize.get_value (), true);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_capthick () {
+            if (parameters == null) return;
+            parameters.set_param ("errorbar.capthick", errorbar_capthick.get_value (), true);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_linewidth () {
+            if (parameters == null) return;
+            parameters.set_param ("errorbar.linewidth", errorbar_linewidth.get_value (), true);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_barsabove () {
+            if (parameters == null) return;
+            parameters.set_param ("errorbar.barsabove", errorbar_barsabove.get_active (), true);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_axis_width () {
+            if (parameters == null) return;
+            parameters.set_param ("axes.linewidth", axis_width.get_value ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_draw_frame () {
+            if (parameters == null) return;
+            bool draw_frame = draw_frame.get_active ();
+            parameters.set_param ("axes.spines.bottom", draw_frame);
+            parameters.set_param ("axes.spines.left", draw_frame);
+            parameters.set_param ("axes.spines.top", draw_frame);
+            parameters.set_param ("axes.spines.right", draw_frame);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_direction () {
+            if (parameters == null) return;
+            TickDirection direction = (TickDirection) tick_direction.get_selected ();
+            string tick_direction = direction.friendly_string ();
+            parameters.set_param ("xtick.direction", tick_direction);
+            parameters.set_param ("ytick.direction", tick_direction);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_minor_ticks () {
+            if (parameters == null) return;
+            bool minor_ticks = minor_ticks.get_active ();
+            parameters.set_param ("xtick.minor.visible", minor_ticks);
+            parameters.set_param ("ytick.minor.visible", minor_ticks);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_major_tick_width () {
+            if (parameters == null) return;
+            double major_tick_width = major_tick_width.get_value ();
+            parameters.set_param ("xtick.major.width", major_tick_width);
+            parameters.set_param ("ytick.major.width", major_tick_width);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_minor_tick_width () {
+            if (parameters == null) return;
+            double minor_tick_width = minor_tick_width.get_value ();
+            parameters.set_param ("xtick.minor.width", minor_tick_width);
+            parameters.set_param ("ytick.minor.width", minor_tick_width);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_major_tick_length () {
+            if (parameters == null) return;
+            double major_tick_length = major_tick_length.get_value ();
+            parameters.set_param ("xtick.major.size", major_tick_length);
+            parameters.set_param ("ytick.major.size", major_tick_length);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_minor_tick_length () {
+            if (parameters == null) return;
+            double minor_tick_length = minor_tick_length.get_value ();
+            parameters.set_param ("xtick.minor.size", minor_tick_length);
+            parameters.set_param ("ytick.minor.size", minor_tick_length);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_labels () {
+            if (parameters == null) return;
+            parameters.set_param ("ticklabels", tick_labels.get_active (), true);
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_bottom () {
+            if (parameters == null) return;
+            parameters.set_param ("xtick.bottom", tick_bottom.get_active ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_left () {
+            if (parameters == null) return;
+            parameters.set_param ("ytick.left", tick_left.get_active ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_top () {
+            if (parameters == null) return;
+            parameters.set_param ("xtick.top", tick_top.get_active ());
+            update_params ();
+        }
+
+        [GtkCallback]
+        private void on_tick_right () {
+            if (parameters == null) return;
+            parameters.set_param ("ytick.right", tick_right.get_active ());
+            update_params ();
+        }
+
+        [GtkCallback]
         private async void add_color () {
             var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
