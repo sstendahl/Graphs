@@ -14,32 +14,6 @@ class ParseError(Exception):
 X = sympy.Symbol("x")
 Y = sympy.Symbol("y")
 
-LINESTYLES = ["none", "solid", "dotted", "dashed", "dashdot"]
-MARKERSTYLES = [
-    "none",
-    ".",
-    ",",
-    "o",
-    "v",
-    "^",
-    "<",
-    ">",
-    "8",
-    "s",
-    "p",
-    "*",
-    "h",
-    "H",
-    "+",
-    "x",
-    "D",
-    "d",
-    "|",
-    "_",
-    "P",
-    "X",
-]
-
 DIRECTIONS = ["bottom", "top", "left", "right"]
 
 LIMITS = [
