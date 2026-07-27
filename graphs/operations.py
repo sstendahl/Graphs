@@ -299,8 +299,8 @@ class CommonOperations():
                 else:  # Apply linear scaling
                     new_ydata = ydata + shift_value
                 if interaction_mode == Graphs.Mode.SELECT:
-                    item_ydata = utilities.bytes_to_nd_array(item.get_ydata_b())
-                    item_ydata = item_ydata.copy()
+                    item_ydata = item.get_ydata_b()
+                    item_ydata = utilities.bytes_to_nd_array(item_ydata).copy()
                     item_ydata[data_mask] = new_ydata
                     new_ydata = item_ydata
                 xerr, yerr = utilities.get_xy_err(item.get_data())

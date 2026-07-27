@@ -36,7 +36,9 @@ def get_xy_err(
     return xerr, yerr
 
 
-def data_holder_to_tuple(holder: Graphs.DataHolder) -> tuple[list, list, list, list]:
+def data_holder_to_tuple(
+    holder: Graphs.DataHolder,
+) -> tuple[list, list, list, list]:
     """Get the data as a picklable tuple."""
     return (
         bytes_to_list(holder.get_xdata_b()),
