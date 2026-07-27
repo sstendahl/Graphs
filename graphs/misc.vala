@@ -107,7 +107,7 @@ namespace Graphs {
                 case HORIZONTAL_LINE: return "_";
                 case FILLED_PLUS: return "P";
                 case FILLED_X: return "X";
-                default: assert_not_reached();
+                default: assert_not_reached ();
             }
         }
     }

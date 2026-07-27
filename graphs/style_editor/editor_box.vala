@@ -242,7 +242,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_name() {
+        private void on_name () {
             if (parameters == null) return;
             parameters.set_param ("name", style_name.get_text ());
             update_params ();
