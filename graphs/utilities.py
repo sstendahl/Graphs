@@ -13,10 +13,9 @@ def bytes_to_ndarray(b: GLib.Bytes) -> numpy.ndarray:
 
 
 def bytes_to_list(b: GLib.Bytes) -> list[float]:
-    ndarray = bytes_to_ndarray(b)
-    if ndarray is None:
+    if b is None:
         return None
-    return ndarray.tolist()
+    return bytes_to_ndarray(b).tolist()
 
 
 def get_xy_data(
