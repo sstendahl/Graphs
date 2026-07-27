@@ -13,6 +13,7 @@ def bytes_to_ndarray(b: GLib.Bytes) -> numpy.ndarray:
 
 
 def bytes_to_list(b: GLib.Bytes) -> list[float]:
+    """Convert data to a python list."""
     if b is None:
         return None
     return bytes_to_ndarray(b).tolist()

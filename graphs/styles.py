@@ -4,7 +4,7 @@ import io
 
 from cycler import cycler
 
-from gi.repository import GLib, Gdk, Gio, Graphs, GObject
+from gi.repository import GLib, GObject, Gdk, Gio, Graphs
 
 from graphs import style_io
 
@@ -40,6 +40,7 @@ class StyleParameters(Graphs.StyleParameters):
             self.set_param(key, val)
 
     def update(self):
+        """Update parameters from vala controlled storage."""
         for key in self.get_params():
             val = self.get_param(key)
             if key in ("axes.prop_cycle", "errorbar.color_cycle"):
