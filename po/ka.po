@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-20 15:50+0000\n"
-"PO-Revision-Date: 2026-04-24 04:00+0200\n"
+"POT-Creation-Date: 2026-06-25 11:18+0000\n"
+"PO-Revision-Date: 2026-07-27 16:01+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Graphs-ის პროგრამისტები"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -41,6 +45,56 @@ msgstr "ნახაზის სტილის ცხრილების ჩ
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "ადვილად შეცვალეთ შემოტანილ მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "გრაფიკები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "გრაფიკების ხატვა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "მეცნიერება"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "განტოლებები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "ვიზუალიზაცია"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "ჩატევა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+#| msgctxt "import-mode"
+#| msgid "xrdml"
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -81,7 +135,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Vis
 msgid "New Window"
 msgstr "ახალი ფანჯარა"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:23
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:20
 msgid "Style Editor"
 msgstr "სტილის რედაქტორი"
 
@@ -188,7 +242,7 @@ msgstr "მხოლოდ Y მნიშვნელობები"
 msgid "Import only Y values, X values will be generated"
 msgstr "მხოლოდ Y-ის მნიშვნელობების შემოტანა. X-ის მნიშვნელობები დაგენერირდება"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:208
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:237
 msgid "Equation"
 msgstr "განტოლება"
 
@@ -580,27 +634,27 @@ msgstr "აცდენის ზოლები"
 msgid "Show Horizontal"
 msgstr "ჰორიზონტალურის ჩვენება"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "ვერტიკალურის ჩვენება"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20 data/ui/style-editor/editor-box.blp:194
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22 data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "დახატვა მონაცემების ზემოდან"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "ფერი"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28 data/ui/style-editor/editor-box.blp:149
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30 data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "ბოლოს სიგრძე"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42 data/ui/style-editor/editor-box.blp:164
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44 data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "ბოლოს სისქე"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56 data/ui/style-editor/editor-box.blp:179
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58 data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "ხაზის სიგანე"
 
@@ -1939,19 +1993,20 @@ msgid "ASCII files"
 msgstr "ASCII ფაილები"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "X ღერძის მინიმუმი"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Y ღერძის მინიმუმი"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "X ღერძის მაქსიმუმი"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
@@ -1972,7 +2027,7 @@ msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 msgid "Y Axis Label"
 msgstr "Y-ღერძის ჭდე"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
@@ -2004,10 +2059,6 @@ msgstr "გრაფიკების სტილის რედაქტო�
 msgid "Are you sure you want to delete %s?"
 msgstr "მართლა გნებავთ, წაშალოთ %s?"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs-ის პროგრამისტები"
-
 #: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr "ეკატერინე პაპავა"
@@ -2017,11 +2068,11 @@ msgstr "ეკატერინე პაპავა"
 msgid "Deleted %s"
 msgstr "წაიშალა %s"
 
-#: graphs/application.vala:22
+#: graphs/application.vala:19
 msgid "New window"
 msgstr "ახალი ფანჯარა"
 
-#: graphs/application.vala:24
+#: graphs/application.vala:21
 msgid "[FILE…]"
 msgstr "[ფაილი...]"
 
@@ -2138,7 +2189,7 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "{font}-ის ჩატვირთვა შეუძლებელია"
 
@@ -2146,62 +2197,62 @@ msgstr "{font}-ის ჩატვირთვა შეუძლებელი
 msgid "Dataset"
 msgstr "მონაცემების სეტი"
 
-#: graphs/item.vala:181
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "გენერირებული მონაცემების ნაკრები"
 
-#: graphs/item.vala:224
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "ჭდე"
 
-#: graphs/item.vala:230
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "შევსება"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "{name}: გარდაქმნის შესრულება შეუძლებელია. დარწმუნდით, რომ სინტაქსი სწორია"
 
-#: graphs/operations.py:257
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "გამოკვეთილ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:261
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "ზოგიერთ ელემენტს, შეიძლება, აცდენის ზოლები არ ჰქონდეთ. ისინი მოცილებული იქნება"
 
-#: graphs/operations.py:272
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "კომბინირებული მონაცემები"
 
-#: graphs/operations.py:415
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name}-ზე ოპერაციის შედეგი დახატვადი ტოლობა არაა"
 
-#: graphs/operations.py:423
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "ოპერაცია განტოლებებისთვის მხარდაჭერილი არაა."
 
-#: graphs/operations.py:580
+#: graphs/operations.py:552
 msgid "No data found within the highlighted area"
 msgstr "მონიშნულ ადგილში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/operations.py:586
+#: graphs/operations.py:560
 msgid "Operation not supported for data items"
 msgstr "ოპერაცია მონაცემის ელემენტებისთვის მხარდაჭერილი არაა"
 
-#: graphs/operations.py:589
+#: graphs/operations.py:563
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: ოპერაციის ჩატარების შეცდომა"
 
-#: graphs/operations.py:594
+#: graphs/operations.py:571
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
@@ -2237,7 +2288,7 @@ msgstr "შენახული პროექტი"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/python_helper.vala:43
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "გატანილი მონაცემები"
 
@@ -2418,9 +2469,6 @@ msgstr "მდებარეობის გახსნა"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "აირჩიეთ, რომელი ელემენტი გნებავთ, ჩაასწოროთ"
-
-#~ msgid "Data"
-#~ msgstr "მონაცემები"
 
 #~ msgid "Line Properties"
 #~ msgstr "ხაზის თვისებები"
