@@ -60,7 +60,7 @@ class StyleParseError(Exception):
 def parse(
     file: Gio.File,
     validate: tuple[RcParams, dict] = None,
-) -> (RcParams, dict):
+) -> tuple[RcParams, dict]:
     """
     Parse a style to RcParams.
 
@@ -200,15 +200,16 @@ WRITE_IGNORELIST = STYLE_IGNORELIST + [
 ]
 
 
-def write(file: Gio.File, style: RcParams, graphs_params: dict) -> None:
+def write(file: Gio.File, style: tuple[RcParams, dict]) -> None:
     """Write a style to a file."""
+    params, graphs_params = style
     stream = Gio.DataOutputStream.new(file.replace(None, False, 0, None))
     stream.put_string("# Generated via Graphs\n")
     for key, value in graphs_params.items():
         if key == "errorbar.color_cycle":
             value = ", ".join(c.lstrip("#") for c in value.by_key()["color"])
         stream.put_string(f"#~graphs {key}: {value}\n")
-    for key, value in style.items():
+    for key, value in params.items():
         if key not in STYLE_BLACKLIST and key not in WRITE_IGNORELIST:
             value = str(value).replace("#", "")
             if key != "axes.prop_cycle":

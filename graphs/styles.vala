@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public int style_cmp (Style a, Style b) {
         if (a.file == null) return -1;
@@ -71,28 +67,27 @@ namespace Graphs {
      * Style manager
      */
     public class StyleManager : Object {
-        public static GLib.ListStore style_model { get; private set; }
-        public static FilterListModel filtered_style_model { get; private set; }
+        public static ListStore style_model { get; private set; }
+        public static Gtk.FilterListModel filtered_style_model { get; private set; }
         public static File style_dir { get; private set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
 
-        protected signal void create_style_request (Style template, File destination, string name);
-        protected signal Style style_request (File file);
+        protected signal Gdk.Texture preview_request (StyleParameters parameters);
         protected signal StyleParameters params_request (File file, StyleParameters? validate);
         protected signal void save_request (StyleParameters parameters, File file);
 
         public static StyleManager instance { get; private set; }
 
-        private CssProvider css_provider;
+        private Gtk.CssProvider css_provider;
         private StyleParameters system_style_light_params;
         private StyleParameters system_style_dark_params;
 
         construct {
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new Gtk.CssProvider ();
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
 
@@ -110,9 +105,9 @@ namespace Graphs {
             Adw.StyleManager.get_default ().notify.connect (on_system_style);
             on_system_style.begin ();
 
-            style_model = new GLib.ListStore (typeof (Style));
-            filtered_style_model = new FilterListModel (
-                style_model, new CustomFilter (filter_system_style)
+            style_model = new ListStore (typeof (Style));
+            filtered_style_model = new Gtk.FilterListModel (
+                style_model, new Gtk.CustomFilter (filter_system_style)
             );
 
             try {
@@ -123,27 +118,20 @@ namespace Graphs {
                 }
             } catch { assert_not_reached (); }
 
-            style_model.append (
-                new Style (
-                    _("System"),
-                    null,
-                    Gdk.Texture.from_resource (
-                        @"/se/sjoerd/Graphs/system-style-$system_style.png"
-                    ),
-                    false
-                )
-            );
+            style_model.append (new Style () {
+                name = _("System"),
+                preview = Gdk.Texture.from_resource (@"/se/sjoerd/Graphs/system-style-$system_style.png"),
+                mutable = false,
+            });
 
             for (uint i = 0; i < STYLES.length; i++) {
                 StyleInfo* info = &STYLES[i];
-                style_model.append (
-                    new Style (
-                        info->name,
-                        File.new_for_uri ("resource://" + info->style_path),
-                        Gdk.Texture.from_resource (info->preview_path),
-                        false
-                    )
-                );
+                style_model.append (new Style () {
+                    name = info->name,
+                    file = File.new_for_uri ("resource://" + info->style_path),
+                    preview = Gdk.Texture.from_resource (info->preview_path),
+                    mutable = false,
+                });
             }
 
             try {
@@ -160,7 +148,7 @@ namespace Graphs {
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
                     ) {
-                        Style style = instance.style_request.emit (file);
+                        Style style = style_for_file (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, stylenames.to_array ()
                         );
@@ -177,6 +165,17 @@ namespace Graphs {
             } catch {}
         }
 
+        private static Style style_for_file (File file) {
+            var parameters = get_style_params (file, get_system_style_params ());
+            return new Style () {
+                name = parameters.get_name (),
+                file = file,
+                preview = instance.preview_request.emit (parameters),
+                mutable = true,
+                light = Tools.get_luminance_from_hex ((string) parameters.get_param ("axes.facecolor")) < 0.4,
+            };
+        }
+
         private async static void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
             Style? style = null;
@@ -190,7 +189,7 @@ namespace Graphs {
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     find_style_for_file (file, out style);
                     if (style == null) {
-                        style = instance.style_request.emit (file);
+                        style = style_for_file (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, list_stylenames ()
                         );
@@ -198,7 +197,7 @@ namespace Graphs {
                         style_model.insert_sorted (style, cmp);
                         return;
                     }
-                    Style tmp_style = instance.style_request.emit (file);
+                    Style tmp_style = style_for_file (file);
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
                     if (style.name == tmp_style.name) {
@@ -256,7 +255,10 @@ namespace Graphs {
             var filename = filename_from_stylename (new_name);
             try {
                 var destination = style_dir.get_child_for_display_name (filename);
-                instance.create_style_request.emit (style, destination, new_name);
+                var parameters = get_style_params (style.file, get_system_style_params ());
+                parameters.set_param ("name", new_name);
+                PythonHelper.run_method (parameters, "update");
+                instance.save_request.emit (parameters, destination);
                 return destination;
             } catch { assert_not_reached (); }
         }
@@ -281,16 +283,10 @@ namespace Graphs {
 
     public class Style : Object {
         public string name { get; construct set; default = ""; }
-        public Texture preview { get; set; }
+        public Gdk.Texture preview { get; set; }
         public File? file { get; construct set; }
         public bool mutable { get; construct set; }
         public bool light { get; set; default = true; }
-
-        public Style (string name, File? file, Texture preview, bool mutable) {
-            Object (
-                name: name, file: file, preview: preview, mutable: mutable
-            );
-        }
     }
 
     /**
@@ -300,16 +296,16 @@ namespace Graphs {
     private class StylePreview : Adw.Bin {
 
         [GtkChild]
-        private unowned Label label { get; }
+        private unowned Gtk.Label label { get; }
 
         [GtkChild]
-        private unowned Picture picture { get; }
+        private unowned Gtk.Picture picture { get; }
 
         [GtkChild]
-        public unowned MenuButton menu_button { get; }
+        public unowned Gtk.MenuButton menu_button { get; }
 
         private Style _style;
-        private CssProvider provider;
+        private Gtk.CssProvider provider;
 
         public Style style {
             get { return this._style; }
@@ -324,8 +320,8 @@ namespace Graphs {
             set { label.set_label (value); }
         }
 
-        public Texture preview {
-            get { return (Texture) picture.get_paintable (); }
+        public Gdk.Texture preview {
+            get { return (Gdk.Texture) picture.get_paintable (); }
             set {
                 picture.set_paintable (value);
                 if (_style.mutable) {
@@ -339,15 +335,15 @@ namespace Graphs {
         }
 
         construct {
-            this.provider = new CssProvider ();
+            this.provider = new Gtk.CssProvider ();
             menu_button.get_style_context ().add_provider (
-                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+                provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
     }
 
     public async void import_style (Gtk.Window window) {
-        var dialog = new FileDialog ();
+        var dialog = new Gtk.FileDialog ();
         dialog.set_filters (get_mplstyle_file_filters ());
         try {
             var file = yield dialog.open (window, null);
