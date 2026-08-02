@@ -131,7 +131,7 @@ namespace Graphs {
         private unowned Adw.SwitchRow errbarsabove { get; }
 
         [GtkChild]
-        private unowned StyleColorRow errcolor_row { get; }
+        private unowned ColorRow errcolor_row { get; }
 
         [GtkChild]
         private unowned Gtk.Scale errcapsize { get; }
@@ -180,7 +180,7 @@ namespace Graphs {
             );
 
             errcolor_row.color = Tools.hex_to_rgba (item.errcolor);
-            errcolor_row.notify["color"].connect ((obj, pspec) => {
+            errcolor_row.color_chosen.connect (() => {
                 item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
             });
         }

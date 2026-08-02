@@ -1,0 +1,8 @@
+using Gtk 4.0;
+
+template $GraphsColorButton: Button {
+  tooltip-text: _("Change Color");
+  clicked => $choose_color();
+
+  child: $GraphsColorSwatch color_swatch {};
+}
