@@ -467,4 +467,3 @@ namespace Graphs.MathParser {
         }
     }
 }
-
