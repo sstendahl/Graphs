@@ -192,10 +192,10 @@ namespace Graphs.MathParser {
             CUSTOM,
 
             A, AB,
-               AR, ARC,
                AC, ACO, ACOS,
                         ACOT,
                    ACS, ACSC,
+               AR, ARC,
                AS, ASE, ASEC,
                    ASI, ASIN,
                AT, ATA, ATAN,
@@ -206,8 +206,8 @@ namespace Graphs.MathParser {
             I, IN,
             L, LO, LOG, LOG1,
             P,
-            S, SI, SIN,
-               SE, SEC,
+            S, SE, SEC,
+               SI, SIN,
                SQ, SQR,
             T, TA, TAN,
 
@@ -251,133 +251,16 @@ namespace Graphs.MathParser {
                         state = TrieState.CUSTOM;
                         break;
 
-                    case TrieState.P:
-                        if (c == 'i') { current_ident = Ident.PI; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.E:
-                        if (c == 'x') state = TrieState.EX;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.EX:
-                        if (c == 'p') { current_ident = Ident.EXP; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.I:
-                        if (c == 'n') state = TrieState.IN;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.IN:
-                        if (c == 'f') { current_ident = Ident.INF; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.S:
-                        if (c == 'i') state = TrieState.SI;
-                        else if (c == 'e') state = TrieState.SE;
-                        else if (c == 'q') state = TrieState.SQ;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SI:
-                        if (c == 'n') { current_ident = Ident.SIN; state = TrieState.SIN; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SIN:
-                        if (c == 'd') { current_ident = Ident.SIND; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SE:
-                        if (c == 'c') { current_ident = Ident.SEC; state = TrieState.SEC; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SEC:
-                        if (c == 'd') { current_ident = Ident.SECD; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SQ:
-                        if (c == 'r') state = TrieState.SQR;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.SQR:
-                        if (c == 't') { current_ident = Ident.SQRT; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.C:
-                        if (c == 'o') state = TrieState.CO;
-                        else if (c == 's') state = TrieState.CS;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.CO:
-                        if (c == 's') { current_ident = Ident.COS; state = TrieState.COS; }
-                        else if (c == 't') { current_ident = Ident.COT; state = COT; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.COS:
-                        if (c == 'd') { current_ident = Ident.COSD; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.COT:
-                        if (c == 'd') { current_ident = Ident.COTD; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.CS:
-                        if (c == 'c') { current_ident = Ident.CSC; state = TrieState.CSC; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.CSC:
-                        if (c == 'd') { current_ident = Ident.CSCD; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.T:
-                        if (c == 'a') state = TrieState.TA;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.TA:
-                        if (c == 'n') { current_ident = Ident.TAN; state = TrieState.TAN; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.TAN:
-                        if (c == 'd') { current_ident = Ident.TAND; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.L:
-                        if (c == 'n') { current_ident = Ident.LN; state = TrieState.CUSTOM; }
-                        else if (c == 'o') state = TrieState.LO;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.LO:
-                        if (c == 'g') { current_ident = Ident.LN; state = TrieState.LOG; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.LOG:
-                        if (c == '2') { current_ident = Ident.LOG2; state = TrieState.CUSTOM; }
-                        else if (c == '1') { current_ident = Ident.CUSTOM; state = TrieState.LOG1; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.LOG1:
-                        if (c == '0') { current_ident = Ident.LOG10; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
                     case TrieState.A:
                         if (c == 'b') state = TrieState.AB;
-                        else if (c == 'r') state = TrieState.AR;
                         else if (c == 'c') state = TrieState.AC;
+                        else if (c == 'r') state = TrieState.AR;
                         else if (c == 's') state = TrieState.AS;
                         else if (c == 't') state = TrieState.AT;
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.AB:
                         if (c == 's') { current_ident = Ident.ABS; state = TrieState.CUSTOM; }
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    case TrieState.AR:
-                        if (c == 'c') state = TrieState.ARC;
-                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
-
-                    // we support writing arc* as a*
-                    case TrieState.ARC:
-                        if (c == 'c') state = TrieState.AC;
-                        else if (c == 's') state = TrieState.AS;
-                        else if (c == 't') state = TrieState.AT;
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.AC:
@@ -404,6 +287,17 @@ namespace Graphs.MathParser {
 
                     case TrieState.ACSC:
                         if (c == 'd') { current_ident = Ident.ACSCD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.AR:
+                        if (c == 'c') state = TrieState.ARC;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    // we support writing arc* as a*
+                    case TrieState.ARC:
+                        if (c == 'c') state = TrieState.AC;
+                        else if (c == 's') state = TrieState.AS;
+                        else if (c == 't') state = TrieState.AT;
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.AS:
@@ -437,6 +331,112 @@ namespace Graphs.MathParser {
 
                     case TrieState.ATAN:
                         if (c == 'd') { current_ident = Ident.ATAND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.C:
+                        if (c == 'o') state = TrieState.CO;
+                        else if (c == 's') state = TrieState.CS;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.CO:
+                        if (c == 's') { current_ident = Ident.COS; state = TrieState.COS; }
+                        else if (c == 't') { current_ident = Ident.COT; state = COT; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.COS:
+                        if (c == 'd') { current_ident = Ident.COSD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.COT:
+                        if (c == 'd') { current_ident = Ident.COTD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.CS:
+                        if (c == 'c') { current_ident = Ident.CSC; state = TrieState.CSC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.CSC:
+                        if (c == 'd') { current_ident = Ident.CSCD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.E:
+                        if (c == 'x') state = TrieState.EX;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.EX:
+                        if (c == 'p') { current_ident = Ident.EXP; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.I:
+                        if (c == 'n') state = TrieState.IN;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.IN:
+                        if (c == 'f') { current_ident = Ident.INF; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.L:
+                        if (c == 'n') { current_ident = Ident.LN; state = TrieState.CUSTOM; }
+                        else if (c == 'o') state = TrieState.LO;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.LO:
+                        if (c == 'g') { current_ident = Ident.LN; state = TrieState.LOG; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.LOG:
+                        if (c == '2') { current_ident = Ident.LOG2; state = TrieState.CUSTOM; }
+                        else if (c == '1') { current_ident = Ident.CUSTOM; state = TrieState.LOG1; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.LOG1:
+                        if (c == '0') { current_ident = Ident.LOG10; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.P:
+                        if (c == 'i') { current_ident = Ident.PI; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.S:
+                        if (c == 'e') state = TrieState.SE;
+                        else if (c == 'i') state = TrieState.SI;
+                        else if (c == 'q') state = TrieState.SQ;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SE:
+                        if (c == 'c') { current_ident = Ident.SEC; state = TrieState.SEC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SEC:
+                        if (c == 'd') { current_ident = Ident.SECD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SI:
+                        if (c == 'n') { current_ident = Ident.SIN; state = TrieState.SIN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SIN:
+                        if (c == 'd') { current_ident = Ident.SIND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SQ:
+                        if (c == 'r') state = TrieState.SQR;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.SQR:
+                        if (c == 't') { current_ident = Ident.SQRT; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.T:
+                        if (c == 'a') state = TrieState.TA;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.TA:
+                        if (c == 'n') { current_ident = Ident.TAN; state = TrieState.TAN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
+                    case TrieState.TAN:
+                        if (c == 'd') { current_ident = Ident.TAND; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     default: assert_not_reached ();
