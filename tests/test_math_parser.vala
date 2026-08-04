@@ -107,7 +107,7 @@ private void test_division_by_zero () {
     try {
         evaluate_string ("1/0");
         assert_not_reached ();
-    } catch (MathError.DIV_ZERO e) {
+    } catch (MathError.INVALID e) {
         // expected
     } catch (Error e) {
         assert_not_reached ();
@@ -118,7 +118,7 @@ private void test_invalid_factorial_negative () {
     try {
         evaluate_string ("(-1)!");
         assert_not_reached ();
-    } catch (MathError.DOMAIN e) {
+    } catch (MathError.INVALID e) {
         // expected
     } catch (Error e) {
         assert_not_reached ();
@@ -129,7 +129,7 @@ private void test_invalid_factorial_fractional () {
     try {
         evaluate_string ("3.5!");
         assert_not_reached ();
-    } catch (MathError.DOMAIN e) {
+    } catch (MathError.INVALID e) {
         // expected
     } catch (Error e) {
         assert_not_reached ();

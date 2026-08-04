@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs.MathParser {
+    [Compact (opaque = true)]
     private class Parser {
         private Lexer lexer = new Lexer ();
 
@@ -12,7 +13,8 @@ namespace Graphs.MathParser {
         public Ast parse (string src, unichar decimal_separator = '.') throws MathError {
             lexer.start_lexing (src, decimal_separator);
             Expression result = expr ();
-            lexer.expect_end ();
+            if (lexer.current_type != TokenType.END)
+                throw new MathError.SYNTAX ("trailing input");
             return new Ast ((owned) result);
         }
 
@@ -85,7 +87,7 @@ namespace Graphs.MathParser {
             return expr;
         }
 
-        private Expression unary () throws MathError {
+        private Expression? unary () throws MathError {
             if (lexer.current_type == TokenType.OPERATOR) {
                 if (lexer.current_op == Operator.SUB) {
                     lexer.next ();
@@ -98,7 +100,7 @@ namespace Graphs.MathParser {
             return postfix ();
         }
 
-        private Expression postfix () throws MathError {
+        private Expression? postfix () throws MathError {
             Expression expr = primary ();
 
             while (true) {
@@ -123,7 +125,7 @@ namespace Graphs.MathParser {
             return expr;
         }
 
-        private Expression primary () throws MathError {
+        private Expression? primary () throws MathError {
             switch (lexer.current_type) {
                 case TokenType.NUMBER:
                     var v = new Expression.number (lexer.current_val);
@@ -144,7 +146,9 @@ namespace Graphs.MathParser {
                     if (lexer.current_type == TokenType.LPAREN) {
                         lexer.next ();
                         Expression arg = expr ();
-                        lexer.expect (TokenType.RPAREN);
+                        if (lexer.current_type != TokenType.RPAREN)
+                            throw new MathError.SYNTAX ("expected token");
+                        lexer.next ();
 
                         return new Expression.function (id, (owned) arg);
                     }
@@ -153,12 +157,14 @@ namespace Graphs.MathParser {
                         case Ident.PI: return new Expression.constant (Ident.PI);
                         case Ident.E: return new Expression.constant (Ident.E);
                         case Ident.INF: return new Expression.constant (Ident.INF);
-                        default: throw new MathError.UNKNOWN_FUNCTION ("invalid identifier");
+                        default: assert_not_reached ();
                     }
                 case TokenType.LPAREN:
                     lexer.next ();
                     Expression expr = expr ();
-                    lexer.expect (TokenType.RPAREN);
+                    if (lexer.current_type != TokenType.RPAREN)
+                        throw new MathError.SYNTAX ("expected token");
+                    lexer.next ();
                     return expr;
                 default:
                     throw new MathError.SYNTAX ("unexpected token");

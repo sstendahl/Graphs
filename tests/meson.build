@@ -14,8 +14,12 @@ test_sources = files(
   'main.vala',
   'test_math_parser.vala',
 )
-test_executable = executable('unittest', test_sources,
-         dependencies: dependencies,
+test_executable = executable('unittest', test_sources, dependencies: [
+    gobject_dep,
+    gtk_dep,
+    adwaita_dep,
+    gee_dep,
+  ],
             link_with: graphs_lib,
   include_directories: source_include,
                c_args: ['-w'], # suppress vala generated c warnings
