@@ -6,18 +6,6 @@ project('Graphs', 'c', 'vala',
           license: 'GPL-3.0-or-later',
 )
 
-dependencies = [
-  dependency('glib-2.0'),
-  dependency('gobject-2.0'),
-  dependency('gio-2.0'),
-  dependency('gtk4'),
-  dependency('libadwaita-1', version: '>= 1.8.0'),
-  dependency('gee-0.8'),
-  dependency('sqlite3'),
-  dependency('libxml-2.0'),
-  dependency('libgsf-1'),
-]
-
 valac = meson.get_compiler('vala')
 
 devenv = environment()
@@ -43,6 +31,18 @@ python = import('python').find_installation('python3',
     'gio_pyio'
   ],
 )
+
+glib_dep = dependency('glib-2.0')
+gobject_dep = dependency('gobject-2.0')
+gio_dep = dependency('gio-2.0')
+gtk_dep = dependency('gtk4')
+adwaita_dep = dependency('libadwaita-1', version: '>= 1.8.0')
+gee_dep = dependency('gee-0.8')
+sqlite_dep = dependency('sqlite3')
+xml_dep = dependency('libxml-2.0')
+gsf_dep = dependency('libgsf-1')
+python_dep = python.dependency(embed: true)
+openmp_dep = dependency('openmp')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
