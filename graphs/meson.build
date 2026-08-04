@@ -29,17 +29,6 @@ python.install_sources(
          subdir: 'graphs',
 )
 
-c_helpers = static_library('c_helpers',
-  files(
-    'math_parser/array_evaluator.c',
-    'utilities.c',
-  ),
-  include_directories: include_directories('.'),
-               c_args: ['-O3', '-fopenmp-simd', '-Wall'],
-              install: false,
-                  pic: true,
-)
-
 configure_file(
          output: 'config.h',
   configuration: vala_conf,
@@ -101,14 +90,28 @@ graphs_lib = shared_library('graphs',
     'transform.vala',
     'utilities.vala',
     'window.vala',
-  ), gresource_xml, gresource,
+    # C helpers
+    'math_parser/array_evaluator.c',
+    'utilities.c',
+  ), gresource_xml, gresource, dependencies: [
+    config_dep,
+    openmp_dep,
+    glib_dep,
+    gobject_dep,
+    gio_dep,
+    gtk_dep,
+    adwaita_dep,
+    gee_dep,
+    sqlite_dep,
+    xml_dep,
+    gsf_dep,
+  ],
              vala_gir: 'Graphs-1.gir',
-         dependencies: dependencies + config_dep,
+          vala_header: 'graphs.h',
   include_directories: source_include,
             link_args: ['-lm'],
-            link_with: c_helpers,
             vala_args: ['--pkg=posix'],
-               c_args: ['-w'], # suppress vala generated c warnings
+               c_args: ['-w', '-fopenmp-simd'], # suppress vala generated c warnings
               install: true,
           install_dir: [true],
 )
@@ -127,10 +130,14 @@ graphs_typelib = custom_target('graphs typelib',
  )
 devenv.set('GI_TYPELIB_PATH', meson.current_build_dir())
 
-executable('graphs', files('graphs.c'),
-  dependencies: dependencies + python.dependency(embed: true),
-     link_with: graphs_lib,
-       install: true,
-   install_dir: bindir,
+executable('graphs', files('graphs.c'), dependencies: [
+    python_dep,
+    gtk_dep,
+    adwaita_dep,
+    gee_dep,
+  ],
+   link_with: graphs_lib,
+     install: true,
+ install_dir: bindir,
 )
 devenv.prepend('PATH', meson.current_build_dir())
