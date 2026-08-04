@@ -12,7 +12,17 @@ private void assert_evaluate_result (string expression, double expected) {
     try {
         assert_double_eq (evaluate_string (expression), expected);
     } catch (Error e) {
-        assert_not_reached ();
+        Test.fail_printf ("%s: %s", expression, e.message);
+    }
+}
+
+private void assert_throws_error (string expression, int code) {
+    try {
+        evaluate_string (expression);
+        Test.fail_printf ("%s should have been invalid", expression);
+    } catch (MathError e) {
+        if (e.code != code)
+            Test.fail_printf (e.message);
     }
 }
 
@@ -104,36 +114,15 @@ private void test_decimal_separator () {
 }
 
 private void test_division_by_zero () {
-    try {
-        evaluate_string ("1/0");
-        assert_not_reached ();
-    } catch (MathError.INVALID e) {
-        // expected
-    } catch (Error e) {
-        assert_not_reached ();
-    }
+    assert_throws_error ("1/0", MathError.INVALID);
 }
 
 private void test_invalid_factorial_negative () {
-    try {
-        evaluate_string ("(-1)!");
-        assert_not_reached ();
-    } catch (MathError.INVALID e) {
-        // expected
-    } catch (Error e) {
-        assert_not_reached ();
-    }
+    assert_throws_error ("(-1)!", MathError.INVALID);
 }
 
 private void test_invalid_factorial_fractional () {
-    try {
-        evaluate_string ("3.5!");
-        assert_not_reached ();
-    } catch (MathError.INVALID e) {
-        // expected
-    } catch (Error e) {
-        assert_not_reached ();
-    }
+    assert_throws_error ("3.5!", MathError.INVALID);
 }
 
 private const string[] INVALID_SYNTAX = {
@@ -147,34 +136,31 @@ private const string[] INVALID_SYNTAX = {
 
 private void test_syntax_errors () {
     foreach (unowned string expr in INVALID_SYNTAX) {
-        try {
-            evaluate_string (expr);
-            assert_not_reached ();
-        } catch (MathError.SYNTAX e) {
-            // expected
-        } catch (Error e) {
-            assert_not_reached ();
-        }
+        assert_throws_error (expr, MathError.SYNTAX);
     }
 }
 
 
-void add_math_parser_tests () {
-    Test.add_func ("/math-parser/basic-arithmetic", test_basic_arithmetic);
-    Test.add_func ("/math-parser/operator-precedence", test_operator_precedence);
-    Test.add_func ("/math-parser/power-associativity", test_power_associativity);
-    Test.add_func ("/math-parser/unary-operators", test_unary_operators);
-    Test.add_func ("/math-parser/factorial", test_factorial);
-    Test.add_func ("/math-parser/implicit-multiplication", test_implicit_multiplication);
-    Test.add_func ("/math-parser/constants", test_constants);
-    Test.add_func ("/math-parser/trig-radians", test_trig_functions_radians);
-    Test.add_func ("/math-parser/trig-degrees", test_trig_functions_degrees);
-    Test.add_func ("/math-parser/inverse-trig", test_inverse_trig_functions);
-    Test.add_func ("/math-parser/misc-functions", test_misc_functions);
-    Test.add_func ("/math-parser/nested-expressions", test_nested_expressions);
-    Test.add_func ("/math-parser/decimal-separator", test_decimal_separator);
-    Test.add_func ("/math-parser/division-by-zero", test_division_by_zero);
-    Test.add_func ("/math-parser/invalid-factorial-negative", test_invalid_factorial_negative);
-    Test.add_func ("/math-parser/invalid-factorial-fractional", test_invalid_factorial_fractional);
-    Test.add_func ("/math-parser/syntax-errors", test_syntax_errors);
+void main (string[] args) {
+    Test.init (ref args);
+
+    Test.add_func ("/math-parser/eval/basic-arithmetic", test_basic_arithmetic);
+    Test.add_func ("/math-parser/eval/operator-precedence", test_operator_precedence);
+    Test.add_func ("/math-parser/eval/power-associativity", test_power_associativity);
+    Test.add_func ("/math-parser/eval/unary-operators", test_unary_operators);
+    Test.add_func ("/math-parser/eval/factorial", test_factorial);
+    Test.add_func ("/math-parser/eval/implicit-multiplication", test_implicit_multiplication);
+    Test.add_func ("/math-parser/eval/constants", test_constants);
+    Test.add_func ("/math-parser/eval/trig-radians", test_trig_functions_radians);
+    Test.add_func ("/math-parser/eval/trig-degrees", test_trig_functions_degrees);
+    Test.add_func ("/math-parser/eval/inverse-trig", test_inverse_trig_functions);
+    Test.add_func ("/math-parser/eval/misc-functions", test_misc_functions);
+    Test.add_func ("/math-parser/eval/nested-expressions", test_nested_expressions);
+    Test.add_func ("/math-parser/eval/decimal-separator", test_decimal_separator);
+    Test.add_func ("/math-parser/eval/division-by-zero", test_division_by_zero);
+    Test.add_func ("/math-parser/eval/invalid-factorial-negative", test_invalid_factorial_negative);
+    Test.add_func ("/math-parser/eval/invalid-factorial-fractional", test_invalid_factorial_fractional);
+    Test.add_func ("/math-parser/eval/syntax-errors", test_syntax_errors);
+
+    Test.run ();
 }
