@@ -340,7 +340,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.CO:
                         if (c == 's') { current_ident = Ident.COS; state = TrieState.COS; }
-                        else if (c == 't') { current_ident = Ident.COT; state = COT; }
+                        else if (c == 't') { current_ident = Ident.COT; state = TrieState.COT; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.COS:
