@@ -359,7 +359,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         equation = item.get_equation()
         self._expr = ast.sympify(equation)
-        self._program = Graphs.ast_to_program(equation, "x")
+        self._program = item.get_program()
         self._axis = axis
         self._view_change_timeout_id = None
         axis.callbacks.connect("xlim_changed", self._on_view_change)
@@ -399,7 +399,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         equation = item.get_equation()
         self._singularities_cache = False
         self._expr = ast.sympify(equation)
-        self._program = Graphs.ast_to_program(equation, "x")
+        self._program = item.get_program()
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
