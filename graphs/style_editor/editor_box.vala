@@ -94,22 +94,22 @@ namespace Graphs {
         protected unowned Gtk.Scale title_padding { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow text_color { get; }
+        protected unowned ColorRow text_color { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow tick_color { get; }
+        protected unowned ColorRow tick_color { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow axis_color { get; }
+        protected unowned ColorRow axis_color { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow grid_color { get; }
+        protected unowned ColorRow grid_color { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow background_color { get; }
+        protected unowned ColorRow background_color { get; }
 
         [GtkChild]
-        protected unowned StyleColorRow outline_color { get; }
+        protected unowned ColorRow outline_color { get; }
 
         [GtkChild]
         private unowned ListBox line_colors_box { get; }
