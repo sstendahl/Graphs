@@ -232,7 +232,10 @@ namespace Graphs.MathParser {
                                 break;
                             }
                             case 'p': state = TrieState.P; break;
-                            case 'e': state = TrieState.E; break;
+                            case 'e':
+                                current_ident = Ident.E;
+                                state = TrieState.E;
+                                break;
                             case 'i': state = TrieState.I; break;
                             case 's': state = TrieState.S; break;
                             case 'c': state = TrieState.C; break;
@@ -464,3 +467,4 @@ namespace Graphs.MathParser {
         }
     }
 }
+
