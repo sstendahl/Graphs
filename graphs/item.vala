@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-
 namespace Graphs {
     /**
      * Small list class
@@ -132,19 +130,19 @@ namespace Graphs {
             return _yerr;
         }
 
-        public GLib.Bytes get_xdata_b () {
+        public Bytes get_xdata_b () {
             return new Bytes ((uint8[]) _xdata);
         }
 
-        public GLib.Bytes get_ydata_b () {
+        public Bytes get_ydata_b () {
             return new Bytes ((uint8[]) _ydata);
         }
 
-        public GLib.Bytes? get_xerr_b () {
+        public Bytes? get_xerr_b () {
             return _xerr == null ? null : new Bytes ((uint8[]) _xerr);
         }
 
-        public GLib.Bytes? get_yerr_b () {
+        public Bytes? get_yerr_b () {
             return _yerr == null ? null : new Bytes ((uint8[]) _yerr);
         }
     }

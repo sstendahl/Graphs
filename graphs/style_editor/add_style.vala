@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * Add style dialog
@@ -17,8 +14,8 @@ namespace Graphs {
 
         public signal void accept (File file);
 
-        public AddStyleDialog (Widget parent) {
-            style_templates.set_expression (new PropertyExpression (typeof (Style), null, "name"));
+        public AddStyleDialog (Gtk.Widget parent) {
+            style_templates.set_expression (new Gtk.PropertyExpression (typeof (Style), null, "name"));
             style_templates.set_model (StyleManager.filtered_style_model);
             present (parent);
         }

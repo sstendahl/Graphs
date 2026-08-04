@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
-
 namespace Graphs {
     /**
      * Item Box widget
@@ -11,7 +7,7 @@ namespace Graphs {
     public class ItemBox : Adw.ActionRow {
 
         [GtkChild]
-        public unowned CheckButton check_button { get; }
+        public unowned Gtk.CheckButton check_button { get; }
 
         [GtkChild]
         private unowned ColorButton color_button { get; }
