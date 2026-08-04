@@ -1,17 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs.MathParser {
+    [Compact]
     private class Lexer {
-        private unowned string src;
-        private unichar c;
-        private unichar decimal_separator;
+        public unowned string src;
+        public unichar c;
+        public unichar decimal_separator;
 
         public TokenType current_type;
         public Operator current_op;
         public Ident current_ident;
         public double current_val;
 
-        private int current_start;
-        private int current_end;
+        public int current_start;
+        public int current_end;
 
         public void start_lexing (string src, unichar decimal_separator = '.') throws MathError {
             this.src = src;
@@ -465,17 +466,6 @@ namespace Graphs.MathParser {
                 current_end = tmp_idx;
                 c = c.tolower ();
             }
-        }
-
-        public inline void expect_end () throws MathError {
-            if (current_type != TokenType.END)
-                throw new MathError.SYNTAX ("trailing input");
-        }
-
-        public inline void expect (TokenType t) throws MathError {
-            if (current_type != t)
-                throw new MathError.SYNTAX ("expected token");
-            next ();
         }
 
         public string get_current_token_as_string () {

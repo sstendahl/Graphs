@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs.MathParser {
+    [Compact]
     private class Evaluator {
         private static Once<Evaluator> _instance;
 
@@ -8,16 +9,21 @@ namespace Graphs.MathParser {
         }
 
         public double eval_ast (Ast expr) throws MathError {
-            return eval (expr.root ());
+            double result = eval (expr.root ());
+
+            if (result.is_nan ())
+                throw new MathError.INVALID ("expression is not a number");
+
+            return result;
         }
 
-        private double eval (Expression expr) throws MathError {
+        private double eval (Expression expr) {
             switch (expr.type ()) {
                 case ExpressionType.NUMBER:
                 case ExpressionType.CONSTANT:
                     return expr.val ();
                 case ExpressionType.VARIABLE:
-                    throw new MathError.UNKNOWN_FUNCTION ("variables not allowed");
+                    return double.NAN;
                 case ExpressionType.UNARY: return unary (expr);
                 case ExpressionType.BINARY: return binary (expr);
                 case ExpressionType.POSTFIX: return postfix (expr);
@@ -26,16 +32,16 @@ namespace Graphs.MathParser {
             }
         }
 
-        private double unary (Expression expr) throws MathError {
+        private double unary (Expression expr) {
             double v = eval (expr.right ());
 
             switch (expr.op ()) {
                 case Operator.SUB: return -v;
-                default: throw new MathError.SYNTAX ("invalid unary operator");
+                default: assert_not_reached ();
             }
         }
 
-        private double binary (Expression expr) throws MathError {
+        private double binary (Expression expr) {
             double l = eval (expr.left ());
             double r = eval (expr.right ());
 
@@ -47,30 +53,28 @@ namespace Graphs.MathParser {
                 case Operator.SUPERSCRIPT: return ipow (l, (int) r);
 
                 case Operator.DIV:
-                    if (r == 0)
-                        throw new MathError.DIV_ZERO ("division by zero");
+                    if (r == 0) return double.NAN;
                     return l / r;
 
-                default: throw new MathError.SYNTAX ("invalid binary operator");
+                default: assert_not_reached ();
             }
         }
 
-        private double postfix (Expression expr) throws MathError {
+        private double postfix (Expression expr) {
             double v = eval (expr.left ());
 
             switch (expr.op ()) {
                 case Operator.FACT:
-                    if (v < 0 || v != Math.floor (v))
-                        throw new MathError.DOMAIN ("invalid factorial");
+                    if (v < 0 || v != Math.floor (v)) return double.NAN;
                     return factorial (v);
-                default: throw new MathError.SYNTAX ("invalid postfix operator");
+                default: assert_not_reached ();
             }
         }
 
         private const double DEGREES_TO_RADIANS = 0.017453292519943295; // pi/180
         private const double RADIANS_TO_DEGREES = 57.29577951308232; // 180/pi
 
-        private double function (Expression expr) throws MathError {
+        private double function (Expression expr) {
             double x = eval (expr.right ());
 
             switch (expr.ident ()) {
@@ -114,7 +118,7 @@ namespace Graphs.MathParser {
                 case Ident.EXP: return Math.exp (x);
                 case Ident.ABS: return Math.fabs (x);
 
-                default: throw new MathError.SYNTAX ("invalid function");
+                default: assert_not_reached ();
             }
         }
     }
