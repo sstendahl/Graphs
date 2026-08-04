@@ -54,70 +54,66 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
           }
         }
 
-        content: Box {
-          orientation: vertical;
+        content: ScrolledWindow {
+          vexpand: true;
+          width-request: 280;
+          hscrollbar-policy: never;
 
-          ScrolledWindow {
-            vexpand: true;
-            width-request: 280;
-            hscrollbar-policy: never;
+          Box {
+            orientation: vertical;
+            margin-start: 12;
+            margin-end: 12;
+            margin-bottom: 12;
+            margin-top: 12;
+            spacing: 12;
 
-            Box {
-              orientation: vertical;
-              margin-start: 12;
-              margin-end: 12;
-              margin-bottom: 12;
-              margin-top: 12;
-              spacing: 12;
+            Adw.PreferencesGroup {
+              Adw.ComboRow equation {
+                title: _("Equation");
 
-              Adw.PreferencesGroup {
-                Adw.ComboRow equation {
-                  title: _("Equation");
-
-                  model: StringList {
-                    strings [
-                      C_("regression-type", "Linear"),
-                      C_("regression-type", "Quadratic"),
-                      C_("regression-type", "Exponential"),
-                      C_("regression-type", "Power Law"),
-                      C_("regression-type", "Logarithmic"),
-                      C_("regression-type", "Sigmoid Logistic"),
-                      C_("regression-type", "Gaussian"),
-                      C_("regression-type", "Custom"),
-                    ]
-                  };
-                }
-
-                Adw.EntryRow custom_equation {
-                  visible: false;
-                  title: _("Y =");
-                }
-              }
-
-              Box fitting_params_box {
-                hexpand: true;
-                spacing: 12;
-                orientation: vertical;
-              }
-
-              ScrolledWindow {
-                hexpand: true;
-                hscrollbar-policy: automatic;
-                vscrollbar-policy: never;
-                propagate-natural-height: true;
-
-                TextView text_view {
-                  left-margin: 12;
-                  right-margin: 12;
-                  top-margin: 12;
-                  bottom-margin: 12;
-                  halign: fill;
-                  editable: false;
-
-                  styles [
-                    "card",
+                model: StringList {
+                  strings [
+                    C_("regression-type", "Linear"),
+                    C_("regression-type", "Quadratic"),
+                    C_("regression-type", "Exponential"),
+                    C_("regression-type", "Power Law"),
+                    C_("regression-type", "Logarithmic"),
+                    C_("regression-type", "Sigmoid Logistic"),
+                    C_("regression-type", "Gaussian"),
+                    C_("regression-type", "Custom"),
                   ]
-                }
+                };
+              }
+
+              Adw.EntryRow custom_equation {
+                visible: false;
+                title: _("Y =");
+              }
+            }
+
+            Box fitting_params_box {
+              hexpand: true;
+              spacing: 12;
+              orientation: vertical;
+            }
+
+            ScrolledWindow {
+              hexpand: true;
+              hscrollbar-policy: automatic;
+              vscrollbar-policy: never;
+              propagate-natural-height: true;
+
+              TextView text_view {
+                left-margin: 12;
+                right-margin: 12;
+                top-margin: 12;
+                bottom-margin: 12;
+                halign: fill;
+                editable: false;
+
+                styles [
+                  "card",
+                ]
               }
             }
           }
@@ -127,23 +123,20 @@ template $GraphsCurveFittingDialog: Adw.Dialog {
         Adw.Clamp {
           maximum-size: 400;
 
-          child: Box {
+          Button confirm_button {
             margin-start: 12;
             margin-end: 12;
             margin-top: 6;
             margin-bottom: 12;
+            hexpand: true;
+            label: _("Add Fit to Data");
+            clicked => $on_accept();
 
-            Button confirm_button {
-              hexpand: true;
-              label: _("Add Fit to Data");
-              clicked => $on_accept();
-
-              styles [
-                "pill",
-                "suggested-action",
-              ]
-            }
-          };
+            styles [
+              "pill",
+              "suggested-action",
+            ]
+          }
         }
       };
 
