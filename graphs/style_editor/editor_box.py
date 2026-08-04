@@ -93,8 +93,8 @@ class StyleEditorBox(Graphs.StyleEditorBox):
                 widget.connect("notify::selected", self._on_combo_change, key)
             elif isinstance(widget, Gtk.Scale):
                 widget.connect("value-changed", self._on_scale_change, key)
-            elif isinstance(widget, Graphs.StyleColorRow):
-                widget.connect("notify::color", self._on_color_change, key)
+            elif isinstance(widget, Graphs.ColorRow):
+                widget.connect("color-chosen", self._on_color_change, key)
             elif isinstance(widget, Adw.SwitchRow):
                 widget.connect("notify::active", self._on_switch_change, key)
             else:
@@ -150,7 +150,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
                 widget.set_selected(int(value))
             elif isinstance(widget, Gtk.Scale):
                 widget.set_value(value)
-            elif isinstance(widget, Graphs.StyleColorRow):
+            elif isinstance(widget, Graphs.ColorRow):
                 widget.set_color(Graphs.tools_hex_to_rgba(value))
             elif isinstance(widget, Adw.SwitchRow):
                 widget.set_active(bool(value))
@@ -293,8 +293,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
     def _on_color_change(
         self,
-        row: Graphs.StyleColorRow,
-        _param,
+        row: Graphs.ColorRow,
         key: str,
     ) -> None:
         self._apply_value(key, Graphs.tools_rgba_to_hex(row.get_color()))
