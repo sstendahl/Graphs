@@ -3,7 +3,7 @@ namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object, ListModel, Gtk.SelectionModel, Gee.Traversable<Item>, Gee.Iterable<Item> {
+    public class Data : Object, ListModel, Gtk.SelectionModel {
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; private set; default = false; }
@@ -488,29 +488,16 @@ namespace Graphs {
 
         // Section Vala iterator
 
-        public Gee.Iterator<Item> iterator () {
+        public ItemIterator iterator () {
             return new ItemIterator (this);
         }
 
-        private class ItemIterator : Object, Gee.Traversable<Item>, Gee.Iterator<Item> {
+        public class ItemIterator : Object {
             private Data _data;
             private int _index = -1;
 
-            public bool read_only { get; default = true; }
-            public bool valid { get { return _index >= 0 && has_next (); } }
-
             public ItemIterator (Data data) {
                 _data = data;
-            }
-
-            public bool @foreach (Gee.ForallFunc<Item> f) {
-                uint n_items = _data.get_n_items ();
-                while (_index < n_items) {
-                    if (!f ((Item) _data.get_item (_index))) return false;
-                    _index++;
-                }
-                _index--;
-                return true;
             }
 
             public bool has_next () {
@@ -525,20 +512,15 @@ namespace Graphs {
                 return false;
             }
 
-            public new Item get () {
+            public new Item @get () {
                 return (Item) _data.get_item (_index);
-            }
-
-            public void remove () {
-                assert_not_reached ();
             }
         }
 
-        public bool @foreach (Gee.ForallFunc<Item> f) {
+        public void @foreach (Func<Item> func) {
             for (int i = 0; i < _n_items; i++) {
-                if (!f (_items[i])) return false;
+                func (_items[i]);
             }
-            return true;
         }
 
         // End section Vala iterator
