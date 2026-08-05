@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * Export figure dialog
@@ -22,7 +19,7 @@ namespace Graphs {
         private unowned Adw.SpinRow height { get; }
 
         private Window window;
-        private GLib.Settings settings;
+        private Settings settings;
 
         public ExportFigureDialog (Window window) {
             Object ();
@@ -50,12 +47,12 @@ namespace Graphs {
             settings.set_enum ("file-format", (int) file_format.get_selected ());
             string suffix = settings.get_string ("file-format");
 
-            var dialog = new FileDialog ();
+            var dialog = new Gtk.FileDialog ();
             dialog.set_initial_name (@"$filename.$suffix");
             dialog.set_accept_label (_("Export"));
-            GLib.ListStore filter_store = new GLib.ListStore (typeof (FileFilter));
-            var filter = new FileFilter ();
-            var selected = (StringObject) file_format.get_selected_item ();
+            ListStore filter_store = new ListStore (typeof (Gtk.FileFilter));
+            var filter = new Gtk.FileFilter ();
+            var selected = (Gtk.StringObject) file_format.get_selected_item ();
             filter.name = selected.get_string ();
             filter.add_suffix (suffix);
             filter_store.append (filter);

@@ -1,44 +1,41 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/operations.ui")]
-    public class Operations : Box {
+    public class Operations : Gtk.Box {
 
         [GtkChild]
-        public unowned Button shift_button { get; }
+        public unowned Gtk.Button shift_button { get; }
 
         [GtkChild]
         public unowned Adw.SplitButton smoothen_button { get; }
 
         [GtkChild]
-        private unowned Button cut_button { get; }
+        private unowned Gtk.Button cut_button { get; }
 
         [GtkChild]
-        public unowned Entry translate_x_entry { get; }
+        public unowned Gtk.Entry translate_x_entry { get; }
 
         [GtkChild]
-        public unowned Entry translate_y_entry { get; }
+        public unowned Gtk.Entry translate_y_entry { get; }
 
         [GtkChild]
-        public unowned Entry multiply_x_entry { get; }
+        public unowned Gtk.Entry multiply_x_entry { get; }
 
         [GtkChild]
-        public unowned Entry multiply_y_entry { get; }
+        public unowned Gtk.Entry multiply_y_entry { get; }
 
         [GtkChild]
-        public unowned Button translate_x_button { get; }
+        public unowned Gtk.Button translate_x_button { get; }
 
         [GtkChild]
-        public unowned Button translate_y_button { get; }
+        public unowned Gtk.Button translate_y_button { get; }
 
         [GtkChild]
-        public unowned Button multiply_x_button { get; }
+        public unowned Gtk.Button multiply_x_button { get; }
 
         [GtkChild]
-        public unowned Button multiply_y_button { get; }
+        public unowned Gtk.Button multiply_y_button { get; }
 
         private Window _window;
         private bool entries_sensitive = false;
@@ -57,8 +54,8 @@ namespace Graphs {
             window.notify["mode"].connect (on_mode_change);
 
             foreach (unowned string action_name in ACTION_NAMES) {
-                Entry entry;
-                Button button;
+                Gtk.Entry entry;
+                Gtk.Button button;
                 get (action_name + "_entry", out entry);
                 get (action_name + "_button", out button);
                 entry.notify["text"].connect (() => {
@@ -72,7 +69,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void perform_operation (Button button) {
+        private void perform_operation (Gtk.Button button) {
             var action = _window.lookup_action (
                 "perform_operation"
             );
@@ -97,7 +94,7 @@ namespace Graphs {
             cut_button.set_sensitive (cut_sensitive && _window.mode == 2);
         }
 
-        private void validate_entry (Entry entry, Button button) {
+        private void validate_entry (Gtk.Entry entry, Gtk.Button button) {
             if (try_evaluate_string (entry.get_text ())) {
                 entry.remove_css_class ("error");
                 button.set_sensitive (entries_sensitive);

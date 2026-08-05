@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * Add Equation dialog.
@@ -13,13 +10,13 @@ namespace Graphs {
         private unowned Adw.EntryRow equation { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         [GtkChild]
         private unowned Adw.EntryRow item_name { get; }
 
         private Window window;
-        private GLib.Settings settings;
+        private Settings settings;
 
         public AddEquationDialog (Window window) {
             Object ();

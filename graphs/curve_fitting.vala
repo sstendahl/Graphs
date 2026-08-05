@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public class FittingParameter {
         private string name;
@@ -114,16 +110,16 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         [GtkChild]
         private unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
-        private unowned Box fitting_params_box { get; }
+        private unowned Gtk.Box fitting_params_box { get; }
 
         [GtkChild]
-        private unowned TextView text_view { get; }
+        private unowned Gtk.TextView text_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -138,12 +134,12 @@ namespace Graphs {
         private unowned Adw.Bin residuals_container { get; }
 
         public Window window { get; construct set; }
-        protected GLib.Settings settings { get; protected set; }
+        protected Settings settings { get; protected set; }
         protected Ast ast { get; private owned set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
 
-        private Map<string, FittingParameter> fitting_parameters;
+        private Gee.Map<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
 
         protected Canvas? canvas {
@@ -157,7 +153,7 @@ namespace Graphs {
         }
 
         construct {
-            fitting_parameters = new HashMap<string, FittingParameter> ();
+            fitting_parameters = new Gee.HashMap<string, FittingParameter> ();
             fit_result = null;
 
             settings = Application.get_settings_child ("curve-fitting");
@@ -246,7 +242,7 @@ namespace Graphs {
             var bold_tag = tag_table.lookup ("bold");
             if (bold_tag == null) bold_tag = buffer.create_tag ("bold", "weight", 700);
 
-            TextIter end_iter;
+            Gtk.TextIter end_iter;
             buffer.get_end_iter (out end_iter);
 
             if (error != CurveFittingError.NONE) {
@@ -380,7 +376,7 @@ namespace Graphs {
 
         private bool handle_new_equation (string equation) {
             // clear existing widgets
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = fitting_params_box.get_last_child ()) != null) {
                 fitting_params_box.remove (widget);
             }
@@ -394,7 +390,7 @@ namespace Graphs {
                     return false;
                 }
 
-                var new_map = new HashMap<string, FittingParameter> ();
+                var new_map = new Gee.HashMap<string, FittingParameter> ();
                 FittingParameter param;
                 bool use_bounds = settings.get_enum ("optimization") > 0;
                 foreach (unowned string variable in free_vars) {
@@ -443,10 +439,10 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/fitting-parameters.ui")]
-    public class FittingParameterBox : Box {
+    public class FittingParameterBox : Gtk.Box {
 
         [GtkChild]
-        private unowned Label label { get; }
+        private unowned Gtk.Label label { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow initial { get; }

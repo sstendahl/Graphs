@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/page.ui")]
     public class EditItemPage : Adw.NavigationPage {
         [GtkChild]
-        private unowned Box edit_item_box { get; }
+        private unowned Gtk.Box edit_item_box { get; }
 
         public void load_item (Item item) {
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = edit_item_box.get_last_child ()) != null) {
                 edit_item_box.remove (widget);
             }
@@ -32,7 +29,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/base.ui")]
-    public class EditItemBaseBox : Box {
+    public class EditItemBaseBox : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.EntryRow name_entry { get; }
@@ -66,7 +63,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/data.ui")]
-    public class EditItemDataItemBox : Box {
+    public class EditItemDataItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
@@ -119,7 +116,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/errorbar-group.ui")]
-    public class EditItemErrorBarGroup : Box {
+    public class EditItemErrorBarGroup : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.SwitchRow use_xerr { get; }
@@ -240,7 +237,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/equation.ui")]
-    public class EditItemEquationItemBox : Box {
+    public class EditItemEquationItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned EditItemEquationGroup equation_group { get; }
@@ -269,7 +266,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/generated-data.ui")]
-    public class EditItemGeneratedDataItemBox : Box {
+    public class EditItemGeneratedDataItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned EditItemEquationGroup equation_group { get; }
@@ -322,7 +319,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_entry_apply (Editable editable) {
+        private void on_entry_apply (Gtk.Editable editable) {
             item.set (editable.get_buildable_id (), editable.get_text ());
         }
 

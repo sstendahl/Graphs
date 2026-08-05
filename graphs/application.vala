@@ -1,15 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     /**
      * Graphs application
      */
     public class Application : Adw.Application {
-        public static GLib.Settings settings { get; private set; }
+        public static Settings settings { get; private set; }
 
         private Gee.List<Window> main_windows;
         private Gee.List<StyleEditor> style_editors;
@@ -43,7 +38,7 @@ namespace Graphs {
             Intl.textdomain (Config.GETTEXT_PACKAGE);
             Intl.setlocale (LocaleCategory.NUMERIC, "C");
 
-            settings = new GLib.Settings (application_id);
+            settings = new Settings (application_id);
 
             this.main_windows = new Gee.LinkedList<Window> ();
             this.style_editors = new Gee.LinkedList<StyleEditor> ();
@@ -98,7 +93,7 @@ namespace Graphs {
             }
             window.present ();
 
-            var settings_list = new GLib.ListStore (typeof (ImportSettings));
+            var settings_list = new ListStore (typeof (ImportSettings));
             for (uint i = 0; i < files.length; i++) {
                 settings_list.append (DataImporter.get_settings_for_file (files[i]));
             }
@@ -159,8 +154,8 @@ namespace Graphs {
          *
          * @param path a slash-separated path
          */
-        public static GLib.Settings get_settings_child (string path) {
-            GLib.Settings settings_child = settings;
+        public static Settings get_settings_child (string path) {
+            Settings settings_child = settings;
             foreach (unowned string child_name in path.split ("/")) {
                 settings_child = settings_child.get_child (child_name);
             }

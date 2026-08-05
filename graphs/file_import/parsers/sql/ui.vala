@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * UI Widget for SQL file import
@@ -40,7 +37,7 @@ namespace Graphs {
             unowned string[] tables = db_reader.table_names;
             string table_name = settings.get_string ("table-name");
 
-            var table_model = new StringList (tables);
+            var table_model = new Gtk.StringList (tables);
             table_row.set_model (table_model);
             table_row.set_selected (table_model.find (table_name));
             use_xerr.set_active (settings.get_boolean ("use-xerr"));
@@ -52,7 +49,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_table_changed () {
             if (is_initial_setup) return;
-            var selected_item = (StringObject) table_row.get_selected_item ();
+            var selected_item = (Gtk.StringObject) table_row.get_selected_item ();
             if (selected_item == null) return;
 
             settings.set_string ("table-name", selected_item.get_string ());
@@ -73,15 +70,15 @@ namespace Graphs {
         [GtkCallback]
         private void on_columns_changed () {
             if (is_initial_setup) return;
-            var selected_x = (StringObject) column_x.get_selected_item ();
-            var selected_y = (StringObject) column_y.get_selected_item ();
+            var selected_x = (Gtk.StringObject) column_x.get_selected_item ();
+            var selected_y = (Gtk.StringObject) column_y.get_selected_item ();
 
             if (selected_x == null || selected_y == null) return;
             settings.set_string ("x-column", selected_x.get_string ());
             settings.set_string ("y-column", selected_y.get_string ());
 
-            var selected_xerr = (StringObject) column_xerr.get_selected_item ();
-            var selected_yerr = (StringObject) column_yerr.get_selected_item ();
+            var selected_xerr = (Gtk.StringObject) column_xerr.get_selected_item ();
+            var selected_yerr = (Gtk.StringObject) column_yerr.get_selected_item ();
             if (selected_xerr != null) {
                 settings.set_string ("xerr-column", selected_xerr.get_string ());
             }
@@ -108,7 +105,7 @@ namespace Graphs {
                 column_y.sensitive = true;
             }
 
-            var column_model = new StringList (columns);
+            var column_model = new Gtk.StringList (columns);
             column_x.set_model (column_model);
             column_y.set_model (column_model);
             column_xerr.set_model (column_model);
