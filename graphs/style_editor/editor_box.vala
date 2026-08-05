@@ -108,10 +108,10 @@ namespace Graphs {
         protected unowned ColorRow outline_color { get; }
 
         [GtkChild]
-        private unowned Gtk.ListBox line_colors_box { get; }
+        protected unowned StyleColorGroup line_colors { get; }
 
         [GtkChild]
-        private unowned Gtk.ListBox errbar_line_colors_box { get; }
+        protected unowned StyleColorGroup errorbar_colors { get; }
 
         [GtkChild]
         private unowned Gtk.Box poor_contrast_warning { get; }
@@ -130,17 +130,10 @@ namespace Graphs {
 
         public StyleParameters parameters { get; protected set; }
 
-        protected StyleColorManager color_manager { get; set; }
-        protected StyleColorManager errbar_color_manager { get; set; }
-        protected Gtk.Window window { get; set; }
-
         protected signal void load_request (File file);
         protected signal void save_request (File file);
 
         construct {
-            this.color_manager = new StyleColorManager (line_colors_box);
-            this.errbar_color_manager = new StyleColorManager (errbar_line_colors_box);
-
             titlesize.set_format_value_func (title_format_function);
             labelsize.set_format_value_func (title_format_function);
         }
@@ -166,26 +159,6 @@ namespace Graphs {
         [GtkCallback]
         private void on_markers () {
             markersize.set_sensitive (markers.get_selected () != 0);
-        }
-
-        [GtkCallback]
-        private async void add_color () {
-            var dialog = new Gtk.ColorDialog () { with_alpha = false };
-            try {
-                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
-                string hex = Tools.rgba_to_hex (color);
-                color_manager.add_color (hex);
-            } catch {}
-        }
-
-        [GtkCallback]
-        private async void add_errbar_color () {
-            var dialog = new Gtk.ColorDialog () { with_alpha = false };
-            try {
-                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
-                string hex = Tools.rgba_to_hex (color);
-                errbar_color_manager.add_color (hex);
-            } catch {}
         }
     }
 }

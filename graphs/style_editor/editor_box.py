@@ -80,8 +80,8 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
     __gtype_name__ = "GraphsPythonStyleEditorBox"
 
-    def __init__(self, window):
-        super().__init__(window=window)
+    def __init__(self):
+        super().__init__()
         self.params, self.graphs_params = None, None
 
         # Setup Widgets
@@ -113,11 +113,11 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             "value-changed",
             self._on_labelsize_change,
         )
-        self.props.color_manager.connect(
+        self.props.line_colors.connect(
             "colors-changed",
             self._on_line_colors_changed,
         )
-        self.props.errbar_color_manager.connect(
+        self.props.errorbar_colors.connect(
             "colors-changed",
             self._on_errbar_colors_changed,
         )
@@ -182,12 +182,12 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         self.check_contrast()
 
         # line colors
-        self.props.color_manager.set_colors(
+        self.props.line_colors.set_colors(
             style_params["axes.prop_cycle"].by_key()["color"],
         )
 
         # error bar colors
-        self.props.errbar_color_manager.set_colors(
+        self.props.errorbar_colors.set_colors(
             graphs_params["errorbar.color_cycle"].by_key()["color"],
         )
 
@@ -207,24 +207,24 @@ class StyleEditorBox(Graphs.StyleEditorBox):
 
     def _on_line_colors_changed(
         self,
-        color_manager: Graphs.StyleColorManager,
+        color_group: Graphs.StyleColorGroup,
     ) -> None:
         """Update line colors in params."""
         if self.params is None:
             return
-        line_colors = color_manager.get_colors()
+        line_colors = color_group.get_colors()
         self.params["axes.prop_cycle"] = cycler(color=line_colors)
         self.params["patch.facecolor"] = line_colors[0]
         self._update_params()
 
     def _on_errbar_colors_changed(
         self,
-        color_manager: Graphs.StyleColorManager,
+        color_group: Graphs.StyleColorGroup,
     ) -> None:
         """Update errorbar colors in graph-params."""
         if self.graphs_params is None:
             return
-        err_colors = color_manager.get_colors()
+        err_colors = color_group.get_colors()
         self.graphs_params["errorbar.color_cycle"] = cycler(color=err_colors)
         self._update_params()
 
