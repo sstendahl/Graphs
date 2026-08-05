@@ -69,8 +69,7 @@ namespace Graphs {
                     "active",
                     BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
                 );
-            } else {
-                legend.visible = false;
+                legend.visible = true;
             }
         }
     }
