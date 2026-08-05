@@ -2,7 +2,9 @@
 """Python Helper - Python part."""
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import ast, curve_fitting, file_io, misc, operations
+import gio_pyio
+
+from graphs import ast, curve_fitting, misc, operations
 from graphs.canvas import Canvas
 from graphs.figure import Figure
 from graphs.style_editor.editor_box import StyleEditorBox
@@ -94,7 +96,7 @@ class PythonHelper(Graphs.PythonHelper):
         settings: Gio.Settings,
         data: Graphs.Data,
     ) -> None:
-        with file_io.open(file, "wb") as file_like:
+        with gio_pyio.open(file, "wb") as file_like:
             figure = Figure(
                 data.get_selected_style_params(),
                 data,
