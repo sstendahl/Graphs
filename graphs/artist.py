@@ -318,7 +318,6 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         self._data, self._caps, self._bars = self._artist
         self._color_artist = self._data
-        self.props.legend = item.get_legend()
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
@@ -340,7 +339,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
                 for cap in self._ycaps:
                     cap.set_visible(False)
 
-        for prop in ("selected", "linewidth", "markersize"):
+        for prop in ("legend", "linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
@@ -374,14 +373,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             marker="none",
         )[0]
         self._color_artist = self._artist
-        for prop in ("selected", "linewidth"):
+        for prop in ("legend", "linewidth", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
         item.connect("notify::equation", self._on_equation_change)
 
         self._set_properties(None, None)
-        self.props.legend = item.get_legend()
         self._generate_data()
 
     def _timeout_callback(self) -> bool:
