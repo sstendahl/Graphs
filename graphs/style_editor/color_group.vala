@@ -38,7 +38,7 @@ namespace Graphs {
         private async void add_color () {
             var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                Gdk.RGBA color = yield dialog.choose_rgba (get_root () as Gtk.Window, null, null);
+                Gdk.RGBA? color = yield dialog.choose_rgba (get_root () as Gtk.Window, null, null);
                 this.colors.add (Tools.rgba_to_hex (color));
                 append_style_color_box (this.colors.size - 1);
                 colors_changed.emit ();
