@@ -7,6 +7,7 @@ project('Graphs', 'c', 'vala',
     license_files: ['LICENSE'],
 )
 
+cc = meson.get_compiler('c')
 valac = meson.get_compiler('vala')
 
 devenv = environment()
@@ -44,6 +45,8 @@ xml_dep = dependency('libxml-2.0')
 gsf_dep = dependency('libgsf-1')
 python_dep = python.dependency(embed: true)
 openmp_dep = dependency('openmp')
+m_dep = cc.find_library('m')
+posix_dep = valac.find_library('posix')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')

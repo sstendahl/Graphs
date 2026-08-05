@@ -98,6 +98,8 @@ graphs_lib = shared_library('graphs',
   ), gresource_xml, gresource, dependencies: [
     config_dep,
     openmp_dep,
+    m_dep,
+    posix_dep,
     glib_dep,
     gobject_dep,
     gio_dep,
@@ -111,9 +113,7 @@ graphs_lib = shared_library('graphs',
              vala_gir: 'Graphs-1.gir',
           vala_header: 'graphs.h',
   include_directories: source_include,
-            link_args: ['-lm'],
-            vala_args: ['--pkg=posix'],
-               c_args: ['-w', '-fopenmp-simd'], # suppress vala generated c warnings
+               c_args: ['-w'], # suppress vala generated c warnings
               install: true,
           install_dir: [true],
 )
