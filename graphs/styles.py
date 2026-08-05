@@ -60,7 +60,7 @@ class StyleManager(Graphs.StyleManager):
     def _on_preview_request(
         self,
         params: Graphs.StyleParameters,
-    ) -> Graphs.StyleParameters:
+    ) -> Gdk.Texture:
         buffer = io.BytesIO()
         style_io.create_preview(buffer, params.as_tuple(), "png", 31)
         return Gdk.Texture.new_from_bytes(GLib.Bytes.new(buffer.getvalue()))
