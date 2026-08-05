@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 import gio_pyio
 
@@ -71,11 +71,8 @@ class PythonHelper(Graphs.PythonHelper):
         return canvas
 
     @staticmethod
-    def _on_create_style_editor_box_request(
-        self,
-        window: Gtk.Window,
-    ) -> Graphs.StyleEditorBox:
-        return StyleEditorBox(window)
+    def _on_create_style_editor_box_request(self) -> Graphs.StyleEditorBox:
+        return StyleEditorBox()
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:
