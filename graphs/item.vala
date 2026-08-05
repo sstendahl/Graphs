@@ -261,14 +261,12 @@ namespace Graphs {
 
         construct {
             typename = _("Label");
-            legend = false;
         }
     }
 
     public class FillItem : Item {
         construct {
             typename = _("Fill");
-            legend = false;
         }
     }
 }
