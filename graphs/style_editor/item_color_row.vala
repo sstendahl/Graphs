@@ -10,7 +10,7 @@ namespace Graphs {
         [GtkChild]
         private unowned ColorButton color_button { get; }
 
-        public StyleColorGroup color_group;
+        public weak StyleColorGroup color_group;
 
         public signal void color_changed (string color);
         public signal void color_removed ();
