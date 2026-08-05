@@ -46,7 +46,7 @@ namespace Graphs {
         private uint _reload_source = 0;
 
         construct {
-            editor_box = PythonHelper.create_style_editor_box (this);
+            editor_box = PythonHelper.create_style_editor_box ();
             editor_bin.set_child (editor_box);
             editor_box.notify["parameters"].connect (on_params_changed);
 

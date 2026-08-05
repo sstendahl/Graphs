@@ -28,6 +28,7 @@ blueprint_files = [
   'sidebar/main.blp',
   'sidebar/operations.blp',
   'style-editor/add-style.blp',
+  'style-editor/color-group.blp',
   'style-editor/editor-box.blp',
   'style-editor/item-color-row.blp',
   'style-editor/shortcuts.blp',

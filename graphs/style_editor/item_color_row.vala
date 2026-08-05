@@ -10,15 +10,15 @@ namespace Graphs {
         [GtkChild]
         private unowned ColorButton color_button { get; }
 
-        public StyleColorManager color_manager;
+        public weak StyleColorGroup color_group;
 
         public signal void color_changed (string color);
         public signal void color_removed ();
 
-        public StyleItemColorRow (StyleColorManager color_manager, int index, string color) {
+        public StyleItemColorRow (StyleColorGroup color_group, int index, string color) {
             Object (index: index);
             set_title (_("Color %d").printf (index + 1));
-            this.color_manager = color_manager;
+            this.color_group = color_group;
             color_button.color = Tools.hex_to_rgba (color);
         }
 

@@ -13,9 +13,9 @@ namespace Graphs {
             return instance.create_canvas_request.emit (parameters, items, interactive, figure_settings);
         }
 
-        protected signal StyleEditorBox create_style_editor_box_request (Gtk.Window window);
-        public static StyleEditorBox create_style_editor_box (Gtk.Window window) {
-            return instance.create_style_editor_box_request.emit (window);
+        protected signal StyleEditorBox create_style_editor_box_request ();
+        public static StyleEditorBox create_style_editor_box () {
+            return instance.create_style_editor_box_request.emit ();
         }
 
         protected signal Window create_window_request ();
