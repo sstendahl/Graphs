@@ -179,11 +179,6 @@ namespace Graphs.MathParser {
             current_end = idx;
         }
 
-        private inline void fail_identifier (ref int state) throws MathError {
-            current_ident = Ident.CUSTOM;
-            state = 200;
-        }
-
         private static inline bool is_superscript (unichar c) {
             switch (c) {
                 case '⁰': case '¹': case '²': case '³': case '⁴': case '⁵':
@@ -192,267 +187,261 @@ namespace Graphs.MathParser {
             }
         }
 
-        private void handle_identifier () throws MathError {
+        private enum TrieState {
+            NONE,
+            CUSTOM,
+
+            A, AB,
+               AC, ACO, ACOS,
+                        ACOT,
+                   ACS, ACSC,
+               AR, ARC,
+               AS, ASE, ASEC,
+                   ASI, ASIN,
+               AT, ATA, ATAN,
+            C, CO, COS,
+                   COT,
+               CS, CSC,
+            E, EX,
+            I, IN,
+            L, LO, LOG, LOG1,
+            P,
+            S, SE, SEC,
+               SI, SIN,
+               SQ, SQR,
+            T, TA, TAN,
+
+        }
+
+        private void handle_identifier () {
             current_type = TokenType.IDENT;
             current_ident = Ident.CUSTOM;
 
-            int state = 0;
+            TrieState state = TrieState.NONE;
             int tmp_idx = current_end;
 
             c = c.tolower ();
             while (true) {
                 // process current char in trie
                 switch (state) {
-                    case 0:
+                    case TrieState.NONE:
                         switch (c) {
                             case 'π': {
                                 current_ident = Ident.PI;
-                                state = 200;
+                                state = TrieState.CUSTOM;
                                 break;
                             }
-                            case 'p': state = 1; break;
-                            case 'e': state = 10; break;
-                            case 'i': state = 15; break;
-                            case 's': state = 20; break;
-                            case 'c': state = 40; break;
-                            case 't': state = 60; break;
-                            case 'l': state = 70; break;
-                            case 'a': state = 80; break;
-                            default: fail_identifier (ref state); break;
+                            case 'p': state = TrieState.P; break;
+                            case 'e':
+                                current_ident = Ident.E;
+                                state = TrieState.E;
+                                break;
+                            case 'i': state = TrieState.I; break;
+                            case 's': state = TrieState.S; break;
+                            case 'c': state = TrieState.C; break;
+                            case 't': state = TrieState.T; break;
+                            case 'l': state = TrieState.L; break;
+                            case 'a': state = TrieState.A; break;
+                            default:
+                                current_ident = Ident.CUSTOM;
+                                state = TrieState.CUSTOM;
+                                break;
                         }
                         break;
 
-                    // p
-                    case 1:
-                        if (c == 'i') { current_ident = Ident.PI; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.CUSTOM:
+                        current_ident = Ident.CUSTOM;
+                        state = TrieState.CUSTOM;
+                        break;
 
-                    // e
-                    case 10:
-                        if (c == 'x') state = 11;
-                        else fail_identifier (ref state); break;
+                    case TrieState.A:
+                        if (c == 'b') state = TrieState.AB;
+                        else if (c == 'c') state = TrieState.AC;
+                        else if (c == 'r') state = TrieState.AR;
+                        else if (c == 's') state = TrieState.AS;
+                        else if (c == 't') state = TrieState.AT;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // ex
-                    case 11:
-                        if (c == 'p') { current_ident = Ident.EXP; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.AB:
+                        if (c == 's') { current_ident = Ident.ABS; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // i
-                    case 15:
-                        if (c == 'n') state = 16;
-                        else fail_identifier (ref state); break;
+                    case TrieState.AC:
+                        if (c == 'o') state = TrieState.ACO;
+                        else if (c == 's') state = TrieState.ACS;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // in
-                    case 16:
-                        if (c == 'f') { current_ident = Ident.INF; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ACO:
+                        if (c == 's') { current_ident = Ident.ACOS; state = TrieState.ACOS; }
+                        else if (c == 't') { current_ident = Ident.ACOT; state = TrieState.ACOT; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // s
-                    case 20:
-                        if (c == 'i') state = 21;
-                        else if (c == 'e') state = 25;
-                        else if (c == 'q') state = 28;
-                        else fail_identifier (ref state); break;
+                    case TrieState.ACOS:
+                        if (c == 'd') { current_ident = Ident.ACOSD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // si
-                    case 21:
-                        if (c == 'n') { current_ident = Ident.SIN; state = 22; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ACOT:
+                        if (c == 'd') { current_ident = Ident.ACOTD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // sin
-                    case 22:
-                        if (c == 'd') { current_ident = Ident.SIND; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ACS:
+                        if (c == 'c') { current_ident = Ident.ACSC; state = TrieState.ACSC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // se
-                    case 25:
-                        if (c == 'c') { current_ident = Ident.SEC; state = 26; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ACSC:
+                        if (c == 'd') { current_ident = Ident.ACSCD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // sec
-                    case 26:
-                        if (c == 'd') { current_ident = Ident.SECD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.AR:
+                        if (c == 'c') state = TrieState.ARC;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // sq
-                    case 28:
-                        if (c == 'r') state = 29;
-                        else fail_identifier (ref state); break;
+                    // we support writing arc* as a*
+                    case TrieState.ARC:
+                        if (c == 'c') state = TrieState.AC;
+                        else if (c == 's') state = TrieState.AS;
+                        else if (c == 't') state = TrieState.AT;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // sqr
-                    case 29:
-                        if (c == 't') { current_ident = Ident.SQRT; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.AS:
+                        if (c == 'e') state = TrieState.ASE;
+                        else if (c == 'i') state = TrieState.ASI;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // c
-                    case 40:
-                        if (c == 'o') state = 41;
-                        else if (c == 's') state = 45;
-                        else fail_identifier (ref state); break;
+                    case TrieState.ASE:
+                        if (c == 'c') { current_ident = Ident.ASEC; state = TrieState.ASEC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // co
-                    case 41:
-                        if (c == 's') { current_ident = Ident.COS; state = 42; }
-                        else if (c == 't') { current_ident = Ident.COT; state = 43; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ASEC:
+                        if (c == 'd') { current_ident = Ident.ASECD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // cos
-                    case 42:
-                        if (c == 'd') { current_ident = Ident.COSD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ASI:
+                        if (c == 'n') { current_ident = Ident.ASIN; state = TrieState.ASIN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // cot
-                    case 43:
-                        if (c == 'd') { current_ident = Ident.COTD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ASIN:
+                        if (c == 'd') { current_ident = Ident.ASIND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // cs
-                    case 45:
-                        if (c == 'c') { current_ident = Ident.CSC; state = 46; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.AT:
+                        if (c == 'a') state = TrieState.ATA;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // csc
-                    case 46:
-                        if (c == 'd') { current_ident = Ident.CSCD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.ATA:
+                        if (c == 'n') { current_ident = Ident.ATAN; state = TrieState.ATAN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // t
-                    case 60:
-                        if (c == 'a') state = 61;
-                        else fail_identifier (ref state); break;
+                    case TrieState.ATAN:
+                        if (c == 'd') { current_ident = Ident.ATAND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // ta
-                    case 61:
-                        if (c == 'n') { current_ident = Ident.TAN; state = 62; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.C:
+                        if (c == 'o') state = TrieState.CO;
+                        else if (c == 's') state = TrieState.CS;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // tan
-                    case 62:
-                        if (c == 'd') { current_ident = Ident.TAND; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.CO:
+                        if (c == 's') { current_ident = Ident.COS; state = TrieState.COS; }
+                        else if (c == 't') { current_ident = Ident.COT; state = TrieState.COT; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // l
-                    case 70:
-                        if (c == 'n') { current_ident = Ident.LN; state = 200; }
-                        else if (c == 'o') state = 71;
-                        else fail_identifier (ref state); break;
+                    case TrieState.COS:
+                        if (c == 'd') { current_ident = Ident.COSD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // lo
-                    case 71:
-                        if (c == 'g') { current_ident = Ident.LN; state = 72; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.COT:
+                        if (c == 'd') { current_ident = Ident.COTD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // log
-                    case 72:
-                        if (c == '2') { current_ident = Ident.LOG2; state = 200; }
-                        else if (c == '1') { current_ident = Ident.CUSTOM; state = 73; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.CS:
+                        if (c == 'c') { current_ident = Ident.CSC; state = TrieState.CSC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // log1
-                    case 73:
-                        if (c == '0') { current_ident = Ident.LOG10; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.CSC:
+                        if (c == 'd') { current_ident = Ident.CSCD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a
-                    case 80:
-                        if (c == 'b') state = 81;
-                        else if (c == 'r') state = 83;
-                        else if (c == 'c') state = 90;
-                        else if (c == 's') state = 96;
-                        else if (c == 't') state = 101;
-                        else fail_identifier (ref state); break;
+                    case TrieState.E:
+                        if (c == 'x') state = TrieState.EX;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // ab
-                    case 81:
-                        if (c == 's') { current_ident = Ident.ABS; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.EX:
+                        if (c == 'p') { current_ident = Ident.EXP; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // ar
-                    case 83:
-                        if (c == 'c') state = 84;
-                        else fail_identifier (ref state); break;
+                    case TrieState.I:
+                        if (c == 'n') state = TrieState.IN;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // arc
-                    case 84:
-                        if (c == 'c') state = 90;
-                        else if (c == 's') state = 96;
-                        else if (c == 't') state = 101;
-                        else fail_identifier (ref state); break;
+                    case TrieState.IN:
+                        if (c == 'f') { current_ident = Ident.INF; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)c
-                    case 90:
-                        if (c == 'o') state = 91;
-                        else if (c == 's') state = 94;
-                        else fail_identifier (ref state); break;
+                    case TrieState.L:
+                        if (c == 'n') { current_ident = Ident.LN; state = TrieState.CUSTOM; }
+                        else if (c == 'o') state = TrieState.LO;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)co
-                    case 91:
-                        if (c == 's') { current_ident = Ident.ACOS; state = 92; }
-                        else if (c == 't') { current_ident = Ident.ACOT; state = 93; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.LO:
+                        if (c == 'g') { current_ident = Ident.LN; state = TrieState.LOG; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)cos
-                    case 92:
-                        if (c == 'd') { current_ident = Ident.ACOSD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.LOG:
+                        if (c == '2') { current_ident = Ident.LOG2; state = TrieState.CUSTOM; }
+                        else if (c == '1') { current_ident = Ident.CUSTOM; state = TrieState.LOG1; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)cot
-                    case 93:
-                        if (c == 'd') { current_ident = Ident.ACOTD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.LOG1:
+                        if (c == '0') { current_ident = Ident.LOG10; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)cs
-                    case 94:
-                        if (c == 'c') { current_ident = Ident.ACSC; state = 95; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.P:
+                        if (c == 'i') { current_ident = Ident.PI; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)csc
-                    case 95:
-                        if (c == 'd') { current_ident = Ident.ACSCD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.S:
+                        if (c == 'e') state = TrieState.SE;
+                        else if (c == 'i') state = TrieState.SI;
+                        else if (c == 'q') state = TrieState.SQ;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)s
-                    case 96:
-                        if (c == 'e') state = 97;
-                        else if (c == 'i') state = 99;
-                        else fail_identifier (ref state); break;
+                    case TrieState.SE:
+                        if (c == 'c') { current_ident = Ident.SEC; state = TrieState.SEC; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)se
-                    case 97:
-                        if (c == 'c') { current_ident = Ident.ASEC; state = 98; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.SEC:
+                        if (c == 'd') { current_ident = Ident.SECD; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)sec
-                    case 98:
-                        if (c == 'd') { current_ident = Ident.ASECD; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.SI:
+                        if (c == 'n') { current_ident = Ident.SIN; state = TrieState.SIN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)si
-                    case 99:
-                        if (c == 'n') { current_ident = Ident.ASIN; state = 100; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.SIN:
+                        if (c == 'd') { current_ident = Ident.SIND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)sin
-                    case 100:
-                        if (c == 'd') { current_ident = Ident.ASIND; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.SQ:
+                        if (c == 'r') state = TrieState.SQR;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)t
-                    case 101:
-                        if (c == 'a') state = 102;
-                        else fail_identifier (ref state); break;
+                    case TrieState.SQR:
+                        if (c == 't') { current_ident = Ident.SQRT; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)ta
-                    case 102:
-                        if (c == 'n') { current_ident = Ident.ATAN; state = 103; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.T:
+                        if (c == 'a') state = TrieState.TA;
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    // a(rc)tan
-                    case 103:
-                        if (c == 'd') { current_ident = Ident.ATAND; state = 200; }
-                        else fail_identifier (ref state); break;
+                    case TrieState.TA:
+                        if (c == 'n') { current_ident = Ident.TAN; state = TrieState.TAN; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
-                    case 200: fail_identifier (ref state); break;
+                    case TrieState.TAN:
+                        if (c == 'd') { current_ident = Ident.TAND; state = TrieState.CUSTOM; }
+                        else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
+
                     default: assert_not_reached ();
                 }
 
