@@ -51,12 +51,6 @@ namespace Graphs {
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
             item.bind_property (
-                "legend",
-                legend,
-                "active",
-                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
-            );
-            item.bind_property (
                 "xposition",
                 xposition,
                 "selected",
@@ -68,6 +62,16 @@ namespace Graphs {
                 "selected",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+            if (item is LegendableItem) {
+                item.bind_property (
+                    "legend",
+                    legend,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            } else {
+                legend.visible = false;
+            }
         }
     }
 
