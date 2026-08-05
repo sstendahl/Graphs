@@ -781,8 +781,7 @@ namespace Graphs {
         }
 
         protected void set_view_history (int pos, owned Limits[] history)
-            requires (history.length <= HISTORY_SIZE)
-        {
+            requires (history.length <= HISTORY_SIZE) {
             int n_states = history.length;
             for (int i = 0; i < n_states; i++) {
                 _view_history_states[i] = history[i];
