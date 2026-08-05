@@ -338,6 +338,7 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
+                dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
                 return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
