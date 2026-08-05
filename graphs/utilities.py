@@ -12,6 +12,13 @@ def bytes_to_ndarray(b: GLib.Bytes) -> numpy.ndarray:
     return numpy.frombuffer(b.get_data(), dtype=numpy.float64)
 
 
+def bytes_to_list(b: GLib.Bytes) -> list[float]:
+    """Get a python list as copy of the original data."""
+    if b is None:
+        return None
+    return bytes_to_ndarray(b).tolist()
+
+
 def get_xy_data(
     holder: Graphs.DataHolder,
 ) -> tuple[numpy.ndarray, numpy.ndarray]:

@@ -596,19 +596,26 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     __gtype_name__ = "GraphsFillItemArtistWrapper"
 
-    @GObject.Property(type=object, flags=2)
-    def data(self) -> None:
+    def _as_tuple(self, holder: Graphs.FillHolder) -> tuple[numpy.ndarray]:
+        return (
+            utilities.bytes_to_ndarray(holder.get_xdata_b()),
+            utilities.bytes_to_ndarray(holder.get_lower_b()),
+            utilities.bytes_to_ndarray(holder.get_upper_b()),
+        )
+
+    @GObject.Property(type=Graphs.FillHolder, flags=2)
+    def data(self) -> Graphs.FillHolder:
         """Write-only property, ignored."""
 
     @data.setter
-    def data(self, data) -> None:
-        dummy = Figure().add_subplot().fill_between(*data)
+    def data(self, data: Graphs.FillHolder) -> None:
+        dummy = Figure().add_subplot().fill_between(*self._as_tuple(data))
         self._artist.set_paths([dummy.get_paths()[0].vertices])
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.fill_between(
-            *item.get_data_tuple(),
+            *self._as_tuple(item.get_data()),
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
