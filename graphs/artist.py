@@ -95,7 +95,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -339,7 +339,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
                 for cap in self._ycaps:
                     cap.set_visible(False)
 
-        for prop in ("selected", "linewidth", "markersize"):
+        for prop in ("legend", "linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
@@ -351,7 +351,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
@@ -373,7 +373,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             marker="none",
         )[0]
         self._color_artist = self._artist
-        for prop in ("selected", "linewidth"):
+        for prop in ("legend", "linewidth", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
