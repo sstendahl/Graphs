@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public class StyleColorManager : Object {
-        private ListBox box;
-        private ArrayList<string> colors = new ArrayList<string> ();
+        private Gtk.ListBox box;
+        private Gee.ArrayList<string> colors = new Gee.ArrayList<string> ();
 
         public signal void colors_changed ();
 
-        public StyleColorManager (ListBox box) {
+        public StyleColorManager (Gtk.ListBox box) {
             this.box = box;
 
             var drop_target = new Gtk.DropTarget (typeof (StyleItemColorRow), Gdk.DragAction.MOVE);

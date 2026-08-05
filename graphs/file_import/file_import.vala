@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public errordomain ParseError {
         INVALID,
@@ -56,12 +52,12 @@ namespace Graphs {
     private const string[] ASCII_SUFFIXES = {"xy", "dat", "txt", "csv"};
 
     public class DataImporter : Object {
-        public static GLib.ListStore file_filters { get; private set; }
+        public static ListStore file_filters { get; private set; }
 
-        private static GLib.Settings mode_settings;
+        private static Settings mode_settings;
         private static string[] mode_settings_list;
         private static Parser[] parsers;
-        private static StringList parser_names = new StringList (null);
+        private static Gtk.StringList parser_names = new Gtk.StringList (null);
 
         public DataImporter (Parser[] parsers) {
             DataImporter.parsers = parsers;
@@ -76,13 +72,13 @@ namespace Graphs {
         }
 
         private static void init_file_filters () {
-            file_filters = new GLib.ListStore (typeof (FileFilter));
+            file_filters = new ListStore (typeof (Gtk.FileFilter));
 
-            var supported_filter = new FileFilter () { name = C_("file-filter", "Supported files") };
+            var supported_filter = new Gtk.FileFilter () { name = C_("file-filter", "Supported files") };
             file_filters.append (supported_filter);
 
             // columns
-            var ascii_filter = new FileFilter () { name = C_("file-filter", "ASCII files") };
+            var ascii_filter = new Gtk.FileFilter () { name = C_("file-filter", "ASCII files") };
             foreach (unowned string suffix in ASCII_SUFFIXES) {
                 ascii_filter.add_suffix (suffix);
                 supported_filter.add_suffix (suffix);
@@ -92,7 +88,7 @@ namespace Graphs {
             foreach (Parser parser in parsers) {
                 if (parser.name == "columns") continue;
 
-                var filter = new FileFilter () { name = parser.filetype_name };
+                var filter = new Gtk.FileFilter () { name = parser.filetype_name };
                 foreach (unowned string suffix in parser.file_suffixes) {
                     filter.add_suffix (suffix);
                     supported_filter.add_suffix (suffix);
@@ -103,7 +99,7 @@ namespace Graphs {
             file_filters.append (Tools.create_all_filter ());
         }
 
-        public static void append_settings_widgets (ImportSettings settings, Box settings_box) {
+        public static void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) {
             try {
                 parsers[settings.mode].append_settings_widgets (settings, settings_box);
             } catch (ParseError e) {
@@ -111,7 +107,7 @@ namespace Graphs {
             }
         }
 
-        public static StringList get_parser_names () {
+        public static Gtk.StringList get_parser_names () {
             return parser_names;
         }
 
@@ -185,8 +181,8 @@ namespace Graphs {
 
         public signal void value_changed (string key, Variant val);
 
-        private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
-        private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
+        private Gee.Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
+        private Gee.Map<string, Object> items = new Gee.HashMap<string, Object> ();
 
         public ImportSettings (File file) {
             Object (
@@ -195,7 +191,7 @@ namespace Graphs {
             );
         }
 
-        public void load_from_settings (GLib.Settings? default_settings) {
+        public void load_from_settings (Settings? default_settings) {
             if (default_settings == null) {
                 has_schema = false;
                 return;
@@ -208,17 +204,17 @@ namespace Graphs {
             }
         }
 
-        public void set_as_default (GLib.Settings settings) {
+        public void set_as_default (Settings settings) {
             foreach (unowned string key in settings.settings_schema.list_keys ()) {
                 settings.set_value (key, get_value (key));
             }
         }
 
-        public void set_item (string key, GLib.Object item) {
+        public void set_item (string key, Object item) {
             items.@set (key, item);
         }
 
-        public GLib.Object get_item (string key) {
+        public Object get_item (string key) {
             return items.@get (key);
         }
 

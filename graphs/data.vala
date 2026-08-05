@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
+    public class Data : Object, ListModel, Gtk.SelectionModel, Gee.Traversable<Item>, Gee.Iterable<Item> {
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; private set; default = false; }
@@ -14,7 +11,7 @@ namespace Graphs {
         public File file { get; set; }
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
-        public SingleSelection style_selection_model { get; private set; }
+        public Gtk.SingleSelection style_selection_model { get; private set; }
         public StyleParameters selected_style_params { get; private set; }
 
         public string selected_stylename {
@@ -39,9 +36,9 @@ namespace Graphs {
         private int _n_items = 0;
         private string[] _used_colors;
         private string[] _used_errbar_colors;
-        private GLib.Settings _settings;
+        private Settings _settings;
         private bool _notify_selection_changed = true;
-        private Gee.List<Limits> _view_history_states = new ArrayList<Limits> ();
+        private Gee.List<Limits> _view_history_states = new Gee.ArrayList<Limits> ();
         private int _view_history_pos = -1;
         private StyleParameters old_selected_style_params;
 
@@ -59,7 +56,7 @@ namespace Graphs {
         construct {
             items_changed.connect (_update_used_positions);
             this._settings = Application.get_settings_child ("figure");
-            this.style_selection_model = new SingleSelection (StyleManager.style_model);
+            this.style_selection_model = new Gtk.SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
 
             var style_manager = StyleManager.instance;
@@ -139,8 +136,8 @@ namespace Graphs {
             }
         }
 
-        public Bitset get_selection_in_range (uint position, uint n_items) {
-            var bitset = new Bitset.empty ();
+        public Gtk.Bitset get_selection_in_range (uint position, uint n_items) {
+            var bitset = new Gtk.Bitset.empty ();
             for (uint index = position; index < position + n_items; index++) {
                 if (_items[index].selected) bitset.add (index);
             }
@@ -192,7 +189,7 @@ namespace Graphs {
             return true;
         }
 
-        public bool set_selection (Bitset selection, Bitset mask) {
+        public bool set_selection (Gtk.Bitset selection, Gtk.Bitset mask) {
             if (mask.is_empty ()) return true;
             _notify_selection_changed = false;
             for (int index = 0; index < _n_items; index++) {
@@ -491,11 +488,11 @@ namespace Graphs {
 
         // Section Vala iterator
 
-        public Iterator<Item> iterator () {
+        public Gee.Iterator<Item> iterator () {
             return new ItemIterator (this);
         }
 
-        private class ItemIterator : Object, Traversable<Item>, Iterator<Item> {
+        private class ItemIterator : Object, Gee.Traversable<Item>, Gee.Iterator<Item> {
             private Data _data;
             private int _index = -1;
 
@@ -506,7 +503,7 @@ namespace Graphs {
                 _data = data;
             }
 
-            public bool @foreach (ForallFunc<Item> f) {
+            public bool @foreach (Gee.ForallFunc<Item> f) {
                 uint n_items = _data.get_n_items ();
                 while (_index < n_items) {
                     if (!f ((Item) _data.get_item (_index))) return false;
@@ -537,7 +534,7 @@ namespace Graphs {
             }
         }
 
-        public bool @foreach (ForallFunc<Item> f) {
+        public bool @foreach (Gee.ForallFunc<Item> f) {
             for (int i = 0; i < _n_items; i++) {
                 if (!f (_items[i])) return false;
             }
@@ -789,7 +786,7 @@ namespace Graphs {
         }
 
         protected void set_view_history (int pos, owned Limits[] history) {
-            _view_history_states = new ArrayList<Limits>.wrap ((owned) history);
+            _view_history_states = new Gee.ArrayList<Limits>.wrap ((owned) history);
             _view_history_pos = pos;
 
             this.can_view_back = _view_history_pos.abs () < _view_history_states.size;

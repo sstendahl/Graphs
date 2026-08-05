@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * Smoothen settings dialog
@@ -17,7 +14,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.SpinRow moving_average_box { get; }
 
-        private GLib.Settings settings { get; set; }
+        private Settings settings { get; set; }
 
         public SmoothenDialog (Window window) {
             Object ();

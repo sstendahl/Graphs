@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
-
 namespace Graphs {
     /**
      * Get value at axis fraction.
@@ -112,7 +108,7 @@ namespace Graphs {
         /**
          * Reset a settings instance to default values.
          */
-        public void reset_settings (GLib.Settings settings) {
+        public void reset_settings (Settings settings) {
             foreach (unowned string key in settings.settings_schema.list_keys ()) {
                 settings.reset (key);
             }
@@ -219,7 +215,7 @@ namespace Graphs {
          */
         public Object build_dialog (string name) {
             string path = "/se/sjoerd/Graphs/ui/dialogs/" + name.replace ("_", "-") + ".ui";
-            var builder = new Builder.from_resource (path);
+            var builder = new Gtk.Builder.from_resource (path);
             return builder.get_object (name + "_dialog");
         }
 
@@ -227,15 +223,15 @@ namespace Graphs {
          * Open the containing folder of a file
          */
         public void open_file_location (File file) {
-            var file_launcher = new FileLauncher (file);
+            var file_launcher = new Gtk.FileLauncher (file);
             file_launcher.open_containing_folder.begin (null, null);
         }
 
         /**
          * Create a file filter matching the suffixes.
          */
-        public FileFilter create_file_filter (string name, ...) {
-            var file_filter = new FileFilter () { name = name };
+        public Gtk.FileFilter create_file_filter (string name, ...) {
+            var file_filter = new Gtk.FileFilter () { name = name };
             var l = va_list ();
             while (true) {
                 unowned string? suffix = l.arg ();
@@ -248,8 +244,8 @@ namespace Graphs {
         /**
          * Create a catchall filter
          */
-        public FileFilter create_all_filter () {
-            var all_filter = new FileFilter () { name = _("All Files")};
+        public Gtk.FileFilter create_all_filter () {
+            var all_filter = new Gtk.FileFilter () { name = _("All Files")};
             all_filter.add_pattern ("*");
             return all_filter;
         }
@@ -257,11 +253,11 @@ namespace Graphs {
         /**
          * Create a ListStore with given FileFilters.
          */
-        public GLib.ListStore create_file_filters (bool add_all, ...) {
-            var list_store = new GLib.ListStore (typeof (FileFilter));
+        public ListStore create_file_filters (bool add_all, ...) {
+            var list_store = new ListStore (typeof (Gtk.FileFilter));
             var l = va_list ();
             while (true) {
-                FileFilter? filter = l.arg ();
+                Gtk.FileFilter? filter = l.arg ();
                 if (filter == null) break;
                 list_store.append (filter);
             }

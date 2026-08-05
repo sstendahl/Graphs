@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-
 namespace Graphs.MathTools {
     private const double REL_TOL = 1e-9;
     private const double ABS_TOL = 1e-4;
@@ -88,7 +86,7 @@ namespace Graphs.MathTools {
      * Get all free variables (without x) in an equation.
      */
     public static string[] get_free_variables (string equation) throws MathError {
-        HashSet<string> strings = new HashSet<string> ();
+        Gee.HashSet<string> strings = new Gee.HashSet<string> ();
 
         MathParser.Lexer lexer = new MathParser.Lexer ();
         lexer.start_lexing (equation);

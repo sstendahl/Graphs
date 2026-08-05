@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-
 namespace Graphs {
     /**
      * Style Editor Window window
@@ -55,7 +52,7 @@ namespace Graphs {
 
             this.css_provider = new Gtk.CssProvider ();
             Gtk.StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             content_view.set_name (Application.get_next_css_name ());
 

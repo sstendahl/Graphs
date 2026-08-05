@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
     [Compact]
     private class Column {
@@ -26,7 +23,7 @@ namespace Graphs {
         private Regex delimiter_regex;
 
         private ColumnsItemSettings[] items;
-        private Bitset used_indices = new Bitset.empty ();
+        private Gtk.Bitset used_indices = new Gtk.Bitset.empty ();
         private uint64 n_used_indices;
         private Column[] columns;
         private int value_size = 0;
@@ -94,7 +91,7 @@ namespace Graphs {
 
                 string? line;
                 int line_number = 0;
-                var bitset_iter = BitsetIter ();
+                var bitset_iter = Gtk.BitsetIter ();
                 uint column_index;
                 uint column_rank;
                 double val;
@@ -197,7 +194,7 @@ namespace Graphs {
         private uint get_rank (uint val) {
             uint current;
             uint rank = 0;
-            var bitset_iter = BitsetIter ();
+            var bitset_iter = Gtk.BitsetIter ();
             bitset_iter.init_first (used_indices, out current);
             do {
                 if (current == val) return rank;

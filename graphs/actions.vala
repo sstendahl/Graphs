@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     namespace Actions {
         public void setup_global () {
@@ -40,7 +36,7 @@ namespace Graphs {
                         "Tobias Bernard <tbernard@gnome.org>"
                     },
                     copyright = "© " + Config.COPYRIGHT,
-                    license_type = License.GPL_3_0,
+                    license_type = Gtk.License.GPL_3_0,
                     translator_credits = _("translator-credits"),
                     release_notes = release_notes
                 };
@@ -80,7 +76,7 @@ namespace Graphs {
 
             var toggle_sidebar_action = new SimpleAction ("toggle-sidebar", null);
             toggle_sidebar_action.activate.connect (() => {
-                OverlaySplitView split_view = window.overlay_split_view;
+                Adw.OverlaySplitView split_view = window.overlay_split_view;
                 split_view.show_sidebar = !split_view.show_sidebar;
             });
             window.overlay_split_view.bind_property (
@@ -91,7 +87,7 @@ namespace Graphs {
             );
             window.add_action (toggle_sidebar_action);
 
-            var modes = new ArrayList<string>.wrap ({"pan", "zoom", "select"});
+            var modes = new Gee.ArrayList<string>.wrap ({"pan", "zoom", "select"});
             foreach (string mode in modes) {
                 string current_mode = mode;
                 var action = new SimpleAction (@"mode-$current_mode", null);
@@ -103,7 +99,7 @@ namespace Graphs {
             }
 
             string[] settings_actions = {"center", "smoothen"};
-            GLib.Settings actions_settings = Application.get_settings_child ("actions");
+            Settings actions_settings = Application.get_settings_child ("actions");
             foreach (unowned string settings_action in settings_actions) {
                 window.add_action (actions_settings.create_action (settings_action));
             }
@@ -217,12 +213,12 @@ namespace Graphs {
 
             var add_data_action = new SimpleAction ("add-data", null);
             add_data_action.activate.connect (() => {
-                var dialog = new FileDialog ();
+                var dialog = new Gtk.FileDialog ();
                 dialog.set_filters (DataImporter.file_filters);
                 dialog.open_multiple.begin (window, null, (d, response) => {
                     try {
                         var files_list_model = dialog.open_multiple.end (response);
-                        var settings_list = new GLib.ListStore (typeof (ImportSettings));
+                        var settings_list = new ListStore (typeof (ImportSettings));
                         for (uint i = 0; i < files_list_model.get_n_items (); i++) {
                             var file = (File) files_list_model.get_item (i);
                             var settings = DataImporter.get_settings_for_file (file);
@@ -276,7 +272,7 @@ namespace Graphs {
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
                 string path = "/se/sjoerd/Graphs/ui/window-shortcuts.ui";
-                var builder = new Builder.from_resource (path);
+                var builder = new Gtk.Builder.from_resource (path);
                 var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (window);
             });

@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public int style_cmp (Style a, Style b) {
         if (a.file == null) return -1;
@@ -42,8 +38,8 @@ namespace Graphs {
      * Style manager
      */
     public class StyleManager : Object {
-        public static GLib.ListStore style_model { get; private set; }
-        public static FilterListModel filtered_style_model { get; private set; }
+        public static ListStore style_model { get; private set; }
+        public static Gtk.FilterListModel filtered_style_model { get; private set; }
         public static File style_dir { get; private set; }
         public signal void style_changed (string stylename);
         public signal void style_deleted (string stylename);
@@ -55,14 +51,14 @@ namespace Graphs {
 
         public static StyleManager instance { get; private set; }
 
-        private CssProvider css_provider;
+        private Gtk.CssProvider css_provider;
         private StyleParameters system_style_light_params;
         private StyleParameters system_style_dark_params;
 
         construct {
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new Gtk.CssProvider ();
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
 
@@ -80,9 +76,9 @@ namespace Graphs {
             Adw.StyleManager.get_default ().notify.connect (on_system_style);
             on_system_style.begin ();
 
-            style_model = new GLib.ListStore (typeof (Style));
-            filtered_style_model = new FilterListModel (
-                style_model, new CustomFilter (filter_system_style)
+            style_model = new ListStore (typeof (Style));
+            filtered_style_model = new Gtk.FilterListModel (
+                style_model, new Gtk.CustomFilter (filter_system_style)
             );
 
             try {
@@ -247,12 +243,12 @@ namespace Graphs {
 
     public class Style : Object {
         public string name { get; construct set; default = ""; }
-        public Texture preview { get; set; }
+        public Gdk.Texture preview { get; set; }
         public File? file { get; construct set; }
         public bool mutable { get; construct set; }
         public bool light { get; set; default = true; }
 
-        public Style (string name, File? file, Texture preview, bool mutable) {
+        public Style (string name, File? file, Gdk.Texture preview, bool mutable) {
             Object (
                 name: name, file: file, preview: preview, mutable: mutable
             );
@@ -266,16 +262,16 @@ namespace Graphs {
     private class StylePreview : Adw.Bin {
 
         [GtkChild]
-        private unowned Label label { get; }
+        private unowned Gtk.Label label { get; }
 
         [GtkChild]
-        private unowned Picture picture { get; }
+        private unowned Gtk.Picture picture { get; }
 
         [GtkChild]
-        public unowned MenuButton menu_button { get; }
+        public unowned Gtk.MenuButton menu_button { get; }
 
         private Style _style;
-        private CssProvider provider;
+        private Gtk.CssProvider provider;
 
         public Style style {
             get { return this._style; }
@@ -290,8 +286,8 @@ namespace Graphs {
             set { label.set_label (value); }
         }
 
-        public Texture preview {
-            get { return (Texture) picture.get_paintable (); }
+        public Gdk.Texture preview {
+            get { return (Gdk.Texture) picture.get_paintable (); }
             set {
                 picture.set_paintable (value);
                 if (_style.mutable) {
@@ -305,15 +301,15 @@ namespace Graphs {
         }
 
         construct {
-            this.provider = new CssProvider ();
+            this.provider = new Gtk.CssProvider ();
             menu_button.get_style_context ().add_provider (
-                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+                provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
     }
 
     public async void import_style (Gtk.Window window) {
-        var dialog = new FileDialog ();
+        var dialog = new Gtk.FileDialog ();
         dialog.set_filters (get_mplstyle_file_filters ());
         try {
             var file = yield dialog.open (window, null);

@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-using Gtk;
-
 namespace Graphs {
     /**
      * Style Color Box

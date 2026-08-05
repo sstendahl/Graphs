@@ -28,8 +28,8 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
-        public signal void export_figure_request (File file, GLib.Settings settings, Data data);
-        public static void export_figure (File file, GLib.Settings settings, Data data) {
+        public signal void export_figure_request (File file, Settings settings, Data data);
+        public static void export_figure (File file, Settings settings, Data data) {
             instance.export_figure_request.emit (file, settings, data);
         }
 
