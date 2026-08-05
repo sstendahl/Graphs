@@ -2,10 +2,12 @@
 """Module for parsing xrdml files."""
 from gettext import gettext as _
 from gettext import pgettext as C_
+from xml.dom import minidom
 
 from gi.repository import Graphs
 
-from graphs import file_io
+import gio_pyio
+
 from graphs.file_import import Parser
 from graphs.item import DataItem
 
@@ -32,7 +34,8 @@ class XrdmlParser(Parser):
         style: Graphs.StyleParameters,
     ) -> None:
         """Import data from xrdml file."""
-        content = file_io.parse_xml(settings.get_file())
+        with gio_pyio.open(settings.get_file(), "rb") as wrapper:
+            content = minidom.parse(wrapper)
         intensities = content.getElementsByTagName("intensities")
         counting_time = content.getElementsByTagName("commonCountingTime")
         counting_time = float(counting_time[0].firstChild.data)
