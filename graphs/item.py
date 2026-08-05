@@ -274,6 +274,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         data: Graphs.FillHolder,
         **kwargs,
     ):
+        """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
     def to_dict(self) -> dict:
