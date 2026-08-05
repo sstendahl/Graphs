@@ -40,11 +40,20 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow yposition { get; }
 
+        [GtkChild]
+        private unowned Adw.SwitchRow legend { get; }
+
         public EditItemBaseBox (Item item) {
             item.bind_property (
                 "name",
                 name_entry,
                 "text",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "legend",
+                legend,
+                "active",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
             item.bind_property (

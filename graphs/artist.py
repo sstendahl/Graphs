@@ -95,7 +95,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -318,6 +318,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         self._data, self._caps, self._bars = self._artist
         self._color_artist = self._data
+        self.props.legend = item.get_legend()
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
@@ -351,7 +352,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
@@ -380,6 +381,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         item.connect("notify::equation", self._on_equation_change)
 
         self._set_properties(None, None)
+        self.props.legend = item.get_legend()
         self._generate_data()
 
     def _timeout_callback(self) -> bool:
