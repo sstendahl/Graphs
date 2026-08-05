@@ -90,6 +90,10 @@ namespace Graphs {
         }
     }
 
+    public interface LegendableItem : Item {
+        public abstract bool legend { get; set; }
+    }
+
     public interface EquationBasedItem : Item {
         public abstract Ast equation { get; set; }
     }
@@ -147,13 +151,14 @@ namespace Graphs {
         }
     }
 
-    public class DataItem : Item {
+    public class DataItem : Item, LegendableItem {
         public DataHolder data { get; set; default = new DataHolder.empty (); }
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
         public double errcapthick { get; set; default = 1; }
         public string errcolor { get; set; default = ""; }
         public double errlinewidth { get; set; default = 1; }
+        public bool legend { get; set; default = true; }
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
         public int markerstyle { get; set; default = 0; }
@@ -223,7 +228,8 @@ namespace Graphs {
         }
     }
 
-    public class EquationItem : Item, EquationBasedItem {
+    public class EquationItem : Item, EquationBasedItem, LegendableItem {
+        public bool legend { get; set; default = true; }
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 

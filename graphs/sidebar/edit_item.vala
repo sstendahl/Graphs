@@ -40,6 +40,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ComboRow yposition { get; }
 
+        [GtkChild]
+        private unowned Adw.SwitchRow legend { get; }
+
         public EditItemBaseBox (Item item) {
             item.bind_property (
                 "name",
@@ -59,6 +62,15 @@ namespace Graphs {
                 "selected",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+            if (item is LegendableItem) {
+                item.bind_property (
+                    "legend",
+                    legend,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+                legend.visible = true;
+            }
         }
     }
 
