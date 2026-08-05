@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data Items."""
-from gi.repository import GObject, Graphs
+from gi.repository import Graphs
 
 from graphs import misc, utilities
 
@@ -118,11 +118,12 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
 
     def get_data_tuple(self) -> tuple[list, list, list, list]:
         """Get the data as a picklable tuple."""
+        holder = self.props.data
         return (
-            self.get_xdata().tolist(),
-            self.get_ydata().tolist(),
-            self.get_xerr().tolist() if self.has_xerr() else None,
-            self.get_yerr().tolist() if self.has_yerr() else None,
+            utilities.bytes_to_list(holder.get_xdata_b()),
+            utilities.bytes_to_list(holder.get_ydata_b()),
+            utilities.bytes_to_list(holder.get_xerr_b()),
+            utilities.bytes_to_list(holder.get_yerr_b()),
         )
 
     def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:
@@ -256,30 +257,44 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonFillItem"
 
-    data = GObject.Property(type=object)
-
     @classmethod
     def new(
         cls,
-        _params: Graphs.StyleParameters,
+        style: Graphs.StyleParameters,
         data: tuple[list[float], list[float], list[float]],
         **kwargs,
     ):
         """Create new FillItem."""
+        return cls.new_with_data(style, Graphs.FillHolder.new(*data), **kwargs)
+
+    @classmethod
+    def new_with_data(
+        cls,
+        _style: Graphs.StyleParameters,
+        data: Graphs.FillHolder,
+        **kwargs,
+    ):
+        """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        if self.props.data is None:
-            self.props.data = ([], [], [])
+    def to_dict(self) -> dict:
+        """Convert item to dict."""
+        dictionary = super().to_dict()
+        dictionary["data"] = self.get_data_tuple()
+        return dictionary
 
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
-        return self.props.data
+        holder = self.props.data
+        return (
+            utilities.bytes_to_list(holder.get_xdata_b()),
+            utilities.bytes_to_list(holder.get_lower_b()),
+            utilities.bytes_to_list(holder.get_upper_b()),
+        )
 
     def set_data_tuple(self, data: tuple[list, list, list]) -> None:
         """Set the data from a tuple."""
-        self.props.data = data
+        self.props.data = Graphs.FillHolder.new(*data)
 
 
 class ItemFactory(Graphs.ItemFactory):
@@ -290,6 +305,7 @@ class ItemFactory(Graphs.ItemFactory):
         "generated-data-item": GeneratedDataItem.new,
         "equation-item": EquationItem.new,
         "text-item": TextItem.new,
+        "fill-item": FillItem.new_with_data,
     }
 
     def __init__(self):
@@ -322,6 +338,7 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
+                dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
                 return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
