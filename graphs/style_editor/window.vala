@@ -326,7 +326,7 @@ namespace Graphs {
             canvas.figure.set ("bottom_label", _("X Label"));
             canvas.figure.set ("left_label", _("Y Label"));
 
-            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.background_color, style.color));
+            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.outline_color, style.text_color));
 
             canvas_bin.set_child (canvas);
         }
