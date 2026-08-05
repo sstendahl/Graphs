@@ -4,6 +4,8 @@ namespace Graphs {
      * Data class
      */
     public class Data : Object, ListModel, Gtk.SelectionModel {
+        private const int HISTORY_SIZE = 100;
+
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; private set; default = false; }
@@ -38,8 +40,10 @@ namespace Graphs {
         private string[] _used_errbar_colors;
         private Settings _settings;
         private bool _notify_selection_changed = true;
-        private Gee.List<Limits> _view_history_states = new Gee.ArrayList<Limits> ();
-        private int _view_history_pos = -1;
+        private Limits[] _view_history_states = new Limits[HISTORY_SIZE];
+        private int _current_view_history_state = 0;
+        private int _oldest_view_history_state = 0;
+        private int _newest_view_history_state = 0;
         private StyleParameters old_selected_style_params;
 
         public signal void style_changed ();
@@ -102,7 +106,7 @@ namespace Graphs {
                 reset_items.begin ();
             });
 
-            _view_history_states.add (figure_settings.get_limits ());
+            _view_history_states[0] = figure_settings.get_limits ();
             PythonHelper.run_method (this, "_init_history_states");
         }
 
@@ -240,8 +244,10 @@ namespace Graphs {
             this.can_view_back = false;
             this.can_view_forward = false;
             this.figure_settings = new FigureSettings (_settings);
-            _view_history_states.clear ();
-            _view_history_states.add (figure_settings.get_limits ());
+            _view_history_states[0] = figure_settings.get_limits ();
+            _current_view_history_state = 0;
+            _oldest_view_history_state = 0;
+            _newest_view_history_state = 0;
             PythonHelper.run_method (this, "_init_history_states");
             this.file = null;
             this.unsaved = false;
@@ -721,22 +727,16 @@ namespace Graphs {
 
         public void add_view_history_state () {
             var limits = figure_settings.get_limits ();
-            var last = _view_history_states.last ();
+            var last = _view_history_states[_current_view_history_state];
             if (MathTools.all_close (limits.values (), last.values ())) return;
 
-            if (_view_history_pos != -1) {
-                int new_size = _view_history_states.size + _view_history_pos + 1;
-                while (_view_history_states.size > new_size) {
-                    _view_history_states.remove_at (_view_history_states.size - 1);
-                }
-            }
+            int next = (_current_view_history_state + 1) % HISTORY_SIZE;
+            _view_history_states[next] = limits;
+            _current_view_history_state = next;
+            _newest_view_history_state = next;
 
-            if (_view_history_states.size > 101) {
-                _view_history_states.remove_at (0);
-            }
-
-            _view_history_pos = -1;
-            _view_history_states.add (limits);
+            if (next == _oldest_view_history_state)
+                _oldest_view_history_state = (_oldest_view_history_state + 1) % HISTORY_SIZE;
 
             this.can_view_back = true;
             this.can_view_forward = false;
@@ -746,33 +746,54 @@ namespace Graphs {
 
         public void view_back () {
             if (!can_view_back) return;
-            int index = _view_history_states.size + --_view_history_pos;
-            figure_settings.set_limits (_view_history_states.get (index));
+            _current_view_history_state = (_current_view_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
+            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
 
-            this.can_view_back = _view_history_pos.abs () < _view_history_states.size;
+            this.can_view_back = _current_view_history_state != _oldest_view_history_state;
             this.can_view_forward = true;
         }
 
         public void view_forward () {
             if (!can_view_forward) return;
-            int index = _view_history_states.size + ++_view_history_pos;
-            figure_settings.set_limits (_view_history_states.get (index));
+            _current_view_history_state = (_current_view_history_state + 1) % HISTORY_SIZE;
+            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
 
             this.can_view_back = true;
-            this.can_view_forward = _view_history_pos < -1;
+            this.can_view_forward = _current_view_history_state != _newest_view_history_state;
         }
 
         protected int get_view_history (out Limits[] history) {
-            history = _view_history_states.to_array ();
-            return _view_history_pos;
+            int n_states;
+            if (_newest_view_history_state >= _oldest_view_history_state)
+                n_states = _newest_view_history_state - _oldest_view_history_state + 1;
+            else
+                n_states = HISTORY_SIZE - _oldest_view_history_state - _newest_view_history_state + 1;
+
+            history = new Limits[n_states];
+
+            int index = _oldest_view_history_state;
+            for (int i = 0; i < n_states; i++) {
+                history[i] = _view_history_states[index];
+                index = (index + 1) % HISTORY_SIZE;
+            }
+
+            return _current_view_history_state - _newest_view_history_state - 1;
         }
 
-        protected void set_view_history (int pos, owned Limits[] history) {
-            _view_history_states = new Gee.ArrayList<Limits>.wrap ((owned) history);
-            _view_history_pos = pos;
+        protected void set_view_history (int pos, owned Limits[] history)
+            requires (history.length <= HISTORY_SIZE)
+        {
+            int n_states = history.length;
+            for (int i = 0; i < n_states; i++) {
+                _view_history_states[i] = history[i];
+            }
 
-            this.can_view_back = _view_history_pos.abs () < _view_history_states.size;
-            this.can_view_forward = _view_history_pos < -1;
+            _oldest_view_history_state = 0;
+            _newest_view_history_state = n_states - 1;
+            _current_view_history_state = _newest_view_history_state + pos + 1;
+
+            this.can_view_back = pos.abs () < n_states;
+            this.can_view_forward = pos < -1;
         }
 
         // End section history
