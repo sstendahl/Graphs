@@ -767,7 +767,7 @@ namespace Graphs {
             if (_newest_view_history_state >= _oldest_view_history_state)
                 n_states = _newest_view_history_state - _oldest_view_history_state + 1;
             else
-                n_states = HISTORY_SIZE - _oldest_view_history_state - _newest_view_history_state + 1;
+                n_states = HISTORY_SIZE - _oldest_view_history_state + _newest_view_history_state + 1;
 
             history = new Limits[n_states];
 
@@ -777,7 +777,7 @@ namespace Graphs {
                 index = (index + 1) % HISTORY_SIZE;
             }
 
-            return _current_view_history_state - _newest_view_history_state - 1;
+            return ((_current_view_history_state - _oldest_view_history_state + HISTORY_SIZE) % HISTORY_SIZE) - n_states;
         }
 
         protected void set_view_history (int pos, owned Limits[] history)
