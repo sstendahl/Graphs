@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-07-19 17:03+0000\n"
-"PO-Revision-Date: 2026-07-23 07:51+0800\n"
+"POT-Creation-Date: 2026-08-04 18:55+0000\n"
+"PO-Revision-Date: 2026-08-05 08:46+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -134,7 +134,7 @@ msgstr ""
 "Graphs 很适合用来绘制和处理数据。使用 Graphs 创建的示意图可保存为适合用来向广"
 "大观众分享和呈现的多种格式，比如在科学出版物或演讲中。另外，保存为矢量图像的"
 "选项可使其在像 Inkscape 的软件中做进一步调整。图表是以 GNOME 环境为标准编写"
-"的，但应同样适用于其它任何桌面环境。"
+"的，但应同样适用于其他任何桌面环境。"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
@@ -169,12 +169,12 @@ msgid ""
 msgstr "您正尝试导入的工程来自 beta 版本的 Graphs。其可能包含无效数据。"
 
 #: data/ui/dialogs/beta-disallowed.blp:9
-#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "继续"
 
 #: data/ui/dialogs/beta-disallowed.blp:10
-#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "中止"
 
@@ -200,7 +200,7 @@ msgstr "删除"
 msgid "Legacy Project"
 msgstr "过时工程"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -260,7 +260,7 @@ msgstr "添加项目"
 
 #: data/ui/import/columns/item-group.blp:9
 #: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
-#: data/ui/style-editor/item-color-row.blp:36
+#: data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "移除"
 
@@ -284,8 +284,8 @@ msgid "Import only Y values, X values will be generated"
 msgstr "仅导入 Y 值，X 值将自动生成"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:246
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
+#: graphs/item.vala:248
 msgid "Equation"
 msgstr "方程式"
 
@@ -295,8 +295,8 @@ msgstr "方程式"
 msgid "More info"
 msgstr "更多信息"
 
-#: data/ui/import/columns/item-group.blp:72
-#: data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73
+#: data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -322,27 +322,27 @@ msgstr ""
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
 "• <b>n*10+100</b> → 100, 110, 120, 130..."
 
-#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93
 #: data/ui/import/sql/main-group.blp:28
-#: data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "X 误差棒"
 
-#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97
 #: data/ui/import/sql/main-group.blp:33
-#: data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "Y 误差棒"
 
-#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110
 #: data/ui/import/sql/main-group.blp:40
-#: data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "X 误差栏"
 
-#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122
 #: data/ui/import/sql/main-group.blp:46
-#: data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "Y 误差栏"
 
@@ -397,25 +397,57 @@ msgstr "自定义"
 msgid "Custom Delimiter"
 msgstr "自定义分隔符"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Learn more about regex syntax...</a>"
+msgstr ""
+"<b>使用正则表达式匹配</b>\n"
+"\n"
+"这些字符在正则表达式语法中有特殊含义：\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"要按字面匹配这些字符，则使用 <b>\\</b> 进行转义\n"
+"\n"
+"<b>示例：</b>\n"
+"• <b>\\.</b> 匹配句点\n"
+"• <b>\\*</b> 匹配星号\n"
+"• <b>\\|</b> 匹配管道符\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>了解更多正则表达式的信息…</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "小数分隔符"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "小数逗号（,）"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "小数点（.）"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "跳过行"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "起始位置要跳过的行数"
 
@@ -707,8 +739,8 @@ msgid "Line"
 msgstr "线条"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -1233,10 +1265,6 @@ msgstr "添加"
 msgid "Template"
 msgstr "模板"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "更改颜色"
-
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
 msgstr "样式名称"
@@ -1434,10 +1462,6 @@ msgstr "添加颜色"
 msgid "Error Bar Colors"
 msgstr "误差棒颜色"
 
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "编辑"
-
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
 msgid "General"
@@ -1504,7 +1528,7 @@ msgstr "打开文件…"
 msgid "Open Preview"
 msgstr "打开预览"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
@@ -1537,7 +1561,11 @@ msgstr "输入数学表达式"
 msgid "Name (optional)"
 msgstr "名称（可选）"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "更改颜色"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "曲线拟合"
 
@@ -1545,104 +1573,104 @@ msgstr "曲线拟合"
 msgid "Open Curve Fitting Menu"
 msgstr "打开曲线拟合菜单"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "线性"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "平方"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "指数"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "幂律"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "对数"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid 函数"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "高斯"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "自定义"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "优化方法"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "L-M 方法"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "信赖域反射"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "置信界限"
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "无"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ：68% 置信区间"
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ：95% 置信区间"
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ：99.7% 置信区间"
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "显示残差"
 
@@ -1737,15 +1765,11 @@ msgstr "生成数据"
 msgid "Generate"
 msgstr "生成"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "拾取颜色"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "移动项目"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "移除项目"
 
@@ -1789,7 +1813,7 @@ msgstr "删除…"
 msgid "Transform Data"
 msgstr "变换颜色"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1825,11 +1849,11 @@ msgstr ""
 "三角函数默认使用弧度。\n"
 "附加 d 以使用角度，例如：sind(x) 或 cosd(x)。"
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "丢弃未选中数据"
 
@@ -2179,7 +2203,7 @@ msgstr "Y 轴标签"
 msgid "Defaults Updated"
 msgstr "默认值已更新"
 
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:23
 #, c-format
 msgid "Color %d"
 msgstr "颜色 %d"
@@ -2218,7 +2242,7 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024-2026\n"
 "SuGotLand <sugotland@outlook.com>, 2024"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:49
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
@@ -2321,7 +2345,7 @@ msgstr "加载工程失败"
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "无法解析样式 %s，默认加载系统样式"
 
-#: graphs/data.vala:850
+#: graphs/data.vala:861
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "无法找到样式 %s，默认加载系统样式"
@@ -2356,11 +2380,11 @@ msgstr "数据集"
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.vala:258
+#: graphs/item.vala:264
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.vala:264
+#: graphs/item.vala:270
 msgid "Fill"
 msgstr "填充"
 
@@ -2518,6 +2542,12 @@ msgstr "Graphs — %s"
 #: graphs/window.vala:398
 msgid "Open Location"
 msgstr "打开位置"
+
+#~ msgid "Edit"
+#~ msgstr "编辑"
+
+#~ msgid "Pick Color"
+#~ msgstr "拾取颜色"
 
 #~ msgid "No numeric data found in column."
 #~ msgstr "表格栏内未发现数字数据。"
