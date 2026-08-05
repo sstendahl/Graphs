@@ -24,12 +24,21 @@ namespace Graphs {
         public string preview_path;
     }
 
+    public class Style : Object {
+        public string name { get; construct set; default = ""; }
+        public Gdk.Texture preview { get; set; }
+        public File? file { get; construct set; default = null; }
+        public bool mutable { get; construct set; default = false; }
+        public bool light { get; set; default = true; }
+    }
+
     public class StyleParameters : Object {
-        public string name { get; protected set; }
-        public string color { get; protected set; }
-        public string background_color { get; protected set; }
-        public string[] color_cycle { get; protected set; }
-        public string[] errorbar_cycle { get; protected set; }
+        public string name { get; construct set; }
+        public string text_color { get; construct set; }
+        public string background_color { get; construct set; }
+        public string outline_color { get; construct set; }
+        public string[] color_cycle { get; construct set; }
+        public string[] errorbar_cycle { get; construct set; }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
@@ -46,8 +55,8 @@ namespace Graphs {
         public signal void style_renamed (string old_name, string new_name);
 
         protected signal void create_style_request (Style template, File destination, string name);
-        protected signal Style style_request (File file);
         protected signal StyleParameters params_request (File file, StyleParameters? validate);
+        protected signal Gdk.Texture preview_request (StyleParameters parameters);
 
         public static StyleManager instance { get; private set; }
 
@@ -90,25 +99,22 @@ namespace Graphs {
             } catch { assert_not_reached (); }
 
             style_model.append (
-                new Style (
-                    _("System"),
-                    null,
-                    Gdk.Texture.from_resource (
+                new Style () {
+                    name = _("System"),
+                    preview = Gdk.Texture.from_resource (
                         @"/se/sjoerd/Graphs/system-style-$system_style.png"
-                    ),
-                    false
-                )
+                    )
+                }
             );
 
             for (uint i = 0; i < STYLES.length; i++) {
                 StyleInfo* info = &STYLES[i];
                 style_model.append (
-                    new Style (
-                        info->name,
-                        File.new_for_uri ("resource://" + info->style_path),
-                        Gdk.Texture.from_resource (info->preview_path),
-                        false
-                    )
+                    new Style () {
+                        name = info->name,
+                        file = File.new_for_uri ("resource://" + info->style_path),
+                        preview = Gdk.Texture.from_resource (info->preview_path)
+                    }
                 );
             }
 
@@ -126,7 +132,7 @@ namespace Graphs {
                         file.query_file_type (0) == 1
                         && Tools.get_filename (file).has_suffix (".mplstyle")
                     ) {
-                        Style style = instance.style_request.emit (file);
+                        Style style = style_for_file (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, stylenames.to_array ()
                         );
@@ -143,6 +149,19 @@ namespace Graphs {
             } catch {}
         }
 
+        private static Style style_for_file (File file) {
+            var validate = get_system_style_params ();
+            var parameters = instance.params_request.emit (file, validate);
+
+            return new Style () {
+                name = parameters.name,
+                file = file,
+                preview = instance.preview_request.emit (parameters),
+                mutable = true,
+                light = Tools.get_luminance_from_hex (parameters.background_color) < 0.4
+            };
+        }
+
         private async static void on_file_change (File file, File? other_file, FileMonitorEvent event_type) {
             if (file.get_basename ()[0] == '.') return;
             Style? style = null;
@@ -156,7 +175,7 @@ namespace Graphs {
                 case FileMonitorEvent.CHANGES_DONE_HINT:
                     find_style_for_file (file, out style);
                     if (style == null) {
-                        style = instance.style_request.emit (file);
+                        style = style_for_file (file);
                         style.name = Tools.get_duplicate_string (
                             style.name, list_stylenames ()
                         );
@@ -164,7 +183,7 @@ namespace Graphs {
                         style_model.insert_sorted (style, cmp);
                         return;
                     }
-                    Style tmp_style = instance.style_request.emit (file);
+                    Style tmp_style = style_for_file (file);
                     style.preview = tmp_style.preview;
                     style.light = tmp_style.light;
                     if (style.name == tmp_style.name) {
@@ -184,7 +203,7 @@ namespace Graphs {
 
         private async void on_system_style () {
             var style_params = get_system_style_params ();
-            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.color, style_params.background_color);
+            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.text_color, style_params.outline_color);
             css_provider.load_from_string (css);
         }
 
@@ -238,20 +257,6 @@ namespace Graphs {
         private StyleParameters params_for_system_style (string name) {
             File file = File.new_for_uri (@"resource:///se/sjoerd/Graphs/styles/$name.mplstyle");
             return params_request.emit (file, null);
-        }
-    }
-
-    public class Style : Object {
-        public string name { get; construct set; default = ""; }
-        public Gdk.Texture preview { get; set; }
-        public File? file { get; construct set; }
-        public bool mutable { get; construct set; }
-        public bool light { get; set; default = true; }
-
-        public Style (string name, File? file, Gdk.Texture preview, bool mutable) {
-            Object (
-                name: name, file: file, preview: preview, mutable: mutable
-            );
         }
     }
 
