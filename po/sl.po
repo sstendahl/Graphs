@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-05 16:59+0000\n"
-"PO-Revision-Date: 2026-08-05 22:02+0200\n"
+"POT-Creation-Date: 2026-08-05 20:20+0000\n"
+"PO-Revision-Date: 2026-08-05 22:23+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -255,7 +255,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:246
+#: graphs/item.vala:257
 msgid "Equation"
 msgstr "Enačba"
 
@@ -478,26 +478,30 @@ msgid "Name"
 msgstr "Ime"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr "Pokaži v legendi"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "Položaj osi X"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "Na dno"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "Na vrh"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "Položaj osi Y"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "Levo"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "Desno"
 
@@ -2255,19 +2259,19 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: graphs/item.vala:165
+#: graphs/item.vala:175
 msgid "Dataset"
 msgstr "Nabor podatkov"
 
-#: graphs/item.vala:207
+#: graphs/item.vala:217
 msgid "Generated Dataset"
 msgstr "Ustvarjen nabor podatkov"
 
-#: graphs/item.vala:262
+#: graphs/item.vala:273
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.vala:268
+#: graphs/item.vala:323
 msgid "Fill"
 msgstr "Polnilo"
 
