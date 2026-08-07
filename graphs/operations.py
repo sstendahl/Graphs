@@ -254,7 +254,7 @@ class CommonOperations():
                     prev_min, prev_max = min(prev_xdata), max(prev_xdata)
                     if interaction_mode == Graphs.Mode.SELECT:
                         prev_min = max(prev_min, startx)
-                        prev_min = min(prev_max, stopx)
+                        prev_max = min(prev_max, stopx)
 
                 xmin, xmax = min(xdata), max(xdata)
                 if xmin >= prev_min and xmax <= prev_max:

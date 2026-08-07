@@ -275,6 +275,11 @@ namespace Graphs {
 
             if (canvas == null) return;
 
+            var old_canvas = toast_overlay.get_child () as Canvas;
+            if (old_canvas != null) {
+                PythonHelper.run_method (old_canvas.figure, "detach");
+            }
+
             figure_settings.bind_property ("min-selected", canvas, "min-selected", 1 | 2);
             figure_settings.bind_property ("max-selected", canvas, "max-selected", 1 | 2);
 

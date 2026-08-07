@@ -362,7 +362,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._program = item.get_program()
         self._axis = axis
         self._view_change_timeout_id = None
-        axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._view_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
             [],
@@ -377,10 +378,20 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
-        item.connect("notify::equation", self._on_equation_change)
+        self._equation_handler = \
+            item.connect("notify::equation", self._on_equation_change)
+        self._item = item
 
         self._set_properties(None, None)
         self._generate_data()
+
+    def disconnect_item(self) -> None:
+        """Release the view and item subscriptions on detach."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._view_handler)
+        self._item.disconnect(self._equation_handler)
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None
