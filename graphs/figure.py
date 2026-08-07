@@ -102,10 +102,26 @@ class Figure(GObject.Object, figure.Figure):
             self._legend = True
             self._legend_position = "best"
 
-        items.connect("items-changed", self._redraw)
+        self._item_handlers = [items.connect("items-changed", self._redraw)]
         if isinstance(items, Gtk.SelectionModel):
-            items.connect("selection-changed", self._redraw)
+            self._item_handlers.append(
+                items.connect("selection-changed", self._redraw),
+            )
         self._redraw()
+
+    def _drop_artists(self) -> None:
+        """Release the current artist wrappers and their subscriptions."""
+        for handle in self._artists:
+            with contextlib.suppress(AttributeError):
+                handle.disconnect_item()
+        self._artists = []
+
+    def detach(self) -> None:
+        """Stop tracking the data model before the canvas is replaced."""
+        for handler in self._item_handlers:
+            self._items.disconnect(handler)
+        self._item_handlers = []
+        self._drop_artists()
 
     def _redraw(self, *_args) -> None:
         logging.debug("redrawing figure")
@@ -176,6 +192,7 @@ class Figure(GObject.Object, figure.Figure):
         self.axis.get_yaxis().set_visible(visible_axes[2])
         self.right_axis.get_yaxis().set_visible(visible_axes[3])
 
+        self._drop_artists()
         self._artists = [
             artist.new_for_item(self, item)
             for item in reversed(drawable_items)
@@ -245,7 +262,7 @@ class Figure(GObject.Object, figure.Figure):
     )
     def legend_position(self) -> int:
         """Legend Position."""
-        legend_position = self.legend_position.replace(" ", "-")
+        legend_position = self._legend_position.replace(" ", "-")
         return Graphs.LegendPosition.from_string(legend_position)
 
     @legend_position.setter
