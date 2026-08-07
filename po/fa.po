@@ -1,14 +1,14 @@
 # Persian translation for Graphs.
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
-# Danial Behzadi <dani.behzi@ubuntu.com>, 2024-2025.
+# Danial Behzadi <dani.behzi@ubuntu.com>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-06-25 11:18+0000\n"
-"PO-Revision-Date: 2026-08-08 01:53+0330\n"
+"POT-Creation-Date: 2026-08-07 17:53+0000\n"
+"PO-Revision-Date: 2026-08-08 02:03+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -23,11 +23,11 @@ msgstr ""
 "X-DL-Domain: po\n"
 "X-DL-State: Translating\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "نمودارها"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
 msgid "The Graphs Developers"
 msgstr "توسعه‌دهندگان نمودارها"
 
@@ -143,7 +143,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;;Vi
 msgid "New Window"
 msgstr "پنجرهٔ جدید"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:20
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:15
 msgid "Style Editor"
 msgstr "ویرایشگر سبک"
 
@@ -155,11 +155,11 @@ msgstr "پروژهٔ آزمایشی"
 msgid "The project you are trying to import is from a beta version of Graphs. It may contain invalid data."
 msgstr "پروژه‌ای که می خواهید درون‌ریزی کنید از نگارشی آزمایشی از نمودارهاست. ممکن است داده‌هایی نامعتبر داشته باشد."
 
-#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "ادامه"
 
-#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "لغو"
 
@@ -180,7 +180,7 @@ msgstr "حذف"
 msgid "Legacy Project"
 msgstr "پروژهٔ قدیمی"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -230,7 +230,7 @@ msgstr "سبک کنونی تغییرات ذخیره نشده‌ای دارد. �
 msgid "Add Item"
 msgstr "افزودن مورد"
 
-#: data/ui/import/columns/item-group.blp:9 data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125 data/ui/style-editor/item-color-row.blp:36
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125 data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "برداشتن"
 
@@ -250,7 +250,7 @@ msgstr "تنها مقدارهای Y"
 msgid "Import only Y values, X values will be generated"
 msgstr "فقط درون‌ریزی مقدارهای Y. مقدارهای X تولید خواهند شد"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:237
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:257
 msgid "Equation"
 msgstr "معادله"
 
@@ -258,7 +258,7 @@ msgstr "معادله"
 msgid "More info"
 msgstr "اطّلاعات بیش‌تر"
 
-#: data/ui/import/columns/item-group.blp:72 data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73 data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -266,11 +266,11 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 "<b>محاسبهٔ مقدار X</b>\n"
 "\n"
@@ -282,21 +282,21 @@ msgstr ""
 "• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
 "• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 
-#: data/ui/import/columns/item-group.blp:91 data/ui/import/sql/main-group.blp:28 data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93 data/ui/import/sql/main-group.blp:28 data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "نوارهای خطای X"
 
-#: data/ui/import/columns/item-group.blp:95 data/ui/import/sql/main-group.blp:33 data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97 data/ui/import/sql/main-group.blp:33 data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "نوارهای خطای Y"
 
-#: data/ui/import/columns/item-group.blp:108 data/ui/import/sql/main-group.blp:40 data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110 data/ui/import/sql/main-group.blp:40 data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "ستون خطای X"
 
-#: data/ui/import/columns/item-group.blp:120 data/ui/import/sql/main-group.blp:46 data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122 data/ui/import/sql/main-group.blp:46 data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "ستون خطای Y"
 
@@ -351,25 +351,55 @@ msgstr "سفارشی"
 msgid "Custom Delimiter"
 msgstr "جداساز سفارشی"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+"<b>از تطیبق الگوی عبارات باقاعده استفاده می‌کند</b>\n"
+"\n"
+"این نویسه‌ّا در ساختا رعبارات باقاعده معنای ویژه دارند:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"برای تطبیق به معنای واقعی این نویسه‌ها با <b>/</b> بگریزاندیشان\n"
+"\n"
+"<b>نمونه‌ها:</b>\n"
+"• <b>\\.</b> مطابق نقطه\n"
+"• <b>\\*</b> مطابق ستاره\n"
+"• <b>\\|</b> مطابق نویسهٔ لوله\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>آموختن بیش‌تر دربارهٔ ساختار عبارات باقاعده…</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "جداکنندهٔ هزارگان"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "کامای ده‌دهی (,)"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "نقطهٔ ده‌دهی (.)"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "پرش از ردیف‌ها"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "شمار ردیف‌ها برای پرش در آغاز"
 
@@ -442,26 +472,30 @@ msgid "Name"
 msgstr "نام"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr "نمایش در راهنما"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "موقعیت محور X"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "پایین"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "بالا"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "موقعیت محور Y"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "راست"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "چپ"
 
@@ -626,7 +660,7 @@ msgstr "اندازهٔ نشانگر"
 msgid "Line"
 msgstr "خط"
 
-#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52 data/ui/transform.blp:69
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52 data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -734,7 +768,7 @@ msgstr "تنظیمات شکل"
 msgid "Labels"
 msgstr "برچسب‌ها"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:100
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "عنوان"
 
@@ -876,7 +910,7 @@ msgstr "مرکز"
 msgid "Hide Unselected Items"
 msgstr "نهفتن موارد ناگزیده"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:83
+#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "سبک"
 
@@ -1112,9 +1146,9 @@ msgstr "افزودن"
 msgid "Template"
 msgstr "الگو"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "تغییر رنگ"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "افزودن رنگ"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1304,17 +1338,9 @@ msgstr "رنگ دور"
 msgid "Line Colors"
 msgstr "رنگ خط‌ها"
 
-#: data/ui/style-editor/editor-box.blp:521 data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "افزودن رنگ"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr "رنگ‌های نوار خطا"
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "ویرایش"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1361,7 +1387,7 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "گشودن سبک"
 
-#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr "ویرایشگر سبک نمودارها"
 
@@ -1381,7 +1407,7 @@ msgstr "گشودن پرونده…"
 msgid "Open Preview"
 msgstr "گشودن پیش‌نمایش"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183 data/ui/window.blp:349
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176 data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "شکست در بار کردن بوم"
 
@@ -1413,7 +1439,11 @@ msgstr "ورود عبارتی ریاضی"
 msgid "Name (optional)"
 msgstr "نام (اختیاری)"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "تغییر رنگ"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "برازش منحنی"
 
@@ -1421,104 +1451,104 @@ msgstr "برازش منحنی"
 msgid "Open Curve Fitting Menu"
 msgstr "گشودن فهرست برازش منحنی"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "خطی"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "درجه دوم"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "نمایی"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "توزیع توانی"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "لگاریتمی"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "لجستیک سیگماوار"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "گوسی"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "سفارشی"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "افزودن برازش به داده‌ها"
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "تغییر وضعیت نوار کناری"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "روش بهینه‌سازی"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "لونبرگ-مارکوارت"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "بازتاب ناحیهٔ اطمینان"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "داگ‌باکس"
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "مرزهای اطمینان"
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "هیچ‌کدام"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "۱σ: ۶۸٪ اطمینان"
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "۲σ: ۹۵٪ اطمینان"
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "۳σ: ۹۹٫۷٪ اطمینان"
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "نمایش باقیمانده‌ها"
 
@@ -1526,7 +1556,7 @@ msgstr "نمایش باقیمانده‌ها"
 msgid "Export Figure"
 msgstr "برون‌ریزی شکل"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "برون‌ریزی"
 
@@ -1613,15 +1643,11 @@ msgstr "تولید داده"
 msgid "Generate"
 msgstr "ایجاد"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "برداشتن رنگ"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "جابه‌جایی مورد"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "برداشتن مورد"
 
@@ -1665,7 +1691,7 @@ msgstr "حذف…"
 msgid "Transform Data"
 msgstr "داده‌های تبدیل"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1701,11 +1727,11 @@ msgstr ""
 "توابع مثلثاتی به طور پیش‌گزیده از رادیان استفاده می‌کنند. \n"
 "افزودن d برای استفاده از درجه. نمونه: sind(x) یا cosd(x)."
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "دور انداختن داده‌های ناگزیده"
 
@@ -1717,7 +1743,7 @@ msgstr "انداختن در این‌جا برای درون‌ریزی"
 msgid "Show Sidebar"
 msgstr "نمایش نوار کناری"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:409
 msgid "Undo"
 msgstr "برگردان"
 
@@ -1882,26 +1908,30 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "انجام دوبارهٔ کنش"
 
-#: graphs/file_import/parsers/columns/__init__.py:17
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr "جداساز سفارشی نمی‌تواند خالی باشد"
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "ستون‌ها"
 
-#: graphs/file_import/parsers/columns/main.vala:46
-msgid "Custom delimiter cannot be empty"
-msgstr "جداساز سفارشی نمی‌تواند خالی باشد"
-
-#: graphs/file_import/parsers/columns/parser.vala:107
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
 msgstr "خطای نمایه در %s. نمی‌توان به نمایهٔ %Id در خط %Id دست یافت. تنها %Id ستون پیدا شد"
 
-#: graphs/file_import/parsers/columns/parser.vala:134
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "نتوانست از پرونده درون بریزد. مقدار بد در خط %Id"
 
-#: graphs/file_import/parsers/columns/ui.vala:41 graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/reader.vala:153
+msgid "Failed to parse file."
+msgstr "شکست در تجزیهٔ پرونده."
+
+#: graphs/file_import/parsers/columns/ui.vala:36 graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "مورد %Id"
@@ -1911,184 +1941,197 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "پروژه"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "پروندهٔ پروژهٔ نمودارها"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:206
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "صفحهٔ گسترده"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:207
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "صفحهٔ گسترده"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:275
-msgid "No numeric data found in column."
-msgstr "هیچ دادهٔ عددی‌ای در ستون پیدا نشد."
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+msgid "Failed to open File."
+msgstr "شکست در گشودن پرونده."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:288
-msgid "Columns do not have the same length."
-msgstr "ستون‌ها درازای یکسانی ندارند."
-
-#: graphs/file_import/parsers/sql/__init__.py:19
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "پایگاه داده"
 
-#: graphs/file_import/parsers/sql/__init__.py:20
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "پایگاه داده سکولایت"
 
-#: graphs/file_import/parsers/sql/reader.vala:135
+#: graphs/file_import/parsers/sql/reader.vala:133
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr "نتوانست داده‌ها را از جدول «%s» وارد کند. هیچ ستون عددی‌ای پیدا نشد"
 
-#: graphs/file_import/parsers/sql/reader.vala:144
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr "هیچ داده‌ای در ستون جدول پیدا نشد"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:66
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "Intensity (cps)"
 msgstr "چگالی (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:18
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/parser.vala:76
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/parser.vala:77
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:117
+#: graphs/file_import/parsers/xry/parser.vala:104 graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "درون‌ریزی شکست خورد"
 
-#: graphs/file_import/file_import.vala:46
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr "شکست تجزیه‌گر در مقداردهی نخستین تنظیمات."
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr "شکست تجزیه‌گر در مقداردهی نخستین ابزارک‌های تنظیمات."
+
+#: graphs/file_import/dialog.vala:131
+msgid "Defaults updated"
+msgstr "پیش‌گزیده‌ها به‌روز شدند"
+
+#: graphs/file_import/file_import.vala:77
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "پرونده‌های پشتیبانی شده"
 
 #. columns
-#: graphs/file_import/file_import.vala:50
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "پرونده‌های اسکی"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:137
+#: graphs/sidebar/figure_settings.vala:134
 msgid "X Axis Minimum"
 msgstr "کمینهٔ محور X"
 
-#: graphs/sidebar/figure_settings.vala:138
+#: graphs/sidebar/figure_settings.vala:135
 msgid "Y Axis Minimum"
 msgstr "کمینهٔ محور Y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:144
+#: graphs/sidebar/figure_settings.vala:141
 msgid "X Axis Maximum"
 msgstr "بیشینهٔ محور X"
 
-#: graphs/sidebar/figure_settings.vala:145
+#: graphs/sidebar/figure_settings.vala:142
 msgid "Y Axis Maximum"
 msgstr "بیشینهٔ محور Y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
+#: graphs/sidebar/figure_settings.vala:160
 msgid "X Axis Scale"
 msgstr "مقیاس محور X"
 
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:161
 msgid "X Axis Label"
 msgstr "برچسب محور X"
 
-#: graphs/sidebar/figure_settings.vala:167
+#: graphs/sidebar/figure_settings.vala:164
 msgid "Y Axis Scale"
 msgstr "مقیاس محور Y"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:165
 msgid "Y Axis Label"
 msgstr "برچسب محور Y"
 
-#: graphs/sidebar/figure_settings.vala:247
+#: graphs/sidebar/figure_settings.vala:245
 msgid "Defaults Updated"
 msgstr "پیش‌گزیده‌ها به‌روز شدند"
 
-#: graphs/style_editor/__init__.py:64
-msgid "Example Item"
-msgstr "مورد مثال"
-
-#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
-msgid "X Label"
-msgstr "برچسب X"
-
-#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
-msgid "Y Label"
-msgstr "برچسب Y"
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "رنگ %Id"
 
-#. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
-#, c-format
-msgid "Graphs Style Editor — %s"
-msgstr "ویرایشگر سبک نمودارها— %s"
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
+msgstr "مورد مثال"
 
-#: graphs/style_editor/window.vala:231
+#: graphs/style_editor/window.vala:224
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "مطمئنید که می‌خواهید %s را حذف کنید؟"
 
-#: graphs/actions.vala:44
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor/window.vala:302
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "ویرایشگر سبک نمودارها— %s"
+
+#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+msgid "X Label"
+msgstr "برچسب X"
+
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "برچسب Y"
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "نتوانست {font} را بار کند"
+
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:182 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
 
-#: graphs/application.vala:19
+#: graphs/application.vala:14
 msgid "New window"
 msgstr "پنجرهٔ جدید"
 
-#: graphs/application.vala:21
+#: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[FILE…]"
 
-#: graphs/curve_fitting.py:99
+#: graphs/curve_fitting.py:97
 msgid "Residuals"
 msgstr "باقیمانده‌ها"
 
-#: graphs/curve_fitting.vala:74
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2096,7 +2139,7 @@ msgstr ""
 "ورود پارامترهای\n"
 "عددی معتبر."
 
-#: graphs/curve_fitting.vala:75
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2104,7 +2147,7 @@ msgstr ""
 "خطای محدودیت: اطمینان\n"
 "از پایین‌تر < آغاز < بالاتر."
 
-#: graphs/curve_fitting.vala:76
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2112,7 +2155,7 @@ msgstr ""
 "خطای ماتریس: داده‌ها\n"
 "برای این مدل ناکافیند."
 
-#: graphs/curve_fitting.vala:77
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2120,7 +2163,7 @@ msgstr ""
 "برازی شکست خورد: رسیدن به\n"
 "بیشینهٔ تلاش‌ها بدون میل."
 
-#: graphs/curve_fitting.vala:78
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2128,7 +2171,7 @@ msgstr ""
 "خطای دامنه: معادله برای\n"
 "این بازهٔ داده معتبر نیست."
 
-#: graphs/curve_fitting.vala:79
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2136,7 +2179,7 @@ msgstr ""
 "معادلهٔ نامعتبر: بررسی\n"
 "نوشتار و متغیّرها."
 
-#: graphs/curve_fitting.vala:80
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2144,161 +2187,157 @@ msgstr ""
 "خطای باند اعتماد: ماتریس\n"
 "کووریانس ناپایدار است."
 
-#: graphs/curve_fitting.vala:252
+#: graphs/curve_fitting.vala:259
 msgid "Parameters"
 msgstr "پارامترها"
 
-#: graphs/curve_fitting.vala:268
+#: graphs/curve_fitting.vala:275
 msgid "Statistics"
 msgstr "آمار"
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:278
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:278
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:449
+#: graphs/curve_fitting.vala:460
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
 
-#: graphs/data.py:107
-#, python-brace-format
-msgid "Could not parse style {stylename}, loading system preferred style"
-msgstr "نتوانست سبک {stylename} را تجزیه کند. بار کردن سبک ترجیحی سامانه"
-
-#: graphs/data.py:112
-#, python-brace-format
-msgid "Style {stylename} does not exist, loading system preferred style"
-msgstr "سبک {stylename} وجود ندارد. بار کردن ترجیح سامانه"
-
-#: graphs/data.py:553
+#: graphs/data.py:357
 msgid "Failed to load project"
 msgstr "شکست در بار کردن پروژه"
 
-#: graphs/export_figure.vala:48
+#: graphs/data.vala:481
+#, c-format
+msgid "Could not parse style %s, defaulting to system style"
+msgstr "نتوانست سبک %s را تجزیه کند. پیش‌گزیده به سبک سامانه"
+
+#: graphs/data.vala:860
+#, c-format
+msgid "Could not find style %s, defaulting to system style"
+msgstr "نتوانست سبک %s را پیدا کند. پیش‌گزیده به سبک سامانه"
+
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "شکل برون‌ریخته"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "شکل برون‌ریخته"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr "هیچ داده‌ای برای برون‌ریزی نیست"
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:20 graphs/export_items.vala:36
+msgid "Exported Data"
+msgstr "داده‌های برون‌ریخته"
+
+#: graphs/export_items.vala:29
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "پرونده‌های متنی"
 
-#: graphs/graphs.in:76
-msgid "Could not load {font}"
-msgstr "نتوانست {font} را بار کند"
-
-#: graphs/item.vala:156
+#: graphs/item.vala:175
 msgid "Dataset"
 msgstr "دادگان"
 
-#: graphs/item.vala:195
+#: graphs/item.vala:217
 msgid "Generated Dataset"
 msgstr "دادگان ایجاد شده"
 
-#: graphs/item.vala:253
+#: graphs/item.vala:273
 msgid "Label"
 msgstr "برچسب"
 
-#: graphs/item.vala:259
+#: graphs/item.vala:323
 msgid "Fill"
 msgstr "پُر کردن"
 
-#: graphs/misc.vala:7
+#: graphs/misc.vala:5
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "پروندهٔ سبک matplotlib"
 
-#: graphs/operations.py:172
+#: graphs/operations.py:124
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "ناتوان در انجام تبدیل. مطمئن شوید نوشتار درست است"
 
-#: graphs/operations.py:222
+#: graphs/operations.py:184
 msgid "No data found in highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:226
+#: graphs/operations.py:188
 msgid "Some items lack error bars; they will be discarded"
 msgstr "مواردی که نوار خطا ندارند دور انداخته خواهند شد"
 
-#: graphs/operations.py:238
+#: graphs/operations.py:200
 msgid "Combined Data"
 msgstr "داده‌های ترکیب شده"
 
-#: graphs/operations.py:381
+#: graphs/operations.py:332
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "عملیات روی {name} منجر به معادله‌ای قابل رسم نشد"
 
-#: graphs/operations.py:389
+#: graphs/operations.py:338
 msgid "Operation not supported for equations."
 msgstr "عملیات برای معادله‌ها پشتیبانی نمی‌شود."
 
-#: graphs/operations.py:552
+#: graphs/operations.py:492 graphs/operations.py:496
 msgid "No data found within the highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:560
+#: graphs/operations.py:505
 msgid "Operation not supported for data items"
 msgstr "عملیات برای موارد داده پشتیبانی نمی‌شود"
 
-#: graphs/operations.py:563
+#: graphs/operations.py:508
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: خطا در انجام عملیات"
 
-#: graphs/operations.py:571
+#: graphs/operations.py:516
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بودند دور ریخته شدند"
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr "پروندهٔ پروژه داده‌ای ندارد"
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "پروژه از نگارشی جدیدتر و ناسازگار آمده"
 
-#: graphs/project.py:306
+#: graphs/project.py:310
 msgid "Failed to do legacy migration"
 msgstr "شکست در مهاجرت به جدید"
 
-#: graphs/project.py:308
+#: graphs/project.py:312
 msgid "Failed to parse project file"
 msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
 
-#: graphs/project.py:314
+#: graphs/project.py:318
 msgid "Failed to migrate project"
 msgstr "شکست در مهاجرت دادن پروژه"
 
-#: graphs/project.py:320
+#: graphs/project.py:324
 msgid "Failed to validate project"
 msgstr "شکست در صحت‌سنجی پروژه"
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr "پروژه‌های ذخیره شده"
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "پروژه"
-
-#: graphs/python_helper.vala:48
-msgid "Exported Data"
-msgstr "داده‌های برون‌ریخته"
 
 #: graphs/style_io.py:108
 #, python-brace-format
@@ -2340,39 +2379,55 @@ msgstr "نتوانست {filename} را تجزیه کند"
 msgid "File {file}, does not contain name tag"
 msgstr "پروندهٔ {file} برچسب نام ندارد"
 
-#: graphs/styles.vala:66
+#: graphs/styles.vala:103
 msgid "System"
 msgstr "سامانه"
 
-#: graphs/utilities.vala:252
+#: graphs/utilities.vala:248
 msgid "All Files"
 msgstr "همهٔ پرونده‌ها"
 
-#: graphs/utilities.vala:293
+#: graphs/utilities.vala:290
 msgid "Document Portal"
 msgstr "درگاه سند"
 
-#: graphs/window.vala:154
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "نمودارها (توسعه)"
 
-#: graphs/window.vala:181
+#: graphs/window.vala:176
 msgid "Untitled Project"
 msgstr "پروژهٔ بی‌عنوان"
 
-#: graphs/window.vala:182
+#: graphs/window.vala:177
 msgid "Draft"
 msgstr "پیش‌نویس"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:188
+#: graphs/window.vala:183
 #, c-format
 msgid "Graphs — %s"
 msgstr "نمودارها — %s"
 
-#: graphs/window.vala:376
+#: graphs/window.vala:399
 msgid "Open Location"
 msgstr "گشودن مکان"
+
+#~ msgid "Edit"
+#~ msgstr "ویرایش"
+
+#~ msgid "Pick Color"
+#~ msgstr "برداشتن رنگ"
+
+#~ msgid "No numeric data found in column."
+#~ msgstr "هیچ دادهٔ عددی‌ای در ستون پیدا نشد."
+
+#~ msgid "Columns do not have the same length."
+#~ msgstr "ستون‌ها درازای یکسانی ندارند."
+
+#, python-brace-format
+#~ msgid "Style {stylename} does not exist, loading system preferred style"
+#~ msgstr "سبک {stylename} وجود ندارد. بار کردن ترجیح سامانه"
 
 #~ msgid "Determines the spacing between data points"
 #~ msgstr "تشخیص فاصله گذاری بین نقطه‌های داده"
