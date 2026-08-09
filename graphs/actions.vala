@@ -267,7 +267,7 @@ namespace Graphs {
             window.notify["is-main-view"].connect ((s, p) => {
                 update_add_fill_sensitivity (window, add_fill_action);
             });
-            data.items_changed.connect ((position, removed, added) => {
+            data.notify["has-data-item"].connect ((s, p) => {
                 update_add_fill_sensitivity (window, add_fill_action);
             });
             update_add_fill_sensitivity (window, add_fill_action);
@@ -292,15 +292,8 @@ namespace Graphs {
             window.add_action (show_shortcuts_action);
         }
 
-        private bool has_data_item (Data data) {
-            foreach (var item in data) {
-                if (item is DataItem || item is EquationItem) return true;
-            }
-            return false;
-        }
-
         private void update_add_fill_sensitivity (Window window, SimpleAction action) {
-            action.set_enabled (window.is_main_view && has_data_item (window.data));
+            action.set_enabled (window.is_main_view && window.data.has_data_item);
         }
     }
 }
