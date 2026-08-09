@@ -2,11 +2,9 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
-from graphs import ast, misc, utilities
+from graphs import misc, utilities
 
 import numpy
-
-import sympy
 
 
 class _PythonItemMixin:
@@ -316,6 +314,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     def apply_bounds(self, items: list, dictionary: dict) -> None:
         """Bind the fill to the bounds recorded in its dict."""
+        color = dictionary.get("color", "")
         upper_source = dictionary.get("upper_source")
         upper_equation = dictionary.get("upper_equation")
         lower_source = dictionary.get("lower_source")
@@ -328,6 +327,8 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
             self.set_lower_source(items[lower_source])
         elif lower_equation is not None:
             self.set_lower_equation(Graphs.expression_to_ast(lower_equation))
+        if color:
+            self.props.color = color
 
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
@@ -353,13 +354,13 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         upper_y = self._fill_bound_y(
             self.get_upper_kind(),
             self.get_upper_source(),
-            self.get_upper_equation(),
+            self.get_upper_program(),
             target_x,
         )
         lower_y = self._fill_bound_y(
             self.get_lower_kind(),
             self.get_lower_source(),
-            self.get_lower_equation(),
+            self.get_lower_program(),
             target_x,
         )
 
@@ -383,13 +384,13 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         lower = self._fill_bound_y(
             self.get_lower_kind(),
             self.get_lower_source(),
-            self.get_lower_equation(),
+            self.get_lower_program(),
             xdata,
         )
         upper = self._fill_bound_y(
             self.get_upper_kind(),
             self.get_upper_source(),
-            self.get_upper_equation(),
+            self.get_upper_program(),
             xdata,
         )
         return lower, upper
@@ -415,12 +416,12 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         return None
 
     @staticmethod
-    def _fill_bound_y(kind, item, equation, target_x) -> numpy.ndarray:
+    def _fill_bound_y(kind, item, program, target_x) -> numpy.ndarray:
         """Resolve a single bound to y-values on the target x-grid."""
         if kind != Graphs.FillBoundKind.ITEM:
-            if equation is None:
+            if program is None:
                 return numpy.zeros(len(target_x))
-            return FillItem._eval_equation(equation, target_x)
+            return numpy.asarray(program.eval(target_x), dtype=float)
 
         if item is None:
             return numpy.zeros(len(target_x))
@@ -431,18 +432,7 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
                 return ydata
             order = numpy.argsort(xdata)  # interp needs increasing x
             return numpy.interp(target_x, xdata[order], ydata[order])
-        return FillItem._eval_equation(item.get_equation(), target_x)
-
-    @staticmethod
-    def _eval_equation(equation, target_x) -> numpy.ndarray:
-        """Sample an equation (a Graphs.Ast) at the target x-points."""
-        expr = ast.sympify(equation)
-        func = sympy.lambdify(misc.X, expr, modules=["numpy", "scipy"])
-        values = func(target_x)
-        return numpy.broadcast_to(
-            numpy.asarray(values, dtype=float),
-            numpy.shape(target_x),
-        ).astype(float)
+        return numpy.asarray(item.get_program().eval(target_x), dtype=float)
 
 
 class ItemFactory(Graphs.ItemFactory):

@@ -331,11 +331,13 @@ namespace Graphs {
         private FillBoundKind _upper_kind = FillBoundKind.DATA;
         private Item? _upper_item = null;
         private Ast? _upper_equation = null;
+        private Program? _upper_program = null;
         private ulong _upper_handler = 0;
 
         private FillBoundKind _lower_kind = FillBoundKind.DATA;
         private Item? _lower_item = null;
         private Ast? _lower_equation = null;
+        private Program? _lower_program = null;
         private ulong _lower_handler = 0;
 
         private Item? _color_source = null;
@@ -358,6 +360,10 @@ namespace Graphs {
             return _upper_equation;
         }
 
+        public unowned Program? get_upper_program () {
+            return _upper_program;
+        }
+
         public FillBoundKind get_lower_kind () {
             return _lower_kind;
         }
@@ -370,11 +376,16 @@ namespace Graphs {
             return _lower_equation;
         }
 
+        public unowned Program? get_lower_program () {
+            return _lower_program;
+        }
+
         public void set_upper_source (Item item) {
             disconnect_source (_upper_item, ref _upper_handler);
             _upper_kind = FillBoundKind.ITEM;
             _upper_item = item;
             _upper_equation = null;
+            _upper_program = null;
             _upper_handler = connect_source (item);
             update_color_binding ();
             recompute ();
@@ -385,6 +396,7 @@ namespace Graphs {
             _upper_kind = FillBoundKind.EQUATION;
             _upper_item = null;
             _upper_equation = equation;
+            _lower_program = ast_to_program (equation);
             update_color_binding ();
             recompute ();
         }
@@ -394,6 +406,7 @@ namespace Graphs {
             _lower_kind = FillBoundKind.ITEM;
             _lower_item = item;
             _lower_equation = null;
+            _lower_program = null;
             _lower_handler = connect_source (item);
             update_color_binding ();
             recompute ();
@@ -404,6 +417,7 @@ namespace Graphs {
             _lower_kind = FillBoundKind.EQUATION;
             _lower_item = null;
             _lower_equation = equation;
+            _lower_program = ast_to_program (equation);
             update_color_binding ();
             recompute ();
         }
@@ -436,8 +450,8 @@ namespace Graphs {
             }
             _color_source = driver;
             if (driver == null) return;
-            if (color == "") this.color = driver.color;
 
+            this.color = driver.color;
             _color_handler = driver.notify["color"].connect ((s, p) => {
                 this.color = ((Item) s).color;
             });
