@@ -1,0 +1,84 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemFillItemBox: Box {
+  orientation: vertical;
+  spacing: 20;
+
+  Adw.PreferencesGroup {
+    title: _("Upper Bound");
+
+    header-suffix: Adw.ToggleGroup upper_type {
+      valign: center;
+      notify::active => $on_upper_change();
+
+      Adw.Toggle {
+        label: _("Item");
+      }
+
+      Adw.Toggle {
+        label: _("Equation");
+      }
+    };
+
+    Adw.ComboRow upper_item {
+      title: _("Item");
+      notify::selected => $on_upper_change();
+    }
+
+    Adw.EntryRow upper_equation {
+      title: _("Y =");
+      max-width-chars: 25;
+      visible: false;
+      notify::text => $on_upper_change();
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Lower Bound");
+
+    header-suffix: Adw.ToggleGroup lower_type {
+      valign: center;
+      notify::active => $on_lower_change();
+
+      Adw.Toggle {
+        label: _("Item");
+      }
+
+      Adw.Toggle {
+        label: _("Equation");
+      }
+    };
+
+    Adw.ComboRow lower_item {
+      title: _("Item");
+      notify::selected => $on_lower_change();
+    }
+
+    Adw.EntryRow lower_equation {
+      title: _("Y =");
+      max-width-chars: 25;
+      visible: false;
+      notify::text => $on_lower_change();
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Fill");
+
+    Adw.ActionRow {
+      title: _("Opacity");
+
+      Scale alpha {
+        draw-value: true;
+        digits: 2;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+        };
+      }
+    }
+  }
+}

@@ -2,9 +2,11 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
-from graphs import misc, utilities
+from graphs import ast, misc, utilities
 
 import numpy
+
+import sympy
 
 
 class _PythonItemMixin:
@@ -257,6 +259,13 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonFillItem"
 
+    BOUND_KEYS = (
+        "upper_source",
+        "upper_equation",
+        "lower_source",
+        "lower_equation",
+    )
+
     @classmethod
     def new(
         cls,
@@ -277,11 +286,48 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
+    @classmethod
+    def from_dict(cls, dictionary: dict):
+        """Create new FillItem, leaving its bounds for apply_bounds."""
+        kwargs = {
+            key: value
+            for key, value in dictionary.items()
+            if key not in cls.BOUND_KEYS
+        }
+        kwargs["data"] = Graphs.FillHolder.new(*kwargs["data"])
+        return cls(**kwargs)
+
     def to_dict(self) -> dict:
         """Convert item to dict."""
         dictionary = super().to_dict()
         dictionary["data"] = self.get_data_tuple()
+        dictionary["upper_equation"] = self._equation_to_str(
+            self.get_upper_equation(),
+        )
+        dictionary["lower_equation"] = self._equation_to_str(
+            self.get_lower_equation(),
+        )
         return dictionary
+
+    @staticmethod
+    def _equation_to_str(equation) -> str:
+        return None if equation is None \
+            else Graphs.ast_to_expression(equation)
+
+    def apply_bounds(self, items: list, dictionary: dict) -> None:
+        """Bind the fill to the bounds recorded in its dict."""
+        upper_source = dictionary.get("upper_source")
+        upper_equation = dictionary.get("upper_equation")
+        lower_source = dictionary.get("lower_source")
+        lower_equation = dictionary.get("lower_equation")
+        if upper_source is not None and upper_source < len(items):
+            self.set_upper_source(items[upper_source])
+        elif upper_equation is not None:
+            self.set_upper_equation(Graphs.expression_to_ast(upper_equation))
+        if lower_source is not None and lower_source < len(items):
+            self.set_lower_source(items[lower_source])
+        elif lower_equation is not None:
+            self.set_lower_equation(Graphs.expression_to_ast(lower_equation))
 
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
@@ -295,6 +341,108 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     def set_data_tuple(self, data: tuple[list, list, list]) -> None:
         """Set the data from a tuple."""
         self.props.data = Graphs.FillHolder.new(*data)
+
+    def _recompute_fill(self) -> None:
+        """Recompute the fill data from its bounds."""
+        target_x = self._fill_target_x()
+        if target_x is None:
+            return
+        if self._has_unresolved_bound():
+            return
+
+        upper_y = self._fill_bound_y(
+            self.get_upper_kind(),
+            self.get_upper_source(),
+            self.get_upper_equation(),
+            target_x,
+        )
+        lower_y = self._fill_bound_y(
+            self.get_lower_kind(),
+            self.get_lower_source(),
+            self.get_lower_equation(),
+            target_x,
+        )
+
+        self.props.data = Graphs.FillHolder.new(target_x, lower_y, upper_y)
+
+    def is_view_based(self) -> bool:
+        """Check whether the x-range is determined by the view on canvas."""
+        bounds = (
+            (self.get_upper_kind(), self.get_upper_source()),
+            (self.get_lower_kind(), self.get_lower_source()),
+        )
+        return all(
+            kind == Graphs.FillBoundKind.EQUATION
+            or isinstance(item, Graphs.EquationItem)
+            for kind, item in bounds
+        )
+
+    def evaluate_bounds(self, xdata) -> tuple:
+        """Evaluate both bounds at the given x-array (for view-based fills)."""
+        xdata = numpy.asarray(xdata, dtype=float)
+        lower = self._fill_bound_y(
+            self.get_lower_kind(),
+            self.get_lower_source(),
+            self.get_lower_equation(),
+            xdata,
+        )
+        upper = self._fill_bound_y(
+            self.get_upper_kind(),
+            self.get_upper_source(),
+            self.get_upper_equation(),
+            xdata,
+        )
+        return lower, upper
+
+    def _has_unresolved_bound(self) -> bool:
+        """Check whether an item bound is not resolved to an item yet."""
+        upper = self.get_upper_kind() == Graphs.FillBoundKind.ITEM \
+            and self.get_upper_source() is None
+        lower = self.get_lower_kind() == Graphs.FillBoundKind.ITEM \
+            and self.get_lower_source() is None
+        return upper or lower
+
+    def _fill_target_x(self) -> numpy.ndarray:
+        """Pick the x-grid, defined by the first bound that is a DataItem."""
+        bounds = (
+            (self.get_upper_kind(), self.get_upper_source()),
+            (self.get_lower_kind(), self.get_lower_source()),
+        )
+        for kind, item in bounds:
+            if kind == Graphs.FillBoundKind.ITEM \
+                    and isinstance(item, Graphs.DataItem):
+                return item.get_xdata()
+        return None
+
+    @staticmethod
+    def _fill_bound_y(kind, item, equation, target_x) -> numpy.ndarray:
+        """Resolve a single bound to y-values on the target x-grid."""
+        if kind != Graphs.FillBoundKind.ITEM:
+            if equation is None:
+                return numpy.zeros(len(target_x))
+            return FillItem._eval_equation(equation, target_x)
+
+        if item is None:
+            return numpy.zeros(len(target_x))
+        if isinstance(item, Graphs.DataItem):
+            xdata, ydata = item.get_xydata()
+            if len(xdata) == len(target_x) \
+                    and numpy.array_equal(xdata, target_x):
+                return ydata
+            order = numpy.argsort(xdata)  # interp needs increasing x
+            return numpy.interp(target_x, xdata[order], ydata[order])
+        return FillItem._eval_equation(item.get_equation(), target_x)
+
+    @staticmethod
+    def _eval_equation(equation, target_x) -> numpy.ndarray:
+        """Sample an equation (a Graphs.Ast) at the target x-points."""
+        expr = ast.sympify(equation)
+        func = sympy.lambdify(misc.X, expr, modules=["numpy", "scipy"])
+        values = func(target_x)
+        return numpy.broadcast_to(
+            numpy.asarray(values, dtype=float),
+            numpy.shape(target_x),
+        ).astype(float)
 
 
 class ItemFactory(Graphs.ItemFactory):
@@ -338,8 +486,7 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
-                dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
-                return FillItem(**dictionary)
+                return FillItem.from_dict(dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
 

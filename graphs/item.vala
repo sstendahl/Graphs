@@ -316,11 +316,146 @@ namespace Graphs {
         }
     }
 
-    public class FillItem : Item {
+    public enum FillBoundKind {
+        NONE,
+        ITEM,
+        EQUATION
+    }
+
+    public class FillItem : Item, LegendableItem {
         public FillHolder data { get; set; default = new FillHolder.empty (); }
+
+        public bool legend { get; set; default = false; }
+        public signal void bounds_changed ();
+
+        private FillBoundKind _upper_kind = FillBoundKind.NONE;
+        private Item? _upper_item = null;
+        private Ast? _upper_equation = null;
+        private ulong _upper_handler = 0;
+
+        private FillBoundKind _lower_kind = FillBoundKind.NONE;
+        private Item? _lower_item = null;
+        private Ast? _lower_equation = null;
+        private ulong _lower_handler = 0;
+
+        private Item? _color_source = null;
+        private ulong _color_handler = 0;
 
         construct {
             typename = _("Fill");
+            alpha = 0.4f;
+        }
+
+        public FillBoundKind get_upper_kind () {
+            return _upper_kind;
+        }
+
+        public Item? get_upper_source () {
+            return _upper_item;
+        }
+
+        public Ast? get_upper_equation () {
+            return _upper_equation;
+        }
+
+        public FillBoundKind get_lower_kind () {
+            return _lower_kind;
+        }
+
+        public Item? get_lower_source () {
+            return _lower_item;
+        }
+
+        public Ast? get_lower_equation () {
+            return _lower_equation;
+        }
+
+        public void set_upper_source (Item item) {
+            disconnect_source (_upper_item, ref _upper_handler);
+            _upper_kind = FillBoundKind.ITEM;
+            _upper_item = item;
+            _upper_equation = null;
+            _upper_handler = connect_source (item);
+            update_color_binding ();
+            recompute ();
+        }
+
+        public void set_upper_equation (Ast equation) {
+            disconnect_source (_upper_item, ref _upper_handler);
+            _upper_kind = FillBoundKind.EQUATION;
+            _upper_item = null;
+            _upper_equation = equation;
+            update_color_binding ();
+            recompute ();
+        }
+
+        public void set_lower_source (Item item) {
+            disconnect_source (_lower_item, ref _lower_handler);
+            _lower_kind = FillBoundKind.ITEM;
+            _lower_item = item;
+            _lower_equation = null;
+            _lower_handler = connect_source (item);
+            update_color_binding ();
+            recompute ();
+        }
+
+        public void set_lower_equation (Ast equation) {
+            disconnect_source (_lower_item, ref _lower_handler);
+            _lower_kind = FillBoundKind.EQUATION;
+            _lower_item = null;
+            _lower_equation = equation;
+            update_color_binding ();
+            recompute ();
+        }
+
+        private ulong connect_source (Item item) {
+            if (item is DataItem) {
+                return item.notify["data"].connect ((s, p) => recompute ());
+            } else if (item is EquationItem) {
+                return item.notify["equation"].connect ((s, p) => recompute ());
+            }
+            return 0;
+        }
+
+        private void disconnect_source (Item? source, ref ulong handler) {
+            if (source != null && handler != 0) source.disconnect (handler);
+            handler = 0;
+        }
+
+        private void update_color_binding () {
+            Item? driver = null;
+            if (_upper_kind == FillBoundKind.ITEM) {
+                driver = _upper_item;
+            } else if (_lower_kind == FillBoundKind.ITEM) {
+                driver = _lower_item;
+            }
+            if (driver == _color_source) return;
+            if (_color_source != null && _color_handler != 0) {
+                _color_source.disconnect (_color_handler);
+                _color_handler = 0;
+            }
+            _color_source = driver;
+            if (driver != null) {
+                this.color = driver.color;
+                _color_handler = driver.notify["color"].connect ((s, p) => {
+                    this.color = ((Item) s).color;
+                });
+            }
+        }
+
+        public override void dispose () {
+            disconnect_source (_upper_item, ref _upper_handler);
+            disconnect_source (_lower_item, ref _lower_handler);
+            if (_color_source != null && _color_handler != 0) {
+                _color_source.disconnect (_color_handler);
+                _color_handler = 0;
+            }
+            base.dispose ();
+        }
+
+        private void recompute () {
+            PythonHelper.run_method (this, "_recompute_fill");
+            bounds_changed ();
         }
     }
 }
