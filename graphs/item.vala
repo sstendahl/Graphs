@@ -434,13 +434,10 @@ namespace Graphs {
                 _color_source.disconnect (_color_handler);
                 _color_handler = 0;
             }
-            _color_source = driver;
-            if (driver != null) {
-                this.color = driver.color;
-                _color_handler = driver.notify["color"].connect ((s, p) => {
-                    this.color = ((Item) s).color;
-                });
-            }
+            if (driver == null) return;
+            _color_handler = driver.notify["color"].connect ((s, p) => {
+                this.color = ((Item) s).color;
+            });
         }
 
         public override void dispose () {
