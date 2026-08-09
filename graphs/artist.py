@@ -21,6 +21,47 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
+def _decimate(x_keys, ydata, sorted_x, x_start, x_stop, pixels):
+    """Return the indices that will be drawn."""
+    point_count = len(ydata)
+    if point_count < 20000:
+        return None
+
+    first, last = 0, point_count
+    if sorted_x:
+        view_low, view_high = min(x_start, x_stop), max(x_start, x_stop)
+        first = max(0, int(numpy.searchsorted(x_keys, view_low, "left")) - 1)
+        last = min(
+            point_count,
+            int(numpy.searchsorted(x_keys, view_high, "right")) + 1,
+        )
+
+    bucket_count = max(128, int(pixels))
+    visible_count = last - first
+    if visible_count <= bucket_count * 2:
+        if visible_count == point_count:
+            return None
+        return numpy.arange(first, last)
+
+    bucket_size = visible_count // bucket_count
+    bucketed_end = first + bucket_size * bucket_count
+    buckets = ydata[first:bucketed_end].reshape(bucket_count, bucket_size)
+    bucket_starts = first + numpy.arange(bucket_count) * bucket_size
+    selected = [
+        buckets.argmin(axis=1) + bucket_starts,
+        buckets.argmax(axis=1) + bucket_starts,
+        numpy.array((first, last - 1)),
+    ]
+    if bucketed_end < last:  # remainder that did not fill a whole bucket
+        remainder = ydata[bucketed_end:last]
+        selected.append(
+            bucketed_end + numpy.array(
+                (remainder.argmin(), remainder.argmax()),
+            ),
+        )
+    return numpy.unique(numpy.concatenate(selected))
+
+
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -105,7 +146,28 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @data.setter
     def data(self, data: Graphs.DataHolder) -> None:
         """Set data property."""
-        xdata, ydata, xerr, yerr = self._handle_singularities(data)
+        self._store(data)
+        self._apply_lod()
+
+    def _store(self, data: Graphs.DataHolder) -> None:
+        """Cache the full resolution data."""
+        self._full = self._handle_singularities(data)
+        xdata = self._full[0]
+        step = numpy.diff(xdata)
+        self._sorted = bool(numpy.all(step[~numpy.isnan(step)] >= 0))
+        self._keys = numpy.maximum.accumulate(
+            numpy.nan_to_num(xdata, nan=-numpy.inf),
+        ) if numpy.isnan(xdata).any() else xdata
+
+    def _apply_lod(self, *_args) -> None:
+        """Draw at a level of detail matching the current view."""
+        xdata, ydata, xerr, yerr = self._full
+        indices = _decimate(self._keys, ydata, self._sorted,
+                            *self._axis.get_xlim(), self._axis.bbox.width)
+        if indices is not None:
+            xdata, ydata = xdata[indices], ydata[indices]
+            xerr = None if xerr is None else xerr[indices]
+            yerr = None if yerr is None else yerr[indices]
         self._data.set_data((xdata, ydata))
 
         if xerr is not None:
@@ -298,7 +360,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        xdata, ydata, xerr, yerr = self._handle_singularities(item.props.data)
+        self._axis = axis
+        self._store(item.props.data)
+        xdata, ydata, xerr, yerr = self._full
         self._artist = axis.errorbar(
             xdata,
             ydata,
@@ -343,6 +407,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
+
+        axis.callbacks.connect("xlim_changed", self._apply_lod)
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper):
