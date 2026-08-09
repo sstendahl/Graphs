@@ -430,7 +430,23 @@ namespace Graphs {
         }
 
         public void delete_items (Item[] items) {
+            var to_remove = new Gee.ArrayList<Item> ();
+            foreach (Item candidate in this) {
+                if (!(candidate is FillItem)) continue;
+                var fill = (FillItem) candidate;
+                foreach (Item item in items) {
+                    if (fill.get_upper_source () == item
+                        || fill.get_lower_source () == item) {
+                        to_remove.add (candidate);
+                        break;
+                    }
+                }
+            }
             foreach (Item item in items) {
+                if (!(item in to_remove)) to_remove.add (item);
+            }
+
+            foreach (Item item in to_remove) {
                 uint index = this.index (item);
                 item_removed.emit (item, index);
                 _remove_item (index);

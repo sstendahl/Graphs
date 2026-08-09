@@ -259,6 +259,19 @@ namespace Graphs {
             window.bind_property ("is_main_view", generate_data_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (generate_data_action);
 
+            var add_fill_action = new SimpleAction ("add-fill", null);
+            add_fill_action.activate.connect (() => {
+                new AddFillDialog (window);
+            });
+            window.add_action (add_fill_action);
+            window.notify["is-main-view"].connect ((s, p) => {
+                update_add_fill_sensitivity (window, add_fill_action);
+            });
+            data.items_changed.connect ((position, removed, added) => {
+                update_add_fill_sensitivity (window, add_fill_action);
+            });
+            update_add_fill_sensitivity (window, add_fill_action);
+
             var export_figure_action = new SimpleAction ("export-figure", null);
             export_figure_action.activate.connect (() => {
                 new ExportFigureDialog (window);
@@ -277,6 +290,17 @@ namespace Graphs {
                 shortcuts_dialog.present (window);
             });
             window.add_action (show_shortcuts_action);
+        }
+
+        private bool has_data_item (Data data) {
+            foreach (var item in data) {
+                if (item is DataItem || item is EquationItem) return true;
+            }
+            return false;
+        }
+
+        private void update_add_fill_sensitivity (Window window, SimpleAction action) {
+            action.set_enabled (window.is_main_view && has_data_item (window.data));
         }
     }
 }

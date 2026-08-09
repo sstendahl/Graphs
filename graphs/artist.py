@@ -606,6 +606,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for FillItem."""
 
     __gtype_name__ = "GraphsFillItemArtistWrapper"
+    legend = GObject.Property(type=bool, default=False)
 
     def _as_tuple(self, holder: Graphs.FillHolder) -> tuple[numpy.ndarray]:
         return (
@@ -620,11 +621,15 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     @data.setter
     def data(self, data: Graphs.FillHolder) -> None:
-        dummy = Figure().add_subplot().fill_between(*self._as_tuple(data))
-        self._artist.set_paths([dummy.get_paths()[0].vertices])
+        if self._item.is_view_based():
+            return
+        self._set_paths(*self._as_tuple(data))
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
+        self._item = item
+        self._axis = axis
+        self._view_change_timeout_id = None
         self._artist = axis.fill_between(
             *self._as_tuple(item.get_data()),
             label=item.get_name(),
@@ -632,3 +637,53 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             alpha=item.get_alpha(),
         )
         self._color_artist = self._artist
+        self._view_change_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._bounds_handler = item.connect(
+            "bounds-changed",
+            self._generate_from_view,
+        )
+        self._generate_from_view()
+        self.set_property("legend", item.get_property("legend"))
+
+    def disconnect_item(self) -> None:
+        """Release the bounds and view subscriptions."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._view_change_handler)
+        if self._bounds_handler is not None:
+            self._item.disconnect(self._bounds_handler)
+            self._bounds_handler = None
+
+    def _set_paths(self, xdata, lower, upper) -> None:
+        dummy = Figure().add_subplot().fill_between(xdata, lower, upper)
+        paths = dummy.get_paths()
+        self._artist.set_paths([paths[0].vertices])
+        self._axis.figure.queue_draw()
+
+    def _generate_from_view(self, *_args) -> None:
+        """Sample the equation bounds across the visible range."""
+        if not self._item.is_view_based():
+            return
+        x_start, x_stop = self._axis.get_xlim()
+        scale = Graphs.scale_from_string(self._axis.get_xscale())
+
+        xdata = numpy.array([
+            Graphs.get_value_at_fraction(fraction, x_start, x_stop, scale)
+            for fraction in numpy.linspace(-1, 2, 5000)
+        ])
+        lower, upper = self._item.evaluate_bounds(xdata)
+        self._set_paths(xdata, lower, upper)
+
+    def _timeout_callback(self) -> bool:
+        self._view_change_timeout_id = None
+        self._generate_from_view()
+        return False
+
+    def _on_view_change(self, *_args) -> None:
+        """Debounced view change handler that regenerates after a delay."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+        self._view_change_timeout_id = \
+            GObject.timeout_add(100, self._timeout_callback)
