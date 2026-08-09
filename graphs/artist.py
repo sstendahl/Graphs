@@ -362,7 +362,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = sympy.sympify(equation)
         self._axis = axis
         self._view_change_timeout_id = None
-        axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._view_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
             [],
@@ -378,6 +379,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties(None, None)
         self._generate_data()
+
+    def disconnect_item(self) -> None:
+        """Release the view subscription on detach."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._view_handler)
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None

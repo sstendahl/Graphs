@@ -92,6 +92,25 @@
   </description>
 
   <releases>
+    <release version="2.0.5" date="2026-08-09">
+      <description>
+        <p>
+          Minor update bringing a significant performance increase when interacting with
+          the canvas.
+        </p>
+        <p>Improvements:</p>
+        <ul>
+          <li>Panning and zooming the canvas using a scroll wheel or touchpad is significantly smoother</li>
+          <li>Equation data is no longer regenerated more often than needed</li>
+          <li>Translation updates</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Scrolling no longer floods the view history with intermediate steps</li>
+          <li>Fixed the limits used by the shift operation when a range is selected</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.4" date="2026-06-23">
       <description>
         <p>Bug fixes:</p>

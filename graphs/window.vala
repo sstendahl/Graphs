@@ -59,6 +59,10 @@ namespace Graphs {
         public Canvas canvas {
             get { return (Canvas) toast_overlay.get_child (); }
             set {
+                var old_canvas = toast_overlay.get_child () as Canvas;
+                if (old_canvas != null) {
+                    PythonHelper.run_method (old_canvas, "detach");
+                }
                 value.bind_property ("mode", this, "mode", 2);
                 toast_overlay.set_child (value);
                 value.grab_focus ();
