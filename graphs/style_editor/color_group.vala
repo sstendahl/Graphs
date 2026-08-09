@@ -5,7 +5,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.ListBox color_box { get; }
 
-        private Gee.ArrayList<string> colors = new Gee.ArrayList<string> ();
+        private ManagedArray<string> colors = new ManagedArray<string> ();
 
         public signal void colors_changed ();
 
@@ -29,8 +29,7 @@ namespace Graphs {
         }
 
         public void set_colors (string[] colors) {
-            this.colors.clear ();
-            this.colors.add_all_array (colors);
+            this.colors = new ManagedArray<string>.take (colors);
             reload_color_boxes ();
         }
 
@@ -39,21 +38,21 @@ namespace Graphs {
             var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
                 Gdk.RGBA? color = yield dialog.choose_rgba (get_root () as Gtk.Window, null, null);
-                this.colors.add (Tools.rgba_to_hex (color));
-                append_style_color_box (this.colors.size - 1);
+                this.colors.append (Tools.rgba_to_hex (color));
+                append_style_color_box (this.colors.length - 1);
                 colors_changed.emit ();
             } catch {}
         }
 
         public string[] get_colors () {
-            return this.colors.to_array ();
+            return this.colors.peek ();
         }
 
         public void change_position (int index1, int index2) {
             if (index1 == index2) return;
             string color = this.colors[index2];
             this.colors.remove_at (index2);
-            this.colors.insert (index1, color);
+            this.colors.insert (color, index1);
             reload_color_boxes ();
             colors_changed.emit ();
         }
@@ -116,9 +115,9 @@ namespace Graphs {
         }
 
         private void reload_color_boxes () {
-            if (this.colors.is_empty) this.colors.add ("#000000");
+            if (this.colors.length == 0) this.colors.append ("#000000");
             this.color_box.remove_all ();
-            for (int i = 0; i < this.colors.size; i++) {
+            for (int i = 0; i < this.colors.length; i++) {
                 append_style_color_box (i);
             }
         }
