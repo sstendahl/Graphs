@@ -52,21 +52,16 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def _source_index(self, source: Graphs.Item) -> int:
-        """Get index position of a fill's bound source."""
-        for index, item in enumerate(self):
-            if item is source:
-                return index
-        return None
-
     def _item_dict(self, item: Graphs.Item) -> dict:
         """Convert an item to a dict."""
         dictionary = item.to_dict()
         if isinstance(item, FillItem):
+            upper = item.get_upper_source()
+            lower = item.get_lower_source()
             dictionary["upper_source"] = \
-                self._source_index(item.get_upper_source())
+                None if upper is None else self.index(upper)
             dictionary["lower_source"] = \
-                self._source_index(item.get_lower_source())
+                None if lower is None else self.index(lower)
         return dictionary
 
     def _init_history_states(self) -> None:
