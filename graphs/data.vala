@@ -33,6 +33,8 @@ namespace Graphs {
             }
         }
 
+        public bool has_data_item { get; private set; default = false; }
+
         private bool[] _used_positions;
         private Item[] _items = new Item[8];
         private int _n_items = 0;
@@ -59,6 +61,7 @@ namespace Graphs {
 
         construct {
             items_changed.connect (_update_used_positions);
+            items_changed.connect (_update_has_data_item);
             this._settings = Application.get_settings_child ("figure");
             this.style_selection_model = new Gtk.SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
@@ -555,6 +558,16 @@ namespace Graphs {
 
         public bool is_empty () {
             return _n_items == 0;
+        }
+
+        private void _update_has_data_item () {
+            foreach (Item item in this) {
+                if (item is DataItem || item is EquationItem) {
+                    has_data_item = true;
+                    return;
+                }
+            }
+            has_data_item = false;
         }
 
         public unowned Item[] get_items () {
