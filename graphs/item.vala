@@ -317,7 +317,7 @@ namespace Graphs {
     }
 
     public enum FillBoundKind {
-        NONE,
+        DATA,
         ITEM,
         EQUATION
     }
@@ -328,12 +328,12 @@ namespace Graphs {
         public bool legend { get; set; default = false; }
         public signal void bounds_changed ();
 
-        private FillBoundKind _upper_kind = FillBoundKind.NONE;
+        private FillBoundKind _upper_kind = FillBoundKind.DATA;
         private Item? _upper_item = null;
         private Ast? _upper_equation = null;
         private ulong _upper_handler = 0;
 
-        private FillBoundKind _lower_kind = FillBoundKind.NONE;
+        private FillBoundKind _lower_kind = FillBoundKind.DATA;
         private Item? _lower_item = null;
         private Ast? _lower_equation = null;
         private ulong _lower_handler = 0;
@@ -434,7 +434,10 @@ namespace Graphs {
                 _color_source.disconnect (_color_handler);
                 _color_handler = 0;
             }
+            _color_source = driver;
             if (driver == null) return;
+            if (color == "") this.color = driver.color;
+
             _color_handler = driver.notify["color"].connect ((s, p) => {
                 this.color = ((Item) s).color;
             });
