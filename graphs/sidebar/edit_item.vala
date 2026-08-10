@@ -352,22 +352,15 @@ namespace Graphs {
     public class EditItemFillItemBox : Gtk.Box {
 
         [GtkChild]
-        private unowned Adw.ToggleGroup upper_type { get; }
-        [GtkChild]
-        private unowned Adw.ComboRow upper_item { get; }
+        private unowned Adw.ComboRow upper_bound { get; }
         [GtkChild]
         private unowned Adw.EntryRow upper_equation { get; }
         [GtkChild]
-        private unowned Adw.ToggleGroup lower_type { get; }
-        [GtkChild]
-        private unowned Adw.ComboRow lower_item { get; }
+        private unowned Adw.ComboRow lower_bound { get; }
         [GtkChild]
         private unowned Adw.EntryRow lower_equation { get; }
         [GtkChild]
         private unowned Gtk.Scale alpha { get; }
-
-        private const uint TYPE_ITEM = 0;
-        private const uint TYPE_EQUATION = 1;
 
         private FillItem item;
         private Settings settings;
@@ -378,27 +371,19 @@ namespace Graphs {
             this.item = item;
             this.settings = Application.get_settings_child ("add-fill");
 
-            var names = new Gtk.StringList (null);
-            var items = new Gee.ArrayList<Item> ();
-            foreach (var it in data) {
-                if (it is DataItem || it is EquationItem) {
-                    names.append (it.name);
-                    items.add (it);
-                }
-            }
-            this.source_items = items.to_array ();
-            upper_item.set_model (names);
-            lower_item.set_model (names);
+            this.source_items = FillBounds.get_source_items (data);
+            upper_bound.set_model (FillBounds.create_model (source_items));
+            lower_bound.set_model (FillBounds.create_model (source_items));
 
             init_bound (
                 item.get_upper_kind (), item.get_upper_source (),
                 item.get_upper_equation (),
-                upper_type, upper_item, upper_equation, "upper-equation"
+                upper_bound, upper_equation, "upper-equation"
             );
             init_bound (
                 item.get_lower_kind (), item.get_lower_source (),
                 item.get_lower_equation (),
-                lower_type, lower_item, lower_equation, "lower-equation"
+                lower_bound, lower_equation, "lower-equation"
             );
 
             item.bind_property (
@@ -412,37 +397,16 @@ namespace Graphs {
             update_state ();
         }
 
-        private int index_of (Item? target) {
-            if (target == null) return -1;
-            for (int i = 0; i < source_items.length; i++) {
-                if (source_items[i] == target) return i;
-            }
-            return -1;
-        }
-
         private void init_bound (
             FillBoundKind kind, Item? source_item, Ast? equation,
-            Adw.ToggleGroup type, Adw.ComboRow item_combo,
-            Adw.EntryRow equation_row, string settings_key
+            Adw.ComboRow combo, Adw.EntryRow equation_row, string settings_key
         ) {
             equation_row.set_text (settings.get_string (settings_key));
 
-            if (kind == FillBoundKind.ITEM) {
-                type.set_active (TYPE_ITEM);
-                int index = index_of (source_item);
-                if (index < 0) {
-                    item_combo.set_sensitive (false);
-                    return;
-                }
-                item_combo.set_selected (index);
-            } else {
-                type.set_active (TYPE_EQUATION);
-                if (equation != null) {
-                    try {
-                        equation_row.set_text (ast_to_expression (equation));
-                    } catch (MathError e) {}
-                }
-            }
+            uint selected = FillBounds.get_selection (
+                kind, source_item, equation, source_items
+            );
+            combo.set_selected (selected);
         }
 
         private bool is_equation_valid (Adw.EntryRow equation_row) {
@@ -450,70 +414,61 @@ namespace Graphs {
         }
 
         private void update_bound_rows (
-            Adw.ToggleGroup type, Adw.ComboRow combo, Adw.EntryRow equation_row
+            Adw.ComboRow combo, Adw.EntryRow equation_row
         ) {
-            bool is_equation = type.get_active () == TYPE_EQUATION;
-            combo.set_visible (!is_equation);
-            equation_row.set_visible (is_equation);
+            bool is_custom = combo.get_selected () == FillBounds.CUSTOM;
+            equation_row.set_sensitive (is_custom);
 
-            if (is_equation && !is_equation_valid (equation_row)) {
+            if (is_custom && !is_equation_valid (equation_row)) {
                 equation_row.add_css_class ("error");
             } else {
                 equation_row.remove_css_class ("error");
             }
         }
 
-        private void set_equation_enabled (Adw.ToggleGroup type, bool enabled) {
-            type.get_toggle (TYPE_EQUATION).set_enabled (enabled);
-        }
-
         private void update_state () {
             if (!ready) return;
-            ready = false;
 
-            update_bound_rows (upper_type, upper_item, upper_equation);
-            update_bound_rows (lower_type, lower_item, lower_equation);
-
-            set_equation_enabled (
-                lower_type, upper_type.get_active () == TYPE_ITEM
-            );
-            set_equation_enabled (
-                upper_type, lower_type.get_active () == TYPE_ITEM
-            );
-
-            ready = true;
+            update_bound_rows (upper_bound, upper_equation);
+            update_bound_rows (lower_bound, lower_equation);
         }
 
         private void apply_bound (
-            Adw.ToggleGroup type, Adw.ComboRow combo,
-            Adw.EntryRow equation_row, bool is_upper
+            Adw.ComboRow combo, Adw.EntryRow equation_row, bool is_upper
         ) {
-            if (type.get_active () == TYPE_EQUATION) {
-                if (!is_equation_valid (equation_row)) return;
-                try {
-                    Ast ast = expression_to_ast (equation_row.get_text ());
-                    if (is_upper) item.set_upper_equation (ast);
-                    else item.set_lower_equation (ast);
-                } catch (MathError e) { assert_not_reached (); }
-            } else if (combo.get_selected () < source_items.length) {
-                Item source = source_items[combo.get_selected ()];
+            uint selected = combo.get_selected ();
+
+            if (selected >= FillBounds.ITEMS) {
+                Item source = source_items[selected - FillBounds.ITEMS];
                 if (is_upper) item.set_upper_source (source);
                 else item.set_lower_source (source);
+                return;
             }
+
+            string? expression = FillBounds.get_expression (selected);
+            if (expression == null) {
+                if (!is_equation_valid (equation_row)) return;
+                expression = equation_row.get_text ();
+            }
+            try {
+                Ast ast = expression_to_ast (expression);
+                if (is_upper) item.set_upper_equation (ast);
+                else item.set_lower_equation (ast);
+            } catch (MathError e) { assert_not_reached (); }
         }
 
         [GtkCallback]
         private void on_upper_change () {
             if (!ready) return;
             update_state ();
-            apply_bound (upper_type, upper_item, upper_equation, true);
+            apply_bound (upper_bound, upper_equation, true);
         }
 
         [GtkCallback]
         private void on_lower_change () {
             if (!ready) return;
             update_state ();
-            apply_bound (lower_type, lower_item, lower_equation, false);
+            apply_bound (lower_bound, lower_equation, false);
         }
     }
 }

@@ -133,6 +133,78 @@ namespace Graphs.MathTools {
         return program_to_data (ast_to_program (equation), xstart, xstop, steps, scale);
     }
 
+
+    public static double[] interpolate (
+        double[] x_data,
+        double[] y_data,
+        double[] targets
+    ) {
+        double[] result = new double[targets.length];
+        int point_count = int.min (x_data.length, y_data.length);
+
+        if (point_count == 0) {
+            return result;
+        }
+
+        int[] indices = new int[point_count];
+
+        for (int i = 0; i < point_count; i++) {
+            indices[i] = i;
+        }
+
+        qsort_with_data<int> (indices, sizeof (int), (index_a, index_b) => {
+                    if (x_data[index_a] < x_data[index_b]) return -1;
+                    if (x_data[index_a] > x_data[index_b]) return 1;
+                    return 0;
+                });
+
+        for (int i = 0; i < targets.length; i++) {
+            double target = targets[i];
+
+            int first = indices[0];
+            int last = indices[point_count - 1];
+
+            if (target <= x_data[first]) {
+                result[i] = y_data[first];
+                continue;
+            }
+
+            if (target >= x_data[last]) {
+                result[i] = y_data[last];
+                continue;
+            }
+
+            int low = 0;
+            int high = point_count - 1;
+
+            while (high - low > 1) {
+                int mid = (low + high) / 2;
+
+                if (x_data[indices[mid]] <= target) {
+                    low = mid;
+                } else {
+                    high = mid;
+                }
+            }
+
+            int lower = indices[low];
+            int upper = indices[high];
+
+            double x_lower = x_data[lower];
+            double x_upper = x_data[upper];
+            double y_lower = y_data[lower];
+            double y_upper = y_data[upper];
+
+            double dx = x_upper - x_lower;
+
+            result[i] = dx == 0
+                ? y_lower
+                : y_lower + (target - x_lower) / dx * (y_upper - y_lower);
+        }
+
+        return result;
+    }
+
     private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
     public static bool validate_expression (Ast expression) {

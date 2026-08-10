@@ -265,13 +265,6 @@ namespace Graphs {
                 new AddFillDialog (window);
             });
             window.add_action (add_fill_action);
-            window.notify["is-main-view"].connect ((s, p) => {
-                update_add_fill_sensitivity (window, add_fill_action);
-            });
-            data.notify["has-data-item"].connect ((s, p) => {
-                update_add_fill_sensitivity (window, add_fill_action);
-            });
-            update_add_fill_sensitivity (window, add_fill_action);
 
             var export_figure_action = new SimpleAction ("export-figure", null);
             export_figure_action.activate.connect (() => {
@@ -291,10 +284,6 @@ namespace Graphs {
                 shortcuts_dialog.present (window);
             });
             window.add_action (show_shortcuts_action);
-        }
-
-        private void update_add_fill_sensitivity (Window window, SimpleAction action) {
-            action.set_enabled (window.is_main_view && window.data.has_data_item);
         }
     }
 }

@@ -320,6 +320,64 @@ namespace Graphs {
         EQUATION
     }
 
+    public class FillBounds : Object {
+        public const uint INF = 0;
+        public const uint NEG_INF = 1;
+        public const uint CUSTOM = 2;
+        public const uint ITEMS = 3;
+
+        public static Item[] get_source_items (Data data) {
+            var items = new Gee.ArrayList<Item> ();
+            foreach (Item item in data) {
+                if (item is DataItem || item is EquationItem) items.add (item);
+            }
+            return items.to_array ();
+        }
+
+        public static Gtk.StringList create_model (Item[] source_items) {
+            var model = new Gtk.StringList (null);
+            model.append (_("Positive Infinity"));
+            model.append (_("Negative Infinity"));
+            model.append (_("Custom Equation…"));
+            foreach (Item item in source_items) {
+                model.append (item.name);
+            }
+            return model;
+        }
+
+        public static string? get_expression (uint selected) {
+            switch (selected) {
+                case INF: return "inf";
+                case NEG_INF: return "-inf";
+                default: return null;
+            }
+        }
+
+        public static uint get_selection (
+            FillBoundKind kind, Item? source, Ast? equation,
+            Item[] source_items
+        ) {
+            if (kind == FillBoundKind.ITEM) {
+                if (source != null) {
+                    for (uint i = 0; i < source_items.length; i++) {
+                        if (source_items[i] == source) return ITEMS + i;
+                    }
+                }
+                return CUSTOM;
+            }
+            if (equation == null) return CUSTOM;
+            string expression;
+            try {
+                expression = ast_to_expression (equation);
+            } catch (MathError e) { return CUSTOM; }
+            switch (expression) {
+                case "inf": return INF;
+                case "-inf": return NEG_INF;
+                default: return CUSTOM;
+            }
+        }
+    }
+
     public class FillItem : Item, LegendableItem {
         public FillHolder data { get; set; default = new FillHolder.empty (); }
 
@@ -394,7 +452,9 @@ namespace Graphs {
             _upper_kind = FillBoundKind.EQUATION;
             _upper_item = null;
             _upper_equation = equation;
-            _lower_program = ast_to_program (equation);
+            try {
+                _upper_program = ast_to_program (equation, "x", false);
+            } catch (MathError e) { assert_not_reached (); }
             update_color_binding ();
             recompute ();
         }
@@ -415,7 +475,9 @@ namespace Graphs {
             _lower_kind = FillBoundKind.EQUATION;
             _lower_item = null;
             _lower_equation = equation;
-            _lower_program = ast_to_program (equation);
+            try {
+                _lower_program = ast_to_program (equation, "x", false);
+            } catch (MathError e) { assert_not_reached (); }
             update_color_binding ();
             recompute ();
         }
@@ -465,8 +527,63 @@ namespace Graphs {
             base.dispose ();
         }
 
+        private unowned double[]? get_target_x () {
+            if (_upper_kind == FillBoundKind.ITEM && _upper_item is DataItem) {
+                return ((DataItem) _upper_item).get_xdata ();
+            }
+            if (_lower_kind == FillBoundKind.ITEM && _lower_item is DataItem) {
+                return ((DataItem) _lower_item).get_xdata ();
+            }
+            return null;
+        }
+
+        private double[] evaluate_bound (
+            FillBoundKind kind, Item? item, Program? program, double[] target
+        ) throws MathError {
+            if (kind != FillBoundKind.ITEM) {
+                if (program == null) return new double[target.length];
+                return program.eval (target);
+            }
+            if (item is DataItem) {
+                var source = (DataItem) item;
+                return MathTools.interpolate (
+                    source.get_xdata (), source.get_ydata (), target
+                );
+            }
+            return ((EquationItem) item).get_program ().eval (target);
+        }
+
+        public bool is_view_based () {
+            return get_target_x () == null;
+        }
+
+        public void evaluate_bounds (
+            double[] xdata, out double[] lower, out double[] upper
+        ) throws MathError {
+            lower = evaluate_bound (
+                _lower_kind, _lower_item, _lower_program, xdata
+            );
+            upper = evaluate_bound (
+                _upper_kind, _upper_item, _upper_program, xdata
+            );
+        }
+
         private void recompute () {
-            PythonHelper.run_method (this, "_recompute_fill");
+            unowned double[]? target = get_target_x ();
+            if (target != null) {
+                double[] x = new double[target.length];
+                for (int i = 0; i < target.length; i++) x[i] = target[i];
+
+                try {
+                    double[] lower, upper;
+                    evaluate_bounds (x, out lower, out upper);
+                    data = new FillHolder (
+                        (owned) x, (owned) lower, (owned) upper
+                    );
+                } catch (MathError e) {
+                    warning ("Failed to evaluate fill bounds: %s", e.message);
+                }
+            }
             bounds_changed ();
         }
     }

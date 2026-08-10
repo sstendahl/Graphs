@@ -33,72 +33,37 @@ template $GraphsAddFillDialog: Adw.Dialog {
     }
 
     content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.ComboRow upper_bound {
+          title: _("Upper Bound");
+          notify::selected => $on_upper_change();
+        }
+
+        Adw.EntryRow upper_equation {
+          title: _("Y =");
+          max-width-chars: 25;
+          activates-default: true;
+          notify::text => $on_upper_change();
+        }
+
+        Adw.ComboRow lower_bound {
+          title: _("Lower Bound");
+          notify::selected => $on_lower_change();
+        }
+
+        Adw.EntryRow lower_equation {
+          title: _("Y =");
+          max-width-chars: 25;
+          activates-default: true;
+          notify::text => $on_lower_change();
+        }
+      }
 
       Adw.PreferencesGroup {
         Adw.EntryRow item_name {
           max-width-chars: 25;
           title: _("Name (optional)");
           activates-default: true;
-        }
-      }
-
-      Adw.PreferencesGroup {
-        title: _("Upper Bound");
-
-        header-suffix: Adw.ToggleGroup upper_type {
-          valign: center;
-          notify::active => $on_type_change();
-
-          Adw.Toggle {
-            label: _("Item");
-          }
-
-          Adw.Toggle {
-            label: _("Equation");
-          }
-        };
-
-        Adw.ComboRow upper_item {
-          title: _("Item");
-          notify::selected => $on_input_change();
-        }
-
-        Adw.EntryRow upper_equation {
-          title: _("Y =");
-          max-width-chars: 25;
-          visible: false;
-          activates-default: true;
-          notify::text => $on_input_change();
-        }
-      }
-
-      Adw.PreferencesGroup {
-        title: _("Lower Bound");
-
-        header-suffix: Adw.ToggleGroup lower_type {
-          valign: center;
-          notify::active => $on_type_change();
-
-          Adw.Toggle {
-            label: _("Item");
-          }
-
-          Adw.Toggle {
-            label: _("Equation");
-          }
-        };
-
-        Adw.ComboRow lower_item {
-          title: _("Item");
-          notify::selected => $on_input_change();
-        }
-
-        Adw.EntryRow lower_equation {
-          title: _("Y =");
-          max-width-chars: 25;
-          visible: false;
-          activates-default: true;
-          notify::text => $on_input_change();
         }
       }
     };
