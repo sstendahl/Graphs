@@ -158,6 +158,7 @@ namespace Graphs {
 
     public class DataItem : Item, LegendableItem {
         public DataHolder data { get; set; default = new DataHolder.empty (); }
+        public bool downsample { get; set; default = true; }
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
         public double errcapthick { get; set; default = 1; }
@@ -181,6 +182,10 @@ namespace Graphs {
 
         public unowned double[] get_ydata () {
             return data.get_ydata ();
+        }
+
+        public bool exceeds_downsample_threshold () {
+            return get_xdata ().length >= DOWNSAMPLE_THRESHOLD;
         }
 
         public bool has_xerr () {

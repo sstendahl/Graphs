@@ -382,6 +382,18 @@ namespace Graphs {
             add_toast (new Adw.Toast (title));
         }
 
+        public void add_downsample_toasts (Item[] items) {
+            foreach (Item item in items) {
+                if (!(item is DataItem)) continue;
+                if (!((DataItem) item).exceeds_downsample_threshold ()) continue;
+                // Translators: Formatted with item name and data points respectively
+                add_toast_string (
+                    _("%s is drawn with reduced detail using %d points")
+                        .printf (item.name, DOWNSAMPLE_THRESHOLD)
+                );
+            }
+        }
+
         /**
          * Add a toast to the window.
          *

@@ -77,6 +77,7 @@ namespace Graphs {
                 }
                 Item[] items = {item};
                 window.data.add_items (items);
+                window.add_downsample_toasts (items);
             } catch (MathError e) { assert_not_reached (); }
 
             window.data.optimize_limits ();

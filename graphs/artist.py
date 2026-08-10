@@ -33,7 +33,7 @@ def _find_row_extrema(rows):
 def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
     """Return the indices that will be drawn."""
     point_count = len(ydata)
-    if point_count < 20000:
+    if point_count < Graphs.DOWNSAMPLE_THRESHOLD:
         return None
 
     first, last = 0, point_count
@@ -169,6 +169,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
     legend = GObject.Property(type=bool, default=True)
+    downsample = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -195,8 +196,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def _apply_lod(self, *_args) -> None:
         """Draw at a level of detail matching the current view."""
         xdata, ydata, xerr, yerr = self._full
-        indices = _decimate(self._keys, ydata, self._nans, self._sorted,
-                            *self._axis.get_xlim(), self._axis.bbox.width)
+        decimate = self.props.downsample \
+            and self._axis.figure.parent is not None
+        indices = _decimate(
+            self._keys, ydata, self._nans, self._sorted,
+            *self._axis.get_xlim(), self._axis.bbox.width,
+        ) if decimate else None
         if indices is not None:
             xdata, ydata = xdata[indices], ydata[indices]
             xerr = None if xerr is None else xerr[indices]
@@ -394,6 +399,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
         self._axis = axis
+        self.props.downsample = item.get_downsample()
         self._store(item.props.data)
         xdata, ydata, xerr, yerr = self._full
         self._artist = axis.errorbar(
@@ -441,6 +447,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
 
+        self.connect("notify::downsample", self._apply_lod)
         axis.callbacks.connect("xlim_changed", self._apply_lod)
 
 
