@@ -251,7 +251,7 @@ namespace Graphs {
         }
 
         private void _update_used_positions () {
-            if (_items.length == 0) {
+            if (_items.is_empty ()) {
                 _used_positions = {true, false, true, false};
                 return;
             }
@@ -489,7 +489,7 @@ namespace Graphs {
         }
 
         public bool is_empty () {
-            return _items.length == 0;
+            return _items.is_empty ();
         }
 
         public Item[] get_items () {

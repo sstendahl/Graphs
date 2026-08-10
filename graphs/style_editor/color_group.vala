@@ -113,7 +113,7 @@ namespace Graphs {
         }
 
         private void reload_color_boxes () {
-            if (this.colors.length == 0) this.colors.append ("#000000");
+            if (this.colors.is_empty ()) this.colors.append ("#000000");
             this.color_box.remove_all ();
             for (int i = 0; i < this.colors.length; i++) {
                 append_style_color_box (i);

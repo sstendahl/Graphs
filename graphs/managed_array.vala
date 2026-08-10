@@ -20,6 +20,10 @@ namespace Graphs {
             this._data = (owned) data;
         }
 
+        public bool is_empty () {
+            return this._length == 0;
+        }
+
         private void grow_if_needed (int grow_size) {
             int minimum_size = _length + grow_size;
             int capacity = _data.length;
@@ -33,7 +37,7 @@ namespace Graphs {
             _data[i] = t;
         }
 
-        public T @get (int i) {
+        public T @get (int i) requires (i >= 0 && i < _length) {
             return _data[i];
         }
 
