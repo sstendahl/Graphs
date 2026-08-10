@@ -276,12 +276,12 @@ namespace Graphs {
         protected void _add_item (Item item) {
             _connect_to_item (item);
             _items.append (item);
-            items_changed.emit (_items.length, 0, 1);
+            items_changed.emit (_items.length - 1, 0, 1);
         }
 
         protected void _insert_item (Item item, int index) {
             _connect_to_item (item);
-            _items.insert (item, index);
+            _items.insert (index, item);
             items_changed.emit (index, 0, 1);
         }
 
@@ -321,7 +321,7 @@ namespace Graphs {
         public void add_items (Item[] items) {
             _used_colors = {};
             _used_errbar_colors = {};
-            foreach (Item item in this) {
+            foreach (Item item in _items) {
                 if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
@@ -402,7 +402,6 @@ namespace Graphs {
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
-            _items.length = items.length;
             _items = new ManagedArray<Item>.take ((owned) items);
             _update_used_positions ();
             items_changed.emit (0, removed, _items.length);
@@ -473,7 +472,7 @@ namespace Graphs {
 
         // Section Vala iterator
 
-        public Iterator<Item> iterator () {
+        public ManagedArrayIterator<Item> iterator () {
             return _items.iterator ();
         }
 
@@ -515,13 +514,7 @@ namespace Graphs {
 
         public void change_position (uint index1, uint index2) {
             if (index1 == index2) return;
-            Item item = _items[(int) index2];
-            if (index1 < index2) {
-                _items.data.move ((int) index1, (int) index1 + 1, (int) (index2 - index1));
-            } else {
-                _items.data.move ((int) index2 + 1, (int) index2, (int) (index1 - index2));
-            }
-            _items[(int) index1] = item;
+            _items.move_to ((int) index1, (int) index2);
             uint position = uint.min (index1, index2);
             uint changed = uint.max (index1, index2) - position + 1;
             items_changed.emit (position, changed, changed);
@@ -582,13 +575,13 @@ namespace Graphs {
                 new AxisInfo.for_direction (figure_settings, "right"),
             };
 
-            var equation_items = new Gee.ArrayList<EquationItem> ();
+            var equation_items = new ManagedArray<EquationItem> (_items.length);
 
-            foreach (Item item in this) {
+            foreach (Item item in _items) {
                 if (!item.selected && hide_unselected) continue;
 
                 if (item is EquationItem) {
-                    equation_items.add ((EquationItem) item);
+                    equation_items.append ((EquationItem) item);
                     continue;
                 }
 
@@ -820,7 +813,7 @@ namespace Graphs {
             uint count = 0;
             uint errbar_count = 0;
 
-            foreach (var item in this) {
+            foreach (var item in _items) {
                 ItemFactory.reset_item (item, old_selected_style_params, selected_style_params);
 
                 if (!(item is DataItem || item is EquationItem)) continue;

@@ -50,9 +50,7 @@ namespace Graphs {
 
         public void change_position (int index1, int index2) {
             if (index1 == index2) return;
-            string color = this.colors[index2];
-            this.colors.remove_at (index2);
-            this.colors.insert (color, index1);
+            this.colors.move_to (index1, index2);
             reload_color_boxes ();
             colors_changed.emit ();
         }
