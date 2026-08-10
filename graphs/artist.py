@@ -21,13 +21,13 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
-def _finite_extrema(values):
-    """Return the local indices of the min and max, ignoring NaN."""
-    finite = numpy.flatnonzero(~numpy.isnan(values))
-    if not len(finite):
-        return finite
-    finite_values = values[finite]
-    return finite[[finite_values.argmin(), finite_values.argmax()]]
+def _find_row_extrema(rows):
+    """Find the position of the min and max within each row, ignoring NaN."""
+    blanked = numpy.isnan(rows)
+    return (
+        numpy.where(blanked, numpy.inf, rows).argmin(axis=1),
+        numpy.where(blanked, -numpy.inf, rows).argmax(axis=1),
+    )
 
 
 def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
@@ -61,27 +61,37 @@ def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
     selected = [lowest, highest, numpy.array((first, last - 1))]
 
     gaps = nan_indices[(nan_indices >= first) & (nan_indices < last)]
-    if len(gaps):
-        bucketed = (gaps[gaps < bucketed_end] - first) // bucket_size
-        touched, first_gap = numpy.unique(bucketed, return_index=True)
-        selected.append(gaps[first_gap])
-        trailing = gaps[gaps >= bucketed_end]
-        if len(trailing):
-            selected.append(trailing[:1])
-        rows = buckets[touched]
-        blanked = numpy.isnan(rows)
-        starts = bucket_starts[touched]
-        lowest[touched] = numpy.where(
-            blanked, numpy.inf, rows,
-        ).argmin(axis=1) + starts
-        highest[touched] = numpy.where(
-            blanked, -numpy.inf, rows,
-        ).argmax(axis=1) + starts
+    if gaps.size:
+        selected += _fix_nan_extrema(
+            gaps, buckets, bucket_starts, bucket_size, first, bucketed_end,
+            lowest, highest,
+        )
 
     if bucketed_end < last:  # remainder that did not fill a whole bucket
-        remainder = ydata[bucketed_end:last]
-        selected.append(bucketed_end + _finite_extrema(remainder))
+        remainder = ydata[bucketed_end:last].reshape(1, -1)
+        selected.append(bucketed_end + numpy.concatenate(
+            _find_row_extrema(remainder),
+        ))
     return numpy.unique(numpy.concatenate(selected))
+
+
+def _fix_nan_extrema(gaps, buckets, bucket_starts, bucket_size, first,
+                     bucketed_end, lowest, highest):
+    """Pick better extrema for the buckets that contain a NaN."""
+    bucketed_gaps = gaps[gaps < bucketed_end]
+    gap_buckets, first_of_bucket = numpy.unique(
+        (bucketed_gaps - first) // bucket_size,
+        return_index=True,
+    )
+    low_within, high_within = _find_row_extrema(buckets[gap_buckets])
+    lowest[gap_buckets] = bucket_starts[gap_buckets] + low_within
+    highest[gap_buckets] = bucket_starts[gap_buckets] + high_within
+
+    breaks = [bucketed_gaps[first_of_bucket]]
+    trailing_gaps = gaps[gaps >= bucketed_end]
+    if trailing_gaps.size:
+        breaks.append(trailing_gaps[:1])
+    return breaks
 
 
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
