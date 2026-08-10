@@ -181,8 +181,8 @@ namespace Graphs {
 
         public signal void value_changed (string key, Variant val);
 
-        private Gee.Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
-        private Gee.Map<string, Object> items = new Gee.HashMap<string, Object> ();
+        private HashTable<string, Variant> settings = new HashTable<string, Variant> (str_hash, str_equal);
+        private HashTable<string, Object> items = new HashTable<string, Object> (str_hash, str_equal);
 
         public ImportSettings (File file) {
             Object (
