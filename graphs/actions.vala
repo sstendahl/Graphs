@@ -87,12 +87,13 @@ namespace Graphs {
             );
             window.add_action (toggle_sidebar_action);
 
-            var modes = new Gee.ArrayList<string>.wrap ({"pan", "zoom", "select"});
-            foreach (string mode in modes) {
-                string current_mode = mode;
-                var action = new SimpleAction (@"mode-$current_mode", null);
+            var mode_class = (EnumClass) typeof (Mode).class_ref ();
+            for (int i = 0; i < mode_class.n_values; i++) {
+                unowned EnumValue? val = mode_class.get_value (i);
+
+                var action = new SimpleAction ("mode-" + val.value_nick, null);
                 action.activate.connect (() => {
-                    window.canvas.mode = (Mode) modes.index_of (current_mode);
+                    window.canvas.mode = (Mode) val.value;
                     window.on_selection_changed ();
                 });
                 window.add_action (action);
