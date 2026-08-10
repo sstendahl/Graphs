@@ -21,7 +21,16 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
-def _decimate(x_keys, ydata, sorted_x, x_start, x_stop, pixels):
+def _finite_extrema(values):
+    """Return the local indices of the min and max, ignoring NaN."""
+    finite = numpy.flatnonzero(~numpy.isnan(values))
+    if not len(finite):
+        return finite
+    finite_values = values[finite]
+    return finite[[finite_values.argmin(), finite_values.argmax()]]
+
+
+def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
     """Return the indices that will be drawn."""
     point_count = len(ydata)
     if point_count < 20000:
@@ -47,18 +56,31 @@ def _decimate(x_keys, ydata, sorted_x, x_start, x_stop, pixels):
     bucketed_end = first + bucket_size * bucket_count
     buckets = ydata[first:bucketed_end].reshape(bucket_count, bucket_size)
     bucket_starts = first + numpy.arange(bucket_count) * bucket_size
-    selected = [
-        buckets.argmin(axis=1) + bucket_starts,
-        buckets.argmax(axis=1) + bucket_starts,
-        numpy.array((first, last - 1)),
-    ]
+    lowest = buckets.argmin(axis=1) + bucket_starts
+    highest = buckets.argmax(axis=1) + bucket_starts
+    selected = [lowest, highest, numpy.array((first, last - 1))]
+
+    gaps = nan_indices[(nan_indices >= first) & (nan_indices < last)]
+    if len(gaps):
+        bucketed = (gaps[gaps < bucketed_end] - first) // bucket_size
+        touched, first_gap = numpy.unique(bucketed, return_index=True)
+        selected.append(gaps[first_gap])
+        trailing = gaps[gaps >= bucketed_end]
+        if len(trailing):
+            selected.append(trailing[:1])
+        rows = buckets[touched]
+        blanked = numpy.isnan(rows)
+        starts = bucket_starts[touched]
+        lowest[touched] = numpy.where(
+            blanked, numpy.inf, rows,
+        ).argmin(axis=1) + starts
+        highest[touched] = numpy.where(
+            blanked, -numpy.inf, rows,
+        ).argmax(axis=1) + starts
+
     if bucketed_end < last:  # remainder that did not fill a whole bucket
         remainder = ydata[bucketed_end:last]
-        selected.append(
-            bucketed_end + numpy.array(
-                (remainder.argmin(), remainder.argmax()),
-            ),
-        )
+        selected.append(bucketed_end + _finite_extrema(remainder))
     return numpy.unique(numpy.concatenate(selected))
 
 
@@ -158,11 +180,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._keys = numpy.maximum.accumulate(
             numpy.nan_to_num(xdata, nan=-numpy.inf),
         ) if numpy.isnan(xdata).any() else xdata
+        self._nans = numpy.flatnonzero(numpy.isnan(self._full[1]))
 
     def _apply_lod(self, *_args) -> None:
         """Draw at a level of detail matching the current view."""
         xdata, ydata, xerr, yerr = self._full
-        indices = _decimate(self._keys, ydata, self._sorted,
+        indices = _decimate(self._keys, ydata, self._nans, self._sorted,
                             *self._axis.get_xlim(), self._axis.bbox.width)
         if indices is not None:
             xdata, ydata = xdata[indices], ydata[indices]
