@@ -4,20 +4,18 @@ namespace Graphs {
      * Small list class
      */
     public class ItemList : Object {
-        private Gee.List<Item> _items = new Gee.ArrayList<Item> ();
+        private ManagedArray<Item> _items = new ManagedArray<Item> ();
 
         public void add (Item item) {
-            _items.add (item);
+            _items.append (item);
         }
 
         public void add_all (Item[] items) {
-            foreach (Item item in items) {
-                _items.add (item);
-            }
+            _items.append_all (items);
         }
 
         public Item[] to_array () {
-            return _items.to_array ();
+            return _items.steal ();
         }
     }
 
