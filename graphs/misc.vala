@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    public const int DOWNSAMPLE_THRESHOLD = 20000;
+    public const int DOWNSAMPLE_THRESHOLD = 5000;
 
     public ListModel get_mplstyle_file_filters () {
         var filter = Tools.create_file_filter (
