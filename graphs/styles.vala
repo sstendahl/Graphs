@@ -123,7 +123,7 @@ namespace Graphs {
                     "standard::*",
                     FileQueryInfoFlags.NONE
                 );
-                Gee.List<string> stylenames = new Gee.ArrayList<string>.wrap (list_stylenames ());
+                ManagedArray<string> stylenames = new ManagedArray<string>.take (list_stylenames ());
                 CompareDataFunc<Style> cmp = style_cmp;
                 FileInfo info = null;
                 while ((info = enumerator.next_file ()) != null) {
@@ -134,10 +134,10 @@ namespace Graphs {
                     ) {
                         Style style = style_for_file (file);
                         style.name = Tools.get_duplicate_string (
-                            style.name, stylenames.to_array ()
+                            style.name, stylenames.peek ()
                         );
                         style_model.insert_sorted (style, cmp);
-                        stylenames.add (style.name);
+                        stylenames.append (style.name);
                     };
                 }
                 enumerator.close ();
