@@ -1,4 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
+subdir('styles')
+subdir('ui')
+
 desktop_file_in = configure_file(
           input: application_id + '.desktop.in',
          output: application_id + '.desktop.in',
@@ -79,28 +82,6 @@ configure_file(
     install_dir: join_paths(mandir, 'man1'),
 )
 
-subdir('ui')
-
-styles = files(
-  'styles/adwaita.mplstyle',
-  'styles/adwaita-dark.mplstyle',
-  'styles/bmh.mplstyle',
-  'styles/classic.mplstyle',
-  'styles/dark-background.mplstyle',
-  'styles/fivethirtyeight.mplstyle',
-  'styles/ggplot.mplstyle',
-  'styles/grayscale.mplstyle',
-  'styles/matplotlib.mplstyle',
-  'styles/seaborn.mplstyle',
-  'styles/seaborn-white.mplstyle',
-  'styles/seaborn-whitegrid.mplstyle',
-  'styles/solarized-light.mplstyle',
-  'styles/tableau-colorblind10.mplstyle',
-  'styles/thesis.mplstyle',
-  'styles/yaru.mplstyle',
-  'styles/yaru-dark.mplstyle',
-)
-
 icons = files(
   'icons/axes-one-quadrant-symbolic.svg',
   'icons/center-symbolic.svg',
@@ -135,27 +116,26 @@ other = files(
   'whats_new',
 )
 
-style_io = files('../graphs/style_io.py')
 gresource_generator = files('generate_gresource.py')
 gresource_xml = custom_target('gresource_xml',
-         input: [blueprints, styles, icons, other],
-        output: [application_id + '.gresource.xml', 'style_list.vala'],
-  depend_files: [style_io, gresource_generator],
+         input: [blueprints, styles, previews, icons, other],
+        output: application_id + '.gresource.xml',
+  depend_files: [gresource_generator],
        command: [
     python,
     gresource_generator,
     '@OUTPUT@',
     meson.current_build_dir(),
     meson.current_source_dir(),
-    style_io,
     '--styles', styles,
+    '--previews', previews + system_style_adwaita + system_style_yaru,
     '--ui', blueprints,
     '--icons', icons,
     '--other', other,
   ],
 )
 
-gresource = gnome.compile_resources(application_id, gresource_xml[0],
+gresource = gnome.compile_resources(application_id, gresource_xml,
   source_dir: meson.current_build_dir(),
       c_name: 'graphs',
 )
