@@ -1,0 +1,15 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+namespace Graphs {
+    private const StyleInfo[] STYLES = { @STYLES@ };
+
+    namespace Config {
+        public const string GETTEXT_PACKAGE = "@GETTEXT_PACKAGE@";
+        public const string LOCALEDIR = "@LOCALEDIR@";
+
+        public const string APPLICATION_ID = "@APPLICATION_ID@";
+        public const string VERSION = "@VERSION@";
+        public const string HOMEPAGE_URL = "@HOMEPAGE_URL@";
+        public const string ISSUE_URL = "@ISSUE_URL@";
+        public const string COPYRIGHT = "@COPYRIGHT@";
+    }
+}
