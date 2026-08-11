@@ -6,8 +6,8 @@ namespace Graphs {
     public class Application : Adw.Application {
         public static Settings settings { get; private set; }
 
-        private Gee.List<Window> main_windows;
-        private Gee.List<StyleEditor> style_editors;
+        private SList<Window> main_windows;
+        private SList<StyleEditor> style_editors;
         private static uint _css_counter = 0;
 
         private const OptionEntry[] OPTION_ENTRIES = {
@@ -40,8 +40,8 @@ namespace Graphs {
 
             settings = new Settings (application_id);
 
-            this.main_windows = new Gee.LinkedList<Window> ();
-            this.style_editors = new Gee.LinkedList<StyleEditor> ();
+            this.main_windows = new SList<Window> ();
+            this.style_editors = new SList<StyleEditor> ();
 
             Gtk.Window.set_default_icon_name (application_id);
 
@@ -53,7 +53,7 @@ namespace Graphs {
          */
         public override void activate () {
             base.activate ();
-            var window = main_windows.is_empty ? create_main_window () : main_windows[0];
+            var window = main_windows.is_empty () ? create_main_window () : main_windows.data;
             window.present ();
         }
 
@@ -132,14 +132,14 @@ namespace Graphs {
 
         public Window create_main_window () {
             Window window = PythonHelper.create_window ();
-            main_windows.add (window);
+            main_windows.append (window);
             add_window (window);
             return window;
         }
 
         public StyleEditor create_style_editor () {
             var style_editor = new StyleEditor ();
-            style_editors.add (style_editor);
+            style_editors.append (style_editor);
             add_window (style_editor);
             return style_editor;
         }
@@ -173,19 +173,25 @@ namespace Graphs {
         }
 
         private void try_quit () {
-            if (main_windows.size == 0 && style_editors.size == 0) {
+            if (main_windows.is_empty () && style_editors.is_empty ()) {
                 quit ();
             }
         }
 
         public void quit_action () {
-            // We need to cast to array here as the list size might change
-            // during iteration
-            foreach (Window window in main_windows.to_array ()) {
-                window.close ();
+            unowned var window = main_windows;
+            while (window != null) {
+                // We need to cache next as the current may be set to null
+                // during window close
+                unowned var next = window.next;
+                window.data.close ();
+                window = next;
             }
-            foreach (StyleEditor style_editor in style_editors.to_array ()) {
-                style_editor.close ();
+            unowned var style_editor = style_editors;
+            while (style_editor != null) {
+                unowned var next = style_editor.next;
+                style_editor.data.close ();
+                style_editor = next;
             }
         }
     }
