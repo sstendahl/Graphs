@@ -5,7 +5,7 @@
 
 #define STACK_MAX 128
 
-gdouble
+static inline gdouble
 factorial (gdouble x)
 {
   if (x < 0.0)
