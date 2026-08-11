@@ -401,8 +401,11 @@ namespace Graphs {
                 );
             } else if (downsampled_count > 1) {
                 add_toast_string (
-                    _("%d items are drawn with reduced detail using %d points")
-                        .printf (downsampled_count, DOWNSAMPLE_THRESHOLD)
+                    ngettext (
+                        "%d item is drawn with reduced detail using %d points",
+                        "%d items are drawn with reduced detail using %d points",
+                        downsampled_count
+                    ).printf (downsampled_count, DOWNSAMPLE_THRESHOLD)
                 );
             }
         }
