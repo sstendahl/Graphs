@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
     /**
      * Data class
      */
-    public class Data : Object, ListModel, SelectionModel, Traversable<Item>, Iterable<Item> {
+    public class Data : Object, ListModel, Gtk.SelectionModel {
+        private const int HISTORY_SIZE = 100;
+
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
         public bool can_view_back { get; private set; default = false; }
@@ -14,7 +13,7 @@ namespace Graphs {
         public File file { get; set; }
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
-        public SingleSelection style_selection_model { get; private set; }
+        public Gtk.SingleSelection style_selection_model { get; private set; }
         public StyleParameters selected_style_params { get; private set; }
 
         public string selected_stylename {
@@ -35,14 +34,15 @@ namespace Graphs {
         }
 
         private bool[] _used_positions;
-        private Item[] _items = new Item[8];
-        private int _n_items = 0;
+        private ManagedArray<Item> _items = new ManagedArray<Item> (8);
         private string[] _used_colors;
         private string[] _used_errbar_colors;
-        private GLib.Settings _settings;
+        private Settings _settings;
         private bool _notify_selection_changed = true;
-        private Gee.List<Limits> _view_history_states = new ArrayList<Limits> ();
-        private int _view_history_pos = -1;
+        private Limits[] _view_history_states = new Limits[HISTORY_SIZE];
+        private int _current_view_history_state = 0;
+        private int _oldest_view_history_state = 0;
+        private int _newest_view_history_state = 0;
         private StyleParameters old_selected_style_params;
 
         public signal void style_changed ();
@@ -59,7 +59,7 @@ namespace Graphs {
         construct {
             items_changed.connect (_update_used_positions);
             this._settings = Application.get_settings_child ("figure");
-            this.style_selection_model = new SingleSelection (StyleManager.style_model);
+            this.style_selection_model = new Gtk.SingleSelection (StyleManager.style_model);
             this.figure_settings = new FigureSettings (_settings);
 
             var style_manager = StyleManager.instance;
@@ -105,7 +105,7 @@ namespace Graphs {
                 reset_items.begin ();
             });
 
-            _view_history_states.add (figure_settings.get_limits ());
+            _view_history_states[0] = figure_settings.get_limits ();
             PythonHelper.run_method (this, "_init_history_states");
         }
 
@@ -121,11 +121,11 @@ namespace Graphs {
         }
 
         public uint get_n_items () {
-            return _n_items;
+            return _items.length;
         }
 
         public Item last () {
-            return _items[_n_items - 1];
+            return _items[_items.length - 1];
         }
 
         // End section ListModel
@@ -134,30 +134,30 @@ namespace Graphs {
         // All required methods to implement the SelectionModel interface
 
         private void clear_selection () {
-            for (uint index = 0; index < _n_items; index++) {
-                _items[index].selected = false;
+            foreach (Item item in _items) {
+                item.selected = false;
             }
         }
 
-        public Bitset get_selection_in_range (uint position, uint n_items) {
-            var bitset = new Bitset.empty ();
-            for (uint index = position; index < position + n_items; index++) {
+        public Gtk.Bitset get_selection_in_range (uint position, uint n_items) {
+            var bitset = new Gtk.Bitset.empty ();
+            for (int index = (int) position; index < position + n_items; index++) {
                 if (_items[index].selected) bitset.add (index);
             }
             return bitset;
         }
 
         public bool is_selected (uint position) {
-            return _items[position].selected;
+            return _items[(int) position].selected;
         }
 
         public bool select_all () {
             _notify_selection_changed = false;
-            for (uint index = 0; index < _n_items; index++) {
-                _items[index].selected = true;
+            foreach (Item item in _items) {
+                item.selected = true;
             }
             _notify_selection_changed = true;
-            selection_changed.emit (0, _n_items);
+            selection_changed.emit (0, _items.length);
             return true;
         }
 
@@ -165,11 +165,11 @@ namespace Graphs {
             if (unselect_rest) {
                 _notify_selection_changed = false;
                 clear_selection ();
-                _items[position].selected = true;
+                _items[(int) position].selected = true;
                 _notify_selection_changed = true;
-                selection_changed.emit (0, _n_items);
+                selection_changed.emit (0, _items.length);
             } else {
-                _items[position].selected = true;
+                _items[(int) position].selected = true;
             }
             return true;
         }
@@ -178,12 +178,12 @@ namespace Graphs {
             _notify_selection_changed = false;
             if (unselect_rest) {
                 clear_selection ();
-                for (uint index = position; index < position + n_items; index++) {
+                for (int index = (int) position; index < position + n_items; index++) {
                     _items[index].selected = true;
                 }
-                selection_changed.emit (0, _n_items);
+                selection_changed.emit (0, _items.length);
             } else {
-                for (uint index = position; index < position + n_items; index++) {
+                for (int index = (int) position; index < position + n_items; index++) {
                      _items[index].selected = true;
                 }
                 selection_changed.emit (position, n_items);
@@ -192,15 +192,15 @@ namespace Graphs {
             return true;
         }
 
-        public bool set_selection (Bitset selection, Bitset mask) {
+        public bool set_selection (Gtk.Bitset selection, Gtk.Bitset mask) {
             if (mask.is_empty ()) return true;
             _notify_selection_changed = false;
-            for (int index = 0; index < _n_items; index++) {
+            for (int index = 0; index < _items.length; index++) {
                 if (!mask.contains (index)) continue;
                 _items[index].selected = selection.contains (index);
             }
             _notify_selection_changed = true;
-            selection_changed.emit (0, _n_items);
+            selection_changed.emit (0, _items.length);
             return true;
         }
 
@@ -208,18 +208,18 @@ namespace Graphs {
             _notify_selection_changed = false;
             clear_selection ();
             _notify_selection_changed = true;
-            selection_changed.emit (0, _n_items);
+            selection_changed.emit (0, _items.length);
             return true;
         }
 
         public bool unselect_item (uint position) {
-            _items[position].selected = false;
+            _items[(int) position].selected = false;
             return true;
         }
 
         public bool unselect_range (uint position, uint n_items) {
             _notify_selection_changed = false;
-            for (uint index = position; index < position + n_items; index++) {
+            for (int index = (int) position; index < position + n_items; index++) {
                 _items[index].selected = false;
             }
             _notify_selection_changed = true;
@@ -233,41 +233,30 @@ namespace Graphs {
 
         public void clear () {
             uint n_items = get_n_items ();
-            for (int index = 0; index < n_items; index++) {
-                _items[index] = null;
-            }
-            _n_items = 0;
+            _items = new ManagedArray<Item> (8);
             items_changed.emit (0, n_items, 0);
             this.can_undo = false;
             this.can_redo = false;
             this.can_view_back = false;
             this.can_view_forward = false;
             this.figure_settings = new FigureSettings (_settings);
-            _view_history_states.clear ();
-            _view_history_states.add (figure_settings.get_limits ());
+            _view_history_states[0] = figure_settings.get_limits ();
+            _current_view_history_state = 0;
+            _oldest_view_history_state = 0;
+            _newest_view_history_state = 0;
             PythonHelper.run_method (this, "_init_history_states");
             this.file = null;
             this.unsaved = false;
             notify_property ("unsaved");
         }
 
-        private void grow_if_needed (int grow_size) {
-            int minimum_size = _n_items + grow_size;
-            if (minimum_size > _items.length) {
-                // double the capacity unless we add even more items at this time
-                _items.resize (grow_size > _items.length ? minimum_size : 2 * _items.length);
-            }
-        }
-
         private void _update_used_positions () {
-            if (_n_items == 0) {
+            if (_items.is_empty ()) {
                 _used_positions = {true, false, true, false};
                 return;
             }
             bool[] used_positions = {false, false, false, false};
-            Item item;
-            for (uint index = 0; index < _n_items; index++) {
-                item = _items[index];
+            foreach (Item item in _items) {
                 if (figure_settings.hide_unselected && !item.selected) continue;
                 used_positions[item.xposition] = true;
                 used_positions[item.yposition + 2] = true;
@@ -286,24 +275,18 @@ namespace Graphs {
 
         protected void _add_item (Item item) {
             _connect_to_item (item);
-            grow_if_needed (1);
-            _items[_n_items] = item;
-            items_changed.emit (_n_items++, 0, 1);
+            _items.append (item);
+            items_changed.emit (_items.length - 1, 0, 1);
         }
 
         protected void _insert_item (Item item, int index) {
             _connect_to_item (item);
-            grow_if_needed (1);
-            _items.move (index, index + 1, _n_items - index);
-            _items[index] = item;
-            _n_items++;
+            _items.insert (index, item);
             items_changed.emit (index, 0, 1);
         }
 
         protected void _remove_item (uint index) {
-            _items[index] = null;
-            _items.move ((int) index + 1, (int) index, (int) (_n_items - index - 1));
-            _n_items--;
+            _items.remove_at ((int) index);
             items_changed.emit (index, 1, 0);
         }
 
@@ -338,7 +321,7 @@ namespace Graphs {
         public void add_items (Item[] items) {
             _used_colors = {};
             _used_errbar_colors = {};
-            foreach (Item item in this) {
+            foreach (Item item in _items) {
                 if (item.color in selected_style_params.color_cycle) append_used_color (item.color);
                 if (item is DataItem) {
                     unowned string errcolor = ((DataItem) item).errcolor;
@@ -346,8 +329,8 @@ namespace Graphs {
                 }
             }
             string[] used_names = get_names ();
-            uint prev_size = _n_items;
-            grow_if_needed (items.length);
+            uint prev_size = _items.length;
+            _items.append_all (items);
             foreach (Item item in items) {
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
@@ -407,7 +390,6 @@ namespace Graphs {
                     }
                 }
                 _connect_to_item (item);
-                _items[_n_items++] = item;
                 item_added.emit (item);
             }
             items_changed.emit (prev_size, 0, items.length);
@@ -416,14 +398,13 @@ namespace Graphs {
         }
 
         public void set_items (owned Item[] items) {
-            uint removed = _n_items;
+            uint removed = _items.length;
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
-            _n_items = items.length;
-            _items = (owned) items;
+            _items = new ManagedArray<Item>.take ((owned) items);
             _update_used_positions ();
-            items_changed.emit (0, removed, _n_items);
+            items_changed.emit (0, removed, _items.length);
         }
 
         public void delete_items (Item[] items) {
@@ -491,57 +472,12 @@ namespace Graphs {
 
         // Section Vala iterator
 
-        public Iterator<Item> iterator () {
-            return new ItemIterator (this);
+        public ManagedArrayIterator<Item> iterator () {
+            return _items.iterator ();
         }
 
-        private class ItemIterator : Object, Traversable<Item>, Iterator<Item> {
-            private Data _data;
-            private int _index = -1;
-
-            public bool read_only { get; default = true; }
-            public bool valid { get { return _index >= 0 && has_next (); } }
-
-            public ItemIterator (Data data) {
-                _data = data;
-            }
-
-            public bool @foreach (ForallFunc<Item> f) {
-                uint n_items = _data.get_n_items ();
-                while (_index < n_items) {
-                    if (!f ((Item) _data.get_item (_index))) return false;
-                    _index++;
-                }
-                _index--;
-                return true;
-            }
-
-            public bool has_next () {
-                return _index + 1 < _data.get_n_items ();
-            }
-
-            public bool next () {
-                if (has_next ()) {
-                    _index++;
-                    return true;
-                }
-                return false;
-            }
-
-            public new Item get () {
-                return (Item) _data.get_item (_index);
-            }
-
-            public void remove () {
-                assert_not_reached ();
-            }
-        }
-
-        public bool @foreach (ForallFunc<Item> f) {
-            for (int i = 0; i < _n_items; i++) {
-                if (!f (_items[i])) return false;
-            }
-            return true;
+        public void @foreach (Func<Item> func) {
+            _items.@foreach (func);
         }
 
         // End section Vala iterator
@@ -553,26 +489,23 @@ namespace Graphs {
         }
 
         public bool is_empty () {
-            return _n_items == 0;
+            return _items.is_empty ();
         }
 
-        public unowned Item[] get_items () {
-            return _items[:_n_items];
+        public Item[] get_items () {
+            return _items.peek ();
         }
 
         public string[] get_names () {
-            string[] names = new string[_n_items];
-            for (int index = 0; index < _n_items; index++) {
+            string[] names = new string[_items.length];
+            for (int index = 0; index < _items.length; index++) {
                 names[index] = _items[index].name;
             }
             return names;
         }
 
         public uint index (Item item) {
-            for (uint index = 0; index < _n_items; index++) {
-                if (_items[index] == item) return index;
-            }
-            assert_not_reached ();
+            return (uint) _items.index (item);
         }
 
         public unowned bool[] get_used_positions () {
@@ -581,25 +514,21 @@ namespace Graphs {
 
         public void change_position (uint index1, uint index2) {
             if (index1 == index2) return;
-            Item item = _items[index2];
-            if (index1 < index2) {
-                _items.move ((int) index1, (int) index1 + 1, (int) (index2 - index1));
-            } else {
-                _items.move ((int) index2 + 1, (int) index2, (int) (index1 - index2));
-            }
-            _items[index1] = item;
+            _items.move_to ((int) index1, (int) index2);
             uint position = uint.min (index1, index2);
             uint changed = uint.max (index1, index2) - position + 1;
             items_changed.emit (position, changed, changed);
             position_changed.emit (index1, index2);
         }
 
-        private struct AxisInfo {
-            unowned string direction;
-            bool used;
-            double min_value;
-            double max_value;
-            Scale scale;
+        [Compact]
+        private class AxisInfo {
+            public unowned string direction;
+            public bool used;
+            public double min_value;
+            public double max_value;
+            public Scale scale;
+            public double[] xdata;
 
             public AxisInfo.for_direction (FigureSettings figure_settings, string direction) {
                 this.direction = direction;
@@ -607,9 +536,14 @@ namespace Graphs {
                 figure_settings.get ("min_" + direction, out min_value);
                 figure_settings.get ("max_" + direction, out max_value);
                 figure_settings.get (direction + "_scale", out scale);
+                xdata = null;
             }
 
-            public void update_min_max (double min_value, double max_value) {
+            public void update_min_max (double[] data) {
+                double min_value, max_value;
+
+                if (!CUtilities.array_minmax (data, scale.is_nonzero (), out min_value, out max_value)) return;
+
                 if (used) {
                     this.min_value = double.min (this.min_value, min_value);
                     this.max_value = double.max (this.max_value, max_value);
@@ -619,23 +553,35 @@ namespace Graphs {
                     used = true;
                 }
             }
+
+            public unowned double[] get_xdata () {
+                if (xdata == null) {
+                    xdata = new double[5000];
+                    CUtilities.create_equidistant_data (min_value, max_value, scale, xdata);
+                }
+
+                return xdata;
+            }
         }
 
         public void optimize_limits () {
+            var figure_settings = this.figure_settings;
+            bool hide_unselected = figure_settings.hide_unselected;
+
             AxisInfo[] axes = {
-                AxisInfo.for_direction (figure_settings, "bottom"),
-                AxisInfo.for_direction (figure_settings, "left"),
-                AxisInfo.for_direction (figure_settings, "top"),
-                AxisInfo.for_direction (figure_settings, "right"),
+                new AxisInfo.for_direction (figure_settings, "bottom"),
+                new AxisInfo.for_direction (figure_settings, "left"),
+                new AxisInfo.for_direction (figure_settings, "top"),
+                new AxisInfo.for_direction (figure_settings, "right"),
             };
 
-            var equation_items = new Gee.ArrayList<EquationItem> ();
+            var equation_items = new ManagedArray<EquationItem> (_items.length);
 
-            foreach (Item item in this) {
-                if (!item.selected && figure_settings.hide_unselected) continue;
+            foreach (Item item in _items) {
+                if (!item.selected && hide_unselected) continue;
 
                 if (item is EquationItem) {
-                    equation_items.add ((EquationItem) item);
+                    equation_items.append ((EquationItem) item);
                     continue;
                 }
 
@@ -645,41 +591,33 @@ namespace Graphs {
                 int xindex = item.xposition * 2;
                 int yindex = item.yposition * 2 + 1;
 
-                double min_x, max_x, min_y, max_y;
-
-                if (!CUtilities.array_minmax (data_item.get_xdata (), axes[xindex].scale.is_nonzero (), out min_x, out max_x)) continue;
-                if (!CUtilities.array_minmax (data_item.get_ydata (), axes[yindex].scale.is_nonzero (), out min_y, out max_y)) continue;
-
-                axes[xindex].update_min_max (min_x, max_x);
-                axes[yindex].update_min_max (min_y, max_y);
+                axes[xindex].update_min_max (data_item.get_xdata ());
+                axes[yindex].update_min_max (data_item.get_ydata ());
             }
 
             foreach (EquationItem item in equation_items) {
                 int xindex = item.xposition * 2;
                 int yindex = item.yposition * 2 + 1;
 
-                double min_x = axes[xindex].min_value;
-                double max_x = axes[xindex].max_value;
+                if (PythonHelper.has_singularities (item.equation, axes[xindex].min_value, axes[xindex].max_value)) continue;
 
-                if (PythonHelper.has_singularities (item.equation, min_x, max_x)) continue;
+                unowned double[] xdata = axes[xindex].get_xdata ();
+                double[] ydata = item.get_program ().eval (xdata);
 
-                double min_y, max_y;
-                if (!MathTools.minmax_equation (item.equation, min_x, max_x, axes[xindex].scale, out min_y, out max_y)) continue;
-
-                axes[yindex].update_min_max (min_y, max_y);
+                axes[yindex].update_min_max (ydata);
             }
 
             for (int i = 0; i < axes.length; i++) {
-                AxisInfo* axis = &axes[i];
-                if (!axis->used) continue;
+                unowned AxisInfo axis = axes[i];
+                if (!axis.used) continue;
 
                 // 0.05 padding on y-axis, 0.015 padding on x-axis
                 double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
 
-                double min_all = axis->min_value;
-                double max_all = axis->max_value;
+                double min_all = axis.min_value;
+                double max_all = axis.max_value;
 
-                if (axis->scale.is_logarithmic ()) {
+                if (axis.scale.is_logarithmic ()) {
                     double log_min = min_all > 0 ? Math.log10 (min_all) : 0;
                     double log_max = max_all > 0 ? Math.log10 (max_all) : 0;
                     double log_span = log_max - log_min;
@@ -692,14 +630,14 @@ namespace Graphs {
                     max_all += padding_factor * span;
 
                     // For inverse scale, calculate padding using a factor
-                    if (axis->scale == Scale.INVERSE) {
+                    if (axis.scale == Scale.INVERSE) {
                         min_all *= 0.99;
                     } else {
                         min_all -= padding_factor * span;
                     }
                 }
 
-                string direction = axis->direction;
+                unowned string direction = axis.direction;
                 figure_settings.set ("min_" + direction, min_all);
                 figure_settings.set ("max_" + direction, max_all);
             }
@@ -731,22 +669,16 @@ namespace Graphs {
 
         public void add_view_history_state () {
             var limits = figure_settings.get_limits ();
-            var last = _view_history_states.last ();
+            var last = _view_history_states[_current_view_history_state];
             if (MathTools.all_close (limits.values (), last.values ())) return;
 
-            if (_view_history_pos != -1) {
-                int new_size = _view_history_states.size + _view_history_pos + 1;
-                while (_view_history_states.size > new_size) {
-                    _view_history_states.remove_at (_view_history_states.size - 1);
-                }
-            }
+            int next = (_current_view_history_state + 1) % HISTORY_SIZE;
+            _view_history_states[next] = limits;
+            _current_view_history_state = next;
+            _newest_view_history_state = next;
 
-            if (_view_history_states.size > 101) {
-                _view_history_states.remove_at (0);
-            }
-
-            _view_history_pos = -1;
-            _view_history_states.add (limits);
+            if (next == _oldest_view_history_state)
+                _oldest_view_history_state = (_oldest_view_history_state + 1) % HISTORY_SIZE;
 
             this.can_view_back = true;
             this.can_view_forward = false;
@@ -756,33 +688,53 @@ namespace Graphs {
 
         public void view_back () {
             if (!can_view_back) return;
-            int index = _view_history_states.size + --_view_history_pos;
-            figure_settings.set_limits (_view_history_states.get (index));
+            _current_view_history_state = (_current_view_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
+            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
 
-            this.can_view_back = _view_history_pos.abs () < _view_history_states.size;
+            this.can_view_back = _current_view_history_state != _oldest_view_history_state;
             this.can_view_forward = true;
         }
 
         public void view_forward () {
             if (!can_view_forward) return;
-            int index = _view_history_states.size + ++_view_history_pos;
-            figure_settings.set_limits (_view_history_states.get (index));
+            _current_view_history_state = (_current_view_history_state + 1) % HISTORY_SIZE;
+            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
 
             this.can_view_back = true;
-            this.can_view_forward = _view_history_pos < -1;
+            this.can_view_forward = _current_view_history_state != _newest_view_history_state;
         }
 
         protected int get_view_history (out Limits[] history) {
-            history = _view_history_states.to_array ();
-            return _view_history_pos;
+            int n_states;
+            if (_newest_view_history_state >= _oldest_view_history_state)
+                n_states = _newest_view_history_state - _oldest_view_history_state + 1;
+            else
+                n_states = HISTORY_SIZE - _oldest_view_history_state + _newest_view_history_state + 1;
+
+            history = new Limits[n_states];
+
+            int index = _oldest_view_history_state;
+            for (int i = 0; i < n_states; i++) {
+                history[i] = _view_history_states[index];
+                index = (index + 1) % HISTORY_SIZE;
+            }
+
+            return ((_current_view_history_state - _oldest_view_history_state + HISTORY_SIZE) % HISTORY_SIZE) - n_states;
         }
 
-        protected void set_view_history (int pos, owned Limits[] history) {
-            _view_history_states = new ArrayList<Limits>.wrap ((owned) history);
-            _view_history_pos = pos;
+        protected void set_view_history (int pos, owned Limits[] history)
+            requires (history.length <= HISTORY_SIZE) {
+            int n_states = history.length;
+            for (int i = 0; i < n_states; i++) {
+                _view_history_states[i] = history[i];
+            }
 
-            this.can_view_back = _view_history_pos.abs () < _view_history_states.size;
-            this.can_view_forward = _view_history_pos < -1;
+            _oldest_view_history_state = 0;
+            _newest_view_history_state = n_states - 1;
+            _current_view_history_state = _newest_view_history_state + pos + 1;
+
+            this.can_view_back = pos.abs () < n_states;
+            this.can_view_forward = pos < -1;
         }
 
         // End section history
@@ -861,7 +813,7 @@ namespace Graphs {
             uint count = 0;
             uint errbar_count = 0;
 
-            foreach (var item in this) {
+            foreach (var item in _items) {
                 ItemFactory.reset_item (item, old_selected_style_params, selected_style_params);
 
                 if (!(item is DataItem || item is EquationItem)) continue;

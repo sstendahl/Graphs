@@ -1,25 +1,21 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-
 namespace Graphs {
     /**
      * Small list class
      */
     public class ItemList : Object {
-        private Gee.List<Item> _items = new Gee.ArrayList<Item> ();
+        private ManagedArray<Item> _items = new ManagedArray<Item> ();
 
         public void add (Item item) {
-            _items.add (item);
+            _items.append (item);
         }
 
         public void add_all (Item[] items) {
-            foreach (Item item in items) {
-                _items.add (item);
-            }
+            _items.append_all (items);
         }
 
         public Item[] to_array () {
-            return _items.to_array ();
+            return _items.steal ();
         }
     }
 
@@ -37,9 +33,10 @@ namespace Graphs {
         protected signal void override_request (Item item, StyleParameters parameters);
 
         protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
-        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale);
-        protected signal EquationItem equation_item_request (StyleParameters parameters, Expression equation);
+        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale);
+        protected signal EquationItem equation_item_request (StyleParameters parameters, Ast equation);
         protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
+        protected signal FillItem fill_item_request (StyleParameters parameters, FillHolder holder);
 
         public static void reset_item (Item item, StyleParameters old_style, StyleParameters new_style) {
             instance.reset_request.emit (item, old_style, new_style);
@@ -53,16 +50,20 @@ namespace Graphs {
             return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
         }
 
-        public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Expression equation, string xstart, string xstop, int steps, Scale scale) {
+        public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale) {
             return instance.generated_data_item_request.emit (parameters, equation, xstart, xstop, steps, scale);
         }
 
-        public static EquationItem new_equation_item (StyleParameters parameters, Expression equation) {
+        public static EquationItem new_equation_item (StyleParameters parameters, Ast equation) {
             return instance.equation_item_request.emit (parameters, equation);
         }
 
         public static TextItem new_text_item (StyleParameters parameters, double xanchor, double yanchor, string text) {
             return instance.text_item_request.emit (parameters, xanchor, yanchor, text);
+        }
+
+        public static FillItem new_fill_item (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
+            return instance.fill_item_request.emit (parameters, new FillHolder ((owned) xdata, (owned) lower, (owned) upper));
         }
     }
 
@@ -92,8 +93,12 @@ namespace Graphs {
         }
     }
 
+    public interface LegendableItem : Item {
+        public abstract bool legend { get; set; }
+    }
+
     public interface EquationBasedItem : Item {
-        public abstract Expression equation { get; set; }
+        public abstract Ast equation { get; set; }
     }
 
     public class DataHolder : Object {
@@ -132,30 +137,31 @@ namespace Graphs {
             return _yerr;
         }
 
-        public GLib.Bytes get_xdata_b () {
+        public Bytes get_xdata_b () {
             return new Bytes ((uint8[]) _xdata);
         }
 
-        public GLib.Bytes get_ydata_b () {
+        public Bytes get_ydata_b () {
             return new Bytes ((uint8[]) _ydata);
         }
 
-        public GLib.Bytes? get_xerr_b () {
+        public Bytes? get_xerr_b () {
             return _xerr == null ? null : new Bytes ((uint8[]) _xerr);
         }
 
-        public GLib.Bytes? get_yerr_b () {
+        public Bytes? get_yerr_b () {
             return _yerr == null ? null : new Bytes ((uint8[]) _yerr);
         }
     }
 
-    public class DataItem : Item {
+    public class DataItem : Item, LegendableItem {
         public DataHolder data { get; set; default = new DataHolder.empty (); }
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
         public double errcapthick { get; set; default = 1; }
         public string errcolor { get; set; default = ""; }
         public double errlinewidth { get; set; default = 1; }
+        public bool legend { get; set; default = true; }
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
         public int markerstyle { get; set; default = 0; }
@@ -190,8 +196,8 @@ namespace Graphs {
         public int steps { get; set; default = 100; }
         public Scale scale { get; set; default = Scale.LINEAR; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        public Ast equation {
             get { return _equation; }
             set {
                 try {
@@ -225,12 +231,14 @@ namespace Graphs {
         }
     }
 
-    public class EquationItem : Item, EquationBasedItem {
+    public class EquationItem : Item, EquationBasedItem, LegendableItem {
+        public bool legend { get; set; default = true; }
         public int linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 
-        private Expression _equation;
-        public Expression equation {
+        private Ast _equation;
+        private Program _program;
+        public Ast equation {
             get { return _equation; }
             set {
                 try {
@@ -238,12 +246,17 @@ namespace Graphs {
                         name = "Y = " + ast_to_expression (value);
 
                     _equation = value;
+                    _program = ast_to_program (value);
                 } catch (MathError e) { assert_not_reached (); }
             }
         }
 
         construct {
             typename = _("Equation");
+        }
+
+        public unowned Program get_program () {
+            return _program;
         }
     }
 
@@ -259,7 +272,51 @@ namespace Graphs {
         }
     }
 
+    public class FillHolder : Object {
+        private double[] _xdata;
+        private double[] _lower;
+        private double[] _upper;
+
+        public FillHolder (owned double[] xdata, owned double[] lower, owned double[] upper) {
+            _xdata = (owned) xdata;
+            _lower = (owned) lower;
+            _upper = (owned) upper;
+        }
+
+        public FillHolder.empty () {
+            _xdata = new double[0];
+            _lower = new double[0];
+            _upper = new double[0];
+        }
+
+        public unowned double[] get_xdata () {
+            return _xdata;
+        }
+
+        public unowned double[] get_lower () {
+            return _lower;
+        }
+
+        public unowned double[] get_upper () {
+            return _upper;
+        }
+
+        public Bytes get_xdata_b () {
+            return new Bytes ((uint8[]) _xdata);
+        }
+
+        public Bytes get_lower_b () {
+            return new Bytes ((uint8[]) _lower);
+        }
+
+        public Bytes get_upper_b () {
+            return new Bytes ((uint8[]) _upper);
+        }
+    }
+
     public class FillItem : Item {
+        public FillHolder data { get; set; default = new FillHolder.empty (); }
+
         construct {
             typename = _("Fill");
         }

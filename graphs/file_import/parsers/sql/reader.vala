@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Sqlite;
-
 namespace Graphs {
     /**
      * Database reader class that handles all database operations
      */
-    public class DatabaseReader : GLib.Object {
+    public class DatabaseReader : Object {
         private Sqlite.Database db;
         public string[] table_names;
         private ImportSettings settings;

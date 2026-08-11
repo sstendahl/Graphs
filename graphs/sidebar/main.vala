@@ -1,35 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/main.ui")]
     public class MainSidebarPage : Adw.NavigationPage {
         [GtkChild]
-        private unowned ScrolledWindow scrollwindow_itemlist { get; }
+        private unowned Gtk.ScrolledWindow scrollwindow_itemlist { get; }
 
         [GtkChild]
-        private unowned ToggleButton pan_button { get; }
+        private unowned Gtk.ToggleButton pan_button { get; }
 
         [GtkChild]
-        private unowned ToggleButton zoom_button { get; }
+        private unowned Gtk.ToggleButton zoom_button { get; }
 
         [GtkChild]
-        private unowned ToggleButton select_button { get; }
+        private unowned Gtk.ToggleButton select_button { get; }
 
         [GtkChild]
         private unowned Adw.Bin operations_bin { get; }
 
         [GtkChild]
-        private unowned Stack itemlist_stack { get; }
+        private unowned Gtk.Stack itemlist_stack { get; }
 
         [GtkChild]
-        public unowned ListBox item_list { get; }
+        public unowned Gtk.ListBox item_list { get; }
 
         public bool height_limited {
             set {
                 scrollwindow_itemlist.set_policy (
-                    PolicyType.AUTOMATIC, value ? PolicyType.NEVER : PolicyType.AUTOMATIC
+                    Gtk.PolicyType.AUTOMATIC, value ? Gtk.PolicyType.NEVER : Gtk.PolicyType.AUTOMATIC
                 );
             }
             get { return false; } // needed to be registered as valid property

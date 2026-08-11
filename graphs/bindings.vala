@@ -2,7 +2,7 @@
 namespace Graphs.CUtilities {
 
     [CCode (cname = "array_minmax")]
-    public extern bool array_minmax (
+    private extern bool array_minmax (
         [CCode (array_length = true)]
         double[] data,
         bool ignore_zero,
@@ -11,19 +11,19 @@ namespace Graphs.CUtilities {
     );
 
     [CCode (cname = "finite_double")]
-    public extern bool finite_double (
+    private extern bool finite_double (
         [CCode (array_length = true)]
         double[] data
     );
 
     [CCode (cname = "arange")]
-    public extern bool arange (
+    private extern bool arange (
         [CCode (array_length = true)]
         double[] output
     );
 
     [CCode (cname = "create_equidistant_data")]
-    public extern bool create_equidistant_data (
+    private extern bool create_equidistant_data (
         double start,
         double stop,
         Scale scale,
@@ -32,7 +32,7 @@ namespace Graphs.CUtilities {
     );
 
     [CCode (cname = "filter_nonfinite")]
-    public extern int filter_nonfinite (
+    private extern int filter_nonfinite (
         [CCode (array_length = false)]
         double[] xdata,
         [CCode (array_length = false)]

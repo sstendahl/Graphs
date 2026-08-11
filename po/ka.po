@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-07-03 07:20+0000\n"
-"PO-Revision-Date: 2026-07-04 07:40+0200\n"
+"POT-Creation-Date: 2026-08-07 17:53+0000\n"
+"PO-Revision-Date: 2026-08-08 07:08+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -18,9 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.9\n"
 
-#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
+#: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
+msgid "The Graphs Developers"
+msgstr "Graphs-ის პროგრამისტები"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -41,6 +45,54 @@ msgstr "ნახაზის სტილის ცხრილების ჩ
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "ადვილად შეცვალეთ შემოტანილ მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "გრაფიკები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "გრაფიკი"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "გრაფიკების ხატვა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "მეცნიერება"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "მათემატიკა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "განტოლებები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "მონაცემები"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "ვიზუალიზაცია"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "ჩატევა"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -81,7 +133,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Vis
 msgid "New Window"
 msgstr "ახალი ფანჯარა"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:20
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:15
 msgid "Style Editor"
 msgstr "სტილის რედაქტორი"
 
@@ -93,11 +145,11 @@ msgstr "ბეტა პროექტი"
 msgid "The project you are trying to import is from a beta version of Graphs. It may contain invalid data."
 msgstr "პროექტი, რომლის შემოტანასაც ცდილობთ, Graphs-ის ბეტა ვერსიაშია შექმნილი. ის, შეიძლება, არასწორ მონაცემებს შეიცავდეს."
 
-#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/beta-disallowed.blp:9 data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "გაგრძელება"
 
-#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/beta-disallowed.blp:10 data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "შეწყვეტა"
 
@@ -118,7 +170,7 @@ msgstr "წაშლა"
 msgid "Legacy Project"
 msgstr "მოძველებული პროექტი"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -168,7 +220,7 @@ msgstr "მიმდინარე პროექტი შეუნახა�
 msgid "Add Item"
 msgstr "ელემენტის დამატება"
 
-#: data/ui/import/columns/item-group.blp:9 data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125 data/ui/style-editor/item-color-row.blp:36
+#: data/ui/import/columns/item-group.blp:9 data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125 data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "წაშლა"
 
@@ -188,7 +240,7 @@ msgstr "მხოლოდ Y მნიშვნელობები"
 msgid "Import only Y values, X values will be generated"
 msgstr "მხოლოდ Y-ის მნიშვნელობების შემოტანა. X-ის მნიშვნელობები დაგენერირდება"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:235
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:257
 msgid "Equation"
 msgstr "განტოლება"
 
@@ -196,7 +248,7 @@ msgstr "განტოლება"
 msgid "More info"
 msgstr "მეტი ინფორმაცია"
 
-#: data/ui/import/columns/item-group.blp:72 data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73 data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -204,11 +256,11 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 "<b>X მნიშვნელობის გამოთვლა</b>\n"
 "\n"
@@ -220,21 +272,21 @@ msgstr ""
 "• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
 "• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 
-#: data/ui/import/columns/item-group.blp:91 data/ui/import/sql/main-group.blp:28 data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93 data/ui/import/sql/main-group.blp:28 data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "X აცდენის ზოლები"
 
-#: data/ui/import/columns/item-group.blp:95 data/ui/import/sql/main-group.blp:33 data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97 data/ui/import/sql/main-group.blp:33 data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "Y აცდენის ზოლები"
 
-#: data/ui/import/columns/item-group.blp:108 data/ui/import/sql/main-group.blp:40 data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110 data/ui/import/sql/main-group.blp:40 data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "X შეცდომის სვეტი"
 
-#: data/ui/import/columns/item-group.blp:120 data/ui/import/sql/main-group.blp:46 data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122 data/ui/import/sql/main-group.blp:46 data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "Y შეცდომის სვეტი"
 
@@ -289,25 +341,55 @@ msgstr "ხელით მითითებული"
 msgid "Custom Delimiter"
 msgstr "მითითებული გამყოფი სიმბოლო"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+"<b>გამოიყენებს რეგულარულ გამოსახულებას დამთხვევისთვის</b>\n"
+"\n"
+"რეგულარულ გამოსახულებებში ამ სიმბოლოებს სპეციალური მნიშვნელობა აქვთ:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"ამ სიმბოლოების დასამთხვევად მათ წინ უნდა დაუწეროოთ სიმბოლო <b>\\</b>\n"
+"\n"
+"<b>მაგალითად:</b>\n"
+"• <b>\\.</b> ემთხვევა წერტილს\n"
+"• <b>\\*</b> ემთხვევა ვარსკვლავს\n"
+"• <b>\\|</b> ემთხვევა ვერტიკალურ ხაზს\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-syntax'>გაიგეთ მეტი რეგგამოსის სინტაქსის შესახებ...</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "ათობითის გამყოფი"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "წილადი მძიმე (,)"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "წილადი წერტილი (.)"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "მწკრივების გამოტოვება"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "დასაწყისში გამოსატოვებელი მწკრივების რაოდენობა"
 
@@ -380,26 +462,30 @@ msgid "Name"
 msgstr "სახელი"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr "ახსნაში ჩვენება"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "X-ღერძის მდებარეობა"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "ბოლოში"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "თავში"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "Y-ღერძის მდებარეობა"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "მარცხენა"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "მარჯვენა"
 
@@ -564,7 +650,7 @@ msgstr "მარკერის ზომა"
 msgid "Line"
 msgstr "ხაზი"
 
-#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52 data/ui/transform.blp:69
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52 data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -672,7 +758,7 @@ msgstr "ფიგურის პარამეტრები"
 msgid "Labels"
 msgstr "ჭდეები"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:107
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "სათაური"
 
@@ -814,7 +900,7 @@ msgstr "ცენტრი"
 msgid "Hide Unselected Items"
 msgstr "მოუნიშნავი ელემენტების დამალვა"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:83
+#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5 graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "სტილი"
 
@@ -1050,9 +1136,9 @@ msgstr "დამატება"
 msgid "Template"
 msgstr "ნიმუში"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "ფერის შეცვლა"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "ფერის დამატება"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1242,17 +1328,9 @@ msgstr "კიდის ფერი"
 msgid "Line Colors"
 msgstr "ხაზის ფერები"
 
-#: data/ui/style-editor/editor-box.blp:521 data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "ფერის დამატება"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr "აცდენის ზოლის ფერები"
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "ჩასწორება"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1299,7 +1377,7 @@ msgctxt "shortcut window"
 msgid "Open Style"
 msgstr "სტილის გახსნა"
 
-#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67 data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr "გრაფიკების სტილის რედაქტორი"
 
@@ -1319,7 +1397,7 @@ msgstr "ფაილის გახსნა…"
 msgid "Open Preview"
 msgstr "მინიატურის გახსნა"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183 data/ui/window.blp:349
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176 data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "ტილოს ჩატვირთვა ჩავარდა"
 
@@ -1351,7 +1429,11 @@ msgstr "შეიყვანეთ მათემატიკური გა�
 msgid "Name (optional)"
 msgstr "სახელი (არასავალდებულო)"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "ფერის შეცვლა"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "მრუდის ჩატევა"
 
@@ -1359,104 +1441,104 @@ msgstr "მრუდის ჩატევა"
 msgid "Open Curve Fitting Menu"
 msgstr "მრუდის ჩატევის მენიუს გახსნა"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "კვადრატული"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "ექსპოტენციალური"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "ხარისხით"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "ლოგარითმული"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "ლოგისტიკური სიგმოიდი"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "გაუსის"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "ხელით მითითებული"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "მონაცემებისთვის აპროქსიმაციის დამატება"
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "გვერდითი პანელის ჩვენების ჩართ/გამორთ"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "ოპტიმიზაციის მეთოდი"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "ლევენბერგ-მარკვარდტი"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "ნდობის რეგიონი ამრეკლავია"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "სანდოობის საზღვრები"
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "არაფერი"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% Confidence"
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% Confidence"
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% Confidence"
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "ნაშთების ჩვენება"
 
@@ -1464,7 +1546,7 @@ msgstr "ნაშთების ჩვენება"
 msgid "Export Figure"
 msgstr "ფიგურის გატანა"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "გატანა"
 
@@ -1551,15 +1633,11 @@ msgstr "მონაცემების გენერაცია"
 msgid "Generate"
 msgstr "გენერაცია"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "აირჩიეთ ფერი"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "ელემენტის გადაადგილება"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "ჩანაწერისწაშლა"
 
@@ -1603,7 +1681,7 @@ msgstr "წაშლა…"
 msgid "Transform Data"
 msgstr "მონაცემების გარდაქმნა"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1639,11 +1717,11 @@ msgstr ""
 "ტრიგონომეტრიული ფუნქციები ნაგულისხმევად რადიანებს იყენებენ.\n"
 "მიაწერეთ ბოლოში d გრადუსების გამოსაყენებლად. მაგ: sind(x) ან cosd(x)."
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "მოუნიშნავი მონაცემების მოცილება"
 
@@ -1655,7 +1733,7 @@ msgstr "შემოსატანად აქ დააგდეთ"
 msgid "Show Sidebar"
 msgstr "გვერდითი ზოლის ჩვენება"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:403
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:409
 msgid "Undo"
 msgstr "დაბრუნება"
 
@@ -1829,21 +1907,21 @@ msgctxt "import-mode"
 msgid "Columns"
 msgstr "სვეტები"
 
-#: graphs/file_import/parsers/columns/reader.vala:110
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
 msgstr "ინდექსის შეცდომა %s-ში. წვდომის შეცდომა ინდექსისთვის %d ხაზზე %d. აღმოჩენილია, მხოლოდ, %d სვეტი"
 
-#: graphs/file_import/parsers/columns/reader.vala:137
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "ფაილიდან შემოტანა შეუძლებელია. არასწორი მნიშვნელობა ხაზზე %d"
 
-#: graphs/file_import/parsers/columns/reader.vala:156
+#: graphs/file_import/parsers/columns/reader.vala:153
 msgid "Failed to parse file."
 msgstr "ფაილის დამუშავება ჩავარდა."
 
-#: graphs/file_import/parsers/columns/ui.vala:40 graphs/file_import/parsers/spreadsheet/ui.vala:149
+#: graphs/file_import/parsers/columns/ui.vala:36 graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "ელემენტი %d"
@@ -1853,7 +1931,7 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "პროექტი"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-ის პროექტის ფაილი"
@@ -1882,26 +1960,26 @@ msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite მონაცემთა ბაზა"
 
-#: graphs/file_import/parsers/sql/reader.vala:135
+#: graphs/file_import/parsers/sql/reader.vala:133
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr "მონაცემების შემოტანა ცხრილიდან \"%s\" შეუძლებელია, რადგან რიცხვითი სვეტები აღმოჩენილი არაა"
 
-#: graphs/file_import/parsers/sql/reader.vala:144
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr "ცხრილის სვეტში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:66
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "Intensity (cps)"
 msgstr "ინტენსივობა (წმ)"
 
@@ -1935,111 +2013,107 @@ msgstr "პარსერის მიერ პარამეტრები�
 msgid "parser failed to init settings widgets."
 msgstr "პარსერის მიერ ვიჯეტის პარამეტრების ინიციალიზაცია ჩავარდა."
 
-#: graphs/file_import/dialog.vala:134
+#: graphs/file_import/dialog.vala:131
 msgid "Defaults updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:77
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "მხარდაჭერილი ფაილები"
 
 #. columns
-#: graphs/file_import/file_import.vala:85
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII ფაილები"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:137
+#: graphs/sidebar/figure_settings.vala:134
 msgid "X Axis Minimum"
 msgstr "X ღერძის მინიმუმი"
 
-#: graphs/sidebar/figure_settings.vala:138
+#: graphs/sidebar/figure_settings.vala:135
 msgid "Y Axis Minimum"
 msgstr "Y ღერძის მინიმუმი"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:144
+#: graphs/sidebar/figure_settings.vala:141
 msgid "X Axis Maximum"
 msgstr "X ღერძის მაქსიმუმი"
 
-#: graphs/sidebar/figure_settings.vala:145
+#: graphs/sidebar/figure_settings.vala:142
 msgid "Y Axis Maximum"
 msgstr "Y ღერძის მაქსიმუმი"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
+#: graphs/sidebar/figure_settings.vala:160
 msgid "X Axis Scale"
 msgstr "X-ღერძის მასშტაბი"
 
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:161
 msgid "X Axis Label"
 msgstr "X-ღერძის ჭდე"
 
-#: graphs/sidebar/figure_settings.vala:167
+#: graphs/sidebar/figure_settings.vala:164
 msgid "Y Axis Scale"
 msgstr "Y-ღერძის მასშტაბის ფაქტორი"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:165
 msgid "Y Axis Label"
 msgstr "Y-ღერძის ჭდე"
 
-#: graphs/sidebar/figure_settings.vala:248
+#: graphs/sidebar/figure_settings.vala:245
 msgid "Defaults Updated"
 msgstr "ნაგულისხმევები განახლდა"
 
-#: graphs/style_editor/__init__.py:63
-msgid "Example Item"
-msgstr "მაგალითი ელემენტი"
-
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:247
-msgid "X Label"
-msgstr "X ჭდე"
-
-#: graphs/style_editor/__init__.py:109 graphs/style_io.py:248
-msgid "Y Label"
-msgstr "Y ჭდე"
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "ფერი %d"
 
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
+msgstr "მაგალითი ელემენტი"
+
+#: graphs/style_editor/window.vala:224
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "მართლა გნებავთ, წაშალოთ %s?"
+
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
+#: graphs/style_editor/window.vala:302
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "გრაფიკების სტილის რედაქტორი — %s"
 
-#: graphs/style_editor/window.vala:231
-#, c-format
-msgid "Are you sure you want to delete %s?"
-msgstr "მართლა გნებავთ, წაშალოთ %s?"
+#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+msgid "X Label"
+msgstr "X ჭდე"
+
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "Y ჭდე"
 
 #: graphs/__init__.py:41
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "{font}-ის ჩატვირთვა შეუძლებელია"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs-ის პროგრამისტები"
-
-#: graphs/actions.vala:44
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr "ეკატერინე პაპავა"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:182 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "წაიშალა %s"
 
-#: graphs/application.vala:19
+#: graphs/application.vala:14
 msgid "New window"
 msgstr "ახალი ფანჯარა"
 
-#: graphs/application.vala:21
+#: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[ფაილი...]"
 
@@ -2047,7 +2121,7 @@ msgstr "[ფაილი...]"
 msgid "Residuals"
 msgstr "ნაშთები"
 
-#: graphs/curve_fitting.vala:85
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2055,7 +2129,7 @@ msgstr ""
 "შეიყვანეთ სწორი\n"
 "რიცხვითი პარამეტრები."
 
-#: graphs/curve_fitting.vala:86
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2063,7 +2137,7 @@ msgstr ""
 "შეზღუდვის შეცდომა: დარწმუნდით, რომ\n"
 "ქვედა < საწყისი < ზედა."
 
-#: graphs/curve_fitting.vala:87
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2071,7 +2145,7 @@ msgstr ""
 "მატრიცის შეცდომა: ამ მოდელისთვის\n"
 "მონაცემები საკმარისი არაა."
 
-#: graphs/curve_fitting.vala:88
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2079,7 +2153,7 @@ msgstr ""
 "ჩატევა ჩავარდა: მაქსიმალური იტერაციები\n"
 "მიღწეულია შეკრების გარეშე."
 
-#: graphs/curve_fitting.vala:89
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2087,7 +2161,7 @@ msgstr ""
 "დომენის შეცდომა: ტოლობა არასწორია\n"
 "ამ მონაცემთა შუალედისთვის."
 
-#: graphs/curve_fitting.vala:90
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2095,7 +2169,7 @@ msgstr ""
 "არასწორი განტოლება: შეამოწმეთ\n"
 "სინტაქსი და ცვლადები."
 
-#: graphs/curve_fitting.vala:91
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2103,23 +2177,23 @@ msgstr ""
 "ნდობის ზოლის შეცდომა: \n"
 "კოვარიანტული მატრიცა არასტაბილურია."
 
-#: graphs/curve_fitting.vala:263
+#: graphs/curve_fitting.vala:259
 msgid "Parameters"
 msgstr "პარამეტრები"
 
-#: graphs/curve_fitting.vala:279
+#: graphs/curve_fitting.vala:275
 msgid "Statistics"
 msgstr "სტატისტიკა"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:464
+#: graphs/curve_fitting.vala:460
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
@@ -2128,55 +2202,55 @@ msgstr "აპროქსიმაციის პარამეტრებ�
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
-#: graphs/data.vala:480
+#: graphs/data.vala:481
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/data.vala:852
+#: graphs/data.vala:860
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/export_figure.vala:48
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "გატანილი ილუსტრაცია"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr "შემოსატანი მონაცემების გარეშე"
 
-#: graphs/export_items.vala:22 graphs/export_items.vala:38
+#: graphs/export_items.vala:20 graphs/export_items.vala:36
 msgid "Exported Data"
 msgstr "გატანილი მონაცემები"
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:29
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/item.vala:156
+#: graphs/item.vala:175
 msgid "Dataset"
 msgstr "მონაცემების სეტი"
 
-#: graphs/item.vala:198
+#: graphs/item.vala:217
 msgid "Generated Dataset"
 msgstr "გენერირებული მონაცემების ნაკრები"
 
-#: graphs/item.vala:247
+#: graphs/item.vala:273
 msgid "Label"
 msgstr "ჭდე"
 
-#: graphs/item.vala:253
+#: graphs/item.vala:323
 msgid "Fill"
 msgstr "შევსება"
 
-#: graphs/misc.vala:7
+#: graphs/misc.vala:5
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
@@ -2223,35 +2297,35 @@ msgstr "{name}: ოპერაციის ჩატარების შე�
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "მონაცემები, რომლებიც მონიშნული ადგილის გარეთ იყო, მოცილებულია"
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr "პროექტის ფაილს მონაცემები აკლია"
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "პროექტი უფრო Graphs-ის უფრო ახალი, არათავსებადი ვერსიისაა"
 
-#: graphs/project.py:306
+#: graphs/project.py:310
 msgid "Failed to do legacy migration"
 msgstr "მოძველებული მიგრაცია ჩავარდა"
 
-#: graphs/project.py:308
+#: graphs/project.py:312
 msgid "Failed to parse project file"
 msgstr "პროექტის ფაილის დამუშავება ჩავარდა"
 
-#: graphs/project.py:314
+#: graphs/project.py:318
 msgid "Failed to migrate project"
 msgstr "პროექტის მიგრაცია ჩავარდა"
 
-#: graphs/project.py:320
+#: graphs/project.py:324
 msgid "Failed to validate project"
 msgstr "პროექტის გადამოწმება ჩავარდა"
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr "შენახული პროექტი"
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "პროექტი"
 
@@ -2295,39 +2369,45 @@ msgstr "{filename}-ის დამუშავება შეუძლებ�
 msgid "File {file}, does not contain name tag"
 msgstr "ფაილი {file} სახელის ჭდე არ შეიცავს"
 
-#: graphs/styles.vala:97
+#: graphs/styles.vala:103
 msgid "System"
 msgstr "სისტემური"
 
-#: graphs/utilities.vala:252
+#: graphs/utilities.vala:248
 msgid "All Files"
 msgstr "ყველა ფაილი"
 
-#: graphs/utilities.vala:294
+#: graphs/utilities.vala:290
 msgid "Document Portal"
 msgstr "დოკუმენტის პორტალი"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "Graphs (Development)"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:176
 msgid "Untitled Project"
 msgstr "უსახელო პროექტი"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:177
 msgid "Draft"
 msgstr "მონახაზი"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:183
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:393
+#: graphs/window.vala:399
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
+
+#~ msgid "Edit"
+#~ msgstr "ჩასწორება"
+
+#~ msgid "Pick Color"
+#~ msgstr "აირჩიეთ ფერი"
 
 #~ msgid "No numeric data found in column."
 #~ msgstr "სვეტში რიცხვითი მონაცემები აღმოჩენილი არაა."
@@ -2442,9 +2522,6 @@ msgstr "მდებარეობის გახსნა"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "აირჩიეთ, რომელი ელემენტი გნებავთ, ჩაასწოროთ"
-
-#~ msgid "Data"
-#~ msgstr "მონაცემები"
 
 #~ msgid "Line Properties"
 #~ msgstr "ხაზის თვისებები"

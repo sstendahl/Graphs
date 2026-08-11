@@ -1,56 +1,56 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-using Gtk;
-
 namespace Graphs {
-    public class StyleColorManager : Object {
-        private ListBox box;
-        private ArrayList<string> colors = new ArrayList<string> ();
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-group.ui")]
+    public class StyleColorGroup : Adw.PreferencesGroup {
+        [GtkChild]
+        private unowned Gtk.ListBox color_box { get; }
+
+        private ManagedArray<string> colors = new ManagedArray<string> ();
 
         public signal void colors_changed ();
 
-        public StyleColorManager (ListBox box) {
-            this.box = box;
-
+        public StyleColorGroup () {
             var drop_target = new Gtk.DropTarget (typeof (StyleItemColorRow), Gdk.DragAction.MOVE);
             drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = (StyleItemColorRow?) val.get_object ();
-                var target_row = (StyleItemColorRow?) box.get_row_at_y ((int) y);
+                var target_row = (StyleItemColorRow?) color_box.get_row_at_y ((int) y);
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
                 // Reject if the value row is not from this instance
-                if (value_row.color_manager != this) return false;
+                if (value_row.color_group != this) return false;
 
                 change_position (target_row.index, value_row.index);
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
 
                 return true;
             });
-            box.add_controller (drop_target);
+            color_box.add_controller (drop_target);
         }
 
         public void set_colors (string[] colors) {
-            this.colors.clear ();
-            this.colors.add_all_array (colors);
+            this.colors = new ManagedArray<string>.take (colors);
             reload_color_boxes ();
         }
 
-        public void add_color (string color) {
-            this.colors.add (color);
-            append_style_color_box (this.colors.size - 1);
-            colors_changed.emit ();
+        [GtkCallback]
+        private async void add_color () {
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
+            try {
+                Gdk.RGBA? color = yield dialog.choose_rgba (get_root () as Gtk.Window, null, null);
+                this.colors.append (Tools.rgba_to_hex (color));
+                append_style_color_box (this.colors.length - 1);
+                colors_changed.emit ();
+            } catch {}
         }
 
         public string[] get_colors () {
-            return this.colors.to_array ();
+            return this.colors.peek ();
         }
 
         public void change_position (int index1, int index2) {
             if (index1 == index2) return;
-            string color = this.colors[index2];
-            this.colors.remove_at (index2);
-            this.colors.insert (index1, color);
+            this.colors.move_to (index1, index2);
             reload_color_boxes ();
             colors_changed.emit ();
         }
@@ -106,16 +106,16 @@ namespace Graphs {
             });
 
             // Update row visuals during DnD operation
-            drop_controller.enter.connect (() => this.box.drag_highlight_row (row));
-            drop_controller.leave.connect (() => this.box.drag_unhighlight_row ());
+            drop_controller.enter.connect (() => this.color_box.drag_highlight_row (row));
+            drop_controller.leave.connect (() => this.color_box.drag_unhighlight_row ());
 
-            this.box.append (row);
+            this.color_box.append (row);
         }
 
         private void reload_color_boxes () {
-            if (this.colors.is_empty) this.colors.add ("#000000");
-            this.box.remove_all ();
-            for (int i = 0; i < this.colors.size; i++) {
+            if (this.colors.is_empty ()) this.colors.append ("#000000");
+            this.color_box.remove_all ();
+            for (int i = 0; i < this.colors.length; i++) {
                 append_style_color_box (i);
             }
         }

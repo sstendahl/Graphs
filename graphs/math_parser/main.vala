@@ -7,7 +7,7 @@ namespace Graphs {
     public static bool try_evaluate_string (string expression, out double? result = null, unichar decimal_separator = '.') {
         try {
             var ast = MathParser.Parser.instance ().parse (expression, decimal_separator);
-            result = MathParser.Evaluator.instance ().eval (ast);
+            result = MathParser.Evaluator.instance ().eval_ast (ast);
             return true;
         } catch (Error e) {
             result = 0;
@@ -20,28 +20,28 @@ namespace Graphs {
      */
     public static double evaluate_string (string expression) throws MathError {
         var ast = MathParser.Parser.instance ().parse (expression);
-        return MathParser.Evaluator.instance ().eval (ast);
+        return MathParser.Evaluator.instance ().eval_ast (ast);
     }
 
     /**
      * Parse an Expression from string to an AST.
      */
-    public static Expression expression_to_ast (string expression) throws MathError {
+    public static Ast expression_to_ast (string expression) throws MathError {
         return MathParser.Parser.instance ().parse (expression);
     }
 
     /**
      * Convert an AST to a string
      */
-    public static string ast_to_expression (Expression expression) throws MathError {
+    public static string ast_to_expression (Ast expression) throws MathError {
         return MathParser.Printer.instance ().print (expression);
     }
 
     /**
      * Convert an AST to an executable array program.
      */
-    public static Program ast_to_program (Expression expression, string variable = "x") throws MathError {
-        Expression simplified = PythonHelper.simplify_expression (expression);
+    public static Program ast_to_program (Ast expression, string variable = "x") throws MathError {
+        Ast simplified = PythonHelper.simplify_expression (expression);
         return MathParser.Compiler.instance ().compile (simplified, variable);
     }
 

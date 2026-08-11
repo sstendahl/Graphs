@@ -2,47 +2,12 @@
 
 #include <stddef.h>
 
-/* This is a copy of the enum in ast.vala */
-typedef enum
-{
-  // control
-  PUSH_CONST,
-  PUSH_X,
+#include "../graphs.h"
 
-  // basic operands
-  ADD,
-  SUB,
-  MUL,
-  DIV,
-  POW,
-  IPOW,
+gdouble factorial (gdouble x);
 
-  // pre and postfix
-  NEG,
-  INV,
-  FACT,
+gdouble ipow (gdouble base, gint exp);
 
-  // trig
-  SIN,
-  COS,
-  TAN,
-  ASIN,
-  ACOS,
-  ATAN,
-
-  // misc
-  LN,
-  LOG2,
-  LOG10,
-  SQRT,
-  EXP,
-  ABS
-} OpCode;
-
-double factorial (double x);
-
-double ipow (double base, int exp);
-
-void eval_array (const OpCode *program, const double *data, size_t plen,
-                 const double *restrict xdata, double *restrict ydata,
-                 size_t n);
+void eval_array (const GraphsOpCode *program, const gdouble *data, gsize plen,
+                 const gdouble *restrict xdata, gdouble *restrict ydata,
+                 gsize n);

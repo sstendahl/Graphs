@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
-
 namespace Graphs {
     /**
      * Item Box widget
@@ -11,16 +7,14 @@ namespace Graphs {
     public class ItemBox : Adw.ActionRow {
 
         [GtkChild]
-        public unowned CheckButton check_button { get; }
+        public unowned Gtk.CheckButton check_button { get; }
 
         [GtkChild]
-        private unowned Button color_button { get; }
+        private unowned ColorButton color_button { get; }
 
         public Window window { get; construct set; }
         public Item item { get; construct set; }
         public uint index { get; construct set; }
-
-        private CssProvider provider;
 
         public ItemBox (Window window, Item item, uint index) {
             Object (
@@ -28,10 +22,7 @@ namespace Graphs {
                 item: item,
                 index: index
             );
-            this.provider = new CssProvider ();
-            color_button.get_style_context ().add_provider (
-                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
-            );
+            color_button.color = item.get_rgba ();
 
             set_subtitle (item.typename);
             item.bind_property ("name", this, "title", 2);
@@ -79,9 +70,7 @@ namespace Graphs {
         }
 
         private void on_color_change () {
-            unowned string c = item.color;
-            string o = item.alpha.to_string ();
-            provider.load_from_string (@"button { color: $c; opacity: $o; }");
+            color_button.color = item.get_rgba ();
         }
 
         [GtkCallback]
@@ -94,19 +83,9 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void choose_color () {
-            var dialog = new ColorDialog ();
-            dialog.choose_rgba.begin (
-                window,
-                item.get_rgba (),
-                null,
-                (d, result) => {
-                    try {
-                        item.set_rgba (dialog.choose_rgba.end (result));
-                        window.data.add_history_state ();
-                    } catch {}
-                }
-            );
+        private void on_color () {
+            item.set_rgba (color_button.color);
+            window.data.add_history_state ();
         }
 
         public void change_position (uint source_index) {

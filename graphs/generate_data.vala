@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     /**
      * Generate Data dialog.
@@ -25,13 +22,13 @@ namespace Graphs {
         private unowned Adw.ComboRow scale { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         [GtkChild]
         private unowned Adw.EntryRow item_name { get; }
 
         private Window window;
-        private GLib.Settings settings;
+        private Settings settings;
 
         public GenerateDataDialog (Window window) {
             Object ();
@@ -47,8 +44,8 @@ namespace Graphs {
 
         private void set_confirm_sensitivity () {
             bool invalid = false;
-            Widget[] widgets = {equation, xstart, xstop};
-            foreach (Widget widget in widgets) {
+            Gtk.Widget[] widgets = {equation, xstart, xstop};
+            foreach (var widget in widgets) {
                 invalid = invalid || widget.has_css_class ("error");
             }
             confirm_button.set_sensitive (!invalid);
@@ -70,7 +67,7 @@ namespace Graphs {
 
             unowned string name = item_name.get_text ();
             try {
-                Expression expression = expression_to_ast (equation);
+                Ast expression = expression_to_ast (equation);
 
                 Item item = ItemFactory.new_generated_data_item (window.data.selected_style_params, expression, xstart, xstop, steps, scale);
                 if (name == "") {

@@ -1,16 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/columns/box.ui")]
-    public class ColumnsBox : Box {
+    public class ColumnsBox : Gtk.Box {
         [GtkChild]
-        public unowned Box items_box { get; }
+        public unowned Gtk.Box items_box { get; }
 
         private ImportSettings settings;
-        private Gee.List<ColumnsItemSettings?> items = new ArrayList<ColumnsItemSettings?> ();
+        private ManagedArray<ColumnsItemSettings?> items;
 
         public ColumnsBox (ImportSettings settings) {
             this.settings = settings;
@@ -19,22 +15,24 @@ namespace Graphs {
 
             var iter = settings.get_value ("items").iterator ();
             size_t n_items = iter.n_children ();
+            items = new ManagedArray<ColumnsItemSettings?> ((int) n_items);
+
             for (int i = 0; i < n_items; i++) {
                 var item_settings = ColumnsItemSettings ();
                 item_settings.load_from_variant (iter.next_value ());
-                items.add (item_settings);
+                items.append (item_settings);
             }
 
             reload_item_groups ();
         }
 
         private void reload_item_groups () {
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = items_box.get_last_child ()) != null) {
                 items_box.remove (widget);
             }
 
-            for (int i = 0; i < items.size; i++) {
+            for (int i = 0; i < items.length; i++) {
                 int index = i;
                 var item_group = new ColumnsItemGroup (items[i], i > 0);
                 item_group.set_title (_("Item %d").printf (i + 1));
@@ -55,7 +53,7 @@ namespace Graphs {
         private void add () {
             var new_settings = ColumnsItemSettings ();
             new_settings.load_from_variant (items[0].to_variant ());
-            items.add (new_settings);
+            items.append (new_settings);
             update_settings ();
             reload_item_groups ();
         }
@@ -125,7 +123,7 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.SpinRow column_yerr { get; }
         [GtkChild]
-        public unowned Button remove_button { get; }
+        public unowned Gtk.Button remove_button { get; }
 
         public signal void settings_changed (ColumnsItemSettings new_settings);
         public signal void remove_request ();

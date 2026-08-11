@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/page.ui")]
     public class EditItemPage : Adw.NavigationPage {
         [GtkChild]
-        private unowned Box edit_item_box { get; }
+        private unowned Gtk.Box edit_item_box { get; }
 
         public void load_item (Item item) {
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = edit_item_box.get_last_child ()) != null) {
                 edit_item_box.remove (widget);
             }
@@ -32,7 +29,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/base.ui")]
-    public class EditItemBaseBox : Box {
+    public class EditItemBaseBox : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.EntryRow name_entry { get; }
@@ -42,6 +39,9 @@ namespace Graphs {
 
         [GtkChild]
         private unowned Adw.ComboRow yposition { get; }
+
+        [GtkChild]
+        private unowned Adw.SwitchRow legend { get; }
 
         public EditItemBaseBox (Item item) {
             item.bind_property (
@@ -62,11 +62,20 @@ namespace Graphs {
                 "selected",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+            if (item is LegendableItem) {
+                item.bind_property (
+                    "legend",
+                    legend,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+                legend.visible = true;
+            }
         }
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/data.ui")]
-    public class EditItemDataItemBox : Box {
+    public class EditItemDataItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
@@ -119,7 +128,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/errorbar-group.ui")]
-    public class EditItemErrorBarGroup : Box {
+    public class EditItemErrorBarGroup : Gtk.Box {
 
         [GtkChild]
         private unowned Adw.SwitchRow use_xerr { get; }
@@ -131,7 +140,7 @@ namespace Graphs {
         private unowned Adw.SwitchRow errbarsabove { get; }
 
         [GtkChild]
-        private unowned StyleColorRow errcolor_row { get; }
+        private unowned ColorRow errcolor_row { get; }
 
         [GtkChild]
         private unowned Gtk.Scale errcapsize { get; }
@@ -180,7 +189,7 @@ namespace Graphs {
             );
 
             errcolor_row.color = Tools.hex_to_rgba (item.errcolor);
-            errcolor_row.notify["color"].connect ((obj, pspec) => {
+            errcolor_row.color_chosen.connect (() => {
                 item.errcolor = Tools.rgba_to_hex (errcolor_row.color);
             });
         }
@@ -218,7 +227,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_equation_apply () {
             try {
-                Expression ast = expression_to_ast (equation.get_text ());
+                Ast ast = expression_to_ast (equation.get_text ());
                 equation.set_text (ast_to_expression (ast));
                 item.equation = ast;
             } catch (MathError e) { assert_not_reached (); }
@@ -231,7 +240,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_simplify () {
             try {
-                Expression ast = expression_to_ast (equation.get_text ());
+                Ast ast = expression_to_ast (equation.get_text ());
                 ast = PythonHelper.simplify_expression (ast);
                 equation.set_text (ast_to_expression (ast));
                 item.equation = ast;
@@ -240,7 +249,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/equation.ui")]
-    public class EditItemEquationItemBox : Box {
+    public class EditItemEquationItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned EditItemEquationGroup equation_group { get; }
@@ -269,7 +278,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/generated-data.ui")]
-    public class EditItemGeneratedDataItemBox : Box {
+    public class EditItemGeneratedDataItemBox : Gtk.Box {
 
         [GtkChild]
         private unowned EditItemEquationGroup equation_group { get; }
@@ -322,7 +331,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_entry_apply (Editable editable) {
+        private void on_entry_apply (Gtk.Editable editable) {
             item.set (editable.get_buildable_id (), editable.get_text ());
         }
 

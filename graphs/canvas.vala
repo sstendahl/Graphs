@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
-
 namespace Graphs {
     /**
      * Custom Canvas implementation.
      */
-    public class Canvas : DrawingArea {
+    public class Canvas : Gtk.DrawingArea {
         public Mode mode { get; set; default = Mode.PAN; }
         public Object figure { get; protected set; }
 

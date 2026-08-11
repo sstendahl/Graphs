@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-07-02 13:18+0000\n"
-"PO-Revision-Date: 2026-07-03 08:39+0800\n"
+"POT-Creation-Date: 2026-08-06 07:35+0000\n"
+"PO-Revision-Date: 2026-08-07 07:14+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -19,9 +19,13 @@ msgstr ""
 "X-Generator: Gtranslator 50.0\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
+msgid "The Graphs Developers"
+msgstr "Graphs 开发者们"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -42,6 +46,54 @@ msgstr "管理绘制样式表"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "处理导入的数据"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "绘制"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "绘制"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "图表"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "绘图"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "科学"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "数学"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "数学"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "方程式"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "数据"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "可视化"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "拟合"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -82,7 +134,7 @@ msgstr ""
 "Graphs 很适合用来绘制和处理数据。使用 Graphs 创建的示意图可保存为适合用来向广"
 "大观众分享和呈现的多种格式，比如在科学出版物或演讲中。另外，保存为矢量图像的"
 "选项可使其在像 Inkscape 的软件中做进一步调整。图表是以 GNOME 环境为标准编写"
-"的，但应同样适用于其它任何桌面环境。"
+"的，但应同样适用于其他任何桌面环境。"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:91
 msgid ""
@@ -102,7 +154,7 @@ msgid "New Window"
 msgstr "新建窗口"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:20
+#: graphs/application.vala:15
 msgid "Style Editor"
 msgstr "样式编辑器"
 
@@ -117,12 +169,12 @@ msgid ""
 msgstr "您正尝试导入的工程来自 beta 版本的 Graphs。其可能包含无效数据。"
 
 #: data/ui/dialogs/beta-disallowed.blp:9
-#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "继续"
 
 #: data/ui/dialogs/beta-disallowed.blp:10
-#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "中止"
 
@@ -148,7 +200,7 @@ msgstr "删除"
 msgid "Legacy Project"
 msgstr "过时工程"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -208,7 +260,7 @@ msgstr "添加项目"
 
 #: data/ui/import/columns/item-group.blp:9
 #: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
-#: data/ui/style-editor/item-color-row.blp:36
+#: data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "移除"
 
@@ -232,8 +284,8 @@ msgid "Import only Y values, X values will be generated"
 msgstr "仅导入 Y 值，X 值将自动生成"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:235
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
+#: graphs/item.vala:257
 msgid "Equation"
 msgstr "方程式"
 
@@ -243,8 +295,8 @@ msgstr "方程式"
 msgid "More info"
 msgstr "更多信息"
 
-#: data/ui/import/columns/item-group.blp:72
-#: data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73
+#: data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -252,11 +304,11 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 "<b>X 值计算</b>\n"
 "\n"
@@ -270,27 +322,27 @@ msgstr ""
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
 "• <b>n*10+100</b> → 100, 110, 120, 130..."
 
-#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93
 #: data/ui/import/sql/main-group.blp:28
-#: data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "X 误差棒"
 
-#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97
 #: data/ui/import/sql/main-group.blp:33
-#: data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "Y 误差棒"
 
-#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110
 #: data/ui/import/sql/main-group.blp:40
-#: data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "X 误差栏"
 
-#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122
 #: data/ui/import/sql/main-group.blp:46
-#: data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "Y 误差栏"
 
@@ -345,25 +397,57 @@ msgstr "自定义"
 msgid "Custom Delimiter"
 msgstr "自定义分隔符"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+"<b>使用正则表达式匹配</b>\n"
+"\n"
+"这些字符在正则表达式语法中有特殊含义：\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"要按字面匹配这些字符，则使用 <b>\\</b> 进行转义\n"
+"\n"
+"<b>示例：</b>\n"
+"• <b>\\.</b> 匹配句点\n"
+"• <b>\\*</b> 匹配星号\n"
+"• <b>\\|</b> 匹配管道符\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>了解更多正则表达式的信息…</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "小数分隔符"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "小数逗号（,）"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "小数点（.）"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "跳过行"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "起始位置要跳过的行数"
 
@@ -437,26 +521,30 @@ msgid "Name"
 msgstr "名称"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr "在图例中显示"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "X 轴位置"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "底部"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "顶部"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "Y 轴位置"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "左侧"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "右侧"
 
@@ -655,8 +743,8 @@ msgid "Line"
 msgstr "线条"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -797,7 +885,7 @@ msgid "Labels"
 msgstr "标签"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:107
+#: graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "标题"
 
@@ -941,7 +1029,7 @@ msgstr "隐藏未选中项目"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:83
+#: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "样式"
 
@@ -1181,9 +1269,9 @@ msgstr "添加"
 msgid "Template"
 msgstr "模板"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "更改颜色"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "添加颜色"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1373,18 +1461,9 @@ msgstr "轮廓颜色"
 msgid "Line Colors"
 msgstr "线条颜色"
 
-#: data/ui/style-editor/editor-box.blp:521
-#: data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "添加颜色"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr "误差棒颜色"
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "编辑"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1432,7 +1511,7 @@ msgid "Open Style"
 msgstr "打开样式"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr "Graphs 样式编辑器"
 
@@ -1452,7 +1531,7 @@ msgstr "打开文件…"
 msgid "Open Preview"
 msgstr "打开预览"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
@@ -1485,7 +1564,11 @@ msgstr "输入数学表达式"
 msgid "Name (optional)"
 msgstr "名称（可选）"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "更改颜色"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "曲线拟合"
 
@@ -1493,104 +1576,104 @@ msgstr "曲线拟合"
 msgid "Open Curve Fitting Menu"
 msgstr "打开曲线拟合菜单"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "线性"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "平方"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "指数"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "幂律"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "对数"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Sigmoid 函数"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "高斯"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "自定义"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "添加拟合至数据"
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "优化方法"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "L-M 方法"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "信赖域反射"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "置信界限"
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "无"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ：68% 置信区间"
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ：95% 置信区间"
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ：99.7% 置信区间"
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "显示残差"
 
@@ -1598,7 +1681,7 @@ msgstr "显示残差"
 msgid "Export Figure"
 msgstr "导出图表"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "导出"
 
@@ -1685,15 +1768,11 @@ msgstr "生成数据"
 msgid "Generate"
 msgstr "生成"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "拾取颜色"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "移动项目"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "移除项目"
 
@@ -1737,7 +1816,7 @@ msgstr "删除…"
 msgid "Transform Data"
 msgstr "变换颜色"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1773,11 +1852,11 @@ msgstr ""
 "三角函数默认使用弧度。\n"
 "附加 d 以使用角度，例如：sind(x) 或 cosd(x)。"
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "丢弃未选中数据"
 
@@ -1789,7 +1868,7 @@ msgstr "拖放到这里来导入"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:403
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:404
 msgid "Undo"
 msgstr "撤消"
 
@@ -1963,24 +2042,24 @@ msgctxt "import-mode"
 msgid "Columns"
 msgstr "列"
 
-#: graphs/file_import/parsers/columns/reader.vala:110
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr "%1$s 中有索引错误，无法在第 %3$d 行访问索引 %2$d，仅找到 %4$d 栏"
 
-#: graphs/file_import/parsers/columns/reader.vala:137
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "无法从文件导入，在第 %d 行有坏值"
 
-#: graphs/file_import/parsers/columns/reader.vala:156
+#: graphs/file_import/parsers/columns/reader.vala:153
 msgid "Failed to parse file."
 msgstr "解析文件失败。"
 
-#: graphs/file_import/parsers/columns/ui.vala:40
-#: graphs/file_import/parsers/spreadsheet/ui.vala:149
+#: graphs/file_import/parsers/columns/ui.vala:36
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "项目 %d"
@@ -1990,7 +2069,7 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
@@ -2019,26 +2098,26 @@ msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite 数据库"
 
-#: graphs/file_import/parsers/sql/reader.vala:135
+#: graphs/file_import/parsers/sql/reader.vala:133
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr "无法从表格“%s”导入数据，未发现数字栏"
 
-#: graphs/file_import/parsers/sql/reader.vala:144
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr "表格栏内未发现数据"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:66
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "Intensity (cps)"
 msgstr "强度 (cps)"
 
@@ -2073,113 +2152,109 @@ msgstr "解析器初始化设置失败。"
 msgid "parser failed to init settings widgets."
 msgstr "解析器初始化设置部件失败。"
 
-#: graphs/file_import/dialog.vala:134
+#: graphs/file_import/dialog.vala:131
 msgid "Defaults updated"
 msgstr "默认值已更新"
 
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:77
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "支持的文件"
 
 #. columns
-#: graphs/file_import/file_import.vala:85
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:137
+#: graphs/sidebar/figure_settings.vala:134
 msgid "X Axis Minimum"
 msgstr "X 轴最小值"
 
-#: graphs/sidebar/figure_settings.vala:138
+#: graphs/sidebar/figure_settings.vala:135
 msgid "Y Axis Minimum"
 msgstr "Y 轴最小值"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:144
+#: graphs/sidebar/figure_settings.vala:141
 msgid "X Axis Maximum"
 msgstr "X 轴最大值"
 
-#: graphs/sidebar/figure_settings.vala:145
+#: graphs/sidebar/figure_settings.vala:142
 msgid "Y Axis Maximum"
 msgstr "Y 轴最大值"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
+#: graphs/sidebar/figure_settings.vala:160
 msgid "X Axis Scale"
 msgstr "X 轴缩放"
 
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:161
 msgid "X Axis Label"
 msgstr "X 轴标签"
 
-#: graphs/sidebar/figure_settings.vala:167
+#: graphs/sidebar/figure_settings.vala:164
 msgid "Y Axis Scale"
 msgstr "Y 轴缩放"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:165
 msgid "Y Axis Label"
 msgstr "Y 轴标签"
 
-#: graphs/sidebar/figure_settings.vala:248
+#: graphs/sidebar/figure_settings.vala:245
 msgid "Defaults Updated"
 msgstr "默认值已更新"
 
-#: graphs/style_editor/__init__.py:63
-msgid "Example Item"
-msgstr "示例项目"
-
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:247
-msgid "X Label"
-msgstr "X 标签"
-
-#: graphs/style_editor/__init__.py:109 graphs/style_io.py:248
-msgid "Y Label"
-msgstr "Y 标签"
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "颜色 %d"
 
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
+msgstr "示例项目"
+
+#: graphs/style_editor/window.vala:224
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "您确定要删除 %s 吗？"
+
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
+#: graphs/style_editor/window.vala:302
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Graphs 样式编辑器 — %s"
 
-#: graphs/style_editor/window.vala:231
-#, c-format
-msgid "Are you sure you want to delete %s?"
-msgstr "您确定要删除 %s 吗？"
+#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+msgid "X Label"
+msgstr "X 标签"
+
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "Y 标签"
 
 #: graphs/__init__.py:41
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs 开发者们"
-
-#: graphs/actions.vala:44
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024-2026\n"
 "SuGotLand <sugotland@outlook.com>, 2024"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:182 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
 
-#: graphs/application.vala:19
+#: graphs/application.vala:14
 msgid "New window"
 msgstr "新建窗口"
 
-#: graphs/application.vala:21
+#: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[文件…]"
 
@@ -2187,7 +2262,7 @@ msgstr "[文件…]"
 msgid "Residuals"
 msgstr "残差"
 
-#: graphs/curve_fitting.vala:85
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2195,7 +2270,7 @@ msgstr ""
 "请输入有效的\n"
 "数字参数。"
 
-#: graphs/curve_fitting.vala:86
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2203,7 +2278,7 @@ msgstr ""
 "约束错误：请确保\n"
 "下限 < 初始 < 上限。"
 
-#: graphs/curve_fitting.vala:87
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2211,7 +2286,7 @@ msgstr ""
 "矩阵错误：数据\n"
 "对于此模型不足。"
 
-#: graphs/curve_fitting.vala:88
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2219,7 +2294,7 @@ msgstr ""
 "拟合失败：未在达到\n"
 "最大迭代次数时拟合。"
 
-#: graphs/curve_fitting.vala:89
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2227,7 +2302,7 @@ msgstr ""
 "域错误：等式对于\n"
 "此数据范围无效。"
 
-#: graphs/curve_fitting.vala:90
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2235,7 +2310,7 @@ msgstr ""
 "无效等式：请检查\n"
 "语法和变量。"
 
-#: graphs/curve_fitting.vala:91
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2243,23 +2318,23 @@ msgstr ""
 "置信带错误：\n"
 "协方差矩阵不稳定。"
 
-#: graphs/curve_fitting.vala:263
+#: graphs/curve_fitting.vala:259
 msgid "Parameters"
 msgstr "参数"
 
-#: graphs/curve_fitting.vala:279
+#: graphs/curve_fitting.vala:275
 msgid "Statistics"
 msgstr "统计"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:464
+#: graphs/curve_fitting.vala:460
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
@@ -2268,55 +2343,55 @@ msgstr "%s 的拟合参数"
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
-#: graphs/data.vala:480
+#: graphs/data.vala:481
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "无法解析样式 %s，默认加载系统样式"
 
-#: graphs/data.vala:852
+#: graphs/data.vala:860
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "无法找到样式 %s，默认加载系统样式"
 
-#: graphs/export_figure.vala:48
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "导出的图表"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "导出的图表"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr "无数据可导出"
 
-#: graphs/export_items.vala:22 graphs/export_items.vala:38
+#: graphs/export_items.vala:20 graphs/export_items.vala:36
 msgid "Exported Data"
 msgstr "已导出数据"
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:29
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "文本文件"
 
-#: graphs/item.vala:156
+#: graphs/item.vala:175
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.vala:198
+#: graphs/item.vala:217
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.vala:247
+#: graphs/item.vala:273
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.vala:253
+#: graphs/item.vala:323
 msgid "Fill"
 msgstr "填充"
 
-#: graphs/misc.vala:7
+#: graphs/misc.vala:5
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
@@ -2337,61 +2412,61 @@ msgstr "一些项目缺少误差棒，它们将被丢弃"
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:333
+#: graphs/operations.py:332
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "对 {name} 的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:341
+#: graphs/operations.py:338
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:495 graphs/operations.py:499
+#: graphs/operations.py:492 graphs/operations.py:496
 msgid "No data found within the highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:508
+#: graphs/operations.py:505
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:511
+#: graphs/operations.py:508
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:519
+#: graphs/operations.py:516
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr "工程文件缺失数据"
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
 
-#: graphs/project.py:306
+#: graphs/project.py:310
 msgid "Failed to do legacy migration"
 msgstr "旧版本文件迁移失败"
 
-#: graphs/project.py:308
+#: graphs/project.py:312
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/project.py:314
+#: graphs/project.py:318
 msgid "Failed to migrate project"
 msgstr "迁移工程失败"
 
-#: graphs/project.py:320
+#: graphs/project.py:324
 msgid "Failed to validate project"
 msgstr "校验工程失败"
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr "保存的工程"
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "工程"
 
@@ -2437,39 +2512,45 @@ msgstr "无法解析 {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
 
-#: graphs/styles.vala:97
+#: graphs/styles.vala:103
 msgid "System"
 msgstr "系统"
 
-#: graphs/utilities.vala:252
+#: graphs/utilities.vala:248
 msgid "All Files"
 msgstr "所有文件"
 
-#: graphs/utilities.vala:294
+#: graphs/utilities.vala:290
 msgid "Document Portal"
 msgstr "文档门户"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:176
 msgid "Untitled Project"
 msgstr "未命名工程"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:177
 msgid "Draft"
 msgstr "草稿"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:183
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:393
+#: graphs/window.vala:394
 msgid "Open Location"
 msgstr "打开位置"
+
+#~ msgid "Edit"
+#~ msgstr "编辑"
+
+#~ msgid "Pick Color"
+#~ msgstr "拾取颜色"
 
 #~ msgid "No numeric data found in column."
 #~ msgstr "表格栏内未发现数字数据。"
@@ -2581,9 +2662,6 @@ msgstr "打开位置"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "选择编辑哪个项目"
-
-#~ msgid "Data"
-#~ msgstr "数据"
 
 #~ msgid "Line Properties"
 #~ msgstr "线条属性"

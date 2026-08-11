@@ -1,0 +1,29 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsStyleColorGroup: Adw.PreferencesGroup {
+  header-suffix: Button {
+    clicked => $add_color();
+
+    styles [
+      "flat",
+    ]
+
+    Adw.ButtonContent {
+      halign: center;
+      icon-name: "list-add-symbolic";
+      label: _("Add Color");
+    }
+  };
+
+  ListBox color_box {
+    vexpand: false;
+    valign: start;
+    hexpand: true;
+    selection-mode: none;
+
+    styles [
+      "boxed-list",
+    ]
+  }
+}

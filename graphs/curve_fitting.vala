@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
-
 namespace Graphs {
     public class FittingParameter {
         private string name;
@@ -114,16 +110,16 @@ namespace Graphs {
         private unowned Adw.ComboRow equation { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         [GtkChild]
         private unowned Adw.EntryRow custom_equation { get; }
 
         [GtkChild]
-        private unowned Box fitting_params_box { get; }
+        private unowned Gtk.Box fitting_params_box { get; }
 
         [GtkChild]
-        private unowned TextView text_view { get; }
+        private unowned Gtk.TextView text_view { get; }
 
         [GtkChild]
         private unowned Adw.ToastOverlay toast_overlay { get; }
@@ -138,12 +134,12 @@ namespace Graphs {
         private unowned Adw.Bin residuals_container { get; }
 
         public Window window { get; construct set; }
-        protected GLib.Settings settings { get; protected set; }
-        protected Expression ast { get; private set; }
+        protected Settings settings { get; protected set; }
+        protected Ast ast { get; private owned set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
 
-        private Map<string, FittingParameter> fitting_parameters;
+        private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
 
         protected Canvas? canvas {
@@ -157,7 +153,7 @@ namespace Graphs {
         }
 
         construct {
-            fitting_parameters = new HashMap<string, FittingParameter> ();
+            fitting_parameters = new HashTable<string, FittingParameter> (str_hash, str_equal);
             fit_result = null;
 
             settings = Application.get_settings_child ("curve-fitting");
@@ -211,26 +207,28 @@ namespace Graphs {
         }
 
         protected double[] get_p0 () {
-            double[] result = new double[fitting_parameters.size];
-            var iterator = fitting_parameters.map_iterator ();
+            double[] result = new double[fitting_parameters.size ()];
+            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
             int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                result[idx++] = iterator.get_value ().get_initial ();
+            unowned string key;
+            FittingParameter val;
+            while (iterator.next (out key, out val)) {
+                result[idx++] = val.get_initial ();
             }
             return result;
         }
 
         protected void get_bounds (out double[] lower, out double[] upper) {
-            lower = new double[fitting_parameters.size];
-            upper = new double[fitting_parameters.size];
-            var iterator = fitting_parameters.map_iterator ();
+            uint size = fitting_parameters.size ();
+            lower = new double[size];
+            upper = new double[size];
+            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
             int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                var param = iterator.get_value ();
-                lower[idx] = param.get_lower_bound ();
-                upper[idx] = param.get_upper_bound ();
+            unowned string key;
+            FittingParameter val;
+            while (iterator.next (out key, out val)) {
+                lower[idx] = val.get_lower_bound ();
+                upper[idx] = val.get_upper_bound ();
                 idx++;
             }
         }
@@ -246,7 +244,7 @@ namespace Graphs {
             var bold_tag = tag_table.lookup ("bold");
             if (bold_tag == null) bold_tag = buffer.create_tag ("bold", "weight", 700);
 
-            TextIter end_iter;
+            Gtk.TextIter end_iter;
             buffer.get_end_iter (out end_iter);
 
             if (error != CurveFittingError.NONE) {
@@ -380,7 +378,7 @@ namespace Graphs {
 
         private bool handle_new_equation (string equation) {
             // clear existing widgets
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = fitting_params_box.get_last_child ()) != null) {
                 fitting_params_box.remove (widget);
             }
@@ -394,11 +392,11 @@ namespace Graphs {
                     return false;
                 }
 
-                var new_map = new HashMap<string, FittingParameter> ();
+                var new_map = new HashTable<string, FittingParameter> (str_hash, str_equal);
                 FittingParameter param;
                 bool use_bounds = settings.get_enum ("optimization") > 0;
                 foreach (unowned string variable in free_vars) {
-                    if (fitting_parameters.has_key (variable)) {
+                    if (fitting_parameters.contains (variable)) {
                         param = fitting_parameters.get (variable);
                     } else {
                         param = new FittingParameter (variable);
@@ -430,7 +428,7 @@ namespace Graphs {
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
             try {
-                Expression ast = expression_to_ast (fitted_equation_string);
+                Ast ast = expression_to_ast (fitted_equation_string);
                 Item item = ItemFactory.new_equation_item (window.data.selected_style_params, ast);
                 item.name = "Y = " + fitted_equation_string;
                 Item[] items = {item};
@@ -443,10 +441,10 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/fitting-parameters.ui")]
-    public class FittingParameterBox : Box {
+    public class FittingParameterBox : Gtk.Box {
 
         [GtkChild]
-        private unowned Label label { get; }
+        private unowned Gtk.Label label { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow initial { get; }

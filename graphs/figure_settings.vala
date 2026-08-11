@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
     private const string[] LIMIT_NAMES = {
         "min-bottom", "max-bottom", "min-top", "max-top",
@@ -59,7 +56,7 @@ namespace Graphs {
         public double min_selected { get; set; default = 0; }
         public double max_selected { get; set; default = 0; }
 
-        public FigureSettings (GLib.Settings settings) {
+        public FigureSettings (Settings settings) {
             Object (
                 bottom_scale: settings.get_enum ("bottom-scale"),
                 left_scale: settings.get_enum ("left-scale"),

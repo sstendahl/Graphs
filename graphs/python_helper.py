@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
-from graphs import ast, curve_fitting, file_io, misc, operations
+import gio_pyio
+
+from graphs import ast, curve_fitting, misc, operations
 from graphs.canvas import Canvas
 from graphs.figure import Figure
 from graphs.style_editor.editor_box import StyleEditorBox
@@ -69,11 +71,8 @@ class PythonHelper(Graphs.PythonHelper):
         return canvas
 
     @staticmethod
-    def _on_create_style_editor_box_request(
-        self,
-        window: Gtk.Window,
-    ) -> Graphs.StyleEditorBox:
-        return StyleEditorBox(window)
+    def _on_create_style_editor_box_request(self) -> Graphs.StyleEditorBox:
+        return StyleEditorBox()
 
     @staticmethod
     def _on_create_window_request(self) -> Graphs.Window:
@@ -94,7 +93,7 @@ class PythonHelper(Graphs.PythonHelper):
         settings: Gio.Settings,
         data: Graphs.Data,
     ) -> None:
-        with file_io.open(file, "wb") as file_like:
+        with gio_pyio.open(file, "wb") as file_like:
             figure = Figure(
                 data.get_selected_style_params(),
                 data,

@@ -44,7 +44,7 @@ def test_new_from_dict_fill_item():
     d = {
         "type": "FillItem",
         "name": "Fill",
-        "data": (None, None, None),
+        "data": ([], [], []),
         "color": "#62A0EA",
         "alpha": 0.25,
     }

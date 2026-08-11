@@ -8,7 +8,7 @@ interactive navigation in conjunction with graphs-specific structures.
 """
 import math
 
-from gi.repository import Adw, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs.figure import Figure
 
@@ -88,8 +88,9 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         scroll = Gtk.EventControllerScroll.new(
             Gtk.EventControllerScrollFlags.BOTH_AXES,
         )
+        self._scroll_timeout_id = None
         scroll.connect("scroll", self.scroll_event)
-        scroll.connect("scroll-end", self.toolbar.push_current)
+        scroll.connect("scroll-end", self._on_scroll_end)
         self.add_controller(scroll)
 
         zoom = Gtk.GestureZoom.new()
@@ -203,9 +204,26 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 scale = Graphs.scale_from_string(ax.get_yscale())
                 ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
                 ax.set_ylim(ymin, ymax)
+        self._on_scroll_change()
 
+    def _scroll_timeout_callback(self) -> bool:
+        self._scroll_timeout_id = None
         self.toolbar.push_current()
-        super().scroll_event(controller, dx, dy)
+        return False
+
+    def _on_scroll_change(self, *_args) -> None:
+        """Debounced scroll handler that pushes the view after a delay."""
+        if self._scroll_timeout_id is not None:
+            GObject.source_remove(self._scroll_timeout_id)
+        self._scroll_timeout_id = \
+            GObject.timeout_add(150, self._scroll_timeout_callback)
+
+    def _on_scroll_end(self, *_args) -> None:
+        """Push the view state at the end of the scroll gesture."""
+        if self._scroll_timeout_id is not None:
+            GObject.source_remove(self._scroll_timeout_id)
+            self._scroll_timeout_id = None
+        self.toolbar.push_current()
 
     def zoom_event(
         self,

@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for saving and loading projects."""
 import copy
+import json
 import logging
 import re
 from gettext import gettext as _
@@ -8,7 +9,9 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs
 
-from graphs import file_io, migrate
+import gio_pyio
+
+from graphs import migrate
 from graphs.item import ItemFactory
 
 CURRENT_PROJECT_VERSION = 2
@@ -296,7 +299,8 @@ def read_project_file(
 ) -> dict:
     """Read a project dict from file and account for migration."""
     try:
-        project_dict = file_io.parse_json(file)
+        with gio_pyio.open(file, "rb") as wrapper:
+            project_dict = json.load(wrapper)
     except UnicodeDecodeError:
         if not parse_flags & Graphs.ProjectParseFlags.ALLOW_LEGACY_MIGRATION:
             raise ProjectParseError("LEGACY_MIGRATION_DISALLOWED", False)
@@ -324,4 +328,10 @@ def read_project_file(
 def save_project_dict(file: Gio.File, project_dict: dict) -> None:
     """Save a project dict to a file."""
     project_dict["project-version"] = CURRENT_PROJECT_VERSION
-    file_io.write_json(file, project_dict, pretty_print=False)
+    with gio_pyio.open(file, "wt") as wrapper:
+        json.dump(
+            project_dict,
+            wrapper,
+            indent=None,
+            sort_keys=True,
+        )

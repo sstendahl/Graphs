@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
-
 namespace Graphs {
 
     public errordomain ProjectParseError {
@@ -19,7 +16,7 @@ namespace Graphs {
 
     namespace Project {
 
-        public FileFilter get_project_file_filter () {
+        public Gtk.FileFilter get_project_file_filter () {
             return Tools.create_file_filter (
                 C_("file-filter", "Graphs Project File"), "graphs"
             );
@@ -41,7 +38,7 @@ namespace Graphs {
                 _save (window);
                 return true;
             }
-            var dialog = new FileDialog ();
+            var dialog = new Gtk.FileDialog ();
             dialog.set_filters (get_project_file_filters ());
             dialog.set_initial_name (_("Project") + ".graphs");
             try {
@@ -86,7 +83,7 @@ namespace Graphs {
         }
 
         public async void open (Window window) {
-            var dialog = new FileDialog ();
+            var dialog = new Gtk.FileDialog ();
             dialog.set_filters (get_project_file_filters ());
             try {
                 var file = yield dialog.open (window, null);

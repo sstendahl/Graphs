@@ -13,9 +13,9 @@ namespace Graphs {
             return instance.create_canvas_request.emit (parameters, items, interactive, figure_settings);
         }
 
-        protected signal StyleEditorBox create_style_editor_box_request (Gtk.Window window);
-        public static StyleEditorBox create_style_editor_box (Gtk.Window window) {
-            return instance.create_style_editor_box_request.emit (window);
+        protected signal StyleEditorBox create_style_editor_box_request ();
+        public static StyleEditorBox create_style_editor_box () {
+            return instance.create_style_editor_box_request.emit ();
         }
 
         protected signal Window create_window_request ();
@@ -28,13 +28,13 @@ namespace Graphs {
             return instance.curve_fitting_dialog_request.emit (window, item);
         }
 
-        public signal void export_figure_request (File file, GLib.Settings settings, Data data);
-        public static void export_figure (File file, GLib.Settings settings, Data data) {
+        public signal void export_figure_request (File file, Settings settings, Data data);
+        public static void export_figure (File file, Settings settings, Data data) {
             instance.export_figure_request.emit (file, settings, data);
         }
 
-        public signal bool has_singularities_request (Expression equation, double xstart, double xstop);
-        public static bool has_singularities (Expression equation, double xstart, double xstop) {
+        public signal bool has_singularities_request (Ast equation, double xstart, double xstop);
+        public static bool has_singularities (Ast equation, double xstart, double xstop) {
             return instance.has_singularities_request.emit (equation, xstart, xstop);
         }
 
@@ -48,8 +48,8 @@ namespace Graphs {
             instance.python_method_request.emit (object, method);
         }
 
-        protected signal string simplify_expression_request (Expression input);
-        public static Expression simplify_expression (Expression input) {
+        protected signal string simplify_expression_request (Ast input);
+        public static Ast simplify_expression (Ast input) {
             try {
                 return expression_to_ast (instance.simplify_expression_request.emit (input));
             } catch (MathError e) { assert_not_reached (); }

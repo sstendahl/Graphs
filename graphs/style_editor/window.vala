@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-
 namespace Graphs {
     /**
      * Style Editor Window window
@@ -49,13 +46,13 @@ namespace Graphs {
         private uint _reload_source = 0;
 
         construct {
-            editor_box = PythonHelper.create_style_editor_box (this);
+            editor_box = PythonHelper.create_style_editor_box ();
             editor_bin.set_child (editor_box);
             editor_box.notify["parameters"].connect (on_params_changed);
 
             this.css_provider = new Gtk.CssProvider ();
             Gtk.StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             content_view.set_name (Application.get_next_css_name ());
 
@@ -329,7 +326,7 @@ namespace Graphs {
             canvas.figure.set ("bottom_label", _("X Label"));
             canvas.figure.set ("left_label", _("Y Label"));
 
-            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.background_color, style.color));
+            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.outline_color, style.text_color));
 
             canvas_bin.set_child (canvas);
         }

@@ -95,7 +95,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -339,7 +339,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
                 for cap in self._ycaps:
                     cap.set_visible(False)
 
-        for prop in ("selected", "linewidth", "markersize"):
+        for prop in ("legend", "linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
@@ -351,7 +351,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     __gtype_name__ = "GraphsEquationItemArtistWrapper"
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
-    legend = True
+    legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
@@ -359,10 +359,11 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         equation = item.get_equation()
         self._expr = ast.sympify(equation)
-        self._program = Graphs.ast_to_program(equation, "x")
+        self._program = item.get_program()
         self._axis = axis
         self._view_change_timeout_id = None
-        axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._view_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
             [],
             [],
@@ -373,14 +374,24 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             marker="none",
         )[0]
         self._color_artist = self._artist
-        for prop in ("selected", "linewidth"):
+        for prop in ("legend", "linewidth", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
-        item.connect("notify::equation", self._on_equation_change)
+        self._equation_handler = \
+            item.connect("notify::equation", self._on_equation_change)
+        self._item = item
 
         self._set_properties(None, None)
         self._generate_data()
+
+    def disconnect_item(self) -> None:
+        """Release the view and item subscriptions on detach."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._view_handler)
+        self._item.disconnect(self._equation_handler)
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None
@@ -394,12 +405,12 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._view_change_timeout_id = \
             GObject.timeout_add(100, self._timeout_callback)
 
-    # We cannot have a Property of type Graphs.Expression
+    # We cannot have a Property of type Graphs.Ast
     def _on_equation_change(self, item, _pspec) -> None:
         equation = item.get_equation()
         self._singularities_cache = False
         self._expr = ast.sympify(equation)
-        self._program = Graphs.ast_to_program(equation, "x")
+        self._program = item.get_program()
         self._generate_data()
 
     @GObject.Property(type=int, default=1)
@@ -596,19 +607,26 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     __gtype_name__ = "GraphsFillItemArtistWrapper"
 
-    @GObject.Property(type=object, flags=2)
-    def data(self) -> None:
+    def _as_tuple(self, holder: Graphs.FillHolder) -> tuple[numpy.ndarray]:
+        return (
+            utilities.bytes_to_ndarray(holder.get_xdata_b()),
+            utilities.bytes_to_ndarray(holder.get_lower_b()),
+            utilities.bytes_to_ndarray(holder.get_upper_b()),
+        )
+
+    @GObject.Property(type=Graphs.FillHolder, flags=2)
+    def data(self) -> Graphs.FillHolder:
         """Write-only property, ignored."""
 
     @data.setter
-    def data(self, data) -> None:
-        dummy = Figure().add_subplot().fill_between(*data)
+    def data(self, data: Graphs.FillHolder) -> None:
+        dummy = Figure().add_subplot().fill_between(*self._as_tuple(data))
         self._artist.set_paths([dummy.get_paths()[0].vertices])
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
         self._artist = axis.fill_between(
-            *item.get_data_tuple(),
+            *self._as_tuple(item.get_data()),
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),

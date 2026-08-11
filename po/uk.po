@@ -2,27 +2,31 @@
 # Copyright (C) 2024 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 #
-# Yuri Chornoivan <yurchor@ukr.net>, 2024, 2025, 2026.
+# SPDX-FileCopyrightText: 2024, 2025, 2026 Yuri Chornoivan <yurchor@ukr.net>
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-07-02 13:18+0000\n"
-"PO-Revision-Date: 2026-07-02 20:04+0300\n"
+"POT-Creation-Date: 2026-08-06 07:35+0000\n"
+"PO-Revision-Date: 2026-08-06 15:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
-"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Lokalize 23.04.3\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>="
+"2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Lokalize 25.12.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "Графіки"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
+msgid "The Graphs Developers"
+msgstr "Розробники «Графіків»"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -43,6 +47,54 @@ msgstr "Керування таблицями стилів креслення"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Робота із імпортованими даними"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Креслення"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Функція"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Графік"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Малювання"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Наука"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Математика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Розрахунки"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Рівняння"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Дані"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Візуалізація"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Апроксимація"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -118,7 +170,7 @@ msgid "New Window"
 msgstr "Нове вікно"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:20
+#: graphs/application.vala:15
 msgid "Style Editor"
 msgstr "Редактор стилю"
 
@@ -135,12 +187,12 @@ msgstr ""
 "У ньому можуть міститися некоректні дані."
 
 #: data/ui/dialogs/beta-disallowed.blp:9
-#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "Продовжити"
 
 #: data/ui/dialogs/beta-disallowed.blp:10
-#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "Перервати"
 
@@ -166,7 +218,7 @@ msgstr "Вилучити"
 msgid "Legacy Project"
 msgstr "Застарілий проєкт"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -231,7 +283,7 @@ msgstr "Додати запис"
 
 #: data/ui/import/columns/item-group.blp:9
 #: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
-#: data/ui/style-editor/item-color-row.blp:36
+#: data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "Вилучити"
 
@@ -255,8 +307,8 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Імпортувати лише значення Y, значення X буде породжено"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:235
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
+#: graphs/item.vala:257
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -266,8 +318,20 @@ msgstr "Рівняння"
 msgid "More info"
 msgstr "Докладніше"
 
-#: data/ui/import/columns/item-group.blp:72
-#: data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73
+#: data/ui/import/spreadsheet/item-group.blp:73
+#| msgid ""
+#| "<b>X Value Calculation</b>\n"
+#| "\n"
+#| "Enter an equation to calculate X values.\n"
+#| "Use 'n' for the row index (starting from 0).\n"
+#| "\n"
+#| "<b>Examples:</b>\n"
+#| "• <b>n</b> → 0, 1, 2, 3, 4...\n"
+#| "• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
+#| "• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
+#| "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
+#| "• <b>n*10+100</b> → 100, 110, 120, 130..."
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -275,11 +339,11 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 "<b>Обчислення значень X</b>\n"
 "\n"
@@ -287,33 +351,33 @@ msgstr ""
 "Скористайтеся «n» для індексу рядка (відлік від 0).\n"
 "\n"
 "<b>Приклади:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 
-#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93
 #: data/ui/import/sql/main-group.blp:28
-#: data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "Позначки похибок X"
 
-#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97
 #: data/ui/import/sql/main-group.blp:33
-#: data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "Позначки похибок Y"
 
-#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110
 #: data/ui/import/sql/main-group.blp:40
-#: data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "Стовпчик похибки за X"
 
-#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122
 #: data/ui/import/sql/main-group.blp:46
-#: data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "Стовпчик похибки за Y"
 
@@ -368,25 +432,73 @@ msgstr "Нетипова"
 msgid "Custom Delimiter"
 msgstr "Нетиповий роздільник"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+#| msgid ""
+#| "<b>Uses regex pattern matching</b>\n"
+#| "\n"
+#| "These characters have special meanings in regex syntax:\n"
+#| "<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+#| "\n"
+#| "To match these characters literally, escape them with <b>\\</b>\n"
+#| "\n"
+#| "<b>Examples:</b>\n"
+#| "• <b>\\.</b> matches a period\n"
+#| "• <b>\\*</b> matches an asterisk\n"
+#| "• <b>\\|</b> matches a pipe character\n"
+#| "\n"
+#| "<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+#| "syntax'>Learn more about regex syntax...</a>"
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+"<b>Використовує відповідність за формальними виразами</b>\n"
+"\n"
+"У синтаксисі формальних виразів мають особливе призначення такі символи:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"Для встановлення відповідності цим символами буквально, екрануйте їх <b>\\</"
+"b>\n"
+"\n"
+"<b>Приклади:</b>\n"
+"• <b>\\.</b> відповідає крапці\n"
+"• <b>\\*</b> відповідає зірочці\n"
+"• <b>\\|</b> відповідає символу вертикальної риски\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Дізнатися більше про синтаксис формальних виразів…</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "Десятковий роздільник"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "Десяткова кома (,)"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "Десяткова крапка (.)"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "Пропустити рядки"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "Кількість рядків, які слід пропустити на початку"
 
@@ -460,26 +572,31 @@ msgid "Name"
 msgstr "Назва"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+#| msgid "Show Legend"
+msgid "Show in Legend"
+msgstr "Показати в умовних позначеннях"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "Розташування вісі x"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "Внизу"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "Згори"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "Розташування вісі y"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "Ліворуч"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "Праворуч"
 
@@ -678,8 +795,8 @@ msgid "Line"
 msgstr "Лінія"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -820,7 +937,7 @@ msgid "Labels"
 msgstr "Мітки"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:107
+#: graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "Заголовок"
 
@@ -964,7 +1081,7 @@ msgstr "Приховати непозначені елементи"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:83
+#: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "Стиль"
 
@@ -1208,9 +1325,9 @@ msgstr "Додати"
 msgid "Template"
 msgstr "Шаблон"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "Змінити колір"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "Додати колір"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1400,18 +1517,9 @@ msgstr "Колір контуру"
 msgid "Line Colors"
 msgstr "Кольори ліній"
 
-#: data/ui/style-editor/editor-box.blp:521
-#: data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "Додати колір"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr "Кольори позначок похибок"
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "Змінити"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1459,7 +1567,7 @@ msgid "Open Style"
 msgstr "Відкрити стиль"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr "Редактор стилю графіка"
 
@@ -1479,7 +1587,7 @@ msgstr "Відкрити файл…"
 msgid "Open Preview"
 msgstr "Попередньо переглянути"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
@@ -1512,7 +1620,11 @@ msgstr "Введіть математичний вираз"
 msgid "Name (optional)"
 msgstr "Назва (необов’язково):"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "Змінити колір"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "Апроксимація кривих"
 
@@ -1520,104 +1632,104 @@ msgstr "Апроксимація кривих"
 msgid "Open Curve Fitting Menu"
 msgstr "Відкрити меню апроксимації кривих"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Лінійна"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Квадратична"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Показникова"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Степенева"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Логарифмічна"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Логістична сигмоїда"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Гаусова"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Нетипова"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "Додати апроксимацію даних"
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "Увімкнути або вимкнути бічну панель"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "Метод оптимізації"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Левенберга-Марквардта"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Відбита довірча область"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Конура"
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "Межі довіри"
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "Немає"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: довірчий інтервал 68%C"
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: довірчий інтервал 95%C"
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: довірчий інтервал 99.7%C"
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "Показувати лишки"
 
@@ -1625,7 +1737,7 @@ msgstr "Показувати лишки"
 msgid "Export Figure"
 msgstr "Експортувати рисунок"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "Експортувати"
 
@@ -1712,15 +1824,11 @@ msgstr "Створення даних"
 msgid "Generate"
 msgstr "Створити"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "Виберіть колір"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "Пересунути елемент"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "Вилучити запис"
 
@@ -1765,7 +1873,7 @@ msgstr "Вилучити…"
 msgid "Transform Data"
 msgstr "Перетворити дані"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1801,11 +1909,11 @@ msgstr ""
 "Для тригонометричних функцій типово буде використано радіани.\n"
 "Додайте d, щоб використати градуси. Приклади: sind(x) і cosd(x)."
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "Відкинути непозначені дані"
 
@@ -1817,7 +1925,7 @@ msgstr "Скиньте сюди для імпортування"
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:403
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:404
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -1991,7 +2099,7 @@ msgctxt "import-mode"
 msgid "Columns"
 msgstr "Стовпчики"
 
-#: graphs/file_import/parsers/columns/reader.vala:110
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -2000,18 +2108,17 @@ msgstr ""
 "Помилка індексу у %s, не вдалося отримати доступ до індексу %d у рядку %d, "
 "знайдено лише %d стовпчиків"
 
-#: graphs/file_import/parsers/columns/reader.vala:137
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Не вдалося імпортувати дані з файла, помилкове значення у рядку %d"
 
-#: graphs/file_import/parsers/columns/reader.vala:156
-#| msgid "Failed to parse project file"
+#: graphs/file_import/parsers/columns/reader.vala:153
 msgid "Failed to parse file."
 msgstr "Не вдалося обробити файл."
 
-#: graphs/file_import/parsers/columns/ui.vala:40
-#: graphs/file_import/parsers/spreadsheet/ui.vala:149
+#: graphs/file_import/parsers/columns/ui.vala:36
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Елемент %d"
@@ -2021,7 +2128,7 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
@@ -2037,7 +2144,6 @@ msgid "Spreadsheet"
 msgstr "Електронна таблиця"
 
 #: graphs/file_import/parsers/spreadsheet/reader.vala:13
-#| msgid "Failed to parse project file"
 msgid "Failed to open File."
 msgstr "Не вдалося відкрити файл."
 
@@ -2051,28 +2157,28 @@ msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "База даних SQLite"
 
-#: graphs/file_import/parsers/sql/reader.vala:135
+#: graphs/file_import/parsers/sql/reader.vala:133
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr ""
 "Не вдалося імпортувати дані з таблиці «%s», не знайдено стовпчиків із "
 "числовими даними"
 
-#: graphs/file_import/parsers/sql/reader.vala:144
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:66
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
@@ -2107,112 +2213,107 @@ msgstr "обробнику не вдалося ініціалізувати па
 msgid "parser failed to init settings widgets."
 msgstr "обробнику не вдалося ініціалізувати віджети параметрів."
 
-#: graphs/file_import/dialog.vala:134
-#| msgid "Defaults Updated"
+#: graphs/file_import/dialog.vala:131
 msgid "Defaults updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:77
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
 #. columns
-#: graphs/file_import/file_import.vala:85
+#: graphs/file_import/file_import.vala:81
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:137
+#: graphs/sidebar/figure_settings.vala:134
 msgid "X Axis Minimum"
 msgstr "Мінімум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:138
+#: graphs/sidebar/figure_settings.vala:135
 msgid "Y Axis Minimum"
 msgstr "Мінімум на вісі y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:144
+#: graphs/sidebar/figure_settings.vala:141
 msgid "X Axis Maximum"
 msgstr "Максимум на вісі x"
 
-#: graphs/sidebar/figure_settings.vala:145
+#: graphs/sidebar/figure_settings.vala:142
 msgid "Y Axis Maximum"
 msgstr "Максимум на вісі y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
+#: graphs/sidebar/figure_settings.vala:160
 msgid "X Axis Scale"
 msgstr "Шкала вісі X"
 
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:161
 msgid "X Axis Label"
 msgstr "Мітка вісі x"
 
-#: graphs/sidebar/figure_settings.vala:167
+#: graphs/sidebar/figure_settings.vala:164
 msgid "Y Axis Scale"
 msgstr "Шкала вісі y"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:165
 msgid "Y Axis Label"
 msgstr "Мітка вісі y"
 
-#: graphs/sidebar/figure_settings.vala:248
+#: graphs/sidebar/figure_settings.vala:245
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/style_editor/__init__.py:63
-msgid "Example Item"
-msgstr "Приклад запису"
-
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:247
-msgid "X Label"
-msgstr "Мітка X"
-
-#: graphs/style_editor/__init__.py:109 graphs/style_io.py:248
-msgid "Y Label"
-msgstr "Мітка Y"
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "Колір %d"
 
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
+msgstr "Приклад запису"
+
+#: graphs/style_editor/window.vala:224
+#, c-format
+msgid "Are you sure you want to delete %s?"
+msgstr "Ви справді хочете вилучити %s?"
+
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
+#: graphs/style_editor/window.vala:302
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
-#: graphs/style_editor/window.vala:231
-#, c-format
-msgid "Are you sure you want to delete %s?"
-msgstr "Ви справді хочете вилучити %s?"
+#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+msgid "X Label"
+msgstr "Мітка X"
+
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "Мітка Y"
 
 #: graphs/__init__.py:41
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "Не вдалося завантажити {font}"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Розробники «Графіків»"
-
-#: graphs/actions.vala:44
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:182 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
 
-#: graphs/application.vala:19
+#: graphs/application.vala:14
 msgid "New window"
 msgstr "Нове вікно"
 
-#: graphs/application.vala:21
+#: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[ФАЙЛ…]"
 
@@ -2220,7 +2321,7 @@ msgstr "[ФАЙЛ…]"
 msgid "Residuals"
 msgstr "Лишки"
 
-#: graphs/curve_fitting.vala:85
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2228,7 +2329,7 @@ msgstr ""
 "Будь ласка, введіть коректні \n"
 "числові параметри."
 
-#: graphs/curve_fitting.vala:86
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2236,7 +2337,7 @@ msgstr ""
 "Помилка обмеження: переконайтеся, що \n"
 "Нижня < Початкова < Верхня."
 
-#: graphs/curve_fitting.vala:87
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2244,7 +2345,7 @@ msgstr ""
 "Помилка у матриці: недостатньо \n"
 "даних для цієї моделі."
 
-#: graphs/curve_fitting.vala:88
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2252,7 +2353,7 @@ msgstr ""
 "Помилка апроксимації: перевищено максимальну \n"
 "кількість ітерацій без досягнення збіжності."
 
-#: graphs/curve_fitting.vala:89
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2260,7 +2361,7 @@ msgstr ""
 "Помилка у домені: рівняння є некоректним \n"
 "для цього діапазону даних."
 
-#: graphs/curve_fitting.vala:90
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2268,7 +2369,7 @@ msgstr ""
 "Некоректне рівняння: перевірте \n"
 "синтаксис і змінні."
 
-#: graphs/curve_fitting.vala:91
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2276,23 +2377,23 @@ msgstr ""
 "Похибка довірчої смуги: \n"
 "Коваріаційна матриця нестабільна."
 
-#: graphs/curve_fitting.vala:263
+#: graphs/curve_fitting.vala:259
 msgid "Parameters"
 msgstr "Параметри"
 
-#: graphs/curve_fitting.vala:279
+#: graphs/curve_fitting.vala:275
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:278
 msgid "RMSE"
 msgstr "КСКП"
 
-#: graphs/curve_fitting.vala:464
+#: graphs/curve_fitting.vala:460
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
@@ -2301,59 +2402,59 @@ msgstr "Параметри апроксимації для %s"
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
-#: graphs/data.vala:480
+#: graphs/data.vala:481
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
 "Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/data.vala:852
+#: graphs/data.vala:860
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
 "Не вдалося знайти стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/export_figure.vala:48
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "Експортований рисунок"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr "Немає даних для експортування"
 
-#: graphs/export_items.vala:22 graphs/export_items.vala:38
+#: graphs/export_items.vala:20 graphs/export_items.vala:36
 msgid "Exported Data"
 msgstr "Експортовані дані"
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:29
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
 
-#: graphs/item.vala:156
+#: graphs/item.vala:175
 msgid "Dataset"
 msgstr "Набір даних"
 
-#: graphs/item.vala:198
+#: graphs/item.vala:217
 msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
-#: graphs/item.vala:247
+#: graphs/item.vala:273
 msgid "Label"
 msgstr "Мітка"
 
-#: graphs/item.vala:253
+#: graphs/item.vala:323
 msgid "Fill"
 msgstr "Заповнення"
 
-#: graphs/misc.vala:7
+#: graphs/misc.vala:5
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "файл стилю Matplotlib"
@@ -2376,62 +2477,62 @@ msgstr "Для деяких записів немає позначок похи�
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:333
+#: graphs/operations.py:332
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
 
-#: graphs/operations.py:341
+#: graphs/operations.py:338
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:495 graphs/operations.py:499
+#: graphs/operations.py:492 graphs/operations.py:496
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:508
+#: graphs/operations.py:505
 msgid "Operation not supported for data items"
 msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:511
+#: graphs/operations.py:508
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: помилка під час виконання дії"
 
-#: graphs/operations.py:519
+#: graphs/operations.py:516
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr "У файлі проєкту не вистачає даних"
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проєкт походить з нової несумісної версії «Графіків»"
 
-#: graphs/project.py:306
+#: graphs/project.py:310
 msgid "Failed to do legacy migration"
 msgstr "Не вдалося перенести дані зі старої версії"
 
-#: graphs/project.py:308
+#: graphs/project.py:312
 msgid "Failed to parse project file"
 msgstr "Не вдалося обробити файл проєкту"
 
-#: graphs/project.py:314
+#: graphs/project.py:318
 msgid "Failed to migrate project"
 msgstr "Не вдалося перенести проєкт"
 
-#: graphs/project.py:320
+#: graphs/project.py:324
 msgid "Failed to validate project"
 msgstr "Не вдалося перевірити проєкт"
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr "Збережений проєкт"
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "Проєкт"
 
@@ -2479,39 +2580,45 @@ msgstr "Не вдалося обробити {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "У файлі {file} не міститься теґу name"
 
-#: graphs/styles.vala:97
+#: graphs/styles.vala:103
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:252
+#: graphs/utilities.vala:248
 msgid "All Files"
 msgstr "усі файли"
 
-#: graphs/utilities.vala:294
+#: graphs/utilities.vala:290
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:159
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:186
+#: graphs/window.vala:176
 msgid "Untitled Project"
 msgstr "Проєкт без назви"
 
-#: graphs/window.vala:187
+#: graphs/window.vala:177
 msgid "Draft"
 msgstr "Чернетка"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:193
+#: graphs/window.vala:183
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
-#: graphs/window.vala:393
+#: graphs/window.vala:394
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "Edit"
+#~ msgstr "Змінити"
+
+#~ msgid "Pick Color"
+#~ msgstr "Виберіть колір"
 
 #~ msgid "No numeric data found in column."
 #~ msgstr "У стовпчику не знайдено числових даних."
@@ -2641,9 +2748,6 @@ msgstr "Відкрити адресу"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "Виберіть запис для редагування"
-
-#~ msgid "Data"
-#~ msgstr "Дані"
 
 #~ msgid "Line Properties"
 #~ msgstr "Властивості лінії"

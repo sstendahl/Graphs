@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gee;
-
 namespace Graphs.MathTools {
     private const double REL_TOL = 1e-9;
     private const double ABS_TOL = 1e-4;
@@ -88,7 +86,7 @@ namespace Graphs.MathTools {
      * Get all free variables (without x) in an equation.
      */
     public static string[] get_free_variables (string equation) throws MathError {
-        HashSet<string> strings = new HashSet<string> ();
+        Gee.HashSet<string> strings = new Gee.HashSet<string> ();
 
         MathParser.Lexer lexer = new MathParser.Lexer ();
         lexer.start_lexing (equation);
@@ -113,7 +111,7 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    public static double[] evaluate_expression (Expression expr, int length, string variable) throws MathError {
+    public static double[] evaluate_expression (Ast expr, int length, string variable) throws MathError {
         double[] input = arange (length);
         return ast_to_program (expr, variable).eval (input);
     }
@@ -131,13 +129,13 @@ namespace Graphs.MathTools {
         return new DataHolder ((owned) xdata, (owned) ydata, null, null);
     }
 
-    public static DataHolder equation_to_data (Expression equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
+    public static DataHolder equation_to_data (Ast equation, double xstart, double xstop, int steps = 5000, Scale scale = Scale.LINEAR) throws MathError {
         return program_to_data (ast_to_program (equation), xstart, xstop, steps, scale);
     }
 
     private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-    public static bool validate_expression (Expression expression) {
+    public static bool validate_expression (Ast expression) {
         try {
             double[] ydata = ast_to_program (expression).eval (XDATA);
             return CUtilities.finite_double (ydata);
@@ -150,26 +148,6 @@ namespace Graphs.MathTools {
         try {
             return validate_expression (expression_to_ast (equation));
         } catch (MathError e) {
-            return false;
-        }
-    }
-
-    public bool minmax_equation (
-        Expression equation,
-        double xstart,
-        double xstop,
-        Scale scale,
-        out double min,
-        out double max
-    ) {
-        double[] xdata = new double[5000];
-        CUtilities.create_equidistant_data (xstart, xstop, scale, xdata);
-        try {
-            double[] ydata = ast_to_program (equation).eval (xdata);
-            return CUtilities.array_minmax (ydata, scale.is_nonzero (), out min, out max);
-        } catch (MathError e) {
-            min = 0;
-            max = 0;
             return false;
         }
     }
