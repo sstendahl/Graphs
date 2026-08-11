@@ -139,7 +139,7 @@ namespace Graphs {
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
 
-        private Gee.Map<string, FittingParameter> fitting_parameters;
+        private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
 
         protected Canvas? canvas {
@@ -153,7 +153,7 @@ namespace Graphs {
         }
 
         construct {
-            fitting_parameters = new Gee.HashMap<string, FittingParameter> ();
+            fitting_parameters = new HashTable<string, FittingParameter> (str_hash, str_equal);
             fit_result = null;
 
             settings = Application.get_settings_child ("curve-fitting");
@@ -207,26 +207,28 @@ namespace Graphs {
         }
 
         protected double[] get_p0 () {
-            double[] result = new double[fitting_parameters.size];
-            var iterator = fitting_parameters.map_iterator ();
+            double[] result = new double[fitting_parameters.size ()];
+            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
             int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                result[idx++] = iterator.get_value ().get_initial ();
+            unowned string key;
+            FittingParameter val;
+            while (iterator.next (out key, out val)) {
+                result[idx++] = val.get_initial ();
             }
             return result;
         }
 
         protected void get_bounds (out double[] lower, out double[] upper) {
-            lower = new double[fitting_parameters.size];
-            upper = new double[fitting_parameters.size];
-            var iterator = fitting_parameters.map_iterator ();
+            uint size = fitting_parameters.size ();
+            lower = new double[size];
+            upper = new double[size];
+            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
             int idx = 0;
-            while (iterator.has_next ()) {
-                iterator.next ();
-                var param = iterator.get_value ();
-                lower[idx] = param.get_lower_bound ();
-                upper[idx] = param.get_upper_bound ();
+            unowned string key;
+            FittingParameter val;
+            while (iterator.next (out key, out val)) {
+                lower[idx] = val.get_lower_bound ();
+                upper[idx] = val.get_upper_bound ();
                 idx++;
             }
         }
@@ -390,11 +392,11 @@ namespace Graphs {
                     return false;
                 }
 
-                var new_map = new Gee.HashMap<string, FittingParameter> ();
+                var new_map = new HashTable<string, FittingParameter> (str_hash, str_equal);
                 FittingParameter param;
                 bool use_bounds = settings.get_enum ("optimization") > 0;
                 foreach (unowned string variable in free_vars) {
-                    if (fitting_parameters.has_key (variable)) {
+                    if (fitting_parameters.contains (variable)) {
                         param = fitting_parameters.get (variable);
                     } else {
                         param = new FittingParameter (variable);
