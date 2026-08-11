@@ -89,7 +89,23 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Scale markersize { get; }
 
+        [GtkChild]
+        private unowned Adw.PreferencesGroup downsample_group { get; }
+
+        [GtkChild]
+        private unowned Adw.SwitchRow downsample { get; }
+
         public EditItemDataItemBox (DataItem item) {
+            if (item.exceeds_downsample_threshold ()) {
+                downsample_group.set_visible (true);
+                item.bind_property (
+                    "downsample",
+                    downsample,
+                    "active",
+                    BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+                );
+            }
+
             item.bind_property (
                 "linestyle",
                 linestyle,
