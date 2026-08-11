@@ -22,6 +22,9 @@ template $GraphsGenerateDataDialog: Adw.Dialog {
       Button confirm_button {
         icon-name: "checkmark-small-symbolic";
         clicked => $on_accept();
+        styles [
+          "suggested-action",
+        ]
       }
     }
 
