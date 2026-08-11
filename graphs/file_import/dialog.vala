@@ -156,7 +156,9 @@ namespace Graphs {
                     window.add_toast_string (e.message);
                 }
             }
-            window.data.add_items (itemlist.to_array ());
+            Item[] new_items = itemlist.to_array ();
+            window.data.add_items (new_items);
+            window.add_downsample_toasts (new_items);
             close ();
         }
     }

@@ -87,4 +87,13 @@ template $GraphsEditItemDataItemBox: Box {
       }
     }
   }
+
+  Adw.PreferencesGroup downsample_group {
+    visible: false;
+
+    Adw.SwitchRow downsample {
+      title: _("Reduce Detail");
+      subtitle: _("Draw fewer data points to improve performance");
+    }
+  }
 }
