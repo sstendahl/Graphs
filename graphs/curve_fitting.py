@@ -30,8 +30,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._data = xdata, ydata
         x_min, x_max = min(xdata), max(xdata)
         padding = (x_max - x_min) * 0.025
-        self._xlim = (x_min - padding, x_max + padding)
-        self._x_fit = numpy.linspace(*self._xlim, 5000)
+        self._x_fit = numpy.linspace(x_min - padding, x_max + padding, 5000)
 
         super().__init__(window=window)
         self.setup(item)
@@ -39,11 +38,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _load_canvas(self) -> None:
         """Initialize and set main canvas."""
-        self.props.canvas.figure.axis.set(xlim=self._xlim)
-
         ax = self.props.residuals_canvas.figure.axis
         ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
-        ax.set_xlim(*self._xlim)
 
     def _fit_curve(self) -> None:
         """Handle fit curve request."""

@@ -213,6 +213,12 @@ namespace Graphs {
         protected void setup (DataItem item) {
             var style = StyleManager.get_system_style_params ();
 
+            double x_min, x_max;
+            CUtilities.array_minmax (item.get_xdata (), false, out x_min, out x_max);
+            double padding = (x_max - x_min) * 0.025;
+            x_min -= padding;
+            x_max += padding;
+
             var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
             data_curve.name = item.name;
             data_curve.color = DATA_COLOR;
@@ -241,6 +247,8 @@ namespace Graphs {
             canvas_settings.hide_unselected = true;
             canvas_settings.bottom_label = figure_settings.bottom_label;
             canvas_settings.top_label = figure_settings.top_label;
+            canvas_settings.min_bottom = x_min;
+            canvas_settings.max_bottom = x_max;
 
             residuals_settings = new FigureSettings.default ();
             residuals_settings.hide_unselected = true;
@@ -248,6 +256,8 @@ namespace Graphs {
             residuals_settings.top_label = _("Residuals");
             residuals_settings.min_left = -1;
             residuals_settings.max_left = 1;
+            residuals_settings.min_bottom = x_min;
+            residuals_settings.max_bottom = x_max;
             residuals_settings.legend = false;
 
             load_canvas ();
