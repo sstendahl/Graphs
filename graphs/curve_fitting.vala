@@ -147,6 +147,8 @@ namespace Graphs {
 
         private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
+        private FigureSettings canvas_settings;
+        private FigureSettings residuals_settings;
 
         protected Canvas? canvas {
             get { return canvas_container.get_child () as Canvas; }
@@ -233,26 +235,29 @@ namespace Graphs {
             residuals_canvas_items = new ListStore (typeof (Item));
             residuals_canvas_items.append (residuals);
 
+            var figure_settings = window.data.figure_settings;
+
+            canvas_settings = new FigureSettings.default ();
+            canvas_settings.hide_unselected = true;
+            canvas_settings.bottom_label = figure_settings.bottom_label;
+            canvas_settings.top_label = figure_settings.top_label;
+
+            residuals_settings = new FigureSettings.default ();
+            residuals_settings.hide_unselected = true;
+            residuals_settings.bottom_label = figure_settings.bottom_label;
+            residuals_settings.top_label = _("Residuals");
+            residuals_settings.min_left = -1;
+            residuals_settings.max_left = 1;
+            residuals_settings.legend = false;
+
             load_canvas ();
             Adw.StyleManager.get_default ().notify.connect (load_canvas);
             set_equation_from_selection ();
         }
 
         private void load_canvas () {
-            var figure_settings = window.data.figure_settings;
             var style = StyleManager.get_system_style_params ();
-
-            var canvas_settings = new FigureSettings.default ();
-            canvas_settings.bottom_label = figure_settings.bottom_label;
-            canvas_settings.top_label = figure_settings.top_label;
             canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
-
-            var residuals_settings = new FigureSettings.default ();
-            residuals_settings.bottom_label = figure_settings.bottom_label;
-            residuals_settings.top_label = _("Residuals");
-            residuals_settings.min_left = -1;
-            residuals_settings.max_left = 1;
-            residuals_settings.legend = false;
             residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
 
             PythonHelper.run_method (this, "_load_canvas");
@@ -299,13 +304,27 @@ namespace Graphs {
             Gtk.TextIter end_iter;
             buffer.get_end_iter (out end_iter);
 
+            var fitted_curve = (Item) main_canvas_items.get_item (0);
+            var fill = (Item) main_canvas_items.get_item (1);
+            var residuals = (Item) residuals_canvas_items.get_item (0);
+
             if (error != CurveFittingError.NONE) {
                 buffer.insert (ref end_iter, error.to_text (), -1);
                 confirm_button.set_sensitive (false);
                 fit_result = null;
-                PythonHelper.run_method (this, "_clear_fit");
+
+                fitted_curve.selected = false;
+                fill.selected = false;
+                residuals.selected = false;
+                residuals_settings.min_left = -1;
+                residuals_settings.max_left = 1;
+
                 return;
             }
+
+            fitted_curve.selected = true;
+            fill.selected = true;
+            residuals.selected = true;
 
             confirm_button.set_sensitive (true);
             if (fit_result == null) return;

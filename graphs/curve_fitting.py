@@ -128,10 +128,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
         ax = cv.figure.axis
-        for line in ax.lines[1:]:
-            line.set_visible(True)
-        for collection in ax.collections:
-            collection.set_visible(True)
 
         all_y = numpy.concatenate((y_lower, y_upper, y_data))
         all_y = all_y[numpy.isfinite(all_y)]
@@ -141,9 +137,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         ax.set_ylim(y_min - padding, y_max + padding)
         cv.queue_draw()
 
-        cv = self.get_residuals_canvas()
-        ax = cv.figure.axis
-        ax.lines[0].set_visible(True)
+        ax = self.get_residuals_canvas().figure.axis
         max_val = abs(residuals).max()
         if max_val > 0:
             y_lim = max_val * 1.1
@@ -153,20 +147,3 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         cv.queue_draw()
 
         self.set_results(Graphs.CurveFittingError.NONE)
-
-    def _clear_fit(self) -> None:
-        """Clear all fit-related data by hiding curves."""
-        cv = self.get_residuals_canvas()
-        ax = cv.figure.axis
-        ax.lines[0].set_visible(False)
-        ax.set_ylim(-1, 1)
-
-        # Hide all lines except the first one (data curve)
-        cv = self.get_canvas()
-        ax = cv.figure.axis
-        for line in ax.lines[1:]:
-            line.set_visible(False)
-        # Hide all collections (fill)
-        for collection in ax.collections:
-            collection.set_visible(False)
-        cv.queue_draw()
