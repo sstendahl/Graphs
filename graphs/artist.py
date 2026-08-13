@@ -160,6 +160,16 @@ class ItemArtistWrapper(GObject.Object):
         """Set alpha property."""
         self._artist.set_alpha(alpha)
 
+    @GObject.Property(type=bool, default=True)
+    def visible(self) -> bool:
+        """Get visible property."""
+        return self._artist.get_visible()
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        """Set visible property."""
+        self._artist.set_visible(visible)
+
 
 class DataItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for DataItem."""
@@ -330,6 +340,16 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             cap.set_markerfacecolor(errcolor)
             cap.set_markeredgecolor(errcolor)
 
+    @GObject.Property(type=bool, default=True)
+    def visible(self) -> bool:
+        """Get visible property."""
+        return self._data.get_visible()
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        """Set visible property."""
+        self._data.set_visible(visible)
+
     def _set_properties(self, *_args) -> None:
         linewidth, markersize = self.props.linewidth, self.props.markersize
         if not self.props.selected:
@@ -442,7 +462,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
                 for cap in self._ycaps:
                     cap.set_visible(False)
 
-        for prop in ("legend", "linewidth", "markersize", "selected"):
+        self.props.legend = item.get_legend()
+        for prop in ("linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
@@ -480,7 +501,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             marker="none",
         )[0]
         self._color_artist = self._artist
-        for prop in ("legend", "linewidth", "selected"):
+        self.props.legend = item.get_legend()
+        for prop in ("linewidth", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
