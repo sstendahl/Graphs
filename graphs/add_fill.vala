@@ -33,9 +33,10 @@ namespace Graphs {
             lower_equation.set_text (settings.get_string ("lower-equation"));
 
             upper_bound.set_selected (
-                source_items.length > 0 ? FillBounds.ITEMS : FillBounds.CUSTOM
+                source_items.length > 0
+                    ? FillBoundSelection.TOP_ITEM : FillBoundSelection.CUSTOM
             );
-            lower_bound.set_selected (FillBounds.NEG_INF);
+            lower_bound.set_selected (FillBoundSelection.NEG_INF);
 
             ready = true;
             update_state ();
@@ -49,14 +50,14 @@ namespace Graphs {
         private bool is_bound_valid (
             Adw.ComboRow combo, Adw.EntryRow equation
         ) {
-            if (combo.get_selected () != FillBounds.CUSTOM) return true;
+            if (combo.get_selected () != FillBoundSelection.CUSTOM) return true;
             return is_equation_valid (equation);
         }
 
         private void update_bound_rows (
             Adw.ComboRow combo, Adw.EntryRow equation
         ) {
-            bool is_custom = combo.get_selected () == FillBounds.CUSTOM;
+            bool is_custom = combo.get_selected () == FillBoundSelection.CUSTOM;
             equation.set_sensitive (is_custom);
 
             if (is_custom && !is_equation_valid (equation)) {
@@ -94,14 +95,15 @@ namespace Graphs {
         ) {
             uint selected = combo.get_selected ();
 
-            if (selected >= FillBounds.ITEMS) {
-                Item source = source_items[selected - FillBounds.ITEMS];
+            if (selected >= FillBoundSelection.TOP_ITEM) {
+                Item source = source_items[selected - FillBoundSelection.TOP_ITEM];
                 if (is_upper) fill.set_upper_source (source);
                 else fill.set_lower_source (source);
                 return;
             }
 
-            string expression = FillBounds.get_expression (selected)
+            string expression =
+                FillBounds.get_expression ((FillBoundSelection) selected)
                 ?? equation.get_text ();
             try {
                 Ast ast = expression_to_ast (expression);

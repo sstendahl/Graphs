@@ -432,7 +432,7 @@ namespace Graphs {
         private void update_bound_rows (
             Adw.ComboRow combo, Adw.EntryRow equation_row
         ) {
-            bool is_custom = combo.get_selected () == FillBounds.CUSTOM;
+            bool is_custom = combo.get_selected () == FillBoundSelection.CUSTOM;
             equation_row.set_sensitive (is_custom);
 
             if (is_custom && !is_equation_valid (equation_row)) {
@@ -454,14 +454,16 @@ namespace Graphs {
         ) {
             uint selected = combo.get_selected ();
 
-            if (selected >= FillBounds.ITEMS) {
-                Item source = source_items[selected - FillBounds.ITEMS];
+            if (selected >= FillBoundSelection.TOP_ITEM) {
+                Item source = source_items[selected - FillBoundSelection.TOP_ITEM];
                 if (is_upper) item.set_upper_source (source);
                 else item.set_lower_source (source);
                 return;
             }
 
-            string? expression = FillBounds.get_expression (selected);
+            string? expression = FillBounds.get_expression (
+                (FillBoundSelection) selected
+            );
             if (expression == null) {
                 if (!is_equation_valid (equation_row)) return;
                 expression = equation_row.get_text ();

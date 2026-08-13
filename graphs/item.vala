@@ -325,12 +325,14 @@ namespace Graphs {
         EQUATION
     }
 
-    public class FillBounds : Object {
-        public const uint INF = 0;
-        public const uint NEG_INF = 1;
-        public const uint CUSTOM = 2;
-        public const uint ITEMS = 3;
+    public enum FillBoundSelection {
+        INF,
+        NEG_INF,
+        CUSTOM,
+        TOP_ITEM
+    }
 
+    public class FillBounds : Object {
         public static Item[] get_source_items (Data data) {
             var items = new Gee.ArrayList<Item> ();
             foreach (Item item in data) {
@@ -344,16 +346,17 @@ namespace Graphs {
             model.append (_("Positive Infinity"));
             model.append (_("Negative Infinity"));
             model.append (_("Custom Equation…"));
+            assert (model.get_n_items () == FillBoundSelection.TOP_ITEM);
             foreach (Item item in source_items) {
                 model.append (item.name);
             }
             return model;
         }
 
-        public static string? get_expression (uint selected) {
-            switch (selected) {
-                case INF: return "inf";
-                case NEG_INF: return "-inf";
+        public static string? get_expression (FillBoundSelection row) {
+            switch (row) {
+                case FillBoundSelection.INF: return "inf";
+                case FillBoundSelection.NEG_INF: return "-inf";
                 default: return null;
             }
         }
@@ -365,20 +368,22 @@ namespace Graphs {
             if (kind == FillBoundKind.ITEM) {
                 if (source != null) {
                     for (uint i = 0; i < source_items.length; i++) {
-                        if (source_items[i] == source) return ITEMS + i;
+                        if (source_items[i] == source) {
+                            return (uint) FillBoundSelection.TOP_ITEM + i;
+                        }
                     }
                 }
-                return CUSTOM;
+                return FillBoundSelection.CUSTOM;
             }
-            if (equation == null) return CUSTOM;
+            if (equation == null) return FillBoundSelection.CUSTOM;
             string expression;
             try {
                 expression = ast_to_expression (equation);
-            } catch (MathError e) { return CUSTOM; }
+            } catch (MathError e) { return FillBoundSelection.CUSTOM; }
             switch (expression) {
-                case "inf": return INF;
-                case "-inf": return NEG_INF;
-                default: return CUSTOM;
+                case "inf": return FillBoundSelection.INF;
+                case "-inf": return FillBoundSelection.NEG_INF;
+                default: return FillBoundSelection.CUSTOM;
             }
         }
     }
