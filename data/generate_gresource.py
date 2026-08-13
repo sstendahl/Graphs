@@ -6,28 +6,13 @@ Generate Graphs GResource.
 Used at build time by meson, but is build-system-independent.
 """
 import argparse
-import importlib.util
-import logging
-import sys
 from pathlib import Path
 from xml.etree import ElementTree
-
-from PIL import Image
-
-from gi.repository import Gio
-
-from matplotlib import font_manager
-
-import numpy
 
 parser = argparse.ArgumentParser(description="Generate Graphs gresource.")
 parser.add_argument(
     "out",
     help="the output file",
-)
-parser.add_argument(
-    "styles_out",
-    help="the styles output file",
 )
 parser.add_argument(
     "build_dir",
@@ -36,10 +21,6 @@ parser.add_argument(
 parser.add_argument(
     "source_dir",
     help="Path to source directory.",
-)
-parser.add_argument(
-    "style_io",
-    help="Path to `style_io.py`. Used to generate style previews.",
 )
 parser.add_argument(
     "--ui",
@@ -56,6 +37,13 @@ parser.add_argument(
     help="List of style files.",
 )
 parser.add_argument(
+    "--previews",
+    required=True,
+    nargs="+",
+    dest="previews",
+    help="List of style previews.",
+)
+parser.add_argument(
     "--other",
     required=True,
     nargs="+",
@@ -70,22 +58,6 @@ parser.add_argument(
     help="List of icon files.",
 )
 args = parser.parse_args()
-
-# Check fonts
-font_list = font_manager.findSystemFonts(fontpaths=None, fontext="ttf")
-for font in font_list:
-    try:
-        font_manager.fontManager.addfont(font)
-    except RuntimeError:
-        logging.warning("Could not load %s", font)
-# Disable matplotlib logging
-logging.getLogger("matplotlib.font_manager").setLevel(logging.ERROR)
-
-# dynamically import style_io
-spec = importlib.util.spec_from_file_location("style_io", args.style_io)
-style_io = importlib.util.module_from_spec(spec)
-sys.modules["style_io"] = style_io
-spec.loader.exec_module(style_io)
 
 # GResource tree creation
 gresources = ElementTree.Element("gresources")
@@ -112,8 +84,6 @@ for file in args.other:
 # End Other Section
 
 # Begin style section
-styles = []
-style_paths = {}
 styles_gresource = ElementTree.SubElement(
     gresources,
     "gresource",
@@ -129,64 +99,24 @@ for style_path in args.styles:
         },
     )
     style_element.text = str(style_file.relative_to(source_dir))
-    g_file = Gio.File.new_for_path(str(style_file))
-    params = style_io.parse(g_file)
-    stylename = params[1]["name"]
-    out_path = Path(build_dir, style_file.name.replace(".mplstyle", ".png"))
-    style_paths[stylename] = out_path
-    with open(out_path, "wb") as out_file:
-        style_io.create_preview(out_file, params, "png", 31)
-    preview_element = ElementTree.SubElement(
-        main_gresource,
-        "file",
-        attrib={
-            "compressed": "True",
-        },
-    )
-    preview_element.text = str(out_path.relative_to(build_dir))
-    styles.append([
-        stylename,
-        main_prefix + "styles/" + style_file.name,
-        main_prefix + out_path.name,
-    ])
-styles.sort(key=lambda x: x[0].casefold())
 
-# Generate a vala file with style info
-with open(args.styles_out, "wt") as out:
-    out.write("namespace Graphs {\n")
-    out.write("private const StyleInfo[] STYLES = {\n")
-    for name, style, preview in styles:
-        out.write(f'{{ "{name}", "{style}", "{preview}" }},\n')
-    out.write("};\n}")
-
-
-def _to_array(file_path):
-    with open(file_path, "rb") as file:
-        return numpy.array(Image.open(file).convert("RGB"))
-
-
-# Generate stitched system previews for Adwaita and Yaru
-for sys_style in ("Adwaita", "Yaru"):
-    light_array = _to_array(style_paths[sys_style])
-    dark_array = _to_array(style_paths[sys_style + " Dark"])
-    height, width = light_array.shape[0:2]
-    stitched_array = numpy.concatenate(
-        (light_array[:, :width // 2], dark_array[:, width // 2:]),
-        axis=1,
-    )
-    stitched_image = Image.fromarray(stitched_array)
-    out_path = Path(build_dir, "system-style-" + sys_style.lower() + ".png")
-    with open(out_path, "wb") as file:
-        stitched_image.save(file, "PNG")
-    preview_element = ElementTree.SubElement(
-        main_gresource,
-        "file",
-        attrib={
-            "compressed": "True",
-        },
-    )
-    preview_element.text = str(out_path.relative_to(build_dir))
 # End style section
+
+# Begin preview section
+
+for preview in args.previews:
+    preview_file = Path(preview).resolve()
+    preview_element = ElementTree.SubElement(
+        main_gresource,
+        "file",
+        attrib={
+            "compressed": "True",
+            "alias": preview_file.name,
+        },
+    )
+    preview_element.text = str(preview_file.relative_to(build_dir))
+
+# End preview section
 
 # Begin ui section
 ui_gresource = ElementTree.SubElement(

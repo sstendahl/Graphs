@@ -28,12 +28,10 @@ python.install_sources(
          subdir: 'graphs',
 )
 
-configure_file(
-         output: 'config.h',
-  configuration: vala_conf,
-)
-config_dep = valac.find_library('config',
-  dirs: join_paths(meson.project_source_root(), 'graphs'),
+config_file = configure_file(
+          input: 'config.vala.in',
+         output: 'config.vala',
+  configuration: conf,
 )
 source_include = include_directories('.')
 graphs_lib = shared_library('graphs',
@@ -96,8 +94,7 @@ graphs_lib = shared_library('graphs',
     # C helpers
     'math_parser/array_evaluator.c',
     'utilities.c',
-  ), gresource_xml, gresource, dependencies: [
-    config_dep,
+  ), gresource_xml, gresource, config_file, dependencies: [
     openmp_dep,
     m_dep,
     posix_dep,
@@ -106,7 +103,6 @@ graphs_lib = shared_library('graphs',
     gio_dep,
     gtk_dep,
     adwaita_dep,
-    gee_dep,
     sqlite_dep,
     xml_dep,
     gsf_dep,
@@ -137,7 +133,6 @@ executable('graphs', files('graphs.c'), dependencies: [
     python_dep,
     gtk_dep,
     adwaita_dep,
-    gee_dep,
   ],
    link_with: graphs_lib,
      install: true,

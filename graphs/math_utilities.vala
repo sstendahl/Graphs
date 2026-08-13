@@ -86,7 +86,7 @@ namespace Graphs.MathTools {
      * Get all free variables (without x) in an equation.
      */
     public static string[] get_free_variables (string equation) throws MathError {
-        Gee.HashSet<string> strings = new Gee.HashSet<string> ();
+        GenericSet<string> strings = new GenericSet<string> (str_hash, str_equal);
 
         MathParser.Lexer lexer = new MathParser.Lexer ();
         lexer.start_lexing (equation);
@@ -102,7 +102,13 @@ namespace Graphs.MathTools {
             lexer.next ();
         }
 
-        return strings.to_array ();
+        uint length = strings.length;
+        string[] result = new string[length];
+        var iter = strings.iterator ();
+        for (int i = 0; i < length; i++) {
+            result[i] = iter.next_value ();
+        }
+        return (owned) result;
     }
 
     public static double[] arange (int steps) {

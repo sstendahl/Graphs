@@ -21,6 +21,79 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
+def _find_row_extrema(rows):
+    """Find the position of the min and max within each row, ignoring NaN."""
+    blanked = numpy.isnan(rows)
+    return (
+        numpy.where(blanked, numpy.inf, rows).argmin(axis=1),
+        numpy.where(blanked, -numpy.inf, rows).argmax(axis=1),
+    )
+
+
+def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
+    """Return the indices that will be drawn."""
+    point_count = len(ydata)
+    if point_count < Graphs.DOWNSAMPLE_THRESHOLD:
+        return None
+
+    first, last = 0, point_count
+    if sorted_x:
+        view_low, view_high = min(x_start, x_stop), max(x_start, x_stop)
+        first = max(0, int(numpy.searchsorted(x_keys, view_low, "left")) - 1)
+        last = min(
+            point_count,
+            int(numpy.searchsorted(x_keys, view_high, "right")) + 1,
+        )
+
+    bucket_count = max(128, int(pixels))
+    visible_count = last - first
+    if visible_count <= bucket_count * 2:
+        if visible_count == point_count:
+            return None
+        return numpy.arange(first, last)
+
+    bucket_size = visible_count // bucket_count
+    bucketed_end = first + bucket_size * bucket_count
+    buckets = ydata[first:bucketed_end].reshape(bucket_count, bucket_size)
+    bucket_starts = first + numpy.arange(bucket_count) * bucket_size
+    lowest = buckets.argmin(axis=1) + bucket_starts
+    highest = buckets.argmax(axis=1) + bucket_starts
+    selected = [lowest, highest, numpy.array((first, last - 1))]
+
+    gaps = nan_indices[(nan_indices >= first) & (nan_indices < last)]
+    if gaps.size:
+        selected += _fix_nan_extrema(
+            gaps, buckets, bucket_starts, bucket_size, first, bucketed_end,
+            lowest, highest,
+        )
+
+    if bucketed_end < last:  # remainder that did not fill a whole bucket
+        remainder = ydata[bucketed_end:last].reshape(1, -1)
+        selected.append(bucketed_end + numpy.concatenate(
+            _find_row_extrema(remainder),
+        ))
+    return numpy.unique(numpy.concatenate(selected))
+
+
+def _fix_nan_extrema(gaps, buckets, bucket_starts, bucket_size, first,
+                     bucketed_end, lowest, highest):
+    """Pick better extrema for the buckets that contain a NaN."""
+    bucketed_gaps = gaps[gaps < bucketed_end]
+    gap_buckets, first_of_bucket = numpy.unique(
+        (bucketed_gaps - first) // bucket_size,
+        return_index=True,
+    )
+    low_within, high_within = _find_row_extrema(buckets[gap_buckets])
+    lowest[gap_buckets] = bucket_starts[gap_buckets] + low_within
+    highest[gap_buckets] = bucket_starts[gap_buckets] + high_within
+
+    breaks = [bucketed_gaps[first_of_bucket]]
+    trailing_gaps = gaps[gaps >= bucketed_end]
+    if trailing_gaps.size:
+        breaks.append(trailing_gaps[:1])
+    return breaks
+
+
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -96,6 +169,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
     legend = GObject.Property(type=bool, default=True)
+    downsample = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -105,7 +179,33 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @data.setter
     def data(self, data: Graphs.DataHolder) -> None:
         """Set data property."""
-        xdata, ydata, xerr, yerr = self._handle_singularities(data)
+        self._store(data)
+        self._apply_lod()
+
+    def _store(self, data: Graphs.DataHolder) -> None:
+        """Cache the full resolution data."""
+        self._full = self._handle_singularities(data)
+        xdata = self._full[0]
+        step = numpy.diff(xdata)
+        self._sorted = bool(numpy.all(step[~numpy.isnan(step)] >= 0))
+        self._keys = numpy.maximum.accumulate(
+            numpy.nan_to_num(xdata, nan=-numpy.inf),
+        ) if numpy.isnan(xdata).any() else xdata
+        self._nans = numpy.flatnonzero(numpy.isnan(self._full[1]))
+
+    def _apply_lod(self, *_args) -> None:
+        """Draw at a level of detail matching the current view."""
+        xdata, ydata, xerr, yerr = self._full
+        decimate = self.props.downsample \
+            and self._axis.figure.parent is not None
+        indices = _decimate(
+            self._keys, ydata, self._nans, self._sorted,
+            *self._axis.get_xlim(), self._axis.bbox.width,
+        ) if decimate else None
+        if indices is not None:
+            xdata, ydata = xdata[indices], ydata[indices]
+            xerr = None if xerr is None else xerr[indices]
+            yerr = None if yerr is None else yerr[indices]
         self._data.set_data((xdata, ydata))
 
         if xerr is not None:
@@ -298,7 +398,10 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        xdata, ydata, xerr, yerr = self._handle_singularities(item.props.data)
+        self._axis = axis
+        self.props.downsample = item.get_downsample()
+        self._store(item.props.data)
+        xdata, ydata, xerr, yerr = self._full
         self._artist = axis.errorbar(
             xdata,
             ydata,
@@ -343,6 +446,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
+
+        self.connect("notify::downsample", self._apply_lod)
+        axis.callbacks.connect("xlim_changed", self._apply_lod)
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper):

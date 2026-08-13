@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-06 07:35+0000\n"
-"PO-Revision-Date: 2026-08-07 07:14+0800\n"
+"POT-Creation-Date: 2026-08-11 14:34+0000\n"
+"PO-Revision-Date: 2026-08-13 12:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -285,7 +285,7 @@ msgstr "仅导入 Y 值，X 值将自动生成"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:257
+#: graphs/item.vala:260
 msgid "Equation"
 msgstr "方程式"
 
@@ -737,6 +737,14 @@ msgstr "实心 X"
 #: data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "标记大小"
+
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr "减少详情"
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr "绘制较少数据点以提升性能"
 
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
@@ -1868,7 +1876,7 @@ msgstr "拖放到这里来导入"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:404
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
 msgid "Undo"
 msgstr "撤消"
 
@@ -2058,8 +2066,8 @@ msgstr "无法从文件导入，在第 %d 行有坏值"
 msgid "Failed to parse file."
 msgstr "解析文件失败。"
 
-#: graphs/file_import/parsers/columns/ui.vala:36
-#: graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/ui.vala:38
+#: graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "项目 %d"
@@ -2245,7 +2253,7 @@ msgstr ""
 "lumingzh <lumingzh@qq.com>, 2024-2026\n"
 "SuGotLand <sugotland@outlook.com>, 2024"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:45
+#: graphs/actions.vala:183 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
@@ -2318,23 +2326,23 @@ msgstr ""
 "置信带错误：\n"
 "协方差矩阵不稳定。"
 
-#: graphs/curve_fitting.vala:259
+#: graphs/curve_fitting.vala:261
 msgid "Parameters"
 msgstr "参数"
 
-#: graphs/curve_fitting.vala:275
+#: graphs/curve_fitting.vala:277
 msgid "Statistics"
 msgstr "统计"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:460
+#: graphs/curve_fitting.vala:462
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
@@ -2343,12 +2351,12 @@ msgstr "%s 的拟合参数"
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
-#: graphs/data.vala:481
+#: graphs/data.vala:459
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "无法解析样式 %s，默认加载系统样式"
 
-#: graphs/data.vala:860
+#: graphs/data.vala:802
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "无法找到样式 %s，默认加载系统样式"
@@ -2375,23 +2383,23 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "文本文件"
 
-#: graphs/item.vala:175
+#: graphs/item.vala:174
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item.vala:217
+#: graphs/item.vala:220
 msgid "Generated Dataset"
 msgstr "生成的数据集"
 
-#: graphs/item.vala:273
+#: graphs/item.vala:276
 msgid "Label"
 msgstr "标签"
 
-#: graphs/item.vala:323
+#: graphs/item.vala:326
 msgid "Fill"
 msgstr "填充"
 
-#: graphs/misc.vala:5
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
@@ -2542,7 +2550,19 @@ msgstr "草稿"
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:394
+#. Translators: Formatted with item name and data points respectively
+#: graphs/window.vala:399
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
+msgstr "%s 是通过使用 %d 个点以减少详情的方式绘制的"
+
+#: graphs/window.vala:405
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] "%d 个项目是通过使用 %d 个点以减少详情的方式绘制的"
+
+#: graphs/window.vala:427
 msgid "Open Location"
 msgstr "打开位置"
 
