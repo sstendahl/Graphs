@@ -236,6 +236,7 @@ namespace Graphs {
 
         public void clear () {
             uint n_items = get_n_items ();
+            _disconnect_from_all_items ();
             _items = new ManagedArray<Item> (8);
             items_changed.emit (0, n_items, 0);
             this.can_undo = false;
@@ -267,13 +268,29 @@ namespace Graphs {
             _used_positions = (owned) used_positions;
         }
 
+        private HashTable<Item, ulong> _item_handlers
+            = new HashTable<Item, ulong> (direct_hash, direct_equal);
+
         private void _connect_to_item (Item item) {
             item.notify["selected"].connect (() => {
                 if (_notify_selection_changed) selection_changed.emit (index (item), 1);
             });
-            item.notify.connect (_on_item_change);
+            _item_handlers[item] = item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
+        }
+
+        private void _disconnect_from_item (Item item) {
+            ulong handler;
+            if (_item_handlers.steal_extended (item, null, out handler)) {
+                item.disconnect (handler);
+            }
+        }
+
+        private void _disconnect_from_all_items () {
+            foreach (Item item in _items) {
+                _disconnect_from_item (item);
+            }
         }
 
         protected void _add_item (Item item) {
@@ -289,6 +306,7 @@ namespace Graphs {
         }
 
         protected void _remove_item (uint index) {
+            _disconnect_from_item (_items[(int) index]);
             _items.remove_at ((int) index);
             items_changed.emit (index, 1, 0);
         }
@@ -402,6 +420,7 @@ namespace Graphs {
 
         public void set_items (owned Item[] items) {
             uint removed = _items.length;
+            _disconnect_from_all_items ();
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
