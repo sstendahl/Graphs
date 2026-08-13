@@ -2,7 +2,7 @@
 """Curve fitting module."""
 from gi.repository import Graphs
 
-from graphs import ast
+from graphs import ast, utilities
 
 import numpy
 
@@ -26,11 +26,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
-        xdata, ydata = item.get_xydata()
-        self._data = xdata, ydata
-        x_min, x_max = min(xdata), max(xdata)
-        padding = (x_max - x_min) * 0.025
-        self._x_fit = numpy.linspace(x_min - padding, x_max + padding, 5000)
+        self._data = item.get_xydata()
 
         super().__init__(window=window)
         self.setup(item)
@@ -92,7 +88,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         fitted_eq = Graphs.ast_to_expression(fitted_eq)
         self.props.fitted_equation_string = fitted_eq
 
-        x_fit = self._x_fit
+        x_fit = utilities.bytes_to_ndarray(self.props.x_fit)
         y_fit = func(x_fit, *params)
         if numpy.ndim(y_fit) == 0:
             y_fit = numpy.full(x_fit.size, y_fit.item())

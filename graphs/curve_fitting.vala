@@ -144,6 +144,7 @@ namespace Graphs {
         protected FitResult? fit_result { get; protected set; }
         protected ListStore main_canvas_items { get; private set; }
         protected ListStore residuals_canvas_items { get; private set; }
+        protected GLib.Bytes x_fit { get; private set; }
 
         private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
@@ -218,6 +219,10 @@ namespace Graphs {
             double padding = (x_max - x_min) * 0.025;
             x_min -= padding;
             x_max += padding;
+
+            var xdata = new double[5000];
+            CUtilities.create_equidistant_data (x_min, x_max, Scale.LINEAR, xdata);
+            x_fit = new Bytes ((uint8[]) xdata);
 
             var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
             data_curve.name = item.name;
