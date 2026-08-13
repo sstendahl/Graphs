@@ -10,6 +10,8 @@ gboolean array_minmax (const gdouble *data, gsize len, gboolean ignore_zero,
 
 gboolean finite_double (const gdouble *data, gsize len);
 
+void fill_double (gdouble *out, gsize len, gdouble value);
+
 gboolean arange (gdouble *out, gsize steps);
 
 gboolean create_equidistant_data (gdouble start, gdouble stop,

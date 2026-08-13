@@ -455,7 +455,8 @@ namespace Graphs {
             uint selected = combo.get_selected ();
 
             if (selected >= FillBoundSelection.TOP_ITEM) {
-                Item source = source_items[selected - FillBoundSelection.TOP_ITEM];
+                uint index = selected - FillBoundSelection.TOP_ITEM;
+                Item source = source_items[index];
                 if (is_upper) item.set_upper_source (source);
                 else item.set_lower_source (source);
                 return;

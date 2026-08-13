@@ -91,6 +91,32 @@ namespace Graphs {
             this.color = Tools.rgba_to_hex (rgba);
             this.alpha = rgba.alpha;
         }
+
+        private GenericSet<unowned Item>? _dependents = null;
+
+        public void register_dependent (Item dependent) {
+            if (_dependents == null) {
+                _dependents = new GenericSet<unowned Item> (
+                    direct_hash, direct_equal
+                );
+            }
+            _dependents.add (dependent);
+        }
+
+        public void unregister_dependent (Item dependent) {
+            if (_dependents != null) _dependents.remove (dependent);
+        }
+
+        public Item[] get_dependents () {
+            if (_dependents == null) return new Item[0];
+            uint length = _dependents.length;
+            var dependents = new Item[length];
+            var iter = _dependents.iterator ();
+            for (int i = 0; i < length; i++) {
+                dependents[i] = iter.next_value ();
+            }
+            return (owned) dependents;
+        }
     }
 
     public interface LegendableItem : Item {
@@ -334,11 +360,11 @@ namespace Graphs {
 
     public class FillBounds : Object {
         public static Item[] get_source_items (Data data) {
-            var items = new Gee.ArrayList<Item> ();
+            var items = new ManagedArray<Item> ();
             foreach (Item item in data) {
-                if (item is DataItem || item is EquationItem) items.add (item);
+                if (item is DataItem || item is EquationItem) items.append (item);
             }
-            return items.to_array ();
+            return items.steal ();
         }
 
         public static Gtk.StringList create_model (Item[] source_items) {
@@ -353,8 +379,8 @@ namespace Graphs {
             return model;
         }
 
-        public static string? get_expression (FillBoundSelection row) {
-            switch (row) {
+        public static string? get_expression (FillBoundSelection selected) {
+            switch (selected) {
                 case FillBoundSelection.INF: return "inf";
                 case FillBoundSelection.NEG_INF: return "-inf";
                 default: return null;
@@ -398,12 +424,14 @@ namespace Graphs {
         private Item? _upper_item = null;
         private Ast? _upper_equation = null;
         private Program? _upper_program = null;
+        private double _upper_constant = 0;
         private ulong _upper_handler = 0;
 
         private FillBoundKind _lower_kind = FillBoundKind.DATA;
         private Item? _lower_item = null;
         private Ast? _lower_equation = null;
         private Program? _lower_program = null;
+        private double _lower_constant = 0;
         private ulong _lower_handler = 0;
 
         private Item? _color_source = null;
@@ -447,63 +475,109 @@ namespace Graphs {
         }
 
         public void set_upper_source (Item item) {
-            disconnect_source (_upper_item, ref _upper_handler);
+            detach_source (ref _upper_item, ref _upper_handler);
             _upper_kind = FillBoundKind.ITEM;
             _upper_item = item;
             _upper_equation = null;
             _upper_program = null;
             _upper_handler = connect_source (item);
+            item.register_dependent (this);
             update_color_binding ();
             recompute ();
         }
 
         public void set_upper_equation (Ast equation) {
-            disconnect_source (_upper_item, ref _upper_handler);
+            detach_source (ref _upper_item, ref _upper_handler);
             _upper_kind = FillBoundKind.EQUATION;
-            _upper_item = null;
             _upper_equation = equation;
-            try {
-                _upper_program = ast_to_program (equation, "x", false);
-            } catch (MathError e) { assert_not_reached (); }
+            _upper_program = null;
+            if (is_constant (equation.root ())) {
+                _upper_constant = MathParser.Evaluator.instance ()
+                    .eval_ast (equation);
+            } else {
+                try {
+                    _upper_program = ast_to_program (equation, "x");
+                } catch (MathError e) { assert_not_reached (); }
+            }
             update_color_binding ();
             recompute ();
         }
 
         public void set_lower_source (Item item) {
-            disconnect_source (_lower_item, ref _lower_handler);
+            detach_source (ref _lower_item, ref _lower_handler);
             _lower_kind = FillBoundKind.ITEM;
             _lower_item = item;
             _lower_equation = null;
             _lower_program = null;
             _lower_handler = connect_source (item);
+            item.register_dependent (this);
             update_color_binding ();
             recompute ();
         }
 
         public void set_lower_equation (Ast equation) {
-            disconnect_source (_lower_item, ref _lower_handler);
+            detach_source (ref _lower_item, ref _lower_handler);
             _lower_kind = FillBoundKind.EQUATION;
-            _lower_item = null;
             _lower_equation = equation;
-            try {
-                _lower_program = ast_to_program (equation, "x", false);
-            } catch (MathError e) { assert_not_reached (); }
+            _lower_program = null;
+            if (is_constant (equation.root ())) {
+                _lower_constant = MathParser.Evaluator.instance ()
+                    .eval_ast (equation);
+            } else {
+                try {
+                    _lower_program = ast_to_program (equation, "x");
+                } catch (MathError e) { assert_not_reached (); }
+            }
             update_color_binding ();
             recompute ();
         }
 
+        private void on_source_changed (Object source, ParamSpec pspec) {
+            recompute ();
+        }
+
+        private void on_source_color_changed (Object source, ParamSpec pspec) {
+            this.color = ((Item) source).color;
+        }
+
         private ulong connect_source (Item item) {
             if (item is DataItem) {
-                return item.notify["data"].connect ((s, p) => recompute ());
+                return item.notify["data"].connect (on_source_changed);
             } else if (item is EquationItem) {
-                return item.notify["equation"].connect ((s, p) => recompute ());
+                return item.notify["equation"].connect (on_source_changed);
             }
             return 0;
         }
 
-        private void disconnect_source (Item? source, ref ulong handler) {
-            if (source != null && handler != 0) source.disconnect (handler);
+        private static bool is_constant (Expression expression) {
+            switch (expression.type ()) {
+                case ExpressionType.VARIABLE:
+                    return false;
+                case ExpressionType.NUMBER:
+                case ExpressionType.CONSTANT:
+                    return true;
+                case ExpressionType.UNARY:
+                case ExpressionType.FUNCTION:
+                    return is_constant (expression.right ());
+                case ExpressionType.POSTFIX:
+                    return is_constant (expression.left ());
+                case ExpressionType.BINARY:
+                    return is_constant (expression.left ())
+                        && is_constant (expression.right ());
+                default:
+                    assert_not_reached ();
+            }
+        }
+
+        private void detach_source (ref Item? source, ref ulong handler) {
+            if (source == null) return;
+            Item item = source;
+            source = null;
+            if (handler != 0) item.disconnect (handler);
             handler = 0;
+            if (item != _upper_item && item != _lower_item) {
+                item.unregister_dependent (this);
+            }
         }
 
         private void update_color_binding () {
@@ -522,14 +596,14 @@ namespace Graphs {
             if (driver == null) return;
 
             this.color = driver.color;
-            _color_handler = driver.notify["color"].connect ((s, p) => {
-                this.color = ((Item) s).color;
-            });
+            _color_handler = driver.notify["color"].connect (
+                on_source_color_changed
+            );
         }
 
         public override void dispose () {
-            disconnect_source (_upper_item, ref _upper_handler);
-            disconnect_source (_lower_item, ref _lower_handler);
+            detach_source (ref _upper_item, ref _upper_handler);
+            detach_source (ref _lower_item, ref _lower_handler);
             if (_color_source != null && _color_handler != 0) {
                 _color_source.disconnect (_color_handler);
                 _color_handler = 0;
@@ -548,11 +622,14 @@ namespace Graphs {
         }
 
         private double[] evaluate_bound (
-            FillBoundKind kind, Item? item, Program? program, double[] target
+            FillBoundKind kind, Item? item, Program? program,
+            double constant, double[] target
         ) throws MathError {
             if (kind != FillBoundKind.ITEM) {
-                if (program == null) return new double[target.length];
-                return program.eval (target);
+                if (program != null) return program.eval (target);
+                double[] result = new double[target.length];
+                CUtilities.fill_double (result, constant);
+                return result;
             }
             if (item is DataItem) {
                 var source = (DataItem) item;
@@ -571,10 +648,12 @@ namespace Graphs {
             double[] xdata, out double[] lower, out double[] upper
         ) throws MathError {
             lower = evaluate_bound (
-                _lower_kind, _lower_item, _lower_program, xdata
+                _lower_kind, _lower_item, _lower_program,
+                _lower_constant, xdata
             );
             upper = evaluate_bound (
-                _upper_kind, _upper_item, _upper_program, xdata
+                _upper_kind, _upper_item, _upper_program,
+                _upper_constant, xdata
             );
         }
 

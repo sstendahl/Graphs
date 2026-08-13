@@ -411,24 +411,25 @@ namespace Graphs {
         }
 
         public void delete_items (Item[] items) {
-            var to_remove = new Gee.ArrayList<Item> ();
-            foreach (Item candidate in this) {
-                if (!(candidate is FillItem)) continue;
-                var fill = (FillItem) candidate;
-                foreach (Item item in items) {
-                    if (fill.get_upper_source () == item
-                        || fill.get_lower_source () == item) {
-                        to_remove.add (candidate);
-                        break;
-                    }
-                }
-            }
+            var seen = new GenericSet<unowned Item> (direct_hash, direct_equal);
+            var to_remove = new ManagedArray<Item> (items.length);
             foreach (Item item in items) {
-                if (!(item in to_remove)) to_remove.add (item);
+                if (seen.contains (item)) continue;
+                seen.add (item);
+                to_remove.append (item);
+            }
+            for (int i = 0; i < to_remove.length; i++) {
+                foreach (Item dependent in to_remove[i].get_dependents ()) {
+                    if (seen.contains (dependent)) continue;
+                    seen.add (dependent);
+                    to_remove.append (dependent);
+                }
             }
 
             foreach (Item item in to_remove) {
-                uint index = this.index (item);
+                int position = _items.index (item);
+                if (position < 0) continue;
+                uint index = (uint) position;
                 item_removed.emit (item, index);
                 _remove_item (index);
 
