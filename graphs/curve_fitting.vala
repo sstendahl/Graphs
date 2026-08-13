@@ -105,6 +105,10 @@ namespace Graphs {
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve-fitting.ui")]
     public class CurveFittingDialog : Adw.Dialog {
+        private const string DATA_COLOR = "#1A5FB4";
+        private const string FIT_COLOR = "#A51D2D";
+        private const string FILL_COLOR = "#62A0EA";
+        private const float FILL_ALPHA = 0.25f;
 
         [GtkChild]
         private unowned Adw.ComboRow equation { get; }
@@ -138,6 +142,8 @@ namespace Graphs {
         protected Ast ast { get; private owned set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
+        protected ListStore main_canvas_items { get; private set; }
+        protected ListStore residuals_canvas_items { get; private set; }
 
         private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
@@ -200,6 +206,32 @@ namespace Graphs {
             equation.notify["selected"].connect (set_equation_from_selection);
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
+        }
+
+        protected void setup (DataItem item) {
+            var style = StyleManager.get_system_style_params ();
+
+            var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
+            data_curve.name = item.name;
+            data_curve.color = DATA_COLOR;
+
+            var fitted_curve = ItemFactory.new_data_item (style, {}, {});
+            fitted_curve.color = FIT_COLOR;
+
+            var fill = ItemFactory.new_fill_item (style, {}, {}, {});
+            fill.color = FILL_COLOR;
+            fill.alpha = FILL_ALPHA;
+
+            var residuals = ItemFactory.new_data_item (style, {}, {});
+            residuals.color = DATA_COLOR;
+
+            main_canvas_items = new ListStore (typeof (Item));
+            main_canvas_items.append (fitted_curve);
+            main_canvas_items.append (fill);
+            main_canvas_items.append (data_curve);
+
+            residuals_canvas_items = new ListStore (typeof (Item));
+            residuals_canvas_items.append (residuals);
 
             PythonHelper.run_method (this, "_load_canvas");
             Adw.StyleManager.get_default ().notify.connect (() => PythonHelper.run_method (this, "_load_canvas"));

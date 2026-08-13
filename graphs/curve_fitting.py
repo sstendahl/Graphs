@@ -2,10 +2,9 @@
 """Curve fitting module."""
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import Graphs
 
 from graphs import ast, canvas
-from graphs.item import DataItem, FillItem
 
 import numpy
 
@@ -36,52 +35,20 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self._xlim = (x_min - padding, x_max + padding)
         self._x_fit = numpy.linspace(*self._xlim, 5000)
 
-        style = Graphs.StyleManager.get_instance().get_system_style_params()
-        self.data_curve = DataItem.new(
-            style,
-            xdata=xdata,
-            ydata=ydata,
-            name=item.get_name(),
-            color=DATA_COLOR,
-            linestyle=LINE_STYLE,
-            markerstyle=MARKER_STYLE,
-            markersize=MARKER_SIZE,
-        )
-        self.fitted_curve = DataItem.new(
-            style,
-            xdata=[],
-            ydata=[],
-            color=FIT_COLOR,
-        )
-        self.fill = FillItem.new(
-            style,
-            ([], [], []),
-            color=FILL_COLOR,
-            alpha=FILL_ALPHA,
-        )
-        self.residuals_item = DataItem.new(
-            style,
-            xdata=[],
-            ydata=[],
-            color=DATA_COLOR,
-            linestyle=LINE_STYLE,
-            markerstyle=MARKER_STYLE,
-            markersize=MARKER_SIZE,
-        )
-
         super().__init__(window=window)
+        self.setup(item)
         self.present(window)
 
     def _load_canvas(self) -> None:
         """Initialize and set main canvas."""
         settings = self.props.window.get_data().get_figure_settings()
-        style = Graphs.StyleManager.get_instance().get_system_style_params()
+        style = Graphs.StyleManager.get_system_style_params()
 
-        listmodel = Gio.ListStore.new(Graphs.Item)
-        listmodel.append(self.fitted_curve)
-        listmodel.append(self.fill)
-        listmodel.append(self.data_curve)
-        cv = canvas.Canvas(style, listmodel, interactive=False)
+        cv = canvas.Canvas(
+            style,
+            self.props.main_canvas_items,
+            interactive=False,
+        )
         ax = cv.figure.axis
         ax.set(
             xlabel=settings.get_bottom_label(),
@@ -90,9 +57,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         )
         self.set_canvas(cv)
 
-        listmodel = Gio.ListStore.new(Graphs.Item)
-        listmodel.append(self.residuals_item)
-        cv = canvas.Canvas(style, listmodel, interactive=False)
+        cv = canvas.Canvas(
+            style,
+            self.props.residuals_canvas_items,
+            interactive=False,
+        )
         ax = cv.figure.axis
         ax.set_ylabel(_("Residuals"))
         ax.set_xlabel(settings.get_bottom_label())
@@ -144,7 +113,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         r2 = 1 - (ss_res / ss_tot)
         rmse = numpy.sqrt(ss_res / y_data.size)
         self.props.fit_result = Graphs.FitResult.new(params, d_cov, r2, rmse)
-        self.residuals_item.set_xydata((x_data, residuals))
+        self.props.residuals_canvas_items[0].set_xydata((x_data, residuals))
 
         # Substitute each free variables with the calculated value.
         values = dict(zip(free_vars, params))
@@ -158,8 +127,9 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         if numpy.ndim(y_fit) == 0:
             y_fit = numpy.full(x_fit.size, y_fit.item())
 
-        self.fitted_curve.set_xydata((x_fit, y_fit))
-        self.fitted_curve.set_name(f"Y = {fitted_eq}")
+        fitted_curve = self.props.main_canvas_items[0]
+        fitted_curve.set_xydata((x_fit, y_fit))
+        fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
         jacobian = numpy.column_stack([
@@ -178,7 +148,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         y_upper = y_fit + confidence_band
         y_lower = y_fit - confidence_band
-        self.fill.set_data_tuple((x_fit, y_lower, y_upper))
+        fill = self.props.main_canvas_items[1]
+        fill.set_data_tuple((x_fit, y_lower, y_upper))
 
         # Show fill and fit again after successful fit
         cv = self.get_canvas()
