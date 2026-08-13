@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-07 17:53+0000\n"
-"PO-Revision-Date: 2026-08-08 07:08+0200\n"
+"POT-Creation-Date: 2026-08-11 14:34+0000\n"
+"PO-Revision-Date: 2026-08-13 07:35+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -240,7 +240,7 @@ msgstr "მხოლოდ Y მნიშვნელობები"
 msgid "Import only Y values, X values will be generated"
 msgstr "მხოლოდ Y-ის მნიშვნელობების შემოტანა. X-ის მნიშვნელობები დაგენერირდება"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:257
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:260
 msgid "Equation"
 msgstr "განტოლება"
 
@@ -645,6 +645,14 @@ msgstr "შევსებული X"
 #: data/ui/sidebar/edit-item/data.blp:76 data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "მარკერის ზომა"
+
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr "დეტალების შემცირება"
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr "ნაკლები მონაცემთა წერტილის დახატვა წარმადობის გასაზრდელად"
 
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
@@ -1733,7 +1741,7 @@ msgstr "შემოსატანად აქ დააგდეთ"
 msgid "Show Sidebar"
 msgstr "გვერდითი ზოლის ჩვენება"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:409
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
 msgid "Undo"
 msgstr "დაბრუნება"
 
@@ -1921,7 +1929,7 @@ msgstr "ფაილიდან შემოტანა შეუძლებ�
 msgid "Failed to parse file."
 msgstr "ფაილის დამუშავება ჩავარდა."
 
-#: graphs/file_import/parsers/columns/ui.vala:36 graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/ui.vala:38 graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "ელემენტი %d"
@@ -2104,7 +2112,7 @@ msgstr "{font}-ის ჩატვირთვა შეუძლებელი
 msgid "translator-credits"
 msgstr "ეკატერინე პაპავა"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:45
+#: graphs/actions.vala:183 graphs/item_box.vala:45
 #, c-format
 msgid "Deleted %s"
 msgstr "წაიშალა %s"
@@ -2177,23 +2185,23 @@ msgstr ""
 "ნდობის ზოლის შეცდომა: \n"
 "კოვარიანტული მატრიცა არასტაბილურია."
 
-#: graphs/curve_fitting.vala:259
+#: graphs/curve_fitting.vala:261
 msgid "Parameters"
 msgstr "პარამეტრები"
 
-#: graphs/curve_fitting.vala:275
+#: graphs/curve_fitting.vala:277
 msgid "Statistics"
 msgstr "სტატისტიკა"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:460
+#: graphs/curve_fitting.vala:462
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "აპროქსიმაციის პარამეტრები %s-სთვის"
@@ -2202,12 +2210,12 @@ msgstr "აპროქსიმაციის პარამეტრებ�
 msgid "Failed to load project"
 msgstr "პროექტის ჩატვირთვა ჩავარდა"
 
-#: graphs/data.vala:481
+#: graphs/data.vala:459
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
 
-#: graphs/data.vala:860
+#: graphs/data.vala:802
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "სტილის %s დამუშავება შეუძლებელია. იტვირთება სისტემის ნაგულისხმევი სტილი"
@@ -2234,23 +2242,23 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "ტექსტური ფაილები"
 
-#: graphs/item.vala:175
+#: graphs/item.vala:174
 msgid "Dataset"
 msgstr "მონაცემების სეტი"
 
-#: graphs/item.vala:217
+#: graphs/item.vala:220
 msgid "Generated Dataset"
 msgstr "გენერირებული მონაცემების ნაკრები"
 
-#: graphs/item.vala:273
+#: graphs/item.vala:276
 msgid "Label"
 msgstr "ჭდე"
 
-#: graphs/item.vala:323
+#: graphs/item.vala:326
 msgid "Fill"
 msgstr "შევსება"
 
-#: graphs/misc.vala:5
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib სტილის ფაილი"
@@ -2399,7 +2407,20 @@ msgstr "მონახაზი"
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
+#. Translators: Formatted with item name and data points respectively
 #: graphs/window.vala:399
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
+msgstr "%s იხატება შემცირებული დეტალებით %d წერტილის გამოყენებით"
+
+#: graphs/window.vala:405
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] "%d ელემენტი იხატება შემცირებული დეტალებით %d წერტილის გამოყენებით"
+msgstr[1] "%d ელემენტი იხატება შემცირებული დეტალებით %d წერტილის გამოყენებით"
+
+#: graphs/window.vala:427
 msgid "Open Location"
 msgstr "მდებარეობის გახსნა"
 
