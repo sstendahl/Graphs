@@ -63,6 +63,7 @@ class _PythonItemMixin:
             for key in dir(self.props) if key != "typename"
         }
         dictionary["type"] = self.__gtype_name__[12:]
+        dictionary.pop("visible")
         return dictionary
 
 
