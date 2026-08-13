@@ -1,10 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Curve fitting module."""
-from gettext import gettext as _
-
 from gi.repository import Graphs
 
-from graphs import ast, canvas
+from graphs import ast
 
 import numpy
 
@@ -41,35 +39,11 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def _load_canvas(self) -> None:
         """Initialize and set main canvas."""
-        settings = self.props.window.get_data().get_figure_settings()
-        style = Graphs.StyleManager.get_system_style_params()
+        self.props.canvas.figure.axis.set(xlim=self._xlim)
 
-        cv = canvas.Canvas(
-            style,
-            self.props.main_canvas_items,
-            interactive=False,
-        )
-        ax = cv.figure.axis
-        ax.set(
-            xlabel=settings.get_bottom_label(),
-            ylabel=settings.get_left_label(),
-            xlim=self._xlim,
-        )
-        self.set_canvas(cv)
-
-        cv = canvas.Canvas(
-            style,
-            self.props.residuals_canvas_items,
-            interactive=False,
-        )
-        ax = cv.figure.axis
-        ax.set_ylabel(_("Residuals"))
-        ax.set_xlabel(settings.get_bottom_label())
+        ax = self.props.residuals_canvas.figure.axis
         ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
         ax.set_xlim(*self._xlim)
-        ax.set_ylim(-1, 1)
-        cv.figure.props.legend = False
-        self.set_residuals_canvas(cv)
 
     def _fit_curve(self) -> None:
         """Handle fit curve request."""

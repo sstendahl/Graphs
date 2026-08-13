@@ -74,6 +74,9 @@ namespace Graphs {
             );
         }
 
+        public FigureSettings.default () {
+        }
+
         public Limits get_limits () {
             double[] values = new double[8];
             for (uint i = 0; i < LIMIT_NAMES.length; i++) {

@@ -233,9 +233,29 @@ namespace Graphs {
             residuals_canvas_items = new ListStore (typeof (Item));
             residuals_canvas_items.append (residuals);
 
-            PythonHelper.run_method (this, "_load_canvas");
-            Adw.StyleManager.get_default ().notify.connect (() => PythonHelper.run_method (this, "_load_canvas"));
+            load_canvas ();
+            Adw.StyleManager.get_default ().notify.connect (load_canvas);
             set_equation_from_selection ();
+        }
+
+        private void load_canvas () {
+            var figure_settings = window.data.figure_settings;
+            var style = StyleManager.get_system_style_params ();
+
+            var canvas_settings = new FigureSettings.default ();
+            canvas_settings.bottom_label = figure_settings.bottom_label;
+            canvas_settings.top_label = figure_settings.top_label;
+            canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
+
+            var residuals_settings = new FigureSettings.default ();
+            residuals_settings.bottom_label = figure_settings.bottom_label;
+            residuals_settings.top_label = _("Residuals");
+            residuals_settings.min_left = -1;
+            residuals_settings.max_left = 1;
+            residuals_settings.legend = false;
+            residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
+
+            PythonHelper.run_method (this, "_load_canvas");
         }
 
         protected double[] get_p0 () {
