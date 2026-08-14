@@ -131,10 +131,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         """Set the data from a tuple."""
         self.props.data = Graphs.DataHolder.new(*data)
 
-    def set_xydata(self, xydata: tuple[numpy.ndarray, numpy.ndarray]) -> None:
-        """Set x- and y-data."""
-        self.set_data_tuple((*xydata, self.get_xerr(), self.get_yerr()))
-
     def get_xdata(self) -> numpy.ndarray:
         """Get xdata."""
         return utilities.bytes_to_ndarray(self.props.data.get_xdata_b())

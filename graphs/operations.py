@@ -301,7 +301,13 @@ class CommonOperations():
                     item_ydata = item.get_ydata().copy()
                     item_ydata[data_mask] = new_ydata
                     new_ydata = item_ydata
-                item.set_xydata((item.get_xdata(), new_ydata))
+                old_holder = item.get_data()
+                item.set_data(Graphs.DataHolder.new(
+                    utilities.bytes_to_ndarray(old_holder.get_xdata_b()),
+                    new_ydata,
+                    utilities.bytes_to_ndarray(old_holder.get_xerr_b()),
+                    utilities.bytes_to_ndarray(old_holder.get_yerr_b()),
+                ))
                 continue
         return True
 
