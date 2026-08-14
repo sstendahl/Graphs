@@ -98,7 +98,7 @@ namespace Graphs.MathParser {
                 case Ident.ASIN: return Math.asin (x);
                 case Ident.ACOS: return Math.acos (x);
                 case Ident.ATAN: return Math.atan (x);
-                case Ident.ACOT: return Math.asin (1d / Math.sqrt (1 + x * x));
+                case Ident.ACOT: return Math.atan (1d / x);
                 case Ident.ASEC: return Math.acos (1d / x);
                 case Ident.ACSC: return Math.asin (1d / x);
 
@@ -106,7 +106,7 @@ namespace Graphs.MathParser {
                 case Ident.ASIND: return Math.asin (x) * RADIANS_TO_DEGREES;
                 case Ident.ACOSD: return Math.acos (x) * RADIANS_TO_DEGREES;
                 case Ident.ATAND: return Math.atan (x) * RADIANS_TO_DEGREES;
-                case Ident.ACOTD: return Math.asin (1d / Math.sqrt (1 + x * x)) * RADIANS_TO_DEGREES;
+                case Ident.ACOTD: return Math.atan (1d / x) * RADIANS_TO_DEGREES;
                 case Ident.ASECD: return Math.acos (1d / x) * RADIANS_TO_DEGREES;
                 case Ident.ACSCD: return Math.asin (1d / x) * RADIANS_TO_DEGREES;
 
