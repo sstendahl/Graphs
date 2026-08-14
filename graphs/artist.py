@@ -222,10 +222,17 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         xdata, ydata, xerr, yerr = self._full
         decimate = self.props.downsample \
             and self._axis.figure.parent is not None
-        indices = _decimate(
-            self._keys, ydata, self._nans, self._sorted,
-            *self._axis.get_xlim(), self._axis.bbox.width,
-        ) if decimate else None
+        if decimate:
+            x_start, x_stop = self._axis.get_xlim()
+            scale = Graphs.scale_from_string(self._axis.get_xscale())
+            lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
+            upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
+            indices = _decimate(
+                self._keys, ydata, self._nans, self._sorted,
+                lower, upper, self._axis.bbox.width * 3,
+            )
+        else:
+            indices = None
         if indices is not None:
             xdata, ydata = xdata[indices], ydata[indices]
             xerr = None if xerr is None else xerr[indices]
