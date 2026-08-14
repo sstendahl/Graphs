@@ -114,7 +114,7 @@ class Figure(GObject.Object, figure.Figure):
         """Stop tracking the data model before the canvas is replaced."""
         if self._item_handler is not None:
             self._items.disconnect(self._item_handler)
-        self._item_handlers = None
+            self._item_handler = None
         self._drop_artists()
 
     def _redraw(self, *_args) -> None:
