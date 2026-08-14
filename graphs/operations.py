@@ -157,7 +157,7 @@ class CommonOperations():
                 xdata, ydata = utilities.equation_to_data(equation, lims)
                 xerr, yerr = None, None
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = item.get_xydata()
+                xdata, ydata = utilities.get_xydata(item.get_data())
                 if mode == Graphs.Mode.SELECT:
                     startx, stopx = lims
                     # If startx and stopx are not out of range, that is,
@@ -229,7 +229,7 @@ class CommonOperations():
                 equation = item.get_equation()
                 xdata, ydata = utilities.equation_to_data(equation, lims)
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = item.get_xydata()
+                xdata, ydata = utilities.get_xydata(item.get_data())
                 if interaction_mode == Graphs.Mode.SELECT:
                     # If startx and stopx are not out of range, that is,
                     # if the item data is within the highlight
@@ -501,7 +501,7 @@ class DataOperations():
         *args,
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
-        xdata, ydata = item.get_xydata()
+        xdata, ydata = utilities.get_xydata(item.get_data())
         if interaction_mode == Graphs.Mode.SELECT:
             startx, stopx = get_selected_limits(
                 figure_settings,

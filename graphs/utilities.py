@@ -19,7 +19,7 @@ def bytes_to_list(b: GLib.Bytes) -> list[float]:
     return bytes_to_ndarray(b).tolist()
 
 
-def get_xy_data(
+def get_xydata(
     holder: Graphs.DataHolder,
 ) -> tuple[numpy.ndarray, numpy.ndarray]:
     """Get x and y data in numpy format from a DataHolder."""
@@ -42,4 +42,4 @@ def equation_to_data(
         steps,
         scale,
     )
-    return get_xy_data(holder)
+    return get_xydata(holder)

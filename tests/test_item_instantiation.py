@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for item instantiation."""
+from graphs import utilities
 from graphs.item import DataItem, FillItem, ItemFactory, TextItem
 
 import pytest
@@ -62,7 +63,7 @@ def test_new_from_dict_unknown_type_raises():
 def test_data_item_default_data():
     """Test if DataItem defaults data to empty lists when not provided."""
     item = DataItem(name="Empty")
-    xdata, ydata = item.get_xydata()
+    xdata, ydata = utilities.get_xydata(item.get_data())
     assert xdata.tolist() == []
     assert ydata.tolist() == []
 

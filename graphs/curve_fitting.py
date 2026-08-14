@@ -18,7 +18,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
     def __init__(self, window: Graphs.Window, item: Graphs.Item):
         """Initialize the curve fitting dialog."""
-        self._data = item.get_xydata()
+        self._data = utilities.get_xydata(item.get_data())
 
         super().__init__(window=window)
         self.setup(item)
