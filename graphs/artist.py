@@ -203,6 +203,20 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         ) if numpy.isnan(xdata).any() else xdata
         self._nans = numpy.flatnonzero(numpy.isnan(self._full[1]))
 
+    def _queue_lod(self, *_args) -> None:
+        """Debounce level of detail updates while panning or resizing."""
+        if self._lod_timeout_id is not None:
+            GObject.source_remove(self._lod_timeout_id)
+        self._lod_timeout_id = GObject.timeout_add(
+            100, self._lod_timeout_callback)
+
+    def _lod_timeout_callback(self) -> bool:
+        self._lod_timeout_id = None
+        self._apply_lod()
+        if self._axis.figure.parent is not None:
+            self._axis.figure.parent.queue_draw()
+        return False
+
     def _apply_lod(self, *_args) -> None:
         """Draw at a level of detail matching the current view."""
         xdata, ydata, xerr, yerr = self._full
@@ -232,6 +246,20 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._ycaps[0].set_data(xdata, ydata - yerr)
             self._ycaps[1].set_data(xdata, ydata + yerr)
 
+    def _apply_visibility(self) -> None:
+        """Apply the combined visibility flags to line, bars and caps."""
+        self._data.set_visible(self._visible)
+        for bar, caps, show in (
+            (self._xbar, self._xcaps, self._showxerr),
+            (self._ybar, self._ycaps, self._showyerr),
+        ):
+            if bar is None:
+                continue
+            visible = self._visible and show
+            bar.set_visible(visible)
+            for cap in caps:
+                cap.set_visible(visible)
+
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
         """Get showxerr property."""
@@ -240,9 +268,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @showxerr.setter
     def showxerr(self, showxerr: bool) -> None:
         """Set showxerr property."""
-        self._xbar.set_visible(showxerr)
-        for cap in self._xcaps:
-            cap.set_visible(showxerr)
+        self._showxerr = showxerr
+        self._apply_visibility()
 
     @GObject.Property(type=bool, default=True)
     def showyerr(self) -> bool:
@@ -252,9 +279,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @showyerr.setter
     def showyerr(self, showyerr: bool) -> None:
         """Set showyerr property."""
-        self._ybar.set_visible(showyerr)
-        for cap in self._ycaps:
-            cap.set_visible(showyerr)
+        self._showyerr = showyerr
+        self._apply_visibility()
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -343,12 +369,13 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @GObject.Property(type=bool, default=True)
     def visible(self) -> bool:
         """Get visible property."""
-        return self._data.get_visible()
+        return self._visible
 
     @visible.setter
     def visible(self, visible: bool) -> None:
         """Set visible property."""
-        self._data.set_visible(visible)
+        self._visible = visible
+        self._apply_visibility()
 
     def _set_properties(self, *_args) -> None:
         linewidth, markersize = self.props.linewidth, self.props.markersize
@@ -419,6 +446,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
         self._axis = axis
+        self._lod_timeout_id = None
         self.props.downsample = item.get_downsample()
         self._store(item.props.data)
         xdata, ydata, xerr, yerr = self._full
@@ -446,30 +474,46 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         # combinations with error bars on either or both axes.
         bar_iter = iter(self._bars)
         cap_iter = iter(self._caps)
+        self._xbar, self._xcaps = None, ()
+        self._ybar, self._ycaps = None, ()
 
         if xerr is not None:
             self._xbar = next(bar_iter)
             self._xcaps = tuple(islice(cap_iter, 2))
-            if not item.get_showxerr():
-                self._xbar.set_visible(False)
-                for cap in self._xcaps:
-                    cap.set_visible(False)
         if yerr is not None:
             self._ybar = next(bar_iter)
             self._ycaps = tuple(islice(cap_iter, 2))
-            if not item.get_showyerr():
-                self._ybar.set_visible(False)
-                for cap in self._ycaps:
-                    cap.set_visible(False)
+
+        self._visible = item.get_visible()
+        self._showxerr = item.get_showxerr()
+        self._showyerr = item.get_showyerr()
+        self._apply_visibility()
 
         self.props.legend = item.get_legend()
         for prop in ("linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
+        self._apply_lod()
 
         self.connect("notify::downsample", self._apply_lod)
-        axis.callbacks.connect("xlim_changed", self._apply_lod)
+        self._view_handler = \
+            axis.callbacks.connect("xlim_changed", self._queue_lod)
+        self._parent = axis.figure.parent
+        self._resize_handler = None if self._parent is None else \
+            self._parent.connect("resize", self._queue_lod)
+
+    def disconnect_item(self) -> None:
+        """Release the view and resize handlers on detach."""
+        if self._lod_timeout_id is not None:
+            GObject.source_remove(self._lod_timeout_id)
+            self._lod_timeout_id = None
+        if self._view_handler is not None:
+            self._axis.callbacks.disconnect(self._view_handler)
+            self._view_handler = None
+        if self._resize_handler is not None:
+            self._parent.disconnect(self._resize_handler)
+            self._resize_handler = None
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper):
