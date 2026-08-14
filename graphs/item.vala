@@ -352,6 +352,16 @@ namespace Graphs {
         EQUATION
     }
 
+    [Compact]
+    private class FillBound {
+        public FillBoundKind kind = FillBoundKind.DATA;
+        public Item? item = null;
+        public Ast? equation = null;
+        public Program? program = null;
+        public double constant = 0;
+        public ulong handler = 0;
+    }
+
     public enum FillBoundSelection {
         INF,
         NEG_INF,
@@ -421,19 +431,8 @@ namespace Graphs {
         public bool legend { get; set; default = false; }
         public signal void bounds_changed ();
 
-        private FillBoundKind _upper_kind = FillBoundKind.DATA;
-        private Item? _upper_item = null;
-        private Ast? _upper_equation = null;
-        private Program? _upper_program = null;
-        private double _upper_constant = 0;
-        private ulong _upper_handler = 0;
-
-        private FillBoundKind _lower_kind = FillBoundKind.DATA;
-        private Item? _lower_item = null;
-        private Ast? _lower_equation = null;
-        private Program? _lower_program = null;
-        private double _lower_constant = 0;
-        private ulong _lower_handler = 0;
+        private FillBound _upper = new FillBound ();
+        private FillBound _lower = new FillBound ();
 
         construct {
             typename = _("Fill");
@@ -441,98 +440,81 @@ namespace Graphs {
         }
 
         public FillBoundKind get_upper_kind () {
-            return _upper_kind;
+            return _upper.kind;
         }
 
         public Item? get_upper_source () {
-            return _upper_item;
+            return _upper.item;
         }
 
         public Ast? get_upper_equation () {
-            return _upper_equation;
+            return _upper.equation;
         }
 
         public unowned Program? get_upper_program () {
-            return _upper_program;
+            return _upper.program;
         }
 
         public FillBoundKind get_lower_kind () {
-            return _lower_kind;
+            return _lower.kind;
         }
 
         public Item? get_lower_source () {
-            return _lower_item;
+            return _lower.item;
         }
 
         public Ast? get_lower_equation () {
-            return _lower_equation;
+            return _lower.equation;
         }
 
         public unowned Program? get_lower_program () {
-            return _lower_program;
+            return _lower.program;
         }
 
         public void set_upper_source (Item item) {
-            detach_source (ref _upper_item, ref _upper_handler);
-            _upper_kind = FillBoundKind.ITEM;
-            _upper_item = item;
-            _upper_equation = null;
-            _upper_program = null;
-            _upper_handler = connect_source (item);
-            item.register_dependent (this);
-            if (this.color == "") this.color = item.color;
-            recompute ();
+            set_source (_upper, item);
         }
 
         public void set_upper_equation (Ast equation) {
-            detach_source (ref _upper_item, ref _upper_handler);
-            _upper_kind = FillBoundKind.EQUATION;
-            _upper_equation = equation;
-            _upper_program = null;
-            if (is_constant (equation.root ())) {
-                try {
-                    _upper_constant = MathParser.Evaluator.instance ()
-                        .eval_ast (equation);
-                } catch (MathError e) {
-                    /* A constant may still be undefined, e.g. 0/0. */
-                    _upper_constant = double.NAN;
-                }
-            } else {
-                try {
-                    _upper_program = ast_to_program (equation, "x");
-                } catch (MathError e) { assert_not_reached (); }
-            }
-            recompute ();
+            set_equation (_upper, equation);
         }
 
         public void set_lower_source (Item item) {
-            detach_source (ref _lower_item, ref _lower_handler);
-            _lower_kind = FillBoundKind.ITEM;
-            _lower_item = item;
-            _lower_equation = null;
-            _lower_program = null;
-            _lower_handler = connect_source (item);
+            set_source (_lower, item);
+        }
+
+        public void set_lower_equation (Ast equation) {
+            set_equation (_lower, equation);
+        }
+
+        private void set_source (FillBound bound, Item item) {
+            detach_source (bound);
+            bound.kind = FillBoundKind.ITEM;
+            bound.item = item;
+            bound.equation = null;
+            bound.program = null;
+            bound.handler = connect_source (item);
             item.register_dependent (this);
             if (this.color == "") this.color = item.color;
             recompute ();
         }
 
-        public void set_lower_equation (Ast equation) {
-            detach_source (ref _lower_item, ref _lower_handler);
-            _lower_kind = FillBoundKind.EQUATION;
-            _lower_equation = equation;
-            _lower_program = null;
+        private void set_equation (FillBound bound, Ast equation) {
+            detach_source (bound);
+            bound.kind = FillBoundKind.EQUATION;
+            bound.equation = equation;
+            bound.program = null;
             if (is_constant (equation.root ())) {
                 try {
-                    _lower_constant = MathParser.Evaluator.instance ()
+                    bound.constant = MathParser.Evaluator.instance ()
                         .eval_ast (equation);
                 } catch (MathError e) {
                     /* A constant may still be undefined, e.g. 0/0. */
-                    _lower_constant = double.NAN;
+                    bound.constant = double.NAN;
                 }
             } else {
                 try {
-                    _lower_program = ast_to_program (equation, "x");
+                    bound.program = ast_to_program (equation, "x");
                 } catch (MathError e) { assert_not_reached (); }
             }
             recompute ();
@@ -567,50 +549,49 @@ namespace Graphs {
             }
         }
 
-        private void detach_source (ref Item? source, ref ulong handler) {
-            if (source == null) return;
-            Item item = source;
-            source = null;
-            if (handler != 0) item.disconnect (handler);
-            handler = 0;
-            if (item != _upper_item && item != _lower_item) {
+        private void detach_source (FillBound bound) {
+            if (bound.item == null) return;
+            Item item = bound.item;
+            bound.item = null;
+            if (bound.handler != 0) item.disconnect (bound.handler);
+            bound.handler = 0;
+            if (item != _upper.item && item != _lower.item) {
                 item.unregister_dependent (this);
             }
         }
 
         public override void dispose () {
-            detach_source (ref _upper_item, ref _upper_handler);
-            detach_source (ref _lower_item, ref _lower_handler);
+            detach_source (_upper);
+            detach_source (_lower);
             base.dispose ();
         }
 
         private unowned double[]? get_target_x () {
-            if (_upper_kind == FillBoundKind.ITEM && _upper_item is DataItem) {
-                return ((DataItem) _upper_item).get_xdata ();
+            if (_upper.kind == FillBoundKind.ITEM && _upper.item is DataItem) {
+                return ((DataItem) _upper.item).get_xdata ();
             }
-            if (_lower_kind == FillBoundKind.ITEM && _lower_item is DataItem) {
-                return ((DataItem) _lower_item).get_xdata ();
+            if (_lower.kind == FillBoundKind.ITEM && _lower.item is DataItem) {
+                return ((DataItem) _lower.item).get_xdata ();
             }
             return null;
         }
 
         private double[] evaluate_bound (
-            FillBoundKind kind, Item? item, Program? program,
-            double constant, double[] target
+            FillBound bound, double[] target
         ) throws MathError {
-            if (kind != FillBoundKind.ITEM) {
-                if (program != null) return program.eval (target);
+            if (bound.kind != FillBoundKind.ITEM) {
+                if (bound.program != null) return bound.program.eval (target);
                 double[] result = new double[target.length];
-                CUtilities.fill_double (result, constant);
+                CUtilities.fill_double (result, bound.constant);
                 return result;
             }
-            if (item is DataItem) {
-                var source = (DataItem) item;
+            if (bound.item is DataItem) {
+                var source = (DataItem) bound.item;
                 return MathTools.interpolate (
                     source.get_xdata (), source.get_ydata (), target
                 );
             }
-            return ((EquationItem) item).get_program ().eval (target);
+            return ((EquationItem) bound.item).get_program ().eval (target);
         }
 
         public bool is_view_based () {
@@ -620,14 +601,8 @@ namespace Graphs {
         public void evaluate_bounds (
             double[] xdata, out double[] lower, out double[] upper
         ) throws MathError {
-            lower = evaluate_bound (
-                _lower_kind, _lower_item, _lower_program,
-                _lower_constant, xdata
-            );
-            upper = evaluate_bound (
-                _upper_kind, _upper_item, _upper_program,
-                _upper_constant, xdata
-            );
+            lower = evaluate_bound (_lower, xdata);
+            upper = evaluate_bound (_upper, xdata);
         }
 
         private void recompute () {
