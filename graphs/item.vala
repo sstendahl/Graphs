@@ -371,7 +371,7 @@ namespace Graphs {
 
     public class FillBounds : Object {
         public static Item[] get_source_items (Data data) {
-            var items = new ManagedArray<Item> ();
+            var items = new ManagedArray<Item> ((int) data.get_n_items ());
             foreach (Item item in data) {
                 if (item is DataItem || item is EquationItem) items.append (item);
             }
