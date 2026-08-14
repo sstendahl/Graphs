@@ -66,7 +66,7 @@ namespace Graphs.MathParser {
             switch (expr.op ()) {
                 case Operator.FACT:
                     if (v < 0 || v != Math.floor (v)) return double.NAN;
-                    return factorial (v);
+                    return Math.tgamma (v + 1);
                 default: assert_not_reached ();
             }
         }

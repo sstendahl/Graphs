@@ -46,9 +46,6 @@ namespace Graphs {
     }
 
     namespace MathParser {
-        [CCode (cname = "factorial", cheader_filename = "math_parser/array_evaluator.h")]
-        private extern double factorial (double x);
-
         [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double ipow (double base, int exp);
 

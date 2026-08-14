@@ -769,8 +769,15 @@ namespace Graphs {
 
         // Section listeners
 
-        private void _on_item_change (Object item, ParamSpec spec) {
-            item_changed.emit ((Item) item, spec.name);
+        private void _on_item_change (Object object, ParamSpec spec) {
+            var item = (Item) object;
+            if (figure_settings.hide_unselected && spec.name == "selected")
+                item.visible = item.selected;
+
+            if (spec.name == "visible")
+                return;
+
+            item_changed.emit (item, spec.name);
         }
 
         private void _on_item_position_change () {
