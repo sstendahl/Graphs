@@ -249,14 +249,12 @@ namespace Graphs {
             var figure_settings = window.data.figure_settings;
 
             canvas_settings = new FigureSettings.default ();
-            canvas_settings.hide_unselected = true;
             canvas_settings.bottom_label = figure_settings.bottom_label;
             canvas_settings.top_label = figure_settings.top_label;
             canvas_settings.min_bottom = x_min;
             canvas_settings.max_bottom = x_max;
 
             residuals_settings = new FigureSettings.default ();
-            residuals_settings.hide_unselected = true;
             residuals_settings.bottom_label = figure_settings.bottom_label;
             residuals_settings.top_label = _("Residuals");
             residuals_settings.min_left = -1;
@@ -328,18 +326,18 @@ namespace Graphs {
                 confirm_button.set_sensitive (false);
                 fit_result = null;
 
-                fitted_curve.selected = false;
-                fill.selected = false;
-                residuals.selected = false;
+                fitted_curve.visible = false;
+                fill.visible = false;
+                residuals.visible = false;
                 residuals_settings.min_left = -1;
                 residuals_settings.max_left = 1;
 
                 return;
             }
 
-            fitted_curve.selected = true;
-            fill.selected = true;
-            residuals.selected = true;
+            fitted_curve.visible = true;
+            fill.visible = true;
+            residuals.visible = true;
 
             confirm_button.set_sensitive (true);
             if (fit_result == null) return;
