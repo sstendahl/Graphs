@@ -317,9 +317,10 @@ namespace Graphs {
             Gtk.TextIter end_iter;
             buffer.get_end_iter (out end_iter);
 
-            var fitted_curve = (Item) main_canvas_items.get_item (0);
-            var fill = (Item) main_canvas_items.get_item (1);
-            var residuals = (Item) residuals_canvas_items.get_item (0);
+            var fitted_curve = (DataItem) main_canvas_items.get_item (0);
+            var fill = (FillItem) main_canvas_items.get_item (1);
+            var data_curve = (DataItem) main_canvas_items.get_item (2);
+            var residuals = (DataItem) residuals_canvas_items.get_item (0);
 
             if (error != CurveFittingError.NONE) {
                 buffer.insert (ref end_iter, error.to_text (), -1);
@@ -341,6 +342,29 @@ namespace Graphs {
 
             confirm_button.set_sensitive (true);
             if (fit_result == null) return;
+
+            double min_y, max_y;
+            double tmp_min_y, tmp_max_y;
+
+            CUtilities.array_minmax (fill.data.get_lower (), false, out min_y, out max_y);
+            CUtilities.array_minmax (fill.data.get_upper (), false, out tmp_min_y, out tmp_max_y);
+            min_y = double.min (min_y, tmp_min_y);
+            max_y = double.max (max_y, tmp_max_y);
+            CUtilities.array_minmax (data_curve.get_ydata (), false, out tmp_min_y, out tmp_max_y);
+            min_y = double.min (min_y, tmp_min_y);
+            max_y = double.max (max_y, tmp_max_y);
+            double padding = (max_y - min_y) * 0.025;
+            canvas_settings.min_left = min_y - padding;
+            canvas_settings.max_left = max_y + padding;
+
+            CUtilities.array_minmax (residuals.get_ydata (), false, out min_y, out max_y);
+            double max_residual = double.max (Math.fabs (min_y), Math.fabs (max_y));
+            if (max_residual > 0)
+                max_residual *= 1.1;
+            else
+                max_residual = 1;
+            residuals_settings.min_left = -max_residual;
+            residuals_settings.max_left = max_residual;
 
             buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
 

@@ -117,25 +117,4 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         fill = self.props.main_canvas_items[1]
         fill.set_data_tuple((x_fit, y_lower, y_upper))
 
-        # Show fill and fit again after successful fit
-        cv = self.get_canvas()
-        ax = cv.figure.axis
-
-        all_y = numpy.concatenate((y_lower, y_upper, y_data))
-        all_y = all_y[numpy.isfinite(all_y)]
-        y_min, y_max = all_y.min(), all_y.max()
-
-        padding = (y_max - y_min) * 0.025
-        ax.set_ylim(y_min - padding, y_max + padding)
-        cv.queue_draw()
-
-        ax = self.get_residuals_canvas().figure.axis
-        max_val = abs(residuals).max()
-        if max_val > 0:
-            y_lim = max_val * 1.1
-            ax.set_ylim(-y_lim, y_lim)
-        else:
-            ax.set_ylim(-1, 1)
-        cv.queue_draw()
-
         self.set_results(Graphs.CurveFittingError.NONE)
