@@ -14,6 +14,7 @@ test_deps = [
   gobject_dep,
   gtk_dep,
   adwaita_dep,
+  m_dep,
 ]
 test_env = [
  'G_TEST_SRCDIR=@0@'.format(meson.current_source_dir()),
