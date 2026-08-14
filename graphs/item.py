@@ -4,8 +4,6 @@ from gi.repository import Graphs
 
 from graphs import misc, utilities
 
-import numpy
-
 
 class _PythonItemMixin:
 
