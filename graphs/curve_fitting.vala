@@ -250,13 +250,13 @@ namespace Graphs {
 
             canvas_settings = new FigureSettings.default ();
             canvas_settings.bottom_label = figure_settings.bottom_label;
-            canvas_settings.top_label = figure_settings.top_label;
+            canvas_settings.left_label = figure_settings.left_label;
             canvas_settings.min_bottom = x_min;
             canvas_settings.max_bottom = x_max;
 
             residuals_settings = new FigureSettings.default ();
             residuals_settings.bottom_label = figure_settings.bottom_label;
-            residuals_settings.top_label = _("Residuals");
+            residuals_settings.left_label = _("Residuals");
             residuals_settings.min_left = -1;
             residuals_settings.max_left = 1;
             residuals_settings.min_bottom = x_min;
