@@ -61,9 +61,14 @@ class PythonHelper(Graphs.PythonHelper):
         figure_settings: Graphs.FigureSettings,
     ) -> Graphs.Canvas:
         rcParams.update(rcParamsDefault)
-        canvas = Canvas(params, items, interactive, figure_settings)
+        canvas = Canvas(
+            params,
+            items,
+            interactive=interactive,
+            figure_settings=figure_settings,
+        )
 
-        if interactive:
+        if figure_settings is not None:
             for prop in dir(figure_settings.props):
                 if prop in FIGURE_IGNORELIST:
                     continue
