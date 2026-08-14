@@ -131,22 +131,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
         """Set the data from a tuple."""
         self.props.data = Graphs.DataHolder.new(*data)
 
-    def get_xdata(self) -> numpy.ndarray:
-        """Get xdata."""
-        return utilities.bytes_to_ndarray(self.props.data.get_xdata_b())
-
-    def get_ydata(self) -> numpy.ndarray:
-        """Get ydata."""
-        return utilities.bytes_to_ndarray(self.props.data.get_ydata_b())
-
-    def get_xerr(self) -> numpy.ndarray:
-        """Get xerr."""
-        return utilities.bytes_to_ndarray(self.props.data.get_xerr_b())
-
-    def get_yerr(self) -> numpy.ndarray:
-        """Get yerr."""
-        return utilities.bytes_to_ndarray(self.props.data.get_yerr_b())
-
 
 class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     """Generated Dataitem."""

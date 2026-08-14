@@ -28,6 +28,15 @@ def get_xydata(
     return xdata, ydata
 
 
+def get_xyerr(
+    holder: Graphs.DataHolder,
+) -> tuple[numpy.ndarray, numpy.ndarray]:
+    """Get x and y err in numpy format from a DataHolder."""
+    xerr = bytes_to_ndarray(holder.get_xerr_b())
+    yerr = bytes_to_ndarray(holder.get_yerr_b())
+    return xerr, yerr
+
+
 def equation_to_data(
     equation: Graphs.Ast,
     limits: tuple[float, float],
