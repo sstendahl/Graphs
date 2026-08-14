@@ -16,6 +16,13 @@ namespace Graphs.CUtilities {
         double[] data
     );
 
+    [CCode (cname = "fill_double")]
+    private extern void fill_double (
+        [CCode (array_length = true)]
+        double[] output,
+        double value
+    );
+
     [CCode (cname = "arange")]
     private extern bool arange (
         [CCode (array_length = true)]

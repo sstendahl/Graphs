@@ -86,6 +86,15 @@ finite_double (const gdouble *restrict data, gsize len)
   return found;
 }
 
+void
+fill_double (gdouble *restrict out, gsize len, gdouble value)
+{
+  for (gsize i = 0; i < len; i++)
+    {
+      out[i] = value;
+    }
+}
+
 gboolean
 arange (gdouble *restrict out, gsize steps)
 {

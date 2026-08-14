@@ -233,6 +233,7 @@ namespace Graphs {
 
         public void clear () {
             uint n_items = get_n_items ();
+            _disconnect_from_all_items ();
             _items = new ManagedArray<Item> (8);
             items_changed.emit (0, n_items, 0);
             this.can_undo = false;
@@ -265,12 +266,23 @@ namespace Graphs {
         }
 
         private void _connect_to_item (Item item) {
-            item.notify["selected"].connect (() => {
-                if (_notify_selection_changed) selection_changed.emit (index (item), 1);
-            });
+            item.notify["selected"].connect (_on_item_selected);
             item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
+        }
+
+        private void _disconnect_from_item (Item item) {
+            item.notify["selected"].disconnect (_on_item_selected);
+            item.notify.disconnect (_on_item_change);
+            item.notify["xposition"].disconnect (_on_item_position_change);
+            item.notify["yposition"].disconnect (_on_item_position_change);
+        }
+
+        private void _disconnect_from_all_items () {
+            foreach (Item item in _items) {
+                _disconnect_from_item (item);
+            }
         }
 
         protected void _add_item (Item item) {
@@ -286,6 +298,7 @@ namespace Graphs {
         }
 
         protected void _remove_item (uint index) {
+            _disconnect_from_item (_items[(int) index]);
             _items.remove_at ((int) index);
             items_changed.emit (index, 1, 0);
         }
@@ -399,6 +412,7 @@ namespace Graphs {
 
         public void set_items (owned Item[] items) {
             uint removed = _items.length;
+            _disconnect_from_all_items ();
             foreach (Item item in items) {
                 _connect_to_item (item);
             }
@@ -408,8 +422,22 @@ namespace Graphs {
         }
 
         public void delete_items (Item[] items) {
-            foreach (Item item in items) {
-                uint index = this.index (item);
+            var seen = new GenericSet<unowned Item> (direct_hash, direct_equal);
+            var to_remove = new ManagedArray<Item> (items.length);
+            to_remove.append_all (items);
+            for (int i = 0; i < to_remove.length; i++) {
+                Item item = to_remove[i];
+                if (seen.contains (item)) continue;
+                seen.add (item);
+                foreach (Item dependent in item.get_dependents ()) {
+                    to_remove.append (dependent);
+                }
+            }
+
+            foreach (Item item in to_remove) {
+                int position = _items.index (item);
+                if (position < 0) continue;
+                uint index = (uint) position;
                 item_removed.emit (item, index);
                 _remove_item (index);
 
@@ -769,15 +797,14 @@ namespace Graphs {
 
         // Section listeners
 
-        private void _on_item_change (Object object, ParamSpec spec) {
-            var item = (Item) object;
-            if (figure_settings.hide_unselected && spec.name == "selected")
-                item.visible = item.selected;
+        private void _on_item_change (Object item, ParamSpec spec) {
+            item_changed.emit ((Item) item, spec.name);
+        }
 
-            if (spec.name == "visible")
-                return;
-
-            item_changed.emit (item, spec.name);
+        private void _on_item_selected (Object object, ParamSpec spec) {
+            if (_notify_selection_changed) {
+                selection_changed.emit (index ((Item) object), 1);
+            }
         }
 
         private void _on_item_position_change () {

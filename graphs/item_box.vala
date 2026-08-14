@@ -28,6 +28,7 @@ namespace Graphs {
             item.bind_property ("name", this, "title", 2);
             item.bind_property ("selected", check_button, "active", 2);
             item.notify["color"].connect (on_color_change);
+            item.notify["alpha"].connect (on_color_change);
             on_color_change ();
         }
 

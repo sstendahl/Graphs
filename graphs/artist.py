@@ -734,6 +734,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for FillItem."""
 
     __gtype_name__ = "GraphsFillItemArtistWrapper"
+    legend = GObject.Property(type=bool, default=False)
 
     def _as_tuple(self, holder: Graphs.FillHolder) -> tuple[numpy.ndarray]:
         return (
@@ -748,11 +749,19 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     @data.setter
     def data(self, data: Graphs.FillHolder) -> None:
-        dummy = Figure().add_subplot().fill_between(*self._as_tuple(data))
-        self._artist.set_paths([dummy.get_paths()[0].vertices])
+        if self._item.is_view_based():
+            return
+        self._set_paths(*self._as_tuple(data))
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
+        self._item = item
+        self._axis = axis
+        self._view_change_timeout_id = None
+        self._view_key = None
+        self._view_xdata = None
+
+        self._dummy_axis = Figure().add_subplot()
         self._artist = axis.fill_between(
             *self._as_tuple(item.get_data()),
             label=item.get_name(),
@@ -760,3 +769,80 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             alpha=item.get_alpha(),
         )
         self._color_artist = self._artist
+        self._xlim_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._ylim_handler = \
+            axis.callbacks.connect("ylim_changed", self._on_view_change)
+        self._bounds_handler = item.connect(
+            "bounds-changed",
+            self._on_bounds_changed,
+        )
+        self.set_property("legend", item.get_property("legend"))
+        self._on_bounds_changed()
+
+    def disconnect_item(self) -> None:
+        """Release the view and item subscriptions on detach."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._xlim_handler)
+        self._axis.callbacks.disconnect(self._ylim_handler)
+        self._item.disconnect(self._bounds_handler)
+
+    def _clamp(self, ydata: numpy.ndarray) -> numpy.ndarray:
+        """Resolve infinities to the edge of the visible area."""
+        if numpy.all(numpy.isfinite(ydata)):
+            return ydata
+        low, high = sorted(self._axis.get_ylim())
+        span = high - low
+        return numpy.clip(ydata, low - span, high + span)
+
+    def _set_paths(self, xdata, lower, upper) -> None:
+        collection = self._dummy_axis.fill_between(
+            xdata,
+            self._clamp(lower),
+            self._clamp(upper),
+        )
+
+        paths = collection.get_paths()
+        collection.remove()
+        if not paths:
+            return
+        self._artist.set_paths([paths[0].vertices])
+        self._axis.figure.queue_draw()
+
+    def _generate_from_view(self) -> None:
+        """Sample the equation bounds across the visible range."""
+        x_start, x_stop = self._axis.get_xlim()
+        scale = Graphs.scale_from_string(self._axis.get_xscale())
+
+        # recalculate xdata if view has changed
+        key = (x_start, x_stop, scale)
+        if key != self._view_key:
+            self._view_xdata = numpy.array([
+                Graphs.get_value_at_fraction(fraction, x_start, x_stop, scale)
+                for fraction in numpy.linspace(-1, 2, 5000)
+            ])
+            self._view_key = key
+
+        lower, upper = self._item.evaluate_bounds(self._view_xdata)
+        self._set_paths(self._view_xdata, lower, upper)
+
+    def _on_bounds_changed(self, *_args) -> None:
+        """Redraw after a bound changed, whichever kind it now is."""
+        if self._item.is_view_based():
+            self._generate_from_view()
+        else:
+            self._set_paths(*self._as_tuple(self._item.get_data()))
+
+    def _timeout_callback(self) -> bool:
+        self._view_change_timeout_id = None
+        self._on_bounds_changed()
+        return False
+
+    def _on_view_change(self, *_args) -> None:
+        """Debounced view change handler that redraws after a delay."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+        self._view_change_timeout_id = \
+            GObject.timeout_add(100, self._timeout_callback)
