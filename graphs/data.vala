@@ -265,23 +265,18 @@ namespace Graphs {
             _used_positions = (owned) used_positions;
         }
 
-        private HashTable<Item, ulong> _item_handlers
-            = new HashTable<Item, ulong> (direct_hash, direct_equal);
-
         private void _connect_to_item (Item item) {
-            item.notify["selected"].connect (() => {
-                if (_notify_selection_changed) selection_changed.emit (index (item), 1);
-            });
-            _item_handlers[item] = item.notify.connect (_on_item_change);
+            item.notify["selected"].connect (_on_item_selected);
+            item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
         }
 
         private void _disconnect_from_item (Item item) {
-            ulong handler;
-            if (_item_handlers.steal_extended (item, null, out handler)) {
-                item.disconnect (handler);
-            }
+            item.notify["selected"].disconnect (_on_item_selected);
+            item.notify.disconnect (_on_item_change);
+            item.notify["xposition"].disconnect (_on_item_position_change);
+            item.notify["yposition"].disconnect (_on_item_position_change);
         }
 
         private void _disconnect_from_all_items () {
@@ -807,6 +802,12 @@ namespace Graphs {
 
         private void _on_item_change (Object item, ParamSpec spec) {
             item_changed.emit ((Item) item, spec.name);
+        }
+
+        private void _on_item_selected (Object object, ParamSpec spec) {
+            if (_notify_selection_changed) {
+                selection_changed.emit (index ((Item) object), 1);
+            }
         }
 
         private void _on_item_position_change () {
