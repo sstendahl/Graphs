@@ -435,9 +435,6 @@ namespace Graphs {
         private double _lower_constant = 0;
         private ulong _lower_handler = 0;
 
-        private Item? _color_source = null;
-        private ulong _color_handler = 0;
-
         construct {
             typename = _("Fill");
             alpha = 0.4f;
@@ -483,7 +480,7 @@ namespace Graphs {
             _upper_program = null;
             _upper_handler = connect_source (item);
             item.register_dependent (this);
-            update_color_binding ();
+            if (this.color == "") this.color = item.color;
             recompute ();
         }
 
@@ -493,14 +490,18 @@ namespace Graphs {
             _upper_equation = equation;
             _upper_program = null;
             if (is_constant (equation.root ())) {
-                _upper_constant = MathParser.Evaluator.instance ()
-                    .eval_ast (equation);
+                try {
+                    _upper_constant = MathParser.Evaluator.instance ()
+                        .eval_ast (equation);
+                } catch (MathError e) {
+                    /* A constant may still be undefined, e.g. 0/0. */
+                    _upper_constant = double.NAN;
+                }
             } else {
                 try {
                     _upper_program = ast_to_program (equation, "x");
                 } catch (MathError e) { assert_not_reached (); }
             }
-            update_color_binding ();
             recompute ();
         }
 
@@ -512,7 +513,7 @@ namespace Graphs {
             _lower_program = null;
             _lower_handler = connect_source (item);
             item.register_dependent (this);
-            update_color_binding ();
+            if (this.color == "") this.color = item.color;
             recompute ();
         }
 
@@ -522,30 +523,26 @@ namespace Graphs {
             _lower_equation = equation;
             _lower_program = null;
             if (is_constant (equation.root ())) {
-                _lower_constant = MathParser.Evaluator.instance ()
-                    .eval_ast (equation);
+                try {
+                    _lower_constant = MathParser.Evaluator.instance ()
+                        .eval_ast (equation);
+                } catch (MathError e) {
+                    /* A constant may still be undefined, e.g. 0/0. */
+                    _lower_constant = double.NAN;
+                }
             } else {
                 try {
                     _lower_program = ast_to_program (equation, "x");
                 } catch (MathError e) { assert_not_reached (); }
             }
-            update_color_binding ();
             recompute ();
-        }
-
-        private void on_source_changed (Object source, ParamSpec pspec) {
-            recompute ();
-        }
-
-        private void on_source_color_changed (Object source, ParamSpec pspec) {
-            this.color = ((Item) source).color;
         }
 
         private ulong connect_source (Item item) {
             if (item is DataItem) {
-                return item.notify["data"].connect (on_source_changed);
+                return item.notify["data"].connect (recompute);
             } else if (item is EquationItem) {
-                return item.notify["equation"].connect (on_source_changed);
+                return item.notify["equation"].connect (recompute);
             }
             return 0;
         }
@@ -581,34 +578,9 @@ namespace Graphs {
             }
         }
 
-        private void update_color_binding () {
-            Item? driver = null;
-            if (_upper_kind == FillBoundKind.ITEM) {
-                driver = _upper_item;
-            } else if (_lower_kind == FillBoundKind.ITEM) {
-                driver = _lower_item;
-            }
-            if (driver == _color_source) return;
-            if (_color_source != null && _color_handler != 0) {
-                _color_source.disconnect (_color_handler);
-                _color_handler = 0;
-            }
-            _color_source = driver;
-            if (driver == null) return;
-
-            this.color = driver.color;
-            _color_handler = driver.notify["color"].connect (
-                on_source_color_changed
-            );
-        }
-
         public override void dispose () {
             detach_source (ref _upper_item, ref _upper_handler);
             detach_source (ref _lower_item, ref _lower_handler);
-            if (_color_source != null && _color_handler != 0) {
-                _color_source.disconnect (_color_handler);
-                _color_handler = 0;
-            }
             base.dispose ();
         }
 
