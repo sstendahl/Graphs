@@ -110,6 +110,8 @@ class CommonOperations():
                     operations_class = EquationOperations
                 elif isinstance(item, Graphs.DataItem):
                     operations_class = DataOperations
+                else:
+                    continue
                 success, message = operations_class.execute(
                     item,
                     "transform",
@@ -184,7 +186,7 @@ class CommonOperations():
             window.add_toast_string(_("No data found in highlighted area"))
             return False
 
-        if (some_x and xerr is None) or (some_y and xerr is None):
+        if (some_x and xerr is None) or (some_y and yerr is None):
             msg = _("Some items lack error bars; they will be discarded")
             window.add_toast_string(msg)
 
@@ -320,9 +322,10 @@ class EquationOperations():
         try:
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
+                xindex = item.get_xposition() * 2
                 args = [(
-                    old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition() + 1],
+                    old_limits[xindex],
+                    old_limits[xindex + 1],
                 )] + list(args)
             equation = ast.sympify(item.get_equation())
             equation = callback(equation, *args)
@@ -339,33 +342,52 @@ class EquationOperations():
         return True, ""
 
     @staticmethod
-    def translate_x(equation, offset) -> str:
+    def translate_x(equation: sympy.Expr, offset: float) -> sympy.Expr:
         """Translate all selected data on the x-axis."""
         return equation.subs(misc.X, misc.X + offset)
 
     @staticmethod
-    def translate_y(equation, offset) -> str:
+    def translate_y(equation: sympy.Expr, offset: float) -> sympy.Expr:
         """Translate all selected data on the y-axis."""
         return equation + offset
 
     @staticmethod
-    def multiply_x(equation, multiplier: float) -> str:
+    def multiply_x(equation: sympy.Expr, multiplier: float) -> sympy.Expr:
         """Multiply all selected data on the x-axis."""
         return equation.subs(misc.X, misc.X * multiplier)
 
     @staticmethod
-    def multiply_y(equation, multiplier: float) -> str:
+    def multiply_y(equation: sympy.Expr, multiplier: float) -> sympy.Expr:
         """Multiply all selected data on the y-axis."""
         return equation * multiplier
 
     @staticmethod
-    def normalize(equation, limits) -> str:
+    def normalize(
+        equation: sympy.Expr,
+        limits: tuple[float, float],
+    ) -> sympy.Expr:
         """Normalize all selected data."""
         domain = sympy.Interval(*limits)
-        return equation / sympy.maximum(equation, misc.X, domain)
+        try:
+            magnitude = float(sympy.maximum(equation, misc.X, domain))
+        except (TypeError, ValueError, NotImplementedError, OverflowError):
+            magnitude = numpy.nan
+        if not numpy.isfinite(magnitude) or magnitude <= 0:
+            _xdata, ydata = utilities.equation_to_data(
+                Graphs.expression_to_ast(str(equation)),
+                limits,
+            )
+            magnitude = numpy.max(numpy.abs(ydata), initial=0)
+        if magnitude == 0:
+            return equation
+        return equation / magnitude
 
     @staticmethod
-    def center(equation, limits, center_maximum: int) -> str:
+    def center(
+        equation: sympy.Expr,
+        limits: tuple[float, float],
+        center_maximum: int,
+    ) -> sympy.Expr:
         """
         Center all selected data.
 
@@ -401,24 +423,24 @@ class EquationOperations():
         return equation.subs(x, x + middle_value)
 
     @staticmethod
-    def derivative(equation) -> str:
+    def derivative(equation: sympy.Expr) -> sympy.Expr:
         """Calculate derivative of all selected data."""
         return sympy.diff(equation, misc.X)
 
     @staticmethod
-    def integral(equation) -> str:
+    def integral(equation: sympy.Expr) -> sympy.Expr:
         """Calculate indefinite integral of all selected data."""
         return sympy.integrate(equation, misc.X)
 
     @staticmethod
-    def fft(equation) -> str:
+    def fft(equation: sympy.Expr) -> sympy.Expr:
         """Perform Fourier transformation on all selected data."""
         k = sympy.Symbol("k")
         equation = sympy.fourier_transform(equation, misc.X, k)
         return equation.subs(k, misc.X)
 
     @staticmethod
-    def inverse_fft(equation) -> str:
+    def inverse_fft(equation: sympy.Expr) -> sympy.Expr:
         """Perform Inverse Fourier transformation on all selected data."""
         k = sympy.Symbol("k")
         equation = sympy.fourier_transform(equation, misc.X, k)
@@ -426,15 +448,15 @@ class EquationOperations():
 
     @staticmethod
     def transform(
-        equation: str,
-        limits: list,
+        equation: sympy.Expr,
+        limits: tuple[float, float],
         input_x: str,
         input_y: str,
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
         xdata, ydata = utilities.equation_to_data(
-            Graphs.expression_to_ast(equation),
+            Graphs.expression_to_ast(str(equation)),
             limits,
         )
         local_dict = {
