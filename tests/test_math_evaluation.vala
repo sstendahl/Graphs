@@ -4,13 +4,16 @@ using Graphs.MathParser;
 
 private const double EPSILON = 1e-10;
 
-private void assert_double_eq (double actual, double expected) {
-    assert_true (Math.fabs (actual - expected) < EPSILON);
+private inline bool double_eq (double actual, double expected) {
+    return Math.fabs (actual - expected) < EPSILON;
 }
 
 private void assert_evaluate_result (string expression, double expected) {
     try {
-        assert_double_eq (evaluate_string (expression), expected);
+        double result = evaluate_string (expression);
+        if (double_eq (result, expected)) return;
+
+        Test.fail_printf ("%s should have been %lf, but was %lf", expression, expected, result);
     } catch (Error e) {
         Test.fail_printf ("%s: %s", expression, e.message);
     }
@@ -110,7 +113,8 @@ private void test_decimal_separator () {
     double result;
     try_evaluate_string ("1,5+2,5", out result, ',');
 
-    assert_double_eq (result, 4);
+    if (result != 4)
+        Test.fail_printf ("could not swap decimal separator");
 }
 
 private void test_division_by_zero () {
@@ -123,6 +127,86 @@ private void test_invalid_factorial_negative () {
 
 private void test_invalid_factorial_fractional () {
     assert_throws_error ("3.5!", MathError.INVALID);
+}
+
+private void test_operator_associativity () {
+    // Subtraction is left-associative: (10 - 3) - 2 = 5
+    assert_evaluate_result ("10-3-2", 5);
+
+    // Division is left-associative: (20 / 4) / 2 = 2.5
+    assert_evaluate_result ("20/4/2", 2.5);
+
+    // Power is right-associative: 2^(3^2) = 512
+    assert_evaluate_result ("2^3^2", 512);
+
+    // Parentheses override the default associativity.
+    assert_evaluate_result ("10-(3-2)", 9);
+    assert_evaluate_result ("20/(4/2)", 10);
+    assert_evaluate_result ("(2^3)^2", 64);
+
+    // Factorial is postfix and binds tighter than exponentiation.
+    assert_evaluate_result ("3!^2", 36);
+    assert_evaluate_result ("2^3!", 64);
+    assert_evaluate_result ("(3!)^2", 36);
+    assert_evaluate_result ("2^(3!)", 64);
+
+    // Repeated factorial is left-to-right as a postfix operation:
+    // (3!)! = 720
+    assert_evaluate_result ("3!!", 720);
+
+    // Factorial combined with arithmetic associativity.
+    assert_evaluate_result ("5!-4!-3!", 90);
+    assert_evaluate_result ("5!/4!/3!", 0.83333333333333334);
+
+    // Exponentiation remains right-associative when factorial is involved.
+    // 1^(3!)^2 = 1^(720^2)
+    assert_evaluate_result ("1^3!^2", Math.pow (1, 720 * 720));
+
+    // Parentheses explicitly change the grouping.
+    assert_evaluate_result ("(2^3!)^2", 4096);
+    assert_evaluate_result ("2^(3!^2)", Math.pow (2, 36));
+
+    // Unary operators vs exponentiation.
+    assert_evaluate_result ("-2^2", -4);
+    assert_evaluate_result ("(-2)^2", 4);
+    assert_evaluate_result ("-2^3!", -64);
+    assert_evaluate_result ("(-2)^3!", 64);
+
+    // Unary operators combined with factorial.
+    assert_evaluate_result ("-(3!)", -6);
+
+    // Implicit multiplication combined with factorial and powers.
+    assert_evaluate_result ("2*3!", 12);
+    assert_evaluate_result ("2(3!)", 12);
+    assert_evaluate_result ("2^3!", 64);
+    assert_evaluate_result ("2(3!)^2", 72);
+
+    // Function calls + factorial + powers.
+    assert_evaluate_result ("sin(pi/2)^2", 1);
+    assert_evaluate_result ("sqrt(3!)", Math.sqrt (6));
+    assert_evaluate_result ("sqrt(3!)^2", 6);
+    assert_evaluate_result ("(sqrt(3!))^2", 6);
+
+    // Multiple levels of right-associative exponentiation.
+    assert_evaluate_result ("2^2^3", 256);
+    assert_evaluate_result ("2^2^3^1", 256);
+    assert_evaluate_result ("2^(2^(3^1))", 256);
+
+    // Factorials at different levels of an exponentiation chain.
+    assert_evaluate_result ("2!^3", 8);
+    assert_evaluate_result ("2^3!^2!", 68719476736);
+    assert_evaluate_result ("(2!)^(3!)", 64);
+
+    // Mixed implicit multiplication and exponentiation.
+    assert_evaluate_result ("2^2(3!)", 24);
+    assert_evaluate_result ("2(3^2)", 18);
+    assert_evaluate_result ("(2^2)(3!)", 24);
+
+    // Nested combinations.
+    assert_evaluate_result ("2^(3!+1)", Math.pow (2, 7));
+    assert_evaluate_result ("(2+3!)^2", 64);
+    assert_evaluate_result ("2*(3!+2^3)", 28);
+    assert_evaluate_result ("(2+3!)^(2+1)", 512);
 }
 
 private const string[] INVALID_SYNTAX = {
@@ -160,6 +244,7 @@ void main (string[] args) {
     Test.add_func ("/math-parser/eval/division-by-zero", test_division_by_zero);
     Test.add_func ("/math-parser/eval/invalid-factorial-negative", test_invalid_factorial_negative);
     Test.add_func ("/math-parser/eval/invalid-factorial-fractional", test_invalid_factorial_fractional);
+    Test.add_func ("/math-parser/eval/operator-associativity", test_operator_associativity);
     Test.add_func ("/math-parser/eval/syntax-errors", test_syntax_errors);
 
     Test.run ();
