@@ -20,10 +20,10 @@ namespace Graphs.MathParser {
 
         /* Grammar:
            expr    -> term ((+|-) term)*
-           term    -> power ((*|/) power)*
-           term    -> power expr
-           power   -> unary ((^|**) power)?
-           unary   -> (- unary) | postfix
+           term    -> unary ((*|/) unary)*
+           term    -> unary expr
+           unary   -> (- unary) | power
+           power   -> postfix ((^|**) unary)?
            postfix -> primary (!)*
            primary -> number | constant | func | '(' expr ')'
         */
@@ -47,7 +47,7 @@ namespace Graphs.MathParser {
         }
 
         private Expression term () throws MathError {
-            Expression expr = power ();
+            Expression expr = unary ();
 
             TokenType t;
             Operator op;
@@ -56,7 +56,7 @@ namespace Graphs.MathParser {
 
                 // implicit multiplication
                 if (t == TokenType.NUMBER || t == TokenType.IDENT || t == TokenType.LPAREN) {
-                    expr = new Expression.binary ((owned) expr, Operator.MUL, power ());
+                    expr = new Expression.binary ((owned) expr, Operator.MUL, unary ());
                     continue;
                 }
 
@@ -67,7 +67,7 @@ namespace Graphs.MathParser {
                 // explicit * or /
                 if (op == Operator.MUL || op == Operator.DIV) {
                     lexer.next ();
-                    expr = new Expression.binary ((owned) expr, op, power ());
+                    expr = new Expression.binary ((owned) expr, op, unary ());
                     continue;
                 }
                 break;
@@ -77,11 +77,11 @@ namespace Graphs.MathParser {
         }
 
         private Expression power () throws MathError {
-            Expression expr = unary ();
+            Expression expr = postfix ();
 
             if (lexer.current_type == TokenType.OPERATOR && lexer.current_op == Operator.POW) {
                 lexer.next ();
-                expr = new Expression.binary ((owned) expr, Operator.POW, power ());
+                expr = new Expression.binary ((owned) expr, Operator.POW, unary ());
             }
 
             return expr;
@@ -91,13 +91,14 @@ namespace Graphs.MathParser {
             if (lexer.current_type == TokenType.OPERATOR) {
                 if (lexer.current_op == Operator.SUB) {
                     lexer.next ();
-                    return new Expression.unary (Operator.SUB, postfix ());
+                    return new Expression.unary (Operator.SUB, unary ());
                 } else if (lexer.current_op == Operator.ADD) {
                     lexer.next ();
+                    return unary ();
                 }
             }
 
-            return postfix ();
+            return power ();
         }
 
         private Expression? postfix () throws MathError {
