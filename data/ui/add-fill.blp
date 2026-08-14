@@ -1,0 +1,71 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsAddFillDialog: Adw.Dialog {
+  content-width: 450;
+  width-request: 360;
+  height-request: 200;
+  title: _("Add Fill");
+  default-widget: confirm_button;
+  focus-widget: confirm_button;
+
+  child: Adw.ToolbarView {
+    [top]
+    Adw.HeaderBar {
+      show-end-title-buttons: false;
+
+      [start]
+      Button {
+        label: _("Cancel");
+        action-name: "window.close";
+      }
+
+      [end]
+      Button confirm_button {
+        label: _("Add");
+        sensitive: false;
+        clicked => $on_accept();
+
+        styles [
+          "suggested-action",
+        ]
+      }
+    }
+
+    content: Adw.PreferencesPage {
+      Adw.PreferencesGroup {
+        Adw.ComboRow upper_bound {
+          title: _("Upper Bound");
+          notify::selected => $on_upper_change();
+        }
+
+        Adw.EntryRow upper_equation {
+          title: _("Y =");
+          max-width-chars: 25;
+          activates-default: true;
+          notify::text => $on_upper_change();
+        }
+
+        Adw.ComboRow lower_bound {
+          title: _("Lower Bound");
+          notify::selected => $on_lower_change();
+        }
+
+        Adw.EntryRow lower_equation {
+          title: _("Y =");
+          max-width-chars: 25;
+          activates-default: true;
+          notify::text => $on_lower_change();
+        }
+      }
+
+      Adw.PreferencesGroup {
+        Adw.EntryRow item_name {
+          max-width-chars: 25;
+          title: _("Name (optional)");
+          activates-default: true;
+        }
+      }
+    };
+  };
+}

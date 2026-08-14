@@ -258,6 +258,13 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonFillItem"
 
+    BOUND_KEYS = (
+        "upper_source",
+        "upper_equation",
+        "lower_source",
+        "lower_equation",
+    )
+
     @classmethod
     def new(
         cls,
@@ -278,11 +285,51 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
+    @classmethod
+    def from_dict(cls, dictionary: dict):
+        """Create new FillItem, leaving its bounds for apply_bounds."""
+        kwargs = {
+            key: value
+            for key, value in dictionary.items()
+            if key not in cls.BOUND_KEYS
+        }
+        kwargs["data"] = Graphs.FillHolder.new(*kwargs["data"])
+        return cls(**kwargs)
+
     def to_dict(self) -> dict:
         """Convert item to dict."""
         dictionary = super().to_dict()
         dictionary["data"] = self.get_data_tuple()
+        dictionary["upper_equation"] = self._equation_to_str(
+            self.get_upper_equation(),
+        )
+        dictionary["lower_equation"] = self._equation_to_str(
+            self.get_lower_equation(),
+        )
         return dictionary
+
+    @staticmethod
+    def _equation_to_str(equation) -> str:
+        return None if equation is None \
+            else Graphs.ast_to_expression(equation)
+
+    def apply_bounds(self, items: list, dictionary: dict) -> None:
+        """Bind the fill to the bounds recorded in its dict."""
+        color = dictionary.get("color", "")
+        upper_source = dictionary.get("upper_source")
+        upper_equation = dictionary.get("upper_equation")
+        lower_source = dictionary.get("lower_source")
+        lower_equation = dictionary.get("lower_equation")
+        if upper_source is not None and upper_source < len(items):
+            self.set_upper_source(items[upper_source])
+        elif upper_equation is not None:
+            self.set_upper_equation(Graphs.expression_to_ast(upper_equation))
+        if lower_source is not None and lower_source < len(items):
+            self.set_lower_source(items[lower_source])
+        elif lower_equation is not None:
+            self.set_lower_equation(Graphs.expression_to_ast(lower_equation))
+        if color:
+            self.props.color = color
 
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
@@ -339,8 +386,7 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
-                dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
-                return FillItem(**dictionary)
+                return FillItem.from_dict(dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
 
