@@ -240,6 +240,9 @@ namespace Graphs {
 
             var residuals = ItemFactory.new_data_item (style, {}, {});
             residuals.color = DATA_COLOR;
+            residuals.markersize = 13;
+            residuals.markerstyle = 1;
+            residuals.linestyle = 0;
 
             main_canvas_items = new ListStore (typeof (Item));
             main_canvas_items.append (fitted_curve);
@@ -275,6 +278,7 @@ namespace Graphs {
             var style = StyleManager.get_system_style_params ();
             canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
             residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
+            residuals_container.set_visible (settings.get_boolean ("show-residuals"));
 
             PythonHelper.run_method (this, "_load_canvas");
         }
