@@ -424,15 +424,12 @@ namespace Graphs {
         public void delete_items (Item[] items) {
             var seen = new GenericSet<unowned Item> (direct_hash, direct_equal);
             var to_remove = new ManagedArray<Item> (items.length);
-            foreach (Item item in items) {
+            to_remove.append_all (items);
+            for (int i = 0; i < to_remove.length; i++) {
+                Item item = to_remove[i];
                 if (seen.contains (item)) continue;
                 seen.add (item);
-                to_remove.append (item);
-            }
-            for (int i = 0; i < to_remove.length; i++) {
-                foreach (Item dependent in to_remove[i].get_dependents ()) {
-                    if (seen.contains (dependent)) continue;
-                    seen.add (dependent);
+                foreach (Item dependent in item.get_dependents ()) {
                     to_remove.append (dependent);
                 }
             }
