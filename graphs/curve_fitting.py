@@ -71,7 +71,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         r2 = 1 - (ss_res / ss_tot)
         rmse = numpy.sqrt(ss_res / y_data.size)
         self.props.fit_result = Graphs.FitResult.new(params, d_cov, r2, rmse)
-        self.props.residuals_canvas_items[0].set_xydata((x_data, residuals))
+        holder = Graphs.DataHolder.new(x_data, residuals, None, None)
+        self.props.residuals_canvas_items[0].set_data(holder)
 
         # Substitute each free variables with the calculated value.
         values = dict(zip(free_vars, params))
@@ -86,7 +87,8 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
             y_fit = numpy.full(x_fit.size, y_fit.item())
 
         fitted_curve = self.props.main_canvas_items[0]
-        fitted_curve.set_xydata((x_fit, y_fit))
+        holder = Graphs.DataHolder.new(x_fit, y_fit, None, None)
+        fitted_curve.set_data(holder)
         fitted_curve.set_name(f"Y = {fitted_eq}")
 
         # Calculate and update confidence band for error propagation.
@@ -106,7 +108,7 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
 
         y_upper = y_fit + confidence_band
         y_lower = y_fit - confidence_band
-        fill = self.props.main_canvas_items[1]
-        fill.set_data_tuple((x_fit, y_lower, y_upper))
+        holder = Graphs.FillHolder.new(x_fit, y_lower, y_upper)
+        self.props.main_canvas_items[1].set_data(holder)
 
         self.set_results(Graphs.CurveFittingError.NONE)
