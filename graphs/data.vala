@@ -798,13 +798,19 @@ namespace Graphs {
         // Section listeners
 
         private void _on_item_change (Object item, ParamSpec spec) {
+            if (spec.name == "visible") return;
+
             item_changed.emit ((Item) item, spec.name);
         }
 
         private void _on_item_selected (Object object, ParamSpec spec) {
-            if (_notify_selection_changed) {
-                selection_changed.emit (index ((Item) object), 1);
-            }
+            var item = (Item) object;
+
+            if (_notify_selection_changed)
+                selection_changed.emit (index (item), 1);
+
+            if (figure_settings.hide_unselected)
+                item.visible = item.selected;
         }
 
         private void _on_item_position_change () {
