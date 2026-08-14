@@ -27,13 +27,14 @@ namespace Graphs {
 
         public int precedence () {
             switch (this) {
-                case SUPERSCRIPT: return 0;
-                case FACT: return 0;
-                case POW: return 0;
-                case MUL: return 0;
-                case DIV: return 0;
                 case ADD: return 1;
                 case SUB: return 1;
+                case MUL: return 2;
+                case DIV: return 2;
+                // 3 is used for unary
+                case POW: return 4;
+                case FACT: return 5;
+                case SUPERSCRIPT: return 5;
                 default: assert_not_reached ();
             }
         }
