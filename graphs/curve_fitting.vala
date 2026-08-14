@@ -105,6 +105,10 @@ namespace Graphs {
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve-fitting.ui")]
     public class CurveFittingDialog : Adw.Dialog {
+        private const string DATA_COLOR = "#1A5FB4";
+        private const string FIT_COLOR = "#A51D2D";
+        private const string FILL_COLOR = "#62A0EA";
+        private const float FILL_ALPHA = 0.25f;
 
         [GtkChild]
         private unowned Adw.ComboRow equation { get; }
@@ -138,9 +142,14 @@ namespace Graphs {
         protected Ast ast { get; private owned set; }
         protected string fitted_equation_string { get; protected set; }
         protected FitResult? fit_result { get; protected set; }
+        protected ListStore main_canvas_items { get; private set; }
+        protected ListStore residuals_canvas_items { get; private set; }
+        protected GLib.Bytes x_fit { get; private set; }
 
         private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
+        private FigureSettings canvas_settings;
+        private FigureSettings residuals_settings;
 
         protected Canvas? canvas {
             get { return canvas_container.get_child () as Canvas; }
@@ -200,10 +209,78 @@ namespace Graphs {
             equation.notify["selected"].connect (set_equation_from_selection);
 
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
+        }
+
+        protected void setup (DataItem item) {
+            var style = StyleManager.get_system_style_params ();
+
+            double x_min, x_max;
+            CUtilities.array_minmax (item.get_xdata (), false, out x_min, out x_max);
+            double padding = (x_max - x_min) * 0.025;
+            x_min -= padding;
+            x_max += padding;
+
+            var xdata = new double[5000];
+            CUtilities.create_equidistant_data (x_min, x_max, Scale.LINEAR, xdata);
+            x_fit = new Bytes ((uint8[]) xdata);
+
+            var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
+            data_curve.name = item.name;
+            data_curve.color = DATA_COLOR;
+            data_curve.markersize = 13;
+            data_curve.markerstyle = 1;
+            data_curve.linestyle = 0;
+
+            var fitted_curve = ItemFactory.new_data_item (style, {}, {});
+            fitted_curve.color = FIT_COLOR;
+
+            var fill = ItemFactory.new_fill_item (style, {}, {}, {});
+            fill.color = FILL_COLOR;
+            fill.alpha = FILL_ALPHA;
+
+            var residuals = ItemFactory.new_data_item (style, {}, {});
+            residuals.color = DATA_COLOR;
+            residuals.markersize = 13;
+            residuals.markerstyle = 1;
+            residuals.linestyle = 0;
+
+            main_canvas_items = new ListStore (typeof (Item));
+            main_canvas_items.append (fitted_curve);
+            main_canvas_items.append (fill);
+            main_canvas_items.append (data_curve);
+
+            residuals_canvas_items = new ListStore (typeof (Item));
+            residuals_canvas_items.append (residuals);
+
+            var figure_settings = window.data.figure_settings;
+
+            canvas_settings = new FigureSettings.default ();
+            canvas_settings.bottom_label = figure_settings.bottom_label;
+            canvas_settings.left_label = figure_settings.left_label;
+            canvas_settings.min_bottom = x_min;
+            canvas_settings.max_bottom = x_max;
+
+            residuals_settings = new FigureSettings.default ();
+            residuals_settings.bottom_label = figure_settings.bottom_label;
+            residuals_settings.left_label = _("Residuals");
+            residuals_settings.min_left = -1;
+            residuals_settings.max_left = 1;
+            residuals_settings.min_bottom = x_min;
+            residuals_settings.max_bottom = x_max;
+            residuals_settings.legend = false;
+
+            load_canvas ();
+            Adw.StyleManager.get_default ().notify.connect (load_canvas);
+            set_equation_from_selection ();
+        }
+
+        private void load_canvas () {
+            var style = StyleManager.get_system_style_params ();
+            canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
+            residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
+            residuals_container.set_visible (settings.get_boolean ("show-residuals"));
 
             PythonHelper.run_method (this, "_load_canvas");
-            Adw.StyleManager.get_default ().notify.connect (() => PythonHelper.run_method (this, "_load_canvas"));
-            set_equation_from_selection ();
         }
 
         protected double[] get_p0 () {
@@ -247,16 +324,54 @@ namespace Graphs {
             Gtk.TextIter end_iter;
             buffer.get_end_iter (out end_iter);
 
+            var fitted_curve = (DataItem) main_canvas_items.get_item (0);
+            var fill = (FillItem) main_canvas_items.get_item (1);
+            var data_curve = (DataItem) main_canvas_items.get_item (2);
+            var residuals = (DataItem) residuals_canvas_items.get_item (0);
+
             if (error != CurveFittingError.NONE) {
                 buffer.insert (ref end_iter, error.to_text (), -1);
                 confirm_button.set_sensitive (false);
                 fit_result = null;
-                PythonHelper.run_method (this, "_clear_fit");
+
+                fitted_curve.visible = false;
+                fill.visible = false;
+                residuals.visible = false;
+                residuals_settings.min_left = -1;
+                residuals_settings.max_left = 1;
+
                 return;
             }
 
+            fitted_curve.visible = true;
+            fill.visible = true;
+            residuals.visible = true;
+
             confirm_button.set_sensitive (true);
             if (fit_result == null) return;
+
+            double min_y, max_y;
+            double tmp_min_y, tmp_max_y;
+
+            CUtilities.array_minmax (fill.data.get_lower (), false, out min_y, out max_y);
+            CUtilities.array_minmax (fill.data.get_upper (), false, out tmp_min_y, out tmp_max_y);
+            min_y = double.min (min_y, tmp_min_y);
+            max_y = double.max (max_y, tmp_max_y);
+            CUtilities.array_minmax (data_curve.get_ydata (), false, out tmp_min_y, out tmp_max_y);
+            min_y = double.min (min_y, tmp_min_y);
+            max_y = double.max (max_y, tmp_max_y);
+            double padding = (max_y - min_y) * 0.025;
+            canvas_settings.min_left = min_y - padding;
+            canvas_settings.max_left = max_y + padding;
+
+            CUtilities.array_minmax (residuals.get_ydata (), false, out min_y, out max_y);
+            double max_residual = double.max (Math.fabs (min_y), Math.fabs (max_y));
+            if (max_residual > 0)
+                max_residual *= 1.1;
+            else
+                max_residual = 1;
+            residuals_settings.min_left = -max_residual;
+            residuals_settings.max_left = max_residual;
 
             buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
 
