@@ -10,14 +10,6 @@ from scipy.optimize import _minpack, curve_fit
 
 import sympy
 
-DATA_COLOR = "#1A5FB4"
-FIT_COLOR = "#A51D2D"
-FILL_COLOR = "#62A0EA"
-FILL_ALPHA = 0.25
-MARKER_STYLE = 1
-MARKER_SIZE = 13
-LINE_STYLE = 0
-
 
 class CurveFittingDialog(Graphs.CurveFittingDialog):
     """Class for displaying the Curve Fitting dialog."""

@@ -227,6 +227,9 @@ namespace Graphs {
             var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
             data_curve.name = item.name;
             data_curve.color = DATA_COLOR;
+            data_curve.markersize = 13;
+            data_curve.markerstyle = 1;
+            data_curve.linestyle = 0;
 
             var fitted_curve = ItemFactory.new_data_item (style, {}, {});
             fitted_curve.color = FIT_COLOR;
