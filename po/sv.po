@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-16 15:23+0000\n"
-"PO-Revision-Date: 2026-04-16 18:39+0200\n"
+"POT-Creation-Date: 2026-08-09 16:07+0000\n"
+"PO-Revision-Date: 2026-08-16 01:37+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -23,6 +23,10 @@ msgstr ""
 #: graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Graphs-utvecklarna"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -43,6 +47,54 @@ msgstr "Hantera plottstilmallar"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Manipulera importerade data"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Plottning"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Diagram"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Graf"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Grafritning"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Vetenskap"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Matematik"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Matte"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Ekvationer"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Data"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Visualisering"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Kurvanpassning"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -96,7 +148,7 @@ msgstr "Plotta;Graf;Grafer;Vetenskap;Matte;Matematik;Ekvation;Data;Plot;Visualis
 msgid "New Window"
 msgstr "Nytt fönster"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:23
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Stilredigerare"
 
@@ -213,7 +265,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Importera endast Y-värden, X-värden kommer genereras"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5
-#: data/ui/curve-fitting.blp:75 graphs/item.vala:158
+#: data/ui/curve-fitting.blp:75 graphs/item.vala:237
 msgid "Equation"
 msgstr "Ekvation"
 
@@ -617,27 +669,27 @@ msgstr "Felstaplar"
 msgid "Show Horizontal"
 msgstr "Visa horisontella"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Visa vertikala"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20 data/ui/style-editor/editor-box.blp:194
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22 data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Rita ovanför data"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Färg"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28 data/ui/style-editor/editor-box.blp:149
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30 data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Ändpunktslängd"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42 data/ui/style-editor/editor-box.blp:164
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44 data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Ändpunktstjocklek"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56 data/ui/style-editor/editor-box.blp:179
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58 data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "Linjebredd"
 
@@ -721,7 +773,7 @@ msgstr "Figurinställningar"
 msgid "Labels"
 msgstr "Etiketter"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:102
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "Plottitel"
 
@@ -1707,7 +1759,7 @@ msgstr "Släpp här för att importera"
 msgid "Show Sidebar"
 msgstr "Visa sidopanel"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:389
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Ångra"
 
@@ -1872,7 +1924,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Gör om åtgärd"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Kolumner"
@@ -1881,12 +1933,12 @@ msgstr "Kolumner"
 msgid "Custom delimiter cannot be empty"
 msgstr "Anpassad avgränsare kan inte vara tom"
 
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
 msgstr "Indexfel i %s, kan inte komma åt index %d på rad %d, endast %d kolumner hittades"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Kan inte importera från fil, felaktigt värde på rad %d"
@@ -1896,27 +1948,27 @@ msgstr "Kan inte importera från fil, felaktigt värde på rad %d"
 msgid "Item %d"
 msgstr "Objekt %d"
 
-#: graphs/file_import/parsers/project/__init__.py:21
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs-projektfil"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:205
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Kalkylblad"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:206
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Kalkylblad"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:274
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
 msgstr "Inga numeriska data hittades i kolumn."
 
@@ -1943,12 +1995,12 @@ msgstr "Kunde inte importera data från tabellen ”%s”, inga numeriska kolumn
 msgid "No data found in table column"
 msgstr "Inga data hittades i tabellkolumn"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:22
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
@@ -1991,19 +2043,20 @@ msgid "ASCII files"
 msgstr "ASCII-filer"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "X-axelminimum"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Y-axelminimum"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "X-axelmaximum"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Y-axelmaximum"
 
@@ -2024,7 +2077,7 @@ msgstr "Y-axelskala"
 msgid "Y Axis Label"
 msgstr "Y-axeletikett"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Standardinställningar har uppdaterats"
 
@@ -2032,11 +2085,11 @@ msgstr "Standardinställningar har uppdaterats"
 msgid "Example Item"
 msgstr "Exempelobjekt"
 
-#: graphs/style_editor/__init__.py:103 graphs/style_io.py:247
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X-etikett"
 
-#: graphs/style_editor/__init__.py:104 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y-etikett"
 
@@ -2056,26 +2109,22 @@ msgstr "Graphs stilredigerare — %s"
 msgid "Are you sure you want to delete %s?"
 msgstr "Är du säker på att du vill ta bort %s?"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs-utvecklarna"
-
 #: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
 "Sjoerd Stendahl <contact@sjoerd.se>\n"
 "Anders Jonsson <anders.jonsson@norsjovallen.se>"
 
-#: graphs/actions.vala:184 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "Tog bort %s"
 
-#: graphs/application.vala:22
+#: graphs/application.vala:19
 msgid "New window"
 msgstr "Nytt fönster"
 
-#: graphs/application.vala:24
+#: graphs/application.vala:21
 msgid "[FILE…]"
 msgstr "[FIL…]"
 
@@ -2163,14 +2212,14 @@ msgstr "Anpassningsparametrar för %s"
 #: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
-msgstr "Kunde inte tolka stilen {stylename}, laddar systemstil i stället"
+msgstr "Kunde inte tolka stilen {stylename}, laddar systemets föredragna stil"
 
 #: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "Stilen {stylename} finns inte, laddar systemstil i stället"
 
-#: graphs/data.py:603
+#: graphs/data.py:553
 msgid "Failed to load project"
 msgstr "Misslyckades med att läsa in projekt"
 
@@ -2192,94 +2241,94 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Textfiler"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "Kunde inte ladda {font}"
 
-#: graphs/item.vala:106
+#: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Datamängd"
 
-#: graphs/item.vala:131
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Genererad datamängd"
 
-#: graphs/item.vala:174
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Etikett"
 
-#: graphs/item.vala:180
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Fyllnad"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib-stilfil"
 
-#: graphs/operations.py:241
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "{name}: Kan inte utföra transformationen, se till att syntaxen är korrekt"
 
-#: graphs/operations.py:292
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "Inga data hittades inom det markerade området"
 
-#: graphs/operations.py:296
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Några objekt saknar felstaplar, de kommer förkastas"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Kombinerade data"
 
-#: graphs/operations.py:448
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operationen på {name} resulterade inte i en plottningsbar ekvation"
 
-#: graphs/operations.py:456
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "Operationen stöds inte för ekvationer."
 
-#: graphs/operations.py:613
+#: graphs/operations.py:552
 msgid "No data found within the highlighted area"
 msgstr "Ingen data hittades inom det markerade området"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:560
 msgid "Operation not supported for data items"
 msgstr "Operationen stöds inte för dataobjekt"
 
-#: graphs/operations.py:622
+#: graphs/operations.py:563
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Fel vid utförande av operationen"
 
-#: graphs/operations.py:628
+#: graphs/operations.py:571
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Data som var utanför det markerade området har kasserats"
 
-#: graphs/project.py:57
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "Projektfilen saknar data"
 
-#: graphs/project.py:78
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Projektet är från en nyare inkompatibel version av Graphs"
 
-#: graphs/project.py:298
+#: graphs/project.py:306
 msgid "Failed to do legacy migration"
 msgstr "Misslyckades med att utföra migrering från äldre format"
 
-#: graphs/project.py:300
+#: graphs/project.py:308
 msgid "Failed to parse project file"
 msgstr "Misslyckades med att tolka projektfilen"
 
-#: graphs/project.py:306
+#: graphs/project.py:314
 msgid "Failed to migrate project"
 msgstr "Misslyckades med att migrera projekt"
 
-#: graphs/project.py:312
+#: graphs/project.py:320
 msgid "Failed to validate project"
 msgstr "Misslyckades med att validera projekt"
 
@@ -2291,7 +2340,7 @@ msgstr "Sparat projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/python_helper.vala:32
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Exporterade data"
 
@@ -2347,27 +2396,50 @@ msgstr "Alla filer"
 msgid "Document Portal"
 msgstr "Dokumentportal"
 
-#: graphs/window.vala:157
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Graphs (utveckling)"
 
-#: graphs/window.vala:184
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Namnlöst projekt"
 
-#: graphs/window.vala:185
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Utkast"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:191
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:379
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Öppna plats"
+
+#~ msgid "Failed to parse file."
+#~ msgstr "Misslyckades med att tolka fil."
+
+#~ msgid "Failed to open File."
+#~ msgstr "Misslyckades med att öppna fil."
+
+#~ msgid "parser failed to init settings."
+#~ msgstr "tolk misslyckades med att initiera inställningar."
+
+#~ msgid "parser failed to init settings widgets."
+#~ msgstr "tolk misslyckades med att initiera inställningskomponenter."
+
+#~ msgid "Defaults updated"
+#~ msgstr "Standardvärden har uppdaterats"
+
+#, c-format
+#~ msgid "Could not parse style %s, defaulting to system style"
+#~ msgstr "Kunde inte tolka stilen %s, använder standardvärdet systemstil"
+
+#, c-format
+#~ msgid "Could not find style %s, defaulting to system style"
+#~ msgstr "Kunde inte hitta stilen %s, använder standardvärdet systemstil"
 
 #~ msgid "Determines the spacing between data points"
 #~ msgstr "Avgör avståndet mellan datapunkter"
@@ -2466,9 +2538,6 @@ msgstr "Öppna plats"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "Välj vilket objekt du vill redigera"
-
-#~ msgid "Data"
-#~ msgstr "Data"
 
 #~ msgid "Line Properties"
 #~ msgstr "Linjeegenskaper"
