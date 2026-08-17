@@ -297,10 +297,10 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
-                dictionary.pop("upper_source")
-                dictionary.pop("upper_equation")
-                dictionary.pop("lower_source")
-                dictionary.pop("lower_equation")
+                dictionary.pop("upper_source", None)
+                dictionary.pop("upper_equation", None)
+                dictionary.pop("lower_source", None)
+                dictionary.pop("lower_equation", None)
                 dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
                 return FillItem(**dictionary)
             case _:
