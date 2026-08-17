@@ -7,7 +7,6 @@ from gettext import gettext as _
 from gi.repository import Gio, Graphs
 
 from graphs import ast, misc, utilities
-from graphs.item import DataItem
 
 import numpy
 
@@ -194,18 +193,15 @@ class CommonOperations():
 
         new_xdata = numpy.concatenate(new_xdata)
         idx = numpy.argsort(new_xdata)
-        xerr = None if new_xerr is None else numpy.concatenate(new_xerr)[idx]
-        yerr = None if new_yerr is None else numpy.concatenate(new_yerr)[idx]
-        data.add_items([
-            DataItem.new(
-                data.get_selected_style_params(),
-                new_xdata[idx],
-                numpy.concatenate(new_ydata)[idx],
-                xerr=xerr,
-                yerr=yerr,
-                name=_("Combined Data"),
-            ),
-        ])
+        new_item = Graphs.ItemFactory.new_data_item(
+            data.get_selected_style_params(),
+            new_xdata[idx],
+            numpy.concatenate(new_ydata)[idx],
+            None if new_xerr is None else numpy.concatenate(new_xerr)[idx],
+            None if new_yerr is None else numpy.concatenate(new_yerr)[idx],
+        )
+        new_item.set_name(_("Combined Data"))
+        data.add_items([new_item])
         return True
 
     @staticmethod
