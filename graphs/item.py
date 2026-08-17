@@ -313,10 +313,10 @@ class ItemFactory(Graphs.ItemFactory):
             key: item.get_property(key)
             for key in dir(item.props) if key != "typename"
         }
-        type = item.__gtype__.name[12:]
-        dictionary["type"] = type
+        typename = item.__gtype__.name[12:]
+        dictionary["type"] = typename
         dictionary.pop("visible")
-        match type:
+        match typename:
             case "DataItem":
                 dictionary["data"] = item.get_data_tuple()
             case "GeneratedDataItem":
