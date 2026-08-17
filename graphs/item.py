@@ -4,8 +4,6 @@ from gi.repository import Graphs
 
 from graphs import misc, utilities
 
-import numpy
-
 
 class _PythonItemMixin:
 
@@ -130,30 +128,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
     def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:
         """Set the data from a tuple."""
         self.props.data = Graphs.DataHolder.new(*data)
-
-    def get_xydata(self) -> tuple[numpy.ndarray, numpy.ndarray]:
-        """Get x- and y-data."""
-        return self.get_xdata(), self.get_ydata()
-
-    def set_xydata(self, xydata: tuple[numpy.ndarray, numpy.ndarray]) -> None:
-        """Set x- and y-data."""
-        self.set_data_tuple((*xydata, self.get_xerr(), self.get_yerr()))
-
-    def get_xdata(self) -> numpy.ndarray:
-        """Get xdata."""
-        return utilities.bytes_to_ndarray(self.props.data.get_xdata_b())
-
-    def get_ydata(self) -> numpy.ndarray:
-        """Get ydata."""
-        return utilities.bytes_to_ndarray(self.props.data.get_ydata_b())
-
-    def get_xerr(self) -> numpy.ndarray:
-        """Get xerr."""
-        return utilities.bytes_to_ndarray(self.props.data.get_xerr_b())
-
-    def get_yerr(self) -> numpy.ndarray:
-        """Get yerr."""
-        return utilities.bytes_to_ndarray(self.props.data.get_yerr_b())
 
 
 class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):

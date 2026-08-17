@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Tests for item instantiation."""
+from graphs import utilities
 from graphs.item import DataItem, FillItem, ItemFactory, TextItem
 
 import pytest
@@ -16,10 +17,11 @@ def test_new_from_dict_data_item():
     item = ItemFactory.new_from_dict(d)
     assert isinstance(item, DataItem)
     assert item.get_name() == "My Dataset"
-    assert item.get_xdata().tolist() == [0.0, 1.0, 2.0]
-    assert item.get_ydata().tolist() == [5.0, 6.0, 7.0]
-    assert item.get_xerr().tolist() == [1, 3, 2]
-    assert item.get_yerr().tolist() == [3, 1, 2]
+    data = item.get_data()
+    assert utilities.bytes_to_list(data.get_xdata_b()) == [0.0, 1.0, 2.0]
+    assert utilities.bytes_to_list(data.get_ydata_b()) == [5.0, 6.0, 7.0]
+    assert utilities.bytes_to_list(data.get_xerr_b()) == [1, 3, 2]
+    assert utilities.bytes_to_list(data.get_yerr_b()) == [3, 1, 2]
 
 
 def test_new_from_dict_text_item():
@@ -62,7 +64,7 @@ def test_new_from_dict_unknown_type_raises():
 def test_data_item_default_data():
     """Test if DataItem defaults data to empty lists when not provided."""
     item = DataItem(name="Empty")
-    xdata, ydata = item.get_xydata()
+    xdata, ydata = utilities.get_xydata(item.get_data())
     assert xdata.tolist() == []
     assert ydata.tolist() == []
 
@@ -70,5 +72,6 @@ def test_data_item_default_data():
 def test_data_item_default_err():
     """Test if DataItem defaults err None when not provided."""
     item = DataItem(name="NoErr")
-    assert item.get_xerr() is None
-    assert item.get_yerr() is None
+    item_data = item.get_data()
+    assert item_data.get_xerr_b() is None
+    assert item_data.get_yerr_b() is None

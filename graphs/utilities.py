@@ -19,13 +19,22 @@ def bytes_to_list(b: GLib.Bytes) -> list[float]:
     return bytes_to_ndarray(b).tolist()
 
 
-def get_xy_data(
+def get_xydata(
     holder: Graphs.DataHolder,
 ) -> tuple[numpy.ndarray, numpy.ndarray]:
     """Get x and y data in numpy format from a DataHolder."""
     xdata = bytes_to_ndarray(holder.get_xdata_b())
     ydata = bytes_to_ndarray(holder.get_ydata_b())
     return xdata, ydata
+
+
+def get_xyerr(
+    holder: Graphs.DataHolder,
+) -> tuple[numpy.ndarray, numpy.ndarray]:
+    """Get x and y err in numpy format from a DataHolder."""
+    xerr = bytes_to_ndarray(holder.get_xerr_b())
+    yerr = bytes_to_ndarray(holder.get_yerr_b())
+    return xerr, yerr
 
 
 def equation_to_data(
@@ -42,4 +51,4 @@ def equation_to_data(
         steps,
         scale,
     )
-    return get_xy_data(holder)
+    return get_xydata(holder)
