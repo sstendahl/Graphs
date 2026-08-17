@@ -299,6 +299,7 @@ class ItemFactory(Graphs.ItemFactory):
         dictionary: dict,
         items: list[Graphs.Item],
     ) -> Graphs.Item:
+        """Replace indexes with references for data dependant items."""
         if isinstance(item, Graphs.FillItem):
             upper_source = dictionary.get("upper_source")
             lower_source = dictionary.get("lower_source")
@@ -344,6 +345,7 @@ class ItemFactory(Graphs.ItemFactory):
         dictionary: dict,
         items: list[Graphs.Item],
     ) -> dict:
+        """Replace references with indexes for data dependant items."""
         if isinstance(item, Graphs.FillItem):
             upper = item.get_upper_source()
             lower = item.get_lower_source()
