@@ -54,7 +54,7 @@ class Data(Graphs.Data):
 
     def _item_dict(self, item: Graphs.Item) -> dict:
         """Convert an item to a dict."""
-        dictionary = item.to_dict()
+        dictionary = ItemFactory.to_dict(item)
         if isinstance(item, FillItem):
             upper = item.get_upper_source()
             lower = item.get_lower_source()
@@ -127,7 +127,9 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([item.to_dict() for item in self])
+        self._data_copy = copy.deepcopy(
+            [ItemFactory.to_dict(item) for item in self],
+        )
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
