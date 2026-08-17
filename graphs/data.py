@@ -10,7 +10,7 @@ from operator import itemgetter
 from gi.repository import Gio, Graphs, Gtk
 
 from graphs import misc, project
-from graphs.item import FillItem, ItemFactory
+from graphs.item import ItemFactory
 
 _FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
     "min-selected",
@@ -55,14 +55,7 @@ class Data(Graphs.Data):
     def _item_dict(self, item: Graphs.Item) -> dict:
         """Convert an item to a dict."""
         dictionary = ItemFactory.to_dict(item)
-        if isinstance(item, FillItem):
-            upper = item.get_upper_source()
-            lower = item.get_lower_source()
-            dictionary["upper_source"] = \
-                None if upper is None else self.index(upper)
-            dictionary["lower_source"] = \
-                None if lower is None else self.index(lower)
-        return dictionary
+        return ItemFactory.link_dependencies(item, dictionary, self)
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
@@ -244,10 +237,9 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEM_REMOVED:
                     dictionary = copy.deepcopy(change[1])
                     item = ItemFactory.new_from_dict(dictionary)
-                    if isinstance(item, FillItem):
-                        items = list(self)
-                        items.insert(change[0], item)
-                        item.apply_bounds(items, dictionary)
+                    items = list(self)
+                    items.insert(change[0], item)
+                    ItemFactory.resolve_dependencies(item, dictionary, items)
                     self._insert_item(item, change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
@@ -292,8 +284,8 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEM_ADDED:
                     dictionary = copy.deepcopy(change)
                     item = ItemFactory.new_from_dict(dictionary)
-                    if isinstance(item, FillItem):
-                        item.apply_bounds(list(self) + [item], dictionary)
+                    items = list(self) + [item]
+                    ItemFactory.resolve_dependencies(item, dictionary, items)
                     self._add_item(item)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
@@ -341,8 +333,7 @@ class Data(Graphs.Data):
         dictionaries = project_dict["data"]
         items = list(map(ItemFactory.new_from_dict, dictionaries))
         for item, dictionary in zip(items, dictionaries):
-            if isinstance(item, FillItem):
-                item.apply_bounds(items, dictionary)
+            ItemFactory.resolve_dependencies(item, dictionary, items)
         self.set_items(items)
 
         # Set clipboard

@@ -224,24 +224,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
-    def apply_bounds(self, items: list, dictionary: dict) -> None:
-        """Bind the fill to the bounds recorded in its dict."""
-        color = dictionary.get("color", "")
-        upper_source = dictionary.get("upper_source")
-        upper_equation = dictionary.get("upper_equation")
-        lower_source = dictionary.get("lower_source")
-        lower_equation = dictionary.get("lower_equation")
-        if upper_source is not None and upper_source < len(items):
-            self.set_upper_source(items[upper_source])
-        elif upper_equation is not None:
-            self.set_upper_equation(Graphs.expression_to_ast(upper_equation))
-        if lower_source is not None and lower_source < len(items):
-            self.set_lower_source(items[lower_source])
-        elif lower_equation is not None:
-            self.set_lower_equation(Graphs.expression_to_ast(lower_equation))
-        if color:
-            self.props.color = color
-
     def get_data_tuple(self) -> tuple[list, list, list]:
         """Get the data as a picklable tuple."""
         holder = self.props.data
@@ -298,13 +280,33 @@ class ItemFactory(Graphs.ItemFactory):
             case "FillItem":
                 dictionary.pop("type")
                 dictionary.pop("upper_source", None)
-                dictionary.pop("upper_equation", None)
                 dictionary.pop("lower_source", None)
-                dictionary.pop("lower_equation", None)
+                upper = dictionary.pop("upper_equation", None)
+                lower = dictionary.pop("lower_equation", None)
                 dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
-                return FillItem(**dictionary)
+                item = FillItem(**dictionary)
+                if upper is not None:
+                    item.set_upper_equation(Graphs.expression_to_ast(upper))
+                if lower is not None:
+                    item.set_lower_equation(Graphs.expression_to_ast(lower))
+                return item
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
+
+    @staticmethod
+    def resolve_dependencies(
+        item: Graphs.Item,
+        dictionary: dict,
+        items: list[Graphs.Item],
+    ) -> Graphs.Item:
+        if isinstance(item, Graphs.FillItem):
+            upper_source = dictionary.get("upper_source")
+            lower_source = dictionary.get("lower_source")
+            if upper_source is not None and upper_source < len(items):
+                item.set_upper_source(items[upper_source])
+            if lower_source is not None and lower_source < len(items):
+                item.set_lower_source(items[lower_source])
+        return item
 
     @staticmethod
     def to_dict(item: Graphs.Item) -> dict:
@@ -334,6 +336,21 @@ class ItemFactory(Graphs.ItemFactory):
                     None if upper is None else Graphs.ast_to_expression(upper)
                 dictionary["lower_equation"] = \
                     None if lower is None else Graphs.ast_to_expression(lower)
+        return dictionary
+
+    @staticmethod
+    def link_dependencies(
+        item: Graphs.Item,
+        dictionary: dict,
+        items: list[Graphs.Item],
+    ) -> dict:
+        if isinstance(item, Graphs.FillItem):
+            upper = item.get_upper_source()
+            lower = item.get_lower_source()
+            dictionary["upper_source"] = \
+                None if upper is None else items.index(upper)
+            dictionary["lower_source"] = \
+                None if lower is None else items.index(lower)
         return dictionary
 
     @staticmethod
