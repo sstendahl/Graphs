@@ -623,7 +623,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             5000,
             scale,
         )
-        data = utilities.get_xy_data(holder)
+        data = utilities.get_xydata(holder)
         singularities = self._find_singularities(lower, upper)
         if singularities:
             data = self._insert_singularity_points(data, singularities)

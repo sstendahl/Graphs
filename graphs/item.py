@@ -54,16 +54,6 @@ class _PythonItemMixin:
             if prop not in kwargs
         }
 
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = {
-            key: self.get_property(key)
-            for key in dir(self.props) if key != "typename"
-        }
-        dictionary["type"] = self.__gtype_name__[12:]
-        dictionary.pop("visible")
-        return dictionary
-
 
 class DataItem(Graphs.DataItem, _PythonItemMixin):
     """DataItem."""
@@ -109,12 +99,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
             **kwargs,
         )
 
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["data"] = self.get_data_tuple()
-        return dictionary
-
     def get_data_tuple(self) -> tuple[list, list, list, list]:
         """Get the data as a picklable tuple."""
         holder = self.props.data
@@ -157,12 +141,6 @@ class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
             **kwargs,
         )
 
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
-        return dictionary
-
 
 class EquationItem(Graphs.EquationItem, _PythonItemMixin):
     """EquationItem."""
@@ -190,12 +168,6 @@ class EquationItem(Graphs.EquationItem, _PythonItemMixin):
             **cls._extract_params(cls, style, kwargs),
             **kwargs,
         )
-
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["equation"] = Graphs.ast_to_expression(self.props.equation)
-        return dictionary
 
 
 class TextItem(Graphs.TextItem, _PythonItemMixin):
@@ -232,13 +204,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
 
     __gtype_name__ = "GraphsPythonFillItem"
 
-    BOUND_KEYS = (
-        "upper_source",
-        "upper_equation",
-        "lower_source",
-        "lower_equation",
-    )
-
     @classmethod
     def new(
         cls,
@@ -258,34 +223,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
     ):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
-
-    @classmethod
-    def from_dict(cls, dictionary: dict):
-        """Create new FillItem, leaving its bounds for apply_bounds."""
-        kwargs = {
-            key: value
-            for key, value in dictionary.items()
-            if key not in cls.BOUND_KEYS
-        }
-        kwargs["data"] = Graphs.FillHolder.new(*kwargs["data"])
-        return cls(**kwargs)
-
-    def to_dict(self) -> dict:
-        """Convert item to dict."""
-        dictionary = super().to_dict()
-        dictionary["data"] = self.get_data_tuple()
-        dictionary["upper_equation"] = self._equation_to_str(
-            self.get_upper_equation(),
-        )
-        dictionary["lower_equation"] = self._equation_to_str(
-            self.get_lower_equation(),
-        )
-        return dictionary
-
-    @staticmethod
-    def _equation_to_str(equation) -> str:
-        return None if equation is None \
-            else Graphs.ast_to_expression(equation)
 
     def apply_bounds(self, items: list, dictionary: dict) -> None:
         """Bind the fill to the bounds recorded in its dict."""
@@ -360,9 +297,44 @@ class ItemFactory(Graphs.ItemFactory):
                 return TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
-                return FillItem.from_dict(dictionary)
+                dictionary.pop("upper_source", None)
+                dictionary.pop("upper_equation", None)
+                dictionary.pop("lower_source", None)
+                dictionary.pop("lower_equation", None)
+                dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
+                return FillItem(**dictionary)
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
+
+    @staticmethod
+    def to_dict(item: Graphs.Item) -> dict:
+        """Serialize an item to a dict."""
+        dictionary = {
+            key: item.get_property(key)
+            for key in dir(item.props) if key != "typename"
+        }
+        typename = item.__gtype__.name[12:]
+        dictionary["type"] = typename
+        dictionary.pop("visible")
+        match typename:
+            case "DataItem":
+                dictionary["data"] = item.get_data_tuple()
+            case "GeneratedDataItem":
+                dictionary["data"] = item.get_data_tuple()
+                equation = Graphs.ast_to_expression(item.get_equation())
+                dictionary["equation"] = equation
+            case "EquationItem":
+                equation = Graphs.ast_to_expression(item.get_equation())
+                dictionary["equation"] = equation
+            case "FillItem":
+                dictionary["data"] = item.get_data_tuple()
+                upper = item.get_upper_equation()
+                lower = item.get_lower_equation()
+                dictionary["upper_equation"] = \
+                    None if upper is None else Graphs.ast_to_expression(upper)
+                dictionary["lower_equation"] = \
+                    None if lower is None else Graphs.ast_to_expression(lower)
+        return dictionary
 
     @staticmethod
     def _on_override_request(
