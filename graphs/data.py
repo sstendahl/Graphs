@@ -217,15 +217,12 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
-                    elif prop == "data":
-                        self[index].set_data_tuple(value)
-                    elif prop == "equation":
-                        self[index].set_property(
-                            prop,
-                            Graphs.expression_to_ast(value),
-                        )
                     else:
-                        self[index].set_property(prop, value)
+                        ItemFactory.deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
@@ -266,15 +263,12 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
-                    elif prop == "data":
-                        self[index].set_data_tuple(value)
-                    elif prop == "equation":
-                        self[index].set_property(
-                            prop,
-                            Graphs.expression_to_ast(value),
-                        )
                     else:
-                        self[index].set_property(prop, value)
+                        ItemFactory.deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
                     dictionary = copy.deepcopy(change)
                     item = ItemFactory.new_from_dict(dictionary)

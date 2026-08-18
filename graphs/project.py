@@ -224,16 +224,6 @@ class ProjectValidator:
         self.project_dict = copy.deepcopy(project_dict)
         self.parse_flags = parse_flags
 
-    @staticmethod
-    def _apply_property(item, prop, value) -> None:
-        """Apply a property value from history state."""
-        if prop == "data":
-            item.set_data_tuple(value)
-        elif prop == "equation":
-            item.set_property(prop, Graphs.expression_to_ast(value))
-        else:
-            item.set_property(prop, value)
-
     def validate(self):
         """Run through the history states."""
         # Validate Figure Settings
@@ -266,7 +256,11 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
-                        self._apply_property(self.items[index], prop, value)
+                        ItemFactory.deserialize_property(
+                            self.items[index],
+                            prop,
+                            value,
+                        )
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
                         self.items.append(ItemFactory.new_from_dict(data))
@@ -284,7 +278,11 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
-                        self._apply_property(self.items[index], prop, value)
+                        ItemFactory.deserialize_property(
+                            self.items[index],
+                            prop,
+                            value,
+                        )
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:

@@ -99,10 +99,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
             **kwargs,
         )
 
-    def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:
-        """Set the data from a tuple."""
-        self.props.data = Graphs.DataHolder.new(*data)
-
 
 class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
     """Generated Dataitem."""
@@ -214,10 +210,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
-    def set_data_tuple(self, data: tuple[list, list, list]) -> None:
-        """Set the data from a tuple."""
-        self.props.data = Graphs.FillHolder.new(*data)
-
 
 class ItemFactory(Graphs.ItemFactory):
     """Item factory."""
@@ -291,6 +283,19 @@ class ItemFactory(Graphs.ItemFactory):
         return item
 
     @staticmethod
+    def deserialize_property(item: Graphs.Item, prop: str, value) -> None:
+        """Set an item's property from a serializable format."""
+        if prop == "data":
+            if isinstance(item, Graphs.DataItem):
+                item.set_data(Graphs.DataHolder.new(*value))
+            elif isinstance(item, Graphs.FillItem):
+                item.set_data(Graphs.FillHolder.new(*value))
+        elif prop == "equation":
+            item.set_property(prop, Graphs.expression_to_ast(value))
+        else:
+            item.set_property(prop, value)
+
+    @staticmethod
     def to_dict(item: Graphs.Item) -> dict:
         """Serialize an item to a dict."""
         dictionary = {
@@ -328,7 +333,7 @@ class ItemFactory(Graphs.ItemFactory):
 
     @staticmethod
     def serialize_property(item: Graphs.Item, prop: str):
-        """Serialize an items property to a picklable format."""
+        """Return an item's property in a serializable format."""
         if prop == "data":
             holder = item.get_data()
             if isinstance(item, Graphs.DataItem):
