@@ -99,16 +99,6 @@ class DataItem(Graphs.DataItem, _PythonItemMixin):
             **kwargs,
         )
 
-    def get_data_tuple(self) -> tuple[list, list, list, list]:
-        """Get the data as a picklable tuple."""
-        holder = self.props.data
-        return (
-            utilities.bytes_to_list(holder.get_xdata_b()),
-            utilities.bytes_to_list(holder.get_ydata_b()),
-            utilities.bytes_to_list(holder.get_xerr_b()),
-            utilities.bytes_to_list(holder.get_yerr_b()),
-        )
-
     def set_data_tuple(self, data: tuple[list, list, list, list]) -> None:
         """Set the data from a tuple."""
         self.props.data = Graphs.DataHolder.new(*data)
@@ -224,15 +214,6 @@ class FillItem(Graphs.FillItem, _PythonItemMixin):
         """Create new FillItem with a FillItem."""
         return cls(data=data, **kwargs)
 
-    def get_data_tuple(self) -> tuple[list, list, list]:
-        """Get the data as a picklable tuple."""
-        holder = self.props.data
-        return (
-            utilities.bytes_to_list(holder.get_xdata_b()),
-            utilities.bytes_to_list(holder.get_lower_b()),
-            utilities.bytes_to_list(holder.get_upper_b()),
-        )
-
     def set_data_tuple(self, data: tuple[list, list, list]) -> None:
         """Set the data from a tuple."""
         self.props.data = Graphs.FillHolder.new(*data)
@@ -313,24 +294,14 @@ class ItemFactory(Graphs.ItemFactory):
     def to_dict(item: Graphs.Item) -> dict:
         """Serialize an item to a dict."""
         dictionary = {
-            key: item.get_property(key)
+            key: ItemFactory.serialize_property(item, key)
             for key in dir(item.props) if key != "typename"
         }
         typename = item.__gtype__.name[12:]
         dictionary["type"] = typename
         dictionary.pop("visible")
         match typename:
-            case "DataItem":
-                dictionary["data"] = item.get_data_tuple()
-            case "GeneratedDataItem":
-                dictionary["data"] = item.get_data_tuple()
-                equation = Graphs.ast_to_expression(item.get_equation())
-                dictionary["equation"] = equation
-            case "EquationItem":
-                equation = Graphs.ast_to_expression(item.get_equation())
-                dictionary["equation"] = equation
             case "FillItem":
-                dictionary["data"] = item.get_data_tuple()
                 upper = item.get_upper_equation()
                 lower = item.get_lower_equation()
                 dictionary["upper_equation"] = \
@@ -354,6 +325,28 @@ class ItemFactory(Graphs.ItemFactory):
             dictionary["lower_source"] = \
                 None if lower is None else items.index(lower)
         return dictionary
+
+    @staticmethod
+    def serialize_property(item: Graphs.Item, prop: str):
+        """Serialize an items property to a picklable format."""
+        if prop == "data":
+            holder = item.get_data()
+            if isinstance(item, Graphs.DataItem):
+                return (
+                    utilities.bytes_to_list(holder.get_xdata_b()),
+                    utilities.bytes_to_list(holder.get_ydata_b()),
+                    utilities.bytes_to_list(holder.get_xerr_b()),
+                    utilities.bytes_to_list(holder.get_yerr_b()),
+                )
+            elif isinstance(item, Graphs.FillItem):
+                return (
+                    utilities.bytes_to_list(holder.get_xdata_b()),
+                    utilities.bytes_to_list(holder.get_lower_b()),
+                    utilities.bytes_to_list(holder.get_upper_b()),
+                )
+        elif prop == "equation":
+            return Graphs.ast_to_expression(item.get_property(prop))
+        return item.get_property(prop)
 
     @staticmethod
     def _on_override_request(

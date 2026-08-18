@@ -88,19 +88,13 @@ class Data(Graphs.Data):
     @staticmethod
     def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
         index = self.index(item)
-        if prop == "data":
-            value = item.get_data_tuple()
-        elif prop == "equation":
-            value = Graphs.ast_to_expression(item.get_property(prop))
-        else:
-            value = item.get_property(prop)
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
                 copy.deepcopy(self._data_copy[index][prop]),
-                value,
+                ItemFactory.serialize_property(item, prop),
             ),
         ))
 
