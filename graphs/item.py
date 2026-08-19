@@ -5,228 +5,37 @@ from gi.repository import Graphs
 from graphs import misc, utilities
 
 
-class _PythonItemMixin:
-
-    def reset(
-        self,
-        old_style: Graphs.StyleParameters,
-        new_style: Graphs.StyleParameters,
-    ) -> None:
-        """Reset all properties."""
-        if not hasattr(self, "_style_properties"):
-            return
-        # Combine rcparams and graphs_params into single dict:
-        old_style = old_style.style_params | old_style.graphs_params
-        new_style = new_style.style_params | new_style.graphs_params
-        for prop, (key, function) in self._style_properties.items():
-            old_value = old_style[key]
-            new_value = new_style[key]
-            if function is not None:
-                old_value = function(old_value)
-                new_value = function(new_value)
-            if self.get_property(prop) == old_value:
-                self.set_property(prop, new_value)
-
-    def override(
-        self,
-        style: Graphs.StyleParameters,
-    ) -> None:
-        """Override all properties."""
-        if not hasattr(self, "_style_properties"):
-            return
-        # Combine rcparams and graphs_params into single dict:
-        style = style.style_params | style.graphs_params
-        for prop, (key, function) in self._style_properties.items():
-            value = style[key] if function is None else function(style[key])
-            self.set_property(prop, value)
-
-    @staticmethod
-    def _extract_params(
-        cls,
-        style: Graphs.StyleParameters,
-        kwargs: dict,
-    ) -> dict:
-        # Combine rcparams and graphs_params into single dict:
-        style = style.style_params | style.graphs_params
-        return {
-            prop: style[key] if function is None else function(style[key])
-            for prop, (key, function) in cls._style_properties.items()
-            if prop not in kwargs
-        }
-
-
-class DataItem(Graphs.DataItem, _PythonItemMixin):
-    """DataItem."""
-
-    __gtype_name__ = "GraphsPythonDataItem"
-
-    _style_properties = {
-        "errbarsabove": ("errorbar.barsabove", None),
-        "errcapsize": ("errorbar.capsize", None),
-        "errcapthick": ("errorbar.capthick", None),
-        "errlinewidth": ("errorbar.linewidth", None),
-        "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
-        "linewidth": ("lines.linewidth", None),
-        "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
-        "markersize": ("lines.markersize", None),
-    }
-
-    @classmethod
-    def new(
-        cls,
-        style: Graphs.StyleParameters,
-        xdata: list[float] = None,
-        ydata: list[float] = None,
-        xerr: list[float] = None,
-        yerr: list[float] = None,
-        **kwargs,
-    ):
-        """Create new DataItem."""
-        data = Graphs.DataHolder.new(xdata, ydata, xerr, yerr)
-        return cls.new_with_data(style, data, **kwargs)
-
-    @classmethod
-    def new_with_data(
-        cls,
-        style: Graphs.StyleParameters,
-        data: Graphs.DataHolder,
-        **kwargs,
-    ):
-        """Create new DataItem with a DataHolder."""
-        return cls(
-            data=data,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
-
-
-class GeneratedDataItem(Graphs.GeneratedDataItem, DataItem):
-    """Generated Dataitem."""
-
-    __gtype_name__ = "GraphsPythonGeneratedDataItem"
-
-    @classmethod
-    def new(
-        cls,
-        style: Graphs.StyleParameters,
-        equation: Graphs.Ast,
-        xstart: str,
-        xstop: str,
-        steps: int,
-        scale: Graphs.Scale,
-        **kwargs,
-    ):
-        """Create new GeneratedDataItem."""
-        return cls(
-            equation=equation,
-            xstart=xstart,
-            xstop=xstop,
-            steps=steps,
-            scale=scale,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
-
-
-class EquationItem(Graphs.EquationItem, _PythonItemMixin):
-    """EquationItem."""
-
-    __gtype_name__ = "GraphsPythonEquationItem"
-
-    _style_properties = {
-        "linestyle": (
-            "lines.linestyle",
-            lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
-        ),
-        "linewidth": ("lines.linewidth", None),
-    }
-
-    @classmethod
-    def new(
-        cls,
-        style: Graphs.StyleParameters,
-        equation: Graphs.Ast,
-        **kwargs,
-    ):
-        """Create new EquationItem."""
-        return cls(
-            equation=equation,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
-
-
-class TextItem(Graphs.TextItem, _PythonItemMixin):
-    """TextItem."""
-
-    __gtype_name__ = "GraphsPythonTextItem"
-
-    _style_properties = {
-        "size": ("font.size", None),
-        "color": ("text.color", None),
-    }
-
-    @classmethod
-    def new(
-        cls,
-        style: Graphs.StyleParameters,
-        xanchor: float = 0,
-        yanchor: float = 0,
-        text: str = "",
-        **kwargs,
-    ):
-        """Create new textItem."""
-        return cls(
-            xanchor=xanchor,
-            yanchor=yanchor,
-            text=text,
-            **cls._extract_params(cls, style, kwargs),
-            **kwargs,
-        )
-
-
-class FillItem(Graphs.FillItem, _PythonItemMixin):
-    """FillItem."""
-
-    __gtype_name__ = "GraphsPythonFillItem"
-
-    @classmethod
-    def new(
-        cls,
-        style: Graphs.StyleParameters,
-        data: tuple[list[float], list[float], list[float]],
-        **kwargs,
-    ):
-        """Create new FillItem."""
-        return cls.new_with_data(style, Graphs.FillHolder.new(*data), **kwargs)
-
-    @classmethod
-    def new_with_data(
-        cls,
-        _style: Graphs.StyleParameters,
-        data: Graphs.FillHolder,
-        **kwargs,
-    ):
-        """Create new FillItem with a FillItem."""
-        return cls(data=data, **kwargs)
-
-
 class ItemFactory(Graphs.ItemFactory):
     """Item factory."""
 
-    _constructors = {
-        "data-item": DataItem.new_with_data,
-        "generated-data-item": GeneratedDataItem.new,
-        "equation-item": EquationItem.new,
-        "text-item": TextItem.new,
-        "fill-item": FillItem.new_with_data,
+    _style_properties = {
+        "DataItem": {
+            "errbarsabove": ("errorbar.barsabove", None),
+            "errcapsize": ("errorbar.capsize", None),
+            "errcapthick": ("errorbar.capthick", None),
+            "errlinewidth": ("errorbar.linewidth", None),
+            "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+            "linewidth": ("lines.linewidth", None),
+            "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
+            "markersize": ("lines.markersize", None),
+        },
+        "EquationItem": {
+            "linestyle": (
+                "lines.linestyle",
+                lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
+            ),
+            "linewidth": ("lines.linewidth", None),
+        },
+        "TextItem": {
+            "size": ("font.size", None),
+            "color": ("text.color", None),
+        },
     }
 
     def __init__(self):
         super().__init__()
         self.connect("override-request", self._on_override_request)
-        for item, callback in self._constructors.items():
-            self.connect(item + "-request", self._on_request, callback)
+        self.connect("reset-request", self._on_reset_request)
 
     @staticmethod
     def new_from_dict(dictionary: dict) -> Graphs.Item:
@@ -235,21 +44,21 @@ class ItemFactory(Graphs.ItemFactory):
             case "DataItem":
                 dictionary.pop("type")
                 dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
-                return DataItem(**dictionary)
+                return Graphs.DataItem(**dictionary)
             case "GeneratedDataItem":
                 dictionary.pop("type")
                 dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
                 equation = Graphs.expression_to_ast(dictionary["equation"])
                 dictionary["equation"] = equation
-                return GeneratedDataItem(**dictionary)
+                return Graphs.GeneratedDataItem(**dictionary)
             case "EquationItem":
                 dictionary.pop("type")
                 equation = Graphs.expression_to_ast(dictionary["equation"])
                 dictionary["equation"] = equation
-                return EquationItem(**dictionary)
+                return Graphs.EquationItem(**dictionary)
             case "TextItem":
                 dictionary.pop("type")
-                return TextItem(**dictionary)
+                return Graphs.TextItem(**dictionary)
             case "FillItem":
                 dictionary.pop("type")
                 dictionary.pop("upper_source", None)
@@ -257,7 +66,7 @@ class ItemFactory(Graphs.ItemFactory):
                 upper = dictionary.pop("upper_equation", None)
                 lower = dictionary.pop("lower_equation", None)
                 dictionary["data"] = Graphs.FillHolder.new(*dictionary["data"])
-                item = FillItem(**dictionary)
+                item = Graphs.FillItem(**dictionary)
                 if upper is not None:
                     item.set_upper_equation(Graphs.expression_to_ast(upper))
                 if lower is not None:
@@ -302,7 +111,7 @@ class ItemFactory(Graphs.ItemFactory):
             key: ItemFactory.serialize_property(item, key)
             for key in dir(item.props) if key != "typename"
         }
-        typename = item.__gtype__.name[12:]
+        typename = item.__gtype__.name[6:]
         dictionary["type"] = typename
         dictionary.pop("visible")
         match typename:
@@ -353,15 +162,48 @@ class ItemFactory(Graphs.ItemFactory):
             return Graphs.ast_to_expression(item.get_property(prop))
         return item.get_property(prop)
 
+    def _item_style_properties(self, item: Graphs.Item) -> dict:
+        if isinstance(item, Graphs.DataItem):
+            return self._style_properties["DataItem"]
+        elif isinstance(item, Graphs.EquationItem):
+            return self._style_properties["EquationItem"]
+        elif isinstance(item, Graphs.TextItem):
+            return self._style_properties["TextItem"]
+        return None
+
     @staticmethod
     def _on_override_request(
         self,
         item: Graphs.Item,
         style: Graphs.StyleParameters,
     ) -> None:
-        item.override(style)
+        style_properties = self._item_style_properties(item)
+        if style_properties is None:
+            return
+        # Combine rcparams and graphs_params into single dict:
+        style = style.style_params | style.graphs_params
+        for prop, (key, function) in style_properties.items():
+            value = style[key] if function is None else function(style[key])
+            item.set_property(prop, value)
 
     @staticmethod
-    def _on_request(self, *args) -> Graphs.Item:
-        *args, callback = args
-        return callback(*args)
+    def _on_reset_request(
+        self,
+        item: Graphs.Item,
+        old_style: Graphs.StyleParameters,
+        new_style: Graphs.StyleParameters,
+    ) -> None:
+        style_properties = self._item_style_properties(item)
+        if style_properties is None:
+            return
+        # Combine rcparams and graphs_params into single dict:
+        old_style = old_style.style_params | old_style.graphs_params
+        new_style = new_style.style_params | new_style.graphs_params
+        for prop, (key, function) in style_properties.items():
+            old_value = old_style[key]
+            new_value = new_style[key]
+            if function is not None:
+                old_value = function(old_value)
+                new_value = function(new_value)
+            if item.get_property(prop) == old_value:
+                item.set_property(prop, new_value)
