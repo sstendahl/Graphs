@@ -260,6 +260,12 @@ namespace Graphs {
             window.bind_property ("is_main_view", generate_data_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (generate_data_action);
 
+            var add_fill_action = new SimpleAction ("add-fill", null);
+            add_fill_action.activate.connect (() => {
+                new AddFillDialog (window);
+            });
+            window.add_action (add_fill_action);
+
             var export_figure_action = new SimpleAction ("export-figure", null);
             export_figure_action.activate.connect (() => {
                 new ExportFigureDialog (window);

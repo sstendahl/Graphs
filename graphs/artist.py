@@ -21,6 +21,79 @@ import sympy
 from sympy.calculus.singularities import singularities as find_singularities
 
 
+def _find_row_extrema(rows):
+    """Find the position of the min and max within each row, ignoring NaN."""
+    blanked = numpy.isnan(rows)
+    return (
+        numpy.where(blanked, numpy.inf, rows).argmin(axis=1),
+        numpy.where(blanked, -numpy.inf, rows).argmax(axis=1),
+    )
+
+
+def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
+    """Return the indices that will be drawn."""
+    point_count = len(ydata)
+    if point_count < Graphs.DOWNSAMPLE_THRESHOLD:
+        return None
+
+    first, last = 0, point_count
+    if sorted_x:
+        view_low, view_high = min(x_start, x_stop), max(x_start, x_stop)
+        first = max(0, int(numpy.searchsorted(x_keys, view_low, "left")) - 1)
+        last = min(
+            point_count,
+            int(numpy.searchsorted(x_keys, view_high, "right")) + 1,
+        )
+
+    bucket_count = max(128, int(pixels))
+    visible_count = last - first
+    if visible_count <= bucket_count * 2:
+        if visible_count == point_count:
+            return None
+        return numpy.arange(first, last)
+
+    bucket_size = visible_count // bucket_count
+    bucketed_end = first + bucket_size * bucket_count
+    buckets = ydata[first:bucketed_end].reshape(bucket_count, bucket_size)
+    bucket_starts = first + numpy.arange(bucket_count) * bucket_size
+    lowest = buckets.argmin(axis=1) + bucket_starts
+    highest = buckets.argmax(axis=1) + bucket_starts
+    selected = [lowest, highest, numpy.array((first, last - 1))]
+
+    gaps = nan_indices[(nan_indices >= first) & (nan_indices < last)]
+    if gaps.size:
+        selected += _fix_nan_extrema(
+            gaps, buckets, bucket_starts, bucket_size, first, bucketed_end,
+            lowest, highest,
+        )
+
+    if bucketed_end < last:  # remainder that did not fill a whole bucket
+        remainder = ydata[bucketed_end:last].reshape(1, -1)
+        selected.append(bucketed_end + numpy.concatenate(
+            _find_row_extrema(remainder),
+        ))
+    return numpy.unique(numpy.concatenate(selected))
+
+
+def _fix_nan_extrema(gaps, buckets, bucket_starts, bucket_size, first,
+                     bucketed_end, lowest, highest):
+    """Pick better extrema for the buckets that contain a NaN."""
+    bucketed_gaps = gaps[gaps < bucketed_end]
+    gap_buckets, first_of_bucket = numpy.unique(
+        (bucketed_gaps - first) // bucket_size,
+        return_index=True,
+    )
+    low_within, high_within = _find_row_extrema(buckets[gap_buckets])
+    lowest[gap_buckets] = bucket_starts[gap_buckets] + low_within
+    highest[gap_buckets] = bucket_starts[gap_buckets] + high_within
+
+    breaks = [bucketed_gaps[first_of_bucket]]
+    trailing_gaps = gaps[gaps >= bucketed_end]
+    if trailing_gaps.size:
+        breaks.append(trailing_gaps[:1])
+    return breaks
+
+
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -87,6 +160,16 @@ class ItemArtistWrapper(GObject.Object):
         """Set alpha property."""
         self._artist.set_alpha(alpha)
 
+    @GObject.Property(type=bool, default=True)
+    def visible(self) -> bool:
+        """Get visible property."""
+        return self._artist.get_visible()
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        """Set visible property."""
+        self._artist.set_visible(visible)
+
 
 class DataItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for DataItem."""
@@ -96,6 +179,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
     legend = GObject.Property(type=bool, default=True)
+    downsample = GObject.Property(type=bool, default=True)
 
     @GObject.Property(type=Graphs.DataHolder)
     def data(self) -> Graphs.DataHolder:
@@ -105,7 +189,54 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @data.setter
     def data(self, data: Graphs.DataHolder) -> None:
         """Set data property."""
-        xdata, ydata, xerr, yerr = self._handle_singularities(data)
+        self._store(data)
+        self._apply_lod()
+
+    def _store(self, data: Graphs.DataHolder) -> None:
+        """Cache the full resolution data."""
+        self._full = self._handle_singularities(data)
+        xdata = self._full[0]
+        step = numpy.diff(xdata)
+        self._sorted = bool(numpy.all(step[~numpy.isnan(step)] >= 0))
+        self._keys = numpy.maximum.accumulate(
+            numpy.nan_to_num(xdata, nan=-numpy.inf),
+        ) if numpy.isnan(xdata).any() else xdata
+        self._nans = numpy.flatnonzero(numpy.isnan(self._full[1]))
+
+    def _queue_lod(self, *_args) -> None:
+        """Debounce level of detail updates while panning or resizing."""
+        if self._lod_timeout_id is not None:
+            GObject.source_remove(self._lod_timeout_id)
+        self._lod_timeout_id = GObject.timeout_add(
+            100, self._lod_timeout_callback)
+
+    def _lod_timeout_callback(self) -> bool:
+        self._lod_timeout_id = None
+        self._apply_lod()
+        if self._axis.figure.parent is not None:
+            self._axis.figure.parent.queue_draw()
+        return False
+
+    def _apply_lod(self, *_args) -> None:
+        """Draw at a level of detail matching the current view."""
+        xdata, ydata, xerr, yerr = self._full
+        decimate = self.props.downsample \
+            and self._axis.figure.parent is not None
+        if decimate:
+            x_start, x_stop = self._axis.get_xlim()
+            scale = Graphs.scale_from_string(self._axis.get_xscale())
+            lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
+            upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
+            indices = _decimate(
+                self._keys, ydata, self._nans, self._sorted,
+                lower, upper, self._axis.bbox.width * 3,
+            )
+        else:
+            indices = None
+        if indices is not None:
+            xdata, ydata = xdata[indices], ydata[indices]
+            xerr = None if xerr is None else xerr[indices]
+            yerr = None if yerr is None else yerr[indices]
         self._data.set_data((xdata, ydata))
 
         if xerr is not None:
@@ -122,6 +253,20 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._ycaps[0].set_data(xdata, ydata - yerr)
             self._ycaps[1].set_data(xdata, ydata + yerr)
 
+    def _apply_visibility(self) -> None:
+        """Apply the combined visibility flags to line, bars and caps."""
+        self._data.set_visible(self._visible)
+        for bar, caps, show in (
+            (self._xbar, self._xcaps, self._showxerr),
+            (self._ybar, self._ycaps, self._showyerr),
+        ):
+            if bar is None:
+                continue
+            visible = self._visible and show
+            bar.set_visible(visible)
+            for cap in caps:
+                cap.set_visible(visible)
+
     @GObject.Property(type=bool, default=True)
     def showxerr(self) -> bool:
         """Get showxerr property."""
@@ -130,9 +275,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @showxerr.setter
     def showxerr(self, showxerr: bool) -> None:
         """Set showxerr property."""
-        self._xbar.set_visible(showxerr)
-        for cap in self._xcaps:
-            cap.set_visible(showxerr)
+        self._showxerr = showxerr
+        self._apply_visibility()
 
     @GObject.Property(type=bool, default=True)
     def showyerr(self) -> bool:
@@ -142,9 +286,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     @showyerr.setter
     def showyerr(self, showyerr: bool) -> None:
         """Set showyerr property."""
-        self._ybar.set_visible(showyerr)
-        for cap in self._ycaps:
-            cap.set_visible(showyerr)
+        self._showyerr = showyerr
+        self._apply_visibility()
 
     @GObject.Property(type=int, default=1)
     def linestyle(self) -> int:
@@ -230,6 +373,17 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             cap.set_markerfacecolor(errcolor)
             cap.set_markeredgecolor(errcolor)
 
+    @GObject.Property(type=bool, default=True)
+    def visible(self) -> bool:
+        """Get visible property."""
+        return self._visible
+
+    @visible.setter
+    def visible(self, visible: bool) -> None:
+        """Set visible property."""
+        self._visible = visible
+        self._apply_visibility()
+
     def _set_properties(self, *_args) -> None:
         linewidth, markersize = self.props.linewidth, self.props.markersize
         if not self.props.selected:
@@ -298,7 +452,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item) -> None:
         super().__init__()
-        xdata, ydata, xerr, yerr = self._handle_singularities(item.props.data)
+        self._axis = axis
+        self._lod_timeout_id = None
+        self.props.downsample = item.get_downsample()
+        self._store(item.props.data)
+        xdata, ydata, xerr, yerr = self._full
         self._artist = axis.errorbar(
             xdata,
             ydata,
@@ -323,26 +481,46 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         # combinations with error bars on either or both axes.
         bar_iter = iter(self._bars)
         cap_iter = iter(self._caps)
+        self._xbar, self._xcaps = None, ()
+        self._ybar, self._ycaps = None, ()
 
         if xerr is not None:
             self._xbar = next(bar_iter)
             self._xcaps = tuple(islice(cap_iter, 2))
-            if not item.get_showxerr():
-                self._xbar.set_visible(False)
-                for cap in self._xcaps:
-                    cap.set_visible(False)
         if yerr is not None:
             self._ybar = next(bar_iter)
             self._ycaps = tuple(islice(cap_iter, 2))
-            if not item.get_showyerr():
-                self._ybar.set_visible(False)
-                for cap in self._ycaps:
-                    cap.set_visible(False)
 
-        for prop in ("legend", "linewidth", "markersize", "selected"):
+        self._visible = item.get_visible()
+        self._showxerr = item.get_showxerr()
+        self._showyerr = item.get_showyerr()
+        self._apply_visibility()
+
+        self.props.legend = item.get_legend()
+        for prop in ("linewidth", "markersize", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
+        self._apply_lod()
+
+        self.connect("notify::downsample", self._apply_lod)
+        self._view_handler = \
+            axis.callbacks.connect("xlim_changed", self._queue_lod)
+        self._parent = axis.figure.parent
+        self._resize_handler = None if self._parent is None else \
+            self._parent.connect("resize", self._queue_lod)
+
+    def disconnect_item(self) -> None:
+        """Release the view and resize handlers on detach."""
+        if self._lod_timeout_id is not None:
+            GObject.source_remove(self._lod_timeout_id)
+            self._lod_timeout_id = None
+        if self._view_handler is not None:
+            self._axis.callbacks.disconnect(self._view_handler)
+            self._view_handler = None
+        if self._resize_handler is not None:
+            self._parent.disconnect(self._resize_handler)
+            self._resize_handler = None
 
 
 class EquationItemArtistWrapper(ItemArtistWrapper):
@@ -374,7 +552,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             marker="none",
         )[0]
         self._color_artist = self._artist
-        for prop in ("legend", "linewidth", "selected"):
+        self.props.legend = item.get_legend()
+        for prop in ("linewidth", "selected"):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
 
@@ -444,7 +623,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             5000,
             scale,
         )
-        data = utilities.get_xy_data(holder)
+        data = utilities.get_xydata(holder)
         singularities = self._find_singularities(lower, upper)
         if singularities:
             data = self._insert_singularity_points(data, singularities)
@@ -606,6 +785,7 @@ class FillItemArtistWrapper(ItemArtistWrapper):
     """Wrapper for FillItem."""
 
     __gtype_name__ = "GraphsFillItemArtistWrapper"
+    legend = GObject.Property(type=bool, default=False)
 
     def _as_tuple(self, holder: Graphs.FillHolder) -> tuple[numpy.ndarray]:
         return (
@@ -620,11 +800,19 @@ class FillItemArtistWrapper(ItemArtistWrapper):
 
     @data.setter
     def data(self, data: Graphs.FillHolder) -> None:
-        dummy = Figure().add_subplot().fill_between(*self._as_tuple(data))
-        self._artist.set_paths([dummy.get_paths()[0].vertices])
+        if self._item.is_view_based():
+            return
+        self._set_paths(*self._as_tuple(data))
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
+        self._item = item
+        self._axis = axis
+        self._view_change_timeout_id = None
+        self._view_key = None
+        self._view_xdata = None
+
+        self._dummy_axis = Figure().add_subplot()
         self._artist = axis.fill_between(
             *self._as_tuple(item.get_data()),
             label=item.get_name(),
@@ -632,3 +820,80 @@ class FillItemArtistWrapper(ItemArtistWrapper):
             alpha=item.get_alpha(),
         )
         self._color_artist = self._artist
+        self._xlim_handler = \
+            axis.callbacks.connect("xlim_changed", self._on_view_change)
+        self._ylim_handler = \
+            axis.callbacks.connect("ylim_changed", self._on_view_change)
+        self._bounds_handler = item.connect(
+            "bounds-changed",
+            self._on_bounds_changed,
+        )
+        self.set_property("legend", item.get_property("legend"))
+        self._on_bounds_changed()
+
+    def disconnect_item(self) -> None:
+        """Release the view and item subscriptions on detach."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+            self._view_change_timeout_id = None
+        self._axis.callbacks.disconnect(self._xlim_handler)
+        self._axis.callbacks.disconnect(self._ylim_handler)
+        self._item.disconnect(self._bounds_handler)
+
+    def _clamp(self, ydata: numpy.ndarray) -> numpy.ndarray:
+        """Resolve infinities to the edge of the visible area."""
+        if numpy.all(numpy.isfinite(ydata)):
+            return ydata
+        low, high = sorted(self._axis.get_ylim())
+        span = high - low
+        return numpy.clip(ydata, low - span, high + span)
+
+    def _set_paths(self, xdata, lower, upper) -> None:
+        collection = self._dummy_axis.fill_between(
+            xdata,
+            self._clamp(lower),
+            self._clamp(upper),
+        )
+
+        paths = collection.get_paths()
+        collection.remove()
+        if not paths:
+            return
+        self._artist.set_paths([paths[0].vertices])
+        self._axis.figure.queue_draw()
+
+    def _generate_from_view(self) -> None:
+        """Sample the equation bounds across the visible range."""
+        x_start, x_stop = self._axis.get_xlim()
+        scale = Graphs.scale_from_string(self._axis.get_xscale())
+
+        # recalculate xdata if view has changed
+        key = (x_start, x_stop, scale)
+        if key != self._view_key:
+            self._view_xdata = numpy.array([
+                Graphs.get_value_at_fraction(fraction, x_start, x_stop, scale)
+                for fraction in numpy.linspace(-1, 2, 5000)
+            ])
+            self._view_key = key
+
+        lower, upper = self._item.evaluate_bounds(self._view_xdata)
+        self._set_paths(self._view_xdata, lower, upper)
+
+    def _on_bounds_changed(self, *_args) -> None:
+        """Redraw after a bound changed, whichever kind it now is."""
+        if self._item.is_view_based():
+            self._generate_from_view()
+        else:
+            self._set_paths(*self._as_tuple(self._item.get_data()))
+
+    def _timeout_callback(self) -> bool:
+        self._view_change_timeout_id = None
+        self._on_bounds_changed()
+        return False
+
+    def _on_view_change(self, *_args) -> None:
+        """Debounced view change handler that redraws after a delay."""
+        if self._view_change_timeout_id is not None:
+            GObject.source_remove(self._view_change_timeout_id)
+        self._view_change_timeout_id = \
+            GObject.timeout_add(100, self._timeout_callback)

@@ -4,8 +4,6 @@
 
 #include "../graphs.h"
 
-gdouble factorial (gdouble x);
-
 gdouble ipow (gdouble base, gint exp);
 
 void eval_array (const GraphsOpCode *program, const gdouble *data, gsize plen,

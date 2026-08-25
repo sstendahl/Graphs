@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-05 20:20+0000\n"
-"PO-Revision-Date: 2026-08-05 22:23+0200\n"
+"POT-Creation-Date: 2026-08-14 13:22+0000\n"
+"PO-Revision-Date: 2026-08-14 15:41+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -255,7 +255,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:257
+#: graphs/item.vala:287
 msgid "Equation"
 msgstr "Enačba"
 
@@ -662,6 +662,14 @@ msgstr "zapolnjeni X"
 msgid "Marker Size"
 msgstr "Velikost oznake"
 
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr "Manj podrobnosti"
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr "Nariši manj podatkovnih točk za hitrejše delovanje"
+
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Črta"
@@ -1009,6 +1017,10 @@ msgid "Add Equation…"
 msgstr "Dodaj enačbo ..."
 
 #: data/ui/sidebar/main.blp:154
+msgid "Add Fill…"
+msgstr "Dodaj polnilo …"
+
+#: data/ui/sidebar/main.blp:155
 msgid "Generate Data…"
 msgstr "Tvori podatke …"
 
@@ -1758,7 +1770,7 @@ msgstr "Spustite tukaj za uvoz"
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:404
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -1946,7 +1958,7 @@ msgstr "Ni mogoče uvoziti iz datoteke, slaba vrednost v vrstici %d"
 msgid "Failed to parse file."
 msgstr "Razčlenjevanje datoteke ni uspelo,"
 
-#: graphs/file_import/parsers/columns/ui.vala:36 graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/ui.vala:38 graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "Element %d"
@@ -2129,7 +2141,7 @@ msgstr "Ni bilo mogoče naložiti {font}"
 msgid "translator-credits"
 msgstr "Martin Srebotnjak <miles@filmsi.net>"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:45
+#: graphs/actions.vala:183 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
@@ -2202,37 +2214,37 @@ msgstr ""
 "Napaka pasu zaupanja: \n"
 "matrika kovariance ni stabilna."
 
-#: graphs/curve_fitting.vala:259
+#: graphs/curve_fitting.vala:261
 msgid "Parameters"
 msgstr "Parametri"
 
-#: graphs/curve_fitting.vala:275
+#: graphs/curve_fitting.vala:277
 msgid "Statistics"
 msgstr "Statistika"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:460
+#: graphs/curve_fitting.vala:462
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:357
+#: graphs/data.py:379
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
-#: graphs/data.vala:475
+#: graphs/data.vala:487
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "Ni bilo mogoče razčleniti sloga %s; povrnitev na privzeti sistemski slog"
 
-#: graphs/data.vala:840
+#: graphs/data.vala:842
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "Ni bilo mogoče najti sloga %s; povrnitev na privzeti sistemski slog"
@@ -2259,23 +2271,35 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
 
-#: graphs/item.vala:175
+#: graphs/item.vala:201
 msgid "Dataset"
 msgstr "Nabor podatkov"
 
-#: graphs/item.vala:217
+#: graphs/item.vala:247
 msgid "Generated Dataset"
 msgstr "Ustvarjen nabor podatkov"
 
-#: graphs/item.vala:273
+#: graphs/item.vala:303
 msgid "Label"
 msgstr "Oznaka"
 
-#: graphs/item.vala:323
+#: graphs/item.vala:383
+msgid "Positive Infinity"
+msgstr "Pozitivna neskončnost"
+
+#: graphs/item.vala:384
+msgid "Negative Infinity"
+msgstr "Negativna neskončnost"
+
+#: graphs/item.vala:385
+msgid "Custom Equation…"
+msgstr "Enačba po meri ..."
+
+#: graphs/item.vala:438
 msgid "Fill"
 msgstr "Polnilo"
 
-#: graphs/misc.vala:5
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
@@ -2330,19 +2354,19 @@ msgstr "V datoteki projekta manjkajo podatki"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
 
-#: graphs/project.py:310
+#: graphs/project.py:314
 msgid "Failed to do legacy migration"
 msgstr "Migracija opuščenega je spodletela"
 
-#: graphs/project.py:312
+#: graphs/project.py:316
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/project.py:318
+#: graphs/project.py:322
 msgid "Failed to migrate project"
 msgstr "Migriranje projekta ni uspelo"
 
-#: graphs/project.py:324
+#: graphs/project.py:328
 msgid "Failed to validate project"
 msgstr "Preverjanje projekta ni uspelo"
 
@@ -2424,6 +2448,21 @@ msgstr "Osnutek"
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
-#: graphs/window.vala:394
+#. Translators: Formatted with item name and data points respectively
+#: graphs/window.vala:399
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
+msgstr "%s je izrisan z manj podrobnostmi, s/z %d točkami"
+
+#: graphs/window.vala:405
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] "%d elementov je izrisanih z manj podrobnostmi, s/z %d točkami"
+msgstr[1] "%d element je izrisan z manj podrobnostmi, s/z %d točkami"
+msgstr[2] "%d elementa sta izrisana z manj podrobnostmi, s/z %d točkami"
+msgstr[3] "%d elementi so izrisani z manj podrobnostmi, s/z %d točkami"
+
+#: graphs/window.vala:427
 msgid "Open Location"
 msgstr "Odpri mesto"

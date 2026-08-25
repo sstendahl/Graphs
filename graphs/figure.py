@@ -7,7 +7,7 @@ Acts as an interface between matplotlib and GObject.
 import contextlib
 import logging
 
-from gi.repository import GObject, Gio, Graphs, Gtk
+from gi.repository import GObject, Gio, Graphs
 
 from graphs import artist, misc
 
@@ -92,21 +92,15 @@ class Figure(GObject.Object, figure.Figure):
                 picker=True,
             ).id = "right_label"
 
-            self._hide_unselected = figure_settings.get_hide_unselected()
             self._legend = figure_settings.get_legend()
             pos = figure_settings.get_legend_position()
             legend_position = Graphs.legend_position_to_string(pos)
             self._legend_position = legend_position.replace("-", " ")
         else:
-            self._hide_unselected = False
             self._legend = True
             self._legend_position = "best"
 
-        self._item_handlers = [items.connect("items-changed", self._redraw)]
-        if isinstance(items, Gtk.SelectionModel):
-            self._item_handlers.append(
-                items.connect("selection-changed", self._redraw),
-            )
+        self._item_handler = items.connect("items-changed", self._redraw)
         self._redraw()
 
     def _drop_artists(self) -> None:
@@ -118,9 +112,9 @@ class Figure(GObject.Object, figure.Figure):
 
     def detach(self) -> None:
         """Stop tracking the data model before the canvas is replaced."""
-        for handler in self._item_handlers:
-            self._items.disconnect(handler)
-        self._item_handlers = []
+        if self._item_handler is not None:
+            self._items.disconnect(self._item_handler)
+            self._item_handler = None
         self._drop_artists()
 
     def _redraw(self, *_args) -> None:
@@ -128,9 +122,7 @@ class Figure(GObject.Object, figure.Figure):
         # bottom, top, left, right
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]
-        drawable_items = [x for x in self._items if x.get_selected()] \
-            if self._hide_unselected else list(self._items)
-        for item in drawable_items:
+        for item in self._items:
             xposition = item.get_xposition()
             yposition = item.get_yposition()
             visible_axes[xposition] = True
@@ -195,7 +187,7 @@ class Figure(GObject.Object, figure.Figure):
         self._drop_artists()
         self._artists = [
             artist.new_for_item(self, item)
-            for item in reversed(drawable_items)
+            for item in reversed(self._items)
         ]
         self.update_legend()
 
@@ -204,7 +196,7 @@ class Figure(GObject.Object, figure.Figure):
         if self._legend and self._artists:
             handles = [
                 handle.get_artist() for handle in self._artists
-                if handle.legend
+                if handle.legend and handle.visible
             ]
             if handles:
                 max_char = max(10, int(self.bbox.width / 15))
@@ -235,16 +227,6 @@ class Figure(GObject.Object, figure.Figure):
         """Queue a draw when in a canvas."""
         with contextlib.suppress(AttributeError):
             self.canvas.queue_draw()
-
-    @GObject.Property(type=bool, default=False)
-    def hide_unselected(self) -> bool:
-        """Whether or not to hide unselected items."""
-        return self._hide_unselected
-
-    @hide_unselected.setter
-    def hide_unselected(self, hide_unselected: bool) -> None:
-        self._hide_unselected = hide_unselected
-        self._redraw()
 
     @GObject.Property(type=bool, default=True)
     def legend(self) -> bool:

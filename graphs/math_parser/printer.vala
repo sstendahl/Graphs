@@ -30,6 +30,24 @@ namespace Graphs.MathParser {
 
         private const double PI_THRESH = 0.00010000314159265359; // 1e-4 + 1e-9 * pi
         private const double E_THRESH = 0.00010000271828182846; // 1e-4 + 1e-9 * e
+        private const int UNARY_PRECEDENCE = 3;
+
+        private static bool child_precedence (Expression expr, out int prec) {
+            prec = int.MAX;
+
+            switch (expr.type ()) {
+                case ExpressionType.BINARY:
+                    prec = expr.op ().precedence ();
+                    return true;
+
+                case ExpressionType.UNARY:
+                    prec = UNARY_PRECEDENCE;
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
 
         private void variable (Expression expr) {
             builder.append (expr.name ());
@@ -76,7 +94,10 @@ namespace Graphs.MathParser {
 
         private void unary (Expression expr) {
             unowned Expression child = expr.right ();
-            bool need_parens = child.type () == ExpressionType.BINARY;
+
+            int child_prec;
+            bool need_parens = child_precedence (child, out child_prec)
+                               && child_prec < UNARY_PRECEDENCE;
 
             if (expr.op () == Operator.SUB) builder.append_c ('-');
 
@@ -102,10 +123,10 @@ namespace Graphs.MathParser {
         }
 
         private static bool need_parens (Expression expr, Expression parent, bool is_right_child) {
-            if (!(expr.type () == ExpressionType.BINARY)) return false;
+            int child_prec;
+            if (!child_precedence (expr, out child_prec)) return false;
             if (!(parent.type () == ExpressionType.BINARY)) return true;
 
-            int child_prec = expr.op ().precedence ();
             Operator parent_op = parent.op ();
             int parent_prec = parent_op.precedence ();
 
@@ -146,7 +167,10 @@ namespace Graphs.MathParser {
 
         private void postfix (Expression expr) {
             unowned Expression child = expr.left ();
-            bool need_parens = child.type () == ExpressionType.BINARY;
+
+            int child_prec;
+            bool need_parens = child_precedence (child, out child_prec)
+                               && child_prec < expr.op ().precedence ();
 
             if (need_parens) builder.append_c ('(');
             emit (child);

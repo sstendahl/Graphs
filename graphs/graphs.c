@@ -5,7 +5,6 @@
 
 #include <Python.h>
 
-#include "config.h"
 #include "graphs.h"
 
 static void
@@ -57,8 +56,9 @@ on_startup (GApplication *app, gpointer user_data)
 #endif
 
   Py_INCREF (debug);
-  PyObject *args = PyTuple_Pack (3, debug, PyUnicode_FromString (LOCALEDIR),
-                                 PyUnicode_FromString (GETTEXT_PACKAGE));
+  PyObject *args
+      = PyTuple_Pack (3, debug, PyUnicode_FromString (GRAPHS_CONFIG_LOCALEDIR),
+                      PyUnicode_FromString (GRAPHS_CONFIG_GETTEXT_PACKAGE));
   PyObject *result = PyObject_CallObject (func, args);
 
   Py_XDECREF (result);

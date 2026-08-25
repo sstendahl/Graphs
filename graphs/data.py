@@ -52,6 +52,11 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
+    def _item_dict(self, item: Graphs.Item) -> dict:
+        """Convert an item to a dict."""
+        dictionary = ItemFactory.to_dict(item)
+        return ItemFactory.link_dependencies(item, dictionary, self)
+
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
         self._history_states = [([], limits)]
@@ -70,32 +75,26 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            item.to_dict(),
+            self._item_dict(item),
         ))
 
     @staticmethod
     def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, item.to_dict()),
+            (index, self._item_dict(item)),
         ))
 
     @staticmethod
     def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
         index = self.index(item)
-        if prop == "data":
-            value = item.get_data_tuple()
-        elif prop == "equation":
-            value = Graphs.ast_to_expression(item.get_property(prop))
-        else:
-            value = item.get_property(prop)
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
                 copy.deepcopy(self._data_copy[index][prop]),
-                value,
+                ItemFactory.serialize_property(item, prop),
             ),
         ))
 
@@ -115,7 +114,9 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy([item.to_dict() for item in self])
+        self._data_copy = copy.deepcopy(
+            [ItemFactory.to_dict(item) for item in self],
+        )
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -216,22 +217,21 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
-                    elif prop == "data":
-                        self[index].set_data_tuple(value)
-                    elif prop == "equation":
-                        self[index].set_property(
-                            prop,
-                            Graphs.expression_to_ast(value),
-                        )
                     else:
-                        self[index].set_property(prop, value)
+                        ItemFactory.deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
-                    self._insert_item(
-                        ItemFactory.new_from_dict(copy.deepcopy(change[1])),
-                        change[0],
-                    )
+                    dictionary = copy.deepcopy(change[1])
+                    item = ItemFactory.new_from_dict(dictionary)
+                    items = list(self)
+                    items.insert(change[0], item)
+                    ItemFactory.resolve_dependencies(item, dictionary, items)
+                    self._insert_item(item, change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
@@ -263,18 +263,18 @@ class Data(Graphs.Data):
                         mask.add(index)
                         if value:
                             selected.add(index)
-                    elif prop == "data":
-                        self[index].set_data_tuple(value)
-                    elif prop == "equation":
-                        self[index].set_property(
-                            prop,
-                            Graphs.expression_to_ast(value),
-                        )
                     else:
-                        self[index].set_property(prop, value)
+                        ItemFactory.deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
-                    change = copy.deepcopy(change)
-                    self._add_item(ItemFactory.new_from_dict(change))
+                    dictionary = copy.deepcopy(change)
+                    item = ItemFactory.new_from_dict(dictionary)
+                    items = list(self) + [item]
+                    ItemFactory.resolve_dependencies(item, dictionary, items)
+                    self._add_item(item)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -296,7 +296,7 @@ class Data(Graphs.Data):
         view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
-            "data": [item.to_dict() for item in self],
+            "data": [self._item_dict(item) for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
@@ -318,7 +318,10 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        items = list(map(ItemFactory.new_from_dict, project_dict["data"]))
+        dictionaries = project_dict["data"]
+        items = list(map(ItemFactory.new_from_dict, dictionaries))
+        for item, dictionary in zip(items, dictionaries):
+            ItemFactory.resolve_dependencies(item, dictionary, items)
         self.set_items(items)
 
         # Set clipboard

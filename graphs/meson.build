@@ -28,12 +28,10 @@ python.install_sources(
          subdir: 'graphs',
 )
 
-configure_file(
-         output: 'config.h',
-  configuration: vala_conf,
-)
-config_dep = valac.find_library('config',
-  dirs: join_paths(meson.project_source_root(), 'graphs'),
+config_file = configure_file(
+          input: 'config.vala.in',
+         output: 'config.vala',
+  configuration: conf,
 )
 source_include = include_directories('.')
 graphs_lib = shared_library('graphs',
@@ -68,6 +66,7 @@ graphs_lib = shared_library('graphs',
     'style_editor/window.vala',
     'actions.vala',
     'add_equation.vala',
+    'add_fill.vala',
     'application.vala',
     'canvas.vala',
     'color_button.vala',
@@ -95,8 +94,7 @@ graphs_lib = shared_library('graphs',
     # C helpers
     'math_parser/array_evaluator.c',
     'utilities.c',
-  ), gresource_xml, gresource, dependencies: [
-    config_dep,
+  ), gresource_xml, gresource, config_file, dependencies: [
     openmp_dep,
     m_dep,
     posix_dep,

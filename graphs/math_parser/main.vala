@@ -40,15 +40,14 @@ namespace Graphs {
     /**
      * Convert an AST to an executable array program.
      */
-    public static Program ast_to_program (Ast expression, string variable = "x") throws MathError {
-        Ast simplified = PythonHelper.simplify_expression (expression);
-        return MathParser.Compiler.instance ().compile (simplified, variable);
+    public static Program ast_to_program (
+        Ast expression, string variable = "x"
+    ) throws MathError {
+        Ast expr = PythonHelper.simplify_expression (expression);
+        return MathParser.Compiler.instance ().compile (expr, variable);
     }
 
     namespace MathParser {
-        [CCode (cname = "factorial", cheader_filename = "math_parser/array_evaluator.h")]
-        private extern double factorial (double x);
-
         [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double ipow (double base, int exp);
 

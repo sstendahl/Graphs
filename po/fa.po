@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-07 17:53+0000\n"
-"PO-Revision-Date: 2026-08-08 02:03+0330\n"
+"POT-Creation-Date: 2026-08-14 13:22+0000\n"
+"PO-Revision-Date: 2026-08-14 18:01+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -250,7 +250,7 @@ msgstr "تنها مقدارهای Y"
 msgid "Import only Y values, X values will be generated"
 msgstr "فقط درون‌ریزی مقدارهای Y. مقدارهای X تولید خواهند شد"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:257
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item.vala:287
 msgid "Equation"
 msgstr "معادله"
 
@@ -656,6 +656,14 @@ msgstr "X توپر"
 msgid "Marker Size"
 msgstr "اندازهٔ نشانگر"
 
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr "کاهش حزییات"
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr "رسم نقطه‌های دادهٔ کم‌تر برای افزایش کارایی"
+
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "خط"
@@ -995,6 +1003,10 @@ msgid "Add Equation…"
 msgstr "افزودن معادله…"
 
 #: data/ui/sidebar/main.blp:154
+msgid "Add Fill…"
+msgstr "افزودن پر کردن…"
+
+#: data/ui/sidebar/main.blp:155
 msgid "Generate Data…"
 msgstr "تولید داده…"
 
@@ -1743,7 +1755,7 @@ msgstr "انداختن در این‌جا برای درون‌ریزی"
 msgid "Show Sidebar"
 msgstr "نمایش نوار کناری"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:409
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
 msgid "Undo"
 msgstr "برگردان"
 
@@ -1931,7 +1943,7 @@ msgstr "نتوانست از پرونده درون بریزد. مقدار بد د
 msgid "Failed to parse file."
 msgstr "شکست در تجزیهٔ پرونده."
 
-#: graphs/file_import/parsers/columns/ui.vala:36 graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/ui.vala:38 graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "مورد %Id"
@@ -2114,7 +2126,7 @@ msgstr "نتوانست {font} را بار کند"
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:45
+#: graphs/actions.vala:183 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
@@ -2187,37 +2199,37 @@ msgstr ""
 "خطای باند اعتماد: ماتریس\n"
 "کووریانس ناپایدار است."
 
-#: graphs/curve_fitting.vala:259
+#: graphs/curve_fitting.vala:261
 msgid "Parameters"
 msgstr "پارامترها"
 
-#: graphs/curve_fitting.vala:275
+#: graphs/curve_fitting.vala:277
 msgid "Statistics"
 msgstr "آمار"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:278
+#: graphs/curve_fitting.vala:280
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:460
+#: graphs/curve_fitting.vala:462
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
 
-#: graphs/data.py:357
+#: graphs/data.py:379
 msgid "Failed to load project"
 msgstr "شکست در بار کردن پروژه"
 
-#: graphs/data.vala:481
+#: graphs/data.vala:487
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "نتوانست سبک %s را تجزیه کند. پیش‌گزیده به سبک سامانه"
 
-#: graphs/data.vala:860
+#: graphs/data.vala:842
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "نتوانست سبک %s را پیدا کند. پیش‌گزیده به سبک سامانه"
@@ -2244,23 +2256,35 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "پرونده‌های متنی"
 
-#: graphs/item.vala:175
+#: graphs/item.vala:201
 msgid "Dataset"
 msgstr "دادگان"
 
-#: graphs/item.vala:217
+#: graphs/item.vala:247
 msgid "Generated Dataset"
 msgstr "دادگان ایجاد شده"
 
-#: graphs/item.vala:273
+#: graphs/item.vala:303
 msgid "Label"
 msgstr "برچسب"
 
-#: graphs/item.vala:323
+#: graphs/item.vala:383
+msgid "Positive Infinity"
+msgstr "بی‌نهایت مثبت"
+
+#: graphs/item.vala:384
+msgid "Negative Infinity"
+msgstr "بی‌نهایت منفی"
+
+#: graphs/item.vala:385
+msgid "Custom Equation…"
+msgstr "معادلهٔ سفارشی…"
+
+#: graphs/item.vala:438
 msgid "Fill"
 msgstr "پُر کردن"
 
-#: graphs/misc.vala:5
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "پروندهٔ سبک matplotlib"
@@ -2315,19 +2339,19 @@ msgstr "پروندهٔ پروژه داده‌ای ندارد"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "پروژه از نگارشی جدیدتر و ناسازگار آمده"
 
-#: graphs/project.py:310
+#: graphs/project.py:314
 msgid "Failed to do legacy migration"
 msgstr "شکست در مهاجرت به جدید"
 
-#: graphs/project.py:312
+#: graphs/project.py:316
 msgid "Failed to parse project file"
 msgstr "شکست در تجزیهٔ پروندهٔ پروژه"
 
-#: graphs/project.py:318
+#: graphs/project.py:322
 msgid "Failed to migrate project"
 msgstr "شکست در مهاجرت دادن پروژه"
 
-#: graphs/project.py:324
+#: graphs/project.py:328
 msgid "Failed to validate project"
 msgstr "شکست در صحت‌سنجی پروژه"
 
@@ -2409,7 +2433,20 @@ msgstr "پیش‌نویس"
 msgid "Graphs — %s"
 msgstr "نمودارها — %s"
 
+#. Translators: Formatted with item name and data points respectively
 #: graphs/window.vala:399
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
+msgstr "‏%s با جزییات کاسته با استفاده از %Id نقطه رسم شده است"
+
+#: graphs/window.vala:405
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] "‏%Id مورد با جزییات کاسته با استفاده از %Id نقطه رسم شده"
+msgstr[1] "‏%Id مورد با جزییات کاسته با استفاده از %Id نقطه رسم شده‌اند"
+
+#: graphs/window.vala:427
 msgid "Open Location"
 msgstr "گشودن مکان"
 

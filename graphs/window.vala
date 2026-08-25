@@ -382,6 +382,34 @@ namespace Graphs {
             add_toast (new Adw.Toast (title));
         }
 
+        public void add_downsample_toasts (Item[] items) {
+            int downsampled_count = 0;
+            string? last_item_name = null;
+
+            foreach (Item item in items) {
+                if (!(item is DataItem)) continue;
+                if (!((DataItem) item).exceeds_downsample_threshold ()) continue;
+                downsampled_count++;
+                last_item_name = item.name;
+            }
+
+            if (downsampled_count == 1) {
+                // Translators: Formatted with item name and data points respectively
+                add_toast_string (
+                    _("%s is drawn with reduced detail using %d points")
+                        .printf (last_item_name, DOWNSAMPLE_THRESHOLD)
+                );
+            } else if (downsampled_count > 1) {
+                add_toast_string (
+                    ngettext (
+                        "%d item is drawn with reduced detail using %d points",
+                        "%d items are drawn with reduced detail using %d points",
+                        downsampled_count
+                    ).printf (downsampled_count, DOWNSAMPLE_THRESHOLD)
+                );
+            }
+        }
+
         /**
          * Add a toast to the window.
          *
