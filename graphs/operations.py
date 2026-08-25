@@ -566,7 +566,7 @@ class DataOperations():
             logging.debug("Sorting data")
             idx = numpy.argsort(new_xdata)
             new_xdata, new_ydata = new_xdata[idx], new_ydata[idx]
-        item.set_data_tuple((new_xdata, new_ydata, xerr, yerr))
+        item.set_data(Graphs.DataHolder.new(new_xdata, new_ydata, xerr, yerr))
         return True, message
 
     @staticmethod
