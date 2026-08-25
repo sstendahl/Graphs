@@ -32,12 +32,6 @@ namespace Graphs {
         protected signal void reset_request (Item item, StyleParameters old_style, StyleParameters new_style);
         protected signal void override_request (Item item, StyleParameters parameters);
 
-        protected signal DataItem data_item_request (StyleParameters parameters, DataHolder holder);
-        protected signal GeneratedDataItem generated_data_item_request (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale);
-        protected signal EquationItem equation_item_request (StyleParameters parameters, Ast equation);
-        protected signal TextItem text_item_request (StyleParameters parameters, double xanchor, double yanchor, string text);
-        protected signal FillItem fill_item_request (StyleParameters parameters, FillHolder holder);
-
         public static void reset_item (Item item, StyleParameters old_style, StyleParameters new_style) {
             instance.reset_request.emit (item, old_style, new_style);
         }
@@ -47,23 +41,49 @@ namespace Graphs {
         }
 
         public static DataItem new_data_item (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
-            return instance.data_item_request.emit (parameters, new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr));
+            var item = new DataItem () {
+                data = new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr),
+            };
+            instance.override_request.emit (item, parameters);
+            return item;
         }
 
         public static GeneratedDataItem new_generated_data_item (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale) {
-            return instance.generated_data_item_request.emit (parameters, equation, xstart, xstop, steps, scale);
+            var item = new GeneratedDataItem () {
+                equation = equation,
+                xstart = xstart,
+                xstop = xstop,
+                steps = steps,
+                scale = scale,
+            };
+            instance.override_request.emit (item, parameters);
+            return item;
         }
 
         public static EquationItem new_equation_item (StyleParameters parameters, Ast equation) {
-            return instance.equation_item_request.emit (parameters, equation);
+            var item = new EquationItem () {
+                equation = equation,
+            };
+            instance.override_request.emit (item, parameters);
+            return item;
         }
 
         public static TextItem new_text_item (StyleParameters parameters, double xanchor, double yanchor, string text) {
-            return instance.text_item_request.emit (parameters, xanchor, yanchor, text);
+            var item = new TextItem () {
+                xanchor = xanchor,
+                yanchor = yanchor,
+                text = text,
+            };
+            instance.override_request.emit (item, parameters);
+            return item;
         }
 
         public static FillItem new_fill_item (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
-            return instance.fill_item_request.emit (parameters, new FillHolder ((owned) xdata, (owned) lower, (owned) upper));
+            var item = new FillItem () {
+                data = new FillHolder ((owned) xdata, (owned) lower, (owned) upper),
+            };
+            instance.override_request.emit (item, parameters);
+            return item;
         }
     }
 
