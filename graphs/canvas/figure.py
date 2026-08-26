@@ -9,7 +9,8 @@ import logging
 
 from gi.repository import GObject, Gio, Graphs
 
-from graphs import artist, misc
+from graphs import misc
+from graphs.canvas import artist
 
 from matplotlib import figure, pyplot
 
