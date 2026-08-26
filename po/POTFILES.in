@@ -68,7 +68,14 @@ graphs/math_parser/lexer.vala
 graphs/math_parser/main.vala
 graphs/math_parser/parser.vala
 graphs/math_parser/printer.vala
-graphs/sidebar/edit_item.vala
+graphs/sidebar/edit_item/base_box.vala
+graphs/sidebar/edit_item/data_box.vala
+graphs/sidebar/edit_item/equation_box.vala
+graphs/sidebar/edit_item/equation_group.vala
+graphs/sidebar/edit_item/errorbar_group.vala
+graphs/sidebar/edit_item/fill_box.vala
+graphs/sidebar/edit_item/generated_data_box.vala
+graphs/sidebar/edit_item/page.vala
 graphs/sidebar/figure_settings.vala
 graphs/sidebar/main.vala
 graphs/sidebar/operations.vala
