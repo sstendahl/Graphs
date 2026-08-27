@@ -47,6 +47,11 @@ data/ui/style-preview.blp
 data/ui/transform.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
+graphs/canvas/artist.py
+graphs/canvas/canvas.py
+graphs/canvas/canvas.vala
+graphs/canvas/figure.py
+graphs/canvas/scales.py
 graphs/file_import/parsers/columns/main.vala
 graphs/file_import/parsers/columns/reader.vala
 graphs/file_import/parsers/columns/ui.vala
@@ -89,10 +94,7 @@ graphs/__init__.py
 graphs/actions.vala
 graphs/add_equation.vala
 graphs/application.vala
-graphs/artist.py
 graphs/ast.py
-graphs/canvas.py
-graphs/canvas.vala
 graphs/color_button.vala
 graphs/color_row.vala
 graphs/color_swatch.vala
@@ -102,7 +104,6 @@ graphs/data.py
 graphs/data.vala
 graphs/export_figure.vala
 graphs/export_items.vala
-graphs/figure.py
 graphs/figure_settings.vala
 graphs/generate_data.vala
 graphs/item.py
@@ -118,7 +119,6 @@ graphs/project.py
 graphs/project.vala
 graphs/python_helper.py
 graphs/python_helper.vala
-graphs/scales.py
 graphs/smoothen_settings.vala
 graphs/style_io.py
 graphs/styles.py
