@@ -10,7 +10,7 @@ import math
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
-from graphs.figure import Figure
+from graphs.canvas.figure import Figure
 
 from matplotlib import backend_tools as tools
 from matplotlib.backend_bases import (
