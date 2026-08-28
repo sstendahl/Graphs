@@ -8,9 +8,7 @@ include:
     MANIFEST_PATH: build-aux/flatpak/se.sjoerd.Graphs.json
     FLATPAK_MODULE: graphs
     APP_ID: se.sjoerd.Graphs
-    RUNTIME_REPO: "https://nightly.gnome.org/gnome-nightly.flatpakrepo"
-    CI_IMAGE_X86_64: "quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master"
-    BUNDLE: "se.sjoerd.Graphs.flatpak"
+    RUNTIME_REPO: "https://dl.flathub.org/repo/flathub.flatpakrepo"
   interruptible: true
   cache:
     key: "$CI_JOB_NAME"
@@ -32,6 +30,14 @@ flatpak@aarch64:
   extends:
     - .flatpak@aarch64
     - .vars
+
+nightly@x86_64:
+  extends: ".publish_nightly"
+  needs: ["flatpak@x86_64"]
+
+nightly@aarch64:
+  extends: ".publish_nightly"
+  needs: ["flatpak@aarch64"]
 
 python-lint:
   image: python:3.12.6
