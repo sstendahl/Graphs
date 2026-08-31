@@ -38,6 +38,8 @@ class Data(Graphs.Data):
             "add-history-state-request",
             self._on_add_history_state_request,
         )
+        self.connect("undo-request", self._on_undo_request)
+        self.connect("redo-request", self._on_redo_request)
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
@@ -58,9 +60,7 @@ class Data(Graphs.Data):
         return ItemFactory.link_dependencies(item, dictionary, self)
 
     def _init_history_states(self) -> None:
-        limits = self.props.figure_settings.get_limits().values()
-        self._history_states = [([], limits)]
-        self._history_pos = -1
+        self.init_history_callback([])
         self._set_data_copy()
 
     @staticmethod
@@ -190,23 +190,14 @@ class Data(Graphs.Data):
         if not self._current_batch:
             # Nothing to add
             return False
-        if self._history_pos != -1:
-            self._history_states = self._history_states[:self._history_pos + 1]
-        self._history_pos = -1
-        limits = self.get_figure_settings().get_limits().values()
-        self._history_states.append((self._current_batch, limits))
-        # Keep history states length limited to 100 spots
-        if len(self._history_states) > 101:
-            self._history_states = self._history_states[1:]
-        self._set_data_copy()
+
+        self.add_history_state_callback(self._current_batch)
+        self._current_batch = []
         return True
 
-    def _undo(self) -> None:
+    @staticmethod
+    def _on_undo_request(self, batch) -> None:
         """Undo the latest change that was added to the clipboard."""
-        if not self.props.can_undo:
-            return
-        batch = self._history_states[self._history_pos][0]
-        self._history_pos -= 1
         selected = Gtk.Bitset.new_empty()
         mask = Gtk.Bitset.new_empty()
         for change_type, change in reversed(batch):
@@ -240,22 +231,14 @@ class Data(Graphs.Data):
                         change[1],
                     )
         self.set_selection(selected, mask)
-        limits = Graphs.Limits.new(self._history_states[self._history_pos][1])
-        self.get_figure_settings().set_limits(limits)
-        self.props.can_redo = True
-        self.props.can_undo = \
-            abs(self._history_pos) < len(self._history_states)
         self._set_data_copy()
 
-    def _redo(self) -> None:
+    @staticmethod
+    def _on_redo_request(self, batch) -> None:
         """Redo the latest change that was added to the clipboard."""
-        if not self.props.can_redo:
-            return
-        self._history_pos += 1
-        state = self._history_states[self._history_pos]
         selected = Gtk.Bitset.new_empty()
         mask = Gtk.Bitset.new_empty()
-        for change_type, change in state[0]:
+        for change_type, change in batch:
             match change_type:
                 case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                     index, prop, value = itemgetter(0, 1, 3)(change)
@@ -285,15 +268,13 @@ class Data(Graphs.Data):
                         change[2],
                     )
         self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(Graphs.Limits.new(state[1]))
-        self.props.can_redo = self._history_pos < -1
-        self.props.can_undo = True
         self._set_data_copy()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
         view_pos, view_states = self.get_view_history()
+        history_pos, limits, batches = self.get_data_history()
         return {
             "version": self.get_version(),
             "data": [self._item_dict(item) for item in self],
@@ -301,8 +282,11 @@ class Data(Graphs.Data):
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
             },
-            "history-states": self._history_states,
-            "history-position": self._history_pos,
+            "history-states": [
+                (batch, lims.values())
+                for batch, lims in zip(batches, limits)
+            ],
+            "history-position": history_pos,
             "view-history-states": [lims.values() for lims in view_states],
             "view-history-position": view_pos,
         }
@@ -326,16 +310,18 @@ class Data(Graphs.Data):
 
         # Set clipboard
         self._set_data_copy()
-        self._history_states = project_dict["history-states"]
-        self._history_pos = project_dict["history-position"]
+        history_states = {
+            Graphs.Limits.new(lims): batch
+            for batch, lims in project_dict["history-states"]
+        }
+        self.set_data_history(
+            project_dict["history-position"],
+            list(history_states.keys()),
+            list(history_states.values()),
+        )
         view_states = project_dict["view-history-states"]
         limits = list(map(Graphs.Limits.new, view_states))
         self.set_view_history(project_dict["view-history-position"], limits)
-
-        # Set clipboard/view buttons
-        self.props.can_undo = \
-            abs(self._history_pos) < len(self._history_states)
-        self.props.can_redo = self._history_pos < -1
 
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())

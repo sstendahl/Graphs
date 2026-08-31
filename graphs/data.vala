@@ -15,6 +15,9 @@ namespace Graphs {
 
             public History () {
                 history_states = new T[HISTORY_SIZE];
+            }
+
+            public void reset () {
                 current_history_state = 0;
                 oldest_history_state = 0;
                 newest_history_state = 0;
@@ -76,8 +79,19 @@ namespace Graphs {
             }
         }
 
-        public bool can_undo { get; protected set; default = false; }
-        public bool can_redo { get; protected set; default = false; }
+        [Compact]
+        private class HistoryState {
+            public Limits limits;
+            public Value val;
+
+            public HistoryState (Limits limits, owned Value val) {
+                this.limits = limits;
+                this.val = (owned) val;
+            }
+        }
+
+        public bool can_undo { get; private set; default = false; }
+        public bool can_redo { get; private set; default = false; }
         public bool can_view_back { get; private set; default = false; }
         public bool can_view_forward { get; private set; default = false; }
         public File file { get; set; }
@@ -109,12 +123,15 @@ namespace Graphs {
         private string[] _used_errbar_colors;
         private Settings _settings;
         private bool _notify_selection_changed = true;
+        private History<HistoryState> _data_history = new History<HistoryState> ();
         private History<Limits> _view_history = new History<Limits> ();
         private StyleParameters old_selected_style_params;
 
         public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
         protected signal bool add_history_state_request ();
+        protected signal void undo_request (Value state);
+        protected signal void redo_request (Value state);
 
         // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
@@ -173,7 +190,9 @@ namespace Graphs {
             });
 
             _view_history.history_states[0] = figure_settings.get_limits ();
+            _view_history.reset ();
             PythonHelper.run_method (this, "_init_history_states");
+            _data_history.reset ();
         }
 
         // Section ListModel
@@ -309,10 +328,9 @@ namespace Graphs {
             this.can_view_forward = false;
             this.figure_settings = new FigureSettings (_settings);
             _view_history.history_states[0] = figure_settings.get_limits ();
-            _view_history.current_history_state = 0;
-            _view_history.oldest_history_state = 0;
-            _view_history.newest_history_state = 0;
+            _view_history.reset ();
             PythonHelper.run_method (this, "_init_history_states");
+            _data_history.reset ();
             this.file = null;
             this.unsaved = false;
             notify_property ("unsaved");
@@ -744,22 +762,74 @@ namespace Graphs {
 
         // Section history
 
+        protected void init_history_callback (Value val) {
+            _data_history.history_states[0] = new HistoryState (figure_settings.get_limits (), val);
+        }
+
         public void add_history_state () {
-            if (!add_history_state_request.emit ()) return;
+            if (!add_history_state_request.emit ())
+                return;
+
             this.can_undo = true;
             this.can_redo = false;
             this.unsaved = true;
             notify_property ("unsaved");
         }
 
+        protected void add_history_state_callback (Value val) {
+            _data_history.add (new HistoryState (figure_settings.get_limits (), val));
+        }
+
         public void undo () {
-            PythonHelper.run_method (this, "_undo");
+            if (!can_undo) return;
+
+            unowned var state = _data_history.current ();
+            figure_settings.set_limits (state.limits);
+            undo_request.emit (state.val);
+            _data_history.back ();
+
+            this.can_undo = _data_history.current_history_state != _data_history.oldest_history_state;
+            this.can_redo = true;
+
             add_view_history_state ();
         }
 
         public void redo () {
-            PythonHelper.run_method (this, "_redo");
+            if (!can_redo) return;
+
+            unowned var state = _data_history.forward ();
+            figure_settings.set_limits (state.limits);
+            redo_request.emit (state.val);
+
+            this.can_undo = true;
+            this.can_redo = _data_history.current_history_state != _data_history.newest_history_state;
+
             add_view_history_state ();
+        }
+
+        public int get_data_history (out Limits[] limits, out Value[] batches) {
+            int position;
+            var history = _data_history.to_array (out position);
+            int n_states = history.length;
+            limits = new Limits[n_states];
+            batches = new Value[n_states];
+            for (int i = 0; i < n_states; i++) {
+                unowned var state = history[i];
+                limits[i] = state.limits;
+                batches[i] = state.val;
+            }
+            return position;
+        }
+
+        public void set_data_history (int pos, Limits[] limits, Value[] batches) {
+            int n_states = limits.length;
+            var states = new HistoryState[n_states];
+            for (int i = 0; i < n_states; i++) {
+                states[i] = new HistoryState (limits[i], batches[i]);
+            }
+            _data_history.set ((owned) states, pos);
+            this.can_undo = pos.abs () < n_states;
+            this.can_redo = pos < -1;
         }
 
         public void add_view_history_state () {
