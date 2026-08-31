@@ -4,7 +4,77 @@ namespace Graphs {
      * Data class
      */
     public class Data : Object, ListModel, Gtk.SelectionModel {
-        private const int HISTORY_SIZE = 100;
+        [Compact]
+        private class History<T> {
+            private const int HISTORY_SIZE = 100;
+
+            public T[] history_states;
+            public int current_history_state;
+            public int oldest_history_state;
+            public int newest_history_state;
+
+            public History () {
+                history_states = new T[HISTORY_SIZE];
+                current_history_state = 0;
+                oldest_history_state = 0;
+                newest_history_state = 0;
+            }
+
+            public void add (owned T t) {
+                int next = (current_history_state + 1) % HISTORY_SIZE;
+                history_states[next] = t;
+                current_history_state = next;
+                newest_history_state = next;
+
+                if (next == oldest_history_state)
+                    oldest_history_state = (oldest_history_state + 1) % HISTORY_SIZE;
+            }
+
+            public unowned T current () {
+                return history_states[current_history_state];
+            }
+
+            public unowned T back () {
+                current_history_state = (current_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
+                return current ();
+            }
+
+            public unowned T forward () {
+                current_history_state = (current_history_state + 1) % HISTORY_SIZE;
+                return current ();
+            }
+
+            public T[] to_array (out int position) {
+                int n_states;
+                if (newest_history_state >= oldest_history_state)
+                    n_states = newest_history_state - oldest_history_state + 1;
+                else
+                    n_states = HISTORY_SIZE - oldest_history_state + newest_history_state + 1;
+
+                T[] history = new T[n_states];
+
+                int index = oldest_history_state;
+                for (int i = 0; i < n_states; i++) {
+                    history[i] = history_states[index];
+                    index = (index + 1) % HISTORY_SIZE;
+                }
+
+                position = ((current_history_state - oldest_history_state + HISTORY_SIZE) % HISTORY_SIZE) - n_states;
+                return history;
+            }
+
+            public void set (owned T[] history, int position)
+                requires (history.length <= HISTORY_SIZE) {
+                int n_states = history.length;
+                for (int i = 0; i < n_states; i++) {
+                    history_states[i] = history[i];
+                }
+
+                oldest_history_state = 0;
+                newest_history_state = n_states - 1;
+                current_history_state = newest_history_state + position + 1;
+            }
+        }
 
         public bool can_undo { get; protected set; default = false; }
         public bool can_redo { get; protected set; default = false; }
@@ -39,10 +109,7 @@ namespace Graphs {
         private string[] _used_errbar_colors;
         private Settings _settings;
         private bool _notify_selection_changed = true;
-        private Limits[] _view_history_states = new Limits[HISTORY_SIZE];
-        private int _current_view_history_state = 0;
-        private int _oldest_view_history_state = 0;
-        private int _newest_view_history_state = 0;
+        private History<Limits> _view_history = new History<Limits> ();
         private StyleParameters old_selected_style_params;
 
         public signal void style_changed ();
@@ -105,7 +172,7 @@ namespace Graphs {
                 reset_items.begin ();
             });
 
-            _view_history_states[0] = figure_settings.get_limits ();
+            _view_history.history_states[0] = figure_settings.get_limits ();
             PythonHelper.run_method (this, "_init_history_states");
         }
 
@@ -241,10 +308,10 @@ namespace Graphs {
             this.can_view_back = false;
             this.can_view_forward = false;
             this.figure_settings = new FigureSettings (_settings);
-            _view_history_states[0] = figure_settings.get_limits ();
-            _current_view_history_state = 0;
-            _oldest_view_history_state = 0;
-            _newest_view_history_state = 0;
+            _view_history.history_states[0] = figure_settings.get_limits ();
+            _view_history.current_history_state = 0;
+            _view_history.oldest_history_state = 0;
+            _view_history.newest_history_state = 0;
             PythonHelper.run_method (this, "_init_history_states");
             this.file = null;
             this.unsaved = false;
@@ -697,16 +764,10 @@ namespace Graphs {
 
         public void add_view_history_state () {
             var limits = figure_settings.get_limits ();
-            var last = _view_history_states[_current_view_history_state];
+            var last = _view_history.current ();
             if (MathTools.all_close (limits.values (), last.values ())) return;
 
-            int next = (_current_view_history_state + 1) % HISTORY_SIZE;
-            _view_history_states[next] = limits;
-            _current_view_history_state = next;
-            _newest_view_history_state = next;
-
-            if (next == _oldest_view_history_state)
-                _oldest_view_history_state = (_oldest_view_history_state + 1) % HISTORY_SIZE;
+            _view_history.add (limits);
 
             this.can_view_back = true;
             this.can_view_forward = false;
@@ -716,52 +777,30 @@ namespace Graphs {
 
         public void view_back () {
             if (!can_view_back) return;
-            _current_view_history_state = (_current_view_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
-            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
+            figure_settings.set_limits (_view_history.back ());
 
-            this.can_view_back = _current_view_history_state != _oldest_view_history_state;
+            this.can_view_back = _view_history.current_history_state != _view_history.oldest_history_state;
             this.can_view_forward = true;
         }
 
         public void view_forward () {
             if (!can_view_forward) return;
-            _current_view_history_state = (_current_view_history_state + 1) % HISTORY_SIZE;
-            figure_settings.set_limits (_view_history_states[_current_view_history_state]);
+            figure_settings.set_limits (_view_history.forward ());
 
             this.can_view_back = true;
-            this.can_view_forward = _current_view_history_state != _newest_view_history_state;
+            this.can_view_forward = _view_history.current_history_state != _view_history.newest_history_state;
         }
 
         protected int get_view_history (out Limits[] history) {
-            int n_states;
-            if (_newest_view_history_state >= _oldest_view_history_state)
-                n_states = _newest_view_history_state - _oldest_view_history_state + 1;
-            else
-                n_states = HISTORY_SIZE - _oldest_view_history_state + _newest_view_history_state + 1;
-
-            history = new Limits[n_states];
-
-            int index = _oldest_view_history_state;
-            for (int i = 0; i < n_states; i++) {
-                history[i] = _view_history_states[index];
-                index = (index + 1) % HISTORY_SIZE;
-            }
-
-            return ((_current_view_history_state - _oldest_view_history_state + HISTORY_SIZE) % HISTORY_SIZE) - n_states;
+            int position;
+            history = _view_history.to_array (out position);
+            return position;
         }
 
-        protected void set_view_history (int pos, owned Limits[] history)
-            requires (history.length <= HISTORY_SIZE) {
-            int n_states = history.length;
-            for (int i = 0; i < n_states; i++) {
-                _view_history_states[i] = history[i];
-            }
+        protected void set_view_history (int pos, owned Limits[] history) {
+            _view_history.set ((owned) history, pos);
 
-            _oldest_view_history_state = 0;
-            _newest_view_history_state = n_states - 1;
-            _current_view_history_state = _newest_view_history_state + pos + 1;
-
-            this.can_view_back = pos.abs () < n_states;
+            this.can_view_back = pos.abs () < history.length;
             this.can_view_forward = pos < -1;
         }
 
