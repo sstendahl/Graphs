@@ -20,7 +20,7 @@ namespace Graphs {
         public TransformDialog (Window window) {
             transform_x.set_text ("X");
             transform_y.set_text ("Y");
-            discard.set_visible (window.canvas.mode == 2);
+            discard.set_visible (window.canvas.mode == Mode.SELECT);
             present (window);
         }
 
