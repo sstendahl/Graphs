@@ -81,7 +81,7 @@ class ItemFactory(Graphs.ItemFactory):
         dictionary: dict,
         items: list[Graphs.Item],
     ) -> Graphs.Item:
-        """Replace indexes with references for data dependant items."""
+        """Replace indexes with references for data dependent items."""
         if isinstance(item, Graphs.FillItem):
             upper_source = dictionary.get("upper_source")
             lower_source = dictionary.get("lower_source")
