@@ -263,7 +263,13 @@ class ProjectValidator:
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
-                        self.items.append(ItemFactory.new_from_dict(data))
+                        new_item = ItemFactory.new_from_dict(data)
+                        self.items.append(new_item)
+                        ItemFactory.resolve_dependencies(
+                            new_item,
+                            data,
+                            self.items,
+                        )
                     case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
                     case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -289,6 +295,11 @@ class ProjectValidator:
                         data = copy.deepcopy(change[1])
                         item = ItemFactory.new_from_dict(data)
                         self.items.insert(change[0], item)
+                        ItemFactory.resolve_dependencies(
+                            item,
+                            data,
+                            self.items,
+                        )
                     case Graphs.ChangeType.ITEMS_SWAPPED:
                         self.items.insert(change[0], self.items.pop(change[1]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:

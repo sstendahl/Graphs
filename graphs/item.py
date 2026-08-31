@@ -40,6 +40,7 @@ class ItemFactory(Graphs.ItemFactory):
     @staticmethod
     def new_from_dict(dictionary: dict) -> Graphs.Item:
         """Instanciate item from dict."""
+        dictionary = dict(dictionary)
         match dictionary["type"]:
             case "DataItem":
                 dictionary.pop("type")
