@@ -13,8 +13,13 @@ namespace Graphs {
                 dialog.select_folder.begin (window, null, (d, response) => {
                     try {
                         File file = dialog.select_folder.end (response);
+                        var used = new ManagedArray<string> ();
                         foreach (Item item in data) {
-                            File item_file = file.get_child_for_display_name (item.name + ".txt");
+                            string filename = Tools.get_duplicate_string (
+                                item.name.replace ("/", "\\").strip (), used.peek ()
+                            );
+                            used.append (filename);
+                            File item_file = file.get_child_for_display_name (filename + ".txt");
                             save_item_as_columns (item, item_file, data.figure_settings);
                         }
                         window.add_toast_string_with_file (_("Exported Data"), file);
