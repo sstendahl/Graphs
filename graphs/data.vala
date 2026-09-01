@@ -783,10 +783,8 @@ namespace Graphs {
         public void undo () {
             if (!can_undo) return;
 
-            unowned var state = _data_history.current ();
-            figure_settings.set_limits (state.limits);
-            undo_request.emit (state.val);
-            _data_history.back ();
+            undo_request.emit (_data_history.current ().val);
+            figure_settings.set_limits (_data_history.back ().limits);
 
             this.can_undo = _data_history.current_history_state != _data_history.oldest_history_state;
             this.can_redo = true;
@@ -798,8 +796,8 @@ namespace Graphs {
             if (!can_redo) return;
 
             unowned var state = _data_history.forward ();
-            figure_settings.set_limits (state.limits);
             redo_request.emit (state.val);
+            figure_settings.set_limits (state.limits);
 
             this.can_undo = true;
             this.can_redo = _data_history.current_history_state != _data_history.newest_history_state;
