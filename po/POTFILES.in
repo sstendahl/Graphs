@@ -67,6 +67,14 @@ graphs/file_import/parsers/xry/parser.vala
 graphs/file_import/__init__.py
 graphs/file_import/dialog.vala
 graphs/file_import/file_import.vala
+graphs/item/__init__.py
+graphs/item/base.vala
+graphs/item/data_item.vala
+graphs/item/equation_item.vala
+graphs/item/factory.vala
+graphs/item/fill_item.vala
+graphs/item/generated_data_item.vala
+graphs/item/text_item.vala
 graphs/math_parser/ast.vala
 graphs/math_parser/evaluator.vala
 graphs/math_parser/lexer.vala
@@ -106,8 +114,6 @@ graphs/export_figure.vala
 graphs/export_items.vala
 graphs/figure_settings.vala
 graphs/generate_data.vala
-graphs/item.py
-graphs/item.vala
 graphs/item_box.vala
 graphs/managed_array.vala
 graphs/math_utilities.vala
