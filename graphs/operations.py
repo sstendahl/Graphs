@@ -513,8 +513,12 @@ class EquationOperations():
                 input_x = input_x.lower().replace(key, str(value))
                 input_y = input_y.lower().replace(key, str(value))
 
-        equation = re.sub(r"(?<!e)x(?!p)", input_x, equation)
-        return input_y.lower().replace("y", equation)
+        equation = re.sub(
+            r"(?<!e)x(?!p)",
+            lambda _match: f"({input_x})",
+            str(equation),
+        )
+        return input_y.lower().replace("y", str(equation))
 
 
 _return = (numpy.ndarray, numpy.ndarray, bool, bool)
