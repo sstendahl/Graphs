@@ -97,8 +97,8 @@
         <p>Bug fixes:</p>
         <ul>
           <li>Fixed an issue with custom transformations on equations where parenthesis were not set around the x-variable</li>
-          <li>Fixed an issue where files would get overwritten on export if the item had the same name</li>
-          <li>Fixed an issue where files would not get saved on export if the filename contained a backslash</li>
+          <li>Fixed an issue where files would get overwritten on export if multiple items shared the same name</li>
+          <li>Fixed an issue where files would not get saved when exporting multiple items if the filename of one of the items contained a backslash</li>
         </ul>
       </description>
     </release>
