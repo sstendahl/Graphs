@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 project('Graphs', 'c', 'vala',
-          version: '2.0.6',
+          version: '2.0.7',
     meson_version: '>= 1.2.0',
   default_options: [ 'warning_level=2', 'werror=false', ],
           license: 'GPL-3.0-or-later',

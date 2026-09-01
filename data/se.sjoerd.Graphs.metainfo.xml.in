@@ -92,6 +92,16 @@
   </description>
 
   <releases>
+    <release version="2.0.7" date="2026-09-01">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed an issue with custom transformations on equations where parenthesis were not set around the x-variable</li>
+          <li>Fixed an issue where files would get overwritten on export if the item had the same name</li>
+          <li>Fixed an issue where files would not get saved on export if the filename contained a backslash</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.6" date="2026-08-09">
       <description>
         <p>
