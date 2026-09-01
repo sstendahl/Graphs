@@ -192,7 +192,7 @@ class Data(Graphs.Data):
             return False
 
         self.add_history_state_callback(self._current_batch)
-        self._current_batch = []
+        self._set_data_copy()
         return True
 
     @staticmethod
