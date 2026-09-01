@@ -1,5 +1,24 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    /**
+     * Small list class
+     */
+    public class ItemList : Object {
+        private ManagedArray<Item> _items = new ManagedArray<Item> ();
+
+        public void add (Item item) {
+            _items.append (item);
+        }
+
+        public void add_all (Item[] items) {
+            _items.append_all (items);
+        }
+
+        public Item[] to_array () {
+            return _items.steal ();
+        }
+    }
+
     public errordomain ParseError {
         INVALID,
         INVALID_CONFIGURATION,
