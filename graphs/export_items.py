@@ -25,10 +25,15 @@ def _export_columns(
 ) -> None:
     """Save Items in columns format."""
     if len(items) > 1:
+        used = []
         for item in items:
-            name = f"{item.get_name()}.txt"
+            name = Graphs.tools_get_duplicate_string(
+                item.get_name().replace("/", "\\").strip(),
+                used,
+            )
+            used.append(name)
             _save_item(
-                file.get_child_for_display_name(name),
+                file.get_child_for_display_name(name + ".txt"),
                 item,
                 figure_settings,
             )
