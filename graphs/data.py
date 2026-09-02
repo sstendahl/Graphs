@@ -275,6 +275,12 @@ class Data(Graphs.Data):
         figure_settings = self.get_figure_settings()
         view_pos, view_states = self.get_view_history()
         history_pos, limits, batches = self.get_data_history()
+        # resolve ownership issues until implementation changes
+        self.set_data_history(
+            history_pos,
+            [Graphs.Limits.new(lims.values()) for lims in limits],
+            copy.deepcopy(batches),
+        )
         return {
             "version": self.get_version(),
             "data": [self._item_dict(item) for item in self],
