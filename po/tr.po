@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: se.sjoerd.Graphs\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-16 15:23+0000\n"
-"PO-Revision-Date: 2026-04-16 22:24+0300\n"
-"Last-Translator: Sabri Ünal <yakushabb@gmail.com>\n"
+"POT-Creation-Date: 2026-09-01 10:34+0000\n"
+"PO-Revision-Date: 2026-09-03 23:32+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish <takim@gnome.org.tr>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
@@ -24,6 +24,10 @@ msgstr ""
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Graphs"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Graphs Geliştiricileri"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -44,6 +48,54 @@ msgstr "Çizim biçem sayfalarını düzenle"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "İçe aktarılan veriyi kolayca değiştir"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Çizme"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Çizit"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Grafik"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Grafikleme"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Bilim"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Matematik"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Matematik"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Denklemler"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Veri"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Görselleştirme"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Sığdırma"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -86,7 +138,7 @@ msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Vis
 msgid "New Window"
 msgstr "Yeni Pencere"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:23
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140 graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Biçem Düzenleyici"
 
@@ -193,7 +245,7 @@ msgstr "Yalnızca Y Değerleri"
 msgid "Import only Y values, X values will be generated"
 msgstr "Yalnızca Y değerlerini içe aktar, X değerleri oluşturulacak"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:158
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75 graphs/item.vala:237
 msgid "Equation"
 msgstr "Denklem"
 
@@ -585,27 +637,27 @@ msgstr "Hata Çubukları"
 msgid "Show Horizontal"
 msgstr "Yatay Göster"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Dikey Göster"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20 data/ui/style-editor/editor-box.blp:194
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22 data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Verinin Üstüne Çiz"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Renk"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28 data/ui/style-editor/editor-box.blp:149
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30 data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Tepe Uzunluğu"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42 data/ui/style-editor/editor-box.blp:164
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44 data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Tepe Kalınlığı"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56 data/ui/style-editor/editor-box.blp:179
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58 data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "Çizgi Genişliği"
 
@@ -677,7 +729,7 @@ msgstr "Biçim Ayarları"
 msgid "Labels"
 msgstr "Etiketler"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:102
+#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "Başlık"
 
@@ -1660,7 +1712,7 @@ msgstr "Buraya Bırakarak İçe Aktar"
 msgid "Show Sidebar"
 msgstr "Kenar Çubuğunu Göster"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:389
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Geri Al"
 
@@ -1825,7 +1877,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Son İşlemi Yinele"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Sütunlar"
@@ -1834,12 +1886,12 @@ msgstr "Sütunlar"
 msgid "Custom delimiter cannot be empty"
 msgstr "Özel ayraç boş olamaz"
 
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid "Index error in %s, cannot access index %d on line %d, only %d columns were found"
 msgstr "%1$s içinde dizin hatası, %3$d satırındaki %2$d dizinine erişilemedi, yalnızca %4$d sütun bulundu"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Dosyadan içe aktarılamadı, %d. satırda kötü değer"
@@ -1849,27 +1901,27 @@ msgstr "Dosyadan içe aktarılamadı, %d. satırda kötü değer"
 msgid "Item %d"
 msgstr "Öge %d"
 
-#: graphs/file_import/parsers/project/__init__.py:21
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Proje"
 
-#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs Proje Dosyası"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:205
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Çizelge"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:206
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Çizelge"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:274
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
 msgstr "Sütunda sayısal veri bulunamadı."
 
@@ -1896,12 +1948,12 @@ msgstr "\"%s\" tablosundan veri içe aktarılamadı, hiçbir sayısal sütun bul
 msgid "No data found in table column"
 msgstr "Tablo sütununda veri bulunamadı"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:22
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
@@ -1944,19 +1996,20 @@ msgid "ASCII files"
 msgstr "ASCII dosyalar"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "X Ekseni En Az"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Y Ekseni En Az"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "X Ekseni En Çok"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Y Ekseni En Çok"
 
@@ -1977,7 +2030,7 @@ msgstr "Y Ekseni Ölçeği"
 msgid "Y Axis Label"
 msgstr "Y Ekseni Etiketi"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Öntanımlılar Güncellendi"
 
@@ -1985,11 +2038,11 @@ msgstr "Öntanımlılar Güncellendi"
 msgid "Example Item"
 msgstr "Örnek Öge"
 
-#: graphs/style_editor/__init__.py:103 graphs/style_io.py:247
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X Etiketi"
 
-#: graphs/style_editor/__init__.py:104 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y Etiketi"
 
@@ -2009,26 +2062,22 @@ msgstr "Graphs Biçem Düzenleyici — %s"
 msgid "Are you sure you want to delete %s?"
 msgstr "%s silmek istediğinize emin misiniz?"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Graphs Geliştiricileri"
-
 #: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
 "Sabri Ünal <yakushabb@gmail.com>\n"
 "Emin Tufan Çetin <etcetin@gmail.com>"
 
-#: graphs/actions.vala:184 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "%s silindi"
 
-#: graphs/application.vala:22
+#: graphs/application.vala:19
 msgid "New window"
 msgstr "Yeni pencere"
 
-#: graphs/application.vala:24
+#: graphs/application.vala:21
 msgid "[FILE…]"
 msgstr "[DOSYA…]"
 
@@ -2123,7 +2172,7 @@ msgstr "{stylename} ayrıştırılamadı, sistemin yeğlediği biçem yükleniyo
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr "{stylename} biçemi yok, sistemin yeğlediği biçem yükleniyor"
 
-#: graphs/data.py:603
+#: graphs/data.py:553
 msgid "Failed to load project"
 msgstr "Proje yüklenemedi"
 
@@ -2145,94 +2194,94 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Metin Dosyaları"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "{font} yüklenemedi"
 
-#: graphs/item.vala:106
+#: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Veri kümesi"
 
-#: graphs/item.vala:131
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Oluşturulan Veri Takımı"
 
-#: graphs/item.vala:174
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Etiket"
 
-#: graphs/item.vala:180
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Dolgu"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib Biçem Dosyası"
 
-#: graphs/operations.py:241
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Dönüşüm yapılamadı, söz diziminin doğru olduğundan emin olun"
 
-#: graphs/operations.py:292
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "Vurgulanan alanda veri bulunamadı"
 
-#: graphs/operations.py:296
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Kimi ögelerin hata çubuğu yok, gözden çıkarılacaklar"
 
-#: graphs/operations.py:307
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Birleştirilmiş Veri"
 
-#: graphs/operations.py:448
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name} üzerindeki işlem çizilebilir bir denklemle sonuçlanmadı"
 
-#: graphs/operations.py:456
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "Denklemler için işlem desteklenmiyor."
 
-#: graphs/operations.py:613
+#: graphs/operations.py:556
 msgid "No data found within the highlighted area"
 msgstr "Vurgulanan alanda veri bulunamadı"
 
-#: graphs/operations.py:619
+#: graphs/operations.py:564
 msgid "Operation not supported for data items"
 msgstr "Veri ögeleri için işlem desteklenmiyor"
 
-#: graphs/operations.py:622
+#: graphs/operations.py:567
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: İşlem gerçekleştirilirken hata oluştu"
 
-#: graphs/operations.py:628
+#: graphs/operations.py:575
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Vurgulanan alanın dışındaki veri gözden çıkarıldı"
 
-#: graphs/project.py:57
+#: graphs/project.py:58
 msgid "Project file is missing data"
 msgstr "Proje dosyasında veri eksik"
 
-#: graphs/project.py:78
+#: graphs/project.py:79
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Proje, Graphsʼın daha yeni ve uyumsuz sürümüne ait"
 
-#: graphs/project.py:298
+#: graphs/project.py:306
 msgid "Failed to do legacy migration"
 msgstr "Eski göç ettirme yapılamadı"
 
-#: graphs/project.py:300
+#: graphs/project.py:308
 msgid "Failed to parse project file"
 msgstr "Proje dosyası ayrıştırılamadı"
 
-#: graphs/project.py:306
+#: graphs/project.py:314
 msgid "Failed to migrate project"
 msgstr "Proje göç ettirilemedi"
 
-#: graphs/project.py:312
+#: graphs/project.py:320
 msgid "Failed to validate project"
 msgstr "Proje doğrulanamadı"
 
@@ -2244,7 +2293,7 @@ msgstr "Kayıtlı Proje"
 msgid "Project"
 msgstr "Proje"
 
-#: graphs/python_helper.vala:32
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Dışa Aktarılan Veri"
 
@@ -2300,25 +2349,25 @@ msgstr "Tüm Dosyalar"
 msgid "Document Portal"
 msgstr "Belge Kapısı"
 
-#: graphs/window.vala:157
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Graphs (Geliştirme)"
 
-#: graphs/window.vala:184
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Adsız Proje"
 
-#: graphs/window.vala:185
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Taslak"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:191
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
-#: graphs/window.vala:379
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Konumu Aç"
 
