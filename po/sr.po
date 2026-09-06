@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-20 15:50+0000\n"
+"POT-Creation-Date: 2026-09-01 10:34+0000\n"
 "PO-Revision-Date: 2026-04-07 20:42+0200\n"
 "Last-Translator: Марко Костић <marko.m.kostic@gmail.com>\n"
 "Language-Team: Serbian <Serbian>\n"
@@ -24,6 +24,10 @@ msgstr ""
 #: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Графици"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Програмери Графика"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -44,6 +48,54 @@ msgstr "Управљајте стиловима графикона"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Обрадите увезене податке"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Цртање"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "График"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "График"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Цртање графика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Наука"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Математика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Математика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Једначине"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Подаци"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Визуелизација"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Прилагођавање"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -111,7 +163,7 @@ msgid "New Window"
 msgstr "Нови прозор"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:23
+#: graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Уређивач стила"
 
@@ -249,7 +301,7 @@ msgstr "Увези само ипсилон вредности, икс вредн
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:208
+#: graphs/item.vala:237
 msgid "Equation"
 msgstr "Једначина"
 
@@ -689,30 +741,30 @@ msgstr "Траке грешке"
 msgid "Show Horizontal"
 msgstr "Прикажи водоравно"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Прикажи усправно"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Цртај изнад података"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Боја"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Дужина капице"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Дебљина капице"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
 #: data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "Ширина линије"
@@ -1805,7 +1857,7 @@ msgstr "Превуците овде за увоз"
 msgid "Show Sidebar"
 msgstr "Прикажи бочну површ"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Опозови"
 
@@ -2040,7 +2092,8 @@ msgstr "SQLite база података"
 #: graphs/file_import/parsers/sql/reader.vala:135
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
-msgstr "Немогуће је увести податке из табеле \"%s\", нису пронађене бројевне колоне"
+msgstr ""
+"Немогуће је увести податке из табеле \"%s\", нису пронађене бројевне колоне"
 
 #: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
@@ -2094,19 +2147,20 @@ msgid "ASCII files"
 msgstr "АСКИ датотеке"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "Минимум икс осе"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Минимум ипсилон осе"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "Максимум икс осе"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Максимум ипсилон осе"
 
@@ -2127,7 +2181,7 @@ msgstr "Размера ипсилон осе"
 msgid "Y Axis Label"
 msgstr "Натпис ипсилон осе"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Подразумеване вредности су ажуриране"
 
@@ -2159,10 +2213,6 @@ msgstr "Уређивач стила Графика - %s"
 msgid "Are you sure you want to delete %s?"
 msgstr "Да ли сте сигурни да желите обрисати %s?"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Програмери Графика"
-
 #: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
@@ -2176,11 +2226,11 @@ msgstr ""
 msgid "Deleted %s"
 msgstr "Обрисано: %s"
 
-#: graphs/application.vala:22
+#: graphs/application.vala:19
 msgid "New window"
 msgstr "Нови прозор"
 
-#: graphs/application.vala:24
+#: graphs/application.vala:21
 msgid "[FILE…]"
 msgstr "[ДАТОТЕКА…]"
 
@@ -2297,7 +2347,7 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Датотеке текста"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "Не могу да учитам {font}"
 
@@ -2305,62 +2355,62 @@ msgstr "Не могу да учитам {font}"
 msgid "Dataset"
 msgstr "Скуп података"
 
-#: graphs/item.vala:181
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Генерисани скуп података"
 
-#: graphs/item.vala:224
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Натпис"
 
-#: graphs/item.vala:230
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Попуна"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Датотека Matplotlib стила"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Не могу да извршим трансформацију, уверите се да је синтакса исправна"
 
-#: graphs/operations.py:257
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "Нису пронађени подаци у истакнутој области"
 
-#: graphs/operations.py:261
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Неким ставкама недостају траке грешке, биће одбачене"
 
-#: graphs/operations.py:272
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Комбиновани подаци"
 
-#: graphs/operations.py:415
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Радња над „{name}“ није резултирала једначином која се може исцртати"
 
-#: graphs/operations.py:423
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "Радња није подржана за једначине."
 
-#: graphs/operations.py:580
+#: graphs/operations.py:556
 msgid "No data found within the highlighted area"
 msgstr "Нису пронађени подаци унутар истакнуте области"
 
-#: graphs/operations.py:586
+#: graphs/operations.py:564
 msgid "Operation not supported for data items"
 msgstr "Радња није подржана за ставке података"
 
-#: graphs/operations.py:589
+#: graphs/operations.py:567
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: грешка при извршавању радње"
 
-#: graphs/operations.py:594
+#: graphs/operations.py:575
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Подаци који су били изван истакнуте области су одбачени"
 
@@ -2396,7 +2446,7 @@ msgstr "Сачувани пројекат"
 msgid "Project"
 msgstr "Пројекат"
 
-#: graphs/python_helper.vala:43
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Извезени подаци"
 
@@ -2456,27 +2506,24 @@ msgstr "Све датотеке"
 msgid "Document Portal"
 msgstr "Портал докумената"
 
-#: graphs/window.vala:154
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Графици (развојни)"
 
-#: graphs/window.vala:181
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Неименовани пројекат"
 
-#: graphs/window.vala:182
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Нацрт"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:188
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графици - %s"
 
-#: graphs/window.vala:376
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Отвори место"
-
-#~ msgid "Determines the spacing between data points"
-#~ msgstr "Одређује размак између тачака података"
