@@ -3,418 +3,2931 @@
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>,  2024.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2025.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2025-2026.
+# Renan de Jesus Melo <renanjmelo@gmail.com>, 2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
-"POT-Creation-Date: 2025-12-02 22:48+0000\n"
-"PO-Revision-Date: 2025-12-09 15:44-0300\n"
-"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"POT-Creation-Date: 2026-09-01 13:33+0000\n"
+"PO-Revision-Date: 2026-09-05 12:34-0300\n"
+"Last-Translator: Renan de Jesus Melo <renanjmelo@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Gtranslator 49.0\n"
+"X-Generator: Gtranslator 50.0\n"
 
 #. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
 msgctxt "_"
 msgid "translator-credits"
-msgstr "Leônidas Araújo <leorusvellt@hotmail.com>, 2024"
+msgstr ""
+"Leônidas Araújo <leorusvellt@hotmail.com>, 2024\n"
+"Renan de Jesus Melo <renanjmelo@gmail.com>, 2026"
 
 #. (itstool) path: page/title
-#: C/curve_fitting.page:8
+#: C/curve-fitting.page:7
 msgid "Curve Fitting"
 msgstr "Ajuste de curva"
 
+#. (itstool) path: page/p
+#: C/curve-fitting.page:8
+msgid ""
+"Curve fitting allows for powerful analysis of imported datasets by finding "
+"the parameters of a mathematical model that best describes the data. The "
+"following topics are covered in this page:"
+msgstr ""
+"O Ajuste de Curva permite poderosas análises sobre os conjuntos de dados "
+"importados encontrando parâmetros de um modelo matemático que melhor "
+"represente os dados. Os tópicos seguintes são cobertos nesta página:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:11
+msgid "<link xref=\"#fitting\">Fitting Data</link>: Set up and run a fit."
+msgstr ""
+"<link xref=\"#fitting\">Ajuste de dados</link>: escolha e execute um ajuste."
+
+# Bound seria melhor traduzido para Extremante porque são os extremos do intervalo real (e esse é o nome genérico para o Ínfimo e o Supremo de um intervalo). Mas, como essa é a tradução do HELP, seguirei o que aparece na interface da aplicação.
+#. (itstool) path: item/p
+#: C/curve-fitting.page:15
+msgid "<link xref=\"#bounds\">Bounds</link>: Constrain fitting parameters."
+msgstr ""
+"<link xref=\"#bounds\">Limites</link>: restringe os parâmetros do ajuste."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:19
+msgid "<link xref=\"#results\">Results</link>: Interpreting the output."
+msgstr "<link xref=\"#results\">Resultados</link>: interpretando as saídas."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:23
+msgid ""
+"<link xref=\"#residuals\">Residuals</link>: Inspect the quality of the fit."
+msgstr ""
+"<link xref=\"#residuals\">Resíduos</link>: inspecione a qualidade do ajuste."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:27
+msgid ""
+"<link xref=\"#algorithms\">Fitting Algorithms</link>: Choose the right "
+"algorithm for your data."
+msgstr ""
+"<link xref=\"#algorithms\">Algoritmos de Ajuste</link>: escolha o Ajuste "
+"certo para seus dados."
+
 #. (itstool) path: section/title
-#: C/curve_fitting.page:10
-msgid "Fitting data"
+#: C/curve-fitting.page:32
+msgid "Fitting Data"
 msgstr "Ajuste de dados"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:11
+#: C/curve-fitting.page:33
 msgid ""
-"Curve fitting allows for a powerful analysis method for your imported data. "
-"To start curve fitting on a data set, press the three vertical dots on the "
-"item you want to fit to, and choose \"Curve Fitting\". This brings up the "
-"Curve Fitting dialog for the selected data set. An extensive list of "
-"predefined equations can be chosen from the dropdown. The corresponding "
-"mathematical formula is shown in the same card."
+"To start curve fitting on a dataset, press the three vertical dots on the "
+"item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve "
+"Fitting dialog. The fit and its confidence band are previewed live as "
+"parameters are adjusted."
 msgstr ""
-"O ajuste de curva permite um método de análise poderoso para seus dados "
-"importados. Para iniciar o ajuste de curva em um conjunto de dados, "
-"pressione os três pontos verticais no item ao qual deseja ajustar e escolha "
-"\"Ajuste de curva\". Isso abre a caixa de diálogo \"Ajuste de curva\" para o "
-"conjunto de dados selecionado. Uma extensa lista de equações predefinidas "
-"pode ser escolhida no menu suspenso. A fórmula matemática correspondente é "
-"mostrada no mesmo cartão."
+"Para iniciar o ajuste de curva em um conjunto de dados, pressione os três "
+"pontos verticais no item ao qual deseja ajustar e escolha <em>Ajuste de "
+"curva</em>. Isso abre a caixa de diálogo “Ajuste de curva”. O ajuste e seu "
+"intervalo de confiança são visualizados em tempo real conforme seus "
+"parâmetros forem ajustados."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/curve_fitting.page:19
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/curve-fitting.page:34
 msgid ""
-"external ref='media/curve_fitting_light.png' "
-"md5='d33b620c42f2c1cf82c94998adf4a670'"
+"An equation to fit against is chosen from the dropdown. The following "
+"predefined equations are available, with their formula shown as a subtitle:"
 msgstr ""
-"external ref='media/curve_fitting_light.png' "
-"md5='d33b620c42f2c1cf82c94998adf4a670'"
+"Uma equação a ser ajustada é escolhida no menu suspenso. As seguintes "
+"equações predefinidas estão disponíveis com suas fórmulas exibidas como "
+"subtítulo."
 
+#. (itstool) path: item/title
+#: C/curve-fitting.page:37 C/figure-settings.page:22
+msgid "Linear"
+msgstr "Linear"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:38
+msgid "<code>a·x + b</code>"
+msgstr "<code>a·x + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:42
+msgid "Quadratic"
+msgstr "Quadrática"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:43
+msgid "<code>a·x² + b·x + c</code>"
+msgstr "<code>a·x² + b·x + c</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:47
+msgid "Exponential"
+msgstr "Exponencial"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:48
+msgid "<code>a·exp(b·x)</code>"
+msgstr "<code>a·exp(b·x)</code>"
+
+# Poderia ser Função Potência, mas como omiti a palavra Função nas demais entradas, preferi manter a consistência.
+#. (itstool) path: item/title
+#: C/curve-fitting.page:52
+msgid "Power Law"
+msgstr "Lei de potência"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:53
+msgid "<code>a·x^b</code>"
+msgstr "<code>a·x^b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:57
+msgid "Logarithmic"
+msgstr "Logarítmica"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:58
+msgid "<code>a·log(x) + b</code>"
+msgstr "<code>a·log(x) + b</code>"
+
+# A função é chamada de Logística enquanto seu gráfico é um S, por isso, também é conhecida como Sigmóide. Adotarei o termo mais frequênte na literatura técnica: Função Logística.
+#. (itstool) path: item/title
+#: C/curve-fitting.page:62
+msgid "Sigmoid Logistic"
+msgstr "Função logística"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:63
+msgid "<code>L / (1 + exp(-k·(x - b)))</code>"
+msgstr "<code>L / (1 + exp(-k·(x - b)))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:67
+msgid "Gaussian"
+msgstr "Gaussiana"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:68
+msgid "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+msgstr "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:72
+msgid "Custom"
+msgstr "Personalizada"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:73
+msgid ""
+"Enter any equation using <code>x</code> as the independent variable. Any "
+"other variable names that are not functions (such as sin(x) or exp(x)) are "
+"automatically detected and treated as free parameters to be fitted."
+msgstr ""
+"Insira uma equação usando <code>x</code> como variável independente. "
+"Qualquer outro nome de variável que não seja uma função (como sin(x) ou "
+"exp(x)) são automaticamente detectados e tradados como parâmetros a serem "
+"ajustados."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:76
+msgid ""
+"Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the "
+"resulting curve as a new equation in the project, with the fitted parameter "
+"values substituted into the expression."
+msgstr ""
+"Quando um ajuste satisfatório for atingido, pressione <em>Adicionar Ajuste "
+"dos Dados</em> para adicionar a curva resultante como uma nova equação no "
+"projeto já com os valores numéricos dos parâmetros substituídos na expressão."
+
+# Bound seria melhor traduzido para Extremante porque são os extremos do intervalo real (e esse é o nome genérico para o Ínfimo e o Supremo de um intervalo). Mas, como essa é a tradução do HELP, seguirei o que aparece na interface da aplicação.
 #. (itstool) path: section/title
-#: C/curve_fitting.page:23
+#: C/curve-fitting.page:79
 msgid "Bounds"
 msgstr "Limites"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:24
+#: C/curve-fitting.page:80
 msgid ""
-"Each detected parameter in the formula will be shown in the sidebar. Here an "
-"initial guess can be set for the fit, as well as the minimum and maximum "
-"value for this parameter. Make sure that the initial guess is in between the "
-"bounds, and that the minimum bound is smaller than the maximum bound. If you "
-"don't want to use any bounds for the parameter, you can set the bounds to "
-"infinite using <code>-inf</code> and <code>inf</code> for the minimum and "
-"maximum bound respectively."
+"Each free parameter detected in the equation is shown in the sidebar with "
+"three fields: an initial guess, a minimum bound, and a maximum bound. The "
+"initial guess is the starting value used by the algorithm. Using a good "
+"initial guess close to the expected value will help the fit converge. The "
+"bounds constrain the range of values the parameter is allowed to take."
 msgstr ""
-"Cada parâmetro detectado na fórmula será mostrado na barra lateral. Aqui "
-"pode ser definida uma estimativa inicial para o ajuste, bem como os valores "
-"mínimo e máximo para este parâmetro. Certifique-se de que a estimativa "
-"inicial esteja entre os limites e que o limite mínimo seja menor que o "
-"limite máximo. Se não quiser usar nenhum limite para o parâmetro, você pode "
-"definir os limites como infinitos usando <code>-inf</code> e <code>inf</"
-"code> para o limite mínimo e máximo, respectivamente."
+"Cada parâmetro livre detectado na equação é exibido na barra lateral com "
+"três campos: palpite inicial, limite inferior, e limite superior. O chute "
+"inicial é o primeiro valor usado pelo algoritmo. Um chute inicial perto do "
+"valor ótimo ajudará o ajuste a convergir. Os extremantes (limites inferior e "
+"superior) limitam o intervalo de valores que o parâmetro pode assumir."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:81
+msgid ""
+"The bounds fields default to <code>-inf</code> and <code>inf</code>, meaning "
+"no constraints are applied. To restrict a parameter, enter the desired "
+"minimum and maximum values."
+msgstr ""
+"Os campos limites são predefinidos em <code>-inf</code> e <code>inf</code>, "
+"significando que não há restrições aplicadas. Para restringir um parâmetro, "
+"insira os valores mínimo e máximo desejados."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:82
+msgid ""
+"Note that bounds fields are only shown when an algorithm that supports them "
+"is selected. When using Levenberg-Marquardt, bounds are hidden as that "
+"algorithm does not support them. See <link xref=\"#algorithms\"/>for details."
+msgstr ""
+"Note que os campos limites somente aparecem quando um algoritmo que os "
+"suporta é selecionado. Ao usar Levenberg-Marquardt, os limites são ocultados "
+"pois esse algoritmo não os suporta. Veja <link xref=\"#algorithms\"/> para "
+"maiores detalhes."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:36
+#: C/curve-fitting.page:86
 msgid "Results"
 msgstr "Resultados"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:37
+#: C/curve-fitting.page:87
 msgid ""
-"Below the fitting parameters, a box is shown with the resulting parameters "
-"of the fit. Apart of the final results, a margin is shown as well for each "
-"parameter as well as the sum of R² indicating the goodness of the fit. The "
-"margin can be set using the primary menu in the Curve Fitting dialog as a "
-"multiple of the standard deviation, corresponding to an uncertainty margin "
-"of 65, 95 or 99.7% for a standard deviation of 1σ, 2σ or 3σ respectively."
+"After a successful fit the results panel shows two sections: Parameters and "
+"Statistics."
 msgstr ""
-"Abaixo dos parâmetros de ajuste, é mostrada uma caixa com os parâmetros "
-"resultantes do ajuste. Além dos resultados finais, também é mostrada uma "
-"margem para cada parâmetro, bem como a soma de R² indicando a qualidade do "
-"ajuste. A margem pode ser definida usando o menu principal na caixa de "
-"diálogo \"Ajuste de Curva\" como um múltiplo do desvio padrão, "
-"correspondendo a uma margem de incerteza de 65, 95 ou 99,7% para um desvio "
-"padrão de 1σ, 2σ ou 3σ respectivamente."
+"Após um ajuste bem-sucedido, o painel Resultados exibe duas seções: "
+"Parâmetros e Estatísticas."
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:45
+#: C/curve-fitting.page:88
 msgid ""
-"Please note that like all fits, that this standard deviation is mostly a "
-"measure of how well the data agrees with the corresponding model. Factors "
-"such as whether this model is actually physically correct, if there's any "
-"systemic errors in the measurements, and if the parameters are correlated to "
-"each other is not taken into account when fitting data. This is an inherent "
-"property of all curve fitting, and a common point of confusion, leading to "
-"misleading error bars on data points even in scientifically published data."
+"The Parameters section lists each fitted parameter with its value. If a "
+"confidence level other than None is selected, a margin is shown next to each "
+"value in the form <code>± error</code>, where the error is the standard "
+"deviation of that parameter multiplied by the selected confidence factor. So "
+"for a confidence level of 1σ the error is equal to the standard deviation, "
+"and for 2σ and 3σ the error is equal to twice and three times the standard "
+"deviation respectively. The confidence level can be set from the primary "
+"menu:"
 msgstr ""
-"Observe que, como todos os ajustes, esse desvio padrão é principalmente uma "
-"medida de quão bem os dados concordam com o modelo correspondente. Fatores "
-"como se este modelo está realmente correto fisicamente, se há algum erro "
-"sistêmico nas medições e se os parâmetros estão correlacionados entre si não "
-"são levados em consideração no ajuste dos dados. Esta é uma propriedade "
-"inerente a todos os ajustes de curvas e um ponto comum de confusão, levando "
-"a barras de erro enganosas em pontos de dados, mesmo em dados publicados "
-"cientificamente."
+"A seção Parâmetros lista cada parâmetro ajustado com seu respectivo valor. "
+"Se um nível de confiança diferente de Nenhum está selecionado, uma margem é "
+"exibida próxima a cada valor na forma <code>± erro</code>, onde o erro é o "
+"desvio padrão daquele parâmetro multiplicado pelo fator de confiança "
+"selecionado. Então, para um nível de confiança de 1σ, o erro é igual ao "
+"desvio padrão; e para 2σ e 3σ, o erro é igual ao dobro e ao triplo do desvio "
+"padrão respectivamente. O nível de confiança pode ser escolhido do menu "
+"primário:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:91
+msgid "<em>None</em>: no margin shown."
+msgstr "<em>Nenhum</em>: sem margem."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:94
+msgid "<em>1σ: 68% Confidence</em>"
+msgstr "<em>1σ: 68% Confiança</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:98
+msgid "<em>2σ: 95% Confidence</em>"
+msgstr "<em>2σ: 95% Confiança</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:102
+msgid "<em>3σ: 99.7% Confidence</em>"
+msgstr "<em>3σ: 99.7% Confiança</em>"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:106
+msgid ""
+"The corresponding confidence band is also drawn as a shaded region around "
+"the fitted curve."
+msgstr ""
+"A correspondente margem de confiança é também desenhada como uma região "
+"sombreada em volta da curva ajustada."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:107
+msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgstr ""
+"A seção Estatísticas exibe duas medidas de adequação do ajuste: R² e RMSE."
+
+# O autor pode ter confundido variância com variação. Adotei variância para facilitar o entendimento.
+#. (itstool) path: section/p
+#: C/curve-fitting.page:108
+msgid ""
+"For a linear fit, R² measures how what proportion of the variation can be "
+"explained by the model. A value of 1 means the model explains all variation "
+"perfectly, while a value of 0 means it explains none. Note that for non-"
+"linear fits, the R² loses its physical meaning of what proportion of the "
+"variance is explained. It can still be somewhat useful to assess the "
+"goodness-of-fit, but the value itself becomes somewhat arbitrary."
+msgstr ""
+"Para um ajuste linear, R² mede qual proporção da variância pode ser "
+"explicada pelo modelo. Um valor de 1 significa que o modelo explica toda a "
+"variância perfeitamente; enquanto um valor de 0 significa que não explica "
+"coisa alguma. Note que para ajustes não-lineares, o R² perde seu significado "
+"como proporção da variância predita pelo modelo de ajuste. Ele ainda pode "
+"ser um tanto útil como indicativo de adequação do ajuste, porém seu valor "
+"numérico se torna um tanto arbitrário."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:109
+msgid ""
+"RMSE (Root Mean Square Error) measures the typical size of the residuals "
+"(the differences between the data points and the fitted curve) in the same "
+"units as the Y data. Unlike R², RMSE gives an absolute sense of how far off "
+"the predictions are on average, which makes it useful when the physical "
+"magnitude of the error matters."
+msgstr ""
+"RMSE (Root Mean Square Error - Raiz do Erro Quadrático Médio) mede o tamanho "
+"típico dos resíduos (a diferença entre os dados amostrais e a curva "
+"ajustada) nas mesma unidade que o eixo Y dos dados. Diferentemente de R², "
+"RMSE fornece um sentido absoluto de quão errada está a média das predições; "
+"isso é útil quando o tamanho do erro importa."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:110
+msgid ""
+"Note that both statistics reflect only how well the data agrees with the "
+"chosen model, not whether the model is physically correct. Factors such as "
+"systematic measurement errors and correlations between parameters are not "
+"accounted for. This is an inherent limitation of curve fitting, and a common "
+"source of misleading uncertainty estimates even in published scientific work."
+msgstr ""
+"Note que ambas as estatísticas refletem quão bem os dados concordam com o "
+"modelo escolhido, e não se o modelo é fisicamente correto. Fatores como "
+"erros sistemáticos nas medidas e correlações entre parâmetros não são "
+"levados em conta. Essa é uma limitação inerente ao ajuste de curva, e uma "
+"fonte enganosa de estimativa de incertezas até mesmo em artigos científicos "
+"publicados."
 
 #. (itstool) path: section/title
-#: C/curve_fitting.page:57
-msgid "Fitting algorithms"
+#: C/curve-fitting.page:113
+msgid "Residuals"
+msgstr "Resíduos"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:114
+msgid ""
+"The residuals plot can be shown by enabling <em>Show Residuals</em> from "
+"within the primary menu. This displays a second plot below the main one "
+"showing the difference between each data point and the fitted curve at that "
+"x-value. A dashed line at zero is shown for reference."
+msgstr ""
+"O gráfico dos resíduos pode ser apresentado ativando <em>Exibir Resíduos</"
+"em> a partir do menu primário. Isso exibe um segundo gráfico abaixo do "
+"principal com a diferença entre cada ponto amostral e a curva ajustada "
+"naquele valor de x. Uma linha tracejada sobre zero é exibida para referência."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:115
+msgid ""
+"A good fit will show residuals scattered randomly around zero with no "
+"visible pattern. A systematic pattern in the residuals, such as a curve or a "
+"trend suggests that the chosen model may not be appropriate for the data."
+msgstr ""
+"Um bom ajuste exibirá resíduos espalhados aleatoriamente em torno de zero "
+"sem um padrão claro. Um padrão sistemático nos resíduos, como uma curva ou "
+"uma tendência, sugere que o modelo escolhido pode não ser apropriado aos "
+"dados."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:118
+msgid "Error Messages"
+msgstr "Mensagens de Erro"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:119
+msgid ""
+"If the fit cannot be completed, an error message is shown in the results "
+"panel instead of the parameter values. The following errors can occur:"
+msgstr ""
+"Se o ajuste não puder ser completado, uma mensagem de erro será exibida no "
+"painel de resultados ao invés dos valores dos parâmetros. Os seguintes erros "
+"podem ocorrer:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:122
+msgid "Invalid equation"
+msgstr "Equação inválida"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:123
+msgid ""
+"The equation contains a syntax error or uses unsupported variables. Check "
+"that the expression is valid."
+msgstr ""
+"A equação contém um erro de sintaxe ou usa variáveis não suportadas. "
+"Verifique se a expressão é válida."
+
+# Neste erro, o palpite inicial não pertence ao intervalo numérico definido pelos Limites (Bounds)
+#. (itstool) path: item/title
+#: C/curve-fitting.page:126
+msgid "Constraint error"
+msgstr "Erro de Restrição"
+
+# Formalmente, o correto seria: Ínfimo < Palpite inicial < Supremo.
+#. (itstool) path: item/p
+#: C/curve-fitting.page:127
+msgid ""
+"The initial guess does not lie within the specified bounds, or the minimum "
+"bound is not smaller than the maximum. Ensure that Lower &lt; Initial &lt; "
+"Upper for each parameter."
+msgstr ""
+"O palpite inicial não está dentro dos limites especificados, ou o limite "
+"inferior não é menor que o superior. Garanta que Inferior &lt; Inicial &lt; "
+"Superior para cada parâmetro."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:130
+msgid "Domain error"
+msgstr "Erro de Domínio"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:131
+msgid ""
+"The equation is not valid over the range of the data, for example due to a "
+"logarithm of a negative number or a division by zero."
+msgstr ""
+"A equação não é válida no intervalo de valores dos dados; por exemplo, "
+"devido ao logaritmo de um número negativo ou uma divisão por zero."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:134
+msgid "Fit failed: max iterations reached"
+msgstr "O ajuste falhou: o máximo de iterações foi atingido."
+
+# Contraditório: se não sabemos os valores esperados, como podemos aproximar o palpite inicial deles?
+#. (itstool) path: item/p
+#: C/curve-fitting.page:135
+msgid ""
+"The algorithm did not converge within the allowed number of iterations. Try "
+"adjusting the initial guesses to be closer to the expected values, or choose "
+"a different algorithm."
+msgstr ""
+"O algoritmo não convergiu dentro do número de iterações permitido. Tente "
+"ajustar os palpites iniciais aproximando-os dos valores esperados, ou "
+"escolha um algoritmo diferente."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:138
+msgid "Matrix error"
+msgstr "Erro de Matriz"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:139
+msgid ""
+"The data is insufficient for the chosen model. This can happen for example "
+"when there are fewer data points than free parameters, or if the data does "
+"not constrain the model well enough to determine a unique solution."
+msgstr ""
+"Os dados são insuficientes para o modelo escolhido. Isso pode ocorrer, por "
+"exemplo, quando há menos pontos do que o número de parâmetros livres, ou se "
+"os dados não definem bem o modelo para uma única solução."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:142
+msgid "Confidence band error"
+msgstr "Erro de faixa de confiança"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:143
+msgid ""
+"The covariance matrix is unstable, so the confidence band cannot be computed "
+"reliably."
+msgstr ""
+"A matriz de covariância é instável, de modo que a margem de confiança não "
+"pode ser calculada confiavelmente."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:148
+msgid "Fitting Algorithms"
 msgstr "Algoritmos de ajuste"
 
 #. (itstool) path: section/p
-#: C/curve_fitting.page:58
+#: C/curve-fitting.page:149
 msgid ""
-"When performing a fit, there are three different fitting algorithms to "
-"choose from, these can be set from the primary menu."
+"Three fitting algorithms are available, selectable from the primary menu "
+"under <em>Optimization Method</em>:"
 msgstr ""
-"Ao realizar um ajuste, existem três algoritmos de ajuste diferentes para "
-"escolher, que podem ser definidos no menu principal."
+"Três algoritmos de ajuste estão disponíveis, e selecionáveis a partir do "
+"menu primário debaixo de <em>Método de otimização</em>:"
 
 #. (itstool) path: item/title
-#: C/curve_fitting.page:64
+#: C/curve-fitting.page:152
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:65
+#: C/curve-fitting.page:153
 msgid ""
-"The Levenberg-Marquardt algorithm is a traditionally relatively popular "
-"algorithm that performs very efficiently. However, it does not handle bounds "
-"for the fitting parameters."
+"A widely used algorithm that performs efficiently for most problems. Does "
+"not support parameter bounds, the minimum and maximum fields are hidden when "
+"this method is selected."
 msgstr ""
-"O algoritmo Levenberg-Marquardt é um algoritmo relativamente popular que "
-"funciona de forma muito eficiente. No entanto, ele não trata os limites dos "
-"parâmetros de ajuste."
+"Um algoritmo amplamente utilizado que desempenha eficientemente para a "
+"maioria dos problemas. Ele não suporta limites para os parâmetros: os campos "
+"mínimo e máximo são ocultados quando este método é selecionado."
 
+# Não encontrei um equivalente na literatura técnica brasileira.
 #. (itstool) path: item/title
-#: C/curve_fitting.page:68
-msgid "Trust Region"
-msgstr "Região de confiança"
+#: C/curve-fitting.page:156
+msgid "Trust Region Reflective"
+msgstr "Trust Region Reflective"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:69
+#: C/curve-fitting.page:157
 msgid ""
-"The Trust Region Reflective algorithm is well-suited for solving large "
-"problems with bounds. This method generally performs well for most cases and "
-"should probably be used for most cases."
+"Handles bounds well and performs reliably across a wide range of problems. A "
+"good default choice for most use cases."
 msgstr ""
-"O algoritmo Região de Confiança Reflexiva é adequado para resolver grandes "
-"problemas com limites. Este método geralmente funciona bem na maioria dos "
-"casos e provavelmente deve ser usado na maioria dos casos."
+"Lida bem com limites e desempenha confiavelmente para uma ampla gama de "
+"problemas. É uma boa escolha para a maioria dos casos."
 
+# Não encontrei um equivalente na literatura técnica brasileira.
 #. (itstool) path: item/title
-#: C/curve_fitting.page:72
+#: C/curve-fitting.page:160
 msgid "Dogbox"
 msgstr "Dogbox"
 
 #. (itstool) path: item/p
-#: C/curve_fitting.page:73
+#: C/curve-fitting.page:161
 msgid ""
-"The Dogbox algorithm uses rectangular trust regions and typically works well "
-"with small problems involving bounds."
+"Uses rectangular trust regions and is well suited to smaller problems where "
+"bounds are required."
 msgstr ""
-"O algoritmo Dogbox usa regiões de confiança retangulares e normalmente "
-"funciona bem com pequenos problemas envolvendo limites."
+"Usa regiões de confiança retangulares e normalmente funciona bem com "
+"problemas menores nos quais intervalos limitados são requeridos."
 
 #. (itstool) path: page/title
+#: C/edit-item.page:7
+msgid "Editing Items"
+msgstr "Editando itens"
+
+#. (itstool) path: page/p
+#: C/edit-item.page:8
+msgid ""
+"Each item in the sidebar can be edited by clicking on it. The edit panel "
+"varies depending on the item type, but all items share a common set of "
+"properties at the top."
+msgstr ""
+"Cada item da barra lateral pode ser editado clicando nele. O painel de "
+"edição varia dependendo do tipo do item, mas todos os itens compartilham um "
+"conjunto comum de propriedades no topo."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:10
+msgid "Name and Position"
+msgstr "Nome e Posição"
+
+# Sugerir mudança na interface para Base e Topo ao invés de Baixo e Cima.
+#. (itstool) path: section/p
+#: C/edit-item.page:11
+msgid ""
+"All items have a name, which is shown in the legend and the sidebar, and can "
+"be changed freely. Note that the naming does support LaTeX notation with the "
+"help of dollar signs. So for instance $\\mu_0$ will provide the Greek letter "
+"μ with a 0 as subscript. Each item can also be assigned to a specific axis: "
+"the X position can be set to either the bottom or top axis, and the Y "
+"position to either the left or right axis. This allows multiple datasets "
+"with different scales to be displayed on the same figure."
+msgstr ""
+"Todos os itens possuem um nome, o qual é exibido na legenda e na barra "
+"lateral, e pode ser alterado livremente. Note que a nomeação suporta notação "
+"LaTeX com o uso de cifrão (símbolo: $). Por exemplo $\\mu_0$ fornecerá a "
+"letra grega μ subscrita por um 0 (zero). Cada item pode ser atribuído a um "
+"eixo específico: a posição X pode ser atribuída a “Baixo” ou à “Cima”, e "
+"a posição Y à “Esquerda” ou à “Direita”. Isso permite múltiplos "
+"conjuntos de dados de diferentes escalas serem exibidos na mesma figura."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:14
+msgid "Datasets: Line and Markers"
+msgstr "Conjuntos de dados: linhas e marcadores"
+
+# Seria melhor adotar nomes diferentes: dados importados e dados simulados. Recomendar alteração.
+#. (itstool) path: section/p
+#: C/edit-item.page:15
+msgid ""
+"For datasets and generated datasets, the following appearance options are "
+"available:"
+msgstr ""
+"Para Conjuntos de dados e Conjuntos de dados gerados, as seguintes opções de "
+"aparência estão disponíveis:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:18 C/edit-style.page:52
+msgid "Linestyle"
+msgstr "Estilo de linha"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:19
+msgid ""
+"The style of the line connecting data points. Options are None, Solid, "
+"Dotted, Dashed, and Dashdot. When set to None, no line is drawn between "
+"points."
+msgstr ""
+"Estilo da linha que conecta pontos amostrais. As opções são: Nenhum, Sólido, "
+"Pontilhado, Tracejado, e Traço-Ponto. Quando Nenhum estiver selecionado, não "
+"se desenhará uma linha conectando os pontos."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:22
+msgid "Linewidth"
+msgstr "Espessura"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:23
+msgid ""
+"The thickness of the line. Only enabled when a linestyle other than None is "
+"selected."
+msgstr ""
+"É a espessura da linha. Apenas estará habilitada quando um estilo de linha "
+"diferente de Nenhum estiver selecionado."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:26 C/edit-style.page:60
+msgid "Markers"
+msgstr "Marcadores"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:27
+msgid ""
+"The shape drawn at each data point. A wide range of marker shapes is "
+"available, including circles, squares, triangles, stars, diamonds, and more. "
+"Set to None to draw no markers."
+msgstr ""
+"É a forma geométrica desenhadas em cada ponto amostral. Uma ampla gama de "
+"formas está disponível incluindo: círculos, quadrados, triângulos, estrelas, "
+"diamantes, e outras. Escolha Nenhum para não desenhar marcador algum."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:30 C/edit-style.page:64
+msgid "Marker Size"
+msgstr "Tamanho do marcador"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:31
+msgid ""
+"The size of the markers. Only enabled when a marker style other than None is "
+"selected."
+msgstr ""
+"É o tamanho do marcador. Só estará habilitado quando um marcador diferente "
+"de Nenhum estiver selecionado."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:36
+msgid "Equations: Line and Equation"
+msgstr "Equações: linha e equação"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:37
+msgid ""
+"Equation items expose the equation itself for editing directly in the edit "
+"panel. A <em>Simplify</em> button is available to simplify the expression "
+"algebraically. The available line options are the same as for datasets, "
+"except that markers are not supported for equations."
+msgstr ""
+"O item equação expõe a expressão matemática para edição diretamente no "
+"painel. Um botão <em>Simplificar</em> está disponível para simplificar a "
+"expressão algebricamente. As opções de linha disponíveis são as mesmas para "
+"dados, exceto os marcadores que não são suportados para equações."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:40
+msgid "Generated Data: Equation and Range"
+msgstr "Dados gerados: equação e domínio"
+
+# Seria melhor redefinir os termos para dataset e generated datasets para evitar confusão.
+#. (itstool) path: section/p
+#: C/edit-item.page:41
+msgid ""
+"Generated datasets have the same options as regular datasets. Additionally, "
+"they expose the same equation field as equation items, along with controls "
+"for the X range and resolution. The <em>X Start</em> and <em>X Stop</em> "
+"fields define the bounds of the generated data. The <em>Steps</em> field "
+"controls how many data points are generated. The <em>Scale</em> setting "
+"determines the spacing between those points, with the following options "
+"available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, "
+"Square Root, and Inverse."
+msgstr ""
+"Conjuntos de dados gerados têm as mesmas opções dos conjuntos de dados "
+"(importados). Adicionalmente, eles exibem o mesmo campo de equação que os "
+"itens Equação, juntamente com os controles para o domínio dos valores de X e "
+"sua resolução. Os campos <em>Início de X</em> e <em>Fim de X</em> definem os "
+"limites dos dados gerados. A configuração <em>Passos</em> determina o "
+"espaçamento entre esses pontos com as seguintes opções disponíveis: Linear, "
+"Logarítmica (Base 10), Logarítmica (Base 2), Radianos, Raiz quadrada e "
+"Inverso."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:44 C/edit-style.page:70 C/import.page:45
+msgid "Error Bars"
+msgstr "Barras de erro"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:45
+msgid ""
+"For datasets that have error bar data, the appearance of the error bars can "
+"be configured in the <em>Error Bars</em> section:"
+msgstr ""
+"Para conjuntos de dados que contêm dados das barras de erro, a aparência "
+"delas pode ser configurada na seção <em>Barras de erros</em>:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:48
+msgid "Show Horizontal / Show Vertical"
+msgstr "Mostrar horizontal / Mostrar vertical"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:49
+msgid ""
+"Toggle the visibility of horizontal (X) and vertical (Y) error bars "
+"independently."
+msgstr ""
+"Alterne a visibilidade das barras de erro horizontal (X) e vertical (Y) "
+"independentemente."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:52 C/edit-style.page:86
+msgid "Draw Above Data"
+msgstr "Sobrepor aos dados"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:53 C/edit-style.page:87
+msgid ""
+"When enabled, error bars are drawn on top of the data line and markers "
+"rather than beneath them."
+msgstr ""
+"Quando habilitado, as barras de erro são desenhadas por cima da linha e dos "
+"marcadores ao invés de por baixo deles."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:56
+msgid "Color"
+msgstr "Cor"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:57
+msgid "The color of the error bars, set independently from the line color."
+msgstr "A cor das barras de erro, escolhida independentemente da cor da linha."
+
+# "Cap" se refere a um acabamento nas extremidades das barras de erro. Ele é traduzido como "Remate" no Excel ou "Traço terminal" em algumas linguagens de programação. Usarei "Remate" porque além de representar bem o acabamento no traçado, é uma palavra curta adequada para o espaço na interface do usuário. 
+#. (itstool) path: item/title
+#: C/edit-item.page:60 C/edit-style.page:74
+msgid "Cap Length"
+msgstr "Comprimento do remate"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:61 C/edit-style.page:75
+msgid "The length of the horizontal cap at the end of each error bar."
+msgstr "O comprimento do remate horizontal ao final de cada barra de erro."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:64 C/edit-style.page:78
+msgid "Cap Thickness"
+msgstr "Espessura do remate"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:65 C/edit-style.page:79
+msgid "The thickness of the cap lines."
+msgstr "A espessura da linha do remate."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:68 C/edit-style.page:56 C/edit-style.page:82
+msgid "Line Width"
+msgstr "Largura da linha"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:69 C/edit-style.page:83
+msgid "The thickness of the error bar lines."
+msgstr "A espessura da linha da barra de erro."
+
+#. (itstool) path: page/title
+#: C/edit-style.page:7
+msgid "Styles"
+msgstr "Estilos"
+
+#. (itstool) path: page/p
+#: C/edit-style.page:8
+msgid ""
+"Styles control the overall appearance of the plots, including colors, fonts, "
+"line widths, ticks, grid, and more. Graphs comes with a selection of built-"
+"in styles to choose from, and you can create and edit your own to get "
+"exactly the look you want."
+msgstr ""
+"Estilos controla a estética geral dos gráficos incluindo: cores, fontes "
+"tipográficas, espessura das linhas, marcas, grade, e mais. O Gráficos vem com "
+"uma seleção de estilos predefinidos para serem escolhidos, e você pode criar "
+"e editar seu próprio estilo para obter exatamente a aparência que desejar."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:10
+msgid "Applying a Style"
+msgstr "Aplicando um estilo"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:11
+msgid ""
+"The active style is selected from the Figure Settings panel, accessible in "
+"the sidebar in the top corner. See <link xref=\"figure-settings\"/>for more "
+"information. In the Appearance section, the current style name is shown. "
+"Clicking it opens the style picker, which displays all available styles as "
+"previews. Click any style to apply it to the figure immediately. When "
+"switching styles, item colors, markers and line widths are automatically "
+"remapped to match the new style's color cycle. Any item properties that were "
+"changed previously, however, are preserved when changing styles."
+msgstr ""
+"O estilo ativo é selecionado no painel Configurações de figura que está "
+"acessível na barra lateral no canto superior. Veja <link xref=\"figure-"
+"settings\"/> para mais informações. Na seção Aparência, o nome do estilo "
+"vigente é exibido. Clicar nele abrirá um seletor de estilos que exibirá "
+"todos os estilos disponíveis como prévias. Clique em qualquer estilo para "
+"aplicá-lo imediatamente à figura. Ao trocar o estilo, a cor dos itens, "
+"marcadores e espessura das linhas são automaticamente remapeados para "
+"corresponder às cores do novo estilo. Qualquer propriedade que tenha sido "
+"alterada previamente, contudo, será preservada ao trocar o estilo."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:15
+msgid "Creating and Managing Styles"
+msgstr "Criando e gerenciando estilos"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:16
+msgid ""
+"To manage styles, press the <em>Manage</em> button on the style picker page, "
+"or open the Style Editor from the application menu. The Style Editor shows "
+"all available styles as previews."
+msgstr ""
+"Para gerenciar os estilos, pressione o botão <em>Gerir</em> na página do "
+"seletor de estilos ou abra o Editor de estilo no menu da aplicação. O Editor "
+"de estilo exibe todos os estilos disponíveis como prévias."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:17
+msgid ""
+"To create a new style, press <em>Create Style…</em>, choose an existing "
+"style as a starting template, and give it a name. Your new style opens in "
+"the editor immediately, ready to customize. Changes are shown automatically "
+"in the preview as you edit."
+msgstr ""
+"Para criar um novo estilo: pressione <em>Criar estilo…</em>; escolha um "
+"estilo existente como modelo de partida; e dê-lhe um nome. Seu novo estilo "
+"se abrirá no editor imediatamente pronto para customização. As mudanças "
+"serão exibidas automaticamente na pré-visualização conforme você editar."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:20
+msgid "Importing and Exporting Styles"
+msgstr "Importando e exportando estilos"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:21
+msgid ""
+"Custom styles can be shared and loaded by saving them to and loading them "
+"from files in the Style Editor. To save a style, simply open your custom "
+"style and choose <em>Save Style as…</em> from the primary menu. You can "
+"import new styles using <em>Import File…</em> in the Style Editor, or open "
+"new styles for editing using the <em>Open File…</em> option."
+msgstr ""
+"Estilos personalizados podem ser compartilhados e carregados a partir de "
+"arquivos no Editor de estilos. Para salvar um estilo, simplesmente abra seu "
+"estilo customizado e escolha <em>Salvar o estilo como…</em> no menu "
+"primário. Você pode importar novos estilos usando <em>Importar arquivo…</"
+"em> no Editor de estilo, ou abrir novos estilos para edição usando a opção "
+"<em>Abrir arquivo…</em>."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:24
+msgid "Changing a Style"
+msgstr "Modificando um estilo"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:25
+msgid "When changing a style, the following options can be set:"
+msgstr "Ao modificar um estilo, as seguintes opções podem ser definidas:"
+
+#. (itstool) path: section/title
+#: C/edit-style.page:27
+msgid "General"
+msgstr "Geral"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:30
+msgid "Style Name"
+msgstr "Nome do estilo"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:31
+msgid "The name of the style as it appears in the style picker."
+msgstr "O nome do estilo como aparece no seletor de estilos."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:34
+msgid "Font"
+msgstr "Fonte"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:35
+msgid ""
+"The font used for all text in the figure, including axis labels, tick "
+"labels, the title, and the legend."
+msgstr ""
+"A fonte usada para todos os textos na figura incluindo: rótulos dos eixos, "
+"rótulos das marcas, o título e a legenda."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:38
+msgid "Title Size"
+msgstr "Tamanho do título"
+
+# O tamanho geral usado no estilo é definido no campo Fonte. Referenciar diretamente facilitará o uso.
+#. (itstool) path: item/p
+#: C/edit-style.page:39
+msgid "The size of the figure title relative to the base text size."
+msgstr ""
+"O tamanho do título da figura relativamente ao tamanho definido na fonte."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:42
+msgid "Label Size"
+msgstr "Tamanho do rótulo"
+
+# O tamanho geral usado no estilo é definido no campo Fonte. Referenciar diretamente facilitará o uso.
+#. (itstool) path: item/p
+#: C/edit-style.page:43
+msgid "The size of axis labels relative to the base text size."
+msgstr ""
+"O tamanho dos rótulos dos eixos relativamente ao tamanho definido na fonte."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:48
+msgid "Lines"
+msgstr "Linhas"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:49
+msgid ""
+"These settings define the default appearance for new items. They can be "
+"overridden per item in the item editor."
+msgstr ""
+"Essas configurações predefinem a aparência para novos itens. Elas podem ser "
+"sobrescritas individualmente no editor do item."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:53
+msgid ""
+"The default line style for new items: None, Solid, Dotted, Dashed, or "
+"Dashdot. Line width is only configurable when a style other than None is "
+"selected."
+msgstr ""
+"O estilo predefinido de linha para novos itens: Nenhum, Sólida, Pontilhada, "
+"Tracejada, ou Traço e Ponto. A Largura da linha somente é configurável "
+"quando um estilo diferente de Nenhum está selecionado."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:57
+msgid "The default thickness of lines."
+msgstr "A Largura predefinida para Linha."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:61
+msgid ""
+"The default marker shape drawn at each data point. A wide range of shapes is "
+"available. Marker size is only configurable when a marker other than None is "
+"selected."
+msgstr ""
+"A forma predefinida de Marcadores desenhada em cada ponto de dados. Uma "
+"ampla gama de formas está disponível. O tamanho do Marcador somente é "
+"configurável quando um marcador diferente de Nenhum está selecionado."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:65
+msgid "The default size of markers."
+msgstr "O tamanho predefinido para Marcadores."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:71
+msgid ""
+"Default appearance settings for error bars, applied to new items. These can "
+"be overridden per item in the item editor."
+msgstr ""
+"A aparência predefinida para Barras de erro que é aplicada a novos itens. "
+"Elas podem ser sobrescritas individualmente no editor do item."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:92
+msgid "Axes"
+msgstr "Eixos"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:95
+msgid "Axis Width"
+msgstr "Largura do eixo"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:96
+msgid "The thickness of the axis lines."
+msgstr "A largura da linha dos eixos."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:99
+msgid "Draw Frame"
+msgstr "Emoldurar plotagem"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:100
+msgid ""
+"When enabled, a full rectangular frame is drawn around the plot area. When "
+"disabled, only the axes that are in use are shown."
+msgstr ""
+"Quando habilitada, uma moldura retangular é desenhada ao redor da área de "
+"plotagem. Quando desabilitada, apenas os eixos que estiverem em uso serão "
+"exibidos."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:105
+msgid "Ticks"
+msgstr "Marcas de escala"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:108
+msgid "Tick Direction"
+msgstr "Direções das marcas"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:109
+msgid "Whether tick marks point inwards or outwards."
+msgstr "Se as marcas apontam para dentro ou para fora."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:112
+msgid "Minor Ticks"
+msgstr "Marcas secundárias"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:113
+msgid ""
+"When enabled, minor tick marks are shown between the major ticks. Minor tick "
+"width and length become configurable when this is on."
+msgstr ""
+"Quando habilitada, marcas secundárias são exibidas entre as marcas "
+"principais. A largura e o comprimento das marcas secundárias serão "
+"configuráveis quando esta opção estiver habilitada."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:116
+msgid "Major Tick Width / Length"
+msgstr "Largura / Comprimento das marcas principais"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:117
+msgid "The thickness and length of major tick marks."
+msgstr "A largura e o comprimento das marcas principais."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:120
+msgid "Minor Tick Width / Length"
+msgstr "Largura / Comprimento das marcas secundárias"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:121
+msgid "The thickness and length of minor tick marks."
+msgstr "A largura e o comprimento das marcas secundárias."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:124
+msgid "Show Tick Labels on all Axes"
+msgstr "Mostrar os rótulos das marcas em todos os eixos."
+
+# Ao ler a msg em inglês, achei que os rótulos apareceriam em ambos os lados de um mesmo eixo. Ao reproduzir no aplicativo, descobri que na realidade ele se referia aos lados da área de plotagem (limite exterior da área quadriculada).
+#. (itstool) path: item/p
+#: C/edit-style.page:125
+msgid ""
+"When enabled, tick labels are shown on all visible axes with ticks rather "
+"than only the axes with data. To show tick labels on both sides of each "
+"axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
+msgstr ""
+"Quando habilitada, os rótulos das marcas são exibidos em todos os eixos "
+"visíveis com marcas ao invés de exibir apenas naqueles com dados. Para "
+"exibir os rótulos das marcas em ambos os dados da área de plotagem, garanta "
+"que <em>Emoldurar plotagem</em> esteja habilitado para que esses eixos "
+"apareçam."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:128
+msgid "Ticks on Bottom / Top / Left / Right Axis"
+msgstr "Marcas no eixo inferior / superior / esquerdo / direito"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:129
+msgid "Each axis can have its tick marks toggled on or off independently."
+msgstr ""
+"Cada eixo pode ter suas marcas ativadas ou desativadas independentemente."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:134
+msgid "Grid"
+msgstr "Grade"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:137
+msgid "Show Grid"
+msgstr "Mostrar grade"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:138
+msgid "Toggles the visibility of the background grid."
+msgstr "Alterna a visibilidade da grade de fundo."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:141
+msgid "Grid Width"
+msgstr "Largura da grade"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:142
+msgid ""
+"The thickness of grid lines. Only configurable when the grid is enabled."
+msgstr ""
+"É a largura das linhas da grade. Somente configurável quando a grade está "
+"habilitada."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:145
+msgid "Grid Opacity"
+msgstr "Opacidade da grade"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:146
+msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgstr ""
+"É a transparência das linhas da grade, de 0 (invisível) a 1 (totalmente "
+"opaca)."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:151
+msgid "Padding"
+msgstr "Espaçamento"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:154
+msgid "Value Padding"
+msgstr "Valor do espaçamento"
+
+# Os tracinhos sobre o eixo são chamados de Graduações. Os valores numéricos correspondentes às graduações são as Marcas de Escala. 
+#. (itstool) path: item/p
+#: C/edit-style.page:155
+msgid "The spacing between the axes and the tick value labels."
+msgstr ""
+"É o espaçamento entre os eixos e os valores das graduações (marcas de "
+"escala)."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:158
+msgid "Label Padding"
+msgstr "Espaçamento do rótulo"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:159
+msgid "The spacing between the axes and the axis labels."
+msgstr "É o espaçamento entre os eixos e seus rótulos."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:162
+msgid "Title Padding"
+msgstr "Espaçamento do título"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:163
+msgid "The spacing between the plot area and the figure title."
+msgstr "É o espaçamento entre a área de plotagem e o título da figura."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:168
+msgid "Colors"
+msgstr "Cores"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:169
+msgid ""
+"The following figure colors can each be set independently: Text, Ticks, "
+"Axes, Grid, Background, and Outline."
+msgstr ""
+"As seguintes cores da figura podem ser escolhidas independentemente: Texto, "
+"Marcas de escala, Eixos, Grade, Área de plotagem, Entorno. "
+
+#. (itstool) path: section/title
+#: C/edit-style.page:172
+msgid "Line Colors and Error Bar Colors"
+msgstr "Cores das linhas e Cores das barras  de erro"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:173
+msgid ""
+"The line color cycle defines the sequence of colors automatically assigned "
+"to new items as they are added to the figure. Colors can be added using the "
+"<em>Add Color</em> button, removed individually, and reordered by dragging. "
+"A separate color cycle is available for error bars."
+msgstr ""
+"A paleta de cores da Linha define a sequência de cores automaticamente "
+"associada a novos itens conforme eles forem adicionados à figura. Cores "
+"podem ser adicionadas usando o botão <em>Adicionar cor</em>; removidas "
+"individualmente; e reordenadas ao arrastar. Uma paleta independente está "
+"disponível para as barras de erro."
+
+#. (itstool) path: page/title
+#: C/export.page:7
+msgid "Exporting"
+msgstr "Exportando"
+
+#. (itstool) path: page/p
+#: C/export.page:8
+msgid ""
+"Graphs can export both the figure as an image and the underlying data as "
+"files. Both options are available from the application menu."
+msgstr ""
+"O Gráficos pode exportar a figura como uma imagem e os dados subjacentes como "
+"arquivos. Ambas as opções estão disponíveis através do menu do aplicativo."
+
+#. (itstool) path: section/title
+#: C/export.page:10
+msgid "Exporting the Figure"
+msgstr "Exportando a figura"
+
+#. (itstool) path: section/p
+#: C/export.page:11
+msgid ""
+"To export the figure as an image, open the application menu and choose "
+"<em>Export Figure…</em>. The export dialog offers the following options:"
+msgstr ""
+"Para exportar a figura como uma imagem, abra o menu do aplicativo e escolha "
+"<em>Exportar figura…</em>. O diálogo de exportação oferece as seguintes "
+"opções:"
+
+#. (itstool) path: item/title
+#: C/export.page:14
+msgid "File Format"
+msgstr "Formato do arquivo"
+
+#. (itstool) path: item/p
+#: C/export.page:15
+msgid ""
+"The image format to export to. The following formats are supported: PNG, "
+"JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most "
+"purposes PNG is a good choice. SVG and PDF produce vector output that scales "
+"to any size without loss of quality, making them well suited for use in "
+"publications and presentations."
+msgstr ""
+"O formato de imagem usado na exportação. Os seguintes formatos são "
+"suportados: PNG, JPEG, WebP, SVG, PDF, PostScript, e PostScript Encapsulado. "
+"Para a maioria dos propósitos, PNG é uma boa escolha. SVG e PDF produzem "
+"saída vetorizada que redimensiona para qualquer tamanho sem perda de "
+"qualidade, tornam-se adequados para uso em publicações e apresentações."
+
+#. (itstool) path: item/title
+#: C/export.page:18
+msgid "Transparent Background"
+msgstr "Transparência do fundo"
+
+#. (itstool) path: item/p
+#: C/export.page:19
+msgid ""
+"When enabled, the figure background is exported as transparent rather than "
+"filled with the style's background color. This is useful when embedding the "
+"figure into a document or presentation with its own background."
+msgstr ""
+"Quando ativado, o fundo da figura é exportado como transparente ao invés de "
+"preenchido com as cores de fundo do estilo. Isso é útil ao inserir a figura "
+"em um documento ou apresentação com cores de fundo próprias."
+
+#. (itstool) path: item/title
+#: C/export.page:22
+msgid "Width and Height"
+msgstr "Largura e altura"
+
+#. (itstool) path: item/p
+#: C/export.page:23
+msgid ""
+"The pixel dimensions of the exported image, between 100 and 7680 pixels wide "
+"and 100 and 4320 pixels tall. Press <em>Use Same Size as App</em> to "
+"automatically fill in the current size of the canvas as it appears on screen."
+msgstr ""
+"Dimensões em pixels da imagem exportada entre: 100 e 7680 pixels de largura; "
+"100 e 4320 pixels de altura. Pressione <em>Use o mesmo tamanho do programa</"
+"em> para preencher automaticamente do modo como está exibido na tela."
+
+#. (itstool) path: section/title
+#: C/export.page:29
+msgid "Exporting Data"
+msgstr "Exportando dados"
+
+#. (itstool) path: section/p
+#: C/export.page:30
+msgid ""
+"To export the underlying dataset values to a file, open the application menu "
+"and choose <em>Export Data…</em>. This exports the current data for all "
+"items in the project."
+msgstr ""
+"Para exportar o conjunto de dados para um arquivo, abra o menu do aplicativo "
+"e escolha <em>Exportar dados…</em>. Isso exportará os dados vigentes para "
+"todos os itens no projeto."
+
+#. (itstool) path: page/title
+#. (itstool) path: section/title
+#: C/figure-settings.page:7 C/window.page:68
+msgid "Figure Settings"
+msgstr "Ajustes da figura"
+
+#. (itstool) path: page/p
+#: C/figure-settings.page:8
+msgid ""
+"The Figure Settings panel controls the labels, axis limits, scaling, and "
+"general appearance of the figure. It can be opened by pressing the settings "
+"button in the top right of the sidebar. The current settings can be saved as "
+"the default for all new projects using the <em>Set as Default</em> button at "
+"the bottom of the panel."
+msgstr ""
+"O painel Ajustes da figura controla os rótulos, limites dos eixos, escala, e "
+"a aparência geral da figura. Ele pode ser aberto pressionando o botão de "
+"engrenagem no topo à direita na barra lateral. Os ajustes vigentes podem ser "
+"salvos como predefinição para todos os novos projetos usando o botão "
+"<em>Definir como padrão</em> na base do painel."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:10
+msgid "Labels"
+msgstr "Rótulos"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:11
+msgid ""
+"A title can be set for the figure, and a label can be set for each axis "
+"independently. Only the labels for axes that are currently in use are shown. "
+"Labels and the title can also be edited directly on the canvas by clicking "
+"on them."
+msgstr ""
+"Um título pode ser dado à figura, e rótulos podem ser atribuídos aos eixos "
+"independentemente. Apenas rótulos para os eixos atualmente em uso são "
+"exibidos. Rótulos e Título também podem ser editados diretamente na tela ao "
+"clicar neles."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:14
+msgid "Axis Limits"
+msgstr "Limites do eixo"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:15
+msgid ""
+"The minimum and maximum values for each axis can be set manually. Only the "
+"limits for axes that are currently in use are shown. Leaving a limit field "
+"empty allows Graphs to determine the range automatically based on the data. "
+"The view can also be reset to fit all data at any time using the "
+"<em>Optimize Limits</em> action."
+msgstr ""
+"Os valores mínimo e máximo de cada eixo podem ser definidos manualmente. "
+"Apenas limites para os eixos atualmente em uso são exibidos. Deixar um campo "
+"de limite vazio atribui ao Gráficos determinar seu valor automaticamente com "
+"base nos dados. A visualização pode ser redefinida para abranger todos os "
+"dados a qualquer momento usando a ação <em>Otimizar limites da vista</em>."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:18
+msgid "Scaling"
+msgstr "Configuração de escala"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:19
+msgid "Each axis can be set to one of the following scales independently:"
+msgstr ""
+"Cada eixo pode ser configurado independentemente para um dos seguintes tipos "
+"de escala:"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:23
+msgid "Equal spacing between values. The default scale for most data."
+msgstr ""
+"A distância entre graduações é uniforme entre valores. É a escala "
+"predefinida para a maioria dos dados."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:26
+msgid "Logarithmic (Base 10)"
+msgstr "Logarítmico (Base 10)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:27
+msgid ""
+"Spacing based on powers of 10. Useful for data spanning several orders of "
+"magnitude."
+msgstr ""
+"A distância entre graduações é baseado em potências de 10. Útil para dados "
+"abrangendo várias ordens de grandeza."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:30
+msgid "Logarithmic (Base 2)"
+msgstr "Logarítmico (Base 2)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:31
+msgid "Spacing based on powers of 2."
+msgstr "A distância entre graduações é baseado em potências de 2."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:34
+msgid "Radians"
+msgstr "Radianos"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:35
+msgid "Axis ticks are expressed as multiples of π."
+msgstr "As marcas de escala são múltiplas de π."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:38
+msgid "Square Root"
+msgstr "Raiz quadrada"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:39
+msgid "Spacing based on the square root of values."
+msgstr "A distância entre graduações é baseada na raiz quadrada dos valores."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:42
+msgid "Inverse"
+msgstr "Inverso"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:43
+msgid "Spacing based on the reciprocal of values."
+msgstr "A distância entre graduações é baseada no recíproco dos valores."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:48
+msgid "Appearance"
+msgstr "Aparência"
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:51
+msgid "Show Legend"
+msgstr "Mostrar legenda"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:52
+msgid ""
+"Toggles the visibility of the legend. When enabled, the legend position can "
+"be set to one of several locations on the figure, or left on Auto to let "
+"Graphs choose the least obstructive position."
+msgstr ""
+"Alterna a visibilidade da legenda. Quando ativada, a posição da legenda pode "
+"ser escolhida dentre várias localizações na figura ou deixada em Automático "
+"para que o Gráficos determine a posição menos obstrutiva"
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:55
+msgid "Hide Unselected Items"
+msgstr "Ocultar itens não selecionados"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:56
+msgid ""
+"When enabled, only items that are currently selected in the sidebar are "
+"shown on the canvas. This is useful for focusing on a subset of the data "
+"without deleting anything."
+msgstr ""
+"Quando ativada, somente os itens que estão atualmente selecionados na barra "
+"lateral serão exibidos na área de plotagem. Isso é útil para focar em um "
+"subconjunto dos dados sem precisar apagar os demais."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:59
+msgid "Style"
+msgstr "Estilo"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:60
+msgid ""
+"Shows the currently active style and opens the style picker when clicked. "
+"See <link xref=\"edit-style\"/>for details on creating and editing styles."
+msgstr ""
+"Exibe o Estilo ativo e abre o seletor de estilos quando clicado. Veja <link "
+"xref=\"edit-style\"/> para detalhes sobre criação e edição de estilos."
+
+#. (itstool) path: page/title
+#: C/import.page:7
+msgid "Adding Data"
+msgstr "Adicionando dados"
+
+#. (itstool) path: page/p
 #: C/import.page:8
-msgid "Importing Data"
-msgstr "Importando dados"
+msgid "There are three different types of data items in Graphs:"
+msgstr "Há três diferentes tipos de itens de dados no Gráficos:"
 
-#. (itstool) path: page/p
-#: C/import.page:9
+#. (itstool) path: item/p
+#: C/import.page:11
 msgid ""
-"There are two primary ways to import new data in Graphs, importing data "
-"directly by file or generating new data using an equation."
+"<link xref=\"#dataset\"> <em>Dataset</em> </link>: Data imported from a file "
+"or database."
 msgstr ""
-"Existem duas maneiras principais de importar novos dados no Gráficos: "
-"importando dados diretamente por arquivo ou gerando novos dados usando uma "
-"equação."
+"<link xref=\"#dataset\"> <em>Conjuntos de dados</em> </link>: Dados "
+"importados de um arquivo ou banco de dados."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:14
-msgctxt "_"
-msgid ""
-"external ref='media/add_data_light.png' "
-"md5='5246da95eb47c74c7488f9b9016dde3d'"
-msgstr ""
-"external ref='media/add_data_light.png' "
-"md5='5246da95eb47c74c7488f9b9016dde3d'"
-
-#. (itstool) path: page/p
+#. (itstool) path: item/p
 #: C/import.page:16
 msgid ""
-"A wide array of filetypes are supported when importing data by file. Graphs "
-"currently supports Panalytical .xrdml files, Leybold .xry files as well as "
-"files that are saved in a column format such as most .csv files, .dat "
-"files, .xy files or plain text. Finally, data from other Graphs projects can "
-"be imported into the current project as well, simply by adding new data as "
-"usual, but by selecting a project file instead."
+"<link xref=\"#generated\"> <em>Generated Dataset</em> </link>: Data "
+"generated from an equation over a fixed set of points."
 msgstr ""
-"Uma grande variedade de tipos de arquivos são suportados ao importar dados "
-"por arquivo. Atualmente, o Gráficos suporta arquivos Panalytical .xrdml, "
-"Leybold .xry, bem como arquivos salvos em um formato de coluna, como a "
-"maioria dos arquivos .csv, .dat, .xy ou texto simples. Finalmente, os dados "
-"de outros projetos do Gráficos também podem ser importados para o projeto "
-"atual, simplesmente adicionando novos dados como de costume, mas "
-"selecionando um arquivo de projeto."
+"<link xref=\"#generated\"> <em>Conjuntos de dados gerados</em> </link>: "
+"Dados gerados a partir de uma equação sobre um conjunto finito de pontos."
 
-#. (itstool) path: page/p
-#: C/import.page:25
+#. (itstool) path: item/p
+#: C/import.page:21
 msgid ""
-"When using a custom delimiter during the import, an extra field will be "
-"visible to enter the delimiter of choice. This field recognizes regular "
-"expressions. For example, to choose a delimiter that looks for whitespace, "
-"one could enter <code>\\s+</code> as delimiter. In this example, <code>\\s</"
-"code> denotes that the delimiter is a whitespace character, and the <code>+</"
-"code> denotes that at least one or more whitespace is required. Thus this "
-"input looks for any amount of whitespaces including tabs. Note that this "
-"particular input is equivalent to the default Whitespace option."
+"<link xref=\"#equation\"> <em>Equation</em> </link>: A mathematical "
+"expression rendered continuously across the entire canvas."
 msgstr ""
-"Ao usar um delimitador personalizado durante a importação, um campo extra "
-"ficará visível para inserir o delimitador de sua escolha. Este campo "
-"reconhece expressões regulares. Por exemplo, para escolher um delimitador "
-"que procure espaços em branco, pode-se inserir <code>\\s+</code> como "
-"delimitador. Neste exemplo, <code>\\s</code> indica que o delimitador é um "
-"caractere de espaço em branco e <code>+</code> indica que pelo menos um ou "
-"mais espaços em branco são necessários. Portanto, esta entrada procura "
-"qualquer quantidade de espaços em branco, incluindo tabulações. Observe que "
-"esta entrada específica é equivalente à opção padrão de espaço em branco."
+"<link xref=\"#equation\"> <em>Equação</em> </link>: Uma expressão matemática "
+"desenhada continuamente em toda a área de plotagem."
 
-#. (itstool) path: page/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/import.page:36
-msgctxt "_"
+#. (itstool) path: section/title
+#: C/import.page:27
+msgid "Dataset"
+msgstr "Conjunto de dados"
+
+#. (itstool) path: section/p
+#: C/import.page:28
 msgid ""
-"external ref='media/add_equation_light.png' "
-"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+"A dataset is data imported from an external source. Graphs supports column-"
+"based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods "
+"and .xlsx), SQLite database files, Panalytical .xrdml files, and "
+"Leybold .xry files. Data from other Graphs projects can also be imported by "
+"selecting a project file."
 msgstr ""
-"external ref='media/add_equation_light.png' "
-"md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+"Um Conjunto de dados são dados importados de uma fonte externa. O Gráficos "
+"suporta arquivos colunados (tais como .csv, .dat, .xy e texto puro), "
+"planilhas (.ods e .xlsx), arquivos de banco SQLite, arquivos "
+"Panalytical .xrdml, e arquivos Lybold .xry. Dados de outros projetos "
+"do Gráficos também podem ser importados ao selecionar um arquivo de projeto."
 
-#. (itstool) path: page/p
+#. (itstool) path: section/p
+#: C/import.page:29
+msgid ""
+"To import data, press the <em>Add</em> button in the top left of the sidebar "
+"and choose <em>Add Data from File…</em>. Multiple files can be added in a "
+"single import session by using the add button in the top left of the import "
+"dialog. Each file appears in the sidebar of the dialog, where it can be "
+"selected to review and adjust its settings. Graphs will attempt to guess the "
+"appropriate settings for each file automatically. Once everything looks "
+"right, press <em>Import</em> to add all files to the project."
+msgstr ""
+"Para importar dados, pressione o botão <em>Adicionar</em> no canto superior "
+"esquerdo da barra lateral e escolha <em>Adicionar dados de arquivo…</em>. "
+"Múltiplos arquivos podem ser adicionados em uma única importação usando o "
+"botão adicionar no topo esquerdo do diálogo de importação. Cada arquivo "
+"aparece na barra lateral da janela de diálogo, onde podem ser selecionados "
+"para revisar e ajustar as configurações. O Gráficos tentará adivinhar as "
+"configurações adequadas para cada arquivo automaticamente. Uma vez que tudo "
+"pareça adequado, pressione <em>Importar</em> para adicionar todos os "
+"arquivos ao projeto."
+
+#. (itstool) path: section/p
+#: C/import.page:30
+msgid ""
+"The <em>Import Mode</em> determines how a file is parsed, and is set "
+"automatically based on the file type. The available modes are described "
+"below."
+msgstr ""
+"O <em>Modo de importação</em> determina como um arquivo é interpretado e é "
+"configurado automaticamente com base no tipo de arquivo. Os modos "
+"disponíveis estão descritos abaixo."
+
+#. (itstool) path: section/title
+#: C/import.page:32
+msgid "Column-based Files"
+msgstr "Arquivos colunados"
+
+#. (itstool) path: section/p
+#: C/import.page:33
+msgid ""
+"Column-based files store data as rows of values separated by a delimiter "
+"such as a comma, tab, or whitespace. Graphs detects the delimiter "
+"automatically in most cases. When using a custom delimiter, an extra field "
+"appears where a delimiter of your choice can be entered. This field "
+"recognizes regular expressions. Using <code>\\s+</code> matches any amount "
+"of whitespace including tabs, for example, and is equivalent to the default "
+"Whitespace option."
+msgstr ""
+"Arquivos colunados armazenam dados em linhas cujos valores são separados por "
+"um delimitador como: vírgula; tabulação; ou espaço em branco. O Gráficos "
+"detecta automaticamente o delimitador na maioria dos casos. Ao usar um "
+"separador personalizado, aparecerá um campo extra no qual o delimitador da "
+"sua escolha poderá ser informado. Esse campo reconhece expressões regulares. "
+"Usar <code>\\s+</code> equipara qualquer quantidade de espaços em branco "
+"incluindo tabulações, por exemplo, e é equivalente à predefinição da opção "
+"Espaço em branco."
+
+#. (itstool) path: section/p
+#: C/import.page:34
+msgid ""
+"If a file only contains a single column of Y values, the <em>Single Column</"
+"em> option can be enabled to generate X values automatically from a "
+"configurable equation, where <code>n</code> represents the row index "
+"starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while "
+"<code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…"
+msgstr ""
+"Se um arquivo contém somente uma única coluna de valores de Y, a opção "
+"<em>Coluna única</em> pode ser ativada para gerar valores de X "
+"automaticamente de uma equação configurável onde <code>n</code> representa o "
+"índice da linha iniciando em zero. Por exemplo, <code>n</code> produz 0, 1, "
+"2, 3... enquanto <code>n*0.5</code> produz 0, 0.5, 1.0, 1.5..."
+
+#. (itstool) path: section/title
+#: C/import.page:37
+msgid "Spreadsheets"
+msgstr "Planilhas"
+
+#. (itstool) path: section/p
 #: C/import.page:38
 msgid ""
-"The other way to import data is to generate data directly using an equation. "
-"This can be done using the \"Add Equation\" button found in the top-left "
-"corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used syntax is "
-"accepted, with an <code>x</code> denoting the x-coordinate. A simple "
-"quadratic equation could for instance be created using <code>x²+5</code> as "
-"input. Be aware that trigonometric functions are using radians by default. "
-"If you want to use degrees, simply add a <code>d</code> to the trigonometric "
-"function. For instance <code>cosd(x)</code> generates a cosine where the x "
-"coordinate is given in degrees while <code>cos(x)</code> generates a cosine "
-"with the x-coordinate in radians."
+"Graphs supports importing data from .ods and .xlsx spreadsheet files. The X "
+"and Y columns are selected by their alphabetical column index, starting from "
+"zero. As with column-based files, the <em>Single Column</em> option can be "
+"used to generate X values automatically when only Y data is available. "
+"Multiple items can be configured from the same spreadsheet in a single "
+"import session by using the <em>Add Item</em> button, each with its own "
+"column selection."
 msgstr ""
-"A outra maneira de importar dados é gerar dados diretamente usando uma "
-"equação. Isso pode ser feito usando o botão “Adicionar equação” localizado "
-"no canto superior esquerdo ou pressionando <cmd>Ctrl+Alt+N</cmd>. A sintaxe "
-"mais comumente usada é aceita, com um <code>x</code> denotando a coordenada "
-"x. Uma equação quadrática simples poderia, por exemplo, ser criada usando "
-"<code>x²+5</code> como entrada. Esteja ciente de que as funções "
-"trigonométricas usam radianos por padrão. Se você quiser usar graus, basta "
-"adicionar um <code>d</code> à função trigonométrica. Por exemplo, "
-"<code>cosd(x)</code> gera um cosseno onde a coordenada x é dada em graus, "
-"enquanto <code>cos(x)</code> gera um cosseno com a coordenada x em radianos."
+"O Gráficos pode importar dados de arquivos planilhados .ods e .xlsx. As "
+"colunas X e Y são selecionadas pelo seu índice alfabético colunar, iniciando "
+"em zero. Assim como arquivos colunados, a opção <em>Coluna única</em> pode "
+"ser usada para gerar os valores de X automaticamente quando somente os "
+"valores de Y estão disponíveis. Múltiplos itens podem ser importados da "
+"mesma planilha numa única importação usando o botão <em>Adicionar item</em>, "
+"cada um com sua própria seleção de coluna. "
+
+#. (itstool) path: section/title
+#: C/import.page:41
+msgid "Databases"
+msgstr "Bases de dados"
+
+#. (itstool) path: section/p
+#: C/import.page:42
+msgid ""
+"SQLite database files are also supported. When importing a database file, "
+"the available tables are shown in a dropdown. Once a table is selected, the "
+"X and Y columns can each be chosen from the numeric columns available in "
+"that table. If a table contains no numeric columns, a warning is shown."
+msgstr ""
+"Arquivos de banco de dados SQLite também são suportados. Ao importar de um "
+"banco de dados, as tabelas são exibidas em um menu de seleção em lista. Uma "
+"vez que a tabela estiver selecionada, as colunas X e Y podem ser escolhidas "
+"dentre as colunas numéricas dessa tabela. Se não houver colunas numéricas "
+"nessa tabela, um aviso será exibido."
+
+#. (itstool) path: section/p
+#: C/import.page:46
+msgid ""
+"Datasets support optional X and Y error bars. For spreadsheet and database "
+"imports, error bars can be enabled per axis using the corresponding toggle, "
+"after which an additional column selector appears to specify which column "
+"contains the error values. Column-based file formats that natively include "
+"error bar data, such as .xrdml files, will have them imported automatically."
+msgstr ""
+"Conjuntos de dados aceitam barras de erro X e Y opcionalmente. Para "
+"importações de planilhas ou bancos de dados, as barras de erro podem ser "
+"habilitadas por eixo usando o ativador correspondente após o qual um seletor "
+"adicional de coluna aparecerá para especificar qual coluna contém os valores "
+"do erro. Arquivos colunados que nativamente incluem dados da barra de erro, "
+"como arquivos .xrdml, terão essa informação importada automaticamente."
+
+# Esta tradução não ficou confusa.
+#. (itstool) path: section/p
+#: C/import.page:47
+msgid ""
+"Once imported, error bars are preserved through most operations. When "
+"combining multiple datasets, error bars are carried over only if all "
+"selected items have them in the output."
+msgstr ""
+"Uma vez importadas, as barras de erro serão preservadas na maioria das "
+"operações. Ao combinar múltiplos conjuntos de dados, as barras de erro serão "
+"mantidas apenas se todos os itens as tiverem na saída."
+
+#. (itstool) path: section/title
+#: C/import.page:51
+msgid "Generated Datasets"
+msgstr "Conjuntos de dados gerados"
+
+#. (itstool) path: section/p
+#: C/import.page:52
+msgid ""
+"Generated datasets create data by evaluating an equation over a range of X "
+"values. To add one, press the <em>Add</em> button in the sidebar and choose "
+"<em>Generate Data…</em>. The following parameters can be configured:"
+msgstr ""
+"Conjuntos de dados gerados criam dados avaliando uma equação para uma gama "
+"de valores de X. Para adicionar um, pressione o botão <em>Adicionar</em> na "
+"barra lateral e escolha <em>Gerar dados…</em>. Os parâmetros a seguir "
+"podem ser configurados:"
+
+#. (itstool) path: item/title
+#. (itstool) path: section/title
+#: C/import.page:55 C/import.page:74
+msgid "Equation"
+msgstr "Equação"
+
+#. (itstool) path: item/p
+#: C/import.page:56
+msgid ""
+"The mathematical expression to evaluate, using <code>x</code> as the "
+"variable."
+msgstr ""
+"A expressão matemática a ser avaliada usando <code>x</code> como variável."
+
+#. (itstool) path: item/title
+#: C/import.page:59
+msgid "X Start and X Stop"
+msgstr "Início de X e fim de X"
+
+#. (itstool) path: item/p
+#: C/import.page:60
+msgid "The lower and upper bounds of the x-range to generate data over."
+msgstr "Os limites inferior e superior do intervalo de X para gerar os dados."
+
+#. (itstool) path: item/title
+#: C/import.page:63
+msgid "Steps"
+msgstr "Passos"
+
+#. (itstool) path: item/p
+#: C/import.page:64
+msgid "The number of data points to generate."
+msgstr "O número de pontos para gerar os dados."
+
+#. (itstool) path: item/title
+#: C/import.page:67
+msgid "Scale"
+msgstr "Escala"
+
+#. (itstool) path: item/p
+#: C/import.page:68
+msgid ""
+"Determines the spacing between data points. Linear spacing places points at "
+"equal intervals. Other options such as Logarithmic, Square Root, and Inverse "
+"are useful when the data or the axis it will be plotted on follows a non-"
+"linear scale."
+msgstr ""
+"Determina o espaçamento entre os pontos do domínio. Espaçamento Linear usa "
+"pontos em intervalos iguais. Outras opções como Logarítmico, Raiz quadrada, "
+"e Inverso são úteis quando os dados ou o eixo de plotagem seguem uma escala "
+"não-linear."
+
+#. (itstool) path: section/p
+#: C/import.page:71
+msgid ""
+"Generated datasets are treated the same as imported data for most purposes. "
+"However, unlike a regular dataset, the parameters used to generate the data "
+"can be changed at any time from the item editor, and the data will be "
+"regenerated accordingly."
+msgstr ""
+"Conjuntos de dados gerados são tratados do mesmo modo que dados importados "
+"para a maioria dos propósitos. Entretanto, diferentemente de conjuntos de "
+"dados tradicionais, os parâmetros usados para gerar esses dados pode ser "
+"alterado a qualquer momento a partir do editor de item que os dados serão "
+"refeitos apropriadamente."
+
+#. (itstool) path: section/p
+#: C/import.page:75
+msgid ""
+"Equation items render a mathematical expression directly and continuously "
+"across the entire canvas. To add one, press the <em>Add</em> button in the "
+"sidebar and choose <em>Add Equation…</em>, or press <keyseq> <key>Ctrl</key> "
+"<key>Alt</key> <key>N</key> </keyseq>."
+msgstr ""
+"Itens do tipo Equação desenham o gráfico da expressão matemática diretamente "
+"e continuamente por toda a área de plotagem. Para adicionar uma, pressione o "
+"botão <em>Adicionar</em> na barra lateral e escolha <em>Adicionar equação…"
+"</em> ou pressione <keyseq> <key>Ctrl</key> <key>Alt</key> <key>N</key> </"
+"keyseq>."
+
+#. (itstool) path: section/p
+#: C/import.page:82
+msgid ""
+"The expression uses <code>x</code> as the variable. Most commonly used "
+"mathematical syntax is accepted. For example, a simple quadratic can be "
+"entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or "
+"<code>1/(x+1)</code> work as expected. Trigonometric functions use radians "
+"by default. To use degrees instead, add a <code>d</code> to the function "
+"name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> "
+"uses radians."
+msgstr ""
+"A expressão usa <code>x</code> como variável. A maioria das expressões "
+"matemática comumente utilizadas é aceita. Por exemplo, uma simples "
+"quadrática pode ser inserida com <code>x²+5</code>, e expressões como "
+"<code>sin(x)*x</code> ou <code>1/(x+1)</code> funcionam como esperado. "
+"Funções trigonométricas usam radianos por padrão. Para usar graus, adicione "
+"<code>d</code> ao nome da função. Desse modo, <code>cosd(x)</code> usará "
+"graus enquanto <code>cos(x)</code> usará radianos."
+
+#. (itstool) path: section/p
+#: C/import.page:83
+msgid ""
+"One important distinction between equation items and datasets is that "
+"operations are performed analytically rather than numerically. For instance, "
+"taking the derivative of <code>x²+5</code> produces the equation <code>2·x</"
+"code> rather than a set of numerically computed slope values."
+msgstr ""
+"Uma importante distinção entre Equação e Conjuntos de dados é que operações "
+"são tratadas analiticamente ao invés de numericamente. Por exemplo, derivar "
+"<code>x²+5</code> produz a equação <code>2·x</code> ao invés de um conjunto "
+"de tangentes numericamente calculadas."
 
 #. (itstool) path: info/desc
-#: C/index.page:8
+#: C/index.page:5
 msgid "Plot and manipulate data"
 msgstr "Plote e manipule dados"
 
 #. (itstool) path: page/title
-#: C/index.page:11
-msgid "<_:media-1/> Graphs"
+#: C/index.page:7
+msgid "<_:media-1/>Graphs"
 msgstr "<_:media-1/> Gráficos"
 
-#. (itstool) path: section/title
-#: C/index.page:17
-msgid "How to"
-msgstr "Instruções"
-
-#. (itstool) path: section/p
-#: C/index.page:18
+# Entendo que "clean, native interface" foi usado como uma expressão indicando uma interface familiar aos utilizadores do GNOME; e limpa no sentido de não poluir com muitos controles deixando o utilizador sobrecarregado (poluição visual).
+#. (itstool) path: page/p
+#: C/index.page:9
 msgid ""
-"There's multiple how-to guides available for Graphs. These can be found here."
+"Graphs is a GNOME Circle application for plotting and manipulating "
+"scientific data. Import datasets from files or sqlite database files, "
+"generate data from equations, apply mathematical operations, fit curves, and "
+"export publication-ready figures, all within a clean, native interface."
 msgstr ""
-"Existem vários guias de instruções disponíveis para o Gráficos. Eles podem "
-"ser encontrados aqui."
+"O Gráficos é uma ferramenta do GNOME Circle para plotagem e manipulação de "
+"dados científicos. Importe conjuntos de dados de arquivos ou bancos SQLite, "
+"gere dados de equações, aplique operações matemáticas, ajuste curvas, e "
+"exporte figuras prontas para publicação; tudo de dentro de uma interface "
+"direta e familiar."
+
+#. (itstool) path: page/p
+#: C/index.page:10
+msgid "Use the topics below to learn how to use Graphs."
+msgstr "Utilize os tópicos abaixo para aprender como usar o Gráficos."
+
+#. (itstool) path: section/title
+#: C/index.page:12
+msgid "Topics"
+msgstr "Tópicos"
 
 #. (itstool) path: page/title
-#: C/manipulate.page:8
+#: C/manipulate.page:7
 msgid "Manipulating Data"
 msgstr "Manipulando dados"
 
 #. (itstool) path: page/p
-#: C/manipulate.page:10
+#: C/manipulate.page:8
 msgid ""
-"There are many different ways to manipulate data using Graphs. All data is "
-"treated the same using Graphs, independent what file it is imported from, or "
-"if it's a generated equation. When selecting a part of the canvas using the "
-"Highlight tool, only the highlight area will be manipulated."
+"Graphs provides a wide range of operations for manipulating data. All "
+"operations work the same regardless of whether the item was imported from a "
+"file or generated from an equation. When a region of the canvas is selected "
+"using the Select tool, only data within that region will be affected."
 msgstr ""
-"Existem muitas maneiras diferentes de manipular dados usando o Gráficos. "
-"Todos os dados são tratados da mesma forma pelo aplicativo, "
-"independentemente do arquivo de onde são importados ou se é uma equação "
-"gerada. Ao selecionar uma parte da tela usando a ferramenta de destaque, "
-"apenas a área destacada será manipulada."
+"Gráficos provê uma ampla gama de operações para manipulação de dados. Todas "
+"as operações funcionam da mesma maneira independentemente do item ter sido "
+"importado de um arquivo ou gerado a partir de uma equação. Quando uma região "
+"da tela é selecionada usando a Ferramenta de Seleção, apenas os dados dentro "
+"da região selecionada serão afetados."
 
-#. (itstool) path: section/title
-#: C/manipulate.page:18
-msgid "Smoothening"
-msgstr "Suavizando"
+#. (itstool) path: item/p
+#: C/manipulate.page:11
+msgid ""
+"<link xref=\"#translate\">Translate</link>: Shift data along the X or Y axis."
+msgstr ""
+"<link xref=\"#translate\">Transladar</link>: desloca o dado ao longo dos "
+"eixos X ou Y."
 
-#. (itstool) path: section/p
+#. (itstool) path: item/p
+#: C/manipulate.page:15
+msgid ""
+"<link xref=\"#multiply\">Multiply</link>: Scale data along the X or Y axis."
+msgstr ""
+"<link xref=\"#multiply\">Multiplicar</link>: escala os dados ao longo dos "
+"eixos X ou Y."
+
+#. (itstool) path: item/p
 #: C/manipulate.page:19
 msgid ""
-"The smoothening action has two different modes, a rolling average or the "
-"Savitzky-Galov filter. The moving average simply works iterating through the "
-"data set, and replacing each point by the average of the last few data "
-"points that were encountered, this way sharp outliers are ignored but "
-"details may be lost. Sudden actual changes in the data may also be detected "
-"later when a smoothening has been applied. Another way to smoothen the data "
-"is the Savitzky-Galov. The difference with the moving average, is that not a "
-"simple average is used for the last data points, but instead a polynomial "
-"function is fitted between the data points. This makes it possible to filter "
-"the underlaying signal still quite nicely out of very noisy data."
+"<link xref=\"#normalize\">Normalize</link>: Scale Y values relative to the "
+"maximum."
 msgstr ""
-"A ação de suavização possui dois modos diferentes: uma média móvel ou o "
-"filtro Savitzky-Galov. A média móvel simplesmente funciona iterando o "
-"conjunto de dados e substituindo cada ponto pela média dos últimos pontos de "
-"dados encontrados. Dessa forma, valores discrepantes são ignorados, mas os "
-"detalhes podem ser perdidos. Mudanças reais repentinas nos dados também "
-"podem ser detectadas posteriormente, quando uma suavização for aplicada. "
-"Outra forma de suavizar os dados é o Savitzky-Galov. A diferença com a média "
-"móvel é que não é usada uma média simples para os últimos pontos de dados, "
-"mas em vez disso uma função polinomial é ajustada entre os pontos de dados. "
-"Isso torna possível filtrar muito bem o sinal subjacente de dados muito "
-"ruidosos."
+"<link xref=\"#normalize\">Normalizar</link>: escala os valores de Y em "
+"relação ao seu máximo."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:23
+msgid ""
+"<link xref=\"#center\">Center</link>: Shift data so it is centered on the X "
+"axis."
+msgstr ""
+"<link xref=\"#center\">Centralizar</link>: desloca os dados centralizando-os "
+"no eixo X."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:27
+msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgstr ""
+"<link xref=\"#smoothening\">Suavizar</link>: reduz ruído no conjunto de "
+"dados."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:31
+msgid "<link xref=\"#derivative\">Derivative</link>: Compute the derivative."
+msgstr "<link xref=\"#derivative\">Derivada</link>: calcula a derivada."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:35
+msgid ""
+"<link xref=\"#integral\">Integral</link>: Compute the cumulative integral."
+msgstr "<link xref=\"#integral\">Integral</link>: calcula a integral."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:39
+msgid ""
+"<link xref=\"#fft\">Fourier Transform</link>: Transform data to the "
+"frequency domain."
+msgstr ""
+"<link xref=\"#fft\">Transformada de Fourier</link>: transforma os dados para "
+"o domínio da frequência."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:43
+msgid ""
+"<link xref=\"#combine\">Combine</link>: Merge multiple datasets into one."
+msgstr ""
+"<link xref=\"#combine\">Combinar</link>: mescla múltiplos conjuntos de dados "
+"em um."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:47
+msgid ""
+"<link xref=\"#shift\">Shift</link>: Automatically offset datasets so they do "
+"not overlap."
+msgstr ""
+"<link xref=\"#shift\">Deslocar</link>: automaticamente desloca os conjuntos "
+"de dados para que não se sobreponham."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:51
+msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgstr ""
+"<link xref=\"#cut\">Recortar</link>: remove os dados dentro da região "
+"selecionada."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:55
+msgid ""
+"<link xref=\"#custom\">Custom Transformations</link>: Apply an arbitrary "
+"equation to the X and Y coordinates."
+msgstr ""
+"<link xref=\"#custom\">Transformações personalizadas</link>: aplica uma "
+"equação arbitrária para as coordenadas X e Y."
 
 #. (itstool) path: section/title
-#: C/manipulate.page:34
+#: C/manipulate.page:60
+msgid "Translate"
+msgstr "Transladar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:61
+msgid ""
+"Translates all selected data by a fixed offset along the X or Y axis. Enter "
+"the desired offset in the corresponding entry field and apply the operation."
+msgstr ""
+"Desloca todos os dados selecionados por um valor constante ao longo dos "
+"eixos X ou Y. Insira o deslocamento desejado no campo correspondente e "
+"aplique a operação."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:64
+msgid "Multiply"
+msgstr "Multiplicar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:65
+msgid ""
+"Multiplies all selected data by a fixed factor along the X or Y axis. Enter "
+"the desired multiplier in the corresponding entry field and apply the "
+"operation."
+msgstr ""
+"Multiplica todos os dados selecionados por um fator constante ao longo dos "
+"eixos X ou Y. Insira o multiplicador desejado no campo correspondente e "
+"aplique a operação."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:68
+msgid "Normalize"
+msgstr "Normalizar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:69
+msgid ""
+"Scales the Y values of all selected data so that the maximum value becomes "
+"1. All other values are divided by that maximum accordingly."
+msgstr ""
+"Escala os valores de Y de todos os dados selecionados de modo que seu máximo "
+"se torne 1. Todos os demais valores são divididos pelo máximo."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:72
+msgid "Center"
+msgstr "Centro"
+
+# Essa tradução foi difícil pois o botão "Centralizar" na realidade deveria ser "Trazer para a origem". Ele só centraliza quando usamos a opção "pelo ponto médio de X" pois a curva fica simétrica.
+# Omiti a última frase pois ela não se aplica na versão atual da interface.
+#. (itstool) path: section/p
+#: C/manipulate.page:73
+msgid ""
+"Shifts data along the X axis so that it is centered. Two modes are "
+"available: centering on the maximum Y value, which shifts the peak of the "
+"data to zero, and centering on the middle of the X range. The mode can be "
+"configured in the smoothen settings."
+msgstr ""
+"Desloca os dados ao longo do eixo X trazendo-os para a origem do eixo. Dois "
+"modos estão disponíveis: “Pelo valor máximo de Y” que traz à origem pelo "
+"pico dos dados; e “Pelo ponto médio de X”."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:76
+msgid "Smoothen"
+msgstr "Suavizar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:77
+msgid ""
+"The smoothen operation reduces noise in a dataset. Two modes are available, "
+"configurable via the smoothen settings dialog."
+msgstr ""
+"A operação de suavização reduz o ruído no conjunto de dados. Dois modos "
+"estão disponíveis, configuráveis através da janela de diálogo configurações "
+"de suavização."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:78
+msgid ""
+"The Savitzky-Golay filter fits a polynomial through the surrounding data "
+"points rather than taking a simple average. This makes it possible to "
+"recover the underlying signal more faithfully from noisy data, and is the "
+"recommended choice in most cases."
+msgstr ""
+"O filtro Savitzky-Golay ajusta um polinômio pelos pontos vizinhos ao invés "
+"de tirar uma simples média aritmética. Isso permite recuperar o sinal mais "
+"fielmente de dados ruidosos; e é a escolha recomendada para na maioria dos "
+"casos."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:79
+msgid ""
+"The moving average replaces each point with the average of a surrounding "
+"window of points. This is simpler but may blur sharp features and cause "
+"changes in the data to appear shifted."
+msgstr ""
+"A média móvel substitui cada ponto pela média dos pontos vizinhos dentro de "
+"uma janela. Isso é mais simples, porém, pode suavizar demasiadamente eventos "
+"agudos; e deslocar a posição em que ocorrem mudanças repentinas nos dados."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:82
+msgid "Derivative"
+msgstr "Derivada"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:83
+msgid ""
+"Computes the numerical derivative of the selected data, replacing the Y "
+"values with the rate of change with respect to X. For equations, the "
+"derivative is calculated analytically."
+msgstr ""
+"Calcula a derivada numérica dos dados selecionados substituindo os valores "
+"de Y pela taxa de variação com respeito a X. Para equações, a derivada é "
+"calculada analiticamente."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:86
+msgid "Integral"
+msgstr "Integral"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:87
+msgid ""
+"Computes the cumulative integral of the selected data using the trapezoidal "
+"method, replacing the Y values with the running area under the curve. For "
+"equations, the integral is calculated analytically."
+msgstr ""
+"Calcula a integral acumulada dos dados usando o método trapezoidal "
+"substituindo os valores de Y pela área sob a curva. Para equações, a "
+"integral é calculada analiticamente."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:90
+msgid "Fourier Transform"
+msgstr "Transformada de Fourier"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:91
+msgid ""
+"Transforms the selected data from the time or spatial domain into the "
+"frequency domain using the Fast Fourier Transform. An inverse transform is "
+"also available to convert back."
+msgstr ""
+"Transforma os dados selecionados do domínio temporal ou espacial para o "
+"domínio da frequência usando a Transformada Rápida de Fourier (FFT). A "
+"transformação inversa também está disponível para voltar ao domínio original."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:94
+msgid "Combine"
+msgstr "Combinar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:95
+msgid ""
+"Merges all selected datasets into a single new dataset. The resulting data "
+"is sorted by X value. If all selected items have error bars, those are "
+"preserved in the combined output."
+msgstr ""
+"Mescla os dados selecionados em um único conjunto de dados. O resultado é "
+"ordenado pelos valores de X. Se todos os dados selecionados tiverem barras "
+"de erro, elas serão preservadas no resultado combinado."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:98
+msgid "Shift"
+msgstr "Deslocar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:99
+msgid ""
+"Automatically offsets each selected dataset along the Y axis so that the "
+"items are spread out and do not overlap one each other. The shift amount is "
+"calculated based on the range of each dataset and respects the current axis "
+"scale, including logarithmic scales."
+msgstr ""
+"Automaticamente desloca os conjuntos de dados selecionados ao longo do eixo "
+"Y de modo que eles se distanciem e não se sobreponham. A intensidade do "
+"deslocamento é calculada com base no domínio de cada conjunto de dados e "
+"respeita a escala vigente do eixo inclusive escalas logarítmicas."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:102
+msgid "Cut"
+msgstr "Recortar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:103
+msgid ""
+"Removes all data points within the currently selected region. This operation "
+"requires the Select tool to be active and a region to be highlighted on the "
+"canvas."
+msgstr ""
+"Remove todos os pontos dentro da região selecionada. Essa operação requer "
+"que o Modo de seleção esteja ativo e a região esteja destacada na área de "
+"plotagem."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:106
 msgid "Custom Transformations"
 msgstr "Transformações personalizadas"
 
 #. (itstool) path: section/p
-#: C/manipulate.page:35
+#: C/manipulate.page:107
 msgid ""
-"Another way to manipulate the data is by using custom transformations. This "
-"field transforms both X and Y coordinate piece by piece according to an "
-"equation of choice. For instance, to take the square of all Y-coordinates, "
-"simply set <code>Y = Y²</code> on the y-data field, and <code>X = X</code> "
-"on the x-data field. Note that the input coordinates are not case-sensitive."
+"Custom transformations let you modify the X and Y coordinates of a dataset "
+"point by point using equations of your choice. For instance, to square all Y "
+"values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code> "
+"in the X field. Coordinate names are not case-sensitive."
 msgstr ""
-"Outra forma de manipular os dados é usando transformações personalizadas. "
-"Este campo transforma as coordenadas X e Y peça por peça de acordo com uma "
-"equação de escolha. Por exemplo, para obter o quadrado de todas as "
-"coordenadas Y, basta definir <code>Y = Y²</code> no campo de dados y e "
-"<code>X = X</code> no campo de dados x. Observe que as coordenadas de "
-"entrada não diferenciam maiúsculas de minúsculas."
+"“Transformações personalizadas” permite modificar as coordenadas X e Y de "
+"um conjunto de dados usando equações de sua preferência. Por exemplo, para "
+"elevar ao quadrado todos os valores de Y, insira <code>Y = Y²</code> no "
+"campo de Y e deixe <code>X = X</code> no campo de X. O nome das coordenadas "
+"não diferencia entre letras maiúsculas e minúsculas."
 
-#. (itstool) path: section/media
-#. This is a reference to an external file such as an image or video. When
-#. the file changes, the md5 hash will change to let you know you need to
-#. update your localized copy. The msgstr is not used at all. Set it to
-#. whatever you like once you have updated your copy of the file.
-#: C/manipulate.page:42
-msgctxt "_"
+#. (itstool) path: section/p
+#: C/manipulate.page:109
 msgid ""
-"external ref='media/custom_transform_light.png' "
-"md5='311f5286f3372e5fea1431dd6a63d666'"
+"<b>The following extra variables are available for custom transformations:</"
+"b>"
 msgstr ""
-"external ref='media/custom_transform_light.png' "
-"md5='311f5286f3372e5fea1431dd6a63d666'"
+"<b>As seguintes variáveis extras estão disponíveis para Transformações "
+"personalizadas:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:111
+msgid "<b>General:</b>"
+msgstr "<b>Geral:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:113
+msgid "<code>x</code>, <code>y</code>: original coordinate values"
+msgstr "<code>x</code>, <code>y</code>: valor original das coordenadas"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:114
+msgid "<code>counts</code>: total number of data points"
+msgstr "<code>counts</code>: total de pontos do conjunto de dados"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:115
+msgid "<b>X-Axis:</b>"
+msgstr "<b>X-Axis:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:117
+msgid "<code>x_min</code>, <code>x_max</code>: minimum and maximum"
+msgstr "<code>x_min</code>, <code>x_max</code>: mínimo e máximo de X"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:118
+msgid "<code>x_mean</code>, <code>x_median</code>: average and median"
+msgstr "<code>x_mean</code>, <code>x_median</code>: média e mediana de X"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:119
+msgid "<code>x_std</code>, <code>x_sum</code>: standard deviation and sum"
+msgstr "<code>x_std</code>, <code>x_sum</code>: desvio padrão, e soma de X"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:120
+msgid "<b>Y-Axis:</b>"
+msgstr "<b>Y-Axis:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:122
+msgid "<code>y_min</code>, <code>y_max</code>: minimum and maximum"
+msgstr "<code>y_min</code>, <code>y_max</code>: mínimo e máximo de Y"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:123
+msgid "<code>y_mean</code>, <code>y_median</code>: average and median"
+msgstr "<code>y_mean</code>, <code>y_median</code>: média e mediana de Y"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:124
+msgid "<code>y_std</code>, <code>y_sum</code>: standard deviation and sum"
+msgstr "<code>y_std</code>, <code>y_sum</code>: desvio padrão, e soma de Y"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:125
+msgid ""
+"Trigonometric functions use radians by default. Append <b>d</b> to use "
+"degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>."
+msgstr ""
+"Funções trigonométricas usam radianos por padrão. Acrescente <b>d</b> para "
+"usar graus decimais; por exemplo: <code>sind(x)</code> ou <code>cosd(x)</"
+"code>."
+
+#. (itstool) path: page/title
+#: C/projects.page:7
+msgid "Projects"
+msgstr "Projetos"
+
+#. (itstool) path: page/p
+#: C/projects.page:8
+msgid ""
+"A Graphs project file saves the complete state of your work so you can close "
+"it and pick up exactly where you left off. All project actions are available "
+"from the application menu."
+msgstr ""
+"Um arquivo de projeto do Gráficos salva o estado completo do seu trabalho "
+"para que você possa fechá-lo e retomá-lo exatamente onde parou. Todas as "
+"ações de projeto estão disponíveis a partir do menu da aplicação."
+
+#. (itstool) path: section/title
+#: C/projects.page:10
+msgid "What Is Saved"
+msgstr "O que é salvo"
+
+#. (itstool) path: section/p
+#: C/projects.page:11
+msgid ""
+"A project file preserves everything about the current session: all items and "
+"their data and appearance settings, all figure settings including labels, "
+"axis scales and limits, legend configuration, and the active style. The full "
+"undo and redo history is also saved, so you can continue undoing changes "
+"after reopening a project. The view history is saved as well."
+msgstr ""
+"Um arquivo de projeto preserva tudo da sessão corrente: todos os itens e "
+"seus dados e configurações de aparência; todas as configurações da figura "
+"incluindo rótulos, escala dos eixos e limites, configurações de legenda e "
+"estilo ativo. O histórico de desfazer e refazer também é salvo, para que você "
+"continue desfazendo alterações após reabrir o projeto. O histórico de "
+"visualização também é salvo."
+
+#. (itstool) path: section/title
+#: C/projects.page:14
+msgid "Saving a Project"
+msgstr "Salvando um Projeto"
+
+#. (itstool) path: section/p
+#: C/projects.page:15
+msgid ""
+"To save the current project, choose <em>Save Project…</em> from the "
+"application menu. If the project has been saved before, <em>Save Project…</"
+"em> overwrites the existing file. To save a copy under a different name or "
+"location, use <em>Save Project As…</em>."
+msgstr ""
+"Para salvar o projeto corrente, escolha <em>Salvar projeto…</em> no menu da "
+"aplicação. Se o projeto foi salvo anteriormente, <em>Salvar projeto…</em> "
+"sobrescreve o arquivo existente. Para salvar uma cópia com um nome diferente "
+"ou noutra pasta, usa <em>Salvar projeto como…</em>."
+
+#. (itstool) path: section/title
+#: C/projects.page:18
+msgid "Opening a Project"
+msgstr "Abrindo um projeto"
+
+#. (itstool) path: section/p
+#: C/projects.page:19
+msgid ""
+"To open a previously saved project, choose <em>Open Project…</em> from the "
+"application menu and select the project file. The project opens in the "
+"current window, replacing whatever was there before. To work on two projects "
+"at the same time, open a new window first using <em>New Project</em>, then "
+"open the second project there."
+msgstr ""
+"Para abrir um projeto salvo anteriormente, escolha <em>Abrir projeto…</em> "
+"no menu da aplicação e selecione o arquivo do projeto. O projeto abre na "
+"janela atual, substituindo qualquer coisa que estiver nela. Para trabalhar "
+"em dois projetos simultaneamente, abra uma nova janela primeiro usando "
+"<em>Novo projeto</em>, então abra o segundo projeto nela."
+
+#. (itstool) path: section/p
+#: C/projects.page:20
+msgid ""
+"A project file can also be imported as data into an existing project by "
+"using <em>Add Data from File…</em> and selecting the project file. This adds "
+"the items from the saved project into the current one without replacing "
+"anything."
+msgstr ""
+"Um arquivo de projeto também pode ser importado como dados dentro de um "
+"projeto existente usando <em>Adicionar dados de arquivo…</em> e "
+"selecionando um arquivo de projeto. Isso adiciona os itens do projeto salvo "
+"no projeto vigente sem substituir item algum."
+
+#. (itstool) path: section/title
+#: C/projects.page:23
+msgid "Closing a Project"
+msgstr "Fechando um projeto"
+
+#. (itstool) path: section/p
+#: C/projects.page:24
+msgid ""
+"To close the current project and return to an empty state, choose <em>Close "
+"Project</em> from the application menu."
+msgstr ""
+"Para fechar o projeto vigente e retornar ao estado inaugural, escolha "
+"<em>Fechar projeto</em> no menu da aplicação."
+
+#. (itstool) path: section/title
+#: C/projects.page:28
+msgid "Version Compatibility"
+msgstr "Compatibilidade de versões"
+
+#. (itstool) path: section/p
+#: C/projects.page:29
+msgid ""
+"Project files saved by older versions of Graphs are automatically migrated "
+"when opened. Projects saved by a newer incompatible version of Graphs cannot "
+"be opened in an older version."
+msgstr ""
+"Arquivos de projeto salvos por versões anteriores do Gráficos são "
+"automaticamente atualizados quando abertos. No entanto, projetos salvos por "
+"uma versão mais recente não podem ser abertos por versões anteriores do "
+"Gráficos."
+
+#. (itstool) path: page/title
+#: C/window.page:7
+msgid "Main Window"
+msgstr "Janela principal"
+
+#. (itstool) path: page/p
+#: C/window.page:8
+msgid ""
+"The Graphs main window is split into two areas: a sidebar on the left "
+"containing the item list and controls, and a canvas on the right where the "
+"figure is displayed."
+msgstr ""
+"A janela principal do Gráficos é dividida em duas áreas: uma barra lateral à "
+"esquerda contendo a lista de itens e controles, e uma tela à direita onde a "
+"figura é exibida."
+
+#. (itstool) path: section/title
+#: C/window.page:10
+msgid "Sidebar"
+msgstr "Barra lateral"
+
+#. (itstool) path: section/p
+#: C/window.page:11
+msgid ""
+"The sidebar contains everything related to managing items and interacting "
+"with the figure."
+msgstr ""
+"A barra lateral contém tudo relacionado à gestão de itens e à interação com "
+"a figura."
+
+#. (itstool) path: section/title
+#: C/window.page:13
+msgid "Header buttons"
+msgstr "Botões do cabeçalho"
+
+#. (itstool) path: section/p
+#: C/window.page:14
+msgid ""
+"At the top of the sidebar, we have the header with a button to add data, a "
+"button to open the figure settings, and a button with the primary menu. At "
+"the top, the <em>Add</em> button opens a menu with three options:"
+msgstr ""
+"No topo da barra lateral, nós temos o cabeçalho com um botão para adicionar "
+"dados, um botão para abrir as configurações da figura, e um botão com o menu "
+"primário. No topo, o botão <em>Adicionar</em> abre um menu com três opções:"
+
+#. (itstool) path: item/title
+#: C/window.page:17
+msgid "Add Data from File…"
+msgstr "Adicionar dados de arquivo…"
+
+#. (itstool) path: item/p
+#: C/window.page:18
+msgid ""
+"Opens the import dialog to load a dataset from a file or database. See <link "
+"xref=\"import\"/>for details on the supported formats and import options."
+msgstr ""
+"Abre o diálogo de importação para carregar um conjunto de dados de um "
+"arquivo ou banco de dados. Veja <link xref=\"import\"/> para detalhes sobre "
+"os formatos suportados e as opções de importação."
+
+#. (itstool) path: item/title
+#: C/window.page:22
+msgid "Add Equation…"
+msgstr "Adicionar equação…"
+
+#. (itstool) path: item/p
+#: C/window.page:23
+msgid ""
+"Opens a dialog to add a new equation item, rendered continuously on the "
+"canvas."
+msgstr ""
+"Abre o diálogo para adicionar um item de nova equação que é desenhado "
+"continuamente na tela."
+
+#. (itstool) path: item/title
+#: C/window.page:26
+msgid "Generate Data…"
+msgstr "Gerar dados…"
+
+#. (itstool) path: item/p
+#: C/window.page:27
+msgid ""
+"Opens a dialog to generate a fixed dataset from an equation over a "
+"configurable x-range."
+msgstr ""
+"Abre o diálogo para gerar um conjunto de dados finito a partir de uma "
+"equação em um intervalo configurável de valores de X."
+
+#. (itstool) path: section/title
+#: C/window.page:32
+msgid "Primary Menu"
+msgstr "Menu primário"
+
+#. (itstool) path: section/p
+#: C/window.page:33
+msgid ""
+"The primary menu in the top right provides access to some general options:"
+msgstr "O menu primário no topo à direita provê acesso a opções mais gerais:"
+
+#. (itstool) path: item/title
+#: C/window.page:36
+msgid "New Project"
+msgstr "Novo projeto"
+
+#. (itstool) path: item/p
+#: C/window.page:37
+msgid "Opens a new empty project in a new window."
+msgstr "Abre um novo projeto vazio em uma nova janela."
+
+#. (itstool) path: item/title
+#: C/window.page:40
+msgid "Save Project / Save Project As…"
+msgstr "Salvar projeto/ Salvar projeto como…"
+
+#. (itstool) path: item/p
+#: C/window.page:41
+msgid ""
+"Saves the current project to a file, preserving all items, figure settings, "
+"and the full undo and view history."
+msgstr ""
+"Salva o projeto corrente em um arquivo preservando todos os itens, "
+"configurações da figura, ações para desfazer e histórico de visualização."
+
+#. (itstool) path: item/title
+#: C/window.page:44
+msgid "Open Project…"
+msgstr "Abrir projeto…"
+
+#. (itstool) path: item/p
+#: C/window.page:45
+msgid "Opens a previously saved project file."
+msgstr "Abre um arquivo de projeto previamente salvo."
+
+#. (itstool) path: item/title
+#: C/window.page:48
+msgid "Close Project"
+msgstr "Fechar projeto"
+
+#. (itstool) path: item/p
+#: C/window.page:49
+msgid "Closes the current project and returns to an empty state."
+msgstr "Fecha o projeto corrente e retorna ao estado inaugural."
+
+#. (itstool) path: item/title
+#: C/window.page:52
+msgid "Export Data…"
+msgstr "Exportar dados…"
+
+#. (itstool) path: item/p
+#: C/window.page:53
+msgid "Exports the current datasets to a file."
+msgstr "Exporta o conjunto de dados vigente para um arquivo."
+
+#. (itstool) path: item/title
+#: C/window.page:56
+msgid "Export Figure…"
+msgstr "Exportar figura…"
+
+#. (itstool) path: item/p
+#: C/window.page:57
+msgid "Exports the figure as an image."
+msgstr "Exporta a figura como uma imagem."
+
+#. (itstool) path: item/title
+#: C/window.page:60
+msgid "Style Editor"
+msgstr "Editor de estilo"
+
+#. (itstool) path: item/p
+#: C/window.page:61
+msgid ""
+"Opens the style editor window. See <link xref=\"edit-style\"/>for details."
+msgstr ""
+"Abre a janela do editor de estilo. Veja <link xref=\"edit-style\"/> para "
+"detalhes."
+
+#. (itstool) path: section/p
+#: C/window.page:66
+msgid ""
+"The item list shows all items currently in the project. Each item can be "
+"selected or deselected by clicking the checkbox next to it. Only selected "
+"items are affected by data operations. Clicking the item name opens the edit "
+"panel for that item. Items can be deleted, and their order can be changed by "
+"dragging."
+msgstr ""
+"A lista de itens mostra todos os itens atualmente no projeto. Cada item pode "
+"ser selecionado ou desselecionado clicando na caixa de checagem ao lado "
+"dele. Apenas itens selecionados são afetados pelas operações nos dados. "
+"Clicar no nome do item abre o painel de edição. Itens podem ser excluídos; e "
+"a ordem deles pode ser alterada arrastando-os."
+
+#. (itstool) path: section/p
+#: C/window.page:69
+msgid ""
+"The figure settings button in the top right of the sidebar opens the Figure "
+"Settings panel, where the figure title, axis labels, axis limits, axis "
+"scales, legend visibility and position, and the active style can all be "
+"configured. Axis labels and limits are only shown for the axes that are "
+"currently in use. The current figure settings can be saved as the default "
+"for new projects using the <em>Set as Default</em> button at the bottom of "
+"the panel."
+msgstr ""
+"O botão de ajustes da figura no topo à direita da barra lateral abre o "
+"painel de Ajustes da figura onde o título da figura, os rótulos dos eixos, "
+"os limites dos eixos, as escalas, a visibilidade e a posição da legenda, e o "
+"estilo ativo podem todos ser configurados. Os rótulos dos eixos e seus "
+"limites são exibidos apenas para os eixos atualmente em uso. As "
+"configurações da figura corrente podem ser salvas como padrão para novos "
+"projetos usando o botão <em>Definir como padrão</em> na base do painel."
+
+#. (itstool) path: section/title
+#: C/window.page:72
+msgid "Canvas Modes"
+msgstr "Modos de tela"
+
+#. (itstool) path: section/p
+#: C/window.page:73
+msgid "Below the item list, three canvas interaction modes are available:"
+msgstr "Abaixo da lista de itens, há três modos de interação disponíveis:"
+
+#. (itstool) path: item/title
+#: C/window.page:76
+msgid "Pan"
+msgstr "Modo panorâmico"
+
+#. (itstool) path: item/p
+#: C/window.page:77
+msgid "Click and drag on the canvas to pan the view. This is the default mode."
+msgstr ""
+"Clique e arraste sobre a tela de desenho para deslocar a vista. Esse é o "
+"modo padrão."
+
+#. (itstool) path: item/title
+#: C/window.page:80
+msgid "Zoom"
+msgstr "Modo de ampliação"
+
+#. (itstool) path: item/p
+#: C/window.page:81
+msgid ""
+"Click and drag to draw a rectangle on the canvas to zoom into that area."
+msgstr ""
+"Clique e arraste para desenhar um retângulo sobre a tela para ampliar nessa "
+"área."
+
+#. (itstool) path: item/title
+#: C/window.page:84
+msgid "Select"
+msgstr "Modo de seleção"
+
+#. (itstool) path: item/p
+#: C/window.page:85
+msgid ""
+"Click and drag to highlight a region of the data. Data operations will only "
+"affect the data within the highlighted area when this mode is active."
+msgstr ""
+"Clique e arraste para destacar uma região dos dados. Operações com os dados "
+"afetarão apenas os pontos dentro da área destacada quando este modo estiver "
+"ativado."
+
+#. (itstool) path: section/title
+#: C/window.page:90
+msgid "Operations"
+msgstr "Operações"
+
+#. (itstool) path: section/p
+#: C/window.page:91
+msgid ""
+"Below the canvas mode buttons, the operations panel provides quick access to "
+"all data manipulation actions. These act on all selected items. See <link "
+"xref=\"manipulate\"/>for a full description of each operation."
+msgstr ""
+"Abaixo dos botões de modo de interação, o painel de operações provê acesso "
+"rápido a todas as ações de manipulação de dados. Elas agem em todos os itens "
+"selecionados. Veja <link xref=\"manipulate\"/> para uma descrição completa "
+"de cada operação."
+
+#. (itstool) path: section/title
+#: C/window.page:96
+msgid "Canvas"
+msgstr "Tela"
+
+#. (itstool) path: section/p
+#: C/window.page:97
+msgid ""
+"The canvas shows the plot containing all active items. Clicking once on the "
+"label, limits or opens the Figure Settings, focused on the clicked item, "
+"allowing for quick adjustments."
+msgstr ""
+"A tela exibe a área de plotagem contendo todos os itens ativos. Clicar uma "
+"vez no rótulo dos eixos ou extremos abre os Ajustes de figura já focando no "
+"campo correspondente para rapidamente ajustá-lo."
+
+#. (itstool) path: section/p
+#: C/window.page:98
+msgid ""
+"On the top left we have the undo and redo button. On the top right of the "
+"canvas there's the view buttons. The back-arrow moves you to the previous "
+"view after having changed the limits while the forward-arrow moves you to "
+"the next view after having clicked the back-arrow. Finally the Optimize "
+"Limits button will try and adjust the limits automatically to fit all "
+"visible items in the canvas. For equations, only the y-range is taken into "
+"account, as the x-data spans an infinite range."
+msgstr ""
+"No topo esquerdo nós temos os botões desfazer e refazer. No topo direito da "
+"figura temos os botões de visualização. A seta Visualização anterior leva-lhe "
+"à vista antes das alterações; enquanto a seta Próxima visualização leva-lhe "
+"ao estado imediatamente posterior ao estado retomado pela Vista anterior."
 
 #. (itstool) path: p/link
 #: C/legal.xml:3
 msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
-msgstr "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr "Licença Creative Commons Attribution-ShareAlike 4.0 International"
 
 #. (itstool) path: license/p
-#: C/legal.xml:3
+#: C/legal.xml:2
 msgid "This work is licensed under a <_:link-1/>."
-msgstr "Este trabalho está licenciado sob um <_:link-1/>."
+msgstr "Este trabalho está licenciado como <_:link-1/>."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='media/curve_fitting_light.png' "
+#~ "md5='d33b620c42f2c1cf82c94998adf4a670'"
+#~ msgstr ""
+#~ "external ref='media/curve_fitting_light.png' "
+#~ "md5='d33b620c42f2c1cf82c94998adf4a670'"
+
+#~ msgid ""
+#~ "Each detected parameter in the formula will be shown in the sidebar. Here "
+#~ "an initial guess can be set for the fit, as well as the minimum and "
+#~ "maximum value for this parameter. Make sure that the initial guess is in "
+#~ "between the bounds, and that the minimum bound is smaller than the "
+#~ "maximum bound. If you don't want to use any bounds for the parameter, you "
+#~ "can set the bounds to infinite using <code>-inf</code> and <code>inf</"
+#~ "code> for the minimum and maximum bound respectively."
+#~ msgstr ""
+#~ "Cada parâmetro detectado na fórmula será mostrado na barra lateral. Aqui "
+#~ "pode ser definida uma estimativa inicial para o ajuste, bem como os "
+#~ "valores mínimo e máximo para este parâmetro. Certifique-se de que a "
+#~ "estimativa inicial esteja entre os limites e que o limite mínimo seja "
+#~ "menor que o limite máximo. Se não quiser usar nenhum limite para o "
+#~ "parâmetro, você pode definir os limites como infinitos usando <code>-inf</"
+#~ "code> e <code>inf</code> para o limite mínimo e máximo, respectivamente."
+
+#~ msgid ""
+#~ "Below the fitting parameters, a box is shown with the resulting "
+#~ "parameters of the fit. Apart of the final results, a margin is shown as "
+#~ "well for each parameter as well as the sum of R² indicating the goodness "
+#~ "of the fit. The margin can be set using the primary menu in the Curve "
+#~ "Fitting dialog as a multiple of the standard deviation, corresponding to "
+#~ "an uncertainty margin of 65, 95 or 99.7% for a standard deviation of 1σ, "
+#~ "2σ or 3σ respectively."
+#~ msgstr ""
+#~ "Abaixo dos parâmetros de ajuste, é mostrada uma caixa com os parâmetros "
+#~ "resultantes do ajuste. Além dos resultados finais, também é mostrada uma "
+#~ "margem para cada parâmetro, bem como a soma de R² indicando a qualidade "
+#~ "do ajuste. A margem pode ser definida usando o menu principal na caixa de "
+#~ "diálogo \"Ajuste de Curva\" como um múltiplo do desvio padrão, "
+#~ "correspondendo a uma margem de incerteza de 65, 95 ou 99,7% para um "
+#~ "desvio padrão de 1σ, 2σ ou 3σ respectivamente."
+
+#~ msgid ""
+#~ "When performing a fit, there are three different fitting algorithms to "
+#~ "choose from, these can be set from the primary menu."
+#~ msgstr ""
+#~ "Ao realizar um ajuste, existem três algoritmos de ajuste diferentes para "
+#~ "escolher, que podem ser definidos no menu principal."
+
+#~ msgid ""
+#~ "The Levenberg-Marquardt algorithm is a traditionally relatively popular "
+#~ "algorithm that performs very efficiently. However, it does not handle "
+#~ "bounds for the fitting parameters."
+#~ msgstr ""
+#~ "O algoritmo Levenberg-Marquardt é um algoritmo relativamente popular que "
+#~ "funciona de forma muito eficiente. No entanto, ele não trata os limites "
+#~ "dos parâmetros de ajuste."
+
+#~ msgid ""
+#~ "The Trust Region Reflective algorithm is well-suited for solving large "
+#~ "problems with bounds. This method generally performs well for most cases "
+#~ "and should probably be used for most cases."
+#~ msgstr ""
+#~ "O algoritmo Região de Confiança Reflexiva é adequado para resolver "
+#~ "grandes problemas com limites. Este método geralmente funciona bem na "
+#~ "maioria dos casos e provavelmente deve ser usado na maioria dos casos."
+
+#~ msgid ""
+#~ "There are two primary ways to import new data in Graphs, importing data "
+#~ "directly by file or generating new data using an equation."
+#~ msgstr ""
+#~ "Existem duas maneiras principais de importar novos dados no Gráficos: "
+#~ "importando dados diretamente por arquivo ou gerando novos dados usando "
+#~ "uma equação."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='media/add_data_light.png' "
+#~ "md5='5246da95eb47c74c7488f9b9016dde3d'"
+#~ msgstr ""
+#~ "external ref='media/add_data_light.png' "
+#~ "md5='5246da95eb47c74c7488f9b9016dde3d'"
+
+#~ msgid ""
+#~ "A wide array of filetypes are supported when importing data by file. "
+#~ "Graphs currently supports Panalytical .xrdml files, Leybold .xry files as "
+#~ "well as files that are saved in a column format such as most .csv "
+#~ "files, .dat files, .xy files or plain text. Finally, data from other "
+#~ "Graphs projects can be imported into the current project as well, simply "
+#~ "by adding new data as usual, but by selecting a project file instead."
+#~ msgstr ""
+#~ "Uma grande variedade de tipos de arquivos são suportados ao importar "
+#~ "dados por arquivo. Atualmente, o Gráficos suporta arquivos "
+#~ "Panalytical .xrdml, Leybold .xry, bem como arquivos salvos em um formato "
+#~ "de coluna, como a maioria dos arquivos .csv, .dat, .xy ou texto simples. "
+#~ "Finalmente, os dados de outros projetos do Gráficos também podem ser "
+#~ "importados para o projeto atual, simplesmente adicionando novos dados "
+#~ "como de costume, mas selecionando um arquivo de projeto."
+
+#~ msgid ""
+#~ "When using a custom delimiter during the import, an extra field will be "
+#~ "visible to enter the delimiter of choice. This field recognizes regular "
+#~ "expressions. For example, to choose a delimiter that looks for "
+#~ "whitespace, one could enter <code>\\s+</code> as delimiter. In this "
+#~ "example, <code>\\s</code> denotes that the delimiter is a whitespace "
+#~ "character, and the <code>+</code> denotes that at least one or more "
+#~ "whitespace is required. Thus this input looks for any amount of "
+#~ "whitespaces including tabs. Note that this particular input is equivalent "
+#~ "to the default Whitespace option."
+#~ msgstr ""
+#~ "Ao usar um delimitador personalizado durante a importação, um campo extra "
+#~ "ficará visível para inserir o delimitador de sua escolha. Este campo "
+#~ "reconhece expressões regulares. Por exemplo, para escolher um delimitador "
+#~ "que procure espaços em branco, pode-se inserir <code>\\s+</code> como "
+#~ "delimitador. Neste exemplo, <code>\\s</code> indica que o delimitador é "
+#~ "um caractere de espaço em branco e <code>+</code> indica que pelo menos "
+#~ "um ou mais espaços em branco são necessários. Portanto, esta entrada "
+#~ "procura qualquer quantidade de espaços em branco, incluindo tabulações. "
+#~ "Observe que esta entrada específica é equivalente à opção padrão de "
+#~ "espaço em branco."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='media/add_equation_light.png' "
+#~ "md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+#~ msgstr ""
+#~ "external ref='media/add_equation_light.png' "
+#~ "md5='009108d0a1fc2d95d54d8aa88f6016d5'"
+
+#~ msgid ""
+#~ "The other way to import data is to generate data directly using an "
+#~ "equation. This can be done using the \"Add Equation\" button found in the "
+#~ "top-left corner, or by pressing <cmd>Ctrl+Alt+N</cmd>. Most commonly used "
+#~ "syntax is accepted, with an <code>x</code> denoting the x-coordinate. A "
+#~ "simple quadratic equation could for instance be created using <code>x²+5</"
+#~ "code> as input. Be aware that trigonometric functions are using radians "
+#~ "by default. If you want to use degrees, simply add a <code>d</code> to "
+#~ "the trigonometric function. For instance <code>cosd(x)</code> generates a "
+#~ "cosine where the x coordinate is given in degrees while <code>cos(x)</"
+#~ "code> generates a cosine with the x-coordinate in radians."
+#~ msgstr ""
+#~ "A outra maneira de importar dados é gerar dados diretamente usando uma "
+#~ "equação. Isso pode ser feito usando o botão “Adicionar equação” "
+#~ "localizado no canto superior esquerdo ou pressionando <cmd>Ctrl+Alt+N</"
+#~ "cmd>. A sintaxe mais comumente usada é aceita, com um <code>x</code> "
+#~ "denotando a coordenada x. Uma equação quadrática simples poderia, por "
+#~ "exemplo, ser criada usando <code>x²+5</code> como entrada. Esteja ciente "
+#~ "de que as funções trigonométricas usam radianos por padrão. Se você "
+#~ "quiser usar graus, basta adicionar um <code>d</code> à função "
+#~ "trigonométrica. Por exemplo, <code>cosd(x)</code> gera um cosseno onde a "
+#~ "coordenada x é dada em graus, enquanto <code>cos(x)</code> gera um "
+#~ "cosseno com a coordenada x em radianos."
+
+#~ msgid "How to"
+#~ msgstr "Instruções"
+
+#~ msgid ""
+#~ "There's multiple how-to guides available for Graphs. These can be found "
+#~ "here."
+#~ msgstr ""
+#~ "Existem vários guias de instruções disponíveis para o Gráficos. Eles "
+#~ "podem ser encontrados aqui."
+
+#~ msgid ""
+#~ "The smoothening action has two different modes, a rolling average or the "
+#~ "Savitzky-Galov filter. The moving average simply works iterating through "
+#~ "the data set, and replacing each point by the average of the last few "
+#~ "data points that were encountered, this way sharp outliers are ignored "
+#~ "but details may be lost. Sudden actual changes in the data may also be "
+#~ "detected later when a smoothening has been applied. Another way to "
+#~ "smoothen the data is the Savitzky-Galov. The difference with the moving "
+#~ "average, is that not a simple average is used for the last data points, "
+#~ "but instead a polynomial function is fitted between the data points. This "
+#~ "makes it possible to filter the underlaying signal still quite nicely out "
+#~ "of very noisy data."
+#~ msgstr ""
+#~ "A ação de suavização possui dois modos diferentes: uma média móvel ou o "
+#~ "filtro Savitzky-Galov. A média móvel simplesmente funciona iterando o "
+#~ "conjunto de dados e substituindo cada ponto pela média dos últimos pontos "
+#~ "de dados encontrados. Dessa forma, valores discrepantes são ignorados, "
+#~ "mas os detalhes podem ser perdidos. Mudanças reais repentinas nos dados "
+#~ "também podem ser detectadas posteriormente, quando uma suavização for "
+#~ "aplicada. Outra forma de suavizar os dados é o Savitzky-Galov. A "
+#~ "diferença com a média móvel é que não é usada uma média simples para os "
+#~ "últimos pontos de dados, mas em vez disso uma função polinomial é "
+#~ "ajustada entre os pontos de dados. Isso torna possível filtrar muito bem "
+#~ "o sinal subjacente de dados muito ruidosos."
+
+#~ msgctxt "_"
+#~ msgid ""
+#~ "external ref='media/custom_transform_light.png' "
+#~ "md5='311f5286f3372e5fea1431dd6a63d666'"
+#~ msgstr ""
+#~ "external ref='media/custom_transform_light.png' "
+#~ "md5='311f5286f3372e5fea1431dd6a63d666'"
