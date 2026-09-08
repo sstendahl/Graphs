@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-04-20 15:50+0000\n"
-"PO-Revision-Date: 2026-04-26 11:39-0300\n"
+"POT-Creation-Date: 2026-09-01 10:34+0000\n"
+"PO-Revision-Date: 2026-09-08 19:24-0300\n"
 "Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
 "Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
@@ -32,6 +32,10 @@ msgstr ""
 msgid "Graphs"
 msgstr "Gráficos"
 
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Os desenvolvedores do Graphs"
+
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
 msgstr "Plote e manipule dados"
@@ -51,6 +55,54 @@ msgstr "Edite folhas de estilo de plotagem"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Manipule dados importados com facilidade"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Plotagem'"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Área de plotagem"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Gráfico"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Gráfico"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Ciências"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Matemática"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Matemática"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Equações"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Dado"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Visualização"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Ajuste de curva"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -120,7 +172,7 @@ msgid "New Window"
 msgstr "Nova janela"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:23
+#: graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Editor de estilo"
 
@@ -258,7 +310,7 @@ msgstr "Importar apenas valores Y, os valores X serão gerados"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:208
+#: graphs/item.vala:237
 msgid "Equation"
 msgstr "Equação"
 
@@ -698,30 +750,30 @@ msgstr "Barras de erro"
 msgid "Show Horizontal"
 msgstr "Mostrar horizontal"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Mostrar vertical"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Desenhar dados acima"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Cor"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Comprimento das extremidades"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Espessura da extremidade"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
 #: data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "Largura da linha"
@@ -1814,7 +1866,7 @@ msgstr "Arraste aqui para importar"
 msgid "Show Sidebar"
 msgstr "Mostrar barra lateral"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Desfazer"
 
@@ -2105,19 +2157,20 @@ msgid "ASCII files"
 msgstr "Arquivos ASCII"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "Mínimo do eixo X"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Mínimo do eixo Y"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "Máximo do eixo X"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Máximo do eixo Y"
 
@@ -2138,7 +2191,7 @@ msgstr "Escala do eixo Y"
 msgid "Y Axis Label"
 msgstr "Rótulo do eixo Y"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Padrões atualizados"
 
@@ -2170,10 +2223,6 @@ msgstr "Editor de estilo de Gráficos — %s"
 msgid "Are you sure you want to delete %s?"
 msgstr "Tem certeza de que deseja excluir %s?"
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
-msgstr "Os desenvolvedores do Graphs"
-
 #: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
@@ -2186,11 +2235,11 @@ msgstr ""
 msgid "Deleted %s"
 msgstr "Excluir %s"
 
-#: graphs/application.vala:22
+#: graphs/application.vala:19
 msgid "New window"
 msgstr "Nova janela"
 
-#: graphs/application.vala:24
+#: graphs/application.vala:21
 msgid "[FILE…]"
 msgstr "[ARQUIVO…]"
 
@@ -2312,7 +2361,7 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Arquivos de texto"
 
-#: graphs/graphs.in:73
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "Não foi possível carregar {font}"
 
@@ -2320,64 +2369,64 @@ msgstr "Não foi possível carregar {font}"
 msgid "Dataset"
 msgstr "Conjunto de dados"
 
-#: graphs/item.vala:181
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Conjunto de dados gerados"
 
-#: graphs/item.vala:224
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Camada"
 
-#: graphs/item.vala:230
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Preencher"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Arquivo de estilo Matplotlib"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Não foi possível executar a transformação. Verifique se a sintaxe está "
 "correta"
 
-#: graphs/operations.py:257
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "Nenhum dado encontrado dentro da área destacada"
 
-#: graphs/operations.py:261
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Alguns itens não possuem barras de erro; eles serão descartados"
 
-#: graphs/operations.py:272
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Dados combinados"
 
-#: graphs/operations.py:415
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "A operação em {name} não resultou em uma equação plotável"
 
-#: graphs/operations.py:423
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "Operação não suportada para equações."
 
-#: graphs/operations.py:580
+#: graphs/operations.py:556
 msgid "No data found within the highlighted area"
 msgstr "Nenhum dado encontrado na área destacada"
 
-#: graphs/operations.py:586
+#: graphs/operations.py:564
 msgid "Operation not supported for data items"
 msgstr "Operação não suportada para itens de dados"
 
-#: graphs/operations.py:589
+#: graphs/operations.py:567
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Erro ao executar a operação"
 
-#: graphs/operations.py:594
+#: graphs/operations.py:575
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Os dados que estavam fora da área destacada foram descartados"
 
@@ -2413,7 +2462,7 @@ msgstr "Projeto salvo"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/python_helper.vala:43
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Dados exportados"
 
@@ -2473,25 +2522,25 @@ msgstr "Todos os arquivos"
 msgid "Document Portal"
 msgstr "Portal de documentos"
 
-#: graphs/window.vala:154
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Gráficos (Desenvolvimento)"
 
-#: graphs/window.vala:181
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Projeto sem título"
 
-#: graphs/window.vala:182
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Rascunho"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:188
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Gráficos — %s"
 
-#: graphs/window.vala:376
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Abrir local"
 
@@ -2592,9 +2641,6 @@ msgstr "Abrir local"
 
 #~ msgid "Choose which item to edit"
 #~ msgstr "Escolha qual item editar"
-
-#~ msgid "Data"
-#~ msgstr "Dado"
 
 #~ msgid "Line Properties"
 #~ msgstr "Propriedades da linha"
