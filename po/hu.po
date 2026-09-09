@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-02-24 12:40+0000\n"
-"PO-Revision-Date: 2026-03-05 21:59+0100\n"
+"POT-Creation-Date: 2026-09-01 10:34+0000\n"
+"PO-Revision-Date: 2026-09-09 18:19+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <openscope at fsf dot hu>\n"
 "Language: hu\n"
@@ -17,12 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 25.08.1\n"
+"X-Generator: Lokalize 25.12.3\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Grafikonok"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "A Grafikonok fejlesztői"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -43,6 +47,61 @@ msgstr "Ábrák stíluslapjainak kezelése"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Importált adatok manipulálása"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Ábrázolás"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Ábra"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+#| msgid "Graphs"
+msgid "Graph"
+msgstr "Grafikon"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+#| msgid "Graphs"
+msgid "Graphing"
+msgstr "Grafikonkészítés"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Tudomány"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Matematika"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Matek"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+#| msgid "Equation"
+msgid "Equations"
+msgstr "Egyenletek"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+#| msgid "No Data"
+msgid "Data"
+msgstr "Adatok"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Megjelenítés"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+#| msgid "Curve Fitting"
+msgid "Fitting"
+msgstr "Illesztés"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+#| msgctxt "import-mode"
+#| msgid "xrdml"
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -117,11 +176,11 @@ msgid "New Window"
 msgstr "Új ablak"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Stílusszerkesztő"
 
 #: data/ui/dialogs/beta-disallowed.blp:5
-#| msgid "New Project"
 msgid "Beta Project"
 msgstr "Béta projekt"
 
@@ -130,8 +189,8 @@ msgid ""
 "The project you are trying to import is from a beta version of Graphs. It "
 "may contain invalid data."
 msgstr ""
-"Az importálni próbált projekt a Graphs béta verziójából származik. Lehet, hogy"
-" érvénytelen adatokat tartalmaz."
+"Az importálni próbált projekt a Graphs béta verziójából származik. Lehet, "
+"hogy érvénytelen adatokat tartalmaz."
 
 #: data/ui/dialogs/beta-disallowed.blp:9
 #: data/ui/dialogs/legacy-migration-disallowed.blp:9
@@ -162,7 +221,6 @@ msgid "Delete"
 msgstr "Törlés"
 
 #: data/ui/dialogs/legacy-migration-disallowed.blp:5
-#| msgid "New Project"
 msgid "Legacy Project"
 msgstr "Örökölt projekt"
 
@@ -177,8 +235,8 @@ msgid ""
 msgstr ""
 "Egy örökölt projektet próbál megnyitni.\n"
 "\n"
-"Az örökölt projektformátum veszélyes kódot tartalmazhat, és kárt okozhat a ren"
-"dszerében.\n"
+"Az örökölt projektformátum veszélyes kódot tartalmazhat, és kárt okozhat a "
+"rendszerében.\n"
 "\n"
 "Csak akkor folytassa, ha megbízik a fájl szerzőjében."
 
@@ -226,7 +284,6 @@ msgstr ""
 "változtatások véglegesen elvesznek."
 
 #: data/ui/import/columns/box.blp:16 data/ui/import/spreadsheet/box.blp:16
-#| msgid "Edit Item"
 msgid "Add Item"
 msgstr "Elem hozzáadása"
 
@@ -238,13 +295,11 @@ msgstr "Eltávolítás"
 
 #: data/ui/import/columns/item-group.blp:26
 #: data/ui/import/spreadsheet/item-group.blp:26
-#| msgid "Column X"
 msgid "X Column"
 msgstr "X-oszlop"
 
 #: data/ui/import/columns/item-group.blp:38
 #: data/ui/import/spreadsheet/item-group.blp:38
-#| msgid "Column X"
 msgid "Y Column"
 msgstr "Y-oszlop"
 
@@ -259,7 +314,7 @@ msgstr "Csak Y-értékek importálása, az X-értékek elő lesznek állítva"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.py:225
+#: graphs/item.vala:237
 msgid "Equation"
 msgstr "Egyenlet"
 
@@ -321,7 +376,6 @@ msgid "Y Error Column"
 msgstr "Y-hibaoszlop"
 
 #: data/ui/import/columns/main-group.blp:5
-#| msgid "File Format"
 msgid "Format"
 msgstr "Formátum"
 
@@ -330,7 +384,6 @@ msgid "Delimiter"
 msgstr "Elválasztó"
 
 #: data/ui/import/columns/main-group.blp:9
-#| msgid "Character sequence used to split values"
 msgid "Character used to separate columns"
 msgstr "Az oszlopok elválasztásához használt karakter"
 
@@ -355,8 +408,6 @@ msgid "Semicolon (;)"
 msgstr "Pontosvessző (;)"
 
 #: data/ui/import/columns/main-group.blp:17
-#| msgctxt "delimiter"
-#| msgid "Decimal comma (,)"
 msgctxt "delimiter"
 msgid "Comma (,)"
 msgstr "Vessző (,)"
@@ -426,13 +477,10 @@ msgid "Select which sheet to import"
 msgstr "Az importálandó munkalap kiválasztása"
 
 #: data/ui/import/spreadsheet/item-group.blp:51
-#| msgctxt "markerstyle"
-#| msgid "Triangle Down"
 msgid "Single Column"
 msgstr "Önálló oszlop"
 
 #: data/ui/import/spreadsheet/item-group.blp:57
-#| msgid "Equation"
 msgid "X Value Equation"
 msgstr "X-érték egyenlete"
 
@@ -441,7 +489,6 @@ msgid "Import Parameters"
 msgstr "Importálási paraméterek"
 
 #: data/ui/import/dialog.blp:30
-#| msgid "All Files"
 msgid "Add File"
 msgstr "Fájl hozzáadása"
 
@@ -450,12 +497,10 @@ msgid "Import"
 msgstr "Importálás"
 
 #: data/ui/import/dialog.blp:84
-#| msgid "Reset to Defaults?"
 msgid "Reset to guessed values"
 msgstr "Visszaállítás a becsült értékekre"
 
 #: data/ui/import/dialog.blp:106
-#| msgid "Import"
 msgid "Import Mode"
 msgstr "Importálási mód"
 
@@ -706,39 +751,34 @@ msgid "Error Bars"
 msgstr "Hibasávok"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:12
-#| msgctxt "markerstyle"
-#| msgid "Horizontal Line"
 msgid "Show Horizontal"
 msgstr "Megjelenítés vízszintesen"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
-#| msgid "Show Grid"
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Megjelenítés függőlegesen"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Rajzolás az adatok fölött"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
-#| msgid "Colors"
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Szín"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Vonalvég hossza"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Vonalvég vastagsága"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
 #: data/ui/style-editor/editor-box.blp:179
-#| msgid "Linewidth"
 msgid "Line Width"
 msgstr "Vonal vastagsága"
 
@@ -761,8 +801,8 @@ msgstr "Skála"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Meghatározza az adatpontok közötti térközöket"
+msgid "How points are spaced"
+msgstr "Hogyan legyenek a pontok elhelyezve"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -838,7 +878,7 @@ msgid "Labels"
 msgstr "Címkék"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:106
+#: graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "Cím"
 
@@ -982,7 +1022,7 @@ msgstr "Nem kiválasztott elemek elrejtése"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:82
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "Stílus"
 
@@ -1256,7 +1296,6 @@ msgid "Lines"
 msgstr "Vonalak"
 
 #: data/ui/style-editor/editor-box.blp:77
-#| msgid "Linewidth"
 msgid "Line width"
 msgstr "Vonal vastagsága"
 
@@ -1475,12 +1514,11 @@ msgid "Open Style"
 msgstr "Stílus megnyitása"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Grafikonok stílusszerkesztő"
 
 #: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
-#| msgid "Import Style…"
 msgid "Import File…"
 msgstr "Fájl importálása…"
 
@@ -1489,7 +1527,6 @@ msgid "Create Style…"
 msgstr "Stílus létrehozása…"
 
 #: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
-#| msgid "Open Style…"
 msgid "Open File…"
 msgstr "Fájl megnyitása…"
 
@@ -1497,7 +1534,7 @@ msgstr "Fájl megnyitása…"
 msgid "Open Preview"
 msgstr "Előnézet megnyitása"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:179
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Nem sikerült betölteni a vásznat"
@@ -1515,7 +1552,6 @@ msgid "Save Style as…"
 msgstr "Stílus mentése másként…"
 
 #: data/ui/style-editor/window.blp:283
-#| msgid "Create Style…"
 msgid "Close Style…"
 msgstr "Stílus kiválasztása…"
 
@@ -1583,61 +1619,60 @@ msgstr "Egyéni"
 msgid "Add Fit to Data"
 msgstr "Illesztés hozzáadása az adatokhoz"
 
-#: data/ui/curve-fitting.blp:157
+#: data/ui/curve-fitting.blp:161
 msgid "Toggle Sidebar"
 msgstr "Oldalsáv be- vagy kikapcsolása"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:202
 msgid "Optimization Method"
 msgstr "Optimalizálási módszer"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg–Marquardt"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:209
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Megbízhatósági tartomány visszaverő"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:216
+#: data/ui/curve-fitting.blp:220
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:223
+#: data/ui/curve-fitting.blp:227
 msgid "Confidence Bounds"
 msgstr "Konfidenciahatárok"
 
-#: data/ui/curve-fitting.blp:226
+#: data/ui/curve-fitting.blp:230
 msgctxt "confidence"
 msgid "None"
 msgstr "Nincs"
 
-#: data/ui/curve-fitting.blp:233
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68%-os konfidencia"
 
-#: data/ui/curve-fitting.blp:240
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95%-os konfidencia"
 
-#: data/ui/curve-fitting.blp:247
+#: data/ui/curve-fitting.blp:251
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99,7%-os konfidencia"
 
-#: data/ui/curve-fitting.blp:255
-#| msgid "Show Sidebar"
+#: data/ui/curve-fitting.blp:259
 msgid "Show Residuals"
 msgstr "Maradékok megjelenítése"
 
@@ -1650,7 +1685,6 @@ msgid "Export"
 msgstr "Exportálás"
 
 #: data/ui/export-figure.blp:43
-#| msgid "Smoothen Settings"
 msgid "Export Settings"
 msgstr "Exportálási beállítások"
 
@@ -1698,7 +1732,6 @@ msgid "Transparent Background"
 msgstr "Átlátszó háttér"
 
 #: data/ui/export-figure.blp:67
-#| msgid "Export Figure"
 msgid "Export Size"
 msgstr "Exportálási méret"
 
@@ -1838,7 +1871,7 @@ msgstr "Húzza ide az importáláshoz"
 msgid "Show Sidebar"
 msgstr "Oldalsáv megjelenítése"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:401
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Visszavonás"
 
@@ -2003,153 +2036,149 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Művelet ismétlése"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
-#| msgid "Column X"
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Oszlopok"
 
 #: graphs/file_import/parsers/columns/main.vala:46
-#| msgid "Custom Delimiter"
 msgid "Custom delimiter cannot be empty"
 msgstr "Az egyéni elválasztó nem lehet üres"
 
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr ""
-"Indexelési hiba ebben: %s, nem lehet elérni a(z) %d. indexet a(z) %d. sorban, "
-"csak %d oszlop található"
+"Indexelési hiba ebben: %s, nem lehet elérni a(z) %d. indexet a(z) %d. "
+"sorban, csak %d oszlop található"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Nem lehet importálni a fájlból, hibás érték van a(z) %d. sorban"
 
-#: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/columns/ui.vala:41
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "%d. elem"
 
-#: graphs/file_import/parsers/project/__init__.py:19
-#| msgid "Project"
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Grafikonok projektfájl"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Munkafüzet"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Munkafüzet"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:276
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
 msgstr "Nem található numerikus adat az oszlopban."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:291
+#: graphs/file_import/parsers/spreadsheet/__init__.py:288
 msgid "Columns do not have the same length."
 msgstr "Az oszlopok nem azonos hosszúságúak."
 
-#: graphs/file_import/parsers/sql/__init__.py:24
-#| msgid "Dataset"
+#: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Adatbázis"
 
-#: graphs/file_import/parsers/sql/__init__.py:25
+#: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite adatbázis"
 
-#: graphs/file_import/parsers/sql/__init__.py:42
-#, python-brace-format
-msgid ""
-"Could not import data from table \"{table_name}\", no numeric columns were "
-"found"
+#: graphs/file_import/parsers/sql/reader.vala:135
+#, c-format
+#| msgid ""
+#| "Could not import data from table \"{table_name}\", no numeric columns "
+#| "were found"
+msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr ""
-"Nem sikerült importálni az adatokat a(z) „{table_name}” táblából, nem találhat"
-"ók numerikus oszlopok"
+"Nem sikerült importálni az adatokat a(z) „%s” táblából, nem találhatók numerik"
+"us oszlopok"
 
-#: graphs/file_import/parsers/sql/__init__.py:52
-#| msgid "No data found within the highlighted area"
+#: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
 msgstr "Nem találhatók adatok a tábla oszlopában"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:66
 msgid "Intensity (cps)"
 msgstr "Intenzitás (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:18
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:76
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:77
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
-#| msgid "Import Style…"
+#: graphs/file_import/__init__.py:117
 msgid "Import failed"
 msgstr "Az importálás nem sikerült"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Támogatott fájlok"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII-fájlok"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "X-tengely legkisebb értéke"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Y-tengely legkisebb értéke"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "X-tengely legnagyobb értéke"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Y-tengely legnagyobb értéke"
 
@@ -2167,23 +2196,22 @@ msgid "Y Axis Scale"
 msgstr "Y-tengely méretezése"
 
 #: graphs/sidebar/figure_settings.vala:168
-#| msgid "X Axis Label"
 msgid "Y Axis Label"
 msgstr "Y-tengely címkéje"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Alapértelmezések frissítve"
 
-#: graphs/style_editor/__init__.py:68
+#: graphs/style_editor/__init__.py:64
 msgid "Example Item"
 msgstr "Példa elem"
 
-#: graphs/style_editor/__init__.py:107 graphs/style_io.py:248
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X-címke"
 
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:249
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y-címke"
 
@@ -2198,34 +2226,36 @@ msgstr "%d. szín"
 msgid "Graphs Style Editor — %s"
 msgstr "Grafikonok stílusszerkesztő – %s"
 
-#: graphs/style_editor/window.vala:234
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Biztosan a(z) %s törlését szeretné?"
 
-#: graphs/actions.vala:28
-msgid "The Graphs Developers"
-msgstr "A Grafikonok fejlesztői"
-
-#: graphs/actions.vala:42
+#: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
 "Meskó Balázs <mesko dot balazs at fsf dot hu>, 2025.\n"
 "Úr Balázs <ur dot balazs at fsf dot hu>, 2024, 2025."
 
-#: graphs/actions.vala:182 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "„%s” törölve"
 
-#: graphs/curve_fitting.py:103
+#: graphs/application.vala:19
+#| msgid "New Window"
+msgid "New window"
+msgstr "Új ablak"
+
+#: graphs/application.vala:21
+msgid "[FILE…]"
+msgstr "[FÁJL…]"
+
+#: graphs/curve_fitting.py:99
 msgid "Residuals"
 msgstr "Maradékok"
 
 #: graphs/curve_fitting.vala:74
-#| msgid ""
-#| "Please enter valid fitting \n"
-#| "parameters to start the fit"
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2281,43 +2311,42 @@ msgstr ""
 "Konfidenciasáv-hiba: a \n"
 "kovariancia mátrix nem stabil."
 
-#: graphs/curve_fitting.vala:250
-#| msgid "Import Parameters"
+#: graphs/curve_fitting.vala:252
 msgid "Parameters"
 msgstr "Paraméterek"
 
-#: graphs/curve_fitting.vala:266
+#: graphs/curve_fitting.vala:268
 msgid "Statistics"
 msgstr "Statisztikák"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:271
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:446
+#: graphs/curve_fitting.vala:449
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s illesztési paraméterei"
 
-#: graphs/data.py:108
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "Nem sikerült feldolgozni a(z) {stylename} stílust, a rendszer által előnyben "
 "részesített stílus betöltése"
 
-#: graphs/data.py:113
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
 "A(z) {stylename} stílus nem létezik, a rendszer által előnyben részesített "
 "stílus betöltése"
 
-#: graphs/data.py:601
+#: graphs/data.py:553
 msgid "Failed to load project"
 msgstr "Nem sikerült betölteni a projektet"
 
@@ -2327,8 +2356,6 @@ msgid "Exported Figure"
 msgstr "Exportált ábra"
 
 #: graphs/export_figure.vala:74
-#| msgctxt "filename"
-#| msgid "Exported Figure"
 msgid "Exported Figure"
 msgstr "Exportált ábra"
 
@@ -2341,74 +2368,73 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Szövegfájlok"
 
-#: graphs/graphs.in:74
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "Nem sikerült betölteni a(z) {font} betűkészletet"
 
-#: graphs/item.py:83
+#: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Adathalmaz"
 
-#: graphs/item.py:156
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Előállított adatkészlet"
 
-#: graphs/item.py:272
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Címke"
 
-#: graphs/item.py:308
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Kitöltés"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib stílusfájl"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Nem lehet végrehajtani a transzformációt, győződön meg arról, hogy a "
 "szintaxis helyes-e"
 
-#: graphs/operations.py:302
-#| msgid "No data found within the highlighted area"
+#: graphs/operations.py:222
 msgid "No data found in highlighted area"
 msgstr "Nem találhatók adatok a kiemelt területen"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:226
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Egyes elemeknél hiányoznak a hibasávok, ezek elvetésre kerülnek."
 
-#: graphs/operations.py:314
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Kombinált adatok"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "A(z) {name} elemen végzett művelet nem eredményezett kirajzolható egyenletet"
 
-#: graphs/operations.py:459
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "A művelet nem támogatott az egyenletek esetén."
 
-#: graphs/operations.py:616
+#: graphs/operations.py:556
 msgid "No data found within the highlighted area"
 msgstr "Nem találhatók adatok a kijelölt területen belül"
 
-#: graphs/operations.py:622
+#: graphs/operations.py:564
 msgid "Operation not supported for data items"
 msgstr "A művelet nem támogatott az adatelemek esetén."
 
-#: graphs/operations.py:625
+#: graphs/operations.py:567
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: hiba a művelet végrehajtásakor"
 
-#: graphs/operations.py:631
+#: graphs/operations.py:575
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "A kiemelt területen kívül eső adatok elvetésre kerültek"
 
@@ -2421,19 +2447,19 @@ msgid "Project is from a newer incompatible version of Graphs"
 msgstr ""
 "A projekt a Grafikonok egy újabb, nem kompatibilis változatából származik"
 
-#: graphs/project.py:287
+#: graphs/project.py:306
 msgid "Failed to do legacy migration"
 msgstr "Nem sikerült elvégezni az örökölt költöztetést"
 
-#: graphs/project.py:289
+#: graphs/project.py:308
 msgid "Failed to parse project file"
 msgstr "Nem sikerült feldolgozni a projektfájlt"
 
-#: graphs/project.py:295
+#: graphs/project.py:314
 msgid "Failed to migrate project"
 msgstr "Nem sikerült költöztetni a projektet"
 
-#: graphs/project.py:301
+#: graphs/project.py:320
 msgid "Failed to validate project"
 msgstr "Nem sikerült ellenőrizni a projektet"
 
@@ -2445,87 +2471,84 @@ msgstr "Mentett projekt"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/python_helper.vala:38
-#| msgctxt "shortcut window"
-#| msgid "Export Data"
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Exportált adatok"
 
-#: graphs/style_io.py:109
+#: graphs/style_io.py:108
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Hiányzó kettőspont a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:117
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Nem stílussal kapcsolatos {param} paraméter a(z) {file} fájlban"
 
-#: graphs/style_io.py:120
+#: graphs/style_io.py:119
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "A(z) {param} paraméter mellőzése a(z) {file} fájlban"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:123
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Kettőzött kulcs a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:142
+#: graphs/style_io.py:141
 #, python-brace-format
-#| msgid "Bad value in file {file} on line {line}"
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
 "supported"
 msgstr ""
-"Hibás érték a(z) {file} fájl {line}. sorában, az egyéni {key} paraméter nem tá"
-"mogatott"
+"Hibás érték a(z) {file} fájl {line}. sorában, az egyéni {key} paraméter nem "
+"támogatott"
 
-#: graphs/style_io.py:166
+#: graphs/style_io.py:165
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Hibás érték a(z) {file} fájl {line}. sorában"
 
-#: graphs/style_io.py:171
+#: graphs/style_io.py:170
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Nem sikerült feldolgozni a(z) {filename} fájlt"
 
-#: graphs/style_io.py:181
+#: graphs/style_io.py:180
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "A(z) {file} fájl nem tartalmaz név címkét"
 
-#: graphs/styles.vala:58
+#: graphs/styles.vala:66
 msgid "System"
 msgstr "Rendszer"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Összes fájl"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Dokumentumportál"
 
-#: graphs/window.vala:142
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Grafikonok (fejlesztői)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Névtelen projekt"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Piszkozat"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafikonok – %s"
 
-#: graphs/window.vala:391
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Hely megnyitása"
