@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-02-24 12:40+0000\n"
-"PO-Revision-Date: 2026-02-28 16:01+0100\n"
+"POT-Creation-Date: 2026-09-01 13:32+0000\n"
+"PO-Revision-Date: 2026-09-11 21:05+0200\n"
 "Last-Translator: twlvnn kraftwerk <kraft_werk@tutanota.com>\n"
 "Language-Team: Bulgarian <dict-notifications@fsa-bg.org>\n"
 "Language: bg\n"
@@ -16,12 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.8\n"
+"X-Generator: Poedit 3.9\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "Графики"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
+msgid "The Graphs Developers"
+msgstr "Разработчиците на „Графики“"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -42,6 +46,54 @@ msgstr "Редактиране на стиловете на графиката"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Лесно манипулиране на внесени данни"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Чертежи"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Чертане"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Графика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Диаграми"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Наука"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Математика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Математика"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Формули"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Данни"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Визуализация"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr "Напасване"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -109,6 +161,7 @@ msgid "New Window"
 msgstr "Нов прозорец"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: graphs/application.vala:15
 msgid "Style Editor"
 msgstr "Редактор на стилове"
 
@@ -125,12 +178,12 @@ msgstr ""
 "Възможно е да съдържа неправилни данни."
 
 #: data/ui/dialogs/beta-disallowed.blp:9
-#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "Напред"
 
 #: data/ui/dialogs/beta-disallowed.blp:10
-#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "Прекратяване"
 
@@ -156,7 +209,7 @@ msgstr "Изтриване"
 msgid "Legacy Project"
 msgstr "Остарял проект"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -223,7 +276,7 @@ msgstr "Добавяне на елемент"
 
 #: data/ui/import/columns/item-group.blp:9
 #: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
-#: data/ui/style-editor/item-color-row.blp:36
+#: data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "Премахване"
 
@@ -247,8 +300,8 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Внасяйте само стойности за Y, стойностите за X ще се генерират"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.py:225
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
+#: graphs/item/equation_item.vala:24
 msgid "Equation"
 msgstr "Формула"
 
@@ -258,8 +311,8 @@ msgstr "Формула"
 msgid "More info"
 msgstr "Още информация"
 
-#: data/ui/import/columns/item-group.blp:72
-#: data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73
+#: data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -267,11 +320,11 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 "<b>Изчисляване на стойността на X</b>\n"
 "\n"
@@ -285,27 +338,27 @@ msgstr ""
 "• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
 "• <b>n*10+100</b> → 100, 110, 120, 130…"
 
-#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93
 #: data/ui/import/sql/main-group.blp:28
-#: data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr "Интервали на грешка за X"
 
-#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97
 #: data/ui/import/sql/main-group.blp:33
-#: data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr "Интервали на грешка за Y"
 
-#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110
 #: data/ui/import/sql/main-group.blp:40
-#: data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr "Колона за грешка по X"
 
-#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122
 #: data/ui/import/sql/main-group.blp:46
-#: data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr "Колона за грешка по Y"
 
@@ -360,25 +413,57 @@ msgstr "Друго"
 msgid "Custom Delimiter"
 msgstr "Друг разделител"
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+"<b>Използва съвпадение по шаблони с регулярни изрази</b>\n"
+"\n"
+"Тези символи имат специално значение в синтаксиса на регулярни изрази:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"За да съвпадат тези символи буквално, трябва да ги екранирате с <b>\\</b>\n"
+"\n"
+"<b>Примери:</b>\n"
+"• <b>\\.</b> съвпада с точка\n"
+"• <b>\\*</b> съвпада със звездичка\n"
+"• <b>\\|</b> съвпада със символа „вертикална черта“\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Научете повече за синтаксиса на регулярни изрази…</a>"
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "Десетичен разделител"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr "Запетая (,)"
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr "Точка (.)"
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "Пропускане на редове"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr "Брой редове, които да се пропуснат в началото"
 
@@ -452,26 +537,30 @@ msgid "Name"
 msgstr "Име"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr "Извеждане в легендата"
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr "Позиция по оста X"
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "Долу"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "Горе"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr "Позиция по оста Y"
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "Ляво"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "Дясно"
 
@@ -665,13 +754,21 @@ msgstr "Запълнен X"
 msgid "Marker Size"
 msgstr "Размер на маркера"
 
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr "Намаляване на детайлите"
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr "Чертане на по-малко точки, за подобряване на производителността"
+
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Черта"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
 
@@ -688,30 +785,30 @@ msgstr "Интервали на грешка"
 msgid "Show Horizontal"
 msgstr "Показване хоризонтално"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:16
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
 msgid "Show Vertical"
 msgstr "Показване вертикално"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:20
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
 #: data/ui/style-editor/editor-box.blp:194
 msgid "Draw Above Data"
 msgstr "Рисуване над данните"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:24
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
 msgid "Color"
 msgstr "Цвят"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:28
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
 #: data/ui/style-editor/editor-box.blp:149
 msgid "Cap Length"
 msgstr "Дължина на маркерите"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:42
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
 #: data/ui/style-editor/editor-box.blp:164
 msgid "Cap Thickness"
 msgstr "Дебелина на маркерите"
 
-#: data/ui/sidebar/edit-item/errorbar-group.blp:56
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
 #: data/ui/style-editor/editor-box.blp:179
 msgid "Line Width"
 msgstr "Широчина на чертата"
@@ -735,8 +832,8 @@ msgstr "Мащабиране"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Определя отстоянието между точките с данните"
+msgid "How points are spaced"
+msgstr "Отстояния между точките"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -812,7 +909,7 @@ msgid "Labels"
 msgstr "Етикети"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:106
+#: graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "Заглавие"
 
@@ -956,7 +1053,7 @@ msgstr "Скриване на неизбраните елементи"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:82
+#: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "Стил"
 
@@ -1045,6 +1142,10 @@ msgid "Add Equation…"
 msgstr "Добавяне на уравнение…"
 
 #: data/ui/sidebar/main.blp:154
+msgid "Add Fill…"
+msgstr "Добавяне на запълване…"
+
+#: data/ui/sidebar/main.blp:155
 msgid "Generate Data…"
 msgstr "Генериране на данни…"
 
@@ -1196,9 +1297,9 @@ msgstr "Добавяне"
 msgid "Template"
 msgstr "Шаблон"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "Промяна на цвета"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "Добавяне на цвят"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1388,18 +1489,9 @@ msgstr "Цвят на очертанията"
 msgid "Line Colors"
 msgstr "Цветове на чертите"
 
-#: data/ui/style-editor/editor-box.blp:521
-#: data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "Добавяне на цвят"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr "Цветове на интервалите на грешка"
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "Редактиране"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1447,7 +1539,7 @@ msgid "Open Style"
 msgstr "Отваряне на стил"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr "Редактор на стила на графиките"
 
@@ -1467,7 +1559,7 @@ msgstr "Отваряне на файл…"
 msgid "Open Preview"
 msgstr "Отваряне на предварителния преглед"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:179
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Канавата не може да се зареди"
@@ -1500,7 +1592,11 @@ msgstr "Въведете математически израз"
 msgid "Name (optional)"
 msgstr "Име (незадължително)"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "Промяна на цвета"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr "Напасване на криви"
 
@@ -1508,104 +1604,104 @@ msgstr "Напасване на криви"
 msgid "Open Curve Fitting Menu"
 msgstr "Отваряне на менюто за напасване на криви"
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Линейно"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Квадратно"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Експоненциално"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr "Степенен закон"
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Логаритъм"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr "Сигмоидна логистична"
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr "Гаусово"
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Друго"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr "Добавяне на напасване към данните"
 
-#: data/ui/curve-fitting.blp:157
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "Превключване на страничната лента"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr "Метод на оптимизация"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Левенберг-Марквард"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:209
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Диапазон на доверие с отражение"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:216
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "С чупки"
 
-#: data/ui/curve-fitting.blp:223
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr "Граници на доверие"
 
-#: data/ui/curve-fitting.blp:226
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "Без"
 
-#: data/ui/curve-fitting.blp:233
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: доверие 68%"
 
-#: data/ui/curve-fitting.blp:240
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: доверие 95%"
 
-#: data/ui/curve-fitting.blp:247
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: доверие 99,7%"
 
-#: data/ui/curve-fitting.blp:255
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr "Показване на остатъците"
 
@@ -1613,7 +1709,7 @@ msgstr "Показване на остатъците"
 msgid "Export Figure"
 msgstr "Изнасяне на фигурата"
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "Изнасяне"
 
@@ -1700,15 +1796,11 @@ msgstr "Генериране на данните"
 msgid "Generate"
 msgstr "Генериране"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "Избиране на цвят"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "Преместване на елемент"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "Премахване на елемент"
 
@@ -1754,7 +1846,7 @@ msgstr "Изтриване…"
 msgid "Transform Data"
 msgstr "Преобразуване на данните"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1790,11 +1882,11 @@ msgstr ""
 "Стандартно тригонометричните функции използват.\n"
 "Добавете „d“, за да използвате градуси, напр. sind(x) или cosd(x)."
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr "X ="
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr "Отхвърляне на неизбраните данни"
 
@@ -1806,7 +1898,7 @@ msgstr "За внасяне пуснете тук"
 msgid "Show Sidebar"
 msgstr "Показване на страничната лента"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:401
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
 msgid "Undo"
 msgstr "Отмяна"
 
@@ -1971,16 +2063,16 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Повтаряне на действието"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr "Собственият разделител не може да е празен"
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Колони"
 
-#: graphs/file_import/parsers/columns/main.vala:46
-msgid "Custom delimiter cannot be empty"
-msgstr "Собственият разделител не може да е празен"
-
-#: graphs/file_import/parsers/columns/parser.vala:106
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -1989,186 +2081,225 @@ msgstr ""
 "Грешка в индекса в %s, не може да се осъществи достъп до индекс %d на ред "
 "%d, намерени са само %d колони"
 
-#: graphs/file_import/parsers/columns/parser.vala:132
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr "Неуспешно внасяне от файл, неправилна стойност на ред %d"
 
+#: graphs/file_import/parsers/columns/reader.vala:153
+msgid "Failed to parse file."
+msgstr "Файлът не може да се разчете."
+
 #: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:141
+#: graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "Елемент %d"
 
-#: graphs/file_import/parsers/project/__init__.py:19
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Проект"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Файл с проект на Графики"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Електронна таблица"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Електронна таблица"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:276
-msgid "No numeric data found in column."
-msgstr "Липсват числови данни в колоната."
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+msgid "Failed to open File."
+msgstr "Файлът не може да се отвори."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:291
-msgid "Columns do not have the same length."
-msgstr "Колоните не са с еднаква дължина."
-
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "База от данни"
 
-#: graphs/file_import/parsers/sql/__init__.py:25
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "База от данни SQLite"
 
-#: graphs/file_import/parsers/sql/__init__.py:42
-#, python-brace-format
-msgid ""
-"Could not import data from table \"{table_name}\", no numeric columns were "
-"found"
-msgstr ""
-"Не може да се внесат данни от таблицата „{table_name}“, липсват числови "
-"колони"
+#: graphs/file_import/parsers/sql/reader.vala:133
+#, c-format
+msgid "Could not import data from table \"%s\", no numeric columns were found"
+msgstr "Не може да се внесат данни от таблицата „%s“, липсват числови колони"
 
-#: graphs/file_import/parsers/sql/__init__.py:52
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr "В колоната на таблицата няма данни"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:70
 msgid "Intensity (cps)"
 msgstr "Интензивност (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
+#: graphs/file_import/parsers/xry/parser.vala:104
+#: graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "Неуспешно внасяне"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr "анализаторът не може да инициализира настройките."
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr "анализаторът не може да инициализира графичните обекти за настройките."
+
+#: graphs/file_import/dialog.vala:131
+msgid "Defaults updated"
+msgstr "Стандартните настройки са променени"
+
+#: graphs/file_import/file_import.vala:96
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Поддържани файлове"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:100
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII файлове"
 
+#: graphs/item/data_item.vala:73
+msgid "Dataset"
+msgstr "Данни"
+
+#: graphs/item/fill_item.vala:79
+msgid "Positive Infinity"
+msgstr "Положителна безкрайност"
+
+#: graphs/item/fill_item.vala:80
+msgid "Negative Infinity"
+msgstr "Отрицателна безкрайност"
+
+#: graphs/item/fill_item.vala:81
+msgid "Custom Equation…"
+msgstr "Друго уравнение…"
+
+#: graphs/item/fill_item.vala:134
+msgid "Fill"
+msgstr "Запълване"
+
+#: graphs/item/generated_data_item.vala:25
+msgid "Generated Dataset"
+msgstr "Генерирани данни"
+
+#: graphs/item/text_item.vala:11
+msgid "Label"
+msgstr "Етикет"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:134
 msgid "X Axis Minimum"
 msgstr "Минимум по оста X"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:135
 msgid "Y Axis Minimum"
 msgstr "Минимум по оста Y"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:141
 msgid "X Axis Maximum"
 msgstr "Максимум по оста X"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:142
 msgid "Y Axis Maximum"
 msgstr "Максимум по оста Y"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
+#: graphs/sidebar/figure_settings.vala:160
 msgid "X Axis Scale"
 msgstr "Ска̀ла по оста X"
 
-#: graphs/sidebar/figure_settings.vala:164
+#: graphs/sidebar/figure_settings.vala:161
 msgid "X Axis Label"
 msgstr "Надпис по оста X"
 
-#: graphs/sidebar/figure_settings.vala:167
+#: graphs/sidebar/figure_settings.vala:164
 msgid "Y Axis Scale"
 msgstr "Ска̀ла по оста Y"
 
-#: graphs/sidebar/figure_settings.vala:168
+#: graphs/sidebar/figure_settings.vala:165
 msgid "Y Axis Label"
 msgstr "Надпис по оста Y"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:245
 msgid "Defaults Updated"
 msgstr "Стандартните настройки са променени"
 
-#: graphs/style_editor/__init__.py:68
-msgid "Example Item"
-msgstr "Примерен елемент"
-
-#: graphs/style_editor/__init__.py:107 graphs/style_io.py:248
-msgid "X Label"
-msgstr "Етикет за X"
-
-#: graphs/style_editor/__init__.py:108 graphs/style_io.py:249
-msgid "Y Label"
-msgstr "Етикет за Y"
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "Цвят %d"
 
-#. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
-#, c-format
-msgid "Graphs Style Editor — %s"
-msgstr "Редактор на стила на графиките — „%s“"
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
+msgstr "Примерен елемент"
 
-#: graphs/style_editor/window.vala:234
+#: graphs/style_editor/window.vala:224
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Сигурни ли сте, че искате да премахнете %s?"
 
-#: graphs/actions.vala:28
-msgid "The Graphs Developers"
-msgstr "Разработчиците на „Графики“"
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor/window.vala:302
+#, c-format
+msgid "Graphs Style Editor — %s"
+msgstr "Редактор на стила на графиките — „%s“"
 
-#: graphs/actions.vala:42
+#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+msgid "X Label"
+msgstr "Етикет за X"
+
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+msgid "Y Label"
+msgstr "Етикет за Y"
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr "{font} не може да зареди"
+
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr ""
 "Twlvnn Kraftwerk &lt;<a "
@@ -2181,16 +2312,20 @@ msgstr ""
 "Докладвайте за грешки в превода в <a href='https://fsa-bg.org/project/gtp/"
 "newticket'>съответния раздел</a>."
 
-#: graphs/actions.vala:182 graphs/item_box.vala:54
+#: graphs/actions.vala:183 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "%s е изтрито"
 
-#: graphs/curve_fitting.py:103
-msgid "Residuals"
-msgstr "Остатъци"
+#: graphs/application.vala:14
+msgid "New window"
+msgstr "Нов прозорец"
 
-#: graphs/curve_fitting.vala:74
+#: graphs/application.vala:16
+msgid "[FILE…]"
+msgstr "[ФАЙЛ…]"
+
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2198,7 +2333,7 @@ msgstr ""
 "Въведете правилни\n"
 "числови параметри."
 
-#: graphs/curve_fitting.vala:75
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2206,7 +2341,7 @@ msgstr ""
 "Грешка в ограниченията: уверете се, че\n"
 "Долна граница < Начална < Горна граница."
 
-#: graphs/curve_fitting.vala:76
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2214,7 +2349,7 @@ msgstr ""
 "Грешка в матрицата: Данните\n"
 "са недостатъчни за този модел."
 
-#: graphs/curve_fitting.vala:77
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2222,7 +2357,7 @@ msgstr ""
 "Грешка при приближението: достигнат е максималният\n"
 "брой итерации без постигане на сближаване."
 
-#: graphs/curve_fitting.vala:78
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2230,7 +2365,7 @@ msgstr ""
 "Грешка в дефиниционната област: Уравнението\n"
 "е невалидно за този диапазон от данни."
 
-#: graphs/curve_fitting.vala:79
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2238,7 +2373,7 @@ msgstr ""
 "Невалидно уравнение: Проверете\n"
 "синтаксиса и променливите."
 
-#: graphs/curve_fitting.vala:80
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2246,189 +2381,169 @@ msgstr ""
 "Грешка в доверителния интервал:\n"
 "Ковариационната матрица е нестабилна."
 
-#: graphs/curve_fitting.vala:250
+#: graphs/curve_fitting.vala:265
+msgid "Residuals"
+msgstr "Остатъци"
+
+#: graphs/curve_fitting.vala:376
 msgid "Parameters"
 msgstr "Параметри"
 
-#: graphs/curve_fitting.vala:266
+#: graphs/curve_fitting.vala:392
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:395
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:269
+#: graphs/curve_fitting.vala:395
 msgid "RMSE"
 msgstr "СКО"
 
-#: graphs/curve_fitting.vala:446
+#: graphs/curve_fitting.vala:577
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Параметри на напасване за %s"
 
-#: graphs/data.py:108
-#, python-brace-format
-msgid "Could not parse style {stylename}, loading system preferred style"
-msgstr ""
-"Стилът {stylename} не може да се разчете, зареждане на предпочитания стил на "
-"системата"
-
-#: graphs/data.py:113
-#, python-brace-format
-msgid "Style {stylename} does not exist, loading system preferred style"
-msgstr ""
-"Стилът {stylename} не съществува, зареждане на предпочитания стил на "
-"системата"
-
-#: graphs/data.py:601
+#: graphs/data.py:360
 msgid "Failed to load project"
 msgstr "Проектът не може да се зареди"
 
-#: graphs/export_figure.vala:48
+#: graphs/data.vala:487
+#, c-format
+msgid "Could not parse style %s, defaulting to system style"
+msgstr "Стилът %s не може да се разчете, зареждане на стила на системата"
+
+#: graphs/data.vala:842
+#, c-format
+msgid "Could not find style %s, defaulting to system style"
+msgstr "Стилът %s липсва, зареждане на стила на системата"
+
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Изнесена фигура"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "Изнесена фигура"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr "Няма данни за изнасяне"
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:25 graphs/export_items.vala:41
+msgid "Exported Data"
+msgstr "Изнесени данни"
+
+#: graphs/export_items.vala:34
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Текстови файлове"
 
-#: graphs/graphs.in:74
-msgid "Could not load {font}"
-msgstr "{font} не може да зареди"
-
-#: graphs/item.py:83
-msgid "Dataset"
-msgstr "Данни"
-
-#: graphs/item.py:156
-msgid "Generated Dataset"
-msgstr "Генерирани данни"
-
-#: graphs/item.py:272
-msgid "Label"
-msgstr "Етикет"
-
-#: graphs/item.py:308
-msgid "Fill"
-msgstr "Запълване"
-
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Файл със стил на Matplotlib"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:125
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Преобразуването не може да се изпълнени, уверете се, че синтаксисът е "
 "правилен"
 
-#: graphs/operations.py:302
+#: graphs/operations.py:187
 msgid "No data found in highlighted area"
 msgstr "Няма намерени данни в откроената част"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:191
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Някои елементи нямат интервали на грешка — ще се прескочат"
 
-#: graphs/operations.py:314
+#: graphs/operations.py:203
 msgid "Combined Data"
 msgstr "Комбинирани данни"
 
-#: graphs/operations.py:450
+#: graphs/operations.py:345
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Операцията {name} не създаде уравнение, което да може да се начертае"
 
-#: graphs/operations.py:459
+#: graphs/operations.py:351
 msgid "Operation not supported for equations."
 msgstr "Операцията не поддържа формули."
 
-#: graphs/operations.py:616
+#: graphs/operations.py:529 graphs/operations.py:533
 msgid "No data found within the highlighted area"
 msgstr "Няма намерени данни в откроената част"
 
-#: graphs/operations.py:622
+#: graphs/operations.py:542
 msgid "Operation not supported for data items"
 msgstr "Операцията не се поддържа за елементите с данни"
 
-#: graphs/operations.py:625
+#: graphs/operations.py:545
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Грешка при изпълнението на операцията"
 
-#: graphs/operations.py:631
+#: graphs/operations.py:552
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Данните извън откроената част са изхвърлени"
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr "Липсват данни във файла за проекта"
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проектът е от по-нова, несъвместима версия на „Графики“"
 
-#: graphs/project.py:287
+#: graphs/project.py:323
 msgid "Failed to do legacy migration"
 msgstr "Неуспешна миграция"
 
-#: graphs/project.py:289
+#: graphs/project.py:325
 msgid "Failed to parse project file"
 msgstr "Файлът с проект не може да се разчете"
 
-#: graphs/project.py:295
+#: graphs/project.py:331
 msgid "Failed to migrate project"
 msgstr "Проектът не може да се мигрира"
 
-#: graphs/project.py:301
+#: graphs/project.py:337
 msgid "Failed to validate project"
 msgstr "Проектът не може да се провери"
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr "Запазен проект"
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "Проект"
 
-#: graphs/python_helper.vala:38
-msgid "Exported Data"
-msgstr "Изнесени данни"
-
-#: graphs/style_io.py:109
+#: graphs/style_io.py:108
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Липсващо двоеточие във файл {file}, ред {line}"
 
-#: graphs/style_io.py:117
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Несвързан със стила параметър {param} във файл {file}"
 
-#: graphs/style_io.py:120
+#: graphs/style_io.py:119
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Игнориране на параметър {param} във файл {file}"
 
-#: graphs/style_io.py:124
+#: graphs/style_io.py:123
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Дублиран ключ във файл {file}, на ред {line}"
 
-#: graphs/style_io.py:142
+#: graphs/style_io.py:141
 #, python-brace-format
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
@@ -2437,51 +2552,66 @@ msgstr ""
 "Лоша стойност във файл {file}, на ред {line}, собственият параметър {key} не "
 "се поддържа"
 
-#: graphs/style_io.py:166
+#: graphs/style_io.py:165
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Лоша стойност във файл {file}, на ред {line}"
 
-#: graphs/style_io.py:171
+#: graphs/style_io.py:170
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "{filename} не може да се разчете"
 
-#: graphs/style_io.py:181
+#: graphs/style_io.py:180
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "Файлът {file} е без етикет за име"
 
-#: graphs/styles.vala:58
+#: graphs/styles.vala:103
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:248
 msgid "All Files"
 msgstr "Всички файлове"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:290
 msgid "Document Portal"
 msgstr "Портал за документи"
 
-#: graphs/window.vala:142
+#: graphs/window.vala:149
 msgid "Graphs (Development)"
 msgstr "Графики (в разработка)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:176
 msgid "Untitled Project"
 msgstr "Ненаименуван проект"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:177
 msgid "Draft"
 msgstr "Чернова"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:183
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графики — %s"
 
-#: graphs/window.vala:391
+#. Translators: Formatted with item name and data points respectively
+#: graphs/window.vala:399
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
+msgstr "%s се изчертава с по-малко детайли, като се използват %d точки"
+
+#: graphs/window.vala:405
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] ""
+"%d елемент се изчертава с по-малко детайли, като се използват %d точки"
+msgstr[1] ""
+"%d елемента се изчертава с по-малко детайли, като се използват %d точки"
+
+#: graphs/window.vala:427
 msgid "Open Location"
 msgstr "Отваряне на пътя"
