@@ -22,8 +22,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/OpenMathLib/OpenBLAS",
-                    "commit": "62bcfb0dc9f1cfa685fc04135c50e2780c303137",
-                    "tag": "v0.3.33",
+                    "commit": "e0166008be8e466242aa76b2ff75ce3f0fbf574a",
+                    "tag": "v0.3.34",
                     "x-checker-data": {
                         "type": "git",
                         "tag-pattern": "^v([\\d.]+)$"
@@ -40,8 +40,8 @@
             "sources": [
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/df/b2/87e62e8c3e2f4b32e5fe99e0b86d576da1312593b39f47d8ceef365e95ed/packaging-26.2-py3-none-any.whl",
-                    "sha256": "5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e",
+                    "url": "https://files.pythonhosted.org/packages/63/34/ba1c580383c9eada3711951fef0795c80b829a078d72188184bcab9dd527/packaging-26.3-py3-none-any.whl",
+                    "sha256": "d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "packaging",
@@ -50,8 +50,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/1d/0b/da4851b1e2d9c40c9bd74c0abd94510a7d797da9ccde0a90e8953751ed4a/pyproject_metadata-0.11.0-py3-none-any.whl",
-                    "sha256": "85bbecca8694e2c00f63b492c96921d6c228454057c88e7c352b2077fcaa4096",
+                    "url": "https://files.pythonhosted.org/packages/b9/8e/d883718e872abc214ba053f60f7e6edc2abd5ffbd1544beb01a9c92ddd3c/pyproject_metadata-0.12.1-py3-none-any.whl",
+                    "sha256": "f7162d580a96386a8eb096da06215f981f547d1490f03055ef99e323bc2da427",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "pyproject-metadata",
@@ -60,8 +60,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/90/ad/77f9483e180cabab2772ac222aedd3dfab858e60d992f40414a3f08e7494/meson_python-0.20.0-py3-none-any.whl",
-                    "sha256": "6a744cf0c09e76ecbdc58cfa374b48c8902dac1b74479628238634efbf36aec9",
+                    "url": "https://files.pythonhosted.org/packages/9e/4f/03aeed5a32e7e8158d8c617fe65b622410db974fe02e3bd78da9689a44fd/meson_python-0.21.1-py3-none-any.whl",
+                    "sha256": "270bc9b78957c47e0aa1758ad616dba3f943d8f9cbdb944d318c3c1c7a49e4bd",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "meson-python",
@@ -70,8 +70,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/e6/60/73603fbcdbe5e803855bcce4414f94eaeed449083bd8183e67161af78188/vcs_versioning-1.1.1-py3-none-any.whl",
-                    "sha256": "b541e2ba79fc6aaa3850f8a7f88af43d97c1c80649c01142ee4146eddbc599e4",
+                    "url": "https://files.pythonhosted.org/packages/d7/20/29378edc8d7d2ce41892adc1356f4c6c6ae03b945d04ca6ade61afa3d5dc/vcs_versioning-2.4.1-py3-none-any.whl",
+                    "sha256": "b7089ec9bef67b2cad82148366e8eac4d63173f440ec62628282b59eb96bbcb0",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "vcs-versioning",
@@ -80,8 +80,8 @@
                 },
                 {
                     "type": "file",
-                    "url": "https://files.pythonhosted.org/packages/5c/e1/342c4434df56aa537f6ce7647eefee521d96fbb828b08acd709865767652/setuptools_scm-10.0.5-py3-none-any.whl",
-                    "sha256": "f611037d8aae618221503b8fa89319f073438252ae3420e01c9ceec249131a0a",
+                    "url": "https://files.pythonhosted.org/packages/4b/00/e9c0591b77186f6c1a8479500456ee72cd30730836c58b7a8a2654909c23/setuptools_scm-10.2.3-py3-none-any.whl",
+                    "sha256": "7fcf8ff55c95eb8b572a23c81495e5559b9b90f3e82fcf0952bb76c37de27a81",
                     "x-checker-data": {
                         "type": "pypi",
                         "name": "setuptools-scm",
@@ -107,8 +107,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/d0/ad/fed0499ce6a338d2a03ebae59cd15093910c8875328855781952abf6c2fe/numpy-2.4.6.tar.gz",
-                            "sha256": "f3a3570c4a2a16746ac2c31a7c7c7b0c186b95ce902e33db6f28094ed7387dda",
+                            "url": "https://files.pythonhosted.org/packages/13/01/11703282db468b85f6f7b8c7f22d058de5970d5c7e60a3a8aaa313c3de36/numpy-2.5.3.tar.gz",
+                            "sha256": "df2d5874ff183595a4ba404edd04f6bd9b5505c1d7708573f6a6c17489a67563",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "numpy"
@@ -150,12 +150,9 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/a3/61/8001b38461d751cd1a0c3a6ae84346796a5758123f3ed97a1b121dfbf4f3/gast-0.6.0-py3-none-any.whl",
-                            "sha256": "52b182313f7330389f72b069ba00f174cfe2a06411099547288839c6cbafbd54",
+                            "url": "https://files.pythonhosted.org/packages/1d/33/f1c6a276de27b7d7339a34749cc33fa87f077f921969c47185d34a887ae2/gast-0.7.0-py3-none-any.whl",
+                            "sha256": "99cbf1365633a74099f69c59bd650476b96baa5ef196fec88032b00b31ba36f7",
                             "x-checker-data": {
-                                "versions": {
-                                    "<": "0.7.0"
-                                },
                                 "type": "pypi",
                                 "name": "gast",
                                 "packagetype": "bdist_wheel"
@@ -163,12 +160,9 @@
                         },
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/44/e4/6e8731d4d10dd09942a6f5015b2148ae612bf13e49629f33f9fade3c8253/beniget-0.4.2.post1-py3-none-any.whl",
-                            "sha256": "e1b336e7b5f2ae201e6cc21f533486669f1b9eccba018dcff5969cd52f1c20ba",
+                            "url": "https://files.pythonhosted.org/packages/66/24/0bef8a8bbf403b536fb2368b6c3fb5f6669b3ef7fdbc2456a3affdd19836/beniget-0.5.0-py3-none-any.whl",
+                            "sha256": "909efcd083af1ac4a5db311f57c415df8cb05c4307eda345edeafac3cd930043",
                             "x-checker-data": {
-                                "versions": {
-                                    "<": "0.5.0"
-                                },
                                 "type": "pypi",
                                 "name": "beniget",
                                 "packagetype": "bdist_wheel"
@@ -176,8 +170,8 @@
                         },
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/2d/25/d608f4a0a4bc3dfad40af2cdb5b92d16b907c3e0a29ff0ab6003740c63ea/pythran-0.18.1-py3-none-any.whl",
-                            "sha256": "e1d811a5843d1881f8adcc3944fe3b84c7317ebf4530617829c19c9836f18b49",
+                            "url": "https://files.pythonhosted.org/packages/4a/dd/6930fa349be42a3ceb14732ec922fb77f2dd9979f16a5df4e0f575369703/pythran-0.19.0-py3-none-any.whl",
+                            "sha256": "42ab2039b4eaec01084e92a2721a474e893047ba5ec87b14d45ee077ac883d08",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pythran",
@@ -195,8 +189,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/b3/06/c3a23c9a0263b136c519f033a58d4641e73065fefc7754e9667ec206d992/pybind11-3.0.4-py3-none-any.whl",
-                            "sha256": "961720ee652da51d531b7b2451a6bd2bc042b0106e6d9baa48ecb7d58034ce63",
+                            "url": "https://files.pythonhosted.org/packages/33/fd/8762f7ee3e4e4be6d1d846cffb4916dd9bb02b2f800d3603718a0efe494c/pybind11-3.1.0-py3-none-any.whl",
+                            "sha256": "b8488090f8acffbcb6b5d6a85571a6827a0a2981ffb75e5a0b27b87c4a6b7dd0",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pybind11",
@@ -217,8 +211,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/7a/97/5a3609c4f8d58b039179648e62dd220f89864f56f7357f5d4f45c29eb2cc/scipy-1.17.1.tar.gz",
-                            "sha256": "95d8e012d8cb8816c226aef832200b1d45109ed4464303e997c5b13122b297c0",
+                            "url": "https://files.pythonhosted.org/packages/7e/74/66de6258867beb2ef08f35f9f2ac017a52cacd5081714d239ff1a442d458/scipy-1.18.1.tar.gz",
+                            "sha256": "52c4b7422442aba924d03ad4019852b08a92e64ea187b933135687bfe2747307",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "scipy"
@@ -267,8 +261,8 @@
                         {
                             "type": "git",
                             "url": "https://github.com/HOST-Oman/libraqm",
-                            "commit": "3a6b891a3db0e0db1364aa38088422f68d8d81e6",
-                            "tag": "v0.10.5",
+                            "commit": "08ee1537e63f93bf926498e12b12ed15ee383216",
+                            "tag": "v0.11.0",
                             "x-checker-data": {
                                 "type": "git",
                                 "tag-pattern": "^v([\\d.]+)$"
@@ -285,8 +279,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/8c/21/c2bcdd5906101a30244eaffc1b6e6ce71a31bd0742a01eb89e660ebfac2d/pillow-12.2.0.tar.gz",
-                            "sha256": "a830b1a40919539d07806aa58e1b114df53ddd43213d9c8b75847eee6c0182b5",
+                            "url": "https://files.pythonhosted.org/packages/1c/3d/bb7fca845737cf9d7dbde16ed1843984665ff2e0a518f5db43e77ec540b9/pillow-12.3.0.tar.gz",
+                            "sha256": "3b8182a766685eaa002637e28b4ec8d6b18819a0c71f579bf0dbaa5830297cce",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "pillow"
@@ -303,8 +297,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/58/01/1253e6698a07380cd31a736d248a3f2a50a7c88779a1813da27503cadc2a/contourpy-1.3.3.tar.gz",
-                            "sha256": "083e12155b210502d0bca491432bb04d56dc3432f95a979b429f2848c3dbe880",
+                            "url": "https://files.pythonhosted.org/packages/83/5a/a55177dd22553a277388e8a1b3220e92de91bacb28356cdc73caa240121d/contourpy-1.4.0.tar.gz",
+                            "sha256": "20156f5a1ac4f8ce02656e39a61e82164a3d359796dc8026f75b062783d500e1",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "contourpy"
@@ -321,8 +315,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/84/69/c97f2c18e0db87d2c7b15da1974dace76ae938f1cfa22e2727a648b7ed43/fonttools-4.63.0.tar.gz",
-                            "sha256": "caeb583deeb5168e694b65cda8b4ee62abedfa66cf88488734466f2366b9c4e0",
+                            "url": "https://files.pythonhosted.org/packages/77/51/d63c7e52163ac14393a35bd14bd7c0da95f8f74be5d7cc988092f9965129/fonttools-4.65.0.tar.gz",
+                            "sha256": "762ba5431358d0dbd4a01982484a1d494fb267e91f974cdcf20b80eab8560f6f",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "fonttools"
@@ -358,8 +352,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/d0/67/9c61eccb13f0bdca9307614e782fec49ffdde0f7a2314935d489fa93cd9c/kiwisolver-1.5.0.tar.gz",
-                            "sha256": "d4193f3d9dc3f6f79aaed0e5637f45d98850ebf01f7ca20e69457f3e8946b66a",
+                            "url": "https://files.pythonhosted.org/packages/ba/07/bd78e6a8fae171ea041ef5bba3ed21a003522fa088834b069b1909981f30/kiwisolver-1.5.1.tar.gz",
+                            "sha256": "f1303ef2eec81262a4b708c3e858afe58d7c75ad91c1c05266eda7673369859a",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "kiwisolver"
@@ -443,8 +437,8 @@
                     "sources": [
                         {
                             "type": "file",
-                            "url": "https://files.pythonhosted.org/packages/1f/24/080c99d223d158d3a8902769269ab6da5b50f7a0e6e072513907e02b7a6c/matplotlib-3.11.0.tar.gz",
-                            "sha256": "68c0c7be01b30dcca3638934f7f591df73401235cbdbf0d1ab1c71e7db7f8b57",
+                            "url": "https://files.pythonhosted.org/packages/e7/c8/9aa712a0afb882649424dd8de8ad9aa6235e796e84c6052e8f6dc1598d0d/matplotlib-3.11.2.tar.gz",
+                            "sha256": "cec596316640f2b394b8f0daa0ea61a8eae82d017b620b9f202befb972a59ea4",
                             "x-checker-data": {
                                 "type": "pypi",
                                 "name": "matplotlib"
