@@ -1,7 +1,7 @@
 {
     "id": "se.sjoerd.Graphs",
     "runtime": "org.gnome.Platform",
-    "runtime-version": "50",
+    "runtime-version": "51",
     "sdk": "org.gnome.Sdk",
     "command": "graphs",
     "finish-args": [
@@ -16,9 +16,9 @@
         "*.a"
     ],
     "modules": [
+        "libgsf.json",
         "python-dependencies.json",
         "python-tests.json",
-        "libgsf.json",
         {
             "name": "graphs",
             "buildsystem": "meson",
