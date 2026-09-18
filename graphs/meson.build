@@ -129,6 +129,7 @@ graphs_lib = shared_library('graphs',
 )
 
 graphs_typelib = custom_target('graphs typelib',
+        input: graphs_lib.vala_gir(),
        output: 'Graphs-1.typelib',
       depends: graphs_lib,
       install: true,
@@ -137,7 +138,7 @@ graphs_typelib = custom_target('graphs typelib',
         find_program('g-ir-compiler'),
         '--output',
         '@OUTPUT@',
-        join_paths(meson.current_build_dir(), 'Graphs-1.gir'),
+        '@INPUT@',
       ],
  )
 devenv.set('GI_TYPELIB_PATH', meson.current_build_dir())
