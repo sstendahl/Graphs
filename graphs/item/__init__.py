@@ -106,7 +106,7 @@ class ItemFactory(Graphs.ItemFactory):
             item.set_property(prop, value)
 
     @staticmethod
-    def to_dict(item: Graphs.Item) -> dict:
+    def to_dict(item: Graphs.Item, items: list[Graphs.Item]) -> dict:
         """Serialize an item to a dict."""
         dictionary = {
             key: ItemFactory.serialize_property(item, key)
@@ -123,22 +123,12 @@ class ItemFactory(Graphs.ItemFactory):
                     None if upper is None else Graphs.ast_to_expression(upper)
                 dictionary["lower_equation"] = \
                     None if lower is None else Graphs.ast_to_expression(lower)
-        return dictionary
-
-    @staticmethod
-    def link_dependencies(
-        item: Graphs.Item,
-        dictionary: dict,
-        items: list[Graphs.Item],
-    ) -> dict:
-        """Replace references with indexes for data dependant items."""
-        if isinstance(item, Graphs.FillItem):
-            upper = item.get_upper_source()
-            lower = item.get_lower_source()
-            dictionary["upper_source"] = \
-                None if upper is None else items.index(upper)
-            dictionary["lower_source"] = \
-                None if lower is None else items.index(lower)
+                upper = item.get_upper_source()
+                lower = item.get_lower_source()
+                dictionary["upper_source"] = \
+                    None if upper is None else items.index(upper)
+                dictionary["lower_source"] = \
+                    None if lower is None else items.index(lower)
         return dictionary
 
     @staticmethod

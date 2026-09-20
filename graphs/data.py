@@ -52,11 +52,6 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def _item_dict(self, item: Graphs.Item) -> dict:
-        """Convert an item to a dict."""
-        dictionary = ItemFactory.to_dict(item)
-        return ItemFactory.link_dependencies(item, dictionary, self)
-
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
         self._history_states = [([], limits)]
@@ -75,14 +70,14 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            self._item_dict(item),
+            ItemFactory.to_dict(item, self),
         ))
 
     @staticmethod
     def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, self._item_dict(item)),
+            (index, ItemFactory.to_dict(item, self)),
         ))
 
     @staticmethod
@@ -115,7 +110,7 @@ class Data(Graphs.Data):
         """Set a deep copy for the data."""
         self._current_batch: list = []
         self._data_copy = copy.deepcopy(
-            [ItemFactory.to_dict(item) for item in self],
+            [ItemFactory.to_dict(item, self) for item in self],
         )
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
@@ -296,7 +291,7 @@ class Data(Graphs.Data):
         view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
-            "data": [self._item_dict(item) for item in self],
+            "data": [ItemFactory.to_dict(item, self) for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
