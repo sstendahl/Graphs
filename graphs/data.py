@@ -222,10 +222,9 @@ class Data(Graphs.Data):
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     dictionary = copy.deepcopy(change[1])
-                    item = ItemFactory.new_from_dict(dictionary)
                     items = list(self)
-                    items.insert(change[0], item)
-                    ItemFactory.resolve_dependencies(item, dictionary, items)
+                    items.insert(change[0], None)
+                    item = ItemFactory.new_from_dict(dictionary, items)
                     self._insert_item(item, change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
@@ -266,10 +265,7 @@ class Data(Graphs.Data):
                         )
                 case Graphs.ChangeType.ITEM_ADDED:
                     dictionary = copy.deepcopy(change)
-                    item = ItemFactory.new_from_dict(dictionary)
-                    items = list(self) + [item]
-                    ItemFactory.resolve_dependencies(item, dictionary, items)
-                    self._add_item(item)
+                    self._add_item(ItemFactory.new_from_dict(dictionary, self))
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -313,11 +309,7 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        dictionaries = project_dict["data"]
-        items = list(map(ItemFactory.new_from_dict, dictionaries))
-        for item, dictionary in zip(items, dictionaries):
-            ItemFactory.resolve_dependencies(item, dictionary, items)
-        self.set_items(items)
+        self.set_items(ItemFactory.new_from_dicts(project_dict["data"]))
 
         # Set clipboard
         self._set_data_copy()

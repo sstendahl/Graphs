@@ -33,7 +33,6 @@ class ProjectParser(Parser):
         """Import data from project file."""
         try:
             project_dict = project.read_project_file(settings.get_file())
-            parsed = list(map(ItemFactory.new_from_dict, project_dict["data"]))
-            items.add_all(parsed)
+            items.add_all(ItemFactory.new_from_dicts(project_dict["data"]))
         except ProjectParseError as e:
             raise ParseError(e.message) from e
