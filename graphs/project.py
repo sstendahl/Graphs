@@ -235,8 +235,7 @@ class ProjectValidator:
         )
 
         # Validate items
-        data = self.project_dict["data"]
-        self.items = [ItemFactory.new_from_dict(d) for d in data]
+        self.items = ItemFactory.new_from_dicts(self.project_dict["data"])
 
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
@@ -263,13 +262,8 @@ class ProjectValidator:
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
-                        new_item = ItemFactory.new_from_dict(data)
+                        new_item = ItemFactory.new_from_dict(data, self.items)
                         self.items.append(new_item)
-                        ItemFactory.resolve_dependencies(
-                            new_item,
-                            data,
-                            self.items,
-                        )
                     case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
                     case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -293,13 +287,9 @@ class ProjectValidator:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:
                         data = copy.deepcopy(change[1])
-                        item = ItemFactory.new_from_dict(data)
-                        self.items.insert(change[0], item)
-                        ItemFactory.resolve_dependencies(
-                            item,
-                            data,
-                            self.items,
-                        )
+                        self.items.insert(change[0], None)
+                        item = ItemFactory.new_from_dict(data, self.items)
+                        self.items[change[0]] = item
                     case Graphs.ChangeType.ITEMS_SWAPPED:
                         self.items.insert(change[0], self.items.pop(change[1]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:

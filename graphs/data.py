@@ -52,11 +52,6 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def _item_dict(self, item: Graphs.Item) -> dict:
-        """Convert an item to a dict."""
-        dictionary = ItemFactory.to_dict(item)
-        return ItemFactory.link_dependencies(item, dictionary, self)
-
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
         self._history_states = [([], limits)]
@@ -75,14 +70,14 @@ class Data(Graphs.Data):
     def _on_item_added(self, item: Graphs.Item) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_ADDED,
-            self._item_dict(item),
+            ItemFactory.to_dict(item, self),
         ))
 
     @staticmethod
     def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_REMOVED,
-            (index, self._item_dict(item)),
+            (index, ItemFactory.to_dict(item, self)),
         ))
 
     @staticmethod
@@ -115,7 +110,7 @@ class Data(Graphs.Data):
         """Set a deep copy for the data."""
         self._current_batch: list = []
         self._data_copy = copy.deepcopy(
-            [ItemFactory.to_dict(item) for item in self],
+            [ItemFactory.to_dict(item, self) for item in self],
         )
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
@@ -227,10 +222,9 @@ class Data(Graphs.Data):
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     dictionary = copy.deepcopy(change[1])
-                    item = ItemFactory.new_from_dict(dictionary)
                     items = list(self)
-                    items.insert(change[0], item)
-                    ItemFactory.resolve_dependencies(item, dictionary, items)
+                    items.insert(change[0], None)
+                    item = ItemFactory.new_from_dict(dictionary, items)
                     self._insert_item(item, change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
@@ -271,10 +265,7 @@ class Data(Graphs.Data):
                         )
                 case Graphs.ChangeType.ITEM_ADDED:
                     dictionary = copy.deepcopy(change)
-                    item = ItemFactory.new_from_dict(dictionary)
-                    items = list(self) + [item]
-                    ItemFactory.resolve_dependencies(item, dictionary, items)
-                    self._add_item(item)
+                    self._add_item(ItemFactory.new_from_dict(dictionary, self))
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -296,7 +287,7 @@ class Data(Graphs.Data):
         view_pos, view_states = self.get_view_history()
         return {
             "version": self.get_version(),
-            "data": [self._item_dict(item) for item in self],
+            "data": [ItemFactory.to_dict(item, self) for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
@@ -318,11 +309,7 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        dictionaries = project_dict["data"]
-        items = list(map(ItemFactory.new_from_dict, dictionaries))
-        for item, dictionary in zip(items, dictionaries):
-            ItemFactory.resolve_dependencies(item, dictionary, items)
-        self.set_items(items)
+        self.set_items(ItemFactory.new_from_dicts(project_dict["data"]))
 
         # Set clipboard
         self._set_data_copy()
