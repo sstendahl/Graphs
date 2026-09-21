@@ -38,7 +38,28 @@ class ItemFactory(Graphs.ItemFactory):
         self.connect("reset-request", self._on_reset_request)
 
     @staticmethod
-    def new_from_dict(dictionary: dict) -> Graphs.Item:
+    def new_from_dicts(dictionaries: list[dict]) -> list[Graphs.Item]:
+        """Instanciate items from dict."""
+        for i, dictionary in enumerate(dictionaries):
+            if dictionary["type"] in ("FillItem", ):
+                continue
+            dictionaries[i] = ItemFactory.new_from_dict(dictionary, None)
+
+        for i, dictionary in enumerate(dictionaries):
+            if isinstance(dictionary, Graphs.Item):
+                continue
+            dictionaries[i] = ItemFactory.new_from_dict(
+                dictionary,
+                dictionaries,
+            )
+
+        return dictionaries
+
+    @staticmethod
+    def new_from_dict(
+        dictionary: dict,
+        items: list[Graphs.item],
+    ) -> Graphs.Item:
         """Instanciate item from dict."""
         dictionary = dict(dictionary)
         match dictionary["type"]:
@@ -72,25 +93,15 @@ class ItemFactory(Graphs.ItemFactory):
                     item.set_upper_equation(Graphs.expression_to_ast(upper))
                 if lower is not None:
                     item.set_lower_equation(Graphs.expression_to_ast(lower))
+                upper_source = dictionary.get("upper_source")
+                lower_source = dictionary.get("lower_source")
+                if upper_source is not None and upper_source < len(items):
+                    item.set_upper_source(items[upper_source])
+                if lower_source is not None and lower_source < len(items):
+                    item.set_lower_source(items[lower_source])
                 return item
             case _:
                 raise ValueError(f"could not find type {dictionary['type']}")
-
-    @staticmethod
-    def resolve_dependencies(
-        item: Graphs.Item,
-        dictionary: dict,
-        items: list[Graphs.Item],
-    ) -> Graphs.Item:
-        """Replace indexes with references for data dependent items."""
-        if isinstance(item, Graphs.FillItem):
-            upper_source = dictionary.get("upper_source")
-            lower_source = dictionary.get("lower_source")
-            if upper_source is not None and upper_source < len(items):
-                item.set_upper_source(items[upper_source])
-            if lower_source is not None and lower_source < len(items):
-                item.set_lower_source(items[lower_source])
-        return item
 
     @staticmethod
     def deserialize_property(item: Graphs.Item, prop: str, value) -> None:
@@ -106,7 +117,7 @@ class ItemFactory(Graphs.ItemFactory):
             item.set_property(prop, value)
 
     @staticmethod
-    def to_dict(item: Graphs.Item) -> dict:
+    def to_dict(item: Graphs.Item, items: list[Graphs.Item]) -> dict:
         """Serialize an item to a dict."""
         dictionary = {
             key: ItemFactory.serialize_property(item, key)
@@ -123,22 +134,12 @@ class ItemFactory(Graphs.ItemFactory):
                     None if upper is None else Graphs.ast_to_expression(upper)
                 dictionary["lower_equation"] = \
                     None if lower is None else Graphs.ast_to_expression(lower)
-        return dictionary
-
-    @staticmethod
-    def link_dependencies(
-        item: Graphs.Item,
-        dictionary: dict,
-        items: list[Graphs.Item],
-    ) -> dict:
-        """Replace references with indexes for data dependant items."""
-        if isinstance(item, Graphs.FillItem):
-            upper = item.get_upper_source()
-            lower = item.get_lower_source()
-            dictionary["upper_source"] = \
-                None if upper is None else items.index(upper)
-            dictionary["lower_source"] = \
-                None if lower is None else items.index(lower)
+                upper = item.get_upper_source()
+                lower = item.get_lower_source()
+                dictionary["upper_source"] = \
+                    None if upper is None else items.index(upper)
+                dictionary["lower_source"] = \
+                    None if lower is None else items.index(lower)
         return dictionary
 
     @staticmethod
