@@ -1,0 +1,2237 @@
+# Norwegian Nynorsk translation for Graphs help.
+# Copyright (C) 2026 Graphs's COPYRIGHT HOLDER
+# This file is distributed under the same license as the Graphs package.
+# Roy-Magne Mo <rmo@sunnmore.net>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Graphs main\n"
+"POT-Creation-Date: 2026-09-25 20:49+0000\n"
+"PO-Revision-Date: 2026-09-25 23:30+0200\n"
+"Last-Translator: Roy-Magne Mo <rmo@sunnmore.net>\n"
+"Language-Team: Norwegian Nynorsk <i18n-nn@lister.ping.uio.no>\n"
+"Language: nn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Put one translator per line, in the form NAME <EMAIL>, YEAR1, YEAR2
+msgctxt "_"
+msgid "translator-credits"
+msgstr "Roy-Magne Mo <rmo@sunnmore.net>, 2026"
+
+#. (itstool) path: page/title
+#: C/curve-fitting.page:7
+msgid "Curve Fitting"
+msgstr "Kurvetilpassing"
+
+#. (itstool) path: page/p
+#: C/curve-fitting.page:8
+msgid "Curve fitting allows for powerful analysis of imported datasets by finding the parameters of a mathematical model that best describes the data. The following topics are covered in this page:"
+msgstr ""
+"Med kurvetilpassing kan du analysere importerte datasett grundig ved å finne"
+" parametrane i den matematiske modellen som best skildrar dataa. Denne sida "
+"handlar om:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:11
+msgid "<link xref=\"#fitting\">Fitting Data</link>: Set up and run a fit."
+msgstr ""
+"<link xref=\"#fitting\">Tilpassing av data</link>: Set opp og køyr ei "
+"tilpassing."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:15
+msgid "<link xref=\"#bounds\">Bounds</link>: Constrain fitting parameters."
+msgstr "<link xref=\"#bounds\">Grenser</link>: Avgrens tilpassingsparametrane."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:19
+msgid "<link xref=\"#results\">Results</link>: Interpreting the output."
+msgstr "<link xref=\"#results\">Resultat</link>: Tolke resultatet."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:23
+msgid "<link xref=\"#residuals\">Residuals</link>: Inspect the quality of the fit."
+msgstr ""
+"<link xref=\"#residuals\">Residualar</link>: Sjekk kor god tilpassinga er."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:27
+msgid "<link xref=\"#algorithms\">Fitting Algorithms</link>: Choose the right algorithm for your data."
+msgstr ""
+"<link xref=\"#algorithms\">Tilpassingsalgoritmar</link>: Vel rett algoritme "
+"for dataa dine."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:32
+msgid "Fitting Data"
+msgstr "Tilpassing av data"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:33
+msgid "To start curve fitting on a dataset, press the three vertical dots on the item you want to fit and choose <em>Curve Fitting</em>. This opens the Curve Fitting dialog. The fit and its confidence band are previewed live as parameters are adjusted."
+msgstr ""
+"For å starte kurvetilpassing på eit datasett trykkjer du på dei tre "
+"loddrette prikkane på elementet du vil tilpasse, og vel "
+"<em>Kurvetilpassing</em>. Då opnar vindauget for kurvetilpassing. "
+"Tilpassinga og konfidensbandet vert førehandsviste medan du justerer "
+"parametrane."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:34
+msgid "An equation to fit against is chosen from the dropdown. The following predefined equations are available, with their formula shown as a subtitle:"
+msgstr ""
+"Du vel likninga det skal tilpassast mot, frå nedtrekkslista. Desse "
+"førehandsdefinerte likningane er tilgjengelege, med formelen vist som "
+"undertittel:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:37
+#: C/figure-settings.page:22
+msgid "Linear"
+msgstr "Lineær"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:38
+msgid "<code>a·x + b</code>"
+msgstr "<code>a·x + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:42
+msgid "Quadratic"
+msgstr "Kvadratisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:43
+msgid "<code>a·x² + b·x + c</code>"
+msgstr "<code>a·x² + b·x + c</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:47
+msgid "Exponential"
+msgstr "Eksponentiell"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:48
+msgid "<code>a·exp(b·x)</code>"
+msgstr "<code>a·exp(b·x)</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:52
+msgid "Power Law"
+msgstr "Potenslov"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:53
+msgid "<code>a·x^b</code>"
+msgstr "<code>a·x^b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:57
+msgid "Logarithmic"
+msgstr "Logaritmisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:58
+msgid "<code>a·log(x) + b</code>"
+msgstr "<code>a·log(x) + b</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:62
+msgid "Sigmoid Logistic"
+msgstr "Sigmoid logistisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:63
+msgid "<code>L / (1 + exp(-k·(x - b)))</code>"
+msgstr "<code>L / (1 + exp(-k·(x - b)))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:67
+msgid "Gaussian"
+msgstr "Gaussisk"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:68
+msgid "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+msgstr "<code>a·exp(-(x - μ)² / (2·σ²))</code>"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:72
+msgid "Custom"
+msgstr "Eigen"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:73
+msgid "Enter any equation using <code>x</code> as the independent variable. Any other variable names that are not functions (such as sin(x) or exp(x)) are automatically detected and treated as free parameters to be fitted."
+msgstr ""
+"Skriv inn ei kva som helst likning med <code>x</code> som den uavhengige "
+"variabelen. Andre variabelnamn som ikkje er funksjonar (som sin(x) eller "
+"exp(x)), vert oppdaga automatisk og handsama som frie parametrar som skal "
+"tilpassast."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:76
+msgid "Once a satisfactory fit is found, press <em>Add Fit to Data</em> to add the resulting curve as a new equation in the project, with the fitted parameter values substituted into the expression."
+msgstr ""
+"Når du har funne ei tilpassing du er nøgd med, trykkjer du <em>Tilpass kurve"
+" til dataa</em> for å leggje til kurva som ei ny likning i prosjektet, med "
+"dei tilpassa parameterverdiane sette inn i uttrykket."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:79
+msgid "Bounds"
+msgstr "Grenser"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:80
+msgid "Each free parameter detected in the equation is shown in the sidebar with three fields: an initial guess, a minimum bound, and a maximum bound. The initial guess is the starting value used by the algorithm. Using a good initial guess close to the expected value will help the fit converge. The bounds constrain the range of values the parameter is allowed to take."
+msgstr ""
+"Kvar fri parameter som vert funnen i likninga, vert vist i sidepanelet med "
+"tre felt: ein startverdi, ei nedre grense og ei øvre grense. Startverdien er"
+" verdien algoritmen startar med. Ein god startverdi nær den venta verdien "
+"hjelper tilpassinga med å konvergere. Grensene avgrensar kva verdiar "
+"parameteren kan ta."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:81
+msgid "The bounds fields default to <code>-inf</code> and <code>inf</code>, meaning no constraints are applied. To restrict a parameter, enter the desired minimum and maximum values."
+msgstr ""
+"Felta for grenser har standardverdiane <code>-inf</code> og "
+"<code>inf</code>, noko som tyder at ingen avgrensingar er lagde på. For å "
+"avgrense ein parameter, skriv du inn ønskt minimums- og maksimumsverdi."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:82
+msgid "Note that bounds fields are only shown when an algorithm that supports them is selected. When using Levenberg-Marquardt, bounds are hidden as that algorithm does not support them. See <link xref=\"#algorithms\"/>for details."
+msgstr ""
+"Merk at grensefelta berre vert viste når ein algoritme som støttar dei, er "
+"vald. Med Levenberg-Marquardt er grensene gøymde, sidan den algoritmen ikkje"
+" støttar dei. Sjå <link xref=\"#algorithms\"/>for detaljar."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:86
+msgid "Results"
+msgstr "Resultat"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:87
+msgid "After a successful fit the results panel shows two sections: Parameters and Statistics."
+msgstr ""
+"Etter ei vellukka tilpassing viser resultatpanelet to delar: Parametrar og "
+"Statistikk."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:88
+msgid "The Parameters section lists each fitted parameter with its value. If a confidence level other than None is selected, a margin is shown next to each value in the form <code>± error</code>, where the error is the standard deviation of that parameter multiplied by the selected confidence factor. So for a confidence level of 1σ the error is equal to the standard deviation, and for 2σ and 3σ the error is equal to twice and three times the standard deviation respectively. The confidence level can be set from the primary menu:"
+msgstr ""
+"Delen Parametrar viser kvar tilpassa parameter med verdien sin. Er eit anna "
+"konfidensnivå enn Ingen valt, vert det vist ein feilmargin ved sida av kvar "
+"verdi på forma <code>± error</code>, der feilen er standardavviket til "
+"parameteren multiplisert med den valde konfidensfaktoren. For "
+"konfidensnivået 1σ er feilen altså lik standardavviket, og for 2σ og 3σ er "
+"han høvesvis to og tre gonger standardavviket. Konfidensnivået kan veljast "
+"frå hovudmenyen:"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:91
+msgid "<em>None</em>: no margin shown."
+msgstr "<em>Ingen</em>: ingen feilmargin vert vist."
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:94
+msgid "<em>1σ: 68% Confidence</em>"
+msgstr "<em>1σ: 68 % konfidens</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:98
+msgid "<em>2σ: 95% Confidence</em>"
+msgstr "<em>2σ: 95 % konfidens</em>"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:102
+msgid "<em>3σ: 99.7% Confidence</em>"
+msgstr "<em>3σ: 99,7 % konfidens</em>"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:106
+msgid "The corresponding confidence band is also drawn as a shaded region around the fitted curve."
+msgstr ""
+"Det tilsvarande konfidensbandet vert òg teikna som eit skugga område rundt "
+"den tilpassa kurva."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:107
+msgid "The Statistics section shows two goodness-of-fit measures: R² and RMSE."
+msgstr "Delen Statistikk viser to mål på kor god tilpassinga er: R² og RMSE."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:108
+msgid "For a linear fit, R² measures how what proportion of the variation can be explained by the model. A value of 1 means the model explains all variation perfectly, while a value of 0 means it explains none. Note that for non-linear fits, the R² loses its physical meaning of what proportion of the variance is explained. It can still be somewhat useful to assess the goodness-of-fit, but the value itself becomes somewhat arbitrary."
+msgstr ""
+"For ei lineær tilpassing måler R² kor stor del av variasjonen modellen kan "
+"forklare. Verdien 1 tyder at modellen forklarar all variasjon perfekt, medan"
+" 0 tyder at han ikkje forklarar noko. Merk at for ikkje-lineære tilpassingar"
+" mistar R² tydinga som del av variansen som vert forklart. Han kan framleis "
+"vere til nokon nytte for å vurdere tilpassinga, men sjølve verdien vert noko"
+" vilkårleg."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:109
+msgid "RMSE (Root Mean Square Error) measures the typical size of the residuals (the differences between the data points and the fitted curve) in the same units as the Y data. Unlike R², RMSE gives an absolute sense of how far off the predictions are on average, which makes it useful when the physical magnitude of the error matters."
+msgstr ""
+"RMSE (Root Mean Square Error) måler den typiske storleiken på residualane "
+"(skilnaden mellom datapunkta og den tilpassa kurva) i same eining som "
+"Y-dataa. I motsetnad til R² gjev RMSE eit absolutt mål på kor langt unna "
+"prediksjonane ligg i gjennomsnitt, noko som gjer det nyttig når den fysiske "
+"storleiken på feilen har noko å seie."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:110
+msgid "Note that both statistics reflect only how well the data agrees with the chosen model, not whether the model is physically correct. Factors such as systematic measurement errors and correlations between parameters are not accounted for. This is an inherent limitation of curve fitting, and a common source of misleading uncertainty estimates even in published scientific work."
+msgstr ""
+"Merk at begge måla berre viser kor godt dataa passar med den valde modellen,"
+" ikkje om modellen er fysisk rett. Faktorar som systematiske målefeil og "
+"korrelasjon mellom parametrar er ikkje tekne med. Dette er ei innebygd "
+"avgrensing ved kurvetilpassing, og ei vanleg kjelde til misvisande "
+"uvisseestimat, sjølv i publisert vitskapleg arbeid."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:113
+msgid "Residuals"
+msgstr "Residualar"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:114
+msgid "The residuals plot can be shown by enabling <em>Show Residuals</em> from within the primary menu. This displays a second plot below the main one showing the difference between each data point and the fitted curve at that x-value. A dashed line at zero is shown for reference."
+msgstr ""
+"Residualplottet kan visast ved å slå på <em>Vis residualar</em> i "
+"hovudmenyen. Då vert det vist eit plott til under hovudplottet, med "
+"skilnaden mellom kvart datapunkt og den tilpassa kurva ved den x-verdien. Ei"
+" stipla linje ved null er vist som referanse."
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:115
+msgid "A good fit will show residuals scattered randomly around zero with no visible pattern. A systematic pattern in the residuals, such as a curve or a trend suggests that the chosen model may not be appropriate for the data."
+msgstr ""
+"Ved ei god tilpassing ligg residualane tilfeldig spreidde rundt null utan "
+"synleg mønster. Eit systematisk mønster i residualane, som ei kurve eller "
+"ein trend, tyder på at den valde modellen kanskje ikkje passar for dataa."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:118
+msgid "Error Messages"
+msgstr "Feilmeldingar"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:119
+msgid "If the fit cannot be completed, an error message is shown in the results panel instead of the parameter values. The following errors can occur:"
+msgstr ""
+"Dersom tilpassinga ikkje kan fullførast, vert det vist ei feilmelding i "
+"resultatpanelet i staden for parameterverdiane. Desse feila kan oppstå:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:122
+msgid "Invalid equation"
+msgstr "Ugyldig likning"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:123
+msgid "The equation contains a syntax error or uses unsupported variables. Check that the expression is valid."
+msgstr ""
+"Likninga inneheld ein syntaksfeil eller brukar variablar som ikkje er "
+"støtta. Sjekk at uttrykket er gyldig."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:126
+msgid "Constraint error"
+msgstr "Avgrensingsfeil"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:127
+msgid "The initial guess does not lie within the specified bounds, or the minimum bound is not smaller than the maximum. Ensure that Lower &lt; Initial &lt; Upper for each parameter."
+msgstr ""
+"Startverdien ligg ikkje innanfor grensene, eller den nedre grensa er ikkje "
+"mindre enn den øvre. Sjå til at Nedre &lt; Start &lt; Øvre for kvar "
+"parameter."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:130
+msgid "Domain error"
+msgstr "Domenefeil"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:131
+msgid "The equation is not valid over the range of the data, for example due to a logarithm of a negative number or a division by zero."
+msgstr ""
+"Likninga er ikkje gyldig i heile dataspennet, til dømes på grunn av "
+"logaritmen til eit negativt tal eller deling på null."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:134
+msgid "Fit failed: max iterations reached"
+msgstr "Tilpassinga feila: største tal på iterasjonar nådd"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:135
+msgid "The algorithm did not converge within the allowed number of iterations. Try adjusting the initial guesses to be closer to the expected values, or choose a different algorithm."
+msgstr ""
+"Algoritmen konvergerte ikkje innanfor det tillatne talet på iterasjonar. "
+"Prøv å justere startverdiane nærare dei venta verdiane, eller vel ein annan "
+"algoritme."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:138
+msgid "Matrix error"
+msgstr "Matrisefeil"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:139
+msgid "The data is insufficient for the chosen model. This can happen for example when there are fewer data points than free parameters, or if the data does not constrain the model well enough to determine a unique solution."
+msgstr ""
+"Det er ikkje nok data for den valde modellen. Dette kan til dømes skje når "
+"det er færre datapunkt enn frie parametrar, eller når dataa ikkje avgrensar "
+"modellen godt nok til å finne ei eintydig løysing."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:142
+msgid "Confidence band error"
+msgstr "Feil i konfidensbandet"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:143
+msgid "The covariance matrix is unstable, so the confidence band cannot be computed reliably."
+msgstr ""
+"Kovariansmatrisa er ustabil, så konfidensbandet kan ikkje reknast ut på ein "
+"påliteleg måte."
+
+#. (itstool) path: section/title
+#: C/curve-fitting.page:148
+msgid "Fitting Algorithms"
+msgstr "Tilpassingsalgoritmar"
+
+#. (itstool) path: section/p
+#: C/curve-fitting.page:149
+msgid "Three fitting algorithms are available, selectable from the primary menu under <em>Optimization Method</em>:"
+msgstr ""
+"Tre tilpassingsalgoritmar er tilgjengelege, og du vel mellom dei i "
+"hovudmenyen under <em>Optimaliseringsmetode</em>:"
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:152
+msgid "Levenberg-Marquardt"
+msgstr "Levenberg-Marquardt"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:153
+msgid "A widely used algorithm that performs efficiently for most problems. Does not support parameter bounds, the minimum and maximum fields are hidden when this method is selected."
+msgstr ""
+"Ein mykje brukt algoritme som er effektiv for dei fleste problem. Han "
+"støttar ikkje parametergrenser, så felta for minimum og maksimum er gøymde "
+"når denne metoden er vald."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:156
+msgid "Trust Region Reflective"
+msgstr "Trust Region Reflective"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:157
+msgid "Handles bounds well and performs reliably across a wide range of problems. A good default choice for most use cases."
+msgstr ""
+"Handterer grenser godt og fungerer påliteleg for mange ulike problem. Eit "
+"godt standardval i dei fleste tilfelle."
+
+#. (itstool) path: item/title
+#: C/curve-fitting.page:160
+msgid "Dogbox"
+msgstr "Dogbox"
+
+#. (itstool) path: item/p
+#: C/curve-fitting.page:161
+msgid "Uses rectangular trust regions and is well suited to smaller problems where bounds are required."
+msgstr ""
+"Brukar rektangulære tillitsregionar og passar godt for mindre problem der "
+"det trengst grenser."
+
+#. (itstool) path: page/title
+#: C/edit-item.page:7
+msgid "Editing Items"
+msgstr "Redigering av element"
+
+#. (itstool) path: page/p
+#: C/edit-item.page:8
+msgid "Each item in the sidebar can be edited by clicking on it. The edit panel varies depending on the item type, but all items share a common set of properties at the top."
+msgstr ""
+"Du kan redigere eit element i sidepanelet ved å klikke på det. "
+"Redigeringspanelet varierer med elementtypen, men alle element har nokre "
+"felles eigenskapar øvst."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:10
+msgid "Name and Position"
+msgstr "Namn og plassering"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:11
+msgid "All items have a name, which is shown in the legend and the sidebar, and can be changed freely. Note that the naming does support LaTeX notation with the help of dollar signs. So for instance $\\mu_0$ will provide the Greek letter μ with a 0 as subscript. Each item can also be assigned to a specific axis: the X position can be set to either the bottom or top axis, and the Y position to either the left or right axis. This allows multiple datasets with different scales to be displayed on the same figure."
+msgstr ""
+"Alle element har eit namn, som vert vist i teiknforklaringa og i "
+"sidepanelet, og som kan endrast fritt. Merk at namnet støttar LaTeX-notasjon"
+" ved hjelp av dollarteikn. Til dømes gjev $\\mu_0$ den greske bokstaven μ "
+"med 0 som senka skrift. Kvart element kan òg knytast til ein bestemt akse: "
+"X-posisjonen kan setjast til anten nedre eller øvre akse, og Y-posisjonen "
+"til anten venstre eller høgre akse. Då kan fleire datasett med ulike skalaer"
+" visast i same figur."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:14
+msgid "Datasets: Line and Markers"
+msgstr "Datasett: Linje og markørar"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:15
+msgid "For datasets and generated datasets, the following appearance options are available:"
+msgstr ""
+"For datasett og genererte datasett er desse vala for utsjånad tilgjengelege:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:18
+#: C/edit-style.page:52
+msgid "Linestyle"
+msgstr "Linjestil"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:19
+msgid "The style of the line connecting data points. Options are None, Solid, Dotted, Dashed, and Dashdot. When set to None, no line is drawn between points."
+msgstr ""
+"Stilen på linja mellom datapunkta. Vala er Ingen, Heiltrukken, Prikka, "
+"Stipla og Strek-punkt. Når Ingen er valt, vert det ikkje teikna noka linje "
+"mellom punkta."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:22
+msgid "Linewidth"
+msgstr "Linjebreidd"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:23
+msgid "The thickness of the line. Only enabled when a linestyle other than None is selected."
+msgstr ""
+"Tjukna på linja. Berre tilgjengeleg når ein annan linjestil enn Ingen er "
+"vald."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:26
+#: C/edit-style.page:60
+msgid "Markers"
+msgstr "Markørar"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:27
+msgid "The shape drawn at each data point. A wide range of marker shapes is available, including circles, squares, triangles, stars, diamonds, and more. Set to None to draw no markers."
+msgstr ""
+"Forma som vert teikna ved kvart datapunkt. Mange markørformer er "
+"tilgjengelege, mellom anna sirklar, kvadrat, trekantar, stjerner og ruter. "
+"Vel Ingen for å ikkje teikne markørar."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:30
+#: C/edit-style.page:64
+msgid "Marker Size"
+msgstr "Markørstorleik"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:31
+msgid "The size of the markers. Only enabled when a marker style other than None is selected."
+msgstr ""
+"Storleiken på markørane. Berre tilgjengeleg når ein annan markørstil enn "
+"Ingen er vald."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:36
+msgid "Equations: Line and Equation"
+msgstr "Likningar: Linje og likning"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:37
+msgid "Equation items expose the equation itself for editing directly in the edit panel. A <em>Simplify</em> button is available to simplify the expression algebraically. The available line options are the same as for datasets, except that markers are not supported for equations."
+msgstr ""
+"For likningselement kan du redigere sjølve likninga direkte i "
+"redigeringspanelet. Med knappen <em>Forenkle</em> kan du forenkle uttrykket "
+"algebraisk. Linjevala er dei same som for datasett, men likningar har ikkje "
+"markørar."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:40
+msgid "Generated Data: Equation and Range"
+msgstr "Genererte data: Likning og område"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:41
+msgid "Generated datasets have the same options as regular datasets. Additionally, they expose the same equation field as equation items, along with controls for the X range and resolution. The <em>X Start</em> and <em>X Stop</em> fields define the bounds of the generated data. The <em>Steps</em> field controls how many data points are generated. The <em>Scale</em> setting determines the spacing between those points, with the following options available: Linear, Logarithmic (Base 10), Logarithmic (Base 2), Radians, Square Root, and Inverse."
+msgstr ""
+"Genererte datasett har dei same vala som vanlege datasett. I tillegg har dei"
+" det same likningsfeltet som likningselement, og kontrollar for X-område og "
+"oppløysing. Felta <em>X-start</em> og <em>X-stopp</em> avgjer grensene for "
+"dei genererte dataa. Feltet <em>Steg</em> avgjer kor mange datapunkt som "
+"vert genererte. Innstillinga <em>Skala</em> avgjer avstanden mellom punkta, "
+"med desse vala: Lineær, Logaritmisk (grunntal 10), Logaritmisk (grunntal 2),"
+" Radianar, Kvadratrot og Invers."
+
+#. (itstool) path: section/title
+#: C/edit-item.page:44
+#: C/edit-style.page:70
+#: C/import.page:45
+msgid "Error Bars"
+msgstr "Feilstolpar"
+
+#. (itstool) path: section/p
+#: C/edit-item.page:45
+msgid "For datasets that have error bar data, the appearance of the error bars can be configured in the <em>Error Bars</em> section:"
+msgstr ""
+"For datasett med data for feilstolpar kan utsjånaden til feilstolpane "
+"setjast opp i delen <em>Feilstolpar</em>:"
+
+#. (itstool) path: item/title
+#: C/edit-item.page:48
+msgid "Show Horizontal / Show Vertical"
+msgstr "Vis vassrette / Vis loddrette"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:49
+msgid "Toggle the visibility of horizontal (X) and vertical (Y) error bars independently."
+msgstr ""
+"Slå vassrette (X) og loddrette (Y) feilstolpar av eller på kvar for seg."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:52
+#: C/edit-style.page:86
+msgid "Draw Above Data"
+msgstr "Teikn over data"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:53
+#: C/edit-style.page:87
+msgid "When enabled, error bars are drawn on top of the data line and markers rather than beneath them."
+msgstr ""
+"Når dette er slått på, vert feilstolpane teikna oppå datalinja og markørane "
+"i staden for under dei."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:56
+msgid "Color"
+msgstr "Farge"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:57
+msgid "The color of the error bars, set independently from the line color."
+msgstr "Fargen på feilstolpane, sett uavhengig av linjefargen."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:60
+#: C/edit-style.page:74
+msgid "Cap Length"
+msgstr "Lengd på endestrek"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:61
+#: C/edit-style.page:75
+msgid "The length of the horizontal cap at the end of each error bar."
+msgstr "Lengda på den vassrette endestreken på kvar feilstolpe."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:64
+#: C/edit-style.page:78
+msgid "Cap Thickness"
+msgstr "Tjukn på endestrek"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:65
+#: C/edit-style.page:79
+msgid "The thickness of the cap lines."
+msgstr "Tjukna på endestrekane."
+
+#. (itstool) path: item/title
+#: C/edit-item.page:68
+#: C/edit-style.page:56
+#: C/edit-style.page:82
+msgid "Line Width"
+msgstr "Linjebreidd"
+
+#. (itstool) path: item/p
+#: C/edit-item.page:69
+#: C/edit-style.page:83
+msgid "The thickness of the error bar lines."
+msgstr "Tjukna på linjene i feilstolpane."
+
+#. (itstool) path: page/title
+#: C/edit-style.page:7
+msgid "Styles"
+msgstr "Stilar"
+
+#. (itstool) path: page/p
+#: C/edit-style.page:8
+msgid "Styles control the overall appearance of the plots, including colors, fonts, line widths, ticks, grid, and more. Graphs comes with a selection of built-in styles to choose from, and you can create and edit your own to get exactly the look you want."
+msgstr ""
+"Stilar styrer den samla utsjånaden til plotta, mellom anna fargar, skrifter,"
+" linjebreidder, merkestrekar og rutenett. Graphs har eit utval innebygde "
+"stilar du kan velje mellom, og du kan lage og redigere dine eigne for å få "
+"akkurat den utsjånaden du vil ha."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:10
+msgid "Applying a Style"
+msgstr "Bruke ein stil"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:11
+msgid "The active style is selected from the Figure Settings panel, accessible in the sidebar in the top corner. See <link xref=\"figure-settings\"/>for more information. In the Appearance section, the current style name is shown. Clicking it opens the style picker, which displays all available styles as previews. Click any style to apply it to the figure immediately. When switching styles, item colors, markers and line widths are automatically remapped to match the new style's color cycle. Any item properties that were changed previously, however, are preserved when changing styles."
+msgstr ""
+"Den aktive stilen vel du i panelet for figurinnstillingar, som du opnar i "
+"sidepanelet i det øvre hjørnet. Sjå <link xref=\"figure-settings\"/>for meir"
+" informasjon. I delen Utsjånad står namnet på den gjeldande stilen. Klikk på"
+" det for å opne stilveljaren, som viser alle tilgjengelege stilar som "
+"førehandsvisingar. Klikk på ein stil for å bruke han på figuren med ein "
+"gong. Når du byter stil, vert fargar, markørar og linjebreidder på elementa "
+"automatisk tilpassa fargesyklusen i den nye stilen. Eigenskapar du har endra"
+" på elementa tidlegare, vert likevel tekne vare på når du byter stil."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:15
+msgid "Creating and Managing Styles"
+msgstr "Lage og handtere stilar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:16
+msgid "To manage styles, press the <em>Manage</em> button on the style picker page, or open the Style Editor from the application menu. The Style Editor shows all available styles as previews."
+msgstr ""
+"For å handtere stilar trykkjer du på knappen <em>Handter</em> på "
+"stilveljarsida, eller opnar stilredigeringa frå appmenyen. Stilredigeringa "
+"viser alle tilgjengelege stilar som førehandsvisingar."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:17
+msgid "To create a new style, press <em>Create Style…</em>, choose an existing style as a starting template, and give it a name. Your new style opens in the editor immediately, ready to customize. Changes are shown automatically in the preview as you edit."
+msgstr ""
+"For å lage ein ny stil trykkjer du <em>Opprett stil …</em>, vel ein "
+"eksisterande stil som mal og gjev han eit namn. Den nye stilen vert opna i "
+"redigeringa med ein gong, klar til å tilpassast. Endringane vert viste i "
+"førehandsvisinga medan du redigerer."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:20
+msgid "Importing and Exporting Styles"
+msgstr "Importere og eksportere stilar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:21
+msgid "Custom styles can be shared and loaded by saving them to and loading them from files in the Style Editor. To save a style, simply open your custom style and choose <em>Save Style as…</em> from the primary menu. You can import new styles using <em>Import File…</em> in the Style Editor, or open new styles for editing using the <em>Open File…</em> option."
+msgstr ""
+"Eigne stilar kan delast ved å lagre dei til og laste dei frå filer i "
+"stilredigeringa. For å lagre ein stil opnar du stilen og vel <em>Lagre stil "
+"som …</em> i hovudmenyen. Du kan importere nye stilar med <em>Importer "
+"fil …</em> i stilredigeringa, eller opne stilar for redigering med <em>Opne "
+"fil …</em>."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:24
+msgid "Changing a Style"
+msgstr "Endre ein stil"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:25
+msgid "When changing a style, the following options can be set:"
+msgstr "Når du endrar ein stil, kan følgjande val setjast:"
+
+#. (itstool) path: section/title
+#: C/edit-style.page:27
+msgid "General"
+msgstr "Generelt"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:30
+msgid "Style Name"
+msgstr "Stilnamn"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:31
+msgid "The name of the style as it appears in the style picker."
+msgstr "Namnet på stilen slik det står i stilveljaren."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:34
+msgid "Font"
+msgstr "Skrifttype"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:35
+msgid "The font used for all text in the figure, including axis labels, tick labels, the title, and the legend."
+msgstr ""
+"Skrifta som vert brukt for all tekst i figuren, mellom anna aksetitlar, "
+"verdiane ved merkestrekane, tittelen og teiknforklaringa."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:38
+msgid "Title Size"
+msgstr "Tittelstorleik"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:39
+msgid "The size of the figure title relative to the base text size."
+msgstr ""
+"Storleiken på tittelen i figuren i forhold til storleiken på grunnteksten."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:42
+msgid "Label Size"
+msgstr "Etikettstorleik"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:43
+msgid "The size of axis labels relative to the base text size."
+msgstr "Storleiken på aksetitlane i forhold til storleiken på grunnteksten."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:48
+msgid "Lines"
+msgstr "Linjer"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:49
+msgid "These settings define the default appearance for new items. They can be overridden per item in the item editor."
+msgstr ""
+"Desse innstillingane avgjer standardutsjånaden for nye element. Dei kan "
+"overstyrast for kvart element i elementredigeringa."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:53
+msgid "The default line style for new items: None, Solid, Dotted, Dashed, or Dashdot. Line width is only configurable when a style other than None is selected."
+msgstr ""
+"Standard linjestil for nye element: Ingen, Heiltrukken, Prikka, Stipla eller"
+" Strek-punkt. Linjebreidda kan berre setjast når ein annan stil enn Ingen er"
+" vald."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:57
+msgid "The default thickness of lines."
+msgstr "Standard tjukn for linjer."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:61
+msgid "The default marker shape drawn at each data point. A wide range of shapes is available. Marker size is only configurable when a marker other than None is selected."
+msgstr ""
+"Standard markørform som vert teikna ved kvart datapunkt. Mange former er "
+"tilgjengelege. Markørstorleiken kan berre setjast når ein annan markør enn "
+"Ingen er vald."
+
+#. (itstool) path: item/p
+#: C/edit-style.page:65
+msgid "The default size of markers."
+msgstr "Standard storleik for markørar."
+
+#. (itstool) path: section/p
+#: C/edit-style.page:71
+msgid "Default appearance settings for error bars, applied to new items. These can be overridden per item in the item editor."
+msgstr ""
+"Standardinnstillingar for utsjånaden til feilstolpar på nye element. Dei kan"
+" overstyrast for kvart element i elementredigeringa."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:92
+msgid "Axes"
+msgstr "Aksar"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:95
+msgid "Axis Width"
+msgstr "Aksebreidd"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:96
+msgid "The thickness of the axis lines."
+msgstr "Tjukna på akselinjene."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:99
+msgid "Draw Frame"
+msgstr "Teikn ramme"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:100
+msgid "When enabled, a full rectangular frame is drawn around the plot area. When disabled, only the axes that are in use are shown."
+msgstr ""
+"Når dette er slått på, vert det teikna ei heil rektangulær ramme rundt "
+"plottområdet. Når det er slått av, vert berre aksane som er i bruk, viste."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:105
+msgid "Ticks"
+msgstr "Merkestrekar"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:108
+msgid "Tick Direction"
+msgstr "Retning på merkestrekar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:109
+msgid "Whether tick marks point inwards or outwards."
+msgstr "Om merkestrekane peikar innover eller utover."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:112
+msgid "Minor Ticks"
+msgstr "Små merkestrekar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:113
+msgid "When enabled, minor tick marks are shown between the major ticks. Minor tick width and length become configurable when this is on."
+msgstr ""
+"Når dette er slått på, vert små merkestrekar viste mellom dei store. Breidda"
+" og lengda på dei små merkestrekane kan då setjast."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:116
+msgid "Major Tick Width / Length"
+msgstr "Breidd / lengd på store merkestrekar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:117
+msgid "The thickness and length of major tick marks."
+msgstr "Tjukna og lengda på dei store merkestrekane."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:120
+msgid "Minor Tick Width / Length"
+msgstr "Breidd / lengd på små merkestrekar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:121
+msgid "The thickness and length of minor tick marks."
+msgstr "Tjukna og lengda på dei små merkestrekane."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:124
+msgid "Show Tick Labels on all Axes"
+msgstr "Vis verdiar ved merkestrekane på alle aksar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:125
+msgid "When enabled, tick labels are shown on all visible axes with ticks rather than only the axes with data. To show tick labels on both sides of each axis, make sure <em>Draw Frame</em> is checked so that the axes are drawn."
+msgstr ""
+"Når dette er slått på, vert verdiane ved merkestrekane viste på alle synlege"
+" aksar med merkestrekar, ikkje berre på aksane med data. For å vise verdiane"
+" på begge sider av kvar akse må <em>Teikn ramme</em> vere kryssa av, slik at"
+" aksane vert teikna."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:128
+msgid "Ticks on Bottom / Top / Left / Right Axis"
+msgstr "Merkestrekar på nedre / øvre / venstre / høgre akse"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:129
+msgid "Each axis can have its tick marks toggled on or off independently."
+msgstr "Merkestrekane kan slåast av eller på for kvar akse for seg."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:134
+msgid "Grid"
+msgstr "Rutenett"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:137
+msgid "Show Grid"
+msgstr "Vis rutenett"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:138
+msgid "Toggles the visibility of the background grid."
+msgstr "Slår bakgrunnsrutenettet av eller på."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:141
+msgid "Grid Width"
+msgstr "Breidd på rutenett"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:142
+msgid "The thickness of grid lines. Only configurable when the grid is enabled."
+msgstr ""
+"Tjukna på rutenettlinjene. Kan berre setjast når rutenettet er slått på."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:145
+msgid "Grid Opacity"
+msgstr "Dekkevne for rutenett"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:146
+msgid "The transparency of grid lines, from 0 (invisible) to 1 (fully opaque)."
+msgstr ""
+"Gjennomsiktigheita til rutenettlinjene, frå 0 (usynleg) til 1 (heilt "
+"dekkjande)."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:151
+msgid "Padding"
+msgstr "Luft"
+
+#. (itstool) path: item/title
+#: C/edit-style.page:154
+msgid "Value Padding"
+msgstr "Luft rundt verdiar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:155
+msgid "The spacing between the axes and the tick value labels."
+msgstr "Avstanden mellom aksane og verdiane ved merkestrekane."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:158
+msgid "Label Padding"
+msgstr "Luft rundt etikettar"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:159
+msgid "The spacing between the axes and the axis labels."
+msgstr "Avstanden mellom aksane og aksetitlane."
+
+#. (itstool) path: item/title
+#: C/edit-style.page:162
+msgid "Title Padding"
+msgstr "Luft rundt tittelen"
+
+#. (itstool) path: item/p
+#: C/edit-style.page:163
+msgid "The spacing between the plot area and the figure title."
+msgstr "Avstanden mellom plottområdet og tittelen på figuren."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:168
+msgid "Colors"
+msgstr "Fargar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:169
+msgid "The following figure colors can each be set independently: Text, Ticks, Axes, Grid, Background, and Outline."
+msgstr ""
+"Desse fargane i figuren kan setjast kvar for seg: tekst, merkestrekar, "
+"aksar, rutenett, bakgrunn og omriss."
+
+#. (itstool) path: section/title
+#: C/edit-style.page:172
+msgid "Line Colors and Error Bar Colors"
+msgstr "Linjefargar og fargar på feilstolpar"
+
+#. (itstool) path: section/p
+#: C/edit-style.page:173
+msgid "The line color cycle defines the sequence of colors automatically assigned to new items as they are added to the figure. Colors can be added using the <em>Add Color</em> button, removed individually, and reordered by dragging. A separate color cycle is available for error bars."
+msgstr ""
+"Syklusen av linjefargar avgjer rekkjefølgja på fargane som automatisk vert "
+"gjevne til nye element når dei vert lagde til i figuren. Du kan leggje til "
+"fargar med knappen <em>Legg til farge</em>, fjerne dei ein og ein og endre "
+"rekkjefølgja ved å dra dei. Feilstolpane har ein eigen fargesyklus."
+
+#. (itstool) path: page/title
+#: C/export.page:7
+msgid "Exporting"
+msgstr "Eksportering"
+
+#. (itstool) path: page/p
+#: C/export.page:8
+msgid "Graphs can export both the figure as an image and the underlying data as files. Both options are available from the application menu."
+msgstr ""
+"Graphs kan eksportere både figuren som bilete og dataa bak han som filer. "
+"Begge vala finst i appmenyen."
+
+#. (itstool) path: section/title
+#: C/export.page:10
+msgid "Exporting the Figure"
+msgstr "Eksportere figuren"
+
+#. (itstool) path: section/p
+#: C/export.page:11
+msgid "To export the figure as an image, open the application menu and choose <em>Export Figure…</em>. The export dialog offers the following options:"
+msgstr ""
+"For å eksportere figuren som bilete opnar du appmenyen og vel <em>Eksporter "
+"figur …</em>. Eksportvindauget har desse vala:"
+
+#. (itstool) path: item/title
+#: C/export.page:14
+msgid "File Format"
+msgstr "Filformat"
+
+#. (itstool) path: item/p
+#: C/export.page:15
+msgid "The image format to export to. The following formats are supported: PNG, JPEG, WebP, SVG, PDF, PostScript, and Encapsulated PostScript. For most purposes PNG is a good choice. SVG and PDF produce vector output that scales to any size without loss of quality, making them well suited for use in publications and presentations."
+msgstr ""
+"Biletformatet det skal eksporterast til. Desse formata er støtta: PNG, JPEG,"
+" WebP, SVG, PDF, PostScript og Encapsulated PostScript. PNG er eit godt val "
+"i dei fleste tilfelle. SVG og PDF gjev vektorgrafikk som kan skalerast til "
+"kva storleik som helst utan å miste kvalitet, og passar difor godt i "
+"publikasjonar og presentasjonar."
+
+#. (itstool) path: item/title
+#: C/export.page:18
+msgid "Transparent Background"
+msgstr "Gjennomsiktig bakgrunn"
+
+#. (itstool) path: item/p
+#: C/export.page:19
+msgid "When enabled, the figure background is exported as transparent rather than filled with the style's background color. This is useful when embedding the figure into a document or presentation with its own background."
+msgstr ""
+"Når dette er slått på, vert figurbakgrunnen eksportert som gjennomsiktig i "
+"staden for å fyllast med bakgrunnsfargen i stilen. Dette er nyttig når "
+"figuren skal setjast inn i eit dokument eller ein presentasjon med eigen "
+"bakgrunn."
+
+#. (itstool) path: item/title
+#: C/export.page:22
+msgid "Width and Height"
+msgstr "Breidd og høgd"
+
+#. (itstool) path: item/p
+#: C/export.page:23
+msgid "The pixel dimensions of the exported image, between 100 and 7680 pixels wide and 100 and 4320 pixels tall. Press <em>Use Same Size as App</em> to automatically fill in the current size of the canvas as it appears on screen."
+msgstr ""
+"Storleiken på det eksporterte biletet i pikslar, mellom 100 og 7680 pikslar "
+"i breidda og mellom 100 og 4320 pikslar i høgda. Trykk <em>Bruk same "
+"storleik som i appen</em> for å fylle inn den gjeldande storleiken på "
+"lerretet slik det er på skjermen."
+
+#. (itstool) path: section/title
+#: C/export.page:29
+msgid "Exporting Data"
+msgstr "Eksportere data"
+
+#. (itstool) path: section/p
+#: C/export.page:30
+msgid "To export the underlying dataset values to a file, open the application menu and choose <em>Export Data…</em>. This exports the current data for all items in the project."
+msgstr ""
+"For å eksportere verdiane i datasetta til ei fil opnar du appmenyen og vel "
+"<em>Eksporter data …</em>. Då vert dei gjeldande dataa for alle elementa i "
+"prosjektet eksporterte."
+
+#. (itstool) path: page/title
+#. (itstool) path: section/title
+#: C/figure-settings.page:7
+#: C/window.page:68
+msgid "Figure Settings"
+msgstr "Figurinnstillingar"
+
+#. (itstool) path: page/p
+#: C/figure-settings.page:8
+msgid "The Figure Settings panel controls the labels, axis limits, scaling, and general appearance of the figure. It can be opened by pressing the settings button in the top right of the sidebar. The current settings can be saved as the default for all new projects using the <em>Set as Default</em> button at the bottom of the panel."
+msgstr ""
+"I panelet for figurinnstillingar styrer du etikettar, aksegrenser, skalering"
+" og den generelle utsjånaden til figuren. Du opnar det med "
+"innstillingsknappen øvst til høgre i sidepanelet. Dei gjeldande "
+"innstillingane kan lagrast som standard for alle nye prosjekt med knappen "
+"<em>Set som standard</em> nedst i panelet."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:10
+msgid "Labels"
+msgstr "Etikettar"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:11
+msgid "A title can be set for the figure, and a label can be set for each axis independently. Only the labels for axes that are currently in use are shown. Labels and the title can also be edited directly on the canvas by clicking on them."
+msgstr ""
+"Figuren kan ha ein tittel, og kvar akse kan ha sin eigen etikett. Berre "
+"etikettane for aksar som er i bruk, vert viste. Etikettane og tittelen kan "
+"òg redigerast direkte på lerretet ved å klikke på dei."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:14
+msgid "Axis Limits"
+msgstr "Aksegrenser"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:15
+msgid "The minimum and maximum values for each axis can be set manually. Only the limits for axes that are currently in use are shown. Leaving a limit field empty allows Graphs to determine the range automatically based on the data. The view can also be reset to fit all data at any time using the <em>Optimize Limits</em> action."
+msgstr ""
+"Minimums- og maksimumsverdiane for kvar akse kan setjast manuelt. Berre "
+"grensene for aksar som er i bruk, vert viste. Lèt du eit grensefelt stå "
+"tomt, avgjer Graphs området automatisk ut frå dataa. Visinga kan òg "
+"nullstillast slik at alle dataa kjem med, når som helst med handlinga "
+"<em>Optimaliser grensene</em>."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:18
+msgid "Scaling"
+msgstr "Skalering"
+
+#. (itstool) path: section/p
+#: C/figure-settings.page:19
+msgid "Each axis can be set to one of the following scales independently:"
+msgstr ""
+"Kvar akse kan setjast til ein av desse skalaene uavhengig av dei andre:"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:23
+msgid "Equal spacing between values. The default scale for most data."
+msgstr "Lik avstand mellom verdiane. Standardskalaen for dei fleste data."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:26
+msgid "Logarithmic (Base 10)"
+msgstr "Logaritmisk (grunntal 10)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:27
+msgid "Spacing based on powers of 10. Useful for data spanning several orders of magnitude."
+msgstr ""
+"Avstand basert på potensar av 10. Nyttig for data som spenner over fleire "
+"storleiksordenar."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:30
+msgid "Logarithmic (Base 2)"
+msgstr "Logaritmisk (grunntal 2)"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:31
+msgid "Spacing based on powers of 2."
+msgstr "Avstand basert på potensar av 2."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:34
+msgid "Radians"
+msgstr "Radianar"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:35
+msgid "Axis ticks are expressed as multiples of π."
+msgstr "Merkestrekane på aksen vert viste som multiplum av π."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:38
+msgid "Square Root"
+msgstr "Kvadratrot"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:39
+msgid "Spacing based on the square root of values."
+msgstr "Avstand basert på kvadratrota av verdiane."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:42
+msgid "Inverse"
+msgstr "Invers"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:43
+msgid "Spacing based on the reciprocal of values."
+msgstr "Avstand basert på den inverse verdien."
+
+#. (itstool) path: section/title
+#: C/figure-settings.page:48
+msgid "Appearance"
+msgstr "Utsjånad"
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:51
+msgid "Show Legend"
+msgstr "Vis teiknforklaring"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:52
+msgid "Toggles the visibility of the legend. When enabled, the legend position can be set to one of several locations on the figure, or left on Auto to let Graphs choose the least obstructive position."
+msgstr ""
+"Slår teiknforklaringa av eller på. Når ho er slått på, kan ho plasserast på "
+"fleire stader i figuren, eller du kan la ho stå på Automatisk, så vel Graphs"
+" den plasseringa som dekkjer minst."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:55
+msgid "Hide Unselected Items"
+msgstr "Gøym element som ikkje er valde"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:56
+msgid "When enabled, only items that are currently selected in the sidebar are shown on the canvas. This is useful for focusing on a subset of the data without deleting anything."
+msgstr ""
+"Når dette er slått på, vert berre elementa som er valde i sidepanelet, viste"
+" på lerretet. Dette er nyttig når du vil konsentrere deg om ein del av dataa"
+" utan å slette noko."
+
+#. (itstool) path: item/title
+#: C/figure-settings.page:59
+msgid "Style"
+msgstr "Stil"
+
+#. (itstool) path: item/p
+#: C/figure-settings.page:60
+msgid "Shows the currently active style and opens the style picker when clicked. See <link xref=\"edit-style\"/>for details on creating and editing styles."
+msgstr ""
+"Viser den aktive stilen og opnar stilveljaren når du klikkar. Sjå <link "
+"xref=\"edit-style\"/>for detaljar om å lage og redigere stilar."
+
+#. (itstool) path: page/title
+#: C/import.page:7
+msgid "Adding Data"
+msgstr "Leggje til data"
+
+#. (itstool) path: page/p
+#: C/import.page:8
+msgid "There are three different types of data items in Graphs:"
+msgstr "Det finst tre ulike typar dataelement i Graphs:"
+
+#. (itstool) path: item/p
+#: C/import.page:11
+msgid "<link xref=\"#dataset\"> <em>Dataset</em> </link>: Data imported from a file or database."
+msgstr ""
+"<link xref=\"#dataset\"> <em>Datasett</em> </link>: Data importert frå ei "
+"fil eller database."
+
+#. (itstool) path: item/p
+#: C/import.page:16
+msgid "<link xref=\"#generated\"> <em>Generated Dataset</em> </link>: Data generated from an equation over a fixed set of points."
+msgstr ""
+"<link xref=\"#generated\"> <em>Generert datasett</em> </link>: Data "
+"genererte frå ei likning over eit fast sett med punkt."
+
+#. (itstool) path: item/p
+#: C/import.page:21
+msgid "<link xref=\"#equation\"> <em>Equation</em> </link>: A mathematical expression rendered continuously across the entire canvas."
+msgstr ""
+"<link xref=\"#equation\"> <em>Likning</em> </link>: Eit matematisk uttrykk "
+"som vert teikna kontinuerleg over heile lerretet."
+
+#. (itstool) path: section/title
+#: C/import.page:27
+msgid "Dataset"
+msgstr "Datasett"
+
+#. (itstool) path: section/p
+#: C/import.page:28
+msgid "A dataset is data imported from an external source. Graphs supports column-based files (such as .csv, .dat, .xy, and plain text), spreadsheets (.ods and .xlsx), SQLite database files, Panalytical .xrdml files, and Leybold .xry files. Data from other Graphs projects can also be imported by selecting a project file."
+msgstr ""
+"Eit datasett er data importerte frå ei ekstern kjelde. Graphs støttar "
+"kolonnebaserte filer (som .csv, .dat, .xy og rein tekst), rekneark (.ods og "
+".xlsx), SQLite-databasefiler, Panalytical .xrdml-filer og Leybold .xry-"
+"filer. Data frå andre Graphs-prosjekt kan òg importerast ved å velje ei "
+"prosjektfil."
+
+#. (itstool) path: section/p
+#: C/import.page:29
+msgid "To import data, press the <em>Add</em> button in the top left of the sidebar and choose <em>Add Data from File…</em>. Multiple files can be added in a single import session by using the add button in the top left of the import dialog. Each file appears in the sidebar of the dialog, where it can be selected to review and adjust its settings. Graphs will attempt to guess the appropriate settings for each file automatically. Once everything looks right, press <em>Import</em> to add all files to the project."
+msgstr ""
+"For å importere data trykkjer du på knappen <em>Legg til</em> øvst til "
+"venstre i sidepanelet og vel <em>Legg til data frå fil …</em>. Du kan leggje"
+" til fleire filer i same importen med leggje til-knappen øvst til venstre i "
+"importvindauget. Kvar fil vert vist i sidepanelet i vindauget, der du kan "
+"velje ho for å sjå over og justere innstillingane. Graphs prøver å gjette "
+"dei rette innstillingane for kvar fil automatisk. Når alt ser rett ut, "
+"trykkjer du <em>Importer</em> for å leggje alle filene til i prosjektet."
+
+#. (itstool) path: section/p
+#: C/import.page:30
+msgid "The <em>Import Mode</em> determines how a file is parsed, and is set automatically based on the file type. The available modes are described below."
+msgstr ""
+"<em>Importmodus</em> avgjer korleis ei fil vert tolka, og vert sett "
+"automatisk ut frå filtypen. Modusane er skildra nedanfor."
+
+#. (itstool) path: section/title
+#: C/import.page:32
+msgid "Column-based Files"
+msgstr "Kolonnebaserte filer"
+
+#. (itstool) path: section/p
+#: C/import.page:33
+msgid "Column-based files store data as rows of values separated by a delimiter such as a comma, tab, or whitespace. Graphs detects the delimiter automatically in most cases. When using a custom delimiter, an extra field appears where a delimiter of your choice can be entered. This field recognizes regular expressions. Using <code>\\s+</code> matches any amount of whitespace including tabs, for example, and is equivalent to the default Whitespace option."
+msgstr ""
+"Kolonnebaserte filer lagrar data som rader med verdiar skilde med eit "
+"skiljeteikn, som komma, tabulator eller mellomrom. Graphs finn skiljeteiknet"
+" automatisk i dei fleste tilfelle. Brukar du eit eige skiljeteikn, kjem det "
+"fram eit ekstra felt der du kan skrive inn skiljeteiknet du vil ha. Feltet "
+"forstår regulære uttrykk. Til dømes finn <code>\\s+</code> alle mengder "
+"mellomrom, også tabulatorar, og svarar til standardvalet Mellomrom."
+
+#. (itstool) path: section/p
+#: C/import.page:34
+msgid "If a file only contains a single column of Y values, the <em>Single Column</em> option can be enabled to generate X values automatically from a configurable equation, where <code>n</code> represents the row index starting from zero. For example, <code>n</code> produces 0, 1, 2, 3… while <code>n*0.5</code> produces 0, 0.5, 1.0, 1.5…"
+msgstr ""
+"Inneheld ei fil berre éin kolonne med Y-verdiar, kan du slå på valet <em>Éin"
+" kolonne</em> for å lage X-verdiar automatisk frå ei likning du kan endre, "
+"der <code>n</code> står for radnummeret, som startar på null. Til dømes gjev"
+" <code>n</code> 0, 1, 2, 3…, medan <code>n*0.5</code> gjev 0, 0.5, 1.0, 1.5…"
+
+#. (itstool) path: section/title
+#: C/import.page:37
+msgid "Spreadsheets"
+msgstr "Rekneark"
+
+#. (itstool) path: section/p
+#: C/import.page:38
+msgid "Graphs supports importing data from .ods and .xlsx spreadsheet files. The X and Y columns are selected by their alphabetical column index, starting from zero. As with column-based files, the <em>Single Column</em> option can be used to generate X values automatically when only Y data is available. Multiple items can be configured from the same spreadsheet in a single import session by using the <em>Add Item</em> button, each with its own column selection."
+msgstr ""
+"Graphs kan importere data frå reknearkfiler i formata .ods og .xlsx. X- og "
+"Y-kolonnane vert valde med kolonnebokstaven. Som for kolonnebaserte filer "
+"kan valet <em>Éin kolonne</em> brukast til å lage X-verdiar automatisk når "
+"det berre finst Y-data. Du kan setje opp fleire element frå same reknearket "
+"i éin import med knappen <em>Legg til element</em>, kvart med sitt eige "
+"kolonneval."
+
+#. (itstool) path: section/title
+#: C/import.page:41
+msgid "Databases"
+msgstr "Databasar"
+
+#. (itstool) path: section/p
+#: C/import.page:42
+msgid "SQLite database files are also supported. When importing a database file, the available tables are shown in a dropdown. Once a table is selected, the X and Y columns can each be chosen from the numeric columns available in that table. If a table contains no numeric columns, a warning is shown."
+msgstr ""
+"SQLite-databasefiler er òg støtta. Når du importerer ei databasefil, vert "
+"tabellane viste i ei nedtrekksliste. Når ein tabell er vald, kan X- og "
+"Y-kolonnane veljast blant dei numeriske kolonnane i tabellen. Har tabellen "
+"ingen numeriske kolonnar, vert det vist ei åtvaring."
+
+#. (itstool) path: section/p
+#: C/import.page:46
+msgid "Datasets support optional X and Y error bars. For spreadsheet and database imports, error bars can be enabled per axis using the corresponding toggle, after which an additional column selector appears to specify which column contains the error values. Column-based file formats that natively include error bar data, such as .xrdml files, will have them imported automatically."
+msgstr ""
+"Datasett kan ha feilstolpar for X og Y. Ved import frå rekneark og databasar"
+" kan feilstolpar slåast på for kvar akse med den tilhøyrande brytaren, og då"
+" kjem det fram ein ekstra kolonneveljar der du vel kva kolonne som har "
+"feilverdiane. Filformat som sjølve inneheld data for feilstolpar, som "
+".xrdml-filer, får dei importerte automatisk."
+
+#. (itstool) path: section/p
+#: C/import.page:47
+msgid "Once imported, error bars are preserved through most operations. When combining multiple datasets, error bars are carried over only if all selected items have them in the output."
+msgstr ""
+"Etter importen vert feilstolpane tekne vare på gjennom dei fleste "
+"operasjonar. Når fleire datasett vert kombinerte, vert feilstolpane berre "
+"tekne med dersom alle dei valde elementa har feilstolpar."
+
+#. (itstool) path: section/title
+#: C/import.page:51
+msgid "Generated Datasets"
+msgstr "Genererte datasett"
+
+#. (itstool) path: section/p
+#: C/import.page:52
+msgid "Generated datasets create data by evaluating an equation over a range of X values. To add one, press the <em>Add</em> button in the sidebar and choose <em>Generate Data…</em>. The following parameters can be configured:"
+msgstr ""
+"Genererte datasett lagar data ved å rekne ut ei likning over eit område med "
+"X-verdiar. For å leggje til eit trykkjer du på knappen <em>Legg til</em> i "
+"sidepanelet og vel <em>Generer data …</em>. Desse parametrane kan setjast:"
+
+#. (itstool) path: item/title
+#. (itstool) path: section/title
+#: C/import.page:55
+#: C/import.page:74
+msgid "Equation"
+msgstr "Likning"
+
+#. (itstool) path: item/p
+#: C/import.page:56
+msgid "The mathematical expression to evaluate, using <code>x</code> as the variable."
+msgstr ""
+"Det matematiske uttrykket som skal reknast ut, med <code>x</code> som "
+"variabel."
+
+#. (itstool) path: item/title
+#: C/import.page:59
+msgid "X Start and X Stop"
+msgstr "X-start og X-stopp"
+
+#. (itstool) path: item/p
+#: C/import.page:60
+msgid "The lower and upper bounds of the x-range to generate data over."
+msgstr "Den nedre og øvre grensa for x-området det skal genererast data for."
+
+#. (itstool) path: item/title
+#: C/import.page:63
+msgid "Steps"
+msgstr "Steg"
+
+#. (itstool) path: item/p
+#: C/import.page:64
+msgid "The number of data points to generate."
+msgstr "Talet på datapunkt som skal genererast."
+
+#. (itstool) path: item/title
+#: C/import.page:67
+msgid "Scale"
+msgstr "Skala"
+
+#. (itstool) path: item/p
+#: C/import.page:68
+msgid "Determines the spacing between data points. Linear spacing places points at equal intervals. Other options such as Logarithmic, Square Root, and Inverse are useful when the data or the axis it will be plotted on follows a non-linear scale."
+msgstr ""
+"Avgjer avstanden mellom datapunkta. Lineær avstand plasserer punkta med like"
+" store mellomrom. Andre val, som Logaritmisk, Kvadratrot og Invers, er "
+"nyttige når dataa, eller aksen dei skal plottast på, følgjer ein ikkje-"
+"lineær skala."
+
+#. (itstool) path: section/p
+#: C/import.page:71
+msgid "Generated datasets are treated the same as imported data for most purposes. However, unlike a regular dataset, the parameters used to generate the data can be changed at any time from the item editor, and the data will be regenerated accordingly."
+msgstr ""
+"Genererte datasett vert handsama på same måte som importerte data i dei "
+"fleste samanhengar. Men i motsetnad til eit vanleg datasett kan parametrane "
+"som vart brukte til å generere dataa, endrast når som helst i "
+"elementredigeringa, og dataa vert då genererte på nytt."
+
+#. (itstool) path: section/p
+#: C/import.page:75
+msgid "Equation items render a mathematical expression directly and continuously across the entire canvas. To add one, press the <em>Add</em> button in the sidebar and choose <em>Add Equation…</em>, or press <keyseq> <key>Ctrl</key> <key>Alt</key> <key>N</key> </keyseq>."
+msgstr ""
+"Likningselement teiknar eit matematisk uttrykk direkte og samanhengande over"
+" heile lerretet. For å leggje til eit trykkjer du på knappen <em>Legg "
+"til</em> i sidepanelet og vel <em>Legg til likning …</em>, eller trykkjer "
+"<keyseq> <key>Ctrl</key> <key>Alt</key> <key>N</key> </keyseq>."
+
+#. (itstool) path: section/p
+#: C/import.page:82
+msgid "The expression uses <code>x</code> as the variable. Most commonly used mathematical syntax is accepted. For example, a simple quadratic can be entered as <code>x²+5</code>, and expressions like <code>sin(x)*x</code> or <code>1/(x+1)</code> work as expected. Trigonometric functions use radians by default. To use degrees instead, add a <code>d</code> to the function name. Using <code>cosd(x)</code> will use degrees while <code>cos(x)</code> uses radians."
+msgstr ""
+"Uttrykket brukar <code>x</code> som variabel. Den vanlegaste matematiske "
+"syntaksen vert godteken. Til dømes kan eit enkelt andregradsuttrykk skrivast"
+" som <code>x²+5</code>, og uttrykk som <code>sin(x)*x</code> eller "
+"<code>1/(x+1)</code> fungerer som venta. Trigonometriske funksjonar brukar "
+"radianar som standard. For å bruke grader legg du til ein <code>d</code> i "
+"funksjonsnamnet. <code>cosd(x)</code> brukar grader, medan "
+"<code>cos(x)</code> brukar radianar."
+
+#. (itstool) path: section/p
+#: C/import.page:83
+msgid "One important distinction between equation items and datasets is that operations are performed analytically rather than numerically. For instance, taking the derivative of <code>x²+5</code> produces the equation <code>2·x</code> rather than a set of numerically computed slope values."
+msgstr ""
+"Ein viktig skilnad mellom likningselement og datasett er at operasjonar vert"
+" utførte analytisk og ikkje numerisk. Til dømes gjev den deriverte av "
+"<code>x²+5</code> likninga <code>2·x</code> og ikkje eit sett med numerisk "
+"utrekna stigningstal."
+
+#. (itstool) path: info/desc
+#: C/index.page:5
+msgid "Plot and manipulate data"
+msgstr "Plott og handsam data"
+
+#. (itstool) path: page/title
+#: C/index.page:7
+msgid "<_:media-1/>Graphs"
+msgstr "<_:media-1/>Graphs"
+
+#. (itstool) path: page/p
+#: C/index.page:9
+msgid "Graphs is a GNOME Circle application for plotting and manipulating scientific data. Import datasets from files or sqlite database files, generate data from equations, apply mathematical operations, fit curves, and export publication-ready figures, all within a clean, native interface."
+msgstr ""
+"Graphs er ein app i GNOME Circle for å plotte og handsame vitskaplege data. "
+"Importer datasett frå filer eller SQLite-databasefiler, generer data frå "
+"likningar, bruk matematiske operasjonar, tilpass kurver og eksporter figurar"
+" klare for publisering, alt i eit ryddig og innebygd grensesnitt."
+
+#. (itstool) path: page/p
+#: C/index.page:10
+msgid "Use the topics below to learn how to use Graphs."
+msgstr "Bruk emna nedanfor for å lære korleis du brukar Graphs."
+
+#. (itstool) path: section/title
+#: C/index.page:12
+msgid "Topics"
+msgstr "Emne"
+
+#. (itstool) path: page/title
+#: C/manipulate.page:7
+msgid "Manipulating Data"
+msgstr "Handsame data"
+
+#. (itstool) path: page/p
+#: C/manipulate.page:8
+msgid "Graphs provides a wide range of operations for manipulating data. All operations work the same regardless of whether the item was imported from a file or generated from an equation. When a region of the canvas is selected using the Select tool, only data within that region will be affected."
+msgstr ""
+"Graphs har mange operasjonar for å handsame data. Alle operasjonane fungerer"
+" likt anten elementet er importert frå ei fil eller generert frå ei likning."
+" Når eit område på lerretet er valt med utvalsverktøyet, vert berre dataa "
+"innanfor området påverka."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:11
+msgid "<link xref=\"#translate\">Translate</link>: Shift data along the X or Y axis."
+msgstr ""
+"<link xref=\"#translate\">Forskyv X/Y</link>: Flytt data langs X- eller "
+"Y-aksen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:15
+msgid "<link xref=\"#multiply\">Multiply</link>: Scale data along the X or Y axis."
+msgstr ""
+"<link xref=\"#multiply\">Multipliser</link>: Skaler data langs X- eller "
+"Y-aksen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:19
+msgid "<link xref=\"#normalize\">Normalize</link>: Scale Y values relative to the maximum."
+msgstr ""
+"<link xref=\"#normalize\">Normaliser</link>: Skaler Y-verdiane i forhold til"
+" maksimum."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:23
+msgid "<link xref=\"#center\">Center</link>: Shift data so it is centered on the X axis."
+msgstr ""
+"<link xref=\"#center\">Sentrer</link>: Flytt data slik at dei vert sentrerte"
+" på X-aksen."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:27
+msgid "<link xref=\"#smoothening\">Smoothen</link>: Reduce noise in a dataset."
+msgstr "<link xref=\"#smoothening\">Glatt ut</link>: Reduser støy i eit datasett."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:31
+msgid "<link xref=\"#derivative\">Derivative</link>: Compute the derivative."
+msgstr "<link xref=\"#derivative\">Derivert</link>: Rekn ut den deriverte."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:35
+msgid "<link xref=\"#integral\">Integral</link>: Compute the cumulative integral."
+msgstr ""
+"<link xref=\"#integral\">Integral</link>: Rekn ut det kumulative integralet."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:39
+msgid "<link xref=\"#fft\">Fourier Transform</link>: Transform data to the frequency domain."
+msgstr ""
+"<link xref=\"#fft\">Fourier-transformasjon</link>: Transformer data til "
+"frekvensdomenet."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:43
+msgid "<link xref=\"#combine\">Combine</link>: Merge multiple datasets into one."
+msgstr ""
+"<link xref=\"#combine\">Kombiner</link>: Slå saman fleire datasett til eitt."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:47
+msgid "<link xref=\"#shift\">Shift</link>: Automatically offset datasets so they do not overlap."
+msgstr ""
+"<link xref=\"#shift\">Forskyv</link>: Forskyv datasett automatisk slik at "
+"dei ikkje overlappar."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:51
+msgid "<link xref=\"#cut\">Cut</link>: Remove data within the selected region."
+msgstr ""
+"<link xref=\"#cut\">Klipp ut</link>: Fjern data innanfor det valde området."
+
+#. (itstool) path: item/p
+#: C/manipulate.page:55
+msgid "<link xref=\"#custom\">Custom Transformations</link>: Apply an arbitrary equation to the X and Y coordinates."
+msgstr ""
+"<link xref=\"#custom\">Eigne transformasjonar</link>: Bruk ei vilkårleg "
+"likning på X- og Y-koordinatane."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:60
+msgid "Translate"
+msgstr "Forskyv X/Y"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:61
+msgid "Translates all selected data by a fixed offset along the X or Y axis. Enter the desired offset in the corresponding entry field and apply the operation."
+msgstr ""
+"Forskyv alle dei valde dataa med ein fast verdi langs X- eller Y-aksen. "
+"Skriv inn forskyvinga i det tilhøyrande feltet og bruk operasjonen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:64
+msgid "Multiply"
+msgstr "Multipliser"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:65
+msgid "Multiplies all selected data by a fixed factor along the X or Y axis. Enter the desired multiplier in the corresponding entry field and apply the operation."
+msgstr ""
+"Multipliserer alle dei valde dataa med ein fast faktor langs X- eller "
+"Y-aksen. Skriv inn faktoren i det tilhøyrande feltet og bruk operasjonen."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:68
+msgid "Normalize"
+msgstr "Normaliser"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:69
+msgid "Scales the Y values of all selected data so that the maximum value becomes 1. All other values are divided by that maximum accordingly."
+msgstr ""
+"Skalerer Y-verdiane til alle dei valde dataa slik at maksimumsverdien vert "
+"1. Alle dei andre verdiane vert delte på denne maksimumsverdien."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:72
+msgid "Center"
+msgstr "Sentrer"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:73
+msgid "Shifts data along the X axis so that it is centered. Two modes are available: centering on the maximum Y value, which shifts the peak of the data to zero, and centering on the middle of the X range. The mode can be configured in the smoothen settings."
+msgstr ""
+"Forskyv data langs X-aksen slik at dei vert sentrerte. Det finst to modusar:"
+" sentrering på største Y-verdi, som flyttar toppen i dataa til null, og "
+"sentrering på midten av X-området. Modusen kan setjast i innstillingane for "
+"utglatting."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:76
+msgid "Smoothen"
+msgstr "Glatt ut"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:77
+msgid "The smoothen operation reduces noise in a dataset. Two modes are available, configurable via the smoothen settings dialog."
+msgstr ""
+"Utglatting reduserer støy i eit datasett. Det finst to modusar, som kan "
+"setjast i vindauget med innstillingar for utglatting."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:78
+msgid "The Savitzky-Golay filter fits a polynomial through the surrounding data points rather than taking a simple average. This makes it possible to recover the underlying signal more faithfully from noisy data, and is the recommended choice in most cases."
+msgstr ""
+"Savitzky-Golay-filteret tilpassar eit polynom gjennom dei nærliggjande "
+"datapunkta i staden for å ta eit enkelt gjennomsnitt. Slik kan det "
+"underliggjande signalet i data med mykje støy attskapast meir truverdig, og "
+"dette er det tilrådde valet i dei fleste tilfelle."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:79
+msgid "The moving average replaces each point with the average of a surrounding window of points. This is simpler but may blur sharp features and cause changes in the data to appear shifted."
+msgstr ""
+"Glidande gjennomsnitt byter ut kvart punkt med gjennomsnittet av eit "
+"vindauge med punkt rundt det. Dette er enklare, men kan viske ut skarpe "
+"trekk og få endringar i dataa til å sjå forskovne ut."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:82
+msgid "Derivative"
+msgstr "Derivert"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:83
+msgid "Computes the numerical derivative of the selected data, replacing the Y values with the rate of change with respect to X. For equations, the derivative is calculated analytically."
+msgstr ""
+"Reknar ut den numeriske deriverte av dei valde dataa og byter ut Y-verdiane "
+"med endringsraten med omsyn på X. For likningar vert den deriverte rekna ut "
+"analytisk."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:86
+msgid "Integral"
+msgstr "Integral"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:87
+msgid "Computes the cumulative integral of the selected data using the trapezoidal method, replacing the Y values with the running area under the curve. For equations, the integral is calculated analytically."
+msgstr ""
+"Reknar ut det kumulative integralet av dei valde dataa med trapesmetoden og "
+"byter ut Y-verdiane med det løpande arealet under kurva. For likningar vert "
+"integralet rekna ut analytisk."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:90
+msgid "Fourier Transform"
+msgstr "Fourier-transformasjon"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:91
+msgid "Transforms the selected data from the time or spatial domain into the frequency domain using the Fast Fourier Transform. An inverse transform is also available to convert back."
+msgstr ""
+"Transformerer dei valde dataa frå tids- eller romdomenet til frekvensdomenet"
+" med rask Fourier-transformasjon (FFT). Det finst òg ein invers "
+"transformasjon for å gå tilbake."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:94
+msgid "Combine"
+msgstr "Kombiner"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:95
+msgid "Merges all selected datasets into a single new dataset. The resulting data is sorted by X value. If all selected items have error bars, those are preserved in the combined output."
+msgstr ""
+"Slår saman alle dei valde datasetta til eitt nytt datasett. Resultatet vert "
+"sortert etter X-verdi. Har alle dei valde elementa feilstolpar, vert dei "
+"tekne med i det samanslåtte resultatet."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:98
+msgid "Shift"
+msgstr "Forskyv"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:99
+msgid "Automatically offsets each selected dataset along the Y axis so that the items are spread out and do not overlap one each other. The shift amount is calculated based on the range of each dataset and respects the current axis scale, including logarithmic scales."
+msgstr ""
+"Forskyv kvart valt datasett automatisk langs Y-aksen slik at elementa vert "
+"spreidde og ikkje overlappar kvarandre. Kor mykje dei vert forskovne, vert "
+"rekna ut frå spennet i kvart datasett og tek omsyn til den gjeldande "
+"akseskalaen, også logaritmiske skalaer."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:102
+msgid "Cut"
+msgstr "Klipp ut"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:103
+msgid "Removes all data points within the currently selected region. This operation requires the Select tool to be active and a region to be highlighted on the canvas."
+msgstr ""
+"Fjernar alle datapunkt innanfor det valde området. Operasjonen krev at "
+"utvalsverktøyet er aktivt og at eit område er markert på lerretet."
+
+#. (itstool) path: section/title
+#: C/manipulate.page:106
+msgid "Custom Transformations"
+msgstr "Eigne transformasjonar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:107
+msgid "Custom transformations let you modify the X and Y coordinates of a dataset point by point using equations of your choice. For instance, to square all Y values, set <code>Y = Y²</code> in the Y field and leave <code>X = X</code> in the X field. Coordinate names are not case-sensitive."
+msgstr ""
+"Med eigne transformasjonar kan du endre X- og Y-koordinatane i eit datasett "
+"punkt for punkt med likningar du vel sjølv. Til dømes kan du kvadrere alle "
+"Y-verdiane ved å skrive <code>Y = Y²</code> i Y-feltet og la <code>X = "
+"X</code> stå i X-feltet. Det er ikkje skilnad på store og små bokstavar i "
+"koordinatnamna."
+
+#. (itstool) path: section/p
+#: C/manipulate.page:109
+msgid "<b>The following extra variables are available for custom transformations:</b>"
+msgstr "<b>Desse ekstra variablane kan brukast i eigne transformasjonar:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:111
+msgid "<b>General:</b>"
+msgstr "<b>Generelt:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:113
+msgid "<code>x</code>, <code>y</code>: original coordinate values"
+msgstr "<code>x</code>, <code>y</code>: opphavlege koordinatverdiar"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:114
+msgid "<code>counts</code>: total number of data points"
+msgstr "<code>counts</code>: det totale talet på datapunkt"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:115
+msgid "<b>X-Axis:</b>"
+msgstr "<b>X-akse:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:117
+msgid "<code>x_min</code>, <code>x_max</code>: minimum and maximum"
+msgstr "<code>x_min</code>, <code>x_max</code>: minimum og maksimum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:118
+msgid "<code>x_mean</code>, <code>x_median</code>: average and median"
+msgstr "<code>x_mean</code>, <code>x_median</code>: gjennomsnitt og median"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:119
+msgid "<code>x_std</code>, <code>x_sum</code>: standard deviation and sum"
+msgstr "<code>x_std</code>, <code>x_sum</code>: standardavvik og sum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:120
+msgid "<b>Y-Axis:</b>"
+msgstr "<b>Y-akse:</b>"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:122
+msgid "<code>y_min</code>, <code>y_max</code>: minimum and maximum"
+msgstr "<code>y_min</code>, <code>y_max</code>: minimum og maksimum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:123
+msgid "<code>y_mean</code>, <code>y_median</code>: average and median"
+msgstr "<code>y_mean</code>, <code>y_median</code>: gjennomsnitt og median"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:124
+msgid "<code>y_std</code>, <code>y_sum</code>: standard deviation and sum"
+msgstr "<code>y_std</code>, <code>y_sum</code>: standardavvik og sum"
+
+#. (itstool) path: section/p
+#: C/manipulate.page:125
+msgid "Trigonometric functions use radians by default. Append <b>d</b> to use degrees, e.g., <code>sind(x)</code> or <code>cosd(x)</code>."
+msgstr ""
+"Trigonometriske funksjonar brukar radianar som standard. Legg til <b>d</b> "
+"for å bruke grader, t.d. <code>sind(x)</code> eller <code>cosd(x)</code>."
+
+#. (itstool) path: page/title
+#: C/projects.page:7
+msgid "Projects"
+msgstr "Prosjekt"
+
+#. (itstool) path: page/p
+#: C/projects.page:8
+msgid "A Graphs project file saves the complete state of your work so you can close it and pick up exactly where you left off. All project actions are available from the application menu."
+msgstr ""
+"Ei prosjektfil i Graphs lagrar heile tilstanden til arbeidet ditt, slik at "
+"du kan lukke det og halde fram nøyaktig der du slapp. Alle handlingar for "
+"prosjekt finst i appmenyen."
+
+#. (itstool) path: section/title
+#: C/projects.page:10
+msgid "What Is Saved"
+msgstr "Kva som vert lagra"
+
+#. (itstool) path: section/p
+#: C/projects.page:11
+msgid "A project file preserves everything about the current session: all items and their data and appearance settings, all figure settings including labels, axis scales and limits, legend configuration, and the active style. The full undo and redo history is also saved, so you can continue undoing changes after reopening a project. The view history is saved as well."
+msgstr ""
+"Ei prosjektfil tek vare på alt i den gjeldande økta: alle elementa med data "
+"og innstillingar for utsjånad, alle figurinnstillingane, mellom anna "
+"etikettar, akseskalaer og grenser, oppsettet av teiknforklaringa og den "
+"aktive stilen. Heile historikken for angring og omgjering vert òg lagra, så "
+"du kan halde fram med å angre endringar etter at du har opna prosjektet på "
+"nytt. Historikken for visinga vert òg lagra."
+
+#. (itstool) path: section/title
+#: C/projects.page:14
+msgid "Saving a Project"
+msgstr "Lagre eit prosjekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:15
+msgid "To save the current project, choose <em>Save Project…</em> from the application menu. If the project has been saved before, <em>Save Project…</em> overwrites the existing file. To save a copy under a different name or location, use <em>Save Project As…</em>."
+msgstr ""
+"For å lagre det gjeldande prosjektet vel du <em>Lagre prosjekt …</em> i "
+"appmenyen. Er prosjektet lagra før, skriv <em>Lagre prosjekt …</em> over den"
+" eksisterande fila. For å lagre ein kopi med eit anna namn eller på ein "
+"annan stad brukar du <em>Lagre prosjekt som …</em>."
+
+#. (itstool) path: section/title
+#: C/projects.page:18
+msgid "Opening a Project"
+msgstr "Opne eit prosjekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:19
+msgid "To open a previously saved project, choose <em>Open Project…</em> from the application menu and select the project file. The project opens in the current window, replacing whatever was there before. To work on two projects at the same time, open a new window first using <em>New Project</em>, then open the second project there."
+msgstr ""
+"For å opne eit prosjekt du har lagra før, vel du <em>Opne prosjekt …</em> i "
+"appmenyen og vel prosjektfila. Prosjektet vert opna i det gjeldande "
+"vindauget og erstattar det som var der før. For å arbeide med to prosjekt "
+"samtidig opnar du først eit nytt vindauge med <em>Nytt prosjekt</em> og "
+"opnar så det andre prosjektet der."
+
+#. (itstool) path: section/p
+#: C/projects.page:20
+msgid "A project file can also be imported as data into an existing project by using <em>Add Data from File…</em> and selecting the project file. This adds the items from the saved project into the current one without replacing anything."
+msgstr ""
+"Ei prosjektfil kan òg importerast som data i eit eksisterande prosjekt med "
+"<em>Legg til data frå fil …</em>, der du vel prosjektfila. Då vert elementa "
+"frå det lagra prosjektet lagde til i det gjeldande utan at noko vert "
+"erstatta."
+
+#. (itstool) path: section/title
+#: C/projects.page:23
+msgid "Closing a Project"
+msgstr "Lukke eit prosjekt"
+
+#. (itstool) path: section/p
+#: C/projects.page:24
+msgid "To close the current project and return to an empty state, choose <em>Close Project</em> from the application menu."
+msgstr ""
+"For å lukke det gjeldande prosjektet og gå tilbake til eit tomt prosjekt vel"
+" du <em>Lukk prosjektet</em> i appmenyen."
+
+#. (itstool) path: section/title
+#: C/projects.page:28
+msgid "Version Compatibility"
+msgstr "Versjonskompatibilitet"
+
+#. (itstool) path: section/p
+#: C/projects.page:29
+msgid "Project files saved by older versions of Graphs are automatically migrated when opened. Projects saved by a newer incompatible version of Graphs cannot be opened in an older version."
+msgstr ""
+"Prosjektfiler lagra med eldre versjonar av Graphs vert automatisk migrerte "
+"når dei vert opna. Prosjekt lagra med ein nyare, ikkje-kompatibel versjon av"
+" Graphs kan ikkje opnast i ein eldre versjon."
+
+#. (itstool) path: page/title
+#: C/window.page:7
+msgid "Main Window"
+msgstr "Hovudvindauge"
+
+#. (itstool) path: page/p
+#: C/window.page:8
+msgid "The Graphs main window is split into two areas: a sidebar on the left containing the item list and controls, and a canvas on the right where the figure is displayed."
+msgstr ""
+"Hovudvindauget i Graphs er delt i to: eit sidepanel til venstre med "
+"elementlista og kontrollane, og eit lerret til høgre der figuren vert vist."
+
+#. (itstool) path: section/title
+#: C/window.page:10
+msgid "Sidebar"
+msgstr "Sidepanel"
+
+#. (itstool) path: section/p
+#: C/window.page:11
+msgid "The sidebar contains everything related to managing items and interacting with the figure."
+msgstr ""
+"Sidepanelet inneheld alt som har med handtering av element og samhandling "
+"med figuren å gjere."
+
+#. (itstool) path: section/title
+#: C/window.page:13
+msgid "Header buttons"
+msgstr "Knappar i toppfeltet"
+
+#. (itstool) path: section/p
+#: C/window.page:14
+msgid "At the top of the sidebar, we have the header with a button to add data, a button to open the figure settings, and a button with the primary menu. At the top, the <em>Add</em> button opens a menu with three options:"
+msgstr ""
+"Øvst i sidepanelet er toppfeltet, med ein knapp for å leggje til data, ein "
+"knapp for å opne figurinnstillingane og ein knapp for hovudmenyen. Knappen "
+"<em>Legg til</em> opnar ein meny med tre val:"
+
+#. (itstool) path: item/title
+#: C/window.page:17
+msgid "Add Data from File…"
+msgstr "Legg til data frå fil …"
+
+#. (itstool) path: item/p
+#: C/window.page:18
+msgid "Opens the import dialog to load a dataset from a file or database. See <link xref=\"import\"/>for details on the supported formats and import options."
+msgstr ""
+"Opnar importvindauget for å laste eit datasett frå ei fil eller ein "
+"database. Sjå <link xref=\"import\"/>for detaljar om formata som er støtta "
+"og vala ved import."
+
+#. (itstool) path: item/title
+#: C/window.page:22
+msgid "Add Equation…"
+msgstr "Legg til likning …"
+
+#. (itstool) path: item/p
+#: C/window.page:23
+msgid "Opens a dialog to add a new equation item, rendered continuously on the canvas."
+msgstr ""
+"Opnar eit vindauge for å leggje til eit nytt likningselement, som vert "
+"teikna samanhengande på lerretet."
+
+#. (itstool) path: item/title
+#: C/window.page:26
+msgid "Generate Data…"
+msgstr "Generer data …"
+
+#. (itstool) path: item/p
+#: C/window.page:27
+msgid "Opens a dialog to generate a fixed dataset from an equation over a configurable x-range."
+msgstr ""
+"Opnar eit vindauge for å generere eit fast datasett frå ei likning over eit "
+"x-område du kan velje."
+
+#. (itstool) path: section/title
+#: C/window.page:32
+msgid "Primary Menu"
+msgstr "Hovudmeny"
+
+#. (itstool) path: section/p
+#: C/window.page:33
+msgid "The primary menu in the top right provides access to some general options:"
+msgstr "Hovudmenyen øvst til høgre gjev tilgang til nokre generelle val:"
+
+#. (itstool) path: item/title
+#: C/window.page:36
+msgid "New Project"
+msgstr "Nytt prosjekt"
+
+#. (itstool) path: item/p
+#: C/window.page:37
+msgid "Opens a new empty project in a new window."
+msgstr "Opnar eit nytt, tomt prosjekt i eit nytt vindauge."
+
+#. (itstool) path: item/title
+#: C/window.page:40
+msgid "Save Project / Save Project As…"
+msgstr "Lagre prosjekt / Lagre prosjekt som …"
+
+#. (itstool) path: item/p
+#: C/window.page:41
+msgid "Saves the current project to a file, preserving all items, figure settings, and the full undo and view history."
+msgstr ""
+"Lagrar det gjeldande prosjektet i ei fil, med alle elementa, "
+"figurinnstillingane og heile historikken for angring og vising."
+
+#. (itstool) path: item/title
+#: C/window.page:44
+msgid "Open Project…"
+msgstr "Opne prosjekt …"
+
+#. (itstool) path: item/p
+#: C/window.page:45
+msgid "Opens a previously saved project file."
+msgstr "Opnar ei tidlegare lagra prosjektfil."
+
+#. (itstool) path: item/title
+#: C/window.page:48
+msgid "Close Project"
+msgstr "Lukk prosjektet"
+
+#. (itstool) path: item/p
+#: C/window.page:49
+msgid "Closes the current project and returns to an empty state."
+msgstr "Lukkar det gjeldande prosjektet og går tilbake til eit tomt prosjekt."
+
+#. (itstool) path: item/title
+#: C/window.page:52
+msgid "Export Data…"
+msgstr "Eksporter data …"
+
+#. (itstool) path: item/p
+#: C/window.page:53
+msgid "Exports the current datasets to a file."
+msgstr "Eksporterer dei gjeldande datasetta til ei fil."
+
+#. (itstool) path: item/title
+#: C/window.page:56
+msgid "Export Figure…"
+msgstr "Eksporter figur …"
+
+#. (itstool) path: item/p
+#: C/window.page:57
+msgid "Exports the figure as an image."
+msgstr "Eksporterer figuren som eit bilete."
+
+#. (itstool) path: item/title
+#: C/window.page:60
+msgid "Style Editor"
+msgstr "Stilredigering"
+
+#. (itstool) path: item/p
+#: C/window.page:61
+msgid "Opens the style editor window. See <link xref=\"edit-style\"/>for details."
+msgstr ""
+"Opnar vindauget for stilredigering. Sjå <link xref=\"edit-style\"/>for "
+"detaljar."
+
+#. (itstool) path: section/p
+#: C/window.page:66
+msgid "The item list shows all items currently in the project. Each item can be selected or deselected by clicking the checkbox next to it. Only selected items are affected by data operations. Clicking the item name opens the edit panel for that item. Items can be deleted, and their order can be changed by dragging."
+msgstr ""
+"Elementlista viser alle elementa i prosjektet. Du vel eller fjernar valet av"
+" eit element ved å klikke på avkryssingsboksen ved sida av. Berre valde "
+"element vert påverka av dataoperasjonar. Klikkar du på namnet til elementet,"
+" vert redigeringspanelet for det opna. Element kan slettast, og rekkjefølgja"
+" kan endrast ved å dra dei."
+
+#. (itstool) path: section/p
+#: C/window.page:69
+msgid "The figure settings button in the top right of the sidebar opens the Figure Settings panel, where the figure title, axis labels, axis limits, axis scales, legend visibility and position, and the active style can all be configured. Axis labels and limits are only shown for the axes that are currently in use. The current figure settings can be saved as the default for new projects using the <em>Set as Default</em> button at the bottom of the panel."
+msgstr ""
+"Knappen for figurinnstillingar øvst til høgre i sidepanelet opnar panelet "
+"for figurinnstillingar, der du kan setje figurtittel, aksetitlar, "
+"aksegrenser, akseskalaer, synlegheit og plassering av teiknforklaringa og "
+"den aktive stilen. Aksetitlar og aksegrenser vert berre viste for aksane som"
+" er i bruk. Dei gjeldande figurinnstillingane kan lagrast som standard for "
+"nye prosjekt med knappen <em>Set som standard</em> nedst i panelet."
+
+#. (itstool) path: section/title
+#: C/window.page:72
+msgid "Canvas Modes"
+msgstr "Modusar for lerretet"
+
+#. (itstool) path: section/p
+#: C/window.page:73
+msgid "Below the item list, three canvas interaction modes are available:"
+msgstr ""
+"Under elementlista finst det tre modusar for samhandling med lerretet:"
+
+#. (itstool) path: item/title
+#: C/window.page:76
+msgid "Pan"
+msgstr "Panorer"
+
+#. (itstool) path: item/p
+#: C/window.page:77
+msgid "Click and drag on the canvas to pan the view. This is the default mode."
+msgstr ""
+"Klikk og dra på lerretet for å panorere visinga. Dette er standardmodusen."
+
+#. (itstool) path: item/title
+#: C/window.page:80
+msgid "Zoom"
+msgstr "Zoom"
+
+#. (itstool) path: item/p
+#: C/window.page:81
+msgid "Click and drag to draw a rectangle on the canvas to zoom into that area."
+msgstr ""
+"Klikk og dra for å teikne eit rektangel på lerretet for å zoome inn på det "
+"området."
+
+#. (itstool) path: item/title
+#: C/window.page:84
+msgid "Select"
+msgstr "Vel"
+
+#. (itstool) path: item/p
+#: C/window.page:85
+msgid "Click and drag to highlight a region of the data. Data operations will only affect the data within the highlighted area when this mode is active."
+msgstr ""
+"Klikk og dra for å markere eit område i dataa. Dataoperasjonar vil berre "
+"påverke dataa innanfor det markerte området når denne modusen er aktiv."
+
+#. (itstool) path: section/title
+#: C/window.page:90
+msgid "Operations"
+msgstr "Operasjonar"
+
+#. (itstool) path: section/p
+#: C/window.page:91
+msgid "Below the canvas mode buttons, the operations panel provides quick access to all data manipulation actions. These act on all selected items. See <link xref=\"manipulate\"/>for a full description of each operation."
+msgstr ""
+"Under modusknappane for lerretet gjev operasjonspanelet rask tilgang til "
+"alle handlingane for datahandsaming. Dei verkar på alle dei valde elementa. "
+"Sjå <link xref=\"manipulate\"/>for ei fullstendig skildring av kvar "
+"operasjon."
+
+#. (itstool) path: section/title
+#: C/window.page:96
+msgid "Canvas"
+msgstr "Lerret"
+
+#. (itstool) path: section/p
+#: C/window.page:97
+msgid "The canvas shows the plot containing all active items. Clicking once on the label, limits or opens the Figure Settings, focused on the clicked item, allowing for quick adjustments."
+msgstr ""
+"Lerretet viser plottet med alle dei aktive elementa. Klikkar du éin gong på "
+"etiketten eller grensene, vert figurinnstillingane opna med fokus på det du "
+"klikka på, slik at du raskt kan justere."
+
+#. (itstool) path: section/p
+#: C/window.page:98
+msgid "On the top left we have the undo and redo button. On the top right of the canvas there's the view buttons. The back-arrow moves you to the previous view after having changed the limits while the forward-arrow moves you to the next view after having clicked the back-arrow. Finally the Optimize Limits button will try and adjust the limits automatically to fit all visible items in the canvas. For equations, only the y-range is taken into account, as the x-data spans an infinite range."
+msgstr ""
+"Øvst til venstre er knappane for å angre og gjere om. Øvst til høgre på "
+"lerretet er visingsknappane. Pila bakover tek deg til den førre visinga "
+"etter at du har endra grensene, og pila framover tek deg til den neste "
+"visinga etter at du har klikka på pila bakover. Til slutt prøver knappen for"
+" å optimalisere grensene å justere grensene automatisk slik at alle synlege "
+"element får plass på lerretet. For likningar vert berre y-området rekna med,"
+" sidan x-dataa strekkjer seg over eit uendeleg område."
+
+#. (itstool) path: p/link
+#: C/legal.xml:3
+msgid "Creative Commons Attribution-ShareAlike 4.0 International License"
+msgstr ""
+"Creative Commons Namngjeving-Del på same vilkår 4.0 Internasjonal-lisens"
+
+#. (itstool) path: license/p
+#: C/legal.xml:2
+msgid "This work is licensed under a <_:link-1/>."
+msgstr "Dette verket er lisensiert under ein <_:link-1/>."
+
