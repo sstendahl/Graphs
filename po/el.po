@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs v1.8.x\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-02-20 16:56+0000\n"
+"POT-Creation-Date: 2026-09-01 10:34+0000\n"
 "PO-Revision-Date: 2025-10-10 23:33+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Greek <Greek>\n"
@@ -18,9 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:25
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
 msgid "Graphs"
 msgstr "Γραφήματα"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:30
+msgid "The Graphs Developers"
+msgstr "Οι προγραμματιστές του Graphs"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -41,6 +45,61 @@ msgstr "Διαχείριση φύλλων στυλ γραφημάτων"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Χειριστείτε τα εισαγόμενα δεδομένα"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Σχεδίαση γραφημάτων"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Σχεδίαση"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+#| msgid "Graphs"
+msgid "Graph"
+msgstr "Γράφημα"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+#| msgid "Graphs"
+msgid "Graphing"
+msgstr "Γραφική παράσταση"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Επιστήμη"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Μαθηματικά"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Μαθηματικά"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+#| msgid "Equation"
+msgid "Equations"
+msgstr "Εξισώσεις"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+#| msgid "No Data"
+msgid "Data"
+msgstr "Δεδομένα"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Οπτικοποίηση"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+#| msgid "Curve Fitting"
+msgid "Fitting"
+msgstr "Προσαρμογή"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+#| msgctxt "import-mode"
+#| msgid "xrdml"
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -115,6 +174,7 @@ msgid "New Window"
 msgstr "Νέο Παράθυρο"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: graphs/application.vala:20
 msgid "Style Editor"
 msgstr "Επεξεργαστής Στυλ"
 
@@ -226,7 +286,7 @@ msgid "Add Item"
 msgstr "Προσθήκη Στοιχείου"
 
 #: data/ui/import/columns/item-group.blp:9
-#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:124
+#: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
 #: data/ui/style-editor/item-color-row.blp:36
 msgid "Remove"
 msgstr "Αφαίρεση"
@@ -242,9 +302,8 @@ msgid "Y Column"
 msgstr "Στήλη Υ"
 
 #: data/ui/import/columns/item-group.blp:51
-#: data/ui/import/spreadsheet/item-group.blp:51
-msgid "Single Column"
-msgstr "Μονή Στήλη"
+msgid "Y Values Only"
+msgstr ""
 
 #: data/ui/import/columns/item-group.blp:52
 #: data/ui/import/spreadsheet/item-group.blp:52
@@ -252,9 +311,10 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Εισαγωγή μόνο τιμών Υ, οι τιμές Χ θα δημιουργηθούν αυτόματα"
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/import/spreadsheet/item-group.blp:57
-msgid "X Value Equation"
-msgstr "Εξίσωση Τιμής Χ"
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
+#: graphs/item.vala:237
+msgid "Equation"
+msgstr "Εξίσωση"
 
 #: data/ui/import/columns/item-group.blp:64
 #: data/ui/import/columns/main-group.blp:32
@@ -288,6 +348,32 @@ msgstr ""
 "• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
 "• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
 "• <b>n*10+100</b> → 100, 110, 120, 130..."
+
+#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/sql/main-group.blp:28
+#: data/ui/import/spreadsheet/item-group.blp:91
+msgid "X Error Bars"
+msgstr "Γραμμές σφάλματος X"
+
+#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/sql/main-group.blp:33
+#: data/ui/import/spreadsheet/item-group.blp:95
+msgid "Y Error Bars"
+msgstr "Γραμμές σφάλματος Y"
+
+#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/sql/main-group.blp:40
+#: data/ui/import/spreadsheet/item-group.blp:108
+#| msgid "X Column"
+msgid "X Error Column"
+msgstr "Στήλη σφάλματος X"
+
+#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/sql/main-group.blp:46
+#: data/ui/import/spreadsheet/item-group.blp:120
+#| msgid "Y Column"
+msgid "Y Error Column"
+msgstr "Στήλη σφάλματος Y"
 
 #: data/ui/import/columns/main-group.blp:5
 msgid "Format"
@@ -374,7 +460,7 @@ msgstr "Στήλη Χ"
 msgid "Column Y"
 msgstr "Στήλη Υ"
 
-#: data/ui/import/sql/main-group.blp:23
+#: data/ui/import/sql/main-group.blp:54
 msgid "This table contains no numeric columns"
 msgstr "Αυτός ο πίνακας δεν περιέχει αριθμητικές στήλες"
 
@@ -389,6 +475,14 @@ msgstr "Φύλλο"
 #: data/ui/import/spreadsheet/main-group.blp:9
 msgid "Select which sheet to import"
 msgstr "Επιλέξτε ποιο φύλλο θα εισαχθεί"
+
+#: data/ui/import/spreadsheet/item-group.blp:51
+msgid "Single Column"
+msgstr "Μονή Στήλη"
+
+#: data/ui/import/spreadsheet/item-group.blp:57
+msgid "X Value Equation"
+msgstr "Εξίσωση Τιμής Χ"
 
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
@@ -406,11 +500,11 @@ msgstr "Εισαγωγή"
 msgid "Reset to guessed values"
 msgstr "Επαναφορά στις εκτιμώμενες τιμές"
 
-#: data/ui/import/dialog.blp:105
+#: data/ui/import/dialog.blp:106
 msgid "Import Mode"
 msgstr "Λειτουργία Εισαγωγής"
 
-#: data/ui/import/dialog.blp:117
+#: data/ui/import/dialog.blp:118
 #: data/ui/sidebar/figure-settings/settings-page.blp:265
 msgid "Set as Default"
 msgstr "Ορισμός ως Προεπιλογή"
@@ -447,193 +541,192 @@ msgstr "Αριστερά"
 msgid "Right"
 msgstr "Δεξιά"
 
-#: data/ui/sidebar/edit-item/data.blp:8
+#: data/ui/sidebar/edit-item/data.blp:9
 msgid "Line and Markers"
 msgstr "Γραμμή και Δείκτες"
 
-#: data/ui/sidebar/edit-item/data.blp:11
+#: data/ui/sidebar/edit-item/data.blp:12
 #: data/ui/sidebar/edit-item/equation.blp:14
 #: data/ui/style-editor/editor-box.blp:62
 msgid "Linestyle"
 msgstr "Στυλ γραμμής"
 
-#: data/ui/sidebar/edit-item/data.blp:16 data/ui/style-editor/editor-box.blp:67
+#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:67
 msgctxt "linestyle"
 msgid "None"
 msgstr "Κανένα"
 
-#: data/ui/sidebar/edit-item/data.blp:17
+#: data/ui/sidebar/edit-item/data.blp:18
 #: data/ui/sidebar/edit-item/equation.blp:18
 #: data/ui/style-editor/editor-box.blp:68
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Συμπαγής"
 
-#: data/ui/sidebar/edit-item/data.blp:18
+#: data/ui/sidebar/edit-item/data.blp:19
 #: data/ui/sidebar/edit-item/equation.blp:19
 #: data/ui/style-editor/editor-box.blp:69
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Διάστικτη"
 
-#: data/ui/sidebar/edit-item/data.blp:19
+#: data/ui/sidebar/edit-item/data.blp:20
 #: data/ui/sidebar/edit-item/equation.blp:20
 #: data/ui/style-editor/editor-box.blp:70
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Διακεκομμένη"
 
-#: data/ui/sidebar/edit-item/data.blp:20
+#: data/ui/sidebar/edit-item/data.blp:21
 #: data/ui/sidebar/edit-item/equation.blp:21
 #: data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Παύλα-Τελεία"
 
-#: data/ui/sidebar/edit-item/data.blp:26
+#: data/ui/sidebar/edit-item/data.blp:27
 #: data/ui/sidebar/edit-item/equation.blp:27
-#: data/ui/style-editor/editor-box.blp:77
 msgid "Linewidth"
 msgstr "Πάχος Γραμμής"
 
-#: data/ui/sidebar/edit-item/data.blp:41 data/ui/style-editor/editor-box.blp:94
+#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:94
 msgid "Markers"
 msgstr "Δείκτες"
 
-#: data/ui/sidebar/edit-item/data.blp:46 data/ui/style-editor/editor-box.blp:99
+#: data/ui/sidebar/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:99
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Κανένας"
 
-#: data/ui/sidebar/edit-item/data.blp:47
+#: data/ui/sidebar/edit-item/data.blp:48
 #: data/ui/style-editor/editor-box.blp:100
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Σημείο"
 
-#: data/ui/sidebar/edit-item/data.blp:48
+#: data/ui/sidebar/edit-item/data.blp:49
 #: data/ui/style-editor/editor-box.blp:101
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Εικονοστοιχείο"
 
-#: data/ui/sidebar/edit-item/data.blp:49
+#: data/ui/sidebar/edit-item/data.blp:50
 #: data/ui/style-editor/editor-box.blp:102
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Κύκλος"
 
-#: data/ui/sidebar/edit-item/data.blp:50
+#: data/ui/sidebar/edit-item/data.blp:51
 #: data/ui/style-editor/editor-box.blp:103
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Τρίγωνο προς τα κάτω"
 
-#: data/ui/sidebar/edit-item/data.blp:51
+#: data/ui/sidebar/edit-item/data.blp:52
 #: data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Τρίγωνο προς τα πάνω"
 
-#: data/ui/sidebar/edit-item/data.blp:52
+#: data/ui/sidebar/edit-item/data.blp:53
 #: data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Τρίγωνο προς τα αριστερά"
 
-#: data/ui/sidebar/edit-item/data.blp:53
+#: data/ui/sidebar/edit-item/data.blp:54
 #: data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Τρίγωνο προς τα δεξιά"
 
-#: data/ui/sidebar/edit-item/data.blp:54
+#: data/ui/sidebar/edit-item/data.blp:55
 #: data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Οκτάγωνο"
 
-#: data/ui/sidebar/edit-item/data.blp:55
+#: data/ui/sidebar/edit-item/data.blp:56
 #: data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Τετράγωνο"
 
-#: data/ui/sidebar/edit-item/data.blp:56
+#: data/ui/sidebar/edit-item/data.blp:57
 #: data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Πεντάγωνο"
 
-#: data/ui/sidebar/edit-item/data.blp:57
+#: data/ui/sidebar/edit-item/data.blp:58
 #: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Αστέρι"
 
-#: data/ui/sidebar/edit-item/data.blp:58
+#: data/ui/sidebar/edit-item/data.blp:59
 #: data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Εξάγωνο 1"
 
-#: data/ui/sidebar/edit-item/data.blp:59
+#: data/ui/sidebar/edit-item/data.blp:60
 #: data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Εξάγωνο 2"
 
-#: data/ui/sidebar/edit-item/data.blp:60
+#: data/ui/sidebar/edit-item/data.blp:61
 #: data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Συν"
 
-#: data/ui/sidebar/edit-item/data.blp:61
+#: data/ui/sidebar/edit-item/data.blp:62
 #: data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "X"
 msgstr "Χ"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/sidebar/edit-item/data.blp:63
+#: data/ui/sidebar/edit-item/data.blp:64
 #: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Ρόμβος"
 
 #. Translators: Diamond as in Cards Symbol
-#: data/ui/sidebar/edit-item/data.blp:65
+#: data/ui/sidebar/edit-item/data.blp:66
 #: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Λεπτός Ρόμβος"
 
-#: data/ui/sidebar/edit-item/data.blp:66
+#: data/ui/sidebar/edit-item/data.blp:67
 #: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Κάθετη Γραμμή"
 
-#: data/ui/sidebar/edit-item/data.blp:67
+#: data/ui/sidebar/edit-item/data.blp:68
 #: data/ui/style-editor/editor-box.blp:120
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Οριζόντια Γραμμή"
 
-#: data/ui/sidebar/edit-item/data.blp:68
+#: data/ui/sidebar/edit-item/data.blp:69
 #: data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Γεμάτο Συν"
 
-#: data/ui/sidebar/edit-item/data.blp:69
+#: data/ui/sidebar/edit-item/data.blp:70
 #: data/ui/style-editor/editor-box.blp:122
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Γεμάτο Χ"
 
-#: data/ui/sidebar/edit-item/data.blp:75
+#: data/ui/sidebar/edit-item/data.blp:76
 #: data/ui/style-editor/editor-box.blp:128
 msgid "Marker Size"
 msgstr "Μέγεθος Δείκτη"
@@ -641,11 +734,6 @@ msgstr "Μέγεθος Δείκτη"
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Γραμμή"
-
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.py:200
-msgid "Equation"
-msgstr "Εξίσωση"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
 #: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
@@ -656,6 +744,48 @@ msgstr "Y ="
 #: data/ui/sidebar/edit-item/equation-group.blp:15
 msgid "Simplify"
 msgstr "Απλοποίηση"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:9
+#: data/ui/style-editor/editor-box.blp:146
+msgid "Error Bars"
+msgstr "Γραμμές σφάλματος"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:12
+#| msgctxt "markerstyle"
+#| msgid "Horizontal Line"
+msgid "Show Horizontal"
+msgstr "Εμφάνιση οριζόντιων"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:17
+#| msgid "Show Residuals"
+msgid "Show Vertical"
+msgstr "Εμφάνιση κατακόρυφων"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:22
+#: data/ui/style-editor/editor-box.blp:194
+msgid "Draw Above Data"
+msgstr "Σχεδίαση πάνω από τα δεδομένα"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:26
+#| msgid "Colors"
+msgid "Color"
+msgstr "Χρώμα"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:30
+#: data/ui/style-editor/editor-box.blp:149
+msgid "Cap Length"
+msgstr "Μήκος άκρου"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:44
+#: data/ui/style-editor/editor-box.blp:164
+msgid "Cap Thickness"
+msgstr "Πάχος άκρου"
+
+#: data/ui/sidebar/edit-item/errorbar-group.blp:58
+#: data/ui/style-editor/editor-box.blp:179
+#| msgid "Linewidth"
+msgid "Line Width"
+msgstr "Πάχος γραμμής"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:18 data/ui/generate-data.blp:72
 msgid "X Start"
@@ -676,8 +806,8 @@ msgstr "Κλίμακα"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:49
 #: data/ui/generate-data.blp:101
-msgid "Determines the spacing between data points"
-msgstr "Καθορίζει την απόσταση μεταξύ των σημείων δεδομένων"
+msgid "How points are spaced"
+msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
 #: data/ui/sidebar/figure-settings/settings-page.blp:155
@@ -753,7 +883,7 @@ msgid "Labels"
 msgstr "Ετικέτες"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:98
+#: graphs/style_editor/__init__.py:100
 msgid "Title"
 msgstr "Τίτλος"
 
@@ -897,7 +1027,7 @@ msgstr "Απόκρυψη μη Επιλεγμένων Στοιχείων"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:246
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:82
+#: graphs/style_editor/window.vala:83
 msgid "Style"
 msgstr "Στυλ"
 
@@ -1169,165 +1299,175 @@ msgstr "Μέγεθος ετικέτας σε σχέση με το μέγεθος
 msgid "Lines"
 msgstr "Γραμμές"
 
-#: data/ui/style-editor/editor-box.blp:146
+#: data/ui/style-editor/editor-box.blp:77
+#| msgid "Linewidth"
+msgid "Line width"
+msgstr "Πάχος γραμμής"
+
+#: data/ui/style-editor/editor-box.blp:199
 msgid "Axes"
 msgstr "Άξονες"
 
-#: data/ui/style-editor/editor-box.blp:149
+#: data/ui/style-editor/editor-box.blp:202
 msgid "Axis Width"
 msgstr "Πλάτος Άξονα"
 
-#: data/ui/style-editor/editor-box.blp:163
+#: data/ui/style-editor/editor-box.blp:216
 msgid "Draw Frame"
 msgstr "Σχεδίαση Πλαισίου"
 
-#: data/ui/style-editor/editor-box.blp:168
+#: data/ui/style-editor/editor-box.blp:221
 msgid "Ticks"
 msgstr "Σημάδια"
 
-#: data/ui/style-editor/editor-box.blp:171
+#: data/ui/style-editor/editor-box.blp:224
 msgid "Tick Directions"
 msgstr "Κατευθύνσεις σημαδιών"
 
-#: data/ui/style-editor/editor-box.blp:175
+#: data/ui/style-editor/editor-box.blp:228
 msgid "Inwards"
 msgstr "Προς τα μέσα"
 
-#: data/ui/style-editor/editor-box.blp:176
+#: data/ui/style-editor/editor-box.blp:229
 msgid "Outwards"
 msgstr "Προς τα έξω"
 
-#: data/ui/style-editor/editor-box.blp:182
+#: data/ui/style-editor/editor-box.blp:235
 msgid "Minor Ticks"
 msgstr "Δευτερεύοντα σημάδια"
 
-#: data/ui/style-editor/editor-box.blp:186
+#: data/ui/style-editor/editor-box.blp:239
 msgid "Major Tick Width"
 msgstr "Πλάτος κύριου σημαδιού"
 
-#: data/ui/style-editor/editor-box.blp:201
+#: data/ui/style-editor/editor-box.blp:254
 msgid "Minor Tick Width"
 msgstr "Πλάτος δευτερεύοντος σημαδιού"
 
-#: data/ui/style-editor/editor-box.blp:217
+#: data/ui/style-editor/editor-box.blp:270
 msgid "Major Tick Length"
 msgstr "Μήκος κύριου σημαδιού"
 
-#: data/ui/style-editor/editor-box.blp:232
+#: data/ui/style-editor/editor-box.blp:285
 msgid "Minor Tick Length"
 msgstr "Μήκος δευτερεύοντος σημαδιού"
 
-#: data/ui/style-editor/editor-box.blp:248
+#: data/ui/style-editor/editor-box.blp:301
 msgid "Show Tick Labels on all Axes"
 msgstr "Εμφάνιση ετικετών σημαδιών σε όλους τους άξονες"
 
-#: data/ui/style-editor/editor-box.blp:252
+#: data/ui/style-editor/editor-box.blp:305
 msgid "Ticks on Bottom Axis"
 msgstr "Σημάδια στον κάτω άξονα"
 
-#: data/ui/style-editor/editor-box.blp:256
+#: data/ui/style-editor/editor-box.blp:309
 msgid "Ticks on Left Axis"
 msgstr "Σημάδια στον αριστερό άξονα"
 
-#: data/ui/style-editor/editor-box.blp:260
+#: data/ui/style-editor/editor-box.blp:313
 msgid "Ticks on Right Axis"
 msgstr "Σημάδια στον δεξιό άξονα"
 
-#: data/ui/style-editor/editor-box.blp:264
+#: data/ui/style-editor/editor-box.blp:317
 msgid "Ticks on Top Axis"
 msgstr "Σημάδια στον πάνω άξονα"
 
-#: data/ui/style-editor/editor-box.blp:269
+#: data/ui/style-editor/editor-box.blp:322
 msgid "Grid"
 msgstr "Πλέγμα"
 
-#: data/ui/style-editor/editor-box.blp:272
+#: data/ui/style-editor/editor-box.blp:325
 msgid "Show Grid"
 msgstr "Εμφάνιση πλέγματος"
 
-#: data/ui/style-editor/editor-box.blp:276
+#: data/ui/style-editor/editor-box.blp:329
 msgid "Grid Width"
 msgstr "Πλάτος πλέγματος"
 
-#: data/ui/style-editor/editor-box.blp:292
+#: data/ui/style-editor/editor-box.blp:345
 msgid "Grid Opacity"
 msgstr "Αδιαφάνεια πλέγματος"
 
-#: data/ui/style-editor/editor-box.blp:309
+#: data/ui/style-editor/editor-box.blp:362
 msgid "Padding"
 msgstr "Περιθώριο"
 
-#: data/ui/style-editor/editor-box.blp:310
+#: data/ui/style-editor/editor-box.blp:363
 msgid "Padding for different parts of the figure"
 msgstr "Περιθώριο για διάφορα μέρη του γραφήματος"
 
-#: data/ui/style-editor/editor-box.blp:313
+#: data/ui/style-editor/editor-box.blp:366
 msgid "Value Padding"
 msgstr "Περιθώριο τιμών"
 
-#: data/ui/style-editor/editor-box.blp:314
+#: data/ui/style-editor/editor-box.blp:367
 msgid "Padding between axes and values"
 msgstr "Περιθώριο μεταξύ αξόνων και τιμών"
 
-#: data/ui/style-editor/editor-box.blp:329
+#: data/ui/style-editor/editor-box.blp:382
 msgid "Label Padding"
 msgstr "Περιθώριο ετικέτας"
 
-#: data/ui/style-editor/editor-box.blp:330
+#: data/ui/style-editor/editor-box.blp:383
 msgid "Padding between axes and labels"
 msgstr "Περιθώριο μεταξύ αξόνων και ετικετών"
 
-#: data/ui/style-editor/editor-box.blp:345
+#: data/ui/style-editor/editor-box.blp:398
 msgid "Title Padding"
 msgstr "Περιθώριο τίτλου"
 
-#: data/ui/style-editor/editor-box.blp:346
+#: data/ui/style-editor/editor-box.blp:399
 msgid "Padding between axes and the title"
 msgstr "Περιθώριο μεταξύ αξόνων και τίτλου"
 
-#: data/ui/style-editor/editor-box.blp:362
+#: data/ui/style-editor/editor-box.blp:415
 msgid "Colors"
 msgstr "Χρώματα"
 
-#: data/ui/style-editor/editor-box.blp:366
+#: data/ui/style-editor/editor-box.blp:419
 msgid "Label text might be hard to read"
 msgstr "Το κείμενο της ετικέτας μπορεί να είναι δυσανάγνωστο"
 
-#: data/ui/style-editor/editor-box.blp:378
+#: data/ui/style-editor/editor-box.blp:431
 msgid "Poor Contrast"
 msgstr "Κακή αντίθεση"
 
-#: data/ui/style-editor/editor-box.blp:394
+#: data/ui/style-editor/editor-box.blp:447
 msgid "Text Color"
 msgstr "Χρώμα κειμένου"
 
-#: data/ui/style-editor/editor-box.blp:405
+#: data/ui/style-editor/editor-box.blp:458
 msgid "Tick Color"
 msgstr "Χρώμα σημαδιού"
 
-#: data/ui/style-editor/editor-box.blp:416
+#: data/ui/style-editor/editor-box.blp:469
 msgid "Axis Color"
 msgstr "Χρώμα άξονα"
 
-#: data/ui/style-editor/editor-box.blp:427
+#: data/ui/style-editor/editor-box.blp:480
 msgid "Grid Color"
 msgstr "Χρώμα πλέγματος"
 
-#: data/ui/style-editor/editor-box.blp:438
+#: data/ui/style-editor/editor-box.blp:491
 msgid "Background Color"
 msgstr "Χρώμα φόντου"
 
-#: data/ui/style-editor/editor-box.blp:449
+#: data/ui/style-editor/editor-box.blp:502
 msgid "Outline Color"
 msgstr "Χρώμα περιγράμματος"
 
-#: data/ui/style-editor/editor-box.blp:456
+#: data/ui/style-editor/editor-box.blp:509
 msgid "Line Colors"
 msgstr "Χρώματα γραμμών"
 
-#: data/ui/style-editor/editor-box.blp:468
+#: data/ui/style-editor/editor-box.blp:521
+#: data/ui/style-editor/editor-box.blp:550
 msgid "Add Color"
 msgstr "Προσθήκη χρώματος"
+
+#: data/ui/style-editor/editor-box.blp:538
+msgid "Error Bar Colors"
+msgstr ""
 
 #: data/ui/style-editor/item-color-row.blp:18
 msgid "Edit"
@@ -1379,7 +1519,7 @@ msgid "Open Style"
 msgstr "Άνοιγμα στυλ"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:201
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
 msgid "Graphs Style Editor"
 msgstr "Επεξεργαστής στυλ γραφημάτων"
 
@@ -1399,7 +1539,7 @@ msgstr "Άνοιγμα αρχείου…"
 msgid "Open Preview"
 msgstr "Άνοιγμα προεπισκόπησης"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:179
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Η φόρτωση του καμβά απέτυχε"
@@ -1484,60 +1624,60 @@ msgstr "Προσαρμοσμένη"
 msgid "Add Fit to Data"
 msgstr "Προσθήκη προσαρμογής στα δεδομένα"
 
-#: data/ui/curve-fitting.blp:157
+#: data/ui/curve-fitting.blp:161
 msgid "Toggle Sidebar"
 msgstr "Εναλλαγή πλευρικής στήλης"
 
-#: data/ui/curve-fitting.blp:198
+#: data/ui/curve-fitting.blp:202
 msgid "Optimization Method"
 msgstr "Μέθοδος βελτιστοποίησης"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr "Levenberg-Marquardt"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:209
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr "Trust Region Reflective"
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:216
+#: data/ui/curve-fitting.blp:220
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr "Dogbox"
 
-#: data/ui/curve-fitting.blp:223
+#: data/ui/curve-fitting.blp:227
 msgid "Confidence Bounds"
 msgstr "Όρια Εμπιστοσύνης"
 
-#: data/ui/curve-fitting.blp:226
+#: data/ui/curve-fitting.blp:230
 msgctxt "confidence"
 msgid "None"
 msgstr "Κανένα"
 
-#: data/ui/curve-fitting.blp:233
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr "1σ: 68% Εμπιστοσύνη"
 
-#: data/ui/curve-fitting.blp:240
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr "2σ: 95% Εμπιστοσύνη"
 
-#: data/ui/curve-fitting.blp:247
+#: data/ui/curve-fitting.blp:251
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr "3σ: 99.7% Εμπιστοσύνη"
 
-#: data/ui/curve-fitting.blp:255
+#: data/ui/curve-fitting.blp:259
 msgid "Show Residuals"
 msgstr "Εμφάνιση υπολοίπων"
 
@@ -1720,7 +1860,8 @@ msgstr ""
 " y_mean, y_median — μέσος όρος και διάμεσος,\n"
 " y_std, y_sum - τυπική απόκλιση και άθροισμα\n"
 "\n"
-"Οι τριγωνομετρικές συναρτήσεις χρησιμοποιούν ακτίνια (radians) ως προεπιλογή.\n"
+"Οι τριγωνομετρικές συναρτήσεις χρησιμοποιούν ακτίνια (radians) ως "
+"προεπιλογή.\n"
 "Προσθέστε το d για χρήση μοιρών, π.χ. sind(x) ή cosd(x)."
 
 #: data/ui/transform.blp:64
@@ -1739,7 +1880,7 @@ msgstr "Αποθέστε εδώ για εισαγωγή"
 msgid "Show Sidebar"
 msgstr "Εμφάνιση Πλευρικής Στήλης"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:401
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:390
 msgid "Undo"
 msgstr "Αναίρεση"
 
@@ -1904,7 +2045,7 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Επανάληψη ενέργειας"
 
-#: graphs/file_import/parsers/columns/__init__.py:22
+#: graphs/file_import/parsers/columns/__init__.py:17
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Στήλες"
@@ -1913,7 +2054,7 @@ msgstr "Στήλες"
 msgid "Custom delimiter cannot be empty"
 msgstr "Ο προσαρμοσμένος διαχωριστής δεν μπορεί να είναι κενός"
 
-#: graphs/file_import/parsers/columns/parser.vala:94
+#: graphs/file_import/parsers/columns/parser.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
@@ -1922,130 +2063,132 @@ msgstr ""
 "Σφάλμα δείκτη στο %s, δεν είναι δυνατή η πρόσβαση στον δείκτη %d στη γραμμή "
 "%d, βρέθηκαν μόνο %d στήλες"
 
-#: graphs/file_import/parsers/columns/parser.vala:120
+#: graphs/file_import/parsers/columns/parser.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr ""
 "Δεν είναι δυνατή η εισαγωγή από το αρχείο, εσφαλμένη τιμή στη γραμμή %d"
 
-#: graphs/file_import/parsers/columns/ui.vala:38
-#: graphs/file_import/parsers/spreadsheet/ui.vala:117
+#: graphs/file_import/parsers/columns/ui.vala:41
+#: graphs/file_import/parsers/spreadsheet/ui.vala:146
 #, c-format
 msgid "Item %d"
 msgstr "Στοιχείο %d"
 
-#: graphs/file_import/parsers/project/__init__.py:19
+#: graphs/file_import/parsers/project/__init__.py:22
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Έργο"
 
-#: graphs/file_import/parsers/project/__init__.py:20 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Αρχείο έργου γραφημάτων"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:208
+#: graphs/file_import/parsers/spreadsheet/__init__.py:206
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Υπολογιστικό φύλλο"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:209
+#: graphs/file_import/parsers/spreadsheet/__init__.py:207
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Υπολογιστικό φύλλο"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:272
+#: graphs/file_import/parsers/spreadsheet/__init__.py:275
 msgid "No numeric data found in column."
 msgstr "Δεν βρέθηκαν αριθμητικά δεδομένα στη στήλη."
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:287
+#: graphs/file_import/parsers/spreadsheet/__init__.py:288
 msgid "Columns do not have the same length."
 msgstr "Οι στήλες δεν έχουν το ίδιο μήκος."
 
-#: graphs/file_import/parsers/sql/__init__.py:24
+#: graphs/file_import/parsers/sql/__init__.py:19
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Βάση δεδομένων"
 
-#: graphs/file_import/parsers/sql/__init__.py:25
+#: graphs/file_import/parsers/sql/__init__.py:20
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "Βάση δεδομένων SQLite"
 
-#: graphs/file_import/parsers/sql/__init__.py:42
-#, python-brace-format
-msgid ""
-"Could not import data from table \"{table_name}\", no numeric columns were "
-"found"
+#: graphs/file_import/parsers/sql/reader.vala:135
+#, c-format
+#| msgid ""
+#| "Could not import data from table \"{table_name}\", no numeric columns "
+#| "were found"
+msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr ""
-"Δεν ήταν δυνατή η εισαγωγή δεδομένων από τον πίνακα \"{table_name}\", δεν "
-"βρέθηκαν αριθμητικές στήλες"
+"Δεν ήταν δυνατή η εισαγωγή δεδομένων από τον πίνακα \"%s\", δεν βρέθηκαν "
+"αριθμητικές στήλες"
 
-#: graphs/file_import/parsers/sql/__init__.py:52
+#: graphs/file_import/parsers/sql/reader.vala:144
 msgid "No data found in table column"
 msgstr "Δεν βρέθηκαν δεδομένα στη στήλη του πίνακα"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:20
+#: graphs/file_import/parsers/xrdml/__init__.py:23
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:21
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:60
+#: graphs/file_import/parsers/xrdml/__init__.py:66
 msgid "Intensity (cps)"
 msgstr "Ένταση (cps)"
 
-#: graphs/file_import/parsers/xry/__init__.py:20
+#: graphs/file_import/parsers/xry/__init__.py:18
 msgctxt "import-mode"
 msgid "xry"
 msgstr "xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:21
+#: graphs/file_import/parsers/xry/__init__.py:19
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr "Leybold xry"
 
-#: graphs/file_import/parsers/xry/__init__.py:43
+#: graphs/file_import/parsers/xry/parser.vala:76
 msgid "β (°)"
 msgstr "β (°)"
 
-#: graphs/file_import/parsers/xry/__init__.py:44
+#: graphs/file_import/parsers/xry/parser.vala:77
 msgid "R (1/s)"
 msgstr "R (1/s)"
 
-#: graphs/file_import/__init__.py:120
+#: graphs/file_import/__init__.py:117
 msgid "Import failed"
 msgstr "Η εισαγωγή απέτυχε"
 
-#: graphs/file_import/file_import.vala:51
+#: graphs/file_import/file_import.vala:46
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Υποστηριζόμενα αρχεία"
 
 #. columns
-#: graphs/file_import/file_import.vala:55
+#: graphs/file_import/file_import.vala:50
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Αρχεία ASCII"
 
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:139
+#: graphs/sidebar/figure_settings.vala:137
 msgid "X Axis Minimum"
 msgstr "Ελάχιστο άξονα Χ"
 
-#: graphs/sidebar/figure_settings.vala:140
+#: graphs/sidebar/figure_settings.vala:138
 msgid "Y Axis Minimum"
 msgstr "Ελάχιστο άξονα Υ"
 
-#: graphs/sidebar/figure_settings.vala:142
+#. Remove direction prefix if only one is present
+#: graphs/sidebar/figure_settings.vala:144
 msgid "X Axis Maximum"
 msgstr "Μέγιστο άξονα Χ"
 
-#: graphs/sidebar/figure_settings.vala:143
+#: graphs/sidebar/figure_settings.vala:145
 msgid "Y Axis Maximum"
 msgstr "Μέγιστο άξονα Υ"
 
@@ -2066,19 +2209,19 @@ msgstr "Κλίμακα άξονα Υ"
 msgid "Y Axis Label"
 msgstr "Ετικέτα άξονα Y"
 
-#: graphs/sidebar/figure_settings.vala:229
+#: graphs/sidebar/figure_settings.vala:247
 msgid "Defaults Updated"
 msgstr "Οι προεπιλογές ενημερώθηκαν"
 
-#: graphs/style_editor/__init__.py:63
+#: graphs/style_editor/__init__.py:64
 msgid "Example Item"
 msgstr "Παράδειγμα στοιχείου"
 
-#: graphs/style_editor/__init__.py:99 graphs/style_io.py:232
+#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
 msgid "X Label"
 msgstr "Ετικέτα X"
 
-#: graphs/style_editor/__init__.py:100 graphs/style_io.py:233
+#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Ετικέτα Y"
 
@@ -2093,16 +2236,12 @@ msgstr "Χρώμα %d"
 msgid "Graphs Style Editor — %s"
 msgstr "Επεξεργαστής στυλ γραφημάτων — %s"
 
-#: graphs/style_editor/window.vala:234
+#: graphs/style_editor/window.vala:231
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε το %s;"
 
-#: graphs/actions.vala:28
-msgid "The Graphs Developers"
-msgstr "Οι προγραμματιστές του Graphs"
-
-#: graphs/actions.vala:42
+#: graphs/actions.vala:44
 msgid "translator-credits"
 msgstr ""
 "Ελληνική μεταφραστική ομάδα GNOME\n"
@@ -2111,16 +2250,25 @@ msgstr ""
 "Για περισσότερες πληροφορίες, επισκεφθείτε τη σελίδα\n"
 "https://gr.gnome.org/"
 
-#: graphs/actions.vala:182 graphs/item_box.vala:54
+#: graphs/actions.vala:186 graphs/item_box.vala:54
 #, c-format
 msgid "Deleted %s"
 msgstr "Διαγράφηκε το %s"
 
-#: graphs/curve_fitting.py:103
+#: graphs/application.vala:19
+#| msgid "New Window"
+msgid "New window"
+msgstr "Νέο παράθυρο"
+
+#: graphs/application.vala:21
+msgid "[FILE…]"
+msgstr "[ΑΡΧΕΙΟ…]"
+
+#: graphs/curve_fitting.py:99
 msgid "Residuals"
 msgstr "Υπόλοιπα"
 
-#: graphs/curve_fitting.vala:119
+#: graphs/curve_fitting.vala:74
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2128,7 +2276,7 @@ msgstr ""
 "Παρακαλώ εισαγάγετε έγκυρες \n"
 "αριθμητικές παραμέτρους."
 
-#: graphs/curve_fitting.vala:120
+#: graphs/curve_fitting.vala:75
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2136,7 +2284,7 @@ msgstr ""
 "Σφάλμα περιορισμού: βεβαιωθείτε ότι \n"
 "Κατώτερο < Αρχικό < Ανώτερο."
 
-#: graphs/curve_fitting.vala:121
+#: graphs/curve_fitting.vala:76
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2144,7 +2292,7 @@ msgstr ""
 "Σφάλμα μητρώου: Τα δεδομένα δεν \n"
 "επαρκούν για αυτό το μοντέλο."
 
-#: graphs/curve_fitting.vala:122
+#: graphs/curve_fitting.vala:77
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2152,7 +2300,7 @@ msgstr ""
 "Η προσαρμογή απέτυχε: Μέγιστες επαναλήψεις \n"
 "χωρίς σύγκλιση."
 
-#: graphs/curve_fitting.vala:123
+#: graphs/curve_fitting.vala:78
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2160,7 +2308,7 @@ msgstr ""
 "Σφάλμα πεδίου ορισμού: Η εξίσωση δεν ισχύει \n"
 "για αυτό το εύρος δεδομένων."
 
-#: graphs/curve_fitting.vala:124
+#: graphs/curve_fitting.vala:79
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2168,7 +2316,7 @@ msgstr ""
 "Μη έγκυρη εξίσωση: Ελέγξτε τη \n"
 "σύνταξη και τις μεταβλητές."
 
-#: graphs/curve_fitting.vala:125
+#: graphs/curve_fitting.vala:80
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2176,42 +2324,42 @@ msgstr ""
 "Σφάλμα ζώνης εμπιστοσύνης: \n"
 "Το μητρώο συνδιακύμανσης είναι ασταθές."
 
-#: graphs/curve_fitting.vala:265
+#: graphs/curve_fitting.vala:252
 msgid "Parameters"
 msgstr "Παράμετροι"
 
-#: graphs/curve_fitting.vala:282
+#: graphs/curve_fitting.vala:268
 msgid "Statistics"
 msgstr "Στατιστικά"
 
-#: graphs/curve_fitting.vala:285
+#: graphs/curve_fitting.vala:271
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:285
+#: graphs/curve_fitting.vala:271
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:463
+#: graphs/curve_fitting.vala:449
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Παράμετροι προσαρμογής για %s"
 
-#: graphs/data.py:104
+#: graphs/data.py:107
 #, python-brace-format
 msgid "Could not parse style {stylename}, loading system preferred style"
 msgstr ""
 "Δεν ήταν δυνατή η ανάλυση του στυλ {stylename}, γίνεται φόρτωση του "
 "προτιμώμενου στυλ συστήματος"
 
-#: graphs/data.py:109
+#: graphs/data.py:112
 #, python-brace-format
 msgid "Style {stylename} does not exist, loading system preferred style"
 msgstr ""
 "Το στυλ {stylename} δεν υπάρχει, γίνεται φόρτωση του προτιμώμενου στυλ "
 "συστήματος"
 
-#: graphs/data.py:593
+#: graphs/data.py:553
 msgid "Failed to load project"
 msgstr "Αποτυχία φόρτωσης έργου"
 
@@ -2233,63 +2381,72 @@ msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Αρχεία κειμένου"
 
-#: graphs/graphs.in:74
+#: graphs/graphs.in:76
 msgid "Could not load {font}"
 msgstr "Δεν ήταν δυνατή η φόρτωση της γραμματοσειράς {font}"
 
-#: graphs/item.py:83
+#: graphs/item.vala:156
 msgid "Dataset"
 msgstr "Σύνολο δεδομένων"
 
-#: graphs/item.py:131
+#: graphs/item.vala:195
 msgid "Generated Dataset"
 msgstr "Δημιουργημένο σύνολο δεδομένων"
 
-#: graphs/item.py:247
+#: graphs/item.vala:253
 msgid "Label"
 msgstr "Ετικέτα"
 
-#: graphs/item.py:283
+#: graphs/item.vala:259
 msgid "Fill"
 msgstr "Γέμισμα"
 
-#: graphs/misc.vala:16
+#: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Αρχείο στυλ Matplotlib"
 
-#: graphs/operations.py:251
+#: graphs/operations.py:172
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Αδυναμία εκτέλεσης μετασχηματισμού, βεβαιωθείτε ότι η σύνταξη είναι σωστή"
 
-#: graphs/operations.py:295 graphs/operations.py:609
-msgid "No data found within the highlighted area"
-msgstr "Δεν βρέθηκαν δεδομένα εντός της επισημασμένης περιοχής"
+#: graphs/operations.py:222
+#| msgid "No data found within the highlighted area"
+msgid "No data found in highlighted area"
+msgstr "Δεν βρέθηκαν δεδομένα στην επισημασμένη περιοχή"
 
-#: graphs/operations.py:306
+#: graphs/operations.py:226
+msgid "Some items lack error bars; they will be discarded"
+msgstr "Ορισμένα στοιχεία δεν διαθέτουν γραμμές σφάλματος· θα απορριφθούν"
+
+#: graphs/operations.py:238
 msgid "Combined Data"
 msgstr "Συνδυασμένα δεδομένα"
 
-#: graphs/operations.py:443
+#: graphs/operations.py:381
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Η λειτουργία στο {name} δεν οδήγησε σε μια σχεδιάσιμη εξίσωση"
 
-#: graphs/operations.py:452
+#: graphs/operations.py:389
 msgid "Operation not supported for equations."
 msgstr "Η λειτουργία δεν υποστηρίζεται για εξισώσεις."
 
-#: graphs/operations.py:615
+#: graphs/operations.py:556
+msgid "No data found within the highlighted area"
+msgstr "Δεν βρέθηκαν δεδομένα εντός της επισημασμένης περιοχής"
+
+#: graphs/operations.py:564
 msgid "Operation not supported for data items"
 msgstr "Η λειτουργία δεν υποστηρίζεται για στοιχεία δεδομένων"
 
-#: graphs/operations.py:618
+#: graphs/operations.py:567
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Σφάλμα κατά την εκτέλεση της λειτουργίας"
 
-#: graphs/operations.py:624
+#: graphs/operations.py:575
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr ""
 "Τα δεδομένα που βρίσκονταν εκτός της επισημασμένης περιοχής απορρίφθηκαν"
@@ -2302,19 +2459,19 @@ msgstr "Λείπουν δεδομένα από το αρχείο έργου"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Το έργο προέρχεται από μια νεότερη, μη συμβατή έκδοση του Graphs"
 
-#: graphs/project.py:287
+#: graphs/project.py:306
 msgid "Failed to do legacy migration"
 msgstr "Αποτυχία μετεγκατάστασης παλαιού τύπου"
 
-#: graphs/project.py:289
+#: graphs/project.py:308
 msgid "Failed to parse project file"
 msgstr "Αποτυχία ανάλυσης του αρχείου έργου"
 
-#: graphs/project.py:295
+#: graphs/project.py:314
 msgid "Failed to migrate project"
 msgstr "Αποτυχία μετεγκατάστασης έργου"
 
-#: graphs/project.py:301
+#: graphs/project.py:320
 msgid "Failed to validate project"
 msgstr "Αποτυχία επικύρωσης έργου"
 
@@ -2326,31 +2483,31 @@ msgstr "Το Έργο Αποθηκεύτηκε"
 msgid "Project"
 msgstr "Έργο"
 
-#: graphs/python_helper.vala:38
+#: graphs/python_helper.vala:48
 msgid "Exported Data"
 msgstr "Εξαγόμενα δεδομένα"
 
-#: graphs/style_io.py:101
+#: graphs/style_io.py:108
 #, python-brace-format
 msgid "Missing colon in file {file}, line {line}"
 msgstr "Λείπει η άνω και κάτω τελεία στο αρχείο {file}, γραμμή {line}"
 
-#: graphs/style_io.py:109
+#: graphs/style_io.py:116
 #, python-brace-format
 msgid "Non-style related parameter {param} in file {file}"
 msgstr "Παράμετρος {param} που δεν σχετίζεται με το στυλ στο αρχείο {file}"
 
-#: graphs/style_io.py:112
+#: graphs/style_io.py:119
 #, python-brace-format
 msgid "Ignoring parameter {param} in file {file}"
 msgstr "Αγνόηση της παραμέτρου {param} στο αρχείο {file}"
 
-#: graphs/style_io.py:116
+#: graphs/style_io.py:123
 #, python-brace-format
 msgid "Duplicate key in file {file}, on line {line}"
 msgstr "Διπλότυπο κλειδί στο αρχείο {file}, στη γραμμή {line}"
 
-#: graphs/style_io.py:134
+#: graphs/style_io.py:141
 #, python-brace-format
 msgid ""
 "Bad value in file {file} on line {line}, custom parameter {key} is not "
@@ -2359,54 +2516,57 @@ msgstr ""
 "Λανθασμένη τιμή στο αρχείο {file} στη γραμμή {line}, η προσαρμοσμένη "
 "παράμετρος {key} δεν υποστηρίζεται"
 
-#: graphs/style_io.py:152
+#: graphs/style_io.py:165
 #, python-brace-format
 msgid "Bad value in file {file} on line {line}"
 msgstr "Λανθασμένη τιμή στο αρχείο {file} στη γραμμή {line}"
 
-#: graphs/style_io.py:157
+#: graphs/style_io.py:170
 #, python-brace-format
 msgid "Could not parse {filename}"
 msgstr "Δεν ήταν δυνατή η ανάλυση του {filename}"
 
-#: graphs/style_io.py:167
+#: graphs/style_io.py:180
 #, python-brace-format
 msgid "File {file}, does not contain name tag"
 msgstr "Το αρχείο {file}, δεν περιέχει ετικέτα ονόματος"
 
-#: graphs/styles.vala:58
+#: graphs/styles.vala:66
 msgid "System"
 msgstr "Σύστημα"
 
-#: graphs/utilities.vala:148
+#: graphs/utilities.vala:252
 msgid "All Files"
 msgstr "Όλα τα Αρχεία"
 
-#: graphs/utilities.vala:189
+#: graphs/utilities.vala:293
 msgid "Document Portal"
 msgstr "Πύλη Εγγράφων"
 
-#: graphs/window.vala:142
+#: graphs/window.vala:158
 msgid "Graphs (Development)"
 msgstr "Γραφήματα (Ανάπτυξη)"
 
-#: graphs/window.vala:194
+#: graphs/window.vala:185
 msgid "Untitled Project"
 msgstr "Έργο χωρίς Τίτλο"
 
-#: graphs/window.vala:195
+#: graphs/window.vala:186
 msgid "Draft"
 msgstr "Πρόχειρο"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:201
+#: graphs/window.vala:192
 #, c-format
 msgid "Graphs — %s"
 msgstr "Γραφήματα — %s"
 
-#: graphs/window.vala:391
+#: graphs/window.vala:380
 msgid "Open Location"
 msgstr "Άνοιγμα Τοποθεσίας"
+
+#~ msgid "Determines the spacing between data points"
+#~ msgstr "Καθορίζει την απόσταση μεταξύ των σημείων δεδομένων"
 
 #~| msgid ""
 #~| "Additional variables:\n"
