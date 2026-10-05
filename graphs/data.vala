@@ -553,6 +553,7 @@ namespace Graphs {
         private class AxisInfo {
             public unowned string direction;
             public bool used;
+            public bool locked;
             public double min_value;
             public double max_value;
             public Scale scale;
@@ -564,10 +565,13 @@ namespace Graphs {
                 figure_settings.get ("min_" + direction, out min_value);
                 figure_settings.get ("max_" + direction, out max_value);
                 figure_settings.get (direction + "_scale", out scale);
+                figure_settings.get ("lock_" + direction, out locked);
                 xdata = null;
             }
 
             public void update_min_max (double[] data) {
+                if (locked) return;
+
                 double min_value, max_value;
 
                 if (!CUtilities.array_minmax (data, scale.is_nonzero (), out min_value, out max_value)) return;
@@ -580,6 +584,23 @@ namespace Graphs {
                     this.max_value = max_value;
                     used = true;
                 }
+            }
+
+            /**
+             * Get the values of ydata for which the matching xdata lies
+             * within the limits of this axis.
+             */
+            public double[] filter_in_range (double[] xdata, double[] ydata) {
+                double low = double.min (min_value, max_value);
+                double high = double.max (min_value, max_value);
+                int length = int.min (xdata.length, ydata.length);
+                double[] filtered = new double[length];
+                int n = 0;
+                for (int i = 0; i < length; i++) {
+                    if (xdata[i] >= low && xdata[i] <= high) filtered[n++] = ydata[i];
+                }
+                filtered.resize (n);
+                return filtered;
             }
 
             public unowned double[] get_xdata () {
@@ -616,23 +637,33 @@ namespace Graphs {
                 if (!(item is DataItem)) continue;
                 var data_item = (DataItem) item;
 
-                int xindex = item.xposition * 2;
-                int yindex = item.yposition * 2 + 1;
+                unowned AxisInfo xaxis = axes[item.xposition * 2];
+                unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
-                axes[xindex].update_min_max (data_item.get_xdata ());
-                axes[yindex].update_min_max (data_item.get_ydata ());
+                xaxis.update_min_max (data_item.get_xdata ());
+
+                if (yaxis.locked) continue;
+                // Only use visible data if x-axis is locked
+                if (xaxis.locked) {
+                    yaxis.update_min_max (
+                        xaxis.filter_in_range (data_item.get_xdata (), data_item.get_ydata ())
+                    );
+                } else {
+                    yaxis.update_min_max (data_item.get_ydata ());
+                }
             }
 
             foreach (EquationItem item in equation_items) {
-                int xindex = item.xposition * 2;
-                int yindex = item.yposition * 2 + 1;
+                unowned AxisInfo xaxis = axes[item.xposition * 2];
+                unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
-                if (PythonHelper.has_singularities (item.equation, axes[xindex].min_value, axes[xindex].max_value)) continue;
+                if (yaxis.locked) continue;
+                if (PythonHelper.has_singularities (item.equation, xaxis.min_value, xaxis.max_value)) continue;
 
-                unowned double[] xdata = axes[xindex].get_xdata ();
+                unowned double[] xdata = xaxis.get_xdata ();
                 double[] ydata = item.get_program ().eval (xdata);
 
-                axes[yindex].update_min_max (ydata);
+                yaxis.update_min_max (ydata);
             }
 
             for (int i = 0; i < axes.length; i++) {

@@ -30,6 +30,9 @@ namespace Graphs {
         public unowned Adw.EntryRow max_bottom { get; }
 
         [GtkChild]
+        public unowned Gtk.ToggleButton bottom_lock { get; }
+
+        [GtkChild]
         public unowned Gtk.Box top_limits { get; }
 
         [GtkChild]
@@ -37,6 +40,9 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Adw.EntryRow max_top { get; }
+
+        [GtkChild]
+        public unowned Gtk.ToggleButton top_lock { get; }
 
         [GtkChild]
         public unowned Gtk.Box left_limits { get; }
@@ -48,6 +54,9 @@ namespace Graphs {
         public unowned Adw.EntryRow max_left { get; }
 
         [GtkChild]
+        public unowned Gtk.ToggleButton left_lock { get; }
+
+        [GtkChild]
         public unowned Gtk.Box right_limits { get; }
 
         [GtkChild]
@@ -55,6 +64,9 @@ namespace Graphs {
 
         [GtkChild]
         public unowned Adw.EntryRow max_right { get; }
+
+        [GtkChild]
+        public unowned Gtk.ToggleButton right_lock { get; }
 
         [GtkChild]
         public unowned Adw.ComboRow bottom_scale { get; }
@@ -141,6 +153,11 @@ namespace Graphs {
             if (x && !both_x) entry.set_title (_("X Axis Maximum"));
             else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
 
+            Gtk.ToggleButton lock_button;
+            this.get (direction + "-lock", out lock_button);
+            figure_settings.bind_property ("lock-" + direction, lock_button, "active", SYNC);
+            update_lock_button (lock_button);
+
             Adw.ComboRow scale;
             prop = direction + "-scale";
             this.get (prop, out scale);
@@ -185,6 +202,16 @@ namespace Graphs {
             });
         }
 
+        private static void update_lock_button (Gtk.ToggleButton button) {
+            if (button.active) {
+                button.set_icon_name ("padlock-closed-symbolic");
+                button.set_tooltip_text (_("Unlock Axis Limits"));
+            } else {
+                button.set_icon_name ("padlock-open-symbolic");
+                button.set_tooltip_text (_("Lock Axis Limits"));
+            }
+        }
+
         public void focus_widget (string name) {
             Gtk.Widget widget;
             this.get (name, out widget);
@@ -206,6 +233,11 @@ namespace Graphs {
                 entry.add_css_class ("error");
                 entry.set_show_apply_button (false);
             }
+        }
+
+        [GtkCallback]
+        private void on_lock_toggled (Object object, ParamSpec spec) {
+            update_lock_button ((Gtk.ToggleButton) object);
         }
 
         [GtkCallback]

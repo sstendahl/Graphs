@@ -42,6 +42,13 @@ MARKERSTYLES = [
 
 DIRECTIONS = ["bottom", "top", "left", "right"]
 
+AXES_DIRECTIONS = (
+    ("bottom", "left"),  # axis
+    ("top", "left"),  # top_left_axis
+    ("bottom", "right"),  # right_axis
+    ("top", "right"),  # top_right_axis
+)
+
 LIMITS = [
     f"{prefix}-{direction}" for direction in DIRECTIONS
     for prefix in ("min", "max")

@@ -35,6 +35,10 @@ FIGURE_IGNORELIST = (
     "min_selected",
     "max_selected",
     "hide_unselected",
+    "lock_bottom",
+    "lock_top",
+    "lock_left",
+    "lock_right",
 )
 
 XDATA = numpy.linspace(0, 10, 10)

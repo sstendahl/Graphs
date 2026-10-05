@@ -10,6 +10,7 @@ import math
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
+from graphs import misc
 from graphs.canvas.figure import Figure
 
 from matplotlib import backend_tools as tools
@@ -50,6 +51,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )
         figure = Figure(style_params, items, self, figure_settings)
         self.props.figure = figure
+        self._figure_settings = figure_settings
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
         FigureCanvasBase.__init__(self, figure=figure)
@@ -116,6 +118,25 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 lambda _a,
                 _b: self.highlight.load(self),
             )
+
+    def is_locked(self, axis, dimension: str) -> bool:
+        """Whether the x or y limits of axis are locked."""
+        if self._figure_settings is None:
+            return False
+        x, y = misc.AXES_DIRECTIONS[self.figure.axes.index(axis)]
+        direction = x if dimension == "x" else y
+        return self._figure_settings.get_property(f"lock-{direction}")
+
+    def restore_locked_limits(self) -> None:
+        """Reset all locked limits to their figure settings values."""
+        settings = self._figure_settings
+        for ax, (x, y) in zip(self.figure.axes, misc.AXES_DIRECTIONS):
+            for direction, set_lim in ((x, ax.set_xlim), (y, ax.set_ylim)):
+                if settings.get_property(f"lock-{direction}"):
+                    set_lim(
+                        settings.get_property(f"min-{direction}"),
+                        settings.get_property(f"max-{direction}"),
+                    )
 
     def _make_ticklabels_pickable(self) -> None:
         """Make all tick labels pickable."""
@@ -190,6 +211,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 dy *= 10
 
             for ax in [self.figure.axis, self.figure.top_left_axis]:
+                if self.is_locked(ax, "x"):
+                    continue
                 xmin, xmax = ax.get_xlim()
                 scale = Graphs.scale_from_string(ax.get_xscale())
                 xmin, xmax = self._calculate_pan_values(xmin, xmax, scale, dx)
@@ -200,6 +223,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 self.figure.right_axis,
                 self.figure.top_right_axis,
             ]:
+                if self.is_locked(ax, "y"):
+                    continue
                 ymin, ymax = ax.get_ylim()
                 scale = Graphs.scale_from_string(ax.get_yscale())
                 ymin, ymax = self._calculate_pan_values(ymin, ymax, scale, -dy)
@@ -308,6 +333,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             return
 
         for ax in [self.figure.axis, self.figure.top_left_axis]:
+            if self.is_locked(ax, "x"):
+                continue
             ax.set_xlim(
                 self._calculate_zoomed_values(
                     self._xfrac,
@@ -321,6 +348,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             self.figure.right_axis,
             self.figure.top_right_axis,
         ]:
+            if self.is_locked(ax, "y"):
+                continue
             ax.set_ylim(
                 self._calculate_zoomed_values(
                     self._yfrac,
@@ -530,32 +559,20 @@ class _DummyToolbar(NavigationToolbar2):
             # button, as multiple buttons can get pressed during motion.
             # Use custom drag_pan that maxes sure limits are set in right order
             # even on inverted scale
-            self.ax_drag_pan(
-                ax,
+            points = ax._get_pan_points(
                 self._pan_info.button,
                 event.key,
                 event.x,
                 event.y,
             )
+            if points is None:
+                continue
+            # Sort limits so this works with inverted scaling
+            if not self.canvas.is_locked(ax, "x"):
+                ax.set_xlim(sorted(points[:, 0]))
+            if not self.canvas.is_locked(ax, "y"):
+                ax.set_ylim(sorted(points[:, 1]))
         self.canvas.draw_idle()
-
-    @staticmethod
-    def ax_drag_pan(self, button, key: str, x: float, y: float) -> None:
-        """
-        Handle mouse events during a pan operation.
-
-        Notes
-        -----
-        This is intended to be overridden by new projection types.
-        """
-        points = self._get_pan_points(button, key, x, y)
-        if points is not None:
-            # Max and min needs to be defined at correct position for this to
-            # work with inverted scaling
-            ylim = points[:, 1]
-            xlim = points[:, 0]
-            self.set_xlim(min(xlim), max(xlim))
-            self.set_ylim(min(ylim), max(ylim))
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1) -> None:
@@ -570,9 +587,20 @@ class _DummyToolbar(NavigationToolbar2):
         self.canvas._rubberband_rect = None
         self.canvas.queue_draw()
 
+    _zooming = False
+
+    # Overwritten function - do not change name
+    def release_zoom(self, event) -> None:
+        """Finish rubberband zooming."""
+        self._zooming = True
+        super().release_zoom(event)
+        self._zooming = False
+
     # Overwritten function - do not change name
     def push_current(self, *_args) -> None:
         """Use custom functionality for the view clipboard."""
+        if self._zooming:
+            self.canvas.restore_locked_limits()
         self.canvas.highlight.load(self.canvas)
         for direction in ("bottom", "left", "top", "right"):
             self.canvas.figure.notify(f"min-{direction}")

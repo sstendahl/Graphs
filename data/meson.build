@@ -101,6 +101,8 @@ icons = files(
   'icons/loupe-symbolic.svg',
   'icons/move-tool-symbolic.svg',
   'icons/normalize-symbolic.svg',
+  'icons/padlock-closed-symbolic.svg',
+  'icons/padlock-open-symbolic.svg',
   'icons/right-symbolic.svg',
   'icons/settings-symbolic.svg',
   'icons/shift-symbolic.svg',
