@@ -21,52 +21,16 @@ namespace Graphs {
         public unowned Adw.EntryRow right_label { get; }
 
         [GtkChild]
-        public unowned Gtk.Box bottom_limits { get; }
+        public unowned AxisLimitsRow bottom_limits { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow min_bottom { get; }
+        public unowned AxisLimitsRow top_limits { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow max_bottom { get; }
+        public unowned AxisLimitsRow left_limits { get; }
 
         [GtkChild]
-        public unowned Gtk.ToggleButton bottom_lock { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box top_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_top { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_top { get; }
-
-        [GtkChild]
-        public unowned Gtk.ToggleButton top_lock { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box left_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_left { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_left { get; }
-
-        [GtkChild]
-        public unowned Gtk.ToggleButton left_lock { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box right_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_right { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_right { get; }
-
-        [GtkChild]
-        public unowned Gtk.ToggleButton right_lock { get; }
+        public unowned AxisLimitsRow right_limits { get; }
 
         [GtkChild]
         public unowned Adw.ComboRow bottom_scale { get; }
@@ -136,37 +100,21 @@ namespace Graphs {
         }
 
         private void handle_widgets (FigureSettings figure_settings, string direction, bool x, bool both_x, bool both_y) {
-            Adw.EntryRow entry;
-            string prop;
-
-            prop = "min-" + direction;
-            this.get (prop, out entry);
-            bind_entry (entry, figure_settings, prop);
-            // Remove direction prefix if only one is present
-            if (x && !both_x) entry.set_title (_("X Axis Minimum"));
-            else if (!x && !both_y) entry.set_title (_("Y Axis Minimum"));
-
-            prop = "max-" + direction;
-            this.get (prop, out entry);
-            bind_entry (entry, figure_settings, prop);
-            // Remove direction prefix if only one is present
-            if (x && !both_x) entry.set_title (_("X Axis Maximum"));
-            else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
-
-            Gtk.ToggleButton lock_button;
-            this.get (direction + "-lock", out lock_button);
-            figure_settings.bind_property ("lock-" + direction, lock_button, "active", SYNC);
-            update_lock_button (lock_button);
-
             Adw.ComboRow scale;
-            prop = direction + "-scale";
-            this.get (prop, out scale);
+            this.get (direction + "-scale", out scale);
             Adw.EntryRow label;
             this.get (direction + "-label", out label);
-            Gtk.Box limits;
+            AxisLimitsRow limits;
             this.get (direction + "-limits", out limits);
 
-            figure_settings.bind_property (prop, scale, "selected", SYNC);
+            figure_settings.bind_property (direction + "-scale", scale, "selected", SYNC);
+            figure_settings.bind_property ("min-" + direction, limits, "min", SYNC);
+            figure_settings.bind_property ("max-" + direction, limits, "max", SYNC);
+            figure_settings.bind_property ("lock-" + direction, limits, "locked", SYNC);
+            limits.applied.connect (() => {
+                window.data.add_view_history_state ();
+                window.canvas.view_changed ();
+            });
 
             scale.set_visible (true);
             label.set_visible (true);
@@ -176,68 +124,26 @@ namespace Graphs {
             if (x && !both_x) {
                 scale.set_title (_("X Axis Scale"));
                 label.set_title (_("X Axis Label"));
+                limits.set_title (_("X Axis"));
             }
             else if (!x && !both_y) {
                 scale.set_title (_("Y Axis Scale"));
                 label.set_title (_("Y Axis Label"));
-            }
-        }
-
-        private void bind_entry (Adw.EntryRow entry, FigureSettings figure_settings, string prop) {
-            figure_settings.bind_property (
-                prop, entry, "text", BindingFlags.SYNC_CREATE, prettyprint_transform
-            );
-
-            entry.apply.connect (() => {
-                double new_val;
-                try_evaluate_string (entry.get_text (), out new_val);
-
-                figure_settings.set (prop, new_val);
-                window.data.add_view_history_state ();
-                window.canvas.view_changed ();
-
-                // workaround button not disappearing when pressed
-                entry.set_show_apply_button (false);
-                entry.set_show_apply_button (true);
-            });
-        }
-
-        private static void update_lock_button (Gtk.ToggleButton button) {
-            if (button.active) {
-                button.set_icon_name ("padlock-closed-symbolic");
-                button.set_tooltip_text (_("Unlock Axis Limits"));
-            } else {
-                button.set_icon_name ("padlock-open-symbolic");
-                button.set_tooltip_text (_("Lock Axis Limits"));
+                limits.set_title (_("Y Axis"));
             }
         }
 
         public void focus_widget (string name) {
+            if (name.has_prefix ("min_") || name.has_prefix ("max_")) {
+                AxisLimitsRow limits;
+                this.get (name.substring (4) + "_limits", out limits);
+                limits.focus_limit (name.has_prefix ("max_"));
+                return;
+            }
+
             Gtk.Widget widget;
             this.get (name, out widget);
             widget.grab_focus ();
-        }
-
-        private static bool prettyprint_transform (Binding binding, Value source, ref Value target) {
-            target.set_string (MathTools.prettyprint_double (source.get_double ()));
-            return true;
-        }
-
-        [GtkCallback]
-        private void on_limit_entry_change (Object object, ParamSpec spec) {
-            var entry = (Adw.EntryRow) object;
-            if (try_evaluate_string (entry.get_text ())) {
-                entry.remove_css_class ("error");
-                entry.set_show_apply_button (true);
-            } else {
-                entry.add_css_class ("error");
-                entry.set_show_apply_button (false);
-            }
-        }
-
-        [GtkCallback]
-        private void on_lock_toggled (Object object, ParamSpec spec) {
-            update_lock_button ((Gtk.ToggleButton) object);
         }
 
         [GtkCallback]

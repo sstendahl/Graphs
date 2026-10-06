@@ -24,6 +24,7 @@ blueprint_files = [
   'sidebar/edit-item/fill.blp',
   'sidebar/edit-item/generated-data.blp',
   'sidebar/edit-item/page.blp',
+  'sidebar/figure-settings/axis-limits-row.blp',
   'sidebar/figure-settings/settings-page.blp',
   'sidebar/figure-settings/style-page.blp',
   'sidebar/main.blp',

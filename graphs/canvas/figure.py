@@ -14,8 +14,6 @@ from graphs.canvas import artist
 
 from matplotlib import figure, pyplot
 
-# (x, y) directions of the figure axes, in the order of `Figure.axes`
-
 
 def _ellipsize(text: str, max_chars: int) -> str:
     """Truncate text with an ellipsis."""

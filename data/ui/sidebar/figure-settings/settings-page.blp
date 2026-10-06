@@ -53,137 +53,24 @@ template $GraphsFigureSettingsPage: Adw.NavigationPage {
           Adw.PreferencesGroup {
             title: _("Axis Limits");
 
-            Box {
-              orientation: vertical;
-              spacing: 12;
+            $GraphsAxisLimitsRow bottom_limits {
+              visible: false;
+              title: _("Bottom X Axis");
+            }
 
-              Box bottom_limits {
-                visible: false;
-                orientation: horizontal;
-                spacing: 6;
+            $GraphsAxisLimitsRow top_limits {
+              visible: false;
+              title: _("Top X Axis");
+            }
 
-                Adw.PreferencesGroup {
-                  Adw.EntryRow min_bottom {
-                    hexpand: true;
-                    title: _("Bottom X Axis Minimum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
+            $GraphsAxisLimitsRow left_limits {
+              visible: false;
+              title: _("Left Y Axis");
+            }
 
-                Adw.PreferencesGroup {
-                  Adw.EntryRow max_bottom {
-                    hexpand: true;
-                    title: _("Bottom X Axis Maximum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                ToggleButton bottom_lock {
-                  valign: center;
-                  icon-name: "padlock-open-symbolic";
-                  notify::active => $on_lock_toggled();
-
-                  styles [
-                    "flat",
-                  ]
-                }
-              }
-
-              Box top_limits {
-                visible: false;
-                orientation: horizontal;
-                spacing: 6;
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow min_top {
-                    hexpand: true;
-                    title: _("Top X Axis Minimum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow max_top {
-                    hexpand: true;
-                    title: _("Top X Axis Maximum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                ToggleButton top_lock {
-                  valign: center;
-                  icon-name: "padlock-open-symbolic";
-                  notify::active => $on_lock_toggled();
-
-                  styles [
-                    "flat",
-                  ]
-                }
-              }
-
-              Box left_limits {
-                visible: false;
-                orientation: horizontal;
-                spacing: 6;
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow min_left {
-                    hexpand: true;
-                    title: _("Left Y Axis Minimum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow max_left {
-                    hexpand: true;
-                    title: _("Left Y Axis Maximum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                ToggleButton left_lock {
-                  valign: center;
-                  icon-name: "padlock-open-symbolic";
-                  notify::active => $on_lock_toggled();
-
-                  styles [
-                    "flat",
-                  ]
-                }
-              }
-
-              Box right_limits {
-                visible: false;
-                orientation: horizontal;
-                spacing: 6;
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow min_right {
-                    hexpand: true;
-                    title: _("Right Y Axis Minimum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                Adw.PreferencesGroup {
-                  Adw.EntryRow max_right {
-                    hexpand: true;
-                    title: _("Right Y Axis Maximum");
-                    notify::text => $on_limit_entry_change();
-                  }
-                }
-
-                ToggleButton right_lock {
-                  valign: center;
-                  icon-name: "padlock-open-symbolic";
-                  notify::active => $on_lock_toggled();
-
-                  styles [
-                    "flat",
-                  ]
-                }
-              }
+            $GraphsAxisLimitsRow right_limits {
+              visible: false;
+              title: _("Right Y Axis");
             }
           }
 
