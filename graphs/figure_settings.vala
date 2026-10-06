@@ -53,10 +53,14 @@ namespace Graphs {
         public double min_right { get; set; default = 0; }
         public double max_right { get; set; default = 10; }
 
-        public bool lock_bottom { get; set; default = false; }
-        public bool lock_left { get; set; default = false; }
-        public bool lock_top { get; set; default = false; }
-        public bool lock_right { get; set; default = false; }
+        public bool lock_min_bottom { get; set; default = false; }
+        public bool lock_max_bottom { get; set; default = false; }
+        public bool lock_min_left { get; set; default = false; }
+        public bool lock_max_left { get; set; default = false; }
+        public bool lock_min_top { get; set; default = false; }
+        public bool lock_max_top { get; set; default = false; }
+        public bool lock_min_right { get; set; default = false; }
+        public bool lock_max_right { get; set; default = false; }
 
         public double min_selected { get; set; default = 0; }
         public double max_selected { get; set; default = 0; }

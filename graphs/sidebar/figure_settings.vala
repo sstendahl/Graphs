@@ -9,40 +9,16 @@ namespace Graphs {
         private unowned Adw.EntryRow title_entry { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow bottom_label { get; }
+        public unowned AxisGroup bottom_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow top_label { get; }
+        public unowned AxisGroup top_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow left_label { get; }
+        public unowned AxisGroup left_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow right_label { get; }
-
-        [GtkChild]
-        public unowned AxisLimitsRow bottom_limits { get; }
-
-        [GtkChild]
-        public unowned AxisLimitsRow top_limits { get; }
-
-        [GtkChild]
-        public unowned AxisLimitsRow left_limits { get; }
-
-        [GtkChild]
-        public unowned AxisLimitsRow right_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow bottom_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow top_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow left_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow right_scale { get; }
+        public unowned AxisGroup right_axis { get; }
 
         [GtkChild]
         private unowned Adw.SwitchRow legend { get; }
@@ -64,10 +40,6 @@ namespace Graphs {
             FigureSettings figure_settings = window.data.figure_settings;
 
             figure_settings.bind_property ("title", title_entry, "text", SYNC);
-            figure_settings.bind_property ("bottom_label", bottom_label, "text", SYNC);
-            figure_settings.bind_property ("top_label", top_label, "text", SYNC);
-            figure_settings.bind_property ("left_label", left_label, "text", SYNC);
-            figure_settings.bind_property ("right_label", right_label, "text", SYNC);
 
             figure_settings.bind_property ("legend", legend, "active", SYNC);
             figure_settings.bind_property ("legend_position", legend_position, "selected", SYNC);
@@ -100,50 +72,43 @@ namespace Graphs {
         }
 
         private void handle_widgets (FigureSettings figure_settings, string direction, bool x, bool both_x, bool both_y) {
-            Adw.ComboRow scale;
-            this.get (direction + "-scale", out scale);
-            Adw.EntryRow label;
-            this.get (direction + "-label", out label);
-            AxisLimitsRow limits;
-            this.get (direction + "-limits", out limits);
+            AxisGroup axis;
+            this.get (direction + "-axis", out axis);
 
-            figure_settings.bind_property (direction + "-scale", scale, "selected", SYNC);
-            figure_settings.bind_property ("min-" + direction, limits, "min", SYNC);
-            figure_settings.bind_property ("max-" + direction, limits, "max", SYNC);
-            figure_settings.bind_property ("lock-" + direction, limits, "locked", SYNC);
-            limits.applied.connect (() => {
+            figure_settings.bind_property (direction + "-label", axis.label_row, "text", SYNC);
+            figure_settings.bind_property (direction + "-scale", axis.scale_row, "selected", SYNC);
+            figure_settings.bind_property ("min-" + direction, axis, "min", SYNC);
+            figure_settings.bind_property ("max-" + direction, axis, "max", SYNC);
+            figure_settings.bind_property ("lock-min-" + direction, axis, "min-locked", SYNC);
+            figure_settings.bind_property ("lock-max-" + direction, axis, "max-locked", SYNC);
+            axis.applied.connect (() => {
                 window.data.add_view_history_state ();
                 window.canvas.view_changed ();
             });
 
-            scale.set_visible (true);
-            label.set_visible (true);
-            limits.set_visible (true);
+            axis.set_visible (true);
 
             // Remove direction prefix if only one is present
-            if (x && !both_x) {
-                scale.set_title (_("X Axis Scale"));
-                label.set_title (_("X Axis Label"));
-                limits.set_title (_("X Axis"));
-            }
-            else if (!x && !both_y) {
-                scale.set_title (_("Y Axis Scale"));
-                label.set_title (_("Y Axis Label"));
-                limits.set_title (_("Y Axis"));
-            }
+            if (x && !both_x) axis.set_title (_("X Axis"));
+            else if (!x && !both_y) axis.set_title (_("Y Axis"));
         }
 
         public void focus_widget (string name) {
-            if (name.has_prefix ("min_") || name.has_prefix ("max_")) {
-                AxisLimitsRow limits;
-                this.get (name.substring (4) + "_limits", out limits);
-                limits.focus_limit (name.has_prefix ("max_"));
+            if (name == "title") {
+                title_entry.grab_focus ();
                 return;
             }
 
-            Gtk.Widget widget;
-            this.get (name, out widget);
-            widget.grab_focus ();
+            // Either "<direction>_label" or "<min|max>_<direction>"
+            string[] parts = name.split ("_");
+            AxisGroup axis;
+            if (parts[1] == "label") {
+                this.get (parts[0] + "_axis", out axis);
+                axis.label_row.grab_focus ();
+            } else {
+                this.get (parts[1] + "_axis", out axis);
+                (parts[0] == "max" ? axis.max_row : axis.min_row).grab_focus ();
+            }
         }
 
         [GtkCallback]

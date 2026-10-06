@@ -23,123 +23,29 @@ template $GraphsFigureSettingsPage: Adw.NavigationPage {
           spacing: 16;
 
           Adw.PreferencesGroup {
-            title: _("Labels");
-
             Adw.EntryRow title_entry {
               title: _("Title");
             }
-
-            Adw.EntryRow bottom_label {
-              visible: false;
-              title: _("Bottom X Axis Label");
-            }
-
-            Adw.EntryRow top_label {
-              visible: false;
-              title: _("Top X Axis Label");
-            }
-
-            Adw.EntryRow left_label {
-              visible: false;
-              title: _("Left Y Axis Label");
-            }
-
-            Adw.EntryRow right_label {
-              visible: false;
-              title: _("Right Y Axis Label");
-            }
           }
 
-          Adw.PreferencesGroup {
-            title: _("Axis Limits");
-
-            $GraphsAxisLimitsRow bottom_limits {
-              visible: false;
-              title: _("Bottom X Axis");
-            }
-
-            $GraphsAxisLimitsRow top_limits {
-              visible: false;
-              title: _("Top X Axis");
-            }
-
-            $GraphsAxisLimitsRow left_limits {
-              visible: false;
-              title: _("Left Y Axis");
-            }
-
-            $GraphsAxisLimitsRow right_limits {
-              visible: false;
-              title: _("Right Y Axis");
-            }
+          $GraphsAxisGroup bottom_axis {
+            visible: false;
+            title: _("Bottom X Axis");
           }
 
-          Adw.PreferencesGroup {
-            title: _("Scaling");
+          $GraphsAxisGroup top_axis {
+            visible: false;
+            title: _("Top X Axis");
+          }
 
-            Adw.ComboRow bottom_scale {
-              visible: false;
-              title: _("Bottom X Axis Scale");
+          $GraphsAxisGroup left_axis {
+            visible: false;
+            title: _("Left Y Axis");
+          }
 
-              model: StringList {
-                strings [
-                  C_("scale", "Linear"),
-                  C_("scale", "Logarithmic (Base 10)"),
-                  C_("scale", "Logarithmic (Base 2)"),
-                  C_("scale", "Radians"),
-                  C_("scale", "Square Root"),
-                  C_("scale", "Inverse"),
-                ]
-              };
-            }
-
-            Adw.ComboRow top_scale {
-              visible: false;
-              title: _("Top X Axis Scale");
-
-              model: StringList {
-                strings [
-                  C_("scale", "Linear"),
-                  C_("scale", "Logarithmic (Base 10)"),
-                  C_("scale", "Logarithmic (Base 2)"),
-                  C_("scale", "Radians"),
-                  C_("scale", "Square Root"),
-                  C_("scale", "Inverse"),
-                ]
-              };
-            }
-
-            Adw.ComboRow left_scale {
-              visible: false;
-              title: _("Left Y Axis Scale");
-
-              model: StringList {
-                strings [
-                  C_("scale", "Linear"),
-                  C_("scale", "Logarithmic (Base 10)"),
-                  C_("scale", "Logarithmic (Base 2)"),
-                  C_("scale", "Radians"),
-                  C_("scale", "Square Root"),
-                  C_("scale", "Inverse"),
-                ]
-              };
-            }
-
-            Adw.ComboRow right_scale {
-              visible: false;
-              title: _("Right Y Axis Scale");
-
-              model: StringList {
-                strings [
-                  C_("scale", "Linear"),
-                  C_("scale", "Logarithmic (Base 10)"),
-                  C_("scale", "Logarithmic (Base 2)"),
-                  C_("scale", "Radians"),
-                  C_("scale", "Square Root"),
-                  C_("scale", "Inverse"),
-                ]
-              };
-            }
+          $GraphsAxisGroup right_axis {
+            visible: false;
+            title: _("Right Y Axis");
           }
 
           Adw.PreferencesGroup {

@@ -119,24 +119,35 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 _b: self.highlight.load(self),
             )
 
-    def is_locked(self, axis, dimension: str) -> bool:
-        """Whether the x or y limits of axis are locked."""
+    def locked_limits(self, axis, dim: str) -> tuple[bool, bool]:
+        """Whether the lower and upper x or y limits of axis are locked."""
         if self._figure_settings is None:
-            return False
+            return False, False
         x, y = misc.AXES_DIRECTIONS[self.figure.axes.index(axis)]
-        direction = x if dimension == "x" else y
-        return self._figure_settings.get_property(f"lock-{direction}")
+        direction = x if dim == "x" else y
+        return (
+            self._figure_settings.get_property(f"lock-min-{direction}"),
+            self._figure_settings.get_property(f"lock-max-{direction}"),
+        )
+
+    def is_locked(self, ax, dim: str) -> bool:
+        """Whether any x or y limit of ax is locked, preventing panning."""
+        return any(self.locked_limits(ax, dim))
 
     def restore_locked_limits(self) -> None:
         """Reset all locked limits to their figure settings values."""
         settings = self._figure_settings
         for ax, (x, y) in zip(self.figure.axes, misc.AXES_DIRECTIONS):
-            for direction, set_lim in ((x, ax.set_xlim), (y, ax.set_ylim)):
-                if settings.get_property(f"lock-{direction}"):
-                    set_lim(
-                        settings.get_property(f"min-{direction}"),
-                        settings.get_property(f"max-{direction}"),
-                    )
+            for direction, get_lim, set_lim in (
+                (x, ax.get_xlim, ax.set_xlim),
+                (y, ax.get_ylim, ax.set_ylim),
+            ):
+                limits = list(get_lim())
+                for i, prefix in enumerate(("min", "max")):
+                    name = f"{prefix}-{direction}"
+                    if settings.get_property(f"lock-{name}"):
+                        limits[i] = settings.get_property(name)
+                set_lim(limits)
 
     def _make_ticklabels_pickable(self) -> None:
         """Make all tick labels pickable."""
@@ -333,33 +344,40 @@ class Canvas(Graphs.Canvas, FigureCanvas):
             return
 
         for ax in [self.figure.axis, self.figure.top_left_axis]:
-            if self.is_locked(ax, "x"):
-                continue
-            ax.set_xlim(
-                self._calculate_zoomed_values(
-                    self._xfrac,
-                    Graphs.scale_from_string(ax.get_xscale()),
-                    ax.get_xlim(),
-                    scaling,
-                ),
-            )
+            self._zoom_axis(ax, "x", self._xfrac, scaling)
         for ax in [
             self.figure.axis,
             self.figure.right_axis,
             self.figure.top_right_axis,
         ]:
-            if self.is_locked(ax, "y"):
-                continue
-            ax.set_ylim(
-                self._calculate_zoomed_values(
-                    self._yfrac,
-                    Graphs.scale_from_string(ax.get_yscale()),
-                    ax.get_ylim(),
-                    scaling,
-                ),
-            )
+            self._zoom_axis(ax, "y", self._yfrac, scaling)
 
         self.queue_draw()
+
+    def _zoom_axis(self, ax, dim: str, fraction: float, scaling: float):
+        """Zoom the x or y axis, keeping locked limits in place."""
+        min_locked, max_locked = self.locked_limits(ax, dim)
+        if min_locked and max_locked:
+            return
+        # Zoom towards a locked limit
+        if min_locked or max_locked:
+            fraction = 0 if min_locked else 1
+
+        if dim == "x":
+            get_lim, set_lim, scale = ax.get_xlim, ax.set_xlim, ax.get_xscale()
+        else:
+            get_lim, set_lim, scale = ax.get_ylim, ax.set_ylim, ax.get_yscale()
+        current = get_lim()
+        new_min, new_max = self._calculate_zoomed_values(
+            fraction,
+            Graphs.scale_from_string(scale),
+            current,
+            scaling,
+        )
+        set_lim(
+            current[0] if min_locked else new_min,
+            current[1] if max_locked else new_max,
+        )
 
     @staticmethod
     def _calculate_pan_values(
