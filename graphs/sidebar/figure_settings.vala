@@ -75,12 +75,7 @@ namespace Graphs {
             AxisGroup axis;
             this.get (direction + "-axis", out axis);
 
-            figure_settings.bind_property (direction + "-label", axis.label_row, "text", SYNC);
-            figure_settings.bind_property (direction + "-scale", axis.scale_row, "selected", SYNC);
-            figure_settings.bind_property ("min-" + direction, axis, "min", SYNC);
-            figure_settings.bind_property ("max-" + direction, axis, "max", SYNC);
-            figure_settings.bind_property ("lock-min-" + direction, axis, "min-locked", SYNC);
-            figure_settings.bind_property ("lock-max-" + direction, axis, "max-locked", SYNC);
+            axis.bind (figure_settings, direction);
             axis.applied.connect (() => {
                 window.data.add_view_history_state ();
                 window.canvas.view_changed ();
@@ -101,14 +96,10 @@ namespace Graphs {
 
             // Either "<direction>_label" or "<min|max>_<direction>"
             string[] parts = name.split ("_");
+            bool label = parts[1] == "label";
             AxisGroup axis;
-            if (parts[1] == "label") {
-                this.get (parts[0] + "_axis", out axis);
-                axis.label_row.grab_focus ();
-            } else {
-                this.get (parts[1] + "_axis", out axis);
-                (parts[0] == "max" ? axis.max_row : axis.min_row).grab_focus ();
-            }
+            this.get ((label ? parts[0] : parts[1]) + "_axis", out axis);
+            axis.focus_row (label ? "label" : parts[0]);
         }
 
         [GtkCallback]

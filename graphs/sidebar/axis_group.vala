@@ -4,16 +4,16 @@ namespace Graphs {
     public class AxisGroup : Adw.PreferencesGroup {
 
         [GtkChild]
-        public unowned Adw.EntryRow label_row { get; }
+        private unowned Adw.EntryRow label_row { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow min_row { get; }
+        private unowned Adw.EntryRow min_row { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow max_row { get; }
+        private unowned Adw.EntryRow max_row { get; }
 
         [GtkChild]
-        public unowned Adw.ComboRow scale_row { get; }
+        private unowned Adw.ComboRow scale_row { get; }
 
         public double min { get; set; }
         public double max { get; set; }
@@ -25,6 +25,19 @@ namespace Graphs {
         construct {
             bind_property ("min", min_row, "text", BindingFlags.SYNC_CREATE, prettyprint_transform);
             bind_property ("max", max_row, "text", BindingFlags.SYNC_CREATE, prettyprint_transform);
+        }
+
+        public void bind (FigureSettings figure_settings, string direction) {
+            figure_settings.bind_property (direction + "-label", label_row, "text", SYNC);
+            figure_settings.bind_property (direction + "-scale", scale_row, "selected", SYNC);
+            figure_settings.bind_property ("min-" + direction, this, "min", SYNC);
+            figure_settings.bind_property ("max-" + direction, this, "max", SYNC);
+            figure_settings.bind_property ("lock-min-" + direction, this, "min-locked", SYNC);
+            figure_settings.bind_property ("lock-max-" + direction, this, "max-locked", SYNC);
+        }
+
+        public void focus_row (string name) {
+            (name == "label" ? label_row : name == "min" ? min_row : max_row).grab_focus ();
         }
 
         private static bool prettyprint_transform (Binding binding, Value source, ref Value target) {
