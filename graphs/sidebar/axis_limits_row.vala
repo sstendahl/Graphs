@@ -54,6 +54,12 @@ namespace Graphs {
         }
 
         [GtkCallback]
+        private void on_focus_changed (Object object, ParamSpec spec) {
+            var text = (Gtk.Text) object;
+            if (!text.has_focus) apply (text);
+        }
+
+        [GtkCallback]
         private void on_text_changed (Object object, ParamSpec spec) {
             var text = (Gtk.Text) object;
             if (try_evaluate_string (text.text)) {

@@ -22,6 +22,7 @@ template $GraphsAxisLimitsRow: Adw.ActionRow {
 
     Text min_text {
       activate => $on_activate();
+      notify::has-focus => $on_focus_changed();
       notify::text => $on_text_changed();
       accessible-role: text_box;
     }
@@ -43,6 +44,7 @@ template $GraphsAxisLimitsRow: Adw.ActionRow {
 
     Text max_text {
       activate => $on_activate();
+      notify::has-focus => $on_focus_changed();
       notify::text => $on_text_changed();
       accessible-role: text_box;
     }
