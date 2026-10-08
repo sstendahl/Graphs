@@ -1,0 +1,63 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsAxisGroup: Adw.PreferencesGroup {
+  Adw.EntryRow label_row {
+    title: _("Label");
+  }
+
+  Adw.EntryRow min_row {
+    title: _("Minimum");
+    show-apply-button: true;
+    apply => $on_apply();
+    notify::text => $on_text_changed();
+
+    [suffix]
+    ToggleButton {
+      valign: center;
+      icon-name: "padlock-open-symbolic";
+      tooltip-text: _("Lock Limit");
+      active: bind template.min-locked bidirectional;
+      notify::active => $on_lock_toggled();
+
+      styles [
+        "flat",
+      ]
+    }
+  }
+
+  Adw.EntryRow max_row {
+    title: _("Maximum");
+    show-apply-button: true;
+    apply => $on_apply();
+    notify::text => $on_text_changed();
+
+    [suffix]
+    ToggleButton {
+      valign: center;
+      icon-name: "padlock-open-symbolic";
+      tooltip-text: _("Lock Limit");
+      active: bind template.max-locked bidirectional;
+      notify::active => $on_lock_toggled();
+
+      styles [
+        "flat",
+      ]
+    }
+  }
+
+  Adw.ComboRow scale_row {
+    title: _("Scale");
+
+    model: StringList {
+      strings [
+        C_("scale", "Linear"),
+        C_("scale", "Logarithmic (Base 10)"),
+        C_("scale", "Logarithmic (Base 2)"),
+        C_("scale", "Radians"),
+        C_("scale", "Square Root"),
+        C_("scale", "Inverse"),
+      ]
+    };
+  }
+}
