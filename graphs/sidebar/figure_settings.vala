@@ -9,64 +9,16 @@ namespace Graphs {
         private unowned Adw.EntryRow title_entry { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow bottom_label { get; }
+        public unowned AxisGroup bottom_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow top_label { get; }
+        public unowned AxisGroup top_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow left_label { get; }
+        public unowned AxisGroup left_axis { get; }
 
         [GtkChild]
-        public unowned Adw.EntryRow right_label { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box bottom_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_bottom { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_bottom { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box top_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_top { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_top { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box left_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_left { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_left { get; }
-
-        [GtkChild]
-        public unowned Gtk.Box right_limits { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow min_right { get; }
-
-        [GtkChild]
-        public unowned Adw.EntryRow max_right { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow bottom_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow top_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow left_scale { get; }
-
-        [GtkChild]
-        public unowned Adw.ComboRow right_scale { get; }
+        public unowned AxisGroup right_axis { get; }
 
         [GtkChild]
         private unowned Adw.SwitchRow legend { get; }
@@ -88,10 +40,6 @@ namespace Graphs {
             FigureSettings figure_settings = window.data.figure_settings;
 
             figure_settings.bind_property ("title", title_entry, "text", SYNC);
-            figure_settings.bind_property ("bottom_label", bottom_label, "text", SYNC);
-            figure_settings.bind_property ("top_label", top_label, "text", SYNC);
-            figure_settings.bind_property ("left_label", left_label, "text", SYNC);
-            figure_settings.bind_property ("right_label", right_label, "text", SYNC);
 
             figure_settings.bind_property ("legend", legend, "active", SYNC);
             figure_settings.bind_property ("legend_position", legend_position, "selected", SYNC);
@@ -124,88 +72,34 @@ namespace Graphs {
         }
 
         private void handle_widgets (FigureSettings figure_settings, string direction, bool x, bool both_x, bool both_y) {
-            Adw.EntryRow entry;
-            string prop;
+            AxisGroup axis;
+            this.get (direction + "-axis", out axis);
 
-            prop = "min-" + direction;
-            this.get (prop, out entry);
-            bind_entry (entry, figure_settings, prop);
-            // Remove direction prefix if only one is present
-            if (x && !both_x) entry.set_title (_("X Axis Minimum"));
-            else if (!x && !both_y) entry.set_title (_("Y Axis Minimum"));
-
-            prop = "max-" + direction;
-            this.get (prop, out entry);
-            bind_entry (entry, figure_settings, prop);
-            // Remove direction prefix if only one is present
-            if (x && !both_x) entry.set_title (_("X Axis Maximum"));
-            else if (!x && !both_y) entry.set_title (_("Y Axis Maximum"));
-
-            Adw.ComboRow scale;
-            prop = direction + "-scale";
-            this.get (prop, out scale);
-            Adw.EntryRow label;
-            this.get (direction + "-label", out label);
-            Gtk.Box limits;
-            this.get (direction + "-limits", out limits);
-
-            figure_settings.bind_property (prop, scale, "selected", SYNC);
-
-            scale.set_visible (true);
-            label.set_visible (true);
-            limits.set_visible (true);
-
-            // Remove direction prefix if only one is present
-            if (x && !both_x) {
-                scale.set_title (_("X Axis Scale"));
-                label.set_title (_("X Axis Label"));
-            }
-            else if (!x && !both_y) {
-                scale.set_title (_("Y Axis Scale"));
-                label.set_title (_("Y Axis Label"));
-            }
-        }
-
-        private void bind_entry (Adw.EntryRow entry, FigureSettings figure_settings, string prop) {
-            figure_settings.bind_property (
-                prop, entry, "text", BindingFlags.SYNC_CREATE, prettyprint_transform
-            );
-
-            entry.apply.connect (() => {
-                double new_val;
-                try_evaluate_string (entry.get_text (), out new_val);
-
-                figure_settings.set (prop, new_val);
+            axis.bind (figure_settings, direction);
+            axis.applied.connect (() => {
                 window.data.add_view_history_state ();
                 window.canvas.view_changed ();
-
-                // workaround button not disappearing when pressed
-                entry.set_show_apply_button (false);
-                entry.set_show_apply_button (true);
             });
+
+            axis.set_visible (true);
+
+            // Remove direction prefix if only one is present
+            if (x && !both_x) axis.set_title (_("X Axis"));
+            else if (!x && !both_y) axis.set_title (_("Y Axis"));
         }
 
         public void focus_widget (string name) {
-            Gtk.Widget widget;
-            this.get (name, out widget);
-            widget.grab_focus ();
-        }
-
-        private static bool prettyprint_transform (Binding binding, Value source, ref Value target) {
-            target.set_string (MathTools.prettyprint_double (source.get_double ()));
-            return true;
-        }
-
-        [GtkCallback]
-        private void on_limit_entry_change (Object object, ParamSpec spec) {
-            var entry = (Adw.EntryRow) object;
-            if (try_evaluate_string (entry.get_text ())) {
-                entry.remove_css_class ("error");
-                entry.set_show_apply_button (true);
-            } else {
-                entry.add_css_class ("error");
-                entry.set_show_apply_button (false);
+            if (name == "title") {
+                title_entry.grab_focus ();
+                return;
             }
+
+            // Either "<direction>_label" or "<min|max>_<direction>"
+            string[] parts = name.split ("_");
+            bool label = parts[1] == "label";
+            AxisGroup axis;
+            this.get ((label ? parts[0] : parts[1]) + "_axis", out axis);
+            axis.focus_row (label ? "label" : parts[0]);
         }
 
         [GtkCallback]
