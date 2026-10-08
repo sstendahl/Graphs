@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-14 13:22+0000\n"
-"PO-Revision-Date: 2026-08-14 15:41+0200\n"
+"POT-Creation-Date: 2026-10-08 07:31+0000\n"
+"PO-Revision-Date: 2026-10-08 22:35+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -255,7 +255,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:287
+#: graphs/item/equation_item.vala:24
 msgid "Equation"
 msgstr "Enačba"
 
@@ -465,7 +465,7 @@ msgstr "Ponastavi na ugibane vrednosti"
 msgid "Import Mode"
 msgstr "Način uvoza"
 
-#: data/ui/import/dialog.blp:118 data/ui/sidebar/figure-settings/settings-page.blp:265
+#: data/ui/import/dialog.blp:118 data/ui/sidebar/figure-settings/settings-page.blp:102
 msgid "Set as Default"
 msgstr "Nastavi kot privzeto"
 
@@ -735,44 +735,32 @@ msgstr "Prilagodi velikost"
 msgid "How points are spaced"
 msgstr "Kako so točke razmaknjene"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/figure-settings/settings-page.blp:155
-#: data/ui/sidebar/figure-settings/settings-page.blp:171 data/ui/sidebar/figure-settings/settings-page.blp:187
-#: data/ui/sidebar/figure-settings/settings-page.blp:203 data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/sidebar/figure-settings/settings-page.blp:156
-#: data/ui/sidebar/figure-settings/settings-page.blp:172 data/ui/sidebar/figure-settings/settings-page.blp:188
-#: data/ui/sidebar/figure-settings/settings-page.blp:204 data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "logaritemska (osnova 10)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/sidebar/figure-settings/settings-page.blp:157
-#: data/ui/sidebar/figure-settings/settings-page.blp:173 data/ui/sidebar/figure-settings/settings-page.blp:189
-#: data/ui/sidebar/figure-settings/settings-page.blp:205 data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "logaritemska (osnova 2)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/sidebar/figure-settings/settings-page.blp:158
-#: data/ui/sidebar/figure-settings/settings-page.blp:174 data/ui/sidebar/figure-settings/settings-page.blp:190
-#: data/ui/sidebar/figure-settings/settings-page.blp:206 data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/sidebar/figure-settings/settings-page.blp:159
-#: data/ui/sidebar/figure-settings/settings-page.blp:175 data/ui/sidebar/figure-settings/settings-page.blp:191
-#: data/ui/sidebar/figure-settings/settings-page.blp:207 data/ui/generate-data.blp:109
+#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/sidebar/figure-settings/settings-page.blp:160
-#: data/ui/sidebar/figure-settings/settings-page.blp:176 data/ui/sidebar/figure-settings/settings-page.blp:192
-#: data/ui/sidebar/figure-settings/settings-page.blp:208 data/ui/generate-data.blp:110
+#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
@@ -785,153 +773,93 @@ msgstr "Uredi element"
 msgid "Figure Settings"
 msgstr "Nastavitve slike"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:26
-msgid "Labels"
-msgstr "Oznake"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/window.vala:325
+#: data/ui/sidebar/figure-settings/settings-page.blp:27 graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "Naziv"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:34
-msgid "Bottom X Axis Label"
-msgstr "Oznaka spodnje osi X"
+#: data/ui/sidebar/figure-settings/settings-page.blp:33
+msgid "Bottom X Axis"
+msgstr "Spodnja os X"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:39
-msgid "Top X Axis Label"
-msgstr "Oznaka vrhnje osi X"
+#: data/ui/sidebar/figure-settings/settings-page.blp:38
+msgid "Top X Axis"
+msgstr "Vrhnja os X"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:44
-msgid "Left Y Axis Label"
-msgstr "Oznaka osi Y na desni"
+#: data/ui/sidebar/figure-settings/settings-page.blp:43
+msgid "Left Y Axis"
+msgstr "Leva os Y"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:49
-msgid "Right Y Axis Label"
-msgstr "Oznaka osi Y na desni"
+#: data/ui/sidebar/figure-settings/settings-page.blp:48
+msgid "Right Y Axis"
+msgstr "Desna os Y"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:54
-msgid "Axis Limits"
-msgstr "Omejitve osi"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:68
-msgid "Bottom X Axis Minimum"
-msgstr "Najmanjše spodnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:75
-msgid "Bottom X Axis Maximum"
-msgstr "Največje spodnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:89
-msgid "Top X Axis Minimum"
-msgstr "Najmanjše vrhnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:96
-msgid "Top X Axis Maximum"
-msgstr "Največje vrhnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:110
-msgid "Left Y Axis Minimum"
-msgstr "Najmanjše leve osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:117
-msgid "Left Y Axis Maximum"
-msgstr "Največja leve osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:131
-msgid "Right Y Axis Minimum"
-msgstr "Najmanjše desne osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:138
-msgid "Right Y Axis Maximum"
-msgstr "Največje desne osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:147
-msgid "Scaling"
-msgstr "Spreminjanje merila"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:151
-msgid "Bottom X Axis Scale"
-msgstr "Merilo spodnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:167
-msgid "Top X Axis Scale"
-msgstr "Merilo vrhnje osi X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:183
-msgid "Left Y Axis Scale"
-msgstr "Merilo leve osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:199
-msgid "Right Y Axis Scale"
-msgstr "Merilo desne osi Y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:215
+#: data/ui/sidebar/figure-settings/settings-page.blp:52
 msgid "Appearance"
 msgstr "Videz"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:218
+#: data/ui/sidebar/figure-settings/settings-page.blp:55
 msgid "Show Legend"
 msgstr "Pokaži legendo"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:222
+#: data/ui/sidebar/figure-settings/settings-page.blp:59
 msgid "Legend Position"
 msgstr "Položaj legende"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:227
+#: data/ui/sidebar/figure-settings/settings-page.blp:64
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Samodejno"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:228
+#: data/ui/sidebar/figure-settings/settings-page.blp:65
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "desno zgoraj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:229
+#: data/ui/sidebar/figure-settings/settings-page.blp:66
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "levo zgoraj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:230
+#: data/ui/sidebar/figure-settings/settings-page.blp:67
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "levo spodaj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:231
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "desno spodaj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:232
+#: data/ui/sidebar/figure-settings/settings-page.blp:69
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Levo na sredini"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:233
+#: data/ui/sidebar/figure-settings/settings-page.blp:70
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Desno na sredini"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:234
+#: data/ui/sidebar/figure-settings/settings-page.blp:71
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "na sredini spodaj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:235
+#: data/ui/sidebar/figure-settings/settings-page.blp:72
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "na sredini zgoraj"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:236
+#: data/ui/sidebar/figure-settings/settings-page.blp:73
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Sredina"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:242
+#: data/ui/sidebar/figure-settings/settings-page.blp:79
 msgid "Hide Unselected Items"
 msgstr "Skrij neizbrane elemente"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5
+#: data/ui/sidebar/figure-settings/settings-page.blp:83 data/ui/sidebar/figure-settings/style-page.blp:5
 #: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "Slog"
@@ -2006,17 +1934,17 @@ msgstr "Ni mogoče uvoziti podatkov iz tabele »%s«, številskih stolpcev ni mo
 msgid "No data found in table column"
 msgstr "V stolpcu tabele ni podatkov"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:26
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:69
+#: graphs/file_import/parsers/xrdml/__init__.py:70
 msgid "Intensity (cps)"
 msgstr "Intenzivnost (cps)"
 
@@ -2054,53 +1982,55 @@ msgstr "Razčlenjevalniku ni uspelo inicializirati gradnikov za nastavitve."
 msgid "Defaults updated"
 msgstr "Privzete nastavitve so posodobljene"
 
-#: graphs/file_import/file_import.vala:77
+#: graphs/file_import/file_import.vala:96
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Vse podprte datoteke"
 
 #. columns
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:100
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Datoteke ASCII"
 
+#: graphs/item/data_item.vala:73
+msgid "Dataset"
+msgstr "Nabor podatkov"
+
+#: graphs/item/fill_item.vala:79
+msgid "Positive Infinity"
+msgstr "Pozitivna neskončnost"
+
+#: graphs/item/fill_item.vala:80
+msgid "Negative Infinity"
+msgstr "Negativna neskončnost"
+
+#: graphs/item/fill_item.vala:81
+msgid "Custom Equation…"
+msgstr "Enačba po meri ..."
+
+#: graphs/item/fill_item.vala:134
+msgid "Fill"
+msgstr "Polnilo"
+
+#: graphs/item/generated_data_item.vala:25
+msgid "Generated Dataset"
+msgstr "Ustvarjen nabor podatkov"
+
+#: graphs/item/text_item.vala:11
+msgid "Label"
+msgstr "Oznaka"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:134
-msgid "X Axis Minimum"
-msgstr "Najmanjša vrednost na osi X"
+#: graphs/sidebar/figure_settings.vala:87
+msgid "X Axis"
+msgstr "Os X"
 
-#: graphs/sidebar/figure_settings.vala:135
-msgid "Y Axis Minimum"
-msgstr "Najmanjša vrednost na osi Y"
+#: graphs/sidebar/figure_settings.vala:88
+msgid "Y Axis"
+msgstr "Os Y"
 
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:141
-msgid "X Axis Maximum"
-msgstr "Največja vrednost na osi X"
-
-#: graphs/sidebar/figure_settings.vala:142
-msgid "Y Axis Maximum"
-msgstr "Največja vrednost na osi Y"
-
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:160
-msgid "X Axis Scale"
-msgstr "Merilo osi X"
-
-#: graphs/sidebar/figure_settings.vala:161
-msgid "X Axis Label"
-msgstr "Oznaka osi X"
-
-#: graphs/sidebar/figure_settings.vala:164
-msgid "Y Axis Scale"
-msgstr "Merilo osi Y"
-
-#: graphs/sidebar/figure_settings.vala:165
-msgid "Y Axis Label"
-msgstr "Oznaka osi Y"
-
-#: graphs/sidebar/figure_settings.vala:245
+#: graphs/sidebar/figure_settings.vala:139
 msgid "Defaults Updated"
 msgstr "Privzete nastavitve so posodobljene"
 
@@ -2153,10 +2083,6 @@ msgstr "Novo okno"
 #: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[DATOTEKA ...]"
-
-#: graphs/curve_fitting.py:97
-msgid "Residuals"
-msgstr "Ostanki"
 
 #: graphs/curve_fitting.vala:81
 msgid ""
@@ -2214,28 +2140,32 @@ msgstr ""
 "Napaka pasu zaupanja: \n"
 "matrika kovariance ni stabilna."
 
-#: graphs/curve_fitting.vala:261
+#: graphs/curve_fitting.vala:265
+msgid "Residuals"
+msgstr "Ostanki"
+
+#: graphs/curve_fitting.vala:376
 msgid "Parameters"
 msgstr "Parametri"
 
-#: graphs/curve_fitting.vala:277
+#: graphs/curve_fitting.vala:392
 msgid "Statistics"
 msgstr "Statistika"
 
-#: graphs/curve_fitting.vala:280
+#: graphs/curve_fitting.vala:395
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:280
+#: graphs/curve_fitting.vala:395
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:462
+#: graphs/curve_fitting.vala:577
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:379
+#: graphs/data.py:347
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -2244,7 +2174,7 @@ msgstr "Nalaganje projekta ni uspelo"
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "Ni bilo mogoče razčleniti sloga %s; povrnitev na privzeti sistemski slog"
 
-#: graphs/data.vala:842
+#: graphs/data.vala:907
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "Ni bilo mogoče najti sloga %s; povrnitev na privzeti sistemski slog"
@@ -2262,87 +2192,59 @@ msgstr "Izvožena slika"
 msgid "No data to export"
 msgstr "Ni podatkov za izvoz"
 
-#: graphs/export_items.vala:20 graphs/export_items.vala:36
+#: graphs/export_items.vala:25 graphs/export_items.vala:41
 msgid "Exported Data"
 msgstr "Izvoženi podatki"
 
-#: graphs/export_items.vala:29
+#: graphs/export_items.vala:34
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
-
-#: graphs/item.vala:201
-msgid "Dataset"
-msgstr "Nabor podatkov"
-
-#: graphs/item.vala:247
-msgid "Generated Dataset"
-msgstr "Ustvarjen nabor podatkov"
-
-#: graphs/item.vala:303
-msgid "Label"
-msgstr "Oznaka"
-
-#: graphs/item.vala:383
-msgid "Positive Infinity"
-msgstr "Pozitivna neskončnost"
-
-#: graphs/item.vala:384
-msgid "Negative Infinity"
-msgstr "Negativna neskončnost"
-
-#: graphs/item.vala:385
-msgid "Custom Equation…"
-msgstr "Enačba po meri ..."
-
-#: graphs/item.vala:438
-msgid "Fill"
-msgstr "Polnilo"
 
 #: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
 
-#: graphs/operations.py:124
+#: graphs/operations.py:125
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:184
+#: graphs/operations.py:187
 msgid "No data found in highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:188
+#: graphs/operations.py:191
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Nekateri elementi so brez stolpcev napake; ti bodo opuščeni"
 
-#: graphs/operations.py:200
+#: graphs/operations.py:203
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:332
+#: graphs/operations.py:345
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:338
+#: graphs/operations.py:351
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:492 graphs/operations.py:496
+#: graphs/operations.py:529 graphs/operations.py:533
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:505
+#: graphs/operations.py:542
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:508
+#: graphs/operations.py:545
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:516
+#: graphs/operations.py:552
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -2354,19 +2256,19 @@ msgstr "V datoteki projekta manjkajo podatki"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
 
-#: graphs/project.py:314
+#: graphs/project.py:313
 msgid "Failed to do legacy migration"
 msgstr "Migracija opuščenega je spodletela"
 
-#: graphs/project.py:316
+#: graphs/project.py:315
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/project.py:322
+#: graphs/project.py:321
 msgid "Failed to migrate project"
 msgstr "Migriranje projekta ni uspelo"
 
-#: graphs/project.py:328
+#: graphs/project.py:327
 msgid "Failed to validate project"
 msgstr "Preverjanje projekta ni uspelo"
 
