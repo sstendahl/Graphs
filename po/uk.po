@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-14 13:22+0000\n"
-"PO-Revision-Date: 2026-08-14 18:48+0300\n"
+"POT-Creation-Date: 2026-10-08 07:31+0000\n"
+"PO-Revision-Date: 2026-10-09 19:32+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -308,7 +308,7 @@ msgstr "Імпортувати лише значення Y, значення X �
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:287
+#: graphs/item/equation_item.vala:24
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -532,7 +532,7 @@ msgid "Import Mode"
 msgstr "Режим імпортування"
 
 #: data/ui/import/dialog.blp:118
-#: data/ui/sidebar/figure-settings/settings-page.blp:265
+#: data/ui/sidebar/figure-settings/settings-page.blp:102
 msgid "Set as Default"
 msgstr "Зробити типовим"
 
@@ -844,60 +844,36 @@ msgid "How points are spaced"
 msgstr "Як буде встановлено інтервал між точками"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
-#: data/ui/sidebar/figure-settings/settings-page.blp:155
-#: data/ui/sidebar/figure-settings/settings-page.blp:171
-#: data/ui/sidebar/figure-settings/settings-page.blp:187
-#: data/ui/sidebar/figure-settings/settings-page.blp:203
 #: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Лінійна"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:54
-#: data/ui/sidebar/figure-settings/settings-page.blp:156
-#: data/ui/sidebar/figure-settings/settings-page.blp:172
-#: data/ui/sidebar/figure-settings/settings-page.blp:188
-#: data/ui/sidebar/figure-settings/settings-page.blp:204
 #: data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Логарифмічна (з основою 10)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:55
-#: data/ui/sidebar/figure-settings/settings-page.blp:157
-#: data/ui/sidebar/figure-settings/settings-page.blp:173
-#: data/ui/sidebar/figure-settings/settings-page.blp:189
-#: data/ui/sidebar/figure-settings/settings-page.blp:205
 #: data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Логарифмічна (з основою 2)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:56
-#: data/ui/sidebar/figure-settings/settings-page.blp:158
-#: data/ui/sidebar/figure-settings/settings-page.blp:174
-#: data/ui/sidebar/figure-settings/settings-page.blp:190
-#: data/ui/sidebar/figure-settings/settings-page.blp:206
 #: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радіани"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:57
-#: data/ui/sidebar/figure-settings/settings-page.blp:159
-#: data/ui/sidebar/figure-settings/settings-page.blp:175
-#: data/ui/sidebar/figure-settings/settings-page.blp:191
-#: data/ui/sidebar/figure-settings/settings-page.blp:207
 #: data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Квадратний корінь"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:58
-#: data/ui/sidebar/figure-settings/settings-page.blp:160
-#: data/ui/sidebar/figure-settings/settings-page.blp:176
-#: data/ui/sidebar/figure-settings/settings-page.blp:192
-#: data/ui/sidebar/figure-settings/settings-page.blp:208
 #: data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
@@ -912,154 +888,98 @@ msgstr "Змінити запис"
 msgid "Figure Settings"
 msgstr "Параметри рисунка"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:26
-msgid "Labels"
-msgstr "Мітки"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:29
+#: data/ui/sidebar/figure-settings/settings-page.blp:27
 #: graphs/style_editor/window.vala:325
 msgid "Title"
 msgstr "Заголовок"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:34
-msgid "Bottom X Axis Label"
-msgstr "Мітка нижньої вісі x"
+#: data/ui/sidebar/figure-settings/settings-page.blp:33
+#| msgid "Bottom X Axis Label"
+msgid "Bottom X Axis"
+msgstr "Нижня вісь X"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:39
-msgid "Top X Axis Label"
-msgstr "Мітка верхньої вісі x"
+#: data/ui/sidebar/figure-settings/settings-page.blp:38
+#| msgid "Top X Axis Label"
+msgid "Top X Axis"
+msgstr "Верхня вісь X"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:44
-msgid "Left Y Axis Label"
-msgstr "Мітка лівої вісі y"
+#: data/ui/sidebar/figure-settings/settings-page.blp:43
+#| msgid "Left Y Axis Label"
+msgid "Left Y Axis"
+msgstr "Ліва вісь Y"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:49
-msgid "Right Y Axis Label"
-msgstr "Мітка правої вісі y"
+#: data/ui/sidebar/figure-settings/settings-page.blp:48
+#| msgid "Right Y Axis Label"
+msgid "Right Y Axis"
+msgstr "Права вісь Y"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:54
-msgid "Axis Limits"
-msgstr "Межі вісі"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:68
-msgid "Bottom X Axis Minimum"
-msgstr "Мінімум на нижній вісі x"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:75
-msgid "Bottom X Axis Maximum"
-msgstr "Максимум на нижній вісі x"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:89
-msgid "Top X Axis Minimum"
-msgstr "Мінімум на верхній вісі x"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:96
-msgid "Top X Axis Maximum"
-msgstr "Максимум на верхній вісі x"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:110
-msgid "Left Y Axis Minimum"
-msgstr "Мінімум на лівій вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:117
-msgid "Left Y Axis Maximum"
-msgstr "Максимум на лівій вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:131
-msgid "Right Y Axis Minimum"
-msgstr "Мінімум на правій вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:138
-msgid "Right Y Axis Maximum"
-msgstr "Максимум на правій вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:147
-msgid "Scaling"
-msgstr "Масштабування"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:151
-msgid "Bottom X Axis Scale"
-msgstr "Шкала нижньої вісі X"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:167
-msgid "Top X Axis Scale"
-msgstr "Шкала верхньої вісі x"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:183
-msgid "Left Y Axis Scale"
-msgstr "Шкала лівої вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:199
-msgid "Right Y Axis Scale"
-msgstr "Шкала правої вісі y"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:215
+#: data/ui/sidebar/figure-settings/settings-page.blp:52
 msgid "Appearance"
 msgstr "Вигляд"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:218
+#: data/ui/sidebar/figure-settings/settings-page.blp:55
 msgid "Show Legend"
 msgstr "Показ умовних позначень"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:222
+#: data/ui/sidebar/figure-settings/settings-page.blp:59
 msgid "Legend Position"
 msgstr "Розташування панелі умовних позначень"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:227
+#: data/ui/sidebar/figure-settings/settings-page.blp:64
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Авто"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:228
+#: data/ui/sidebar/figure-settings/settings-page.blp:65
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Вгорі праворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:229
+#: data/ui/sidebar/figure-settings/settings-page.blp:66
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Вгорі ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:230
+#: data/ui/sidebar/figure-settings/settings-page.blp:67
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Знизу ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:231
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Знизу праворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:232
+#: data/ui/sidebar/figure-settings/settings-page.blp:69
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "За центром ліворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:233
+#: data/ui/sidebar/figure-settings/settings-page.blp:70
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "За центром праворуч"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:234
+#: data/ui/sidebar/figure-settings/settings-page.blp:71
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "За центром внизу"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:235
+#: data/ui/sidebar/figure-settings/settings-page.blp:72
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "За центром вгорі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:236
+#: data/ui/sidebar/figure-settings/settings-page.blp:73
 msgctxt "legend-position"
 msgid "Center"
 msgstr "За центром"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:242
+#: data/ui/sidebar/figure-settings/settings-page.blp:79
 msgid "Hide Unselected Items"
 msgstr "Приховати непозначені елементи"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246
+#: data/ui/sidebar/figure-settings/settings-page.blp:83
 #: data/ui/sidebar/figure-settings/style-page.blp:5
 #: graphs/style_editor/window.vala:81
 msgid "Style"
@@ -1154,7 +1074,6 @@ msgid "Add Equation…"
 msgstr "Додати рівняння…"
 
 #: data/ui/sidebar/main.blp:154
-#| msgid "Add File"
 msgid "Add Fill…"
 msgstr "Додати заповнення…"
 
@@ -2153,17 +2072,17 @@ msgstr ""
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:26
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:69
+#: graphs/file_import/parsers/xrdml/__init__.py:70
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
@@ -2202,53 +2121,57 @@ msgstr "обробнику не вдалося ініціалізувати ві
 msgid "Defaults updated"
 msgstr "Оновлено типові значення"
 
-#: graphs/file_import/file_import.vala:77
+#: graphs/file_import/file_import.vala:96
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "підтримувані файли"
 
 #. columns
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:100
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
+#: graphs/item/data_item.vala:73
+msgid "Dataset"
+msgstr "Набір даних"
+
+#: graphs/item/fill_item.vala:79
+msgid "Positive Infinity"
+msgstr "Додатна нескінченність"
+
+#: graphs/item/fill_item.vala:80
+msgid "Negative Infinity"
+msgstr "Від'ємна нескінченність"
+
+#: graphs/item/fill_item.vala:81
+msgid "Custom Equation…"
+msgstr "Нетипове рівняння…"
+
+#: graphs/item/fill_item.vala:134
+msgid "Fill"
+msgstr "Заповнення"
+
+#: graphs/item/generated_data_item.vala:25
+msgid "Generated Dataset"
+msgstr "Створений набір даних"
+
+#: graphs/item/text_item.vala:11
+msgid "Label"
+msgstr "Мітка"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:134
-msgid "X Axis Minimum"
-msgstr "Мінімум на вісі x"
+#: graphs/sidebar/figure_settings.vala:87
+#| msgid "X Axis Scale"
+msgid "X Axis"
+msgstr "Вісь X"
 
-#: graphs/sidebar/figure_settings.vala:135
-msgid "Y Axis Minimum"
-msgstr "Мінімум на вісі y"
+#: graphs/sidebar/figure_settings.vala:88
+#| msgid "Y Axis Scale"
+msgid "Y Axis"
+msgstr "Вісь Y"
 
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:141
-msgid "X Axis Maximum"
-msgstr "Максимум на вісі x"
-
-#: graphs/sidebar/figure_settings.vala:142
-msgid "Y Axis Maximum"
-msgstr "Максимум на вісі y"
-
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:160
-msgid "X Axis Scale"
-msgstr "Шкала вісі X"
-
-#: graphs/sidebar/figure_settings.vala:161
-msgid "X Axis Label"
-msgstr "Мітка вісі x"
-
-#: graphs/sidebar/figure_settings.vala:164
-msgid "Y Axis Scale"
-msgstr "Шкала вісі y"
-
-#: graphs/sidebar/figure_settings.vala:165
-msgid "Y Axis Label"
-msgstr "Мітка вісі y"
-
-#: graphs/sidebar/figure_settings.vala:245
+#: graphs/sidebar/figure_settings.vala:139
 msgid "Defaults Updated"
 msgstr "Оновлено типові значення"
 
@@ -2301,10 +2224,6 @@ msgstr "Нове вікно"
 #: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[ФАЙЛ…]"
-
-#: graphs/curve_fitting.py:97
-msgid "Residuals"
-msgstr "Лишки"
 
 #: graphs/curve_fitting.vala:81
 msgid ""
@@ -2362,28 +2281,32 @@ msgstr ""
 "Похибка довірчої смуги: \n"
 "Коваріаційна матриця нестабільна."
 
-#: graphs/curve_fitting.vala:261
+#: graphs/curve_fitting.vala:265
+msgid "Residuals"
+msgstr "Лишки"
+
+#: graphs/curve_fitting.vala:376
 msgid "Parameters"
 msgstr "Параметри"
 
-#: graphs/curve_fitting.vala:277
+#: graphs/curve_fitting.vala:392
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:280
+#: graphs/curve_fitting.vala:395
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:280
+#: graphs/curve_fitting.vala:395
 msgid "RMSE"
 msgstr "КСКП"
 
-#: graphs/curve_fitting.vala:462
+#: graphs/curve_fitting.vala:577
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
 
-#: graphs/data.py:379
+#: graphs/data.py:347
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
@@ -2394,7 +2317,7 @@ msgstr ""
 "Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/data.vala:842
+#: graphs/data.vala:907
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
@@ -2414,91 +2337,62 @@ msgstr "Експортований рисунок"
 msgid "No data to export"
 msgstr "Немає даних для експортування"
 
-#: graphs/export_items.vala:20 graphs/export_items.vala:36
+#: graphs/export_items.vala:25 graphs/export_items.vala:41
 msgid "Exported Data"
 msgstr "Експортовані дані"
 
-#: graphs/export_items.vala:29
+#: graphs/export_items.vala:34
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
-
-#: graphs/item.vala:201
-msgid "Dataset"
-msgstr "Набір даних"
-
-#: graphs/item.vala:247
-msgid "Generated Dataset"
-msgstr "Створений набір даних"
-
-#: graphs/item.vala:303
-msgid "Label"
-msgstr "Мітка"
-
-#: graphs/item.vala:383
-msgid "Positive Infinity"
-msgstr "Додатна нескінченність"
-
-#: graphs/item.vala:384
-msgid "Negative Infinity"
-msgstr "Від'ємна нескінченність"
-
-#: graphs/item.vala:385
-#| msgid "Add Equation…"
-msgid "Custom Equation…"
-msgstr "Нетипове рівняння…"
-
-#: graphs/item.vala:438
-msgid "Fill"
-msgstr "Заповнення"
 
 #: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "файл стилю Matplotlib"
 
-#: graphs/operations.py:124
+#: graphs/operations.py:125
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Не вдалося виконати перетворення. Переконайтеся, що правильно вказано "
 "синтаксичну конструкцію"
 
-#: graphs/operations.py:184
+#: graphs/operations.py:187
 msgid "No data found in highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:188
+#: graphs/operations.py:191
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Для деяких записів немає позначок похибок; ці записи буде відкинуто"
 
-#: graphs/operations.py:200
+#: graphs/operations.py:203
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:332
+#: graphs/operations.py:345
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
 
-#: graphs/operations.py:338
+#: graphs/operations.py:351
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:492 graphs/operations.py:496
+#: graphs/operations.py:529 graphs/operations.py:533
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:505
+#: graphs/operations.py:542
 msgid "Operation not supported for data items"
 msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:508
+#: graphs/operations.py:545
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: помилка під час виконання дії"
 
-#: graphs/operations.py:516
+#: graphs/operations.py:552
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
@@ -2510,19 +2404,19 @@ msgstr "У файлі проєкту не вистачає даних"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Проєкт походить з нової несумісної версії «Графіків»"
 
-#: graphs/project.py:314
+#: graphs/project.py:313
 msgid "Failed to do legacy migration"
 msgstr "Не вдалося перенести дані зі старої версії"
 
-#: graphs/project.py:316
+#: graphs/project.py:315
 msgid "Failed to parse project file"
 msgstr "Не вдалося обробити файл проєкту"
 
-#: graphs/project.py:322
+#: graphs/project.py:321
 msgid "Failed to migrate project"
 msgstr "Не вдалося перенести проєкт"
 
-#: graphs/project.py:328
+#: graphs/project.py:327
 msgid "Failed to validate project"
 msgstr "Не вдалося перевірити проєкт"
 
@@ -2630,6 +2524,69 @@ msgstr[3] ""
 #: graphs/window.vala:427
 msgid "Open Location"
 msgstr "Відкрити адресу"
+
+#~ msgid "Labels"
+#~ msgstr "Мітки"
+
+#~ msgid "Axis Limits"
+#~ msgstr "Межі вісі"
+
+#~ msgid "Bottom X Axis Minimum"
+#~ msgstr "Мінімум на нижній вісі x"
+
+#~ msgid "Bottom X Axis Maximum"
+#~ msgstr "Максимум на нижній вісі x"
+
+#~ msgid "Top X Axis Minimum"
+#~ msgstr "Мінімум на верхній вісі x"
+
+#~ msgid "Top X Axis Maximum"
+#~ msgstr "Максимум на верхній вісі x"
+
+#~ msgid "Left Y Axis Minimum"
+#~ msgstr "Мінімум на лівій вісі y"
+
+#~ msgid "Left Y Axis Maximum"
+#~ msgstr "Максимум на лівій вісі y"
+
+#~ msgid "Right Y Axis Minimum"
+#~ msgstr "Мінімум на правій вісі y"
+
+#~ msgid "Right Y Axis Maximum"
+#~ msgstr "Максимум на правій вісі y"
+
+#~ msgid "Scaling"
+#~ msgstr "Масштабування"
+
+#~ msgid "Bottom X Axis Scale"
+#~ msgstr "Шкала нижньої вісі X"
+
+#~ msgid "Top X Axis Scale"
+#~ msgstr "Шкала верхньої вісі x"
+
+#~ msgid "Left Y Axis Scale"
+#~ msgstr "Шкала лівої вісі y"
+
+#~ msgid "Right Y Axis Scale"
+#~ msgstr "Шкала правої вісі y"
+
+#~ msgid "X Axis Minimum"
+#~ msgstr "Мінімум на вісі x"
+
+#~ msgid "Y Axis Minimum"
+#~ msgstr "Мінімум на вісі y"
+
+#~ msgid "X Axis Maximum"
+#~ msgstr "Максимум на вісі x"
+
+#~ msgid "Y Axis Maximum"
+#~ msgstr "Максимум на вісі y"
+
+#~ msgid "X Axis Label"
+#~ msgstr "Мітка вісі x"
+
+#~ msgid "Y Axis Label"
+#~ msgstr "Мітка вісі y"
 
 #~ msgid "Edit"
 #~ msgstr "Змінити"
