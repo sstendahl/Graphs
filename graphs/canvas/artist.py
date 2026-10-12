@@ -373,6 +373,18 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             cap.set_markerfacecolor(errcolor)
             cap.set_markeredgecolor(errcolor)
 
+    @GObject.Property(type=float, default=1)
+    def alpha(self) -> float:
+        """Get alpha property."""
+        return self._data.get_alpha()
+
+    @alpha.setter
+    def alpha(self, alpha: float) -> None:
+        """Set alpha property of the line, error bars and caps."""
+        self._data.set_alpha(alpha)
+        for part in (*self._bars, *self._caps):
+            part.set_alpha(alpha)
+
     @GObject.Property(type=bool, default=True)
     def visible(self) -> bool:
         """Get visible property."""
