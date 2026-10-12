@@ -16,6 +16,14 @@ namespace Graphs {
 
         public abstract string[] get_sheet_names () throws ParseError;
         public abstract void parse (int sheet_index, uint max_columns, HashTable<uint, Column> columns) throws ParseError;
+
+        protected static int get_capacity (HashTable<uint, Column> columns) {
+            int capacity = 0;
+            columns.for_each ((key, column) => {
+                capacity = column.data.length;
+            });
+            return capacity;
+        }
     }
 
     private class ODSParser : SpreadsheetParserInternal {
@@ -121,7 +129,7 @@ namespace Graphs {
                 if (sheet == null)
                     throw new ParseError.INVALID ("failed to parse xml");
 
-                int array_size = columns[0].data.length, value_size = 0;
+                int array_size = get_capacity (columns), value_size = 0;
                 int current_col, repeat_count;
                 unowned Column column;
                 string cell_text;
@@ -313,7 +321,7 @@ namespace Graphs {
                 if (sheet == null)
                     throw new ParseError.INVALID ("failed to parse xml");
 
-                int array_size = columns[0].data.length, value_size = 0;
+                int array_size = get_capacity (columns), value_size = 0;
                 int current_col;
                 unowned Column column;
                 string? r;
