@@ -354,7 +354,7 @@ class EquationOperations():
     @staticmethod
     def translate_x(equation: sympy.Expr, offset: float) -> sympy.Expr:
         """Translate all selected data on the x-axis."""
-        return equation.subs(misc.X, misc.X + offset)
+        return equation.subs(misc.X, misc.X - offset)
 
     @staticmethod
     def translate_y(equation: sympy.Expr, offset: float) -> sympy.Expr:
@@ -364,7 +364,7 @@ class EquationOperations():
     @staticmethod
     def multiply_x(equation: sympy.Expr, multiplier: float) -> sympy.Expr:
         """Multiply all selected data on the x-axis."""
-        return equation.subs(misc.X, misc.X * multiplier)
+        return equation.subs(misc.X, misc.X / multiplier)
 
     @staticmethod
     def multiply_y(equation: sympy.Expr, multiplier: float) -> sympy.Expr:

@@ -26,11 +26,15 @@ namespace Graphs {
         private ImportSettings settings;
         private bool is_initial_setup = true;
 
-        public SqlGroup (ImportSettings settings) throws ParseError {
-            this.db_reader = (DatabaseReader) settings.get_item ("db-reader");
+        public SqlGroup (ImportSettings settings) {
+            this.db_reader = (DatabaseReader) settings.get_item ("reader");
             this.settings = settings;
 
-            setup_ui ();
+            try {
+                setup_ui ();
+            } catch (ParseError e) {
+                warning ("Could not load SQL columns: %s", e.message);
+            }
         }
 
         private void setup_ui () throws ParseError {

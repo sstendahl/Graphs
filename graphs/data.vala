@@ -553,8 +553,12 @@ namespace Graphs {
         private class AxisInfo {
             public unowned string direction;
             public bool used;
+            public bool min_locked;
+            public bool max_locked;
             public double min_value;
             public double max_value;
+            public double lower_bound;
+            public double upper_bound;
             public Scale scale;
             public double[] xdata;
 
@@ -564,20 +568,44 @@ namespace Graphs {
                 figure_settings.get ("min_" + direction, out min_value);
                 figure_settings.get ("max_" + direction, out max_value);
                 figure_settings.get (direction + "_scale", out scale);
+                figure_settings.get ("lock_min_" + direction, out min_locked);
+                figure_settings.get ("lock_max_" + direction, out max_locked);
                 xdata = null;
+
+                lower_bound = min_locked ? min_value : -double.INFINITY;
+                upper_bound = max_locked ? max_value : double.INFINITY;
+                if (lower_bound > upper_bound) { // Inverted axis
+                    double temp = lower_bound;
+                    lower_bound = upper_bound;
+                    upper_bound = temp;
+                }
+            }
+
+            public bool any_locked () {
+                return min_locked || max_locked;
+            }
+
+            public bool fully_locked () {
+                return min_locked && max_locked;
+            }
+
+            public bool within_locks (double value) {
+                return value >= lower_bound && value <= upper_bound;
             }
 
             public void update_min_max (double[] data) {
+                if (fully_locked ()) return;
+
                 double min_value, max_value;
 
                 if (!CUtilities.array_minmax (data, scale.is_nonzero (), out min_value, out max_value)) return;
 
                 if (used) {
-                    this.min_value = double.min (this.min_value, min_value);
-                    this.max_value = double.max (this.max_value, max_value);
+                    if (!min_locked) this.min_value = double.min (this.min_value, min_value);
+                    if (!max_locked) this.max_value = double.max (this.max_value, max_value);
                 } else {
-                    this.min_value = min_value;
-                    this.max_value = max_value;
+                    if (!min_locked) this.min_value = min_value;
+                    if (!max_locked) this.max_value = max_value;
                     used = true;
                 }
             }
@@ -590,6 +618,26 @@ namespace Graphs {
 
                 return xdata;
             }
+        }
+
+        /**
+         * Get the data points that lie within the locked limits of either axis.
+         */
+        private static void filter_locked (
+            AxisInfo xaxis, AxisInfo yaxis, double[] xdata, double[] ydata,
+            out double[] x_visible, out double[] y_visible
+        ) {
+            int length = int.min (xdata.length, ydata.length);
+            x_visible = new double[length];
+            y_visible = new double[length];
+            int n = 0;
+            for (int i = 0; i < length; i++) {
+                if (!xaxis.within_locks (xdata[i]) || !yaxis.within_locks (ydata[i])) continue;
+                x_visible[n] = xdata[i];
+                y_visible[n++] = ydata[i];
+            }
+            x_visible.resize (n);
+            y_visible.resize (n);
         }
 
         public void optimize_limits () {
@@ -616,23 +664,32 @@ namespace Graphs {
                 if (!(item is DataItem)) continue;
                 var data_item = (DataItem) item;
 
-                int xindex = item.xposition * 2;
-                int yindex = item.yposition * 2 + 1;
+                unowned AxisInfo xaxis = axes[item.xposition * 2];
+                unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
-                axes[xindex].update_min_max (data_item.get_xdata ());
-                axes[yindex].update_min_max (data_item.get_ydata ());
+                if (xaxis.any_locked () || yaxis.any_locked ()) {
+                    // Only optimize for the data within the locked limits
+                    double[] xdata, ydata;
+                    filter_locked (xaxis, yaxis, data_item.get_xdata (), data_item.get_ydata (), out xdata, out ydata);
+                    xaxis.update_min_max (xdata);
+                    yaxis.update_min_max (ydata);
+                } else {
+                    xaxis.update_min_max (data_item.get_xdata ());
+                    yaxis.update_min_max (data_item.get_ydata ());
+                }
             }
 
             foreach (EquationItem item in equation_items) {
-                int xindex = item.xposition * 2;
-                int yindex = item.yposition * 2 + 1;
+                unowned AxisInfo xaxis = axes[item.xposition * 2];
+                unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
-                if (PythonHelper.has_singularities (item.equation, axes[xindex].min_value, axes[xindex].max_value)) continue;
+                if (yaxis.fully_locked ()) continue;
+                if (PythonHelper.has_singularities (item.equation, xaxis.min_value, xaxis.max_value)) continue;
 
-                unowned double[] xdata = axes[xindex].get_xdata ();
+                unowned double[] xdata = xaxis.get_xdata ();
                 double[] ydata = item.get_program ().eval (xdata);
 
-                axes[yindex].update_min_max (ydata);
+                yaxis.update_min_max (ydata);
             }
 
             for (int i = 0; i < axes.length; i++) {
@@ -665,9 +722,17 @@ namespace Graphs {
                     }
                 }
 
+                // Locked limits stay, unless the data lies beyond them and
+                // the axis would flip
+                if (axis.any_locked ()) {
+                    if (axis.min_locked) min_all = axis.min_value;
+                    if (axis.max_locked) max_all = axis.max_value;
+                    if (min_all >= max_all) continue;
+                }
+
                 unowned string direction = axis.direction;
-                figure_settings.set ("min_" + direction, min_all);
-                figure_settings.set ("max_" + direction, max_all);
+                if (!axis.min_locked) figure_settings.set ("min_" + direction, min_all);
+                if (!axis.max_locked) figure_settings.set ("max_" + direction, max_all);
             }
 
             add_view_history_state ();
