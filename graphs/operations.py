@@ -340,7 +340,7 @@ class CommonOperations():
                 ydata[mask] *= value
                 if yerr is not None:
                     # Scale the error bars with the data. get_xyerr returns a
-                    # read-only view of the item's data, so use copy instead.
+                    # read-only version of the item's data, so use copy instead
                     yerr = yerr.copy()
                     yerr[mask] *= value
             item.set_data(Graphs.DataHolder.new(xdata, ydata, xerr, yerr))
