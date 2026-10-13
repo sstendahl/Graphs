@@ -22,27 +22,43 @@ template $GraphsSpreadsheetItemGroup: Adw.PreferencesGroup {
       orientation: horizontal;
       homogeneous: true;
 
-      Adw.SpinRow column_x {
-        title: _("X Column");
-        sensitive: bind single_column.active inverted;
+      ListBox {
+        selection-mode: none;
 
-        adjustment: Adjustment {
-          lower: 0;
-          upper: 16383;
-          step-increment: 1;
-          value: 0;
-        };
+        Adw.SpinRow column_x {
+          title: _("X Column");
+          sensitive: bind single_column.active inverted;
+
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 16383;
+            step-increment: 1;
+            value: 0;
+          };
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
 
-      Adw.SpinRow column_y {
-        title: _("Y Column");
+      ListBox {
+        selection-mode: none;
 
-        adjustment: Adjustment {
-          lower: 0;
-          upper: 16383;
-          step-increment: 1;
-          value: 1;
-        };
+        Adw.SpinRow column_y {
+          title: _("Y Column");
+
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 16383;
+            step-increment: 1;
+            value: 1;
+          };
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
     }
   }
@@ -89,12 +105,28 @@ template $GraphsSpreadsheetItemGroup: Adw.PreferencesGroup {
       orientation: horizontal;
       homogeneous: true;
 
-      Adw.SwitchRow use_xerr {
-        title: _("X Error Bars");
+      ListBox {
+        selection-mode: none;
+
+        Adw.SwitchRow use_xerr {
+          title: _("X Error Bars");
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
 
-      Adw.SwitchRow use_yerr {
-        title: _("Y Error Bars");
+      ListBox {
+        selection-mode: none;
+
+        Adw.SwitchRow use_yerr {
+          title: _("Y Error Bars");
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
     }
   }
@@ -106,28 +138,44 @@ template $GraphsSpreadsheetItemGroup: Adw.PreferencesGroup {
       orientation: horizontal;
       homogeneous: true;
 
-      Adw.SpinRow column_xerr {
-        title: _("X Error Column");
-        sensitive: bind use_xerr.active;
+      ListBox {
+        selection-mode: none;
 
-        adjustment: Adjustment {
-          lower: 0;
-          upper: 16383;
-          step-increment: 1;
-          value: 0;
-        };
+        Adw.SpinRow column_xerr {
+          title: _("X Error Column");
+          sensitive: bind use_xerr.active;
+
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 16383;
+            step-increment: 1;
+            value: 0;
+          };
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
 
-      Adw.SpinRow column_yerr {
-        title: _("Y Error Column");
-        sensitive: bind use_yerr.active;
+      ListBox {
+        selection-mode: none;
 
-        adjustment: Adjustment {
-          lower: 0;
-          upper: 16383;
-          step-increment: 1;
-          value: 1;
-        };
+        Adw.SpinRow column_yerr {
+          title: _("Y Error Column");
+          sensitive: bind use_yerr.active;
+
+          adjustment: Adjustment {
+            lower: 0;
+            upper: 16383;
+            step-increment: 1;
+            value: 1;
+          };
+        }
+
+        styles [
+          "side-by-side",
+        ]
       }
     }
   }

@@ -69,3 +69,11 @@
   padding-left: 6px;
   padding-right: 6px;
 }
+
+list.side-by-side {
+  background: none;
+}
+
+list.side-by-side > row {
+  padding: 0;
+}
