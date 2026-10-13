@@ -696,8 +696,8 @@ namespace Graphs {
                 unowned AxisInfo axis = axes[i];
                 if (!axis.used) continue;
 
-                // 0.05 padding on y-axis, 0.015 padding on x-axis
-                double padding_factor = i % 2 == 0 ? 0.05 : 0.015;
+                // 0.05 padding on y-axis, 0.015 padding on x-axis. Even
+                double padding_factor = i % 2 == 0 ? 0.015 : 0.05;
 
                 double min_all = axis.min_value;
                 double max_all = axis.max_value;
