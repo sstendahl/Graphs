@@ -1,0 +1,16 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsImportingItemBox: Adw.ActionRow {
+  title-lines: 1;
+  use-markup: false;
+  activatable: false;
+  selectable: false;
+  subtitle: _("Importing…");
+
+  [prefix]
+  Adw.Spinner {
+    width-request: 24;
+    height-request: 24;
+  }
+}

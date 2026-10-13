@@ -41,6 +41,7 @@ data/ui/curve-fitting.blp
 data/ui/export-figure.blp
 data/ui/fitting-parameters.blp
 data/ui/generate-data.blp
+data/ui/importing-item-box.blp
 data/ui/item-box.blp
 data/ui/smoothen-settings.blp
 data/ui/style-preview.blp

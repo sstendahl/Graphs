@@ -43,6 +43,7 @@ blueprint_files = [
   'export-figure.blp',
   'fitting-parameters.blp',
   'generate-data.blp',
+  'importing-item-box.blp',
   'item-box.blp',
   'smoothen-settings.blp',
   'style-preview.blp',

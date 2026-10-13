@@ -9,12 +9,22 @@ namespace Graphs.MathParser {
         private unowned string variable_name;
 
         private static Once<Compiler> _instance;
+        private static Mutex _mutex;
 
         public static unowned Compiler instance () {
             return _instance.once (() => { return new Compiler (); });
         }
 
         public Program compile (Ast expr, string variable) throws MathError {
+            _mutex.lock ();
+            try {
+                return compile_locked (expr, variable);
+            } finally {
+                _mutex.unlock ();
+            }
+        }
+
+        private Program compile_locked (Ast expr, string variable) throws MathError {
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
