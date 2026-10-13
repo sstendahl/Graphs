@@ -446,7 +446,7 @@ namespace Graphs.MathParser {
                 }
 
                 if (!src.get_next_char (ref tmp_idx, out c)
-                    || !(c.isalnum () || c == 'π')
+                    || !(c.isalnum () || c == 'π' || c == '_')
                     || is_superscript (c)) {
                     if (state == 10) current_ident = Ident.E;
                     break;
