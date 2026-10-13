@@ -211,8 +211,14 @@ namespace Graphs {
             custom_equation.notify["text"].connect (on_custom_equation_text_changed);
         }
 
+        private StyleParameters get_canvas_style () {
+            var data = window.data;
+            if (!data.figure_settings.use_custom_style) return StyleManager.get_system_style_params ();
+            return StyleManager.get_system_style_params_for (data.selected_style_params);
+        }
+
         protected void setup (DataItem item) {
-            var style = StyleManager.get_system_style_params ();
+            var style = get_canvas_style ();
 
             double x_min, x_max;
             CUtilities.array_minmax (item.get_xdata (), false, out x_min, out x_max);
@@ -275,7 +281,7 @@ namespace Graphs {
         }
 
         private void load_canvas () {
-            var style = StyleManager.get_system_style_params ();
+            var style = get_canvas_style ();
             canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
             residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
             residuals_container.set_visible (settings.get_boolean ("show-residuals"));
