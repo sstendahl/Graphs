@@ -96,7 +96,7 @@ namespace Graphs {
         }
     }
 
-    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/importing-item-box.ui")]
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/importing-item-box.ui")]
     public class ImportingItemBox : Adw.ActionRow {
         public ImportingItemBox (string filename) {
             Object (title: filename);
