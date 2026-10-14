@@ -95,4 +95,11 @@ namespace Graphs {
             window.data.add_view_history_state ();
         }
     }
+
+    [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/importing-item-box.ui")]
+    public class ImportingItemBox : Adw.ActionRow {
+        public ImportingItemBox (string filename) {
+            Object (title: filename);
+        }
+    }
 }

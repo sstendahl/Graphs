@@ -17,6 +17,7 @@ data/ui/import/spreadsheet/main-group.blp
 data/ui/import/spreadsheet/item-group.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
+data/ui/import/importing-item-box.blp
 data/ui/sidebar/edit-item/base.blp
 data/ui/sidebar/edit-item/data.blp
 data/ui/sidebar/edit-item/equation.blp

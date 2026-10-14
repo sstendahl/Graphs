@@ -7,6 +7,8 @@
 
 #include "graphs.h"
 
+static PyThreadState *main_thread_state = NULL;
+
 static void
 handle_sigint (int sig)
 {
@@ -69,6 +71,7 @@ on_startup (GApplication *app, gpointer user_data)
       PyErr_Print ();
       g_error ("Python startup failed");
     }
+  main_thread_state = PyEval_SaveThread ();
 }
 
 int
@@ -83,7 +86,11 @@ main (int argc, char **argv)
   int status = g_application_run (G_APPLICATION (app), argc, argv);
 
   g_object_unref (app);
-  Py_Finalize ();
+  if (main_thread_state)
+    {
+      PyEval_RestoreThread (main_thread_state);
+      Py_Finalize ();
+    }
 
   return status;
 }

@@ -16,6 +16,7 @@ blueprint_files = [
   'import/sql/main-group.blp',
   'import/dialog.blp',
   'import/file-row.blp',
+  'import/importing-item-box.blp',
   'sidebar/edit-item/base.blp',
   'sidebar/edit-item/data.blp',
   'sidebar/edit-item/equation.blp',

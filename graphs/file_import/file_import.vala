@@ -159,6 +159,33 @@ namespace Graphs {
             return parsers[settings.mode].parse (settings, style);
         }
 
+        public static async ItemList parse_async (
+            ImportSettings settings, StyleParameters style, Cancellable? cancellable = null
+        ) throws Error {
+            var task = new Task (settings, cancellable, (source, result) => parse_async.callback ());
+            task.set_task_data (style.ref (), Object.unref);
+            task.set_return_on_cancel (true);
+            task.run_in_thread (parse_in_thread);
+            yield;
+
+            Value result;
+            task.propagate_value (out result);
+            return (ItemList) result.get_object ();
+        }
+
+        private static void parse_in_thread (
+            Task task, Object source, void* task_data, Cancellable? cancellable
+        ) {
+            unowned var style = (StyleParameters) task_data;
+            try {
+                var result = Value (typeof (ItemList));
+                result.set_object (parse ((ImportSettings) source, style));
+                task.return_value (result);
+            } catch (ParseError e) {
+                task.return_error ((owned) e);
+            }
+        }
+
         private static bool init_import_settings (ImportSettings settings) {
             settings.mode_name = parser_names.get_string (settings.mode);
             unowned string name = parsers[settings.mode].name;
