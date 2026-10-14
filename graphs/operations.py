@@ -59,8 +59,8 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
                 window.add_toast_string(message)
             all_success = success or all_success
     if all_success:
-        data.add_history_state()
         data.optimize_limits()
+        data.add_history_state()
 
 
 class DataHelper():
@@ -175,8 +175,8 @@ class CommonOperations():
                     toast = message if success else fail_message
                     window.add_toast_string(toast)
 
-                data.add_history_state()
-                data.optimize_limits()
+            data.optimize_limits()
+            data.add_history_state()
 
         dialog = Graphs.TransformDialog.new(window)
         dialog.connect("accept", on_accept)
