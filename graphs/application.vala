@@ -1,8 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gee;
-using Gtk;
 
 namespace Graphs {
     /**

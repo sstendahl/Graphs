@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
 
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/columns/box.ui")]
-    public class ColumnsBox : Box {
+    public class ColumnsBox : Gtk.Box {
         [GtkChild]
-        public unowned Box items_box { get; }
+        public unowned Gtk.Box items_box { get; }
 
         private ImportSettings settings;
         private Gee.List<ColumnsItemSettings?> items;
@@ -24,13 +21,13 @@ namespace Graphs {
                 item_settings_list[i] = ColumnsItemSettings ();
                 item_settings_list[i].load_from_variant (iter.next_value ());
             }
-            items = new ArrayList<ColumnsItemSettings?>.wrap (item_settings_list);
+            items = new Gee.ArrayList<ColumnsItemSettings?>.wrap (item_settings_list);
 
             reload_item_groups ();
         }
 
         private void reload_item_groups () {
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = items_box.get_last_child ()) != null) {
                 items_box.remove (widget);
             }
@@ -126,7 +123,7 @@ namespace Graphs {
         [GtkChild]
         public unowned Adw.SpinRow column_yerr { get; }
         [GtkChild]
-        public unowned Button remove_button { get; }
+        public unowned Gtk.Button remove_button { get; }
 
         public signal void settings_changed (ColumnsItemSettings new_settings);
         public signal void remove_request ();

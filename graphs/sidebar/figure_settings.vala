@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
 
 namespace Graphs {
     private const BindingFlags SYNC = BindingFlags.BIDIRECTIONAL | BindingFlags.SYNC_CREATE;
@@ -24,7 +22,7 @@ namespace Graphs {
         public unowned Adw.EntryRow right_label { get; }
 
         [GtkChild]
-        public unowned Box bottom_limits { get; }
+        public unowned Gtk.Box bottom_limits { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow min_bottom { get; }
@@ -33,7 +31,7 @@ namespace Graphs {
         public unowned Adw.EntryRow max_bottom { get; }
 
         [GtkChild]
-        public unowned Box top_limits { get; }
+        public unowned Gtk.Box top_limits { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow min_top { get; }
@@ -42,7 +40,7 @@ namespace Graphs {
         public unowned Adw.EntryRow max_top { get; }
 
         [GtkChild]
-        public unowned Box left_limits { get; }
+        public unowned Gtk.Box left_limits { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow min_left { get; }
@@ -51,7 +49,7 @@ namespace Graphs {
         public unowned Adw.EntryRow max_left { get; }
 
         [GtkChild]
-        public unowned Box right_limits { get; }
+        public unowned Gtk.Box right_limits { get; }
 
         [GtkChild]
         public unowned Adw.EntryRow min_right { get; }
@@ -81,7 +79,7 @@ namespace Graphs {
         private unowned Adw.SwitchRow hide_unselected { get; }
 
         [GtkChild]
-        private unowned Label style_name { get; }
+        private unowned Gtk.Label style_name { get; }
 
         private Window window;
 
@@ -149,7 +147,7 @@ namespace Graphs {
             this.get (prop, out scale);
             Adw.EntryRow label;
             this.get (direction + "-label", out label);
-            Box limits;
+            Gtk.Box limits;
             this.get (direction + "-limits", out limits);
 
             figure_settings.bind_property (prop, scale, "selected", SYNC);
@@ -189,7 +187,7 @@ namespace Graphs {
         }
 
         public void focus_widget (string name) {
-            Widget widget;
+            Gtk.Widget widget;
             this.get (name, out widget);
             widget.grab_focus ();
         }
@@ -252,14 +250,14 @@ namespace Graphs {
     public class StylePage : Adw.NavigationPage {
 
         [GtkChild]
-        private unowned GridView style_grid { get; }
+        private unowned Gtk.GridView style_grid { get; }
 
         private Window window;
 
         public StylePage (Window window) {
             this.window = window;
 
-            var factory = new SignalListItemFactory ();
+            var factory = new Gtk.SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
@@ -267,12 +265,12 @@ namespace Graphs {
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = (ListItem) object;
+            Gtk.ListItem item = (Gtk.ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = (ListItem) object;
+            Gtk.ListItem item = (Gtk.ListItem) object;
             StylePreview preview = (StylePreview) item.get_child ();
             preview.style = (Style) item.get_item ();
         }

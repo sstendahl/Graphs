@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -11,16 +8,16 @@ namespace Graphs {
     public class ItemBox : Adw.ActionRow {
 
         [GtkChild]
-        public unowned CheckButton check_button { get; }
+        public unowned Gtk.CheckButton check_button { get; }
 
         [GtkChild]
-        private unowned Button color_button { get; }
+        private unowned Gtk.Button color_button { get; }
 
         public Window window { get; construct set; }
         public Item item { get; construct set; }
         public uint index { get; construct set; }
 
-        private CssProvider provider;
+        private Gtk.CssProvider provider;
 
         public ItemBox (Window window, Item item, uint index) {
             Object (
@@ -28,9 +25,9 @@ namespace Graphs {
                 item: item,
                 index: index
             );
-            this.provider = new CssProvider ();
+            this.provider = new Gtk.CssProvider ();
             color_button.get_style_context ().add_provider (
-                provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+                provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
 
             set_subtitle (item.typename);
@@ -95,7 +92,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void choose_color () {
-            var dialog = new ColorDialog ();
+            var dialog = new Gtk.ColorDialog ();
             dialog.choose_rgba.begin (
                 window,
                 item.get_rgba (),

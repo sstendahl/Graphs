@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
 
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/dialog.ui")]
@@ -19,10 +17,10 @@ namespace Graphs {
         private unowned Adw.ToastOverlay toast_overlay { get; }
 
         [GtkChild]
-        private unowned ListBox file_list { get; }
+        private unowned Gtk.ListBox file_list { get; }
 
         [GtkChild]
-        private unowned Box file_settings_box { get; }
+        private unowned Gtk.Box file_settings_box { get; }
 
         [GtkChild]
         private unowned Adw.PreferencesGroup default_group { get; }
@@ -31,7 +29,7 @@ namespace Graphs {
         private unowned Adw.PreferencesGroup remove_group { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         private Window window;
         private GLib.ListStore settings_list;
@@ -74,7 +72,7 @@ namespace Graphs {
         }
 
         private void load_mode_settings () {
-            Widget widget;
+            Gtk.Widget widget;
             while ((widget = file_settings_box.get_last_child ()) != null) {
                 file_settings_box.remove (widget);
             }
@@ -90,7 +88,7 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_row_selected (ListBoxRow? row) {
+        private void on_row_selected (Gtk.ListBoxRow? row) {
             if (row == null) return;
             var file_row = (ImportFileRow) row;
             file_settings_page.set_title (file_row.settings.filename);
@@ -99,7 +97,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_add () {
-            var dialog = new FileDialog ();
+            var dialog = new Gtk.FileDialog ();
             dialog.set_filters (DataImporter.file_filters);
             dialog.open_multiple.begin (window, null, (d, response) => {
                 try {
@@ -163,12 +161,12 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/file-row.ui")]
-    public class ImportFileRow : ListBoxRow {
+    public class ImportFileRow : Gtk.ListBoxRow {
         [GtkChild]
-        private unowned Label filename { get; }
+        private unowned Gtk.Label filename { get; }
 
         [GtkChild]
-        private unowned Label mode { get; }
+        private unowned Gtk.Label mode { get; }
 
         public ImportSettings settings;
 

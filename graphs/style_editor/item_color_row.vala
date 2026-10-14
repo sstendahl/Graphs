@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -13,7 +11,7 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Button color_button { get; }
 
-        private CssProvider provider = new CssProvider ();
+        private Gtk.CssProvider provider = new Gtk.CssProvider ();
         private string color;
         public StyleColorManager color_manager;
 
@@ -22,7 +20,7 @@ namespace Graphs {
 
         construct {
             this.color_button.get_style_context ().add_provider (
-                this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+                this.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
         }
 
@@ -40,9 +38,9 @@ namespace Graphs {
 
         [GtkCallback]
         private async void on_color_choose () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                RGBA rgba = yield dialog.choose_rgba (
+                Gdk.RGBA rgba = yield dialog.choose_rgba (
                     (Gtk.Window) this.get_root (),
                     Tools.hex_to_rgba (color),
                     null

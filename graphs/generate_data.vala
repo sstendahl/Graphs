@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -25,7 +23,7 @@ namespace Graphs {
         private unowned Adw.ComboRow scale { get; }
 
         [GtkChild]
-        private unowned Button confirm_button { get; }
+        private unowned Gtk.Button confirm_button { get; }
 
         [GtkChild]
         private unowned Adw.EntryRow item_name { get; }
@@ -47,8 +45,8 @@ namespace Graphs {
 
         private void set_confirm_sensitivity () {
             bool invalid = false;
-            Widget[] widgets = {equation, xstart, xstop};
-            foreach (Widget widget in widgets) {
+            Gtk.Widget[] widgets = {equation, xstart, xstop};
+            foreach (Gtk.Widget widget in widgets) {
                 invalid = invalid || widget.has_css_class ("error");
             }
             confirm_button.set_sensitive (!invalid);

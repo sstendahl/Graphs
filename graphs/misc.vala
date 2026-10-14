@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
 
 namespace Graphs {
     public ListModel get_mplstyle_file_filters () {
