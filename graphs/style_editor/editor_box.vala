@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     private string title_format_function (Gtk.Scale scale, double value) {
@@ -11,12 +8,12 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")]
-    public class StyleEditorBox : Box {
+    public class StyleEditorBox : Gtk.Box {
         [GtkChild]
         protected unowned Adw.EntryRow style_name { get; }
 
         [GtkChild]
-        protected unowned FontDialogButton font_chooser { get; }
+        protected unowned Gtk.FontDialogButton font_chooser { get; }
 
         [GtkChild]
         protected unowned Gtk.Scale titlesize { get; }
@@ -112,13 +109,13 @@ namespace Graphs {
         protected unowned StyleColorRow outline_color { get; }
 
         [GtkChild]
-        private unowned ListBox line_colors_box { get; }
+        private unowned Gtk.ListBox line_colors_box { get; }
 
         [GtkChild]
-        private unowned ListBox errbar_line_colors_box { get; }
+        private unowned Gtk.ListBox errbar_line_colors_box { get; }
 
         [GtkChild]
-        private unowned Box poor_contrast_warning { get; }
+        private unowned Gtk.Box poor_contrast_warning { get; }
 
         [GtkChild]
         protected unowned Gtk.Scale errorbar_capsize { get; }
@@ -163,9 +160,9 @@ namespace Graphs {
 
         [GtkCallback]
         private async void add_color () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                RGBA color = yield dialog.choose_rgba (window, null, null);
+                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
                 color_manager.add_color (hex);
             } catch {}
@@ -173,9 +170,9 @@ namespace Graphs {
 
         [GtkCallback]
         private async void add_errbar_color () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
-                RGBA color = yield dialog.choose_rgba (window, null, null);
+                Gdk.RGBA color = yield dialog.choose_rgba (window, null, null);
                 string hex = Tools.rgba_to_hex (color);
                 errbar_color_manager.add_color (hex);
             } catch {}

@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gee;
-using Gtk;
 
 namespace Graphs {
     public class Parser : Object {
@@ -16,13 +13,13 @@ namespace Graphs {
 
         protected signal uint guess_import_mode_request (ImportSettings settings);
         protected signal bool init_import_settings_request (ImportSettings settings);
-        protected signal Widget append_settings_widgets_request (ImportSettings settings, Box settings_box);
+        protected signal Gtk.Widget append_settings_widgets_request (ImportSettings settings, Gtk.Box settings_box);
         protected signal string parse_request (ItemList itemlist, ImportSettings settings, Data data);
 
         private static GLib.Settings mode_settings;
         private static string[] mode_settings_list;
         private static Parser[] parsers;
-        private static StringList parser_names = new StringList (null);
+        private static Gtk.StringList parser_names = new Gtk.StringList (null);
 
         private static DataImporter instance;
 
@@ -41,13 +38,13 @@ namespace Graphs {
         }
 
         private static void init_file_filters () {
-            file_filters = new GLib.ListStore (typeof (FileFilter));
+            file_filters = new GLib.ListStore (typeof (Gtk.FileFilter));
 
-            var supported_filter = new FileFilter () { name = C_("file-filter", "Supported files") };
+            var supported_filter = new Gtk.FileFilter () { name = C_("file-filter", "Supported files") };
             file_filters.append (supported_filter);
 
             // columns
-            var ascii_filter = new FileFilter () { name = C_("file-filter", "ASCII files") };
+            var ascii_filter = new Gtk.FileFilter () { name = C_("file-filter", "ASCII files") };
             string[] ascii_suffixes = {"xy", "dat", "txt", "csv"};
             foreach (string suffix in ascii_suffixes) {
                 ascii_filter.add_suffix (suffix);
@@ -58,7 +55,7 @@ namespace Graphs {
             foreach (Parser parser in parsers) {
                 if (parser.name == "columns") continue;
 
-                var filter = new FileFilter () { name = parser.filetype_name };
+                var filter = new Gtk.FileFilter () { name = parser.filetype_name };
                 foreach (string suffix in parser.file_suffixes) {
                     filter.add_suffix (suffix);
                     supported_filter.add_suffix (suffix);
@@ -69,11 +66,11 @@ namespace Graphs {
             file_filters.append (Tools.create_all_filter ());
         }
 
-        public static Widget append_settings_widgets (ImportSettings settings, Box settings_box) {
+        public static Gtk.Widget append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) {
             return instance.append_settings_widgets_request.emit (settings, settings_box);
         }
 
-        public static StringList get_parser_names () {
+        public static Gtk.StringList get_parser_names () {
             return parser_names;
         }
 
@@ -124,8 +121,8 @@ namespace Graphs {
 
         public signal void value_changed (string key, Variant val);
 
-        private Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
-        private Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
+        private Gee.Map<string, Variant> settings = new Gee.HashMap<string, Variant> ();
+        private Gee.Map<string, Object> items = new Gee.HashMap<string, GLib.Object> ();
 
         public ImportSettings (File file) {
             Object (

@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -9,15 +7,15 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-row.ui")]
     public class StyleColorRow : Adw.ActionRow {
         [GtkChild]
-        private unowned Image image { get; }
+        private unowned Gtk.Image image { get; }
 
-        public RGBA color { get; set; }
+        public Gdk.RGBA color { get; set; }
 
-        private CssProvider provider = new CssProvider ();
+        private Gtk.CssProvider provider = new Gtk.CssProvider ();
 
         construct {
             this.image.get_style_context ().add_provider (
-                this.provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+                this.provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             this.notify["color"].connect (on_color);
         }
@@ -29,7 +27,7 @@ namespace Graphs {
 
         [GtkCallback]
         private async void on_color_choose () {
-            var dialog = new ColorDialog () { with_alpha = false };
+            var dialog = new Gtk.ColorDialog () { with_alpha = false };
             try {
                 this.color = yield dialog.choose_rgba (
                     (Gtk.Window) this.get_root (), color, null

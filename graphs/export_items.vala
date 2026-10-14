@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Gtk;
 
 namespace Graphs {
     namespace Export {
@@ -10,7 +9,7 @@ namespace Graphs {
                 return;
             }
 
-            var dialog = new FileDialog ();
+            var dialog = new Gtk.FileDialog ();
             if (data.get_n_items () > 1) {
                 dialog.select_folder.begin (window, null, (d, response) => {
                     try {

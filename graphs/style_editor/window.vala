@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -17,10 +14,10 @@ namespace Graphs {
         private unowned Adw.Bin canvas_bin { get; }
 
         [GtkChild]
-        private unowned Stack stack { get; }
+        private unowned Gtk.Stack stack { get; }
 
         [GtkChild]
-        private unowned GridView style_grid { get; }
+        private unowned Gtk.GridView style_grid { get; }
 
         [GtkChild]
         protected unowned Adw.ToolbarView content_view { get; }
@@ -43,14 +40,14 @@ namespace Graphs {
                     application.uninhibit (_inhibit_cookie);
                     _inhibit_cookie = application.inhibit (
                         this,
-                        ApplicationInhibitFlags.LOGOUT,
+                        Gtk.ApplicationInhibitFlags.LOGOUT,
                         value
                     );
                 }
             }
         }
 
-        protected CssProvider css_provider { get; private set; }
+        protected Gtk.CssProvider css_provider { get; private set; }
         protected bool unsaved { get; set; default = false; }
         private File _file;
         private bool _force_close = false;
@@ -61,9 +58,9 @@ namespace Graphs {
         protected signal void save_request (File file);
 
         construct {
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new Gtk.CssProvider ();
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             content_view.set_name (Application.get_next_css_name ());
 
@@ -78,7 +75,7 @@ namespace Graphs {
             var save_as_action = new SimpleAction ("save-style-as", null);
             save_as_action.activate.connect (() => {
                 if (_file == null) return;
-                var dialog = new FileDialog ();
+                var dialog = new Gtk.FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.set_initial_name (_("Style") + ".mplstyle");
                 dialog.save.begin (this, null, (d, response) => {
@@ -92,7 +89,7 @@ namespace Graphs {
 
             var open_action = new SimpleAction ("open-style", null);
             open_action.activate.connect (() => {
-                var dialog = new FileDialog ();
+                var dialog = new Gtk.FileDialog ();
                 dialog.set_filters (get_mplstyle_file_filters ());
                 dialog.open.begin (this, null, (d, response) => {
                     try {
@@ -136,7 +133,7 @@ namespace Graphs {
             var show_shortcuts_action = new SimpleAction ("show-shortcuts", null);
             show_shortcuts_action.activate.connect (() => {
                 string path = "/se/sjoerd/Graphs/ui/style-editor/shortcuts.ui";
-                var builder = new Builder.from_resource (path);
+                var builder = new Gtk.Builder.from_resource (path);
                 var shortcuts_dialog = (Adw.ShortcutsDialog) builder.get_object ("shortcuts");
                 shortcuts_dialog.present (this);
             });
@@ -162,7 +159,7 @@ namespace Graphs {
                 if (unsaved) {
                     if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                         this,
-                        ApplicationInhibitFlags.LOGOUT,
+                        Gtk.ApplicationInhibitFlags.LOGOUT,
                         _stylename
                     );
                     save_action.set_enabled (true);
@@ -175,11 +172,11 @@ namespace Graphs {
                 }
             });
 
-            var factory = new SignalListItemFactory ();
+            var factory = new Gtk.SignalListItemFactory ();
             factory.setup.connect (on_factory_setup);
             factory.bind.connect (on_factory_bind);
             style_grid.set_factory (factory);
-            style_grid.set_model (new NoSelection (StyleManager.filtered_style_model));
+            style_grid.set_model (new Gtk.NoSelection (StyleManager.filtered_style_model));
         }
 
         public void load (File file) {
@@ -200,12 +197,12 @@ namespace Graphs {
         }
 
         private void on_factory_setup (Object object) {
-            ListItem item = (ListItem) object;
+            Gtk.ListItem item = (Gtk.ListItem) object;
             item.set_child (new StylePreview ());
         }
 
         private void on_factory_bind (Object object) {
-            ListItem item = (ListItem) object;
+            Gtk.ListItem item = (Gtk.ListItem) object;
             StylePreview preview = (StylePreview) item.get_child ();
             Style style = (Style) item.get_item ();
             preview.style = style;
@@ -220,7 +217,7 @@ namespace Graphs {
                 action_group.add_action (open_action);
                 var open_with_action = new SimpleAction ("open_with", null);
                 open_with_action.activate.connect (() => {
-                    var launcher = new FileLauncher (style.file);
+                    var launcher = new Gtk.FileLauncher (style.file);
                     launcher.set_always_ask (true);
                     launcher.launch.begin (this, null);
                 });

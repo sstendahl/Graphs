@@ -1,7 +1,4 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-using Adw;
-using Gdk;
-using Gtk;
 
 namespace Graphs {
     /**
@@ -11,13 +8,13 @@ namespace Graphs {
     public class Window : Adw.ApplicationWindow {
 
         [GtkChild]
-        private unowned Button view_back_button { get; }
+        private unowned Gtk.Button view_back_button { get; }
 
         [GtkChild]
-        private unowned Button view_forward_button { get; }
+        private unowned Gtk.Button view_forward_button { get; }
 
         [GtkChild]
-        private unowned Button optimize_limits_button { get; }
+        private unowned Gtk.Button optimize_limits_button { get; }
 
         [GtkChild]
         public unowned Adw.OverlaySplitView overlay_split_view { get; }
@@ -29,10 +26,10 @@ namespace Graphs {
         private unowned Adw.WindowTitle content_title { get; }
 
         [GtkChild]
-        private unowned Overlay drag_overlay { get; }
+        private unowned Gtk.Overlay drag_overlay { get; }
 
         [GtkChild]
-        private unowned Revealer drag_revealer { get; }
+        private unowned Gtk.Revealer drag_revealer { get; }
 
         [GtkChild]
         protected unowned Adw.ToolbarView content_view { get; }
@@ -48,8 +45,8 @@ namespace Graphs {
 
 
         public Data data { get; construct set; }
-        protected CssProvider css_provider { get; private set; }
-        protected EventControllerKey key_controller { get; private set; }
+        protected Gtk.CssProvider css_provider { get; private set; }
+        protected Gtk.EventControllerKey key_controller { get; private set; }
 
         public Mode mode {
             get { return main_page.mode; }
@@ -78,14 +75,14 @@ namespace Graphs {
         private FigureSettingsPage figure_settings_page;
 
         construct {
-            this.css_provider = new CssProvider ();
-            StyleContext.add_provider_for_display (
-                Display.get_default (), css_provider, STYLE_PROVIDER_PRIORITY_APPLICATION
+            this.css_provider = new Gtk.CssProvider ();
+            Gtk.StyleContext.add_provider_for_display (
+                Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             );
             content_view.set_name (Application.get_next_css_name ());
 
-            this.key_controller = new EventControllerKey ();
-            ((Widget) this).add_controller (key_controller);
+            this.key_controller = new Gtk.EventControllerKey ();
+            ((Gtk.Widget) this).add_controller (key_controller);
 
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
@@ -197,7 +194,7 @@ namespace Graphs {
             if (data.unsaved) {
                 if (_inhibit_cookie == 0) _inhibit_cookie = application.inhibit (
                     this,
-                    ApplicationInhibitFlags.LOGOUT,
+                    Gtk.ApplicationInhibitFlags.LOGOUT,
                     title
                 );
                 save_action.set_enabled (true);
