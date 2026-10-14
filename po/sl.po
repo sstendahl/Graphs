@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-08 07:31+0000\n"
-"PO-Revision-Date: 2026-10-08 22:35+0200\n"
+"POT-Creation-Date: 2026-10-14 10:32+0000\n"
+"PO-Revision-Date: 2026-10-14 19:30+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -469,6 +469,10 @@ msgstr "Način uvoza"
 msgid "Set as Default"
 msgstr "Nastavi kot privzeto"
 
+#: data/ui/import/importing-item-box.blp:9
+msgid "Importing…"
+msgstr "Poteka uvažanje …"
+
 #: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
 msgstr "Ime in položaj"
@@ -773,7 +777,7 @@ msgstr "Uredi element"
 msgid "Figure Settings"
 msgstr "Nastavitve slike"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:27 graphs/style_editor/window.vala:325
+#: data/ui/sidebar/figure-settings/settings-page.blp:27 graphs/style_editor/window.vala:326
 msgid "Title"
 msgstr "Naziv"
 
@@ -1698,7 +1702,7 @@ msgstr "Spustite tukaj za uvoz"
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -2043,22 +2047,22 @@ msgstr "Barve %d"
 msgid "Example Item"
 msgstr "Primer elementa"
 
-#: graphs/style_editor/window.vala:224
+#: graphs/style_editor/window.vala:225
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ali ste prepričani, da želite izbrisati %s?"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:302
+#: graphs/style_editor/window.vala:303
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Urejevalnik sloga grafov — %s"
 
-#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
 msgid "X Label"
 msgstr "Oznaka X"
 
-#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Oznaka Y"
 
@@ -2140,27 +2144,27 @@ msgstr ""
 "Napaka pasu zaupanja: \n"
 "matrika kovariance ni stabilna."
 
-#: graphs/curve_fitting.vala:265
+#: graphs/curve_fitting.vala:271
 msgid "Residuals"
 msgstr "Ostanki"
 
-#: graphs/curve_fitting.vala:376
+#: graphs/curve_fitting.vala:382
 msgid "Parameters"
 msgstr "Parametri"
 
-#: graphs/curve_fitting.vala:392
+#: graphs/curve_fitting.vala:398
 msgid "Statistics"
 msgstr "Statistika"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:401
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:401
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:577
+#: graphs/curve_fitting.vala:583
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
@@ -2206,45 +2210,45 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
 
-#: graphs/operations.py:125
+#: graphs/operations.py:210
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:187
+#: graphs/operations.py:272
 msgid "No data found in highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:191
+#: graphs/operations.py:276
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Nekateri elementi so brez stolpcev napake; ti bodo opuščeni"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:288
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:345
+#: graphs/operations.py:310 graphs/operations.py:560 graphs/operations.py:564
+msgid "No data found within the highlighted area"
+msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
+
+#: graphs/operations.py:376
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:351
+#: graphs/operations.py:382
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:529 graphs/operations.py:533
-msgid "No data found within the highlighted area"
-msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
-
-#: graphs/operations.py:542
+#: graphs/operations.py:573
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:545
+#: graphs/operations.py:576
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:552
+#: graphs/operations.py:583
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -2320,7 +2324,7 @@ msgstr "Ni mogoče razčleniti {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 
-#: graphs/styles.vala:103
+#: graphs/styles.vala:107
 msgid "System"
 msgstr "Sistem"
 
@@ -2332,31 +2336,31 @@ msgstr "Vse datoteke"
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
-#: graphs/window.vala:149
+#: graphs/window.vala:165
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:176
+#: graphs/window.vala:192
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.vala:177
+#: graphs/window.vala:193
 msgid "Draft"
 msgstr "Osnutek"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:183
+#: graphs/window.vala:199
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:399
+#: graphs/window.vala:473
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s je izrisan z manj podrobnostmi, s/z %d točkami"
 
-#: graphs/window.vala:405
+#: graphs/window.vala:479
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
@@ -2365,6 +2369,6 @@ msgstr[1] "%d element je izrisan z manj podrobnostmi, s/z %d točkami"
 msgstr[2] "%d elementa sta izrisana z manj podrobnostmi, s/z %d točkami"
 msgstr[3] "%d elementi so izrisani z manj podrobnostmi, s/z %d točkami"
 
-#: graphs/window.vala:427
+#: graphs/window.vala:501
 msgid "Open Location"
 msgstr "Odpri mesto"
