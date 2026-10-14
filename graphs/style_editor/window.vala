@@ -190,6 +190,7 @@ namespace Graphs {
             this.unsaved = false;
             set_title (_("Graphs Style Editor"));
             stack.get_pages ().select_item (0, true);
+            StyleManager.apply_color_scheme (this, null);
         }
 
         private void on_factory_setup (Object object) {
@@ -327,6 +328,7 @@ namespace Graphs {
             canvas.figure.set ("left_label", _("Y Label"));
 
             css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.outline_color, style.text_color));
+            StyleManager.apply_color_scheme (this, editor_box.parameters);
 
             canvas_bin.set_child (canvas);
         }

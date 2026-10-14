@@ -271,6 +271,10 @@ namespace Graphs {
             css_provider.load_from_string (css);
 
             var figure_settings = data.figure_settings;
+            StyleManager.apply_color_scheme (
+                this, figure_settings.use_custom_style ? style_params : null
+            );
+
             var canvas = PythonHelper.create_canvas (data.selected_style_params, data, true, figure_settings);
 
             if (canvas == null) return;

@@ -41,7 +41,11 @@ namespace Graphs {
         public string[] errorbar_cycle { get; construct set; }
     }
 
-    private const string SYSTEM_CSS_TEMPLATE = ".system-canvas-view {color: %s; background-color: %s;}";
+    private const string SYSTEM_CSS_TEMPLATE = """
+        .system-canvas-view {color: %s; background-color: %s;}
+        .canvas-light .system-canvas-view {color: %s; background-color: %s;}
+        .canvas-dark .system-canvas-view {color: %s; background-color: %s;}
+    """;
 
     /**
      * Style manager
@@ -203,7 +207,13 @@ namespace Graphs {
 
         private async void on_system_style () {
             var style_params = get_system_style_params ();
-            string css = SYSTEM_CSS_TEMPLATE.printf (style_params.text_color, style_params.outline_color);
+            var light = system_style_light_params;
+            var dark = system_style_dark_params;
+            string css = SYSTEM_CSS_TEMPLATE.printf (
+                style_params.text_color, style_params.outline_color,
+                light.text_color, light.outline_color,
+                dark.text_color, dark.outline_color
+            );
             css_provider.load_from_string (css);
         }
 
@@ -211,8 +221,24 @@ namespace Graphs {
             return Adw.StyleManager.get_default ().get_dark () ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
+        public static StyleParameters get_system_style_params_for (StyleParameters parameters) {
+            return is_dark_style (parameters) ? instance.system_style_dark_params : instance.system_style_light_params;
+        }
+
         public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
             return instance.params_request.emit (style.file, validate);
+        }
+
+        public static bool is_dark_style (StyleParameters parameters) {
+            return Tools.get_luminance_from_hex (parameters.outline_color) < 0.4;
+        }
+
+        public static void apply_color_scheme (Gtk.Widget widget, StyleParameters? parameters) {
+            widget.remove_css_class ("canvas-dark");
+            widget.remove_css_class ("canvas-light");
+            if (parameters == null) return;
+
+            widget.add_css_class (is_dark_style (parameters) ? "canvas-dark" : "canvas-light");
         }
 
         /**
