@@ -146,19 +146,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_accept () {
-            ItemList itemlist = new ItemList ();
-            for (uint i = 0; i < settings_list.get_n_items (); i++) {
-                var settings = (ImportSettings) settings_list.get_item (i);
-                try {
-                    var new_items = DataImporter.parse (settings, window.data.selected_style_params);
-                    itemlist.add_all (new_items.to_array ());
-                } catch (ParseError e) {
-                    window.add_toast_string (e.message);
-                }
-            }
-            Item[] new_items = itemlist.to_array ();
-            window.data.add_items (new_items);
-            window.add_downsample_toasts (new_items);
+            window.import_files (settings_list);
             close ();
         }
     }

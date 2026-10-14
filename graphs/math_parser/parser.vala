@@ -5,17 +5,23 @@ namespace Graphs.MathParser {
         private Lexer lexer = new Lexer ();
 
         private static Once<Parser> _instance;
+        private static Mutex _mutex;
 
         public static unowned Parser instance () {
             return _instance.once (() => { return new Parser (); });
         }
 
         public Ast parse (string src, unichar decimal_separator = '.') throws MathError {
-            lexer.start_lexing (src, decimal_separator);
-            Expression result = expr ();
-            if (lexer.current_type != TokenType.END)
-                throw new MathError.SYNTAX ("trailing input");
-            return new Ast ((owned) result);
+            _mutex.lock ();
+            try {
+                lexer.start_lexing (src, decimal_separator);
+                Expression result = expr ();
+                if (lexer.current_type != TokenType.END)
+                    throw new MathError.SYNTAX ("trailing input");
+                return new Ast ((owned) result);
+            } finally {
+                _mutex.unlock ();
+            }
         }
 
         /* Grammar:

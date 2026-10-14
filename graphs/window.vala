@@ -1,5 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    private class ImportJob {
+        public ImportSettings settings;
+        public Item[]? items = null;
+        public bool done = false;
+
+        public ImportJob (ImportSettings settings) {
+            this.settings = settings;
+        }
+    }
+
     private const string WINDOW_CSS_TEMPLATE = ".canvas-view#%s {color: %s; background-color: %s;}";
 
     /**
@@ -61,10 +71,16 @@ namespace Graphs {
             get { return sidebar_navigation_view.get_visible_page () == main_page; }
         }
 
+        public bool importing {
+            get { return !_imports.is_empty (); }
+        }
+
         private bool _force_close = false;
         private uint _inhibit_cookie = 0;
         private FigureSettingsPage figure_settings_page;
         private Gtk.CssProvider css_provider;
+        private Queue<ImportJob> _imports = new Queue<ImportJob> ();
+        private Cancellable _import_cancellable = new Cancellable ();
 
         construct {
             this.css_provider = new Gtk.CssProvider ();
@@ -79,7 +95,7 @@ namespace Graphs {
             var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
                 var value_row = (ItemBox?) val.get_object ();
-                var target_row = (ItemBox?) main_page.item_list.get_row_at_y ((int) y);
+                var target_row = main_page.item_list.get_row_at_y ((int) y) as ItemBox;
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
@@ -209,17 +225,17 @@ namespace Graphs {
             main_page.item_list.remove_all ();
             var export_data_action = (SimpleAction) lookup_action ("export-data");
             var optimize_limits_action = (SimpleAction) lookup_action ("optimize-limits");
+            main_page.set_show_empty_data_page (data.is_empty () && _imports.is_empty ());
             if (data.is_empty ()) {
-                main_page.set_show_empty_data_page (true);
                 main_page.operations.shift_button.set_sensitive (false);
                 main_page.operations.smoothen_button.set_sensitive (false);
                 main_page.operations.set_cut_sensitivity (false);
                 main_page.operations.set_entry_sensitivity (false);
                 export_data_action.set_enabled (false);
                 optimize_limits_action.set_enabled (false);
+                append_import_rows ();
                 return;
             }
-            main_page.set_show_empty_data_page (false);
             bool items_selected = false;
             bool data_items_selected = false;
             uint index = 0;
@@ -231,6 +247,7 @@ namespace Graphs {
                 data_items_selected = data_items_selected || (item.selected && data_item);
                 index++;
             }
+            append_import_rows ();
             main_page.operations.shift_button.set_sensitive (items_selected);
             main_page.operations.smoothen_button.set_sensitive (data_items_selected);
             main_page.operations.set_cut_sensitivity (data_items_selected && mode == Mode.SELECT);
@@ -350,6 +367,59 @@ namespace Graphs {
             main_page.item_list.append (row);
         }
 
+        private void append_import_rows () {
+            foreach (unowned ImportJob job in _imports.head) {
+                main_page.item_list.append (new ImportingItemBox (job.settings.filename));
+            }
+        }
+
+        public void import_files (ListModel settings_list) {
+            StyleParameters style = data.selected_style_params;
+            for (uint i = 0; i < settings_list.get_n_items (); i++) {
+                var job = new ImportJob ((ImportSettings) settings_list.get_item (i));
+                _imports.push_tail (job);
+                DataImporter.parse_async.begin (job.settings, style, _import_cancellable, (o, result) => {
+                    try {
+                        job.items = DataImporter.parse_async.end (result).to_array ();
+                    } catch (IOError.CANCELLED e) {
+                        return;
+                    } catch (Error e) {
+                        add_toast_string (e.message);
+                    }
+                    job.done = true;
+                    add_finished_imports ();
+                });
+            }
+            notify_property ("importing");
+            on_items_changed ();
+        }
+
+        public void cancel_imports () {
+            if (_imports.is_empty ()) return;
+            _import_cancellable.cancel ();
+            _import_cancellable = new Cancellable ();
+            _imports.clear ();
+            notify_property ("importing");
+            on_items_changed ();
+        }
+
+        private void add_finished_imports () {
+            var itemlist = new ItemList ();
+            while (!_imports.is_empty () && _imports.peek_head ().done) {
+                ImportJob job = _imports.pop_head ();
+                if (job.items != null) itemlist.add_all (job.items);
+            }
+            notify_property ("importing");
+
+            Item[] new_items = itemlist.to_array ();
+            if (new_items.length == 0) {
+                on_items_changed ();
+                return;
+            }
+            data.add_items (new_items);
+            add_downsample_toasts (new_items);
+        }
+
         public void push_sidebar_page (Adw.NavigationPage page) {
             sidebar_navigation_view.push (page);
         }
@@ -447,6 +517,7 @@ namespace Graphs {
             var application = (Application) application;
 
             if (_force_close) {
+                cancel_imports ();
                 application.on_main_window_closed (this);
                 return false;
             }
@@ -474,6 +545,7 @@ namespace Graphs {
                 dialog.present (this);
                 return true;
             }
+            cancel_imports ();
             application.on_main_window_closed (this);
             return false;
         }

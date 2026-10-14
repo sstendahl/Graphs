@@ -4,15 +4,19 @@ namespace Graphs.MathParser {
         private StringBuilder builder;
 
         private static Once<Printer> _instance;
+        private static Mutex _mutex;
 
         public static unowned Printer instance () {
             return _instance.once (() => { return new Printer (); });
         }
 
         public string print (Ast ast) {
+            _mutex.lock ();
             this.builder = new StringBuilder ();
             emit (ast.root ());
-            return builder.free_and_steal ();
+            string result = builder.free_and_steal ();
+            _mutex.unlock ();
+            return result;
         }
 
         private void emit (Expression expr) {

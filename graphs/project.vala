@@ -87,7 +87,7 @@ namespace Graphs {
             dialog.set_filters (get_project_file_filters ());
             try {
                 var file = yield dialog.open (window, null);
-                if (!window.data.unsaved && window.data.file == null) {
+                if (!window.data.unsaved && window.data.file == null && !window.importing) {
                     yield load (window, window.data, file);
                     return;
                 }
@@ -102,22 +102,27 @@ namespace Graphs {
             } catch {}
         }
 
+        private void clear (Window window) {
+            window.cancel_imports ();
+            window.data.clear ();
+        }
+
         public void close (Window window) {
             if (!window.data.unsaved) {
-                window.data.clear ();
+                clear (window);
                 return;
             }
             var dialog = (Adw.AlertDialog) Tools.build_dialog ("save_project_changes");
             dialog.response.connect ((d, response) => {
                 switch (response) {
                     case "discard": {
-                        window.data.clear ();
+                        clear (window);
                         break;
                     }
                     case "save": {
                         save.begin (window, false, (o, result) => {
                             if (save.end (result)) {
-                                window.data.clear ();
+                                clear (window);
                             }
                         });
                         break;
