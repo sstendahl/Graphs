@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Module for data transformations."""
 import logging
+import math
 import re
 from gettext import gettext as _
 
@@ -89,6 +90,90 @@ def get_selected_limits(
         scale,
     )
     return new_min, new_max
+
+
+def _has_pole(values: numpy.ndarray) -> bool:
+    """
+    Check whether sampled equation values shoot off towards infinity.
+
+    Splits the samples into four sets and compares maximum deviation from the
+    median. Near a pole the deviation will differ strongly between sets.
+    """
+    # Crashes on numpy.max() if one of the sets is empty
+    if values.size < 4:
+        return False
+
+    deviation = numpy.abs(values - numpy.median(values))
+    max_deviations = []
+    for start in range(4):
+        max_deviations.append(numpy.max(deviation[start::4]))
+    return max(max_deviations) > 2 * min(max_deviations)
+
+
+def _get_y_range(item, settings, mode, scale: Graphs.Scale) -> tuple | None:
+    """Get (item, low, high, mask) in axis units, None if there is no data."""
+    xposition = item.get_xposition()
+    limits = get_selected_limits(settings, mode, xposition)
+    mask = None
+    if isinstance(item, Graphs.EquationItem):
+        if xposition == Graphs.XPosition.BOTTOM:
+            xscale = settings.get_bottom_scale()
+        else:
+            xscale = settings.get_top_scale()
+        ydata = utilities.equation_to_data(
+            item.get_equation(), limits, scale=xscale,
+        )[1]
+    else:
+        xdata, ydata = utilities.get_xydata(item.get_data())
+        if mode == Graphs.Mode.SELECT:
+            mask = (xdata >= min(limits)) & (xdata <= max(limits))
+            ydata = ydata[mask]
+    with numpy.errstate(divide="ignore", invalid="ignore"):
+        if scale == Graphs.Scale.LOG:
+            values = numpy.log10(ydata)
+        elif scale == Graphs.Scale.LOG2:
+            values = numpy.log2(ydata)
+        else:
+            values = ydata
+    finite = values[numpy.isfinite(values)]
+    if finite.size == 0:
+        return None
+    if isinstance(item, Graphs.EquationItem) and _has_pole(finite):
+        # Don't let the spike decide the spacing
+        low, high = numpy.percentile(finite, (5, 95))
+    else:
+        low, high = finite.min(), finite.max()
+    return item, float(low), float(high), mask
+
+
+def _stack(y_ranges: list, scale: Graphs.Scale, move_first: bool) -> list:
+    """Get (item, mask, value) for the items of one y-axis."""
+    heights = [high - low for _item, low, high, _mask in y_ranges]
+    gap = 0.1 * max(heights)
+    if gap == 0:  # flat curves, use their distance from zero instead
+        levels = [abs(high) for _item, _low, high, _mask in y_ranges]
+        gap = 0.1 * max(levels) or 1  # 1 when all lines are y = 0
+
+    log = scale in (Graphs.Scale.LOG, Graphs.Scale.LOG2)
+    base = 2 if scale == Graphs.Scale.LOG2 else 10
+    decimals = 2 - math.floor(math.log10(gap))
+    if log:
+        digits = 1 - math.floor(math.log10(base ** (0.01 * gap) - 1))
+
+    old_top = new_top = y_ranges[0][2]
+    shifts = []
+    for item, low, high, mask in y_ranges if move_first else y_ranges[1:]:
+        offset = new_top + max(0, low - old_top) + gap - low
+        if not log:
+            value = offset = round(offset, decimals)
+        else:
+            factor = base ** offset
+            value = round(factor, digits - math.floor(math.log10(factor)))
+            offset = math.log(value, base)
+        shifts.append((item, mask, value))
+        old_top = max(old_top, high)
+        new_top = max(new_top, high + offset)
+    return shifts
 
 
 class CommonOperations():
@@ -205,114 +290,60 @@ class CommonOperations():
         return True
 
     @staticmethod
-    def shift(window: Graphs.Window) -> None:
-        """Shift data."""
-        interaction_mode = window.get_mode()
+    def shift(window: Graphs.Window) -> bool:
+        """Stack the selected items vertically, so no two share y values."""
+        mode = window.get_mode()
         data = window.get_data()
-        figure_settings = data.get_figure_settings()
-        data_list = ([
-            item for item in data if item.get_selected()
-            and isinstance(item, (Graphs.EquationItem, Graphs.DataItem))
-        ])
-        ranges = [
-            figure_settings.get_max_left() - figure_settings.get_min_left(),
-            figure_settings.get_max_right() - figure_settings.get_min_right(),
+        settings = data.get_figure_settings()
+        scales = settings.get_left_scale(), settings.get_right_scale()
+        groups = ([], [])  # (items on left axes, items on right axis)
+        for item in data:
+            if item.get_selected() and isinstance(
+                item, (Graphs.EquationItem, Graphs.DataItem),
+            ):
+                y = int(item.get_yposition())
+                y_range = _get_y_range(item, settings, mode, scales[y])
+                if y_range is not None:
+                    groups[y].append(y_range)
+        if not any(groups):
+            if mode == Graphs.Mode.SELECT:
+                msg = _("No data found within the highlighted area")
+            window.add_toast_string(msg)
+            return False
+
+        shifts = [
+            (shift, scale) for group, scale in zip(groups, scales) if group
+            for shift in _stack(
+                group, scale, len(group) == 1 or mode == Graphs.Mode.SELECT,
+            )
         ]
-        left_scale = figure_settings.get_left_scale()
-        right_scale = figure_settings.get_right_scale()
-        for index, item in enumerate(data_list):
-            pos = item.get_xposition()
-            lims = get_selected_limits(figure_settings, interaction_mode, pos)
-            startx, stopx = lims
-            scale = right_scale if item.get_yposition() else left_scale
+        for (item, mask, value), scale in shifts:
+            log = scale in (Graphs.Scale.LOG, Graphs.Scale.LOG2)
             if isinstance(item, Graphs.EquationItem):
-                equation = item.get_equation()
-                xdata, ydata = utilities.equation_to_data(equation, lims)
-            elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = utilities.get_xydata(item.get_data())
-                if interaction_mode == Graphs.Mode.SELECT:
-                    # If startx and stopx are not out of range, that is,
-                    # if the item data is within the highlight
-                    if stopx < min(xdata) or startx > max(xdata):
-                        continue
-                    data_mask = numpy.greater_equal(xdata, startx)
-                    data_mask &= numpy.less_equal(xdata, stopx)
-                    xdata, ydata = xdata[data_mask], ydata[data_mask]
-            if min(xdata.size, ydata.size) == 0:
-                continue
-
-            shift_value = 0
-
-            item = data_list[0]
-            for i in range(index + 1):
-                previous_item = item
-                item = data_list[i]
-                y_range = ranges[item.get_yposition()]
-
-                if isinstance(previous_item, Graphs.EquationItem):
-                    prev_min, prev_max = startx, stopx
+                equation = Graphs.ast_to_expression(item.get_equation())
+                if not log:
+                    equation = f"({equation}) + {value!r}"
                 else:
-                    prev_xdata = utilities.bytes_to_ndarray(
-                        previous_item.get_data().get_xdata_b(),
-                    )
-                    prev_min, prev_max = min(prev_xdata), max(prev_xdata)
-                    if interaction_mode == Graphs.Mode.SELECT:
-                        prev_min = max(prev_min, startx)
-                        prev_max = min(prev_max, stopx)
-
-                xmin, xmax = min(xdata), max(xdata)
-                if xmin >= prev_min and xmax <= prev_max:
-                    mask = numpy.greater_equal(xdata, xmin)
-                    mask &= numpy.less_equal(xdata, xmax)
-                    ydata = ydata[mask]
-                nonzero_data = ydata[ydata != 0]
-                ymin = nonzero_data.min()
-                ymax = nonzero_data.max()
-
-                if scale == Graphs.Scale.LOG:
-                    shift_value += \
-                        numpy.log10(abs(ymax / ymin)) \
-                        + 0.1 * numpy.log10(y_range)
-                elif scale == Graphs.Scale.LOG2:
-                    shift_value += \
-                        numpy.log2(abs(ymax / ymin)) \
-                        + 0.1 * numpy.log2(y_range)
-                else:
-                    shift_value += (ymax - ymin) + 0.1 * y_range
-            if shift_value == 0:
-                continue
-            shift_value = Graphs.math_tools_sig_fig_round(shift_value, 3)
-            if isinstance(item, Graphs.EquationItem):
-                equation = ast.sympify(item.get_equation())
-                if scale == Graphs.Scale.LOG:
-                    equation = equation * 10 ** shift_value
-                elif scale == Graphs.Scale.LOG2:
-                    equation = equation * 2 ** shift_value
-                else:
-                    equation = equation + shift_value
-                item.set_equation(Graphs.expression_to_ast(str(equation)))
-                continue
-            if isinstance(item, Graphs.DataItem):
-                if scale == Graphs.Scale.LOG:
-                    new_ydata = ydata * 10**shift_value
-                elif scale == Graphs.Scale.LOG2:
-                    new_ydata = ydata * 2**shift_value
-                else:  # Apply linear scaling
-                    new_ydata = ydata + shift_value
-                old_holder = item.get_data()
-                if interaction_mode == Graphs.Mode.SELECT:
-                    item_ydata = utilities.bytes_to_ndarray(
-                        old_holder.get_ydata_b(),
-                    ).copy()
-                    item_ydata[data_mask] = new_ydata
-                    new_ydata = item_ydata
-                item.set_data(Graphs.DataHolder.new(
-                    utilities.bytes_to_ndarray(old_holder.get_xdata_b()),
-                    new_ydata,
-                    utilities.bytes_to_ndarray(old_holder.get_xerr_b()),
-                    utilities.bytes_to_ndarray(old_holder.get_yerr_b()),
+                    equation = f"{value!r} * ({equation})"
+                item.set_equation(Graphs.PythonHelper.simplify_expression(
+                    Graphs.expression_to_ast(equation),
                 ))
                 continue
+            holder = item.get_data()
+            xdata, ydata = utilities.get_xydata(holder)
+            xerr, yerr = utilities.get_xyerr(holder)
+            mask = slice(None) if mask is None else mask
+            ydata = ydata.copy()
+            if not log:
+                ydata[mask] += value
+            else:
+                ydata[mask] *= value
+                if yerr is not None:
+                    # Scale the error bars with the data. get_xyerr returns a
+                    # read-only version of the item's data, so use copy instead
+                    yerr = yerr.copy()
+                    yerr[mask] *= value
+            item.set_data(Graphs.DataHolder.new(xdata, ydata, xerr, yerr))
         return True
 
 
