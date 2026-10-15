@@ -1,5 +1,27 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    public enum XPosition {
+        BOTTOM,
+        TOP;
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (XPosition).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+    }
+
+    public enum YPosition {
+        LEFT,
+        RIGHT;
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (YPosition).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+    }
+
     public abstract class Item : Object {
         public string typename { get; construct set; }
         public string name { get; set; default = ""; }
