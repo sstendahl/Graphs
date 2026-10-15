@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-08 07:31+0000\n"
-"PO-Revision-Date: 2026-10-09 07:41+0800\n"
+"POT-Creation-Date: 2026-10-14 10:32+0000\n"
+"PO-Revision-Date: 2026-10-15 08:00+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -512,6 +512,10 @@ msgstr "导入模式"
 msgid "Set as Default"
 msgstr "设为默认"
 
+#: data/ui/import/importing-item-box.blp:9
+msgid "Importing…"
+msgstr "正在导入…"
+
 #: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
 msgstr "名称和位置"
@@ -865,7 +869,7 @@ msgid "Figure Settings"
 msgstr "图表设置"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:27
-#: graphs/style_editor/window.vala:325
+#: graphs/style_editor/window.vala:326
 msgid "Title"
 msgstr "标题"
 
@@ -1796,7 +1800,7 @@ msgstr "拖放到这里来导入"
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
 msgid "Undo"
 msgstr "撤消"
 
@@ -2145,22 +2149,22 @@ msgstr "颜色 %d"
 msgid "Example Item"
 msgstr "示例项目"
 
-#: graphs/style_editor/window.vala:224
+#: graphs/style_editor/window.vala:225
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "您确定要删除 %s 吗？"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:302
+#: graphs/style_editor/window.vala:303
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Graphs 样式编辑器 — %s"
 
-#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X 标签"
 
-#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y 标签"
 
@@ -2244,27 +2248,27 @@ msgstr ""
 "置信带错误：\n"
 "协方差矩阵不稳定。"
 
-#: graphs/curve_fitting.vala:265
+#: graphs/curve_fitting.vala:271
 msgid "Residuals"
 msgstr "残差"
 
-#: graphs/curve_fitting.vala:376
+#: graphs/curve_fitting.vala:382
 msgid "Parameters"
 msgstr "参数"
 
-#: graphs/curve_fitting.vala:392
+#: graphs/curve_fitting.vala:398
 msgid "Statistics"
 msgstr "统计"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:401
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:401
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:577
+#: graphs/curve_fitting.vala:583
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
@@ -2310,45 +2314,45 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib 样式文件"
 
-#: graphs/operations.py:125
+#: graphs/operations.py:210
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "无法执行变换，请确保语法正确"
 
-#: graphs/operations.py:187
+#: graphs/operations.py:272
 msgid "No data found in highlighted area"
 msgstr "高亮区域内未发现数据"
 
-#: graphs/operations.py:191
+#: graphs/operations.py:276
 msgid "Some items lack error bars; they will be discarded"
 msgstr "一些项目缺少误差棒，它们将被丢弃"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:288
 msgid "Combined Data"
 msgstr "组合的数据"
 
-#: graphs/operations.py:345
+#: graphs/operations.py:310 graphs/operations.py:560 graphs/operations.py:564
+msgid "No data found within the highlighted area"
+msgstr "高亮区域内未发现数据"
+
+#: graphs/operations.py:376
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "对 {name} 的操作未产生可绘图方程式的结果"
 
-#: graphs/operations.py:351
+#: graphs/operations.py:382
 msgid "Operation not supported for equations."
 msgstr "方程式不支持该操作。"
 
-#: graphs/operations.py:529 graphs/operations.py:533
-msgid "No data found within the highlighted area"
-msgstr "高亮区域内未发现数据"
-
-#: graphs/operations.py:542
+#: graphs/operations.py:573
 msgid "Operation not supported for data items"
 msgstr "数据项目不支持该操作"
 
-#: graphs/operations.py:545
+#: graphs/operations.py:576
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:552
+#: graphs/operations.py:583
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
@@ -2426,7 +2430,7 @@ msgstr "无法解析 {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "文件 {file} 不包含名称标签"
 
-#: graphs/styles.vala:103
+#: graphs/styles.vala:107
 msgid "System"
 msgstr "系统"
 
@@ -2438,37 +2442,37 @@ msgstr "所有文件"
 msgid "Document Portal"
 msgstr "文档门户"
 
-#: graphs/window.vala:149
+#: graphs/window.vala:165
 msgid "Graphs (Development)"
 msgstr "Graphs（开发版）"
 
-#: graphs/window.vala:176
+#: graphs/window.vala:192
 msgid "Untitled Project"
 msgstr "未命名工程"
 
-#: graphs/window.vala:177
+#: graphs/window.vala:193
 msgid "Draft"
 msgstr "草稿"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:183
+#: graphs/window.vala:199
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs — %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:399
+#: graphs/window.vala:473
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s 是通过使用 %d 个点以减少详情的方式绘制的"
 
-#: graphs/window.vala:405
+#: graphs/window.vala:479
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
 msgstr[0] "%d 个项目是通过使用 %d 个点以减少详情的方式绘制的"
 
-#: graphs/window.vala:427
+#: graphs/window.vala:501
 msgid "Open Location"
 msgstr "打开位置"
 
