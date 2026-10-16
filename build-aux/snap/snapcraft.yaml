@@ -1,5 +1,5 @@
 name: graphs
-base: core24
+base: core26
 adopt-info: graphs
 grade: stable 
 confinement: strict
@@ -19,10 +19,10 @@ parts:
     source: .
     plugin: python
     python-packages:
-      - matplotlib==3.10.3
-      - numexpr==2.11.0
-      - numpy==2.3.2
-      - scipy==1.16.1
+      - matplotlib==3.11.0
+      - numexpr==2.14.1
+      - numpy==2.4.6
+      - scipy==1.17.1
       - sympy==1.14.0
     prime:
       - -usr/bin/activate*
@@ -45,7 +45,7 @@ parts:
     after: [ python-deps ]
     plugin: meson
     source: https://gitlab.gnome.org/World/Graphs.git
-    source-tag: 'v1.8.5'
+    source-tag: 'v2.0.7'
     source-depth: 1
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
@@ -74,4 +74,4 @@ apps:
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-    extensions: [gnome]      
+    extensions: [gnome]
