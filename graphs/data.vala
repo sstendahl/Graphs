@@ -449,17 +449,30 @@ namespace Graphs {
 
                 prop = item.xposition.friendly_string () + "-label";
                 figure_settings.get (prop, out axis_label);
-                if (_used_positions[item.xposition] && item.xlabel == axis_label) {
+                if (item.xlabel != "" && item.xlabel == axis_label
+                    && !label_in_use (true, item.xposition, axis_label)) {
                     figure_settings.set (prop, _settings.get_string (prop));
                 }
 
                 prop = item.yposition.friendly_string () + "-label";
                 figure_settings.get (prop, out axis_label);
-                if (_used_positions[item.yposition + 2] && item.ylabel == axis_label) {
+                if (item.ylabel != "" && item.ylabel == axis_label
+                    && !label_in_use (false, item.yposition, axis_label)) {
                     figure_settings.set (prop, _settings.get_string (prop));
                 }
             }
             add_history_state ();
+        }
+
+        private bool label_in_use (bool x_axis, int position, string label) {
+            foreach (Item item in _items) {
+                if (x_axis) {
+                    if (item.xposition == position && item.xlabel == label) return true;
+                } else {
+                    if (item.yposition == position && item.ylabel == label) return true;
+                }
+            }
+            return false;
         }
 
         // End section management
