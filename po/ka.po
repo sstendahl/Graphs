@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-14 10:32+0000\n"
-"PO-Revision-Date: 2026-10-20 06:42+0200\n"
+"POT-Creation-Date: 2026-10-20 13:44+0000\n"
+"PO-Revision-Date: 2026-10-21 07:48+0200\n"
 "Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
 "Language-Team: Georgian <ka@li.org>\n"
 "Language: ka\n"
@@ -1919,17 +1919,21 @@ msgstr "მონაცემების შემოტანა ცხრი�
 msgid "No data found in table column"
 msgstr "ცხრილის სვეტში მონაცემები აღმოჩენილი არაა"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr "სკანირების ღერძისთვის პოზიციები აღმოჩენილი არაა"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr "ინტენსივობა (წმ)"
 
