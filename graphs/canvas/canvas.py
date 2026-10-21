@@ -503,11 +503,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.queue_draw()
 
 
-def _in_direction_of(limits, current) -> list:
-    """Sort limits, descending if the current limits are."""
-    return sorted(limits, reverse=current[0] > current[1])
-
-
 class _DummyToolbar(NavigationToolbar2):
     """Custom Toolbar implementation."""
 
@@ -546,6 +541,11 @@ class _DummyToolbar(NavigationToolbar2):
             self.canvas.set_cursor(tools.Cursors.POINTER)
             self._last_cursor = tools.Cursors.POINTER
 
+    @staticmethod
+    def _in_direction_of(limits, current) -> list:
+        """Sort limits, descending if the current limits are."""
+        return sorted(limits, reverse=current[0] > current[1])
+
     # Overwritten function - do not change name
     def drag_pan(self, event) -> None:
         """Handle dragging in pan/zoom mode."""
@@ -564,9 +564,9 @@ class _DummyToolbar(NavigationToolbar2):
                 continue
             # Sort limits so this works with inverted scaling
             if not self.canvas.is_locked(ax, "x"):
-                ax.set_xlim(_in_direction_of(points[:, 0], ax.get_xlim()))
+                ax.set_xlim(self._in_direction_of(points[:, 0], ax.get_xlim()))
             if not self.canvas.is_locked(ax, "y"):
-                ax.set_ylim(_in_direction_of(points[:, 1], ax.get_ylim()))
+                ax.set_ylim(self._in_direction_of(points[:, 1], ax.get_ylim()))
         self.canvas.draw_idle()
 
     # Overwritten function - do not change name
