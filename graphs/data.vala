@@ -27,6 +27,7 @@ namespace Graphs {
                 this._figure_settings = value;
                 value.notify["custom-style"].connect (_on_custom_style);
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
+                value.notify["hide-unselected"].connect (_on_hide_unselected);
                 value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
                 _update_used_positions ();
                 _on_use_custom_style.begin ();
@@ -402,6 +403,7 @@ namespace Graphs {
                         }
                     }
                 }
+                item.visible = !figure_settings.hide_unselected || item.selected;
                 _connect_to_item (item);
                 item_added.emit (item);
             }
@@ -417,6 +419,7 @@ namespace Graphs {
                 _connect_to_item (item);
             }
             _items = new ManagedArray<Item>.take ((owned) items);
+            _update_visibility ();
             _update_used_positions ();
             items_changed.emit (0, removed, _items.length);
         }
@@ -874,8 +877,19 @@ namespace Graphs {
             if (_notify_selection_changed)
                 selection_changed.emit (index (item), 1);
 
-            if (figure_settings.hide_unselected)
-                item.visible = item.selected;
+            item.visible = !figure_settings.hide_unselected || item.selected;
+        }
+
+        private void _update_visibility () {
+            bool hide = figure_settings.hide_unselected;
+            foreach (Item item in _items) {
+                item.visible = !hide || item.selected;
+            }
+        }
+
+        private void _on_hide_unselected () {
+            _update_visibility ();
+            _update_used_positions ();
         }
 
         private void _on_item_position_change () {
