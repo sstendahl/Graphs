@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    public enum EquationLinestyle {
+        NONE,
+        SOLID,
+        DOTTED,
+        DASHED,
+        DASHDOT
+    }
+
     public class EquationItem : Item, EquationBasedItem, LegendableItem {
         public bool legend { get; set; default = true; }
-        public int linestyle { get; set; default = 1; }
+        public EquationLinestyle linestyle { get; set; default = 1; }
         public double linewidth { get; set; default = 3; }
 
         private Ast _equation;
