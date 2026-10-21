@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-14 10:32+0000\n"
-"PO-Revision-Date: 2026-10-14 19:30+0200\n"
+"POT-Creation-Date: 2026-10-20 13:44+0000\n"
+"PO-Revision-Date: 2026-10-21 19:54+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -1938,17 +1938,21 @@ msgstr "Ni mogoče uvoziti podatkov iz tabele »%s«, številskih stolpcev ni mo
 msgid "No data found in table column"
 msgstr "V stolpcu tabele ni podatkov"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr "Za os skeniranja ni bilo najdenih položajev"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr "Intenzivnost (cps)"
 
