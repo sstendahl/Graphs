@@ -58,7 +58,19 @@ namespace Graphs {
         SOLID,
         DOTTED,
         DASHED,
-        DASHDOT
+        DASHDOT;
+
+        public unowned string to_style () {
+            EnumClass enumc = (EnumClass) typeof (DataLinestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+
+        public static DataLinestyle from_style (string style) {
+            EnumClass enumc = (EnumClass) typeof (DataLinestyle).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (style);
+            return (DataLinestyle) eval.value;
+        }
     }
 
     public enum DataMarkerstyle {
@@ -83,7 +95,20 @@ namespace Graphs {
         VERTCAL_LINE,
         HORIZONTAL_LINE,
         FILLED_PLUS,
-        FILLED_X
+        FILLED_X;
+
+        private const string[] STYLE_VALUES = {"none", ".", ",", "o", "v", "^", "<", ">", "8", "s", "p", "*", "h", "H", "+", "x", "D", "d", "|", "_", "P", "X"};
+
+        public unowned string to_style () {
+            return STYLE_VALUES[this];
+        }
+
+        public static DataMarkerstyle from_style (string style) {
+            for (int i = 0; i < STYLE_VALUES.length; i++) {
+                if (STYLE_VALUES[i] == style) return i;
+            }
+            assert_not_reached ();
+        }
     }
 
     public class DataItem : Item, LegendableItem {
