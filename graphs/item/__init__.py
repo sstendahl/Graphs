@@ -2,7 +2,7 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
-from graphs import misc, utilities
+from graphs import utilities
 
 
 class ItemFactory(Graphs.ItemFactory):
@@ -14,16 +14,15 @@ class ItemFactory(Graphs.ItemFactory):
             "errcapsize": ("errorbar.capsize", None),
             "errcapthick": ("errorbar.capthick", None),
             "errlinewidth": ("errorbar.linewidth", None),
-            "linestyle": ("lines.linestyle", misc.LINESTYLES.index),
+            "linestyle": ("lines.linestyle", Graphs.data_linestyle_from_style),
             "linewidth": ("lines.linewidth", None),
-            "markerstyle": ("lines.marker", misc.MARKERSTYLES.index),
+            "markerstyle":
+            ("lines.marker", Graphs.data_markerstyle_from_style),
             "markersize": ("lines.markersize", None),
         },
         "EquationItem": {
-            "linestyle": (
-                "lines.linestyle",
-                lambda x: max(misc.LINESTYLES.index(x) - 1, 0),
-            ),
+            "linestyle":
+            ("lines.linestyle", Graphs.equation_linestyle_from_style),
             "linewidth": ("lines.linewidth", None),
         },
         "TextItem": {
