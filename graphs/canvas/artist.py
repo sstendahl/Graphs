@@ -63,20 +63,34 @@ def _decimate(x_keys, ydata, nan_indices, sorted_x, x_start, x_stop, pixels):
     gaps = nan_indices[(nan_indices >= first) & (nan_indices < last)]
     if gaps.size:
         selected += _fix_nan_extrema(
-            gaps, buckets, bucket_starts, bucket_size, first, bucketed_end,
-            lowest, highest,
+            gaps,
+            buckets,
+            bucket_starts,
+            bucket_size,
+            first,
+            bucketed_end,
+            lowest,
+            highest,
         )
 
     if bucketed_end < last:  # remainder that did not fill a whole bucket
         remainder = ydata[bucketed_end:last].reshape(1, -1)
-        selected.append(bucketed_end + numpy.concatenate(
-            _find_row_extrema(remainder),
-        ))
+        selected.append(
+            bucketed_end + numpy.concatenate(_find_row_extrema(remainder)),
+        )
     return numpy.unique(numpy.concatenate(selected))
 
 
-def _fix_nan_extrema(gaps, buckets, bucket_starts, bucket_size, first,
-                     bucketed_end, lowest, highest):
+def _fix_nan_extrema(
+    gaps,
+    buckets,
+    bucket_starts,
+    bucket_size,
+    first,
+    bucketed_end,
+    lowest,
+    highest,
+):
     """Pick better extrema for the buckets that contain a NaN."""
     bucketed_gaps = gaps[gaps < bucketed_end]
     gap_buckets, first_of_bucket = numpy.unique(
@@ -208,7 +222,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         if self._lod_timeout_id is not None:
             GObject.source_remove(self._lod_timeout_id)
         self._lod_timeout_id = GObject.timeout_add(
-            100, self._lod_timeout_callback)
+            100,
+            self._lod_timeout_callback,
+        )
 
     def _lod_timeout_callback(self) -> bool:
         self._lod_timeout_id = None
@@ -228,8 +244,13 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             lower = Graphs.get_value_at_fraction(-1, x_start, x_stop, scale)
             upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
             indices = _decimate(
-                self._keys, ydata, self._nans, self._sorted,
-                lower, upper, self._axis.bbox.width * 3,
+                self._keys,
+                ydata,
+                self._nans,
+                self._sorted,
+                lower,
+                upper,
+                self._axis.bbox.width * 3,
             )
         else:
             indices = None
@@ -289,25 +310,27 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._showyerr = showyerr
         self._apply_visibility()
 
-    @GObject.Property(type=int, default=1)
-    def linestyle(self) -> int:
+    @GObject.Property(type=int, default=Graphs.DataLinestyle.SOLID)
+    def linestyle(self) -> Graphs.DataLinestyle:
         """Get linestyle property."""
-        return misc.LINESTYLES.index(self._data.get_linestyle())
+        return Graphs.data_linestyle_from_style(self._data.get_linestyle())
 
     @linestyle.setter
-    def linestyle(self, linestyle: int) -> None:
+    def linestyle(self, linestyle: Graphs.DataLinestyle) -> None:
         """Set linestyle property."""
-        self._data.set_linestyle(misc.LINESTYLES[linestyle])
+        linestyle = Graphs.python_data_linestyle_to_style(linestyle)
+        self._data.set_linestyle(linestyle)
 
-    @GObject.Property(type=int, default=1)
-    def markerstyle(self) -> int:
+    @GObject.Property(type=int, default=Graphs.DataMarkerstyle.NONE)
+    def markerstyle(self) -> Graphs.DataMarkerstyle:
         """Get markerstyle property."""
-        return misc.MARKERSTYLES.index(self._data.get_marker())
+        return Graphs.data_markerstyle_from_style(self._data.get_marker())
 
     @markerstyle.setter
-    def markerstyle(self, markerstyle: int) -> None:
+    def markerstyle(self, markerstyle: Graphs.DataMarkerstyle) -> None:
         """Set markerstyle property."""
-        self._data.set_marker(misc.MARKERSTYLES[markerstyle])
+        markerstyle = Graphs.python_data_markerstyle_to_style(markerstyle)
+        self._data.set_marker(markerstyle)
 
     @GObject.Property(type=float, default=0)
     def errcapsize(self) -> float:
@@ -477,8 +500,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.get_linestyle()],
-            marker=misc.MARKERSTYLES[item.get_markerstyle()],
+            linestyle=Graphs.python_data_linestyle_to_style(
+                item.get_linestyle(),
+            ),
+            marker=Graphs.python_data_markerstyle_to_style(
+                item.get_markerstyle(),
+            ),
             capsize=item.get_errcapsize(),
             capthick=item.get_errcapthick(),
             elinewidth=item.get_errlinewidth(),
@@ -560,7 +587,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             label=item.get_name(),
             color=item.get_color(),
             alpha=item.get_alpha(),
-            linestyle=misc.LINESTYLES[item.get_linestyle() + 1],
+            linestyle=Graphs.python_equation_linestyle_to_style(
+                item.get_linestyle(),
+            ),
             marker="none",
         )[0]
         self._color_artist = self._artist
@@ -604,15 +633,17 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._program = item.get_program()
         self._generate_data()
 
-    @GObject.Property(type=int, default=1)
-    def linestyle(self) -> int:
+    @GObject.Property(type=int, default=Graphs.EquationLinestyle.SOLID)
+    def linestyle(self) -> Graphs.EquationLinestyle:
         """Get linestyle property."""
-        return misc.LINESTYLES.index(self._artist.get_linestyle()) - 1
+        linestyle = self._artist.get_linestyle()
+        return Graphs.equation_linestyle.from_style(linestyle)
 
     @linestyle.setter
-    def linestyle(self, linestyle: int) -> None:
+    def linestyle(self, linestyle: Graphs.EquationLinestyle) -> None:
         """Set linestyle property."""
-        self._artist.set_linestyle(misc.LINESTYLES[linestyle + 1])
+        linestyle = Graphs.python_equation_linestyle_to_style(linestyle)
+        self._artist.set_linestyle(linestyle)
 
     def _set_properties(self, _x, _y) -> None:
         linewidth = self.props.linewidth
