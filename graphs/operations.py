@@ -253,6 +253,8 @@ class CommonOperations():
                     mask = numpy.greater_equal(xdata, startx)
                     mask &= numpy.less_equal(xdata, stopx)
                     xdata, ydata = xdata[mask], ydata[mask]
+                    xerr = None if xerr is None else xerr[mask]
+                    yerr = None if yerr is None else yerr[mask]
 
                 if xerr is not None and new_xerr is not None:
                     new_xerr.append(xerr)
