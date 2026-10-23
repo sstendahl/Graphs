@@ -367,9 +367,10 @@ class EquationOperations():
         try:
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
+                xindex = item.get_xposition() * 2
                 args = [(
-                    old_limits[item.get_xposition()],
-                    old_limits[item.get_yposition() + 1],
+                    old_limits[xindex],
+                    old_limits[xindex + 1],
                 )] + list(args)
             equation = item.get_preprocessed_equation()
             equation = str(sympy.simplify(callback(equation, *args)))
