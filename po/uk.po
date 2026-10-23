@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-14 10:32+0000\n"
-"PO-Revision-Date: 2026-10-15 19:08+0300\n"
+"POT-Creation-Date: 2026-10-23 10:56+0000\n"
+"PO-Revision-Date: 2026-10-23 20:56+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2"
-" && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>="
+"2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 25.12.1\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
@@ -157,12 +157,12 @@ msgstr ""
 
 #: data/se.sjoerd.Graphs.desktop.in:11
 msgid ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
-"tion;Fitting;xrdml;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;"
 msgstr ""
-"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiza"
-"tion;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані;к"
-"реслити;рисунок;візуалізація;апроксимація;"
+"Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualiz"
+"ation;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані"
+";креслити;рисунок;візуалізація;апроксимація;"
 
 #: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
 #: data/ui/style-editor/window.blp:299
@@ -308,7 +308,7 @@ msgstr "Імпортувати лише значення Y, значення X �
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item/equation_item.vala:24
+#: graphs/item/equation_item.vala:43
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -537,7 +537,6 @@ msgid "Set as Default"
 msgstr "Зробити типовим"
 
 #: data/ui/import/importing-item-box.blp:9
-#| msgid "Import File…"
 msgid "Importing…"
 msgstr "Імпортування…"
 
@@ -2073,17 +2072,21 @@ msgstr ""
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr "Не знайдено позицій для вісі сканування"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
@@ -2133,7 +2136,7 @@ msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "файли ASCII"
 
-#: graphs/item/data_item.vala:73
+#: graphs/item/data_item.vala:131
 msgid "Dataset"
 msgstr "Набір даних"
 
@@ -2211,7 +2214,7 @@ msgstr "Не вдалося завантажити {font}"
 msgid "translator-credits"
 msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 
-#: graphs/actions.vala:183 graphs/item_box.vala:46
+#: graphs/actions.vala:184 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
@@ -2309,14 +2312,14 @@ msgstr "Параметри апроксимації для %s"
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
-#: graphs/data.vala:487
+#: graphs/data.vala:503
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
 "Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/data.vala:907
+#: graphs/data.vala:934
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
@@ -2356,42 +2359,42 @@ msgstr ""
 "Не вдалося виконати перетворення. Переконайтеся, що правильно вказано "
 "синтаксичну конструкцію"
 
-#: graphs/operations.py:272
+#: graphs/operations.py:274
 msgid "No data found in highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:276
+#: graphs/operations.py:278
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Для деяких записів немає позначок похибок; ці записи буде відкинуто"
 
-#: graphs/operations.py:288
+#: graphs/operations.py:290
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:310 graphs/operations.py:560 graphs/operations.py:564
+#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:376
+#: graphs/operations.py:378
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
 
-#: graphs/operations.py:382
+#: graphs/operations.py:384
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:573
+#: graphs/operations.py:575
 msgid "Operation not supported for data items"
 msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:576
+#: graphs/operations.py:578
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: помилка під час виконання дії"
 
-#: graphs/operations.py:583
+#: graphs/operations.py:585
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
