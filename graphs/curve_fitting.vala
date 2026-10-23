@@ -234,8 +234,8 @@ namespace Graphs {
             data_curve.name = item.name;
             data_curve.color = DATA_COLOR;
             data_curve.markersize = 13;
-            data_curve.markerstyle = 1;
-            data_curve.linestyle = 0;
+            data_curve.markerstyle = POINT;
+            data_curve.linestyle = SOLID;
 
             var fitted_curve = ItemFactory.new_data_item (style, {}, {});
             fitted_curve.color = FIT_COLOR;
@@ -247,8 +247,8 @@ namespace Graphs {
             var residuals = ItemFactory.new_data_item (style, {}, {});
             residuals.color = DATA_COLOR;
             residuals.markersize = 13;
-            residuals.markerstyle = 1;
-            residuals.linestyle = 0;
+            residuals.markerstyle = POINT;
+            residuals.linestyle = SOLID;
 
             main_canvas_items = new ListStore (typeof (Item));
             main_canvas_items.append (fitted_curve);
