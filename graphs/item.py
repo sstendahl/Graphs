@@ -291,8 +291,10 @@ class ItemFactory(Graphs.ItemFactory):
                 return DataItem(**dictionary)
             case "GeneratedDataItem":
                 dictionary.pop("type")
-                dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
-                return GeneratedDataItem(**dictionary)
+                data = dictionary.pop("data")
+                item = GeneratedDataItem(**dictionary)
+                item.props.data = Graphs.DataHolder.new(*data)
+                return item
             case "EquationItem":
                 cls = EquationItem
             case "TextItem":
