@@ -1,7 +1,7 @@
 name: graphs
-base: core24
+base: core26
 adopt-info: graphs
-grade: stable 
+grade: stable
 confinement: strict
 compression: lzo
 platforms:
@@ -16,36 +16,31 @@ slots:
 
 parts:
   python-deps:
-    source: .
-    plugin: python
-    python-packages:
-      - matplotlib==3.10.9
-      - numexpr==2.14.1
-      - numpy==2.4.4
-      - scipy==1.17.1
-      - sympy==1.14.0
-    prime:
-      - -usr/bin/activate*
-      - -usr/bin/Activate.ps1
-      - -usr/bin/python*
-      - -usr/bin/pip*
-      - -pyvenv.cfg
-      - -share
-      - -include
-      - -lib
-      - -lib64
-      - -usr/lib/*/dist-packages/pip*
-      - -usr/lib/*/dist-packages/setuptools*
-      - -usr/lib/*/dist-packages/pkg_resources*
-    organize: 
-      bin: usr/bin
-      lib/python3.12/site-packages: usr/lib/python3/dist-packages
-      
+    plugin: nil
+    build-packages:
+      - python3-venv
+      - python3-dev
+    override-build: |
+      /snap/gnome-core26-sdk/current/usr/bin/python3 -m venv $CRAFT_PART_BUILD/venv
+      $CRAFT_PART_BUILD/venv/bin/pip install \
+        --target $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages \
+        matplotlib==3.11.0 \
+        numexpr==2.14.1 \
+        numpy==2.4.6 \
+        scipy==1.17.1 \
+        sympy==1.14.0
+      # gio-pyio needs PyGObject, which the GNOME SDK/runtime already provides
+      $CRAFT_PART_BUILD/venv/bin/pip install \
+        --target $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages \
+        --no-deps \
+        gio-pyio==0.0.6
+      rm -rf $CRAFT_PART_INSTALL/usr/lib/python3/dist-packages/bin
+
   graphs:
     after: [ python-deps ]
     plugin: meson
     source: https://gitlab.gnome.org/World/Graphs.git
-    source-tag: 'v2.0.0'
+    source-tag: 'v2.0.7'
     source-depth: 1
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
@@ -53,7 +48,7 @@ parts:
     build-environment:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
     build-snaps:
-      - blueprint-compiler/latest/edge 
+      - blueprint-compiler/latest/edge
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
@@ -64,8 +59,8 @@ parts:
       done
     organize:
       snap/graphs/current/usr: usr
-    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]    
-    
+    parse-info: [usr/share/metainfo/se.sjoerd.Graphs.metainfo.xml]
+
 apps:
   graphs:
     command: usr/bin/graphs
@@ -73,5 +68,5 @@ apps:
     common-id: se.sjoerd.Graphs
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
-      GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-    extensions: [gnome]      
+      GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET_BUILD_FOR/girepository-1.0:$GI_TYPELIB_PATH
+    extensions: [gnome]
