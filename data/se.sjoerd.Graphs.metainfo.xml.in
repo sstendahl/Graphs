@@ -104,6 +104,9 @@
           <li>Fixed an issue where a custom transformation on multiple items would add a separate undo step for each item</li>
           <li>Fixed an issue where redoing an operation would not restore the view that belonged to that operation</li>
           <li>Fixed an issue where equations were always rejected when they had no valid values between 0 and 10 (e.g. sqrt(x-30))</li>
+          <li>Fixed operations on generated data being lost after reloading a project</li>
+          <li>Curve fitting now also works when using spaces in the custom equation</li>
+          <li>Fix a memory leaks when using error bars</li>
         </ul>
         <p>Other Improvements</p>
         <ul>
