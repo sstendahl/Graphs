@@ -151,7 +151,7 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_validate_equation_request(self, equation: str) -> bool:
         try:
-            ydata = numexpr.evaluate(equation, local_dict={"x": XDATA})
-            return numpy.isfinite(ydata).any()
+            numexpr.evaluate(equation, local_dict={"x": XDATA})
+            return True
         except (KeyError, SyntaxError, ValueError, TypeError):
             return False

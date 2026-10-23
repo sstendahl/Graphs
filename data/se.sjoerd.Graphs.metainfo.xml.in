@@ -103,6 +103,7 @@
           <li>Fixed an issue where deleting with no items selected would show "Deleted (null)"</li>
           <li>Fixed an issue where a custom transformation on multiple items would add a separate undo step for each item</li>
           <li>Fixed an issue where redoing an operation would not restore the view that belonged to that operation</li>
+          <li>Fixed an issue where equations were always rejected when they had no valid values between 0 and 10 (e.g. sqrt(x-30))</li>
         </ul>
         <p>Other Improvements</p>
         <ul>
