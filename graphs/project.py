@@ -249,6 +249,7 @@ class ProjectValidator:
         assert history_pos < 0
         assert abs(history_pos) <= len(history_states)
         while history_pos < -1:
+            history_pos += 1
             for (change_type, change) in history_states[history_pos][0]:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
@@ -266,7 +267,6 @@ class ProjectValidator:
                         self.items.insert(change[1], self.items.pop(change[0]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[2])
-            history_pos += 1
         for history_state in reversed(history_states):
             limits = history_state[1]
             self.figure_settings.set_limits(Graphs.Limits.new(limits))
