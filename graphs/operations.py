@@ -684,8 +684,12 @@ class DataOperations():
             )
         elif smooth_type == 1:
             box_points = settings.get_int("moving-average-box")
-            box = numpy.ones(box_points) / box_points
-            new_ydata = numpy.convolve(ydata, box, mode="same")
+            box_points = min(box_points, len(ydata))
+            box = numpy.ones(box_points)
+            # Divide by the points actually inside the box, so that the
+            # ends aren't pulled towards zero
+            new_ydata = numpy.convolve(ydata, box, mode="same") \
+                / numpy.convolve(numpy.ones(len(ydata)), box, mode="same")
         return xdata, new_ydata, False, False
 
     @staticmethod
