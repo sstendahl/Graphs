@@ -9,7 +9,7 @@ namespace Graphs {
         private double[] _values;
 
         public Limits (owned double[] values)
-            requires (values.length = 8) {
+            requires (values.length == 8) {
             _values = (owned) values;
         }
 
