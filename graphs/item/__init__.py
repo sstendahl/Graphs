@@ -68,10 +68,12 @@ class ItemFactory(Graphs.ItemFactory):
                 return Graphs.DataItem(**dictionary)
             case "GeneratedDataItem":
                 dictionary.pop("type")
-                dictionary["data"] = Graphs.DataHolder.new(*dictionary["data"])
+                data = dictionary.pop("data")
                 equation = Graphs.expression_to_ast(dictionary["equation"])
                 dictionary["equation"] = equation
-                return Graphs.GeneratedDataItem(**dictionary)
+                item = Graphs.GeneratedDataItem(**dictionary)
+                item.set_data(Graphs.DataHolder.new(*data))
+                return item
             case "EquationItem":
                 dictionary.pop("type")
                 equation = Graphs.expression_to_ast(dictionary["equation"])
