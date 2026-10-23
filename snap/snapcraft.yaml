@@ -1,7 +1,7 @@
 name: graphs
 base: core26
 adopt-info: graphs
-grade: stable 
+grade: stable
 confinement: strict
 compression: lzo
 platforms:
@@ -18,10 +18,15 @@ parts:
   python-deps:
     source: .
     plugin: python
+    build-packages:
+      - python3-venv
+      - python3-dev
+    build-environment:
+      - PARTS_PYTHON_INTERPRETER: /usr/bin/python3.14
     python-packages:
-      - matplotlib==3.10.9
+      - matplotlib==3.11.0
       - numexpr==2.14.1
-      - numpy==2.4.4
+      - numpy==2.4.6
       - scipy==1.17.1
       - sympy==1.14.0
     prime:
@@ -37,15 +42,15 @@ parts:
       - -usr/lib/*/dist-packages/pip*
       - -usr/lib/*/dist-packages/setuptools*
       - -usr/lib/*/dist-packages/pkg_resources*
-    organize: 
+    organize:
       bin: usr/bin
-      lib/python3.12/site-packages: usr/lib/python3/dist-packages
-      
+      lib/python3.14/site-packages: usr/lib/python3/dist-packages
+
   graphs:
     after: [ python-deps ]
     plugin: meson
     source: https://gitlab.gnome.org/World/Graphs.git
-    source-tag: 'v2.0.3'
+    source-tag: 'v2.0.7'
     source-depth: 1
     meson-parameters:
       - --prefix=/snap/graphs/current/usr
@@ -53,7 +58,7 @@ parts:
     build-environment:
       - PYTHONPATH: $CRAFT_STAGE/usr/lib/python3/dist-packages:$PYTHONPATH
     build-snaps:
-      - blueprint-compiler/latest/edge 
+      - blueprint-compiler/latest/edge
     override-build: |
       craftctl default
       sed -e '1c#!/usr/bin/env python3' -i ${CRAFT_PART_INSTALL}/snap/graphs/current/usr/bin/graphs
@@ -64,8 +69,8 @@ parts:
       done
     organize:
       snap/graphs/current/usr: usr
-    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]    
-    
+    parse-info: [usr/share/appdata/se.sjoerd.Graphs.appdata.xml]
+
 apps:
   graphs:
     command: usr/bin/graphs
@@ -74,4 +79,4 @@ apps:
     environment:
       PYTHONPATH: $SNAP/usr/lib/python3/dist-packages:$PYTHONPATH
       GI_TYPELIB_PATH: $SNAP/usr/lib/$CRAFT_ARCH_TRIPLET/girepository-1.0:$GI_TYPELIB_PATH
-    extensions: [gnome]      
+    extensions: [gnome]
