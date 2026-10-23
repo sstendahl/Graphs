@@ -34,7 +34,9 @@ class PythonWindow(Graphs.Window):
     def _on_zoom_in(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1.15, False)
+            self.props.canvas.toolbar.push_current()
 
     def _on_zoom_out(self, _a, _b) -> None:
         if self.props.canvas is not None:
             self.props.canvas.zoom(1 / 1.15, False)
+            self.props.canvas.toolbar.push_current()

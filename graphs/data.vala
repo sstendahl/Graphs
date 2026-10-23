@@ -27,6 +27,7 @@ namespace Graphs {
                 this._figure_settings = value;
                 value.notify["custom-style"].connect (_on_custom_style);
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
+                value.notify["hide-unselected"].connect (_on_hide_unselected);
                 value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
                 _update_used_positions ();
                 _on_use_custom_style.begin ();
@@ -402,6 +403,7 @@ namespace Graphs {
                         }
                     }
                 }
+                item.visible = !figure_settings.hide_unselected || item.selected;
                 _connect_to_item (item);
                 item_added.emit (item);
             }
@@ -417,6 +419,7 @@ namespace Graphs {
                 _connect_to_item (item);
             }
             _items = new ManagedArray<Item>.take ((owned) items);
+            _update_visibility ();
             _update_used_positions ();
             items_changed.emit (0, removed, _items.length);
         }
@@ -446,17 +449,30 @@ namespace Graphs {
 
                 prop = item.xposition.friendly_string () + "-label";
                 figure_settings.get (prop, out axis_label);
-                if (_used_positions[item.xposition] && item.xlabel == axis_label) {
+                if (item.xlabel != "" && item.xlabel == axis_label
+                    && !label_in_use (true, item.xposition, axis_label)) {
                     figure_settings.set (prop, _settings.get_string (prop));
                 }
 
                 prop = item.yposition.friendly_string () + "-label";
                 figure_settings.get (prop, out axis_label);
-                if (_used_positions[item.yposition + 2] && item.ylabel == axis_label) {
+                if (item.ylabel != "" && item.ylabel == axis_label
+                    && !label_in_use (false, item.yposition, axis_label)) {
                     figure_settings.set (prop, _settings.get_string (prop));
                 }
             }
             add_history_state ();
+        }
+
+        private bool label_in_use (bool x_axis, int position, string label) {
+            foreach (Item item in _items) {
+                if (x_axis) {
+                    if (item.xposition == position && item.xlabel == label) return true;
+                } else {
+                    if (item.yposition == position && item.ylabel == label) return true;
+                }
+            }
+            return false;
         }
 
         // End section management
@@ -874,8 +890,19 @@ namespace Graphs {
             if (_notify_selection_changed)
                 selection_changed.emit (index (item), 1);
 
-            if (figure_settings.hide_unselected)
-                item.visible = item.selected;
+            item.visible = !figure_settings.hide_unselected || item.selected;
+        }
+
+        private void _update_visibility () {
+            bool hide = figure_settings.hide_unselected;
+            foreach (Item item in _items) {
+                item.visible = !hide || item.selected;
+            }
+        }
+
+        private void _on_hide_unselected () {
+            _update_visibility ();
+            _update_used_positions ();
         }
 
         private void _on_item_position_change () {
