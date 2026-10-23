@@ -96,7 +96,18 @@
       <description>
         <p>Bug fixes:</p>
         <ul>
-          <li>Fixed an issue scrolling in the canvas would sometimes be over the wrong axis</li>
+          <li>Fixed an issue where projects saved after an undo could not be opened again</li>
+          <li>Fixed a crash when importing text files with indented columns or a header line containing numbers</li>
+          <li>Fixed initial values and bounds in curve fitting being applied to the wrong parameter</li>
+          <li>Fixed cot, sec, csc and the degree-based trigonometric functions evaluating wrongly in larger expressions</li>
+          <li>Fixed an issue where points of measured data could be hidden at steep sign changes</li>
+          <li>Fixed equation operations using the wrong x range for items on the top or right axis</li>
+          <li>Fixed Combine not working in select mode</li>
+          <li>Fixed the moving average pulling the ends of the data towards zero</li>
+          <li>Fixed Normalize method changing the sign of completely negative data</li>
+          <li>Fixed the Fourier transform not being drawn in frequency order, and the inverse transform returning frequencies instead of time</li>
+          <li>Fixed changes to the opacity of datasets not being applied</li>
+          <li>Fixed an issue where scrolling in the canvas would sometimes be over the wrong axis</li>
           <li>Fixed an issue where panning would flip inverted axes</li>
           <li>Fixed an issue where zooming with the keyboard was not set in the view clipboard</li>
           <li>Fixed an issue where deleting an item would reset axis labels that were still used by other items</li>
@@ -106,7 +117,8 @@
           <li>Fixed an issue where equations were always rejected when they had no valid values between 0 and 10 (e.g. sqrt(x-30))</li>
           <li>Fixed operations on generated data being lost after reloading a project</li>
           <li>Curve fitting now also works when using spaces in the custom equation</li>
-          <li>Fix a memory leaks when using error bars</li>
+          <li>Fix a memory leak when using error bars</li>
+          <li>Exported figures are no longer kept in memory</li>
         </ul>
         <p>Other Improvements</p>
         <ul>
