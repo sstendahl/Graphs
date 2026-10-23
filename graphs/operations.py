@@ -734,18 +734,23 @@ class DataOperations():
     @staticmethod
     def fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Fourier transformation on all selected data."""
-        y_fourier = numpy.fft.fft(ydata)
-        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
-        y_fourier = [value.real for value in y_fourier]
+        # Shift the zero frequency to the centre, so that x is ascending
+        y_fourier = numpy.fft.fftshift(numpy.fft.fft(ydata)).real
+        x_fourier = numpy.fft.fftshift(
+            numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0]),
+        )
         return x_fourier, y_fourier, False, True
 
     @staticmethod
     def inverse_fft(_item, xdata: list, ydata: list) -> _return:
         """Perform Inverse Fourier transformation on all selected data."""
-        y_fourier = numpy.fft.ifft(ydata)
-        x_fourier = numpy.fft.fftfreq(len(xdata), xdata[1] - xdata[0])
-        y_fourier = [value.real for value in y_fourier]
-        return x_fourier, y_fourier, False, True
+        ydata = numpy.asarray(ydata)
+        if numpy.all(numpy.diff(xdata) > 0):
+            ydata = numpy.fft.ifftshift(ydata)
+        y_signal = numpy.fft.ifft(ydata).real
+        frequency_step = abs(xdata[1] - xdata[0])
+        times = numpy.arange(len(xdata)) / (len(xdata) * frequency_step)
+        return times, y_signal, False, True
 
     @staticmethod
     def transform(
