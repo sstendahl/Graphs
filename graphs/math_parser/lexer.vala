@@ -25,13 +25,16 @@ namespace Graphs.MathParser {
         }
 
         public void next () throws MathError {
-            current_start = current_end;
+            int token_start = current_end;
             do {
+                token_start = current_end;
                 if (src.get_next_char (ref current_end, out c)) continue;
                 if (current_end == 0) throw new MathError.SYNTAX ("empty expression");
+                current_start = token_start;
                 current_type = TokenType.END;
                 return;
             } while (c.isspace ());
+            current_start = token_start;
 
             // Number
             if (c.isdigit () || c == decimal_separator) {
