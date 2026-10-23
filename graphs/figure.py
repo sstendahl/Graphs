@@ -173,6 +173,8 @@ class Figure(GObject.Object, figure.Figure):
 
                 axis.tick_params(which=ticks, **tick_params)
 
+            for container in list(axis.containers):
+                container.remove()
             for handle in [*axis.collections, *axis.lines, *axis.texts]:
                 handle.remove()
             axis_legend = axis.get_legend()
