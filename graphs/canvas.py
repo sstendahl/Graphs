@@ -68,7 +68,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         self.figure.detach()
 
     def _setup_interactive(self):
-        self._ctrl_held, self._shift_held = False, False
         self._xfrac, self._yfrac = None, None
         self.mpl_connect("pick_event", self._on_pick)
         self.mpl_connect("motion_notify_event", self._set_mouse_fraction)
@@ -143,34 +142,6 @@ class Canvas(Graphs.Canvas, FigureCanvas):
                 *self._mpl_coords((x, y)),
             )._process()
 
-    def key_press_event(
-        self,
-        controller: Gtk.EventControllerKey,
-        keyval: int,
-        keycode: int,
-        state: Gdk.ModifierType,
-    ) -> None:
-        """Handle key press event."""
-        if keyval in {65507, 65508}:  # Control_L or Control_R
-            self._ctrl_held = True
-        elif keyval in {65505, 65506}:  # Left or right Shift
-            self._shift_held = True
-        else:  # Prevent keys from being true with key combos
-            self._ctrl_held = False
-        super().key_press_event(controller, keyval, keycode, state)
-
-    def key_release_event(
-        self,
-        controller: Gtk.EventControllerKey,
-        keyval: int,
-        keycode: int,
-        state: Gdk.ModifierType,
-    ) -> None:
-        """Handle key release event."""
-        self._ctrl_held = False
-        self._shift_held = False
-        super().key_release_event(controller, keyval, keycode, state)
-
     def scroll_event(
         self,
         controller: Gtk.EventControllerScroll,
@@ -185,10 +156,11 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         - X-limits: _axis and _top_left_axis (independent x ax.)
         - Y-limits: _axis, _right_axis, and _top_right_axis (independent y ax.)
         """
-        if self._ctrl_held:
+        state = controller.get_current_event_state()
+        if state & Gdk.ModifierType.CONTROL_MASK:
             self.zoom(1 / _SCROLL_SCALE if dy > 0 else _SCROLL_SCALE)
         else:
-            if self._shift_held:
+            if state & Gdk.ModifierType.SHIFT_MASK:
                 dx, dy = dy, dx
             if controller.get_unit() == Gdk.ScrollUnit.WHEEL:
                 dx *= 10
@@ -555,12 +527,15 @@ class _DummyToolbar(NavigationToolbar2):
         """
         points = self._get_pan_points(button, key, x, y)
         if points is not None:
-            # Max and min needs to be defined at correct position for this to
-            # work with inverted scaling
-            ylim = points[:, 1]
-            xlim = points[:, 0]
-            self.set_xlim(min(xlim), max(xlim))
-            self.set_ylim(min(ylim), max(ylim))
+            self.set_xlim(_DummyToolbar._in_direction_of(
+                points[:, 0], self.get_xlim()))
+            self.set_ylim(_DummyToolbar._in_direction_of(
+                points[:, 1], self.get_ylim()))
+
+    @staticmethod
+    def _in_direction_of(limits, current) -> list:
+        """Sort limits, descending if the current limits are."""
+        return sorted(limits, reverse=current[0] > current[1])
 
     # Overwritten function - do not change name
     def draw_rubberband(self, _event, x0, y0, x1, y1) -> None:

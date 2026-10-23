@@ -92,6 +92,25 @@
   </description>
 
   <releases>
+    <release version="2.0.8" date="2026-10-23">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed an issue scrolling in the canvas would sometimes be over the wrong axis</li>
+          <li>Fixed an issue where panning would flip inverted axes</li>
+          <li>Fixed an issue where zooming with the keyboard was not set in the view clipboard</li>
+          <li>Fixed an issue where deleting an item would reset axis labels that were still used by other items</li>
+          <li>Fixed an issue where deleting with no items selected would show "Deleted (null)"</li>
+          <li>Fixed an issue where a custom transformation on multiple items would add a separate undo step for each item</li>
+          <li>Fixed an issue where redoing an operation would not restore the view that belonged to that operation</li>
+        </ul>
+        <p>Other Improvements</p>
+        <ul>
+          <li>Adds Norwegian Nynorsk translations</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.7" date="2026-09-01">
       <description>
         <p>Bug fixes:</p>
