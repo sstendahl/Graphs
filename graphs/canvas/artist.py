@@ -116,6 +116,7 @@ def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     for prop in dir(artist_wrapper.props):
         if not (prop == "label" and artist_wrapper.legend):
             item.bind_property(prop, artist_wrapper, prop, 0)
+    artist_wrapper.props.visible = item.get_visible()
     artist_wrapper.connect("notify", lambda _x, _y: fig.update_legend())
     return artist_wrapper
 
