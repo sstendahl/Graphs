@@ -131,6 +131,18 @@ class DataHelper():
         return min_x, max_x
 
     @staticmethod
+    def normalization_factor(ydata: numpy.ndarray) -> float:
+        """Get the value to divide by to normalize."""
+        ydata = numpy.asarray(ydata)
+        ydata = ydata[numpy.isfinite(ydata)]
+        factor = ydata.max() if ydata.size else 0
+        if factor <= 0 and ydata.size:
+            factor = numpy.abs(ydata).max()
+        if factor == 0:
+            raise ValueError
+        return float(factor)
+
+    @staticmethod
     def sort_data(
         xdata: numpy.ndarray,
         ydata: numpy.ndarray,
@@ -380,8 +392,8 @@ class EquationOperations():
                     old_limits[xindex + 1],
                 )] + list(args)
             equation = item.get_preprocessed_equation()
-            equation = str(sympy.simplify(callback(equation, *args)))
             try:
+                equation = str(sympy.simplify(callback(equation, *args)))
                 numexpr.evaluate(equation, local_dict={"x": XDATA})
             except (KeyError, SyntaxError, ValueError, TypeError) as e:
                 raise misc.InvalidEquationError(
@@ -421,7 +433,7 @@ class EquationOperations():
     def normalize(equation, limits) -> str:
         """Normalize all selected data."""
         ydata = utilities.equation_to_data(equation, limits)[1]
-        return f"({equation})/{max(ydata)}"
+        return f"({equation})/{DataHelper.normalization_factor(ydata)}"
 
     @staticmethod
     def center(equation, limits, center_maximum: int) -> str:
@@ -662,7 +674,8 @@ class DataOperations():
     @staticmethod
     def normalize(_item, xdata: list, ydata: list) -> _return:
         """Normalize all selected data."""
-        return xdata, ydata / max(ydata), False, False
+        factor = DataHelper.normalization_factor(ydata)
+        return xdata, ydata / factor, False, False
 
     @staticmethod
     def smoothen(
