@@ -203,14 +203,21 @@ class CommonOperations():
                 xdata, ydata = utilities.equation_to_data(eq, lims)
                 xerr, yerr = None, None
             elif isinstance(item, Graphs.DataItem):
-                xdata, ydata = DataHelper().get_xydata(mode, lims, item)
+                xdata, ydata = item.get_xydata()
+                mask = numpy.ones(len(xdata), dtype=bool)
+                if mode == Graphs.Mode.SELECT:
+                    mask = (xdata >= lims[0]) & (xdata <= lims[1])
+                    # Nothing of this item is within the highlight
+                    if not mask.any():
+                        continue
+                xdata, ydata = xdata[mask], ydata[mask]
                 if item.get_xerr() is not None and xerr is not None:
-                    xerr.append(item.get_xerr())
+                    xerr.append(item.get_xerr()[mask])
                     some_x = True
                 else:
                     xerr = None
                 if item.get_yerr() is not None and yerr is not None:
-                    yerr.append(item.get_yerr())
+                    yerr.append(item.get_yerr()[mask])
                     some_y = True
                 else:
                     yerr = None
