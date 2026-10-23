@@ -9,28 +9,6 @@ namespace Graphs {
         return Tools.create_file_filters (false, filter);
     }
 
-    public enum XPosition {
-        BOTTOM,
-        TOP;
-
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (XPosition).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
-        }
-    }
-
-    public enum YPosition {
-        LEFT,
-        RIGHT;
-
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (YPosition).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
-        }
-    }
-
     public enum Scale {
         LINEAR,
         LOG,

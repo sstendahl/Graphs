@@ -55,4 +55,16 @@ namespace Graphs {
             } catch (MathError e) { assert_not_reached (); }
         }
     }
+
+    public unowned string python_data_linestyle_to_style (DataLinestyle linestyle) {
+        return linestyle.to_style ();
+    }
+
+    public unowned string python_data_markerstyle_to_style (DataMarkerstyle markerstyle) {
+        return markerstyle.to_style ();
+    }
+
+    public unowned string python_equation_linestyle_to_style (EquationLinestyle linestyle) {
+        return linestyle.to_style ();
+    }
 }

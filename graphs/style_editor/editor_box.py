@@ -6,7 +6,7 @@ from cycler import cycler
 
 from gi.repository import Adw, Gio, Graphs, Gtk, Pango
 
-from graphs import misc, style_io
+from graphs import style_io
 from graphs.styles import StyleParameters
 
 STYLE_DICT = {
@@ -60,8 +60,31 @@ STYLE_DICT = {
     "errorbar_barsabove": ["errorbar.barsabove"],
 }
 VALUE_DICT = {
-    "linestyle": misc.LINESTYLES,
-    "markers": misc.MARKERSTYLES,
+    "linestyle": ["none", "solid", "dotted", "dashed", "dashdot"],
+    "markers": [
+        "none",
+        ".",
+        ",",
+        "o",
+        "v",
+        "^",
+        "<",
+        ">",
+        "8",
+        "s",
+        "p",
+        "*",
+        "h",
+        "H",
+        "+",
+        "x",
+        "D",
+        "d",
+        "|",
+        "_",
+        "P",
+        "X",
+    ],
     "tick_direction": ["in", "out"],
 }
 FONT_STYLE_DICT = {
