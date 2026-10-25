@@ -290,29 +290,20 @@ namespace Graphs {
         }
 
         protected double[] get_p0 () {
-            double[] result = new double[fitting_parameters.size ()];
-            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
-            int idx = 0;
-            unowned string key;
-            FittingParameter val;
-            while (iterator.next (out key, out val)) {
-                result[idx++] = val.get_initial ();
+            double[] result = new double[free_vars.length];
+            for (int i = 0; i < free_vars.length; i++) {
+                result[i] = fitting_parameters.get (free_vars[i]).get_initial ();
             }
             return result;
         }
 
         protected void get_bounds (out double[] lower, out double[] upper) {
-            uint size = fitting_parameters.size ();
-            lower = new double[size];
-            upper = new double[size];
-            var iterator = HashTableIter<string, FittingParameter> (fitting_parameters);
-            int idx = 0;
-            unowned string key;
-            FittingParameter val;
-            while (iterator.next (out key, out val)) {
-                lower[idx] = val.get_lower_bound ();
-                upper[idx] = val.get_upper_bound ();
-                idx++;
+            lower = new double[free_vars.length];
+            upper = new double[free_vars.length];
+            for (int i = 0; i < free_vars.length; i++) {
+                unowned FittingParameter param = fitting_parameters.get (free_vars[i]);
+                lower[i] = param.get_lower_bound ();
+                upper[i] = param.get_upper_bound ();
             }
         }
 
