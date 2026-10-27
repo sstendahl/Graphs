@@ -3,7 +3,7 @@ namespace Graphs {
     public int style_cmp (Style a, Style b) {
         if (a.file == null) return -1;
         else if (b.file == null) return 1;
-        return strcmp (a.name.down (), b.name.down ());
+        return strcmp (a.name.casefold (), b.name.casefold ());
     }
 
     private string filename_from_stylename (string name) {
