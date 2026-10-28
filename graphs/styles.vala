@@ -33,19 +33,32 @@ namespace Graphs {
     }
 
     public struct StyleData {
+        Pango.FontDescription font;
+        DataLinestyle linestyle;
+        double linewidth;
+        DataMarkerstyle markerstyle;
+        double markersize;
+        double errorbar_capsize;
+        double errorbar_capthick;
+        double errorbar_linewidth;
+        bool errorbar_barsabove;
         string text_color;
         string background_color;
         string outline_color;
         string[] color_cycle;
         string[] errorbar_cycle;
 
-        // Python bindings cannot mutate string array fields
+        // Python bindings cannot mutate string array or struct fields
         public void set_color_cycle (string[] color_cycle) {
             this.color_cycle = color_cycle;
         }
 
         public void set_errorbar_cycle (string[] errorbar_cycle) {
             this.errorbar_cycle = errorbar_cycle;
+        }
+
+        public void set_font (Pango.FontDescription font) {
+            this.font = font;
         }
     }
 

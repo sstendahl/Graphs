@@ -2,7 +2,7 @@
 """Module for style utilities."""
 import io
 
-from gi.repository import GLib, Gdk, Gio, Graphs
+from gi.repository import GLib, Gdk, Gio, Graphs, Pango
 
 from graphs import style_io
 
@@ -14,6 +14,27 @@ class StyleParameters(Graphs.StyleParameters):
 
     def __init__(self, params: tuple[RcParams, dict]):
         data = Graphs.StyleData()
+
+        # Font
+        font = Pango.FontDescription.new()
+        font.set_size(params[0]["font.size"] * Pango.SCALE)
+        font.set_weight(params[0]["font.weight"])
+        font.set_style(Pango.parse_style(params[0]["font.style"])[1])
+        font.set_variant(Pango.parse_variant(params[0]["font.variant"])[1])
+        data.set_font(font)
+
+        data.linestyle = \
+            Graphs.data_linestyle_from_style(params[0]["lines.linestyle"])
+        data.linewidth = params[0]["lines.linewidth"]
+        data.markerstyle = \
+            Graphs.data_markerstyle_from_style(params[0]["lines.marker"])
+        data.markersize = params[0]["lines.markersize"]
+
+        data.errorbar_capsize = params[1]["errorbar.capsize"]
+        data.errorbar_capthick = params[1]["errorbar.capthick"]
+        data.errorbar_linewidth = params[1]["errorbar.linewidth"]
+        data.errorbar_barsabove = params[1]["errorbar.barsabove"]
+
         data.text_color = params[0]["text.color"]
         data.background_color = params[0]["axes.facecolor"]
         data.outline_color = params[0]["figure.facecolor"]
