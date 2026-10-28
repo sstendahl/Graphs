@@ -13,14 +13,16 @@ class StyleParameters(Graphs.StyleParameters):
     """Custom Style Parameters class."""
 
     def __init__(self, params: tuple[RcParams, dict]):
-        super().__init__(
-            name=params[1]["name"],
-            text_color=params[0]["text.color"],
-            background_color=params[0]["axes.facecolor"],
-            outline_color=params[0]["figure.facecolor"],
-            color_cycle=params[0]["axes.prop_cycle"].by_key()["color"],
-            errorbar_cycle=params[1]["errorbar.color_cycle"].by_key()["color"],
+        data = Graphs.StyleData()
+        data.text_color = params[0]["text.color"]
+        data.background_color = params[0]["axes.facecolor"]
+        data.outline_color = params[0]["figure.facecolor"]
+        data.set_color_cycle(params[0]["axes.prop_cycle"].by_key()["color"])
+        data.set_errorbar_cycle(
+            params[1]["errorbar.color_cycle"].by_key()["color"],
         )
+
+        super().__init__(name=params[1]["name"], data=data)
         self.style_params = params[0]
         self.graphs_params = params[1]
 

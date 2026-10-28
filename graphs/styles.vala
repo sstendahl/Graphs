@@ -32,13 +32,26 @@ namespace Graphs {
         public bool light { get; set; default = true; }
     }
 
+    public struct StyleData {
+        string text_color;
+        string background_color;
+        string outline_color;
+        string[] color_cycle;
+        string[] errorbar_cycle;
+
+        // Python bindings cannot mutate string array fields
+        public void set_color_cycle (string[] color_cycle) {
+            this.color_cycle = color_cycle;
+        }
+
+        public void set_errorbar_cycle (string[] errorbar_cycle) {
+            this.errorbar_cycle = errorbar_cycle;
+        }
+    }
+
     public class StyleParameters : Object {
         public string name { get; construct set; }
-        public string text_color { get; construct set; }
-        public string background_color { get; construct set; }
-        public string outline_color { get; construct set; }
-        public string[] color_cycle { get; construct set; }
-        public string[] errorbar_cycle { get; construct set; }
+        public StyleData data { get; construct set; }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = """
@@ -162,7 +175,7 @@ namespace Graphs {
                 file = file,
                 preview = instance.preview_request.emit (parameters),
                 mutable = true,
-                light = Tools.get_luminance_from_hex (parameters.background_color) < 0.4
+                light = is_dark_style (parameters)
             };
         }
 
@@ -210,9 +223,9 @@ namespace Graphs {
             var light = system_style_light_params;
             var dark = system_style_dark_params;
             string css = SYSTEM_CSS_TEMPLATE.printf (
-                style_params.text_color, style_params.outline_color,
-                light.text_color, light.outline_color,
-                dark.text_color, dark.outline_color
+                style_params.data.text_color, style_params.data.outline_color,
+                light.data.text_color, light.data.outline_color,
+                dark.data.text_color, dark.data.outline_color
             );
             css_provider.load_from_string (css);
         }
@@ -230,7 +243,7 @@ namespace Graphs {
         }
 
         public static bool is_dark_style (StyleParameters parameters) {
-            return Tools.get_luminance_from_hex (parameters.outline_color) < 0.4;
+            return Tools.get_luminance_from_hex (parameters.data.outline_color) < 0.4;
         }
 
         public static void apply_color_scheme (Gtk.Widget widget, StyleParameters? parameters) {
