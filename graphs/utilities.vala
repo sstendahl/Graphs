@@ -127,7 +127,7 @@ namespace Graphs {
          * Convert a Gdk.RGBA to a color in hex representation
          */
         public string rgba_to_hex (Gdk.RGBA rgba) {
-            return "#%02x%02x%02x".printf(
+            return "#%02x%02x%02x".printf (
                 (uint)(rgba.red * 255),
                 (uint)(rgba.green * 255),
                 (uint)(rgba.blue * 255)).ascii_up ();
