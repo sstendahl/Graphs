@@ -132,7 +132,7 @@ namespace Graphs {
             builder.append ("%02x".printf ((uint)(rgba.red * 255)));
             builder.append ("%02x".printf ((uint)(rgba.green * 255)));
             builder.append ("%02x".printf ((uint)(rgba.blue * 255)));
-            return builder.str.up ();
+            return builder.str.ascii_up ();
         }
 
         /**
