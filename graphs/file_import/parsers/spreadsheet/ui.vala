@@ -102,7 +102,7 @@ namespace Graphs {
         }
 
         private int on_input (Adw.SpinRow spin_button, out double new_value) {
-            new_value = Tools.alpha_to_int (spin_button.get_text ().strip ().up ());
+            new_value = Tools.alpha_to_int (spin_button.get_text ().strip ().ascii_up ());
             return 1;
         }
     }

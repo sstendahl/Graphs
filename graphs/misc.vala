@@ -56,7 +56,7 @@ namespace Graphs {
     }
 
     public static string scale_to_string (Scale scale) {
-        return scale.to_string ()[13:].down ();
+        return scale.to_string ()[13:].ascii_down ();
     }
 
     public enum LegendPosition {
