@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/main-group.ui")]
     public class SpreadsheetGroup : Adw.PreferencesGroup {
@@ -6,9 +5,7 @@ namespace Graphs {
         private unowned Adw.ComboRow sheet_selector;
 
         public SpreadsheetGroup (ImportSettings settings) {
-            var parser = (SpreadsheetReader) settings.get_item ("reader");
-
-            var string_list = new Gtk.StringList (parser.get_sheet_names ());
+            var string_list = (Gtk.StringList) settings.get_item ("sheet-names");
             sheet_selector.set_model (string_list);
             sheet_selector.set_selected (settings.get_int ("sheet-index"));
 
@@ -105,7 +102,7 @@ namespace Graphs {
         }
 
         private int on_input (Adw.SpinRow spin_button, out double new_value) {
-            new_value = Tools.alpha_to_int (spin_button.get_text ().strip ().up ());
+            new_value = Tools.alpha_to_int (spin_button.get_text ().strip ().ascii_up ());
             return 1;
         }
     }
@@ -116,20 +113,19 @@ namespace Graphs {
         private unowned Gtk.Box items_box { get; }
 
         private ImportSettings settings;
-        private ManagedArray<ColumnsItemSettings?> items;
+        private Gee.List<ColumnsItemSettings?> items;
 
         public SpreadsheetBox (ImportSettings settings) {
             this.settings = settings;
 
             var iter = settings.get_value ("items").iterator ();
             size_t n_items = iter.n_children ();
-            items = new ManagedArray<ColumnsItemSettings?> ((int) n_items);
-
+            ColumnsItemSettings?[] item_settings_list = new ColumnsItemSettings?[n_items];
             for (int i = 0; i < n_items; i++) {
-                var item_settings = ColumnsItemSettings ();
-                item_settings.load_from_variant (iter.next_value ());
-                items.append (item_settings);
+                item_settings_list[i] = ColumnsItemSettings ();
+                item_settings_list[i].load_from_variant (iter.next_value ());
             }
+            items = new Gee.ArrayList<ColumnsItemSettings?>.wrap (item_settings_list);
 
             reload_item_groups ();
         }
@@ -140,7 +136,7 @@ namespace Graphs {
                 items_box.remove (widget);
             }
 
-            for (int i = 0; i < items.length; i++) {
+            for (int i = 0; i < items.size; i++) {
                 int index = i;
 
                 var item_group = new SpreadsheetItemGroup (items[i], i > 0);
@@ -165,7 +161,7 @@ namespace Graphs {
         private void add () {
             var new_settings = ColumnsItemSettings ();
             new_settings.load_from_variant (items[0].to_variant ());
-            items.append (new_settings);
+            items.add (new_settings);
             update_settings ();
             reload_item_groups ();
         }

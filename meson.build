@@ -1,17 +1,26 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 project('Graphs', 'c', 'vala',
-          version: '2.0.2',
-    meson_version: '>= 1.10.0',
-  default_options: ['warning_level=2', 'werror=false'],
+          version: '2.0.9',
+    meson_version: '>= 1.2.0',
+  default_options: [ 'warning_level=2', 'werror=false', ],
           license: 'GPL-3.0-or-later',
     license_files: ['LICENSE'],
 )
 
-cc = meson.get_compiler('c')
+dependencies = [
+  dependency('glib-2.0'),
+  dependency('gobject-2.0'),
+  dependency('gio-2.0'),
+  dependency('gtk4'),
+  dependency('libadwaita-1', version: '>= 1.8.0'),
+  dependency('gee-0.8'),
+  dependency('sqlite3'),
+]
+
 valac = meson.get_compiler('vala')
 
 devenv = environment()
-devenv.prepend('PYTHONPATH', meson.current_source_dir())
+devenv.set('GRAPHS_DEVEL_PATH', meson.current_source_dir())
 
 application_id = 'se.sjoerd.Graphs'
 copyright = '2022 - 2026'
@@ -29,23 +38,11 @@ python = import('python').find_installation('python3',
     'numpy',
     'scipy',
     'matplotlib',
+    'numexpr',
     'sympy',
     'gio_pyio'
   ],
 )
-
-glib_dep = dependency('glib-2.0')
-gobject_dep = dependency('gobject-2.0')
-gio_dep = dependency('gio-2.0')
-gtk_dep = dependency('gtk4')
-adwaita_dep = dependency('libadwaita-1', version: '>= 1.8.0')
-sqlite_dep = dependency('sqlite3')
-xml_dep = dependency('libxml-2.0')
-gsf_dep = dependency('libgsf-1')
-python_dep = python.dependency(embed: true)
-openmp_dep = dependency('openmp')
-m_dep = cc.find_library('m')
-posix_dep = valac.find_library('posix')
 
 prefix = get_option('prefix')
 datadir = get_option('datadir')
@@ -57,16 +54,13 @@ localedir = join_paths(prefix, get_option('localedir'))
 mandir = join_paths(prefix, get_option('mandir'))
 debug = get_option('buildtype') == 'debug'
 gettext_package = 'graphs'
-is_linux = host_machine.system() == 'linux'
 
 if debug
   version += '-' + run_command('git', 'rev-parse', '--short', 'HEAD', check: true).stdout().strip()
   add_project_arguments(['--define=DEBUG'], language: 'vala')
-  add_project_arguments(['-DDEBUG'], language: 'c')
-endif
-
-if is_linux
-  add_project_arguments(['--define=LINUX'], language: 'vala')
+  debug_str = 'True'
+else
+  debug_str = 'False'
 endif
 
 conf = configuration_data()
@@ -82,10 +76,20 @@ conf.set('ISSUE_URL', issue_url)
 conf.set('HELP_URL', help_url)
 conf.set('TRANSLATION_URL', translation_url)
 conf.set('CONTRIBUTE_URL', contribute_url)
-conf.set('VERSION', version)
+conf.set('DEBUG', debug_str)
+
+vala_conf = configuration_data()
+vala_conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
+vala_conf.set_quoted('LOCALEDIR', localedir)
+vala_conf.set_quoted('APPLICATION_ID', application_id)
+vala_conf.set_quoted('VERSION', version)
+vala_conf.set_quoted('HOMEPAGE_URL', homepage_url)
+vala_conf.set_quoted('ISSUE_URL', issue_url)
+vala_conf.set_quoted('COPYRIGHT', copyright)
 
 add_project_arguments (
   '-DGETTEXT_PACKAGE="' + gettext_package + '"',
+  '-w',
   language: 'c'
 )
 
@@ -100,6 +104,6 @@ meson.add_devenv(devenv)
 gnome.post_install(
      glib_compile_schemas: true,
     gtk_update_icon_cache: true,
-  update_desktop_database: is_linux,
+  update_desktop_database: true,
      update_mime_database: true,
 )

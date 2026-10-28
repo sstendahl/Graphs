@@ -1,5 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
+    public errordomain ColumnsParseError {
+        INDEX_ERROR,
+        IMPORT_ERROR,
+        INVALID_CONFIGURATION
+    }
+
     enum ColumnsDelimiter {
         WHITESPACE,
         TAB,
@@ -9,19 +15,24 @@ namespace Graphs {
         PERIOD,
         CUSTOM;
 
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (ColumnsDelimiter).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
+        public string friendly_string () {
+            return this.to_string ()[25:].ascii_down ();
         }
 
         public static ColumnsDelimiter parse (string delimiter) {
-            EnumClass enumc = (EnumClass) typeof (ColumnsDelimiter).class_ref ();
-            unowned EnumValue? eval = enumc.get_value_by_nick (delimiter);
-            return (ColumnsDelimiter) eval.value;
+            switch (delimiter) {
+                case "whitespace": return ColumnsDelimiter.WHITESPACE;
+                case "tab": return ColumnsDelimiter.TAB;
+                case "colon": return ColumnsDelimiter.COLON;
+                case "semicolon": return ColumnsDelimiter.SEMICOLON;
+                case "comma": return ColumnsDelimiter.COMMA;
+                case "period": return ColumnsDelimiter.PERIOD;
+                case "custom": return ColumnsDelimiter.CUSTOM;
+                default: assert_not_reached ();
+            }
         }
 
-        public unowned string to_regex_pattern (string custom_delimiter) throws ParseError {
+        public string to_regex_pattern (string custom_delimiter) throws ColumnsParseError {
             switch (this) {
                 case WHITESPACE: return "\\s+";
                 case TAB: return "\\t";
@@ -31,7 +42,7 @@ namespace Graphs {
                 case PERIOD: return "\\.";
                 case CUSTOM:
                     if (custom_delimiter.length == 0) {
-                        throw new ParseError.INVALID_CONFIGURATION (
+                        throw new ColumnsParseError.INVALID_CONFIGURATION (
                             _("Custom delimiter cannot be empty")
                         );
                     }
@@ -45,10 +56,8 @@ namespace Graphs {
         COMMA,
         PERIOD;
 
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (ColumnsSeparator).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
+        public string friendly_string () {
+            return this.to_string ()[25:].ascii_down ();
         }
 
         public unichar as_unichar () {
@@ -56,9 +65,11 @@ namespace Graphs {
         }
 
         public static ColumnsSeparator parse (string separator) {
-            EnumClass enumc = (EnumClass) typeof (ColumnsSeparator).class_ref ();
-            unowned EnumValue? eval = enumc.get_value_by_nick (separator);
-            return (ColumnsSeparator) eval.value;
+            switch (separator) {
+                case "comma": return ColumnsSeparator.COMMA;
+                case "period": return ColumnsSeparator.PERIOD;
+                default: assert_not_reached ();
+            }
         }
     }
 
@@ -96,27 +107,6 @@ namespace Graphs {
                 use_yerr,
                 equation
             );
-        }
-    }
-
-    public class ColumnsParser : Parser {
-        public ColumnsParser () {
-            Object (
-                name: "columns",
-                ui_name: C_("import-mode", "Columns"),
-                filetype_name: null,
-                file_suffixes: null
-            );
-        }
-
-        public override void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) throws ParseError {
-            settings_box.append (new ColumnsBox (settings));
-        }
-
-        public override ItemList parse (ImportSettings settings, StyleParameters style) throws ParseError {
-            var reader = new ColumnsReader (settings);
-            reader.parse ();
-            return reader.add_items (style);
         }
     }
 }

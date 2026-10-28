@@ -1,12 +1,37 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
-namespace Graphs {
-    public const int DOWNSAMPLE_THRESHOLD = 5000;
 
+namespace Graphs {
     public ListModel get_mplstyle_file_filters () {
         var filter = Tools.create_file_filter (
             C_("file-filter", "Matplotlib Style File"), "mplstyle"
         );
         return Tools.create_file_filters (false, filter);
+    }
+
+    public enum XPosition {
+        BOTTOM,
+        TOP;
+
+        public string friendly_string () {
+            switch (this) {
+                case BOTTOM: return "bottom";
+                case TOP: return "top";
+                default: assert_not_reached ();
+            }
+        }
+    }
+
+    public enum YPosition {
+        LEFT,
+        RIGHT;
+
+        public string friendly_string () {
+            switch (this) {
+                case LEFT: return "left";
+                case RIGHT: return "right";
+                default: assert_not_reached ();
+            }
+        }
     }
 
     public enum Scale {
@@ -18,29 +43,20 @@ namespace Graphs {
         INVERSE;
 
         public static Scale from_string (string str) {
-            EnumClass enumc = (EnumClass) typeof (Scale).class_ref ();
-            unowned EnumValue? eval = enumc.get_value_by_nick (str);
-            return (Scale) eval.value;
-        }
-
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (Scale).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
-        }
-
-        public bool is_logarithmic () {
-            return this == LOG || this == LOG2;
-        }
-
-        public bool is_nonzero () {
-            return is_logarithmic () || this == SQUAREROOT;
+            switch (str) {
+                case "linear": return LINEAR;
+                case "log": return LOG;
+                case "log2": return LOG2;
+                case "radians": return RADIANS;
+                case "squareroot": return SQUAREROOT;
+                case "inverse": return INVERSE;
+                default: assert_not_reached ();
+            }
         }
     }
 
-    // Python cannot bind Enum instance methods
-    public static unowned string scale_to_string (Scale scale) {
-        return scale.friendly_string ();
+    public static string scale_to_string (Scale scale) {
+        return scale.to_string ()[13:].ascii_down ();
     }
 
     public enum LegendPosition {
@@ -56,20 +72,40 @@ namespace Graphs {
         CENTER;
 
         public static LegendPosition from_string (string str) {
-            EnumClass enumc = (EnumClass) typeof (LegendPosition).class_ref ();
-            unowned EnumValue? eval = enumc.get_value_by_nick (str);
-            return (LegendPosition) eval.value;
+            switch (str) {
+                case "best": return BEST;
+                case "upper right": return UPPER_RIGHT;
+                case "upper left": return UPPER_LEFT;
+                case "lower left": return LOWER_LEFT;
+                case "lower right": return LOWER_RIGHT;
+                case "center left": return CENTER_LEFT;
+                case "center right": return CENTER_RIGHT;
+                case "lower center": return LOWER_CENTER;
+                case "upper center": return UPPER_CENTER;
+                case "center": return CENTER;
+                default: assert_not_reached ();
+            }
         }
 
-        public unowned string friendly_string () {
-            EnumClass enumc = (EnumClass) typeof (LegendPosition).class_ref ();
-            unowned EnumValue? eval = enumc.get_value (this);
-            return eval.value_nick;
+        public string friendly_string () {
+            switch (this) {
+                case BEST: return "best";
+                case UPPER_RIGHT: return "upper right";
+                case UPPER_LEFT: return "upper left";
+                case LOWER_LEFT: return "lower left";
+                case LOWER_RIGHT: return "lower right";
+                case CENTER_LEFT: return "center left";
+                case CENTER_RIGHT: return "center right";
+                case LOWER_CENTER: return "lower center";
+                case UPPER_CENTER: return "upper center";
+                case CENTER: return "center";
+                default: assert_not_reached ();
+            }
         }
     }
 
     // Python cannot bind Enum instance methods
-    public unowned string legend_position_to_string (LegendPosition pos) {
+    public static string legend_position_to_string (LegendPosition pos) {
         return pos.friendly_string ();
     }
 

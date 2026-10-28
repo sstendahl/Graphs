@@ -92,16 +92,115 @@
   </description>
 
   <releases>
+    <release version="2.0.9" date="2026-09-28">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed a bug in the Turkish locale where Graphs would crash on start</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.8" date="2026-10-23">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed an issue where projects saved after an undo could not be opened again</li>
+          <li>Fixed a crash when importing text files with indented columns or a header line containing numbers</li>
+          <li>Fixed initial values and bounds in curve fitting being applied to the wrong parameter</li>
+          <li>Fixed cot, sec, csc and the degree-based trigonometric functions evaluating wrongly in larger expressions</li>
+          <li>Fixed an issue where points of measured data could be hidden at steep sign changes</li>
+          <li>Fixed equation operations using the wrong x range for items on the top or right axis</li>
+          <li>Fixed Combine not working in select mode</li>
+          <li>Fixed the moving average pulling the ends of the data towards zero</li>
+          <li>Fixed Normalize method changing the sign of completely negative data</li>
+          <li>Fixed the Fourier transform not being drawn in frequency order, and the inverse transform returning frequencies instead of time</li>
+          <li>Fixed changes to the opacity of datasets not being applied</li>
+          <li>Fixed an issue where scrolling in the canvas would sometimes be over the wrong axis</li>
+          <li>Fixed an issue where panning would flip inverted axes</li>
+          <li>Fixed an issue where zooming with the keyboard was not set in the view clipboard</li>
+          <li>Fixed an issue where deleting an item would reset axis labels that were still used by other items</li>
+          <li>Fixed an issue where deleting with no items selected would show "Deleted (null)"</li>
+          <li>Fixed an issue where a custom transformation on multiple items would add a separate undo step for each item</li>
+          <li>Fixed an issue where redoing an operation would not restore the view that belonged to that operation</li>
+          <li>Fixed an issue where equations were always rejected when they had no valid values between 0 and 10 (e.g. sqrt(x-30))</li>
+          <li>Fixed operations on generated data being lost after reloading a project</li>
+          <li>Curve fitting now also works when using spaces in the custom equation</li>
+          <li>Fix a memory leak when using error bars</li>
+          <li>Exported figures are no longer kept in memory</li>
+        </ul>
+        <p>Other Improvements</p>
+        <ul>
+          <li>Adds Norwegian Nynorsk translations</li>
+          <li>Translation updates</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.7" date="2026-09-01">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed an issue with custom transformations on equations where parenthesis were not set around the x-variable</li>
+          <li>Fixed an issue where files would get overwritten on export if multiple items shared the same name</li>
+          <li>Fixed an issue where files would not get saved when exporting multiple items if the filename of one of the items contained a backslash</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.6" date="2026-08-09">
+      <description>
+        <p>
+          Minor update bringing a significant performance increase when interacting with
+          the canvas.
+        </p>
+        <p>Improvements:</p>
+        <ul>
+          <li>Panning and zooming the canvas using a scroll wheel or touchpad is significantly smoother</li>
+          <li>Equation data is no longer regenerated more often than needed</li>
+          <li>Translation updates</li>
+        </ul>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Scrolling no longer floods the view history with intermediate steps</li>
+          <li>Fixed the limits used by the shift operation when a range is selected</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.5" date="2026-06-25">
+      <description>
+        <ul>
+          <li>Fixed an issue where the highlight was no longer visible.</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.4" date="2026-06-23">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed a bug where import from projects did not work</li>
+          <li>Fixed a bug where project import did not load all items properly</li>
+          <li>Fixed an issue where the y-label of the previews was not set properly</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.0.3" date="2026-06-15">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fix the combine operation not working</li>
+          <li>Fix error bar rendering when both x and y error bars are present</li>
+          <li>Fix bundled styles not loading correctly</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.2" date="2026-05-20">
       <description>
         <p>Fixes a bug where changing the style would break when error bars are present on the canvas</p>
       </description>
-    </release>    
+    </release>
     <release version="2.0.1" date="2026-05-18">
       <description>
         <p>Fixes a bug where the canvas was not refreshed when setting the minimum value on the left-axis</p>
       </description>
-    </release>  
+    </release>
     <release version="2.0.0" date="2026-05-15">
       <description>
         <p>Version 2.0 of Graphs is a major update, introducing several new features such as proper equation support and a completely redesigned style editor.</p>
