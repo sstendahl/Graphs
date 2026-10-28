@@ -127,11 +127,10 @@ namespace Graphs {
          * Convert a Gdk.RGBA to a color in hex representation
          */
         public string rgba_to_hex (Gdk.RGBA rgba) {
-            var builder = new StringBuilder ("#");
-            builder.append ("%02x".printf ((uint)(rgba.red * 255)));
-            builder.append ("%02x".printf ((uint)(rgba.green * 255)));
-            builder.append ("%02x".printf ((uint)(rgba.blue * 255)));
-            return builder.str.up ();
+            return "#%02x%02x%02x".printf (
+                (uint)(rgba.red * 255),
+                (uint)(rgba.green * 255),
+                (uint)(rgba.blue * 255)).ascii_up ();
         }
 
         /**
