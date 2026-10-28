@@ -16,7 +16,7 @@ namespace Graphs {
         CUSTOM;
 
         public string friendly_string () {
-            return this.to_string ()[25:].down ();
+            return this.to_string ()[25:].ascii_down ();
         }
 
         public static ColumnsDelimiter parse (string delimiter) {
@@ -57,7 +57,7 @@ namespace Graphs {
         PERIOD;
 
         public string friendly_string () {
-            return this.to_string ()[25:].down ();
+            return this.to_string ()[25:].ascii_down ();
         }
 
         public unichar as_unichar () {

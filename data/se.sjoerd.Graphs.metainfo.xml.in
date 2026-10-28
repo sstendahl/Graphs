@@ -92,6 +92,14 @@
   </description>
 
   <releases>
+    <release version="2.0.9" date="2026-09-28">
+      <description>
+        <p>Bug fixes:</p>
+        <ul>
+          <li>Fixed a bug in the Turkish locale where Graphs would crash on start</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.0.8" date="2026-10-23">
       <description>
         <p>Bug fixes:</p>
