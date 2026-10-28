@@ -78,7 +78,7 @@ namespace Graphs {
         protected void setup () {
             StyleManager.instance = this;
 
-            string gtk_theme = Gtk.Settings.get_default ().gtk_theme_name.down ();
+            string gtk_theme = Gtk.Settings.get_default ().gtk_theme_name.ascii_down ();
             bool ubuntu = Environment.get_variable ("SNAP") != null && gtk_theme.has_prefix ("yaru");
 
             unowned string system_style = ubuntu ? "yaru" : "adwaita";
