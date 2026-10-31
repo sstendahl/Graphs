@@ -5,36 +5,8 @@ from gi.repository import Graphs
 from graphs import utilities
 
 
-class ItemFactory(Graphs.ItemFactory):
+class ItemFactory():
     """Item factory."""
-
-    _style_properties = {
-        "DataItem": {
-            "errbarsabove": ("errorbar.barsabove", None),
-            "errcapsize": ("errorbar.capsize", None),
-            "errcapthick": ("errorbar.capthick", None),
-            "errlinewidth": ("errorbar.linewidth", None),
-            "linestyle": ("lines.linestyle", Graphs.data_linestyle_from_style),
-            "linewidth": ("lines.linewidth", None),
-            "markerstyle":
-            ("lines.marker", Graphs.data_markerstyle_from_style),
-            "markersize": ("lines.markersize", None),
-        },
-        "EquationItem": {
-            "linestyle":
-            ("lines.linestyle", Graphs.equation_linestyle_from_style),
-            "linewidth": ("lines.linewidth", None),
-        },
-        "TextItem": {
-            "size": ("font.size", None),
-            "color": ("text.color", None),
-        },
-    }
-
-    def __init__(self):
-        super().__init__()
-        self.connect("override-request", self._on_override_request)
-        self.connect("reset-request", self._on_reset_request)
 
     @staticmethod
     def new_from_dicts(dictionaries: list[dict]) -> list[Graphs.Item]:
@@ -164,49 +136,3 @@ class ItemFactory(Graphs.ItemFactory):
         elif prop == "equation":
             return Graphs.ast_to_expression(item.get_property(prop))
         return item.get_property(prop)
-
-    def _item_style_properties(self, item: Graphs.Item) -> dict:
-        if isinstance(item, Graphs.DataItem):
-            return self._style_properties["DataItem"]
-        elif isinstance(item, Graphs.EquationItem):
-            return self._style_properties["EquationItem"]
-        elif isinstance(item, Graphs.TextItem):
-            return self._style_properties["TextItem"]
-        return None
-
-    @staticmethod
-    def _on_override_request(
-        self,
-        item: Graphs.Item,
-        style: Graphs.StyleParameters,
-    ) -> None:
-        style_properties = self._item_style_properties(item)
-        if style_properties is None:
-            return
-        # Combine rcparams and graphs_params into single dict:
-        style = style.style_params | style.graphs_params
-        for prop, (key, function) in style_properties.items():
-            value = style[key] if function is None else function(style[key])
-            item.set_property(prop, value)
-
-    @staticmethod
-    def _on_reset_request(
-        self,
-        item: Graphs.Item,
-        old_style: Graphs.StyleParameters,
-        new_style: Graphs.StyleParameters,
-    ) -> None:
-        style_properties = self._item_style_properties(item)
-        if style_properties is None:
-            return
-        # Combine rcparams and graphs_params into single dict:
-        old_style = old_style.style_params | old_style.graphs_params
-        new_style = new_style.style_params | new_style.graphs_params
-        for prop, (key, function) in style_properties.items():
-            old_value = old_style[key]
-            new_value = new_style[key]
-            if function is not None:
-                old_value = function(old_value)
-                new_value = function(new_value)
-            if item.get_property(prop) == old_value:
-                item.set_property(prop, new_value)

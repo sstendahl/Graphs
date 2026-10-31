@@ -22,6 +22,13 @@ namespace Graphs {
         }
     }
 
+    protected delegate Value StylePropertyTransform (StyleData s);
+
+    protected struct StylePropertyBinding {
+        string prop;
+        StylePropertyTransform transform;
+    }
+
     public abstract class Item : Object {
         public string typename { get; construct set; }
         public string name { get; set; default = ""; }
@@ -43,6 +50,42 @@ namespace Graphs {
         public void set_rgba (Gdk.RGBA rgba) {
             this.color = Tools.rgba_to_hex (rgba);
             this.alpha = rgba.alpha;
+        }
+
+        protected virtual unowned StylePropertyBinding[]? get_property_bindings () {
+            return null;
+        }
+
+        public void override (StyleParameters style) {
+            unowned var bindings = get_property_bindings ();
+            if (bindings == null) return;
+
+            unowned StyleData data = style.data;
+            foreach (unowned var binding in bindings) {
+                Value val = binding.transform (data);
+                set_property (binding.prop, val);
+            }
+        }
+
+        public void reset (StyleParameters old_style, StyleParameters new_style) {
+            unowned var bindings = get_property_bindings ();
+            if (bindings == null) return;
+
+            unowned var object_class = get_class ();
+            unowned StyleData old_data = old_style.data;
+            unowned StyleData new_data = new_style.data;
+            foreach (unowned var binding in bindings) {
+                ParamSpec pspec = object_class.find_property (binding.prop);
+
+                Value old_val = binding.transform (old_data);
+                Value current_val = Value (pspec.value_type);
+                get_property (binding.prop, ref current_val);
+
+                if (pspec.values_cmp (old_val, current_val) != 0) continue;
+
+                Value new_val = binding.transform (new_data);
+                set_property (binding.prop, new_val);
+            }
         }
 
         private GenericSet<unowned Item>? _dependents = null;

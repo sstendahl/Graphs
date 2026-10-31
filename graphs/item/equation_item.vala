@@ -43,6 +43,15 @@ namespace Graphs {
             typename = _("Equation");
         }
 
+        private static StylePropertyBinding[] bindings = {
+            {"linestyle", (s) => s.linestyle - 1},
+            {"linewidth", (s) => s.linewidth}
+        };
+
+        protected override unowned StylePropertyBinding[]? get_property_bindings () {
+            return bindings;
+        }
+
         public unowned Program get_program () {
             return _program;
         }
