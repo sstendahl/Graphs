@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-06-25 11:18+0000\n"
-"PO-Revision-Date: 2026-07-10 13:24+0200\n"
+"POT-Creation-Date: 2026-10-28 11:52+0000\n"
+"PO-Revision-Date: 2026-10-31 10:38+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian Bokmål <nb@li.org>\n"
 "Language: nb\n"
@@ -18,9 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2
-#: data/ui/sidebar/main.blp:5 graphs/actions.vala:27
+#: data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
 msgstr "Grafer"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:8 graphs/actions.vala:26
+msgid "The Graphs Developers"
+msgstr "Utviklerene av Grafer"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:44
 msgid "Plot and manipulate any data"
@@ -41,6 +45,54 @@ msgstr "Håndter stilark for plott"
 #: data/se.sjoerd.Graphs.metainfo.xml.in:60
 msgid "Manipulate imported data"
 msgstr "Manipuler importerte data"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:66
+msgid "Plotting"
+msgstr "Plotting"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:67
+msgid "Plot"
+msgstr "Plott"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:68
+msgid "Graph"
+msgstr "Graf"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:69
+msgid "Graphing"
+msgstr "Grafer"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:70
+msgid "Science"
+msgstr "Vitenskap"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:71
+msgid "Mathematics"
+msgstr "Matematikk"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:72
+msgid "Math"
+msgstr "Matte"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:73
+msgid "Equations"
+msgstr "Ligninger"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:74
+msgid "Data"
+msgstr "Data"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:75
+msgid "Visualization"
+msgstr "Visualisering"
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:76
+msgid "Fitting"
+msgstr ""
+
+#: data/se.sjoerd.Graphs.metainfo.xml.in:77
+msgid "xrdml"
+msgstr "xrdml"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:80
 msgid "Plot and manipulate data"
@@ -90,7 +142,7 @@ msgid "New Window"
 msgstr "Nytt vindu"
 
 #: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
-#: graphs/application.vala:20
+#: graphs/application.vala:15
 msgid "Style Editor"
 msgstr "Stilredigering"
 
@@ -105,12 +157,12 @@ msgid ""
 msgstr ""
 
 #: data/ui/dialogs/beta-disallowed.blp:9
-#: data/ui/dialogs/legacy-migration-disallowed.blp:9
+#: data/ui/dialogs/legacy-migration-disallowed.blp:11
 msgid "Continue"
 msgstr "Fortsett"
 
 #: data/ui/dialogs/beta-disallowed.blp:10
-#: data/ui/dialogs/legacy-migration-disallowed.blp:10
+#: data/ui/dialogs/legacy-migration-disallowed.blp:12
 msgid "Abort"
 msgstr "Avbryt"
 
@@ -136,7 +188,7 @@ msgstr "Slett"
 msgid "Legacy Project"
 msgstr "Gammelt prosjekt"
 
-#: data/ui/dialogs/legacy-migration-disallowed.blp:6
+#: data/ui/dialogs/legacy-migration-disallowed.blp:7
 msgid ""
 "You are trying to open a legacy project.\n"
 "\n"
@@ -191,7 +243,7 @@ msgstr "Legg til oppføring"
 
 #: data/ui/import/columns/item-group.blp:9
 #: data/ui/import/spreadsheet/item-group.blp:9 data/ui/import/dialog.blp:125
-#: data/ui/style-editor/item-color-row.blp:36
+#: data/ui/style-editor/item-color-row.blp:29
 msgid "Remove"
 msgstr "Fjern"
 
@@ -215,8 +267,8 @@ msgid "Import only Y values, X values will be generated"
 msgstr ""
 
 #: data/ui/import/columns/item-group.blp:57
-#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:75
-#: graphs/item.vala:237
+#: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
+#: graphs/item/equation_item.vala:43
 msgid "Equation"
 msgstr "Ligning"
 
@@ -226,8 +278,8 @@ msgstr "Ligning"
 msgid "More info"
 msgstr "Mer informasjon"
 
-#: data/ui/import/columns/item-group.blp:72
-#: data/ui/import/spreadsheet/item-group.blp:72
+#: data/ui/import/columns/item-group.blp:73
+#: data/ui/import/spreadsheet/item-group.blp:73
 msgid ""
 "<b>X Value Calculation</b>\n"
 "\n"
@@ -235,34 +287,34 @@ msgid ""
 "Use 'n' for the row index (starting from 0).\n"
 "\n"
 "<b>Examples:</b>\n"
-"• <b>n</b> → 0, 1, 2, 3, 4...\n"
-"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0...\n"
-"• <b>n^2</b> → 0, 1, 4, 9, 16...\n"
-"• <b>2^n</b> → 1, 2, 4, 8, 16...\n"
-"• <b>n*10+100</b> → 100, 110, 120, 130..."
+"• <b>n</b> → 0, 1, 2, 3, 4…\n"
+"• <b>n*0.5</b> → 0, 0.5, 1.0, 1.5, 2.0…\n"
+"• <b>n^2</b> → 0, 1, 4, 9, 16…\n"
+"• <b>2^n</b> → 1, 2, 4, 8, 16…\n"
+"• <b>n*10+100</b> → 100, 110, 120, 130…"
 msgstr ""
 
-#: data/ui/import/columns/item-group.blp:91
+#: data/ui/import/columns/item-group.blp:93
 #: data/ui/import/sql/main-group.blp:28
-#: data/ui/import/spreadsheet/item-group.blp:91
+#: data/ui/import/spreadsheet/item-group.blp:93
 msgid "X Error Bars"
 msgstr ""
 
-#: data/ui/import/columns/item-group.blp:95
+#: data/ui/import/columns/item-group.blp:97
 #: data/ui/import/sql/main-group.blp:33
-#: data/ui/import/spreadsheet/item-group.blp:95
+#: data/ui/import/spreadsheet/item-group.blp:97
 msgid "Y Error Bars"
 msgstr ""
 
-#: data/ui/import/columns/item-group.blp:108
+#: data/ui/import/columns/item-group.blp:110
 #: data/ui/import/sql/main-group.blp:40
-#: data/ui/import/spreadsheet/item-group.blp:108
+#: data/ui/import/spreadsheet/item-group.blp:110
 msgid "X Error Column"
 msgstr ""
 
-#: data/ui/import/columns/item-group.blp:120
+#: data/ui/import/columns/item-group.blp:122
 #: data/ui/import/sql/main-group.blp:46
-#: data/ui/import/spreadsheet/item-group.blp:120
+#: data/ui/import/spreadsheet/item-group.blp:122
 msgid "Y Error Column"
 msgstr ""
 
@@ -317,25 +369,43 @@ msgstr "Egendefinert"
 msgid "Custom Delimiter"
 msgstr ""
 
-#: data/ui/import/columns/main-group.blp:54
+#: data/ui/import/columns/main-group.blp:43
+msgid ""
+"<b>Uses regex pattern matching</b>\n"
+"\n"
+"These characters have special meanings in regex syntax:\n"
+"<b>. * + ? [ ] ^ $ | \\ ( ) { }</b>\n"
+"\n"
+"To match these characters literally, escape them with <b>\\</b>\n"
+"\n"
+"<b>Examples:</b>\n"
+"• <b>\\.</b> matches a period\n"
+"• <b>\\*</b> matches an asterisk\n"
+"• <b>\\|</b> matches a pipe character\n"
+"\n"
+"<a href='https://docs.python.org/3/library/re.html#regular-expression-"
+"syntax'>Learn more about regex syntax…</a>"
+msgstr ""
+
+#: data/ui/import/columns/main-group.blp:56
 msgid "Decimal Separator"
 msgstr "Desimalskilletegn"
 
-#: data/ui/import/columns/main-group.blp:58
+#: data/ui/import/columns/main-group.blp:60
 msgctxt "separator"
 msgid "Decimal comma (,)"
 msgstr ""
 
-#: data/ui/import/columns/main-group.blp:59
+#: data/ui/import/columns/main-group.blp:61
 msgctxt "separator"
 msgid "Decimal point (.)"
 msgstr ""
 
-#: data/ui/import/columns/main-group.blp:65
+#: data/ui/import/columns/main-group.blp:67
 msgid "Skip Rows"
 msgstr "Hopp over rader"
 
-#: data/ui/import/columns/main-group.blp:66
+#: data/ui/import/columns/main-group.blp:68
 msgid "Number of rows to skip at the beginning"
 msgstr ""
 
@@ -396,9 +466,13 @@ msgid "Import Mode"
 msgstr ""
 
 #: data/ui/import/dialog.blp:118
-#: data/ui/sidebar/figure-settings/settings-page.blp:265
+#: data/ui/sidebar/figure-settings/settings-page.blp:102
 msgid "Set as Default"
 msgstr ""
+
+#: data/ui/import/importing-item-box.blp:9
+msgid "Importing…"
+msgstr "Importerer …"
 
 #: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
@@ -409,26 +483,30 @@ msgid "Name"
 msgstr "Navn"
 
 #: data/ui/sidebar/edit-item/base.blp:14
+msgid "Show in Legend"
+msgstr ""
+
+#: data/ui/sidebar/edit-item/base.blp:19
 msgid "X-Axis Position"
 msgstr ""
 
-#: data/ui/sidebar/edit-item/base.blp:18
+#: data/ui/sidebar/edit-item/base.blp:23
 msgid "Bottom"
 msgstr "Bunn"
 
-#: data/ui/sidebar/edit-item/base.blp:19
+#: data/ui/sidebar/edit-item/base.blp:24
 msgid "Top"
 msgstr "Topp"
 
-#: data/ui/sidebar/edit-item/base.blp:25
+#: data/ui/sidebar/edit-item/base.blp:30
 msgid "Y-Axis Position"
 msgstr ""
 
-#: data/ui/sidebar/edit-item/base.blp:29
+#: data/ui/sidebar/edit-item/base.blp:34
 msgid "Left"
 msgstr "Venstre"
 
-#: data/ui/sidebar/edit-item/base.blp:30
+#: data/ui/sidebar/edit-item/base.blp:35
 msgid "Right"
 msgstr "Høyre"
 
@@ -622,13 +700,21 @@ msgstr ""
 msgid "Marker Size"
 msgstr ""
 
+#: data/ui/sidebar/edit-item/data.blp:95
+msgid "Reduce Detail"
+msgstr ""
+
+#: data/ui/sidebar/edit-item/data.blp:96
+msgid "Draw fewer data points to improve performance"
+msgstr ""
+
 #: data/ui/sidebar/edit-item/equation.blp:11
 msgid "Line"
 msgstr "Linje"
 
 #: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
-#: data/ui/curve-fitting.blp:93 data/ui/generate-data.blp:52
-#: data/ui/transform.blp:69
+#: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
+#: data/ui/transform.blp:71
 msgid "Y ="
 msgstr ""
 
@@ -696,60 +782,36 @@ msgid "How points are spaced"
 msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
-#: data/ui/sidebar/figure-settings/settings-page.blp:155
-#: data/ui/sidebar/figure-settings/settings-page.blp:171
-#: data/ui/sidebar/figure-settings/settings-page.blp:187
-#: data/ui/sidebar/figure-settings/settings-page.blp:203
 #: data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Lineær"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:54
-#: data/ui/sidebar/figure-settings/settings-page.blp:156
-#: data/ui/sidebar/figure-settings/settings-page.blp:172
-#: data/ui/sidebar/figure-settings/settings-page.blp:188
-#: data/ui/sidebar/figure-settings/settings-page.blp:204
 #: data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:55
-#: data/ui/sidebar/figure-settings/settings-page.blp:157
-#: data/ui/sidebar/figure-settings/settings-page.blp:173
-#: data/ui/sidebar/figure-settings/settings-page.blp:189
-#: data/ui/sidebar/figure-settings/settings-page.blp:205
 #: data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:56
-#: data/ui/sidebar/figure-settings/settings-page.blp:158
-#: data/ui/sidebar/figure-settings/settings-page.blp:174
-#: data/ui/sidebar/figure-settings/settings-page.blp:190
-#: data/ui/sidebar/figure-settings/settings-page.blp:206
 #: data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianer"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:57
-#: data/ui/sidebar/figure-settings/settings-page.blp:159
-#: data/ui/sidebar/figure-settings/settings-page.blp:175
-#: data/ui/sidebar/figure-settings/settings-page.blp:191
-#: data/ui/sidebar/figure-settings/settings-page.blp:207
 #: data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr ""
 
 #: data/ui/sidebar/edit-item/generated-data.blp:58
-#: data/ui/sidebar/figure-settings/settings-page.blp:160
-#: data/ui/sidebar/figure-settings/settings-page.blp:176
-#: data/ui/sidebar/figure-settings/settings-page.blp:192
-#: data/ui/sidebar/figure-settings/settings-page.blp:208
 #: data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
@@ -764,156 +826,96 @@ msgstr "Rediger oppføring"
 msgid "Figure Settings"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:26
-msgid "Labels"
-msgstr "Etiketter"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:29
-#: graphs/style_editor/__init__.py:100
+#: data/ui/sidebar/figure-settings/settings-page.blp:27
+#: graphs/style_editor/window.vala:326
 msgid "Title"
 msgstr "Tittel"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:34
-msgid "Bottom X Axis Label"
+#: data/ui/sidebar/figure-settings/settings-page.blp:33
+msgid "Bottom X Axis"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:39
-msgid "Top X Axis Label"
+#: data/ui/sidebar/figure-settings/settings-page.blp:38
+msgid "Top X Axis"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:44
-msgid "Left Y Axis Label"
+#: data/ui/sidebar/figure-settings/settings-page.blp:43
+msgid "Left Y Axis"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:49
-msgid "Right Y Axis Label"
+#: data/ui/sidebar/figure-settings/settings-page.blp:48
+msgid "Right Y Axis"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:54
-msgid "Axis Limits"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:68
-msgid "Bottom X Axis Minimum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:75
-msgid "Bottom X Axis Maximum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:89
-msgid "Top X Axis Minimum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:96
-msgid "Top X Axis Maximum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:110
-msgid "Left Y Axis Minimum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:117
-msgid "Left Y Axis Maximum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:131
-msgid "Right Y Axis Minimum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:138
-msgid "Right Y Axis Maximum"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:147
-msgid "Scaling"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:151
-msgid "Bottom X Axis Scale"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:167
-msgid "Top X Axis Scale"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:183
-msgid "Left Y Axis Scale"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:199
-msgid "Right Y Axis Scale"
-msgstr ""
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:215
+#: data/ui/sidebar/figure-settings/settings-page.blp:52
 msgid "Appearance"
 msgstr "Utseende"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:218
+#: data/ui/sidebar/figure-settings/settings-page.blp:55
 msgid "Show Legend"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:222
+#: data/ui/sidebar/figure-settings/settings-page.blp:59
 msgid "Legend Position"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:227
+#: data/ui/sidebar/figure-settings/settings-page.blp:64
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Auto"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:228
+#: data/ui/sidebar/figure-settings/settings-page.blp:65
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:229
+#: data/ui/sidebar/figure-settings/settings-page.blp:66
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:230
+#: data/ui/sidebar/figure-settings/settings-page.blp:67
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:231
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:232
+#: data/ui/sidebar/figure-settings/settings-page.blp:69
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:233
+#: data/ui/sidebar/figure-settings/settings-page.blp:70
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:234
+#: data/ui/sidebar/figure-settings/settings-page.blp:71
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:235
+#: data/ui/sidebar/figure-settings/settings-page.blp:72
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:236
+#: data/ui/sidebar/figure-settings/settings-page.blp:73
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Senter"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:242
+#: data/ui/sidebar/figure-settings/settings-page.blp:79
 msgid "Hide Unselected Items"
 msgstr ""
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246
+#: data/ui/sidebar/figure-settings/settings-page.blp:83
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:83
+#: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr ""
 
@@ -1002,6 +1004,10 @@ msgid "Add Equation…"
 msgstr "Legg til likning …"
 
 #: data/ui/sidebar/main.blp:154
+msgid "Add Fill…"
+msgstr "Legg til fyll …"
+
+#: data/ui/sidebar/main.blp:155
 msgid "Generate Data…"
 msgstr "Generer data …"
 
@@ -1153,9 +1159,9 @@ msgstr "Legg til"
 msgid "Template"
 msgstr "Mal"
 
-#: data/ui/style-editor/color-row.blp:5
-msgid "Change Color"
-msgstr "Endre farge"
+#: data/ui/style-editor/color-group.blp:15
+msgid "Add Color"
+msgstr "Legg til farge"
 
 #: data/ui/style-editor/editor-box.blp:10
 msgid "Style Name"
@@ -1345,18 +1351,9 @@ msgstr ""
 msgid "Line Colors"
 msgstr ""
 
-#: data/ui/style-editor/editor-box.blp:521
-#: data/ui/style-editor/editor-box.blp:550
-msgid "Add Color"
-msgstr "Legg til farge"
-
-#: data/ui/style-editor/editor-box.blp:538
+#: data/ui/style-editor/editor-box.blp:513
 msgid "Error Bar Colors"
 msgstr ""
-
-#: data/ui/style-editor/item-color-row.blp:18
-msgid "Edit"
-msgstr "Rediger"
 
 #: data/ui/style-editor/shortcuts.blp:6 data/ui/window-shortcuts.blp:6
 msgctxt "shortcut window"
@@ -1404,7 +1401,7 @@ msgid "Open Style"
 msgstr "Åpne stil"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:198
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
 msgid "Graphs Style Editor"
 msgstr ""
 
@@ -1424,7 +1421,7 @@ msgstr "Åpne fil …"
 msgid "Open Preview"
 msgstr "Åpne forhåndsvisning"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:183
+#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr ""
@@ -1457,7 +1454,11 @@ msgstr ""
 msgid "Name (optional)"
 msgstr "Navn (valgfritt)"
 
-#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:70
+#: data/ui/color-button.blp:4 data/ui/color-row.blp:5
+msgid "Change Color"
+msgstr "Endre farge"
+
+#: data/ui/curve-fitting.blp:45 data/ui/item-box.blp:64
 msgid "Curve Fitting"
 msgstr ""
 
@@ -1465,104 +1466,104 @@ msgstr ""
 msgid "Open Curve Fitting Menu"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:79
+#: data/ui/curve-fitting.blp:76
 msgctxt "regression-type"
 msgid "Linear"
 msgstr "Lineær"
 
-#: data/ui/curve-fitting.blp:80
+#: data/ui/curve-fitting.blp:77
 msgctxt "regression-type"
 msgid "Quadratic"
 msgstr "Kvadratisk"
 
-#: data/ui/curve-fitting.blp:81
+#: data/ui/curve-fitting.blp:78
 msgctxt "regression-type"
 msgid "Exponential"
 msgstr "Eksponesiell"
 
-#: data/ui/curve-fitting.blp:82
+#: data/ui/curve-fitting.blp:79
 msgctxt "regression-type"
 msgid "Power Law"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:83
+#: data/ui/curve-fitting.blp:80
 msgctxt "regression-type"
 msgid "Logarithmic"
 msgstr "Logaritmisk"
 
-#: data/ui/curve-fitting.blp:84
+#: data/ui/curve-fitting.blp:81
 msgctxt "regression-type"
 msgid "Sigmoid Logistic"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:85
+#: data/ui/curve-fitting.blp:82
 msgctxt "regression-type"
 msgid "Gaussian"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:86
+#: data/ui/curve-fitting.blp:83
 msgctxt "regression-type"
 msgid "Custom"
 msgstr "Egendefinert"
 
-#: data/ui/curve-fitting.blp:138
+#: data/ui/curve-fitting.blp:132
 msgid "Add Fit to Data"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:161
+#: data/ui/curve-fitting.blp:154
 msgid "Toggle Sidebar"
 msgstr "Slå av/på sidelinje"
 
-#: data/ui/curve-fitting.blp:202
+#: data/ui/curve-fitting.blp:195
 msgid "Optimization Method"
 msgstr ""
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:206
+#: data/ui/curve-fitting.blp:199
 msgctxt "optimization"
 msgid "Levenberg-Marquardt"
 msgstr ""
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms, NOTE: This is a reflective version of the Trust-region algorithm.
-#: data/ui/curve-fitting.blp:213
+#: data/ui/curve-fitting.blp:206
 msgctxt "optimization"
 msgid "Trust Region Reflective"
 msgstr ""
 
 #. Translators: see https://help.gnome.org/graphs/curve_fitting.html#algorithms
-#: data/ui/curve-fitting.blp:220
+#: data/ui/curve-fitting.blp:213
 msgctxt "optimization"
 msgid "Dogbox"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:227
+#: data/ui/curve-fitting.blp:220
 msgid "Confidence Bounds"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:230
+#: data/ui/curve-fitting.blp:223
 msgctxt "confidence"
 msgid "None"
 msgstr "Ingen"
 
-#: data/ui/curve-fitting.blp:237
+#: data/ui/curve-fitting.blp:230
 #, no-c-format
 msgctxt "confidence"
 msgid "1σ: 68% Confidence"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:244
+#: data/ui/curve-fitting.blp:237
 #, no-c-format
 msgctxt "confidence"
 msgid "2σ: 95% Confidence"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:251
+#: data/ui/curve-fitting.blp:244
 #, no-c-format
 msgctxt "confidence"
 msgid "3σ: 99.7% Confidence"
 msgstr ""
 
-#: data/ui/curve-fitting.blp:259
+#: data/ui/curve-fitting.blp:252
 msgid "Show Residuals"
 msgstr ""
 
@@ -1570,7 +1571,7 @@ msgstr ""
 msgid "Export Figure"
 msgstr ""
 
-#: data/ui/export-figure.blp:22 graphs/export_figure.vala:55
+#: data/ui/export-figure.blp:22 graphs/export_figure.vala:52
 msgid "Export"
 msgstr "Eksporter"
 
@@ -1657,15 +1658,11 @@ msgstr "Generer data"
 msgid "Generate"
 msgstr "Generer"
 
-#: data/ui/item-box.blp:20
-msgid "Pick Color"
-msgstr "Velg farge"
-
-#: data/ui/item-box.blp:54
+#: data/ui/item-box.blp:48
 msgid "Move Item"
 msgstr "Flytt oppføring"
 
-#: data/ui/item-box.blp:75
+#: data/ui/item-box.blp:69
 msgid "Remove Item"
 msgstr "Fjern oppføring"
 
@@ -1709,7 +1706,7 @@ msgstr "Slett …"
 msgid "Transform Data"
 msgstr "Transformer data"
 
-#: data/ui/transform.blp:41
+#: data/ui/transform.blp:42
 msgid ""
 "<b>Available variables</b>\n"
 "General:\n"
@@ -1729,11 +1726,11 @@ msgid ""
 "Append d to use degrees, e.g. sind(x) or cosd(x)."
 msgstr ""
 
-#: data/ui/transform.blp:64
+#: data/ui/transform.blp:66
 msgid "X ="
 msgstr ""
 
-#: data/ui/transform.blp:74
+#: data/ui/transform.blp:76
 msgid "Discard Unselected Data"
 msgstr ""
 
@@ -1745,7 +1742,7 @@ msgstr ""
 msgid "Show Sidebar"
 msgstr "Vis sidelinje"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:386
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
 msgid "Undo"
 msgstr "Angre"
 
@@ -1910,29 +1907,33 @@ msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "Gjenopprett handling"
 
-#: graphs/file_import/parsers/columns/__init__.py:17
+#: graphs/file_import/parsers/columns/main.vala:35
+msgid "Custom delimiter cannot be empty"
+msgstr ""
+
+#: graphs/file_import/parsers/columns/main.vala:106
 msgctxt "import-mode"
 msgid "Columns"
 msgstr "Kolonner"
 
-#: graphs/file_import/parsers/columns/main.vala:46
-msgid "Custom delimiter cannot be empty"
-msgstr ""
-
-#: graphs/file_import/parsers/columns/parser.vala:107
+#: graphs/file_import/parsers/columns/reader.vala:107
 #, c-format
 msgid ""
 "Index error in %s, cannot access index %d on line %d, only %d columns were "
 "found"
 msgstr ""
 
-#: graphs/file_import/parsers/columns/parser.vala:134
+#: graphs/file_import/parsers/columns/reader.vala:134
 #, c-format
 msgid "Cannot import from file, bad value on line %d"
 msgstr ""
 
-#: graphs/file_import/parsers/columns/ui.vala:41
-#: graphs/file_import/parsers/spreadsheet/ui.vala:146
+#: graphs/file_import/parsers/columns/reader.vala:153
+msgid "Failed to parse file."
+msgstr ""
+
+#: graphs/file_import/parsers/columns/ui.vala:38
+#: graphs/file_import/parsers/spreadsheet/ui.vala:147
 #, c-format
 msgid "Item %d"
 msgstr "Oppføring %d"
@@ -1942,384 +1943,380 @@ msgctxt "import-mode"
 msgid "Project"
 msgstr ""
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:24
+#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr ""
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:206
+#: graphs/file_import/parsers/spreadsheet/main.vala:9
 msgctxt "import-mode"
 msgid "Spreadsheet"
 msgstr "Regneark"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:207
+#: graphs/file_import/parsers/spreadsheet/main.vala:10
 msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Regneark"
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:275
-msgid "No numeric data found in column."
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+msgid "Failed to open File."
 msgstr ""
 
-#: graphs/file_import/parsers/spreadsheet/__init__.py:288
-msgid "Columns do not have the same length."
-msgstr ""
-
-#: graphs/file_import/parsers/sql/__init__.py:19
+#: graphs/file_import/parsers/sql/main.vala:9
 msgctxt "import-mode"
 msgid "Database"
 msgstr "Database"
 
-#: graphs/file_import/parsers/sql/__init__.py:20
+#: graphs/file_import/parsers/sql/main.vala:10
 msgctxt "file-filter"
 msgid "SQLite Database"
 msgstr "SQLite-database"
 
-#: graphs/file_import/parsers/sql/reader.vala:135
+#: graphs/file_import/parsers/sql/reader.vala:133
 #, c-format
 msgid "Could not import data from table \"%s\", no numeric columns were found"
 msgstr ""
 
-#: graphs/file_import/parsers/sql/reader.vala:144
+#: graphs/file_import/parsers/sql/reader.vala:142
 msgid "No data found in table column"
 msgstr ""
 
-#: graphs/file_import/parsers/xrdml/__init__.py:23
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr ""
 
-#: graphs/file_import/parsers/xrdml/__init__.py:66
+#: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr ""
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr ""
 
-#: graphs/file_import/parsers/xry/__init__.py:18
+#: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
 msgid "xry"
 msgstr ""
 
-#: graphs/file_import/parsers/xry/__init__.py:19
+#: graphs/file_import/parsers/xry/parser.vala:24
 msgctxt "file-filter"
 msgid "Leybold xry"
 msgstr ""
 
-#: graphs/file_import/parsers/xry/parser.vala:76
+#: graphs/file_import/parsers/xry/parser.vala:83
 msgid "β (°)"
 msgstr ""
 
-#: graphs/file_import/parsers/xry/parser.vala:77
+#: graphs/file_import/parsers/xry/parser.vala:84
 msgid "R (1/s)"
 msgstr ""
 
-#: graphs/file_import/__init__.py:117
+#: graphs/file_import/parsers/xry/parser.vala:104
+#: graphs/file_import/__init__.py:89
 msgid "Import failed"
 msgstr "Import feilet"
 
-#: graphs/file_import/file_import.vala:46
+#: graphs/file_import/__init__.py:57
+msgid "parser failed to init settings."
+msgstr ""
+
+#: graphs/file_import/__init__.py:72
+msgid "parser failed to init settings widgets."
+msgstr ""
+
+#: graphs/file_import/dialog.vala:131
+msgid "Defaults updated"
+msgstr ""
+
+#: graphs/file_import/file_import.vala:96
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Støttede filer"
 
 #. columns
-#: graphs/file_import/file_import.vala:50
+#: graphs/file_import/file_import.vala:100
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII-filer"
 
+#: graphs/item/data_item.vala:131
+msgid "Dataset"
+msgstr "Datasett"
+
+#: graphs/item/fill_item.vala:79
+msgid "Positive Infinity"
+msgstr ""
+
+#: graphs/item/fill_item.vala:80
+msgid "Negative Infinity"
+msgstr ""
+
+#: graphs/item/fill_item.vala:81
+msgid "Custom Equation…"
+msgstr "Egendefinert likning …"
+
+#: graphs/item/fill_item.vala:134
+msgid "Fill"
+msgstr "Fyll"
+
+#: graphs/item/generated_data_item.vala:25
+msgid "Generated Dataset"
+msgstr "Generert datasett"
+
+#: graphs/item/text_item.vala:11
+msgid "Label"
+msgstr "Etikett"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:137
-msgid "X Axis Minimum"
-msgstr ""
+#: graphs/sidebar/figure_settings.vala:87
+msgid "X Axis"
+msgstr "X-akse"
 
-#: graphs/sidebar/figure_settings.vala:138
-msgid "Y Axis Minimum"
-msgstr ""
+#: graphs/sidebar/figure_settings.vala:88
+msgid "Y Axis"
+msgstr "Y-akse"
 
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:144
-msgid "X Axis Maximum"
-msgstr ""
-
-#: graphs/sidebar/figure_settings.vala:145
-msgid "Y Axis Maximum"
-msgstr ""
-
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:163
-msgid "X Axis Scale"
-msgstr ""
-
-#: graphs/sidebar/figure_settings.vala:164
-msgid "X Axis Label"
-msgstr ""
-
-#: graphs/sidebar/figure_settings.vala:167
-msgid "Y Axis Scale"
-msgstr ""
-
-#: graphs/sidebar/figure_settings.vala:168
-msgid "Y Axis Label"
-msgstr ""
-
-#: graphs/sidebar/figure_settings.vala:247
+#: graphs/sidebar/figure_settings.vala:139
 msgid "Defaults Updated"
 msgstr ""
 
-#: graphs/style_editor/__init__.py:64
-msgid "Example Item"
-msgstr ""
-
-#: graphs/style_editor/__init__.py:101 graphs/style_io.py:247
-msgid "X Label"
-msgstr ""
-
-#: graphs/style_editor/__init__.py:102 graphs/style_io.py:248
-msgid "Y Label"
-msgstr ""
-
-#: graphs/style_editor/item_color_row.vala:31
+#: graphs/style_editor/item_color_row.vala:20
 #, c-format
 msgid "Color %d"
 msgstr "Farge %d"
 
-#. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:40
-#, c-format
-msgid "Graphs Style Editor — %s"
+#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+msgid "Example Item"
 msgstr ""
 
-#: graphs/style_editor/window.vala:231
+#: graphs/style_editor/window.vala:225
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr ""
 
-#: graphs/actions.vala:30
-msgid "The Graphs Developers"
+#. Translators: Window title that will be formatted with the stylename.
+#: graphs/style_editor/window.vala:303
+#, c-format
+msgid "Graphs Style Editor — %s"
 msgstr ""
 
-#: graphs/actions.vala:44
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
+msgid "X Label"
+msgstr ""
+
+#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
+msgid "Y Label"
+msgstr ""
+
+#: graphs/__init__.py:41
+#, python-brace-format
+msgid "Could not load {font}"
+msgstr ""
+
+#: graphs/actions.vala:40
 msgid "translator-credits"
 msgstr "Kjartan Maraas <kmaraas@gnome.org>"
 
-#: graphs/actions.vala:186 graphs/item_box.vala:54
+#: graphs/actions.vala:184 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "Slettet %s"
 
-#: graphs/application.vala:19
+#: graphs/application.vala:14
 msgid "New window"
 msgstr "Nytt vindu"
 
-#: graphs/application.vala:21
+#: graphs/application.vala:16
 msgid "[FILE…]"
 msgstr "[FIL …]"
 
-#: graphs/curve_fitting.py:99
-msgid "Residuals"
-msgstr ""
-
-#: graphs/curve_fitting.vala:74
+#: graphs/curve_fitting.vala:81
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
 msgstr ""
 
-#: graphs/curve_fitting.vala:75
+#: graphs/curve_fitting.vala:82
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
 msgstr ""
 
-#: graphs/curve_fitting.vala:76
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
 msgstr ""
 
-#: graphs/curve_fitting.vala:77
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
 msgstr ""
 
-#: graphs/curve_fitting.vala:78
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
 msgstr ""
 
-#: graphs/curve_fitting.vala:79
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
 msgstr ""
 
-#: graphs/curve_fitting.vala:80
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
 msgstr ""
 
-#: graphs/curve_fitting.vala:252
+#: graphs/curve_fitting.vala:271
+msgid "Residuals"
+msgstr ""
+
+#: graphs/curve_fitting.vala:373
 msgid "Parameters"
 msgstr "Parametere"
 
-#: graphs/curve_fitting.vala:268
+#: graphs/curve_fitting.vala:389
 msgid "Statistics"
 msgstr "Statistikk"
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:392
 msgid "R²"
 msgstr ""
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:392
 msgid "RMSE"
 msgstr ""
 
-#: graphs/curve_fitting.vala:449
+#: graphs/curve_fitting.vala:574
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr ""
 
-#: graphs/data.py:107
-#, python-brace-format
-msgid "Could not parse style {stylename}, loading system preferred style"
-msgstr ""
-
-#: graphs/data.py:112
-#, python-brace-format
-msgid "Style {stylename} does not exist, loading system preferred style"
-msgstr ""
-
-#: graphs/data.py:553
+#: graphs/data.py:347
 msgid "Failed to load project"
 msgstr ""
 
-#: graphs/export_figure.vala:48
+#: graphs/data.vala:503
+#, c-format
+msgid "Could not parse style %s, defaulting to system style"
+msgstr ""
+
+#: graphs/data.vala:934
+#, c-format
+msgid "Could not find style %s, defaulting to system style"
+msgstr ""
+
+#: graphs/export_figure.vala:45
 msgctxt "filename"
 msgid "Exported Figure"
 msgstr "Eksportert figur"
 
-#: graphs/export_figure.vala:74
+#: graphs/export_figure.vala:71
 msgid "Exported Figure"
 msgstr "Eksportert figur"
 
-#: graphs/export_items.vala:9
+#: graphs/export_items.vala:7
 msgid "No data to export"
 msgstr ""
 
-#: graphs/export_items.vala:31
+#: graphs/export_items.vala:25 graphs/export_items.vala:41
+msgid "Exported Data"
+msgstr "Eksporterte data"
+
+#: graphs/export_items.vala:34
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Tekstfiler"
-
-#: graphs/graphs.in:76
-msgid "Could not load {font}"
-msgstr ""
-
-#: graphs/item.vala:156
-msgid "Dataset"
-msgstr "Datasett"
-
-#: graphs/item.vala:195
-msgid "Generated Dataset"
-msgstr "Generert datasett"
-
-#: graphs/item.vala:253
-msgid "Label"
-msgstr "Etikett"
-
-#: graphs/item.vala:259
-msgid "Fill"
-msgstr "Fyll"
 
 #: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr ""
 
-#: graphs/operations.py:172
+#: graphs/operations.py:210
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 
-#: graphs/operations.py:222
+#: graphs/operations.py:274
 msgid "No data found in highlighted area"
 msgstr ""
 
-#: graphs/operations.py:226
+#: graphs/operations.py:278
 msgid "Some items lack error bars; they will be discarded"
 msgstr ""
 
-#: graphs/operations.py:238
+#: graphs/operations.py:290
 msgid "Combined Data"
 msgstr "Kombinerte data"
 
-#: graphs/operations.py:381
+#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
+msgid "No data found within the highlighted area"
+msgstr ""
+
+#: graphs/operations.py:378
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 
-#: graphs/operations.py:389
+#: graphs/operations.py:384
 msgid "Operation not supported for equations."
 msgstr ""
 
-#: graphs/operations.py:552
-msgid "No data found within the highlighted area"
-msgstr ""
-
-#: graphs/operations.py:560
+#: graphs/operations.py:575
 msgid "Operation not supported for data items"
 msgstr ""
 
-#: graphs/operations.py:563
+#: graphs/operations.py:578
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr ""
 
-#: graphs/operations.py:571
+#: graphs/operations.py:585
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr ""
 
-#: graphs/project.py:58
+#: graphs/project.py:61
 msgid "Project file is missing data"
 msgstr ""
 
-#: graphs/project.py:79
+#: graphs/project.py:82
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr ""
 
-#: graphs/project.py:306
+#: graphs/project.py:313
 msgid "Failed to do legacy migration"
 msgstr ""
 
-#: graphs/project.py:308
+#: graphs/project.py:315
 msgid "Failed to parse project file"
 msgstr ""
 
-#: graphs/project.py:314
+#: graphs/project.py:321
 msgid "Failed to migrate project"
 msgstr ""
 
-#: graphs/project.py:320
+#: graphs/project.py:327
 msgid "Failed to validate project"
 msgstr ""
 
-#: graphs/project.vala:31
+#: graphs/project.vala:28
 msgid "Saved Project"
 msgstr ""
 
-#: graphs/project.vala:46
+#: graphs/project.vala:43
 msgid "Project"
 msgstr "Prosjekt"
-
-#: graphs/python_helper.vala:48
-msgid "Exported Data"
-msgstr "Eksporterte data"
 
 #: graphs/style_io.py:108
 #, python-brace-format
@@ -2363,36 +2360,49 @@ msgstr ""
 msgid "File {file}, does not contain name tag"
 msgstr ""
 
-#: graphs/styles.vala:66
+#: graphs/styles.vala:107
 msgid "System"
 msgstr "System"
 
-#: graphs/utilities.vala:252
+#: graphs/utilities.vala:247
 msgid "All Files"
 msgstr "Alle filer"
 
-#: graphs/utilities.vala:293
+#: graphs/utilities.vala:289
 msgid "Document Portal"
-msgstr ""
+msgstr "Dokumentportal"
 
-#: graphs/window.vala:154
+#: graphs/window.vala:165
 msgid "Graphs (Development)"
-msgstr ""
+msgstr "Grafer (utvikling)"
 
-#: graphs/window.vala:181
+#: graphs/window.vala:192
 msgid "Untitled Project"
-msgstr ""
+msgstr "Prosjekt uten navn"
 
-#: graphs/window.vala:182
+#: graphs/window.vala:193
 msgid "Draft"
 msgstr "Skisse"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:188
+#: graphs/window.vala:199
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafer – %s"
 
-#: graphs/window.vala:376
-msgid "Open Location"
+#. Translators: Formatted with item name and data points respectively
+#: graphs/window.vala:473
+#, c-format
+msgid "%s is drawn with reduced detail using %d points"
 msgstr ""
+
+#: graphs/window.vala:479
+#, c-format
+msgid "%d item is drawn with reduced detail using %d points"
+msgid_plural "%d items are drawn with reduced detail using %d points"
+msgstr[0] ""
+msgstr[1] ""
+
+#: graphs/window.vala:501
+msgid "Open Location"
+msgstr "Åpne plassering"
