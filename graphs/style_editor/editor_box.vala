@@ -216,5 +216,222 @@ namespace Graphs {
             parameters.data.markersize = markersize.get_value ();
             update ();
         }
+
+        [GtkCallback]
+        private void on_errorbar_capsize () {
+            if (parameters == null) return;
+            parameters.data.errorbar_capsize = errorbar_capsize.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_capthick () {
+            if (parameters == null) return;
+            parameters.data.errorbar_capthick = errorbar_capthick.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_linewidth () {
+            if (parameters == null) return;
+            parameters.data.errorbar_linewidth = errorbar_linewidth.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_barsabove () {
+            if (parameters == null) return;
+            parameters.data.errorbar_barsabove = errorbar_barsabove.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_axis_width () {
+            if (parameters == null) return;
+            parameters.data.axis_width = axis_width.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_draw_frame () {
+            if (parameters == null) return;
+            parameters.data.draw_frame = draw_frame.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_direction () {
+            if (parameters == null) return;
+            parameters.data.tick_direction = (TickDirection) tick_direction.get_selected ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_minor_ticks () {
+            if (parameters == null) return;
+            parameters.data.minor_ticks = minor_ticks.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_major_tick_width () {
+            if (parameters == null) return;
+            parameters.data.major_tick_width = major_tick_width.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_minor_tick_width () {
+            if (parameters == null) return;
+            parameters.data.minor_tick_width = minor_tick_width.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_major_tick_length () {
+            if (parameters == null) return;
+            parameters.data.major_tick_length = major_tick_length.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_minor_tick_length () {
+            if (parameters == null) return;
+            parameters.data.minor_tick_length = minor_tick_length.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_labels () {
+            if (parameters == null) return;
+            parameters.data.tick_labels = tick_labels.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_bottom () {
+            if (parameters == null) return;
+            parameters.data.tick_bottom = tick_bottom.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_left () {
+            if (parameters == null) return;
+            parameters.data.tick_left = tick_left.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_top () {
+            if (parameters == null) return;
+            parameters.data.tick_top = tick_top.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_right () {
+            if (parameters == null) return;
+            parameters.data.tick_right = tick_right.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_show_grid () {
+            if (parameters == null) return;
+            parameters.data.show_grid = show_grid.get_active ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_grid_linewidth () {
+            if (parameters == null) return;
+            parameters.data.grid_linewidth = grid_linewidth.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_grid_opacity () {
+            if (parameters == null) return;
+            parameters.data.grid_opacity = grid_opacity.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_value_padding () {
+            if (parameters == null) return;
+            parameters.data.value_padding = value_padding.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_label_padding () {
+            if (parameters == null) return;
+            parameters.data.label_padding = label_padding.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_title_padding () {
+            if (parameters == null) return;
+            parameters.data.title_padding = title_padding.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_text_color () {
+            if (parameters == null) return;
+            parameters.data.text_color = Tools.rgba_to_hex (text_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_tick_color () {
+            if (parameters == null) return;
+            parameters.data.tick_color = Tools.rgba_to_hex (tick_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_axis_color () {
+            if (parameters == null) return;
+            parameters.data.axis_color = Tools.rgba_to_hex (axis_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_grid_color () {
+            if (parameters == null) return;
+            parameters.data.grid_color = Tools.rgba_to_hex (grid_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_background_color () {
+            if (parameters == null) return;
+            parameters.data.background_color = Tools.rgba_to_hex (background_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_outline_color () {
+            if (parameters == null) return;
+            parameters.data.outline_color = Tools.rgba_to_hex (outline_color.color);
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_line_colors () {
+            if (parameters == null) return;
+            parameters.data.color_cycle = line_colors.get_colors ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_errorbar_colors () {
+            if (parameters == null) return;
+            parameters.data.errorbar_cycle = errorbar_colors.get_colors ();
+            update ();
+        }
     }
 }

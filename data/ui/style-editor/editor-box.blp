@@ -157,6 +157,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_errorbar_capsize();
 
         adjustment: Adjustment {
           lower: 0;
@@ -172,6 +173,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_errorbar_capthick();
 
         adjustment: Adjustment {
           lower: 0;
@@ -187,6 +189,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_errorbar_linewidth();
 
         adjustment: Adjustment {
           lower: 0;
@@ -197,6 +200,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow errorbar_barsabove {
       title: _("Draw Above Data");
+      notify::active => $on_errorbar_barsabove();
     }
   }
 
@@ -209,6 +213,7 @@ template $GraphsStyleEditorBox: Box {
       Scale axis_width {
         draw-value: true;
         width-request: 200;
+        value-changed => $on_axis_width();
 
         adjustment: Adjustment {
           lower: 0;
@@ -219,6 +224,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow draw_frame {
       title: _("Draw Frame");
+      notify::active => $on_draw_frame();
     }
   }
 
@@ -227,6 +233,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ComboRow tick_direction {
       title: _("Tick Directions");
+      notify::selected => $on_tick_direction ();
 
       model: StringList {
         strings [
@@ -238,6 +245,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow minor_ticks {
       title: _("Minor Ticks");
+      notify::active => $on_minor_ticks();
     }
 
     Adw.ActionRow {
@@ -247,6 +255,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_major_tick_width();
 
         adjustment: Adjustment {
           lower: 0;
@@ -263,6 +272,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_minor_tick_width();
 
         adjustment: Adjustment {
           lower: 0;
@@ -278,6 +288,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_major_tick_length();
 
         adjustment: Adjustment {
           lower: 0;
@@ -294,6 +305,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_minor_tick_length();
 
         adjustment: Adjustment {
           lower: 0;
@@ -304,22 +316,27 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow tick_labels {
       title: _("Show Tick Labels on all Axes");
+      notify::active => $on_tick_labels();
     }
 
     Adw.SwitchRow tick_bottom {
       title: _("Ticks on Bottom Axis");
+      notify::active => $on_tick_bottom();
     }
 
     Adw.SwitchRow tick_left {
       title: _("Ticks on Left Axis");
+      notify::active => $on_tick_left();
     }
 
     Adw.SwitchRow tick_right {
       title: _("Ticks on Right Axis");
+      notify::active => $on_tick_right();
     }
 
     Adw.SwitchRow tick_top {
       title: _("Ticks on Top Axis");
+      notify::active => $on_tick_top();
     }
   }
 
@@ -328,6 +345,7 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.SwitchRow show_grid {
       title: _("Show Grid");
+      notify::active => $on_show_grid();
     }
 
     Adw.ActionRow {
@@ -338,6 +356,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_grid_linewidth();
 
         adjustment: Adjustment {
           lower: 0;
@@ -354,6 +373,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_grid_opacity();
 
         adjustment: Adjustment {
           lower: 0;
@@ -375,6 +395,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_value_padding();
 
         adjustment: Adjustment {
           lower: 0;
@@ -391,6 +412,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_label_padding();
 
         adjustment: Adjustment {
           lower: 0;
@@ -407,6 +429,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_title_padding();
 
         adjustment: Adjustment {
           lower: 0;
@@ -450,6 +473,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow text_color {
           title: _("Text Color");
+          color-chosen => $on_text_color();
         }
       }
 
@@ -461,6 +485,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow tick_color {
           title: _("Tick Color");
+          color-chosen => $on_tick_color();
         }
       }
 
@@ -472,6 +497,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow axis_color {
           title: _("Axis Color");
+          color-chosen => $on_axis_color();
         }
       }
 
@@ -483,6 +509,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow grid_color {
           title: _("Grid Color");
+          color-chosen => $on_grid_color();
         }
       }
 
@@ -494,6 +521,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow background_color {
           title: _("Background Color");
+          color-chosen => $on_background_color();
         }
       }
 
@@ -505,6 +533,7 @@ template $GraphsStyleEditorBox: Box {
 
         $GraphsColorRow outline_color {
           title: _("Outline Color");
+          color-chosen => $on_outline_color();
         }
       }
     }
@@ -512,9 +541,11 @@ template $GraphsStyleEditorBox: Box {
 
   $GraphsStyleColorGroup line_colors {
     title: _("Line Colors");
+    colors-changed => $on_line_colors ();
   }
 
   $GraphsStyleColorGroup errorbar_colors {
     title: _("Error Bar Colors");
+    colors-changed => $on_errorbar_colors ();
   }
 }
