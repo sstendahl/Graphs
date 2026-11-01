@@ -108,6 +108,7 @@ namespace Graphs {
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
 
+        protected signal void save_request (File file, StyleParameters parameters);
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal StyleParameters params_request (File file, StyleParameters? validate);
         protected signal Gdk.Texture preview_request (StyleParameters parameters);
@@ -277,6 +278,10 @@ namespace Graphs {
 
         public static StyleParameters get_style_params (File file, StyleParameters? validate = null) {
             return instance.params_request.emit (file, validate);
+        }
+
+        public static void save_style_params (File file, StyleParameters style) {
+            instance.save_request.emit (file, style);
         }
 
         public static bool is_dark_style (StyleParameters parameters) {

@@ -145,13 +145,6 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             self._on_errbar_colors_changed,
         )
 
-        self.connect("save_request", self._on_save_request)
-
-    @staticmethod
-    def _on_save_request(self, file: Gio.File) -> None:
-        """Save style params to file."""
-        style_io.write(file, self.params, self.graphs_params)
-
     def _update_params(self) -> None:
         """Update the style parameters."""
         self.props.parameters = \

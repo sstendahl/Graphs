@@ -98,6 +98,7 @@ class StyleManager(Graphs.StyleManager):
         self.connect("params-request", self._on_params_request)
         self.connect("preview-request", self._on_preview_request)
         self.connect("create-style-request", self._on_create_style_request)
+        self.connect("save-request", self._on_save_request)
 
         self.setup()
 
@@ -109,6 +110,14 @@ class StyleManager(Graphs.StyleManager):
     ) -> Graphs.StyleParameters:
         validate = None if validate is None else validate.as_tuple()
         return StyleParameters(style_io.parse(file, validate))
+
+    @staticmethod
+    def _on_save_request(
+        self,
+        file: Gio.File,
+        style: Graphs.StyleParameters,
+    ) -> None:
+        style_io.write(file, style.style_params, style.graphs_params)
 
     @staticmethod
     def _on_preview_request(

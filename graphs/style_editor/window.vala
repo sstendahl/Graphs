@@ -167,8 +167,10 @@ namespace Graphs {
         public void load (File file) {
             this._file = file;
             this.loading = true;
-            editor_box.load (file);
-            set_title (editor_box.parameters.name);
+            var validate = StyleManager.get_system_style_params ();
+            var style = StyleManager.get_style_params (file, validate);
+            editor_box.load (style);
+            set_title (style.name);
             reload_canvas ();
             stack.get_pages ().select_item (1, true);
             this.unsaved = false;
@@ -176,7 +178,7 @@ namespace Graphs {
         }
 
         public void save () {
-            editor_box.save (_file);
+            StyleManager.save_style_params (_file, editor_box.parameters);
             this.unsaved = false;
             if (_inhibit_cookie > 0) {
                 application.uninhibit (_inhibit_cookie);

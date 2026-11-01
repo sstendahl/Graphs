@@ -130,18 +130,13 @@ namespace Graphs {
 
         public StyleParameters parameters { get; protected set; }
 
-        protected signal void save_request (File file);
-
         construct {
             titlesize.set_format_value_func (title_format_function);
             labelsize.set_format_value_func (title_format_function);
         }
 
-        public void load (File file) {
+        public void load (StyleParameters style) {
             parameters = null;
-
-            var validate = StyleManager.get_system_style_params ();
-            var style = StyleManager.get_style_params (file, validate);
             unowned var data = style.data;
 
             style_name.set_text (style.name);
@@ -196,10 +191,6 @@ namespace Graphs {
             check_contrast ();
 
             parameters = style;
-        }
-
-        public void save (File file) {
-            save_request.emit (file);
         }
 
         protected void check_contrast () {
