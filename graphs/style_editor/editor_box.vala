@@ -90,7 +90,8 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Box poor_contrast_warning { get; }
 
-        public StyleParameters parameters { get; protected set; }
+        public StyleParameters parameters { get; private set; }
+        public signal void parameters_changed ();
 
         construct {
             titlesize.set_format_value_func (title_format_function);
@@ -162,6 +163,7 @@ namespace Graphs {
 
         private void update () {
             PythonHelper.run_method (parameters, "update");
+            parameters_changed.emit ();
         }
 
         [GtkCallback]
@@ -415,6 +417,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_outline_color () {
+            check_contrast ();
             if (parameters == null) return;
             parameters.data.outline_color = Tools.rgba_to_hex (outline_color.color);
             update ();
@@ -422,6 +425,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_line_colors () {
+            check_contrast ();
             if (parameters == null) return;
             parameters.data.color_cycle = line_colors.get_colors ();
             update ();

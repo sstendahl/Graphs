@@ -258,7 +258,7 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
                 margin-end: 12;
 
                 child: $GraphsStyleEditorBox editor_box {
-                  notify::parameters => $on_params_changed();
+                  parameters-changed => $on_params_changed();
                 };
               };
             };

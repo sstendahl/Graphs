@@ -2,6 +2,8 @@
 """Module for style utilities."""
 import io
 
+from cycler import cycler
+
 from gi.repository import GLib, Gdk, Gio, Graphs, Pango
 
 from graphs import style_io
@@ -112,6 +114,75 @@ class StyleParameters(Graphs.StyleParameters):
         self.style_params["axes.titlesize"] = titlesize
         labelsize = round(data.labelsize / 2 * font_size, 1)
         self.style_params["axes.labelsize"] = labelsize
+
+        self.style_params["lines.linestyle"] = \
+            Graphs.python_data_linestyle_to_style(data.linestyle)
+        self.style_params["lines.linewidth"] = data.linewidth
+        self.style_params["lines.marker"] = \
+            Graphs.python_data_markerstyle_to_style(data.markerstyle)
+        self.style_params["lines.markersize"] = data.markersize
+
+        self.graphs_params["errorbar.capsize"] = data.errorbar_capsize
+        self.graphs_params["errorbar.capthick"] = data.errorbar_capthick
+        self.graphs_params["errorbar.linewidth"] = data.errorbar_linewidth
+        self.graphs_params["errorbar.barsabove"] = data.errorbar_barsabove
+
+        for key in (
+            "axes.spines.bottom",
+            "axes.spines.left",
+            "axes.spines.top",
+            "axes.spines.right",
+        ):
+            self.style_params[key] = data.draw_frame
+
+        tick_direction = Graphs.tick_direction_to_string(data.tick_direction)
+        self.style_params["xtick.direction"] = tick_direction
+        self.style_params["ytick.direction"] = tick_direction
+        self.style_params["xtick.minor.visible"] = data.minor_ticks
+        self.style_params["ytick.minor.visible"] = data.minor_ticks
+        self.style_params["xtick.major.width"] = data.major_tick_width
+        self.style_params["ytick.major.width"] = data.major_tick_width
+        self.style_params["xtick.minor.width"] = data.minor_tick_width
+        self.style_params["ytick.minor.width"] = data.minor_tick_width
+        self.style_params["xtick.major.size"] = data.major_tick_length
+        self.style_params["ytick.major.size"] = data.major_tick_length
+        self.style_params["xtick.minor.size"] = data.minor_tick_length
+        self.style_params["ytick.minor.size"] = data.minor_tick_length
+        self.style_params["xtick.bottom"] = data.tick_bottom
+        self.style_params["ytick.left"] = data.tick_left
+        self.style_params["xtick.top"] = data.tick_top
+        self.style_params["ytick.right"] = data.tick_right
+        self.graphs_params["ticklabels"] = data.tick_labels
+
+        self.style_params["axes.grid"] = data.show_grid
+        self.style_params["axes.linewidth"] = data.axis_width
+        self.style_params["grid.linewidth"] = data.grid_linewidth
+        self.style_params["grid.alpha"] = data.grid_opacity
+
+        for key in (
+            "xtick.major.pad",
+            "ytick.minor.pad",
+            "xtick.major.pad",
+            "ytick.minor.pad",
+        ):
+            self.style_params[key] = data.value_padding
+        self.style_params["axes.labelpad"] = data.label_padding
+        self.style_params["axes.titlepad"] = data.title_padding
+
+        self.style_params["xtick.color"] = data.tick_color
+        self.style_params["ytick.color"] = data.tick_color
+        self.style_params["axes.edgecolor"] = data.axis_color
+        self.style_params["grid.color"] = data.grid_color
+        self.style_params["axes.facecolor"] = data.background_color
+        self.style_params["figure.facecolor"] = data.outline_color
+        self.style_params["figure.edgecolor"] = data.outline_color
+
+        line_colors = data.color_cycle
+        self.style_params["axes.prop_cycle"] = cycler(color=line_colors)
+        self.style_params["patch.facecolor"] = line_colors[0]
+
+        err_colors = data.errorbar_cycle
+        self.graphs_params["errorbar.color_cycle"] = cycler(color=err_colors)
 
     def as_tuple(self) -> tuple[RcParams, dict]:
         """Return params as tuple."""
