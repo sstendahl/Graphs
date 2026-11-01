@@ -47,7 +47,7 @@ namespace Graphs {
             }
             while (stmt.step () == Sqlite.ROW) {
                 unowned string col_name = stmt.column_text (1);
-                string col_type = stmt.column_text (2).up ();
+                string col_type = stmt.column_text (2).ascii_up ();
 
                 if (is_numeric_type (col_type)) {
                     columns.append_val (col_name);

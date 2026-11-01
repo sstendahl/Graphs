@@ -60,7 +60,7 @@ namespace Graphs {
                     string line = input.read_line ().strip ();
                     string[] values = whitespace.split (line);
                     for (int j = 0; j < item_count; j++) {
-                        if (!(values[j].down () == "nan")) {
+                        if (!(values[j].ascii_down () == "nan")) {
                             columns[j].data[i] = evaluate_string (values[j]);
                             if (columns[j].first_val == null) columns[j].first_val = i;
                             columns[j].last_val = i;
