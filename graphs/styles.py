@@ -82,7 +82,7 @@ class StyleParameters(Graphs.StyleParameters):
 
     def update(self) -> None:
         """Update style parameters."""
-        self.graphs_params["name"] == self.props.name
+        self.graphs_params["name"] = self.props.name
         data = self.props.data
 
         font = data.font
