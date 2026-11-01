@@ -12,7 +12,7 @@ namespace Graphs {
         protected unowned Adw.EntryRow style_name { get; }
 
         [GtkChild]
-        protected unowned Gtk.FontDialogButton font_chooser { get; }
+        protected unowned Gtk.FontDialogButton font { get; }
 
         [GtkChild]
         protected unowned Gtk.Scale titlesize { get; }
@@ -141,7 +141,7 @@ namespace Graphs {
 
             style_name.set_text (style.name);
 
-            font_chooser.set_font_desc (data.font);
+            font.set_font_desc (data.font);
             titlesize.set_value (data.titlesize);
             labelsize.set_value (data.labelsize);
 
@@ -193,9 +193,20 @@ namespace Graphs {
             parameters = style;
         }
 
-        protected void check_contrast () {
+        private void check_contrast () {
             double contrast = Tools.get_contrast (outline_color.color, text_color.color);
             poor_contrast_warning.set_visible (contrast < 4.5);
+        }
+
+        private void update () {
+            PythonHelper.run_method (parameters, "update");
+        }
+
+        [GtkCallback]
+        private void on_font () {
+            if (parameters == null) return;
+            parameters.data.font = font.get_font_desc ();
+            update ();
         }
 
         [GtkCallback]

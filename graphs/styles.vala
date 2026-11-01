@@ -32,45 +32,46 @@ namespace Graphs {
         public bool light { get; set; default = true; }
     }
 
-    public struct StyleData {
-        Pango.FontDescription font;
-        double titlesize;
-        double labelsize;
-        DataLinestyle linestyle;
-        double linewidth;
-        DataMarkerstyle markerstyle;
-        double markersize;
-        double errorbar_capsize;
-        double errorbar_capthick;
-        double errorbar_linewidth;
-        bool errorbar_barsabove;
-        double axis_width;
-        bool draw_frame;
-        TickDirection tick_direction;
-        bool minor_ticks;
-        double major_tick_width;
-        double minor_tick_width;
-        double major_tick_length;
-        double minor_tick_length;
-        bool tick_labels;
-        bool tick_bottom;
-        bool tick_left;
-        bool tick_right;
-        bool tick_top;
-        bool show_grid;
-        double grid_linewidth;
-        double grid_opacity;
-        double value_padding;
-        double label_padding;
-        double title_padding;
-        string text_color;
-        string tick_color;
-        string axis_color;
-        string grid_color;
-        string background_color;
-        string outline_color;
-        string[] color_cycle;
-        string[] errorbar_cycle;
+    [Compact]
+    public class StyleData {
+        public Pango.FontDescription font;
+        public double titlesize;
+        public double labelsize;
+        public DataLinestyle linestyle;
+        public double linewidth;
+        public DataMarkerstyle markerstyle;
+        public double markersize;
+        public double errorbar_capsize;
+        public double errorbar_capthick;
+        public double errorbar_linewidth;
+        public bool errorbar_barsabove;
+        public double axis_width;
+        public bool draw_frame;
+        public TickDirection tick_direction;
+        public bool minor_ticks;
+        public double major_tick_width;
+        public double minor_tick_width;
+        public double major_tick_length;
+        public double minor_tick_length;
+        public bool tick_labels;
+        public bool tick_bottom;
+        public bool tick_left;
+        public bool tick_right;
+        public bool tick_top;
+        public bool show_grid;
+        public double grid_linewidth;
+        public double grid_opacity;
+        public double value_padding;
+        public double label_padding;
+        public double title_padding;
+        public string text_color;
+        public string tick_color;
+        public string axis_color;
+        public string grid_color;
+        public string background_color;
+        public string outline_color;
+        public string[] color_cycle;
+        public string[] errorbar_cycle;
 
         // Python bindings cannot mutate string array or struct fields
         public void set_color_cycle (string[] color_cycle) {
@@ -88,7 +89,8 @@ namespace Graphs {
 
     public class StyleParameters : Object {
         public string name { get; construct set; }
-        public StyleData data { get; construct set; }
+        private StyleData _data = new StyleData ();
+        public StyleData data { get { return _data; } }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = """
@@ -418,3 +420,4 @@ namespace Graphs {
         } catch {}
     }
 }
+

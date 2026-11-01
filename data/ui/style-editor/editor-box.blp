@@ -12,11 +12,12 @@ template $GraphsStyleEditorBox: Box {
 
     Adw.ActionRow {
       title: _("Font");
-      activatable-widget: font_chooser;
+      activatable-widget: font;
 
-      FontDialogButton font_chooser {
+      FontDialogButton font {
         valign: center;
         use-font: true;
+        notify::font-desc => $on_font();
 
         dialog: FontDialog {};
       }

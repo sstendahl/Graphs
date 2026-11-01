@@ -13,7 +13,8 @@ class StyleParameters(Graphs.StyleParameters):
     """Custom Style Parameters class."""
 
     def __init__(self, params: tuple[RcParams, dict]):
-        data = Graphs.StyleData()
+        super().__init__(name=params[1]["name"])
+        data = self.props.data
 
         font = Pango.FontDescription.new()
         font.set_family(params[0]["font.sans-serif"][0])
@@ -74,9 +75,43 @@ class StyleParameters(Graphs.StyleParameters):
             params[1]["errorbar.color_cycle"].by_key()["color"],
         )
 
-        super().__init__(name=params[1]["name"], data=data)
         self.style_params = params[0]
         self.graphs_params = params[1]
+
+    def update(self) -> None:
+        """Update style parameters."""
+        self.graphs_params["name"] == self.props.name
+        data = self.props.data
+
+        font = data.font
+        self.style_params["font.sans-serif"] = [font.get_family()]
+        font_size = font.get_size() / Pango.SCALE
+        for key in (
+            "font.size",
+            "xtick.labelsize",
+            "ytick.labelsize",
+            "legend.fontsize",
+            "figure.labelsize",
+        ):
+            self.style_params[key] = font_size
+        font_weight = font.get_weight()
+        for key in (
+            "font.weight",
+            "axes.titleweight",
+            "axes.labelweight",
+            "figure.titleweight",
+            "figure.labelweight",
+        ):
+            self.style_params[key] = font_weight
+        self.style_params["font.style"] = \
+            Graphs.tools_font_style_to_string(font.get_style())
+        self.style_params["font.variant"] = \
+            Graphs.tools_font_variant_to_string(font.get_variant())
+        titlesize = round(data.titlesize / 2 * self.font_size, 1)
+        self.style_params["figure.titlesize"] = titlesize
+        self.style_params["axes.titlesize"] = titlesize
+        labelsize = round(data.labelsize / 2 * self.font_size, 1)
+        self.style_params["axes.labelsize"] = labelsize
 
     def as_tuple(self) -> tuple[RcParams, dict]:
         """Return params as tuple."""
