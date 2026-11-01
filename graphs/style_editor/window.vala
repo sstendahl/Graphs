@@ -20,7 +20,7 @@ namespace Graphs {
         private const double PREVIEW_YDATA2[] = {1, 2.718282, 7.389056, 20.085537, 54.598150, 148.413159, 403.428793, 1096.633158, 2980.957987, 8103.083928, 22026.465795};
 
         [GtkChild]
-        private unowned Adw.Bin editor_bin { get; }
+        private unowned StyleEditorBox editor_box { get; }
 
         [GtkChild]
         private unowned Adw.Bin canvas_bin { get; }
@@ -34,7 +34,6 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.ToolbarView content_view { get; }
 
-        private StyleEditorBox editor_box;
         private ListStore test_items;
         private Gtk.CssProvider css_provider;
         private bool unsaved = false;
@@ -46,10 +45,6 @@ namespace Graphs {
         private uint _reload_source = 0;
 
         construct {
-            editor_box = PythonHelper.create_style_editor_box ();
-            editor_bin.set_child (editor_box);
-            editor_box.notify["parameters"].connect (on_params_changed);
-
             this.css_provider = new Gtk.CssProvider ();
             Gtk.StyleContext.add_provider_for_display (
                 Gdk.Display.get_default (), css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
@@ -274,6 +269,7 @@ namespace Graphs {
             return false;
         }
 
+        [GtkCallback]
         private void on_params_changed () {
             if (loading) return;
 

@@ -257,7 +257,9 @@ template $GraphsStyleEditor: Adw.ApplicationWindow {
                 margin-start: 12;
                 margin-end: 12;
 
-                child: Adw.Bin editor_bin {};
+                child: $GraphsStyleEditorBox editor_box {
+                  notify::parameters => $on_params_changed();
+                };
               };
             };
           };

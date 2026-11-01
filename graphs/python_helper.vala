@@ -13,11 +13,6 @@ namespace Graphs {
             return instance.create_canvas_request.emit (parameters, items, interactive, figure_settings);
         }
 
-        protected signal StyleEditorBox create_style_editor_box_request ();
-        public static StyleEditorBox create_style_editor_box () {
-            return instance.create_style_editor_box_request.emit ();
-        }
-
         protected signal Window create_window_request ();
         public static Window create_window () {
             return instance.create_window_request ();
