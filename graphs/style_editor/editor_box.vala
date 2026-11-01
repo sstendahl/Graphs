@@ -130,7 +130,6 @@ namespace Graphs {
 
         public StyleParameters parameters { get; protected set; }
 
-        protected signal void load_request (StyleParameters style);
         protected signal void save_request (File file);
 
         construct {
@@ -139,6 +138,8 @@ namespace Graphs {
         }
 
         public void load (File file) {
+            parameters = null;
+
             var validate = StyleManager.get_system_style_params ();
             var style = StyleManager.get_style_params (file, validate);
             unowned var data = style.data;
@@ -149,12 +150,52 @@ namespace Graphs {
             titlesize.set_value (data.titlesize);
             labelsize.set_value (data.labelsize);
 
+            linestyle.set_selected (data.linestyle);
+            linewidth.set_value (data.linewidth);
+            markers.set_selected (data.markerstyle);
+            markersize.set_value (data.markersize);
+
+            errorbar_capsize.set_value (data.errorbar_capsize);
+            errorbar_capthick.set_value (data.errorbar_capthick);
+            errorbar_linewidth.set_value (data.errorbar_linewidth);
+            errorbar_barsabove.set_active (data.errorbar_barsabove);
+
+            axis_width.set_value (data.axis_width);
+            draw_frame.set_active (data.draw_frame);
+
+            tick_direction.set_selected (data.tick_direction);
+            minor_ticks.set_active (data.minor_ticks);
+            major_tick_width.set_value (data.major_tick_width);
+            minor_tick_width.set_value (data.minor_tick_width);
+            major_tick_length.set_value (data.major_tick_width);
+            minor_tick_length.set_value (data.minor_tick_length);
+            tick_labels.set_active (data.tick_labels);
+            tick_bottom.set_active (data.tick_bottom);
+            tick_left.set_active (data.tick_left);
+            tick_top.set_active (data.tick_top);
+            tick_right.set_active (data.tick_right);
+
+            show_grid.set_active (data.show_grid);
+            grid_linewidth.set_value (data.grid_linewidth);
+            grid_opacity.set_value (data.grid_opacity);
+
+            value_padding.set_value (data.value_padding);
+            label_padding.set_value (data.label_padding);
+            title_padding.set_value (data.title_padding);
+
+            text_color.color = Tools.hex_to_rgba (data.text_color);
+            tick_color.color = Tools.hex_to_rgba (data.tick_color);
+            axis_color.color = Tools.hex_to_rgba (data.axis_color);
+            grid_color.color = Tools.hex_to_rgba (data.grid_color);
+            background_color.color = Tools.hex_to_rgba (data.background_color);
+            outline_color.color = Tools.hex_to_rgba (data.outline_color);
+
             line_colors.set_colors (data.color_cycle);
             errorbar_colors.set_colors (data.errorbar_cycle);
 
-            load_request.emit (style);
-
             check_contrast ();
+
+            parameters = style;
         }
 
         public void save (File file) {

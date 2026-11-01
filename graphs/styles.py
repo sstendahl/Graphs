@@ -15,7 +15,6 @@ class StyleParameters(Graphs.StyleParameters):
     def __init__(self, params: tuple[RcParams, dict]):
         data = Graphs.StyleData()
 
-        # Font
         font = Pango.FontDescription.new()
         font.set_family(params[0]["font.sans-serif"][0])
         font_size = params[0]["font.size"]
@@ -40,9 +39,36 @@ class StyleParameters(Graphs.StyleParameters):
         data.errorbar_linewidth = params[1]["errorbar.linewidth"]
         data.errorbar_barsabove = params[1]["errorbar.barsabove"]
 
+        data.axis_width = params[0]["axes.linewidth"]
+        data.draw_frame = params[0]["axes.spines.bottom"]
+        data.tick_direction = \
+            Graphs.tick_direction_from_string(params[0]["xtick.direction"])
+        data.minor_ticks = params[0]["xtick.minor.visible"]
+        data.major_tick_width = params[0]["xtick.major.width"]
+        data.minor_tick_width = params[0]["xtick.minor.width"]
+        data.major_tick_length = params[0]["xtick.major.size"]
+        data.minor_tick_length = params[0]["xtick.minor.size"]
+        data.tick_bottom = params[0]["xtick.bottom"]
+        data.tick_left = params[0]["ytick.left"]
+        data.tick_top = params[0]["xtick.top"]
+        data.tick_right = params[0]["ytick.right"]
+        data.tick_labels = params[1]["ticklabels"]
+
+        data.show_grid = params[0]["axes.grid"]
+        data.grid_linewidth = params[0]["grid.linewidth"]
+        data.grid_opacity = params[0]["grid.alpha"]
+
+        data.value_padding = params[0]["xtick.major.pad"]
+        data.label_padding = params[0]["axes.labelpad"]
+        data.title_padding = params[0]["axes.titlepad"]
+
         data.text_color = params[0]["text.color"]
+        data.tick_color = params[0]["xtick.color"]
+        data.axis_color = params[0]["axes.edgecolor"]
+        data.grid_color = params[0]["grid.color"]
         data.background_color = params[0]["axes.facecolor"]
         data.outline_color = params[0]["figure.facecolor"]
+
         data.set_color_cycle(params[0]["axes.prop_cycle"].by_key()["color"])
         data.set_errorbar_cycle(
             params[1]["errorbar.color_cycle"].by_key()["color"],

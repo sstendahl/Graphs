@@ -145,38 +145,7 @@ class StyleEditorBox(Graphs.StyleEditorBox):
             self._on_errbar_colors_changed,
         )
 
-        self.connect("load_request", self._on_load_request)
         self.connect("save_request", self._on_save_request)
-
-    @staticmethod
-    def _on_load_request(self, params: Graphs.StyleParameters) -> None:
-        """Load style params from file."""
-        self.params, self.graphs_params = None, None
-        style_params, graphs_params = params.as_tuple()
-        for key, value in STYLE_DICT.items():
-            value = value[0]
-            value = graphs_params[
-                value
-            ] if value in style_io.STYLE_CUSTOM_PARAMS else style_params[value]
-            with contextlib.suppress(KeyError):
-                value = VALUE_DICT[key].index(value)
-            widget = self.get_property(key.replace("-", "_"))
-            if isinstance(widget, Adw.EntryRow):
-                widget.set_text(str(value))
-            elif isinstance(widget, Adw.ComboRow):
-                widget.set_selected(int(value))
-            elif isinstance(widget, Gtk.Scale):
-                widget.set_value(value)
-            elif isinstance(widget, Graphs.ColorRow):
-                widget.set_color(Graphs.tools_hex_to_rgba(value))
-            elif isinstance(widget, Adw.SwitchRow):
-                widget.set_active(bool(value))
-            else:
-                raise ValueError
-
-        self.params, self.graphs_params = style_params, graphs_params
-
-        self._update_params()
 
     @staticmethod
     def _on_save_request(self, file: Gio.File) -> None:
