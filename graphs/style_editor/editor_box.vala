@@ -7,126 +7,88 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/editor-box.ui")]
-    public class StyleEditorBox : Gtk.Box {
+    private class StyleEditorBox : Gtk.Box {
         [GtkChild]
-        protected unowned Adw.EntryRow style_name { get; }
-
+        private unowned Adw.EntryRow style_name { get; }
         [GtkChild]
-        protected unowned Gtk.FontDialogButton font { get; }
-
+        private unowned Gtk.FontDialogButton font { get; }
         [GtkChild]
-        protected unowned Gtk.Scale titlesize { get; }
-
+        private unowned Gtk.Scale titlesize { get; }
         [GtkChild]
-        protected unowned Gtk.Scale labelsize { get; }
-
+        private unowned Gtk.Scale labelsize { get; }
         [GtkChild]
-        protected unowned Adw.ComboRow linestyle { get; }
-
+        private unowned Adw.ComboRow linestyle { get; }
         [GtkChild]
-        protected unowned Gtk.Scale linewidth { get; }
-
+        private unowned Gtk.Scale linewidth { get; }
         [GtkChild]
-        protected unowned Adw.ComboRow markers { get; }
-
+        private unowned Adw.ComboRow markerstyle { get; }
         [GtkChild]
-        protected unowned Gtk.Scale markersize { get; }
-
+        private unowned Gtk.Scale markersize { get; }
         [GtkChild]
-        protected unowned Gtk.Scale axis_width { get; }
-
+        private unowned Gtk.Scale errorbar_capsize { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow draw_frame { get; }
-
+        private unowned Gtk.Scale errorbar_capthick { get; }
         [GtkChild]
-        protected unowned Adw.ComboRow tick_direction { get; }
-
+        private unowned Gtk.Scale errorbar_linewidth { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow minor_ticks { get; }
-
+        private unowned Adw.SwitchRow errorbar_barsabove { get; }
         [GtkChild]
-        protected unowned Gtk.Scale major_tick_width { get; }
-
+        private unowned Gtk.Scale axis_width { get; }
         [GtkChild]
-        protected unowned Gtk.Scale minor_tick_width { get; }
-
+        private unowned Adw.SwitchRow draw_frame { get; }
         [GtkChild]
-        protected unowned Gtk.Scale major_tick_length { get; }
-
+        private unowned Adw.ComboRow tick_direction { get; }
         [GtkChild]
-        protected unowned Gtk.Scale minor_tick_length { get; }
-
+        private unowned Adw.SwitchRow minor_ticks { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow tick_labels { get; }
-
+        private unowned Gtk.Scale major_tick_width { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow tick_bottom { get; }
-
+        private unowned Gtk.Scale minor_tick_width { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow tick_left { get; }
-
+        private unowned Gtk.Scale major_tick_length { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow tick_right { get; }
-
+        private unowned Gtk.Scale minor_tick_length { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow tick_top { get; }
-
+        private unowned Adw.SwitchRow tick_labels { get; }
         [GtkChild]
-        protected unowned Adw.SwitchRow show_grid { get; }
-
+        private unowned Adw.SwitchRow tick_bottom { get; }
         [GtkChild]
-        protected unowned Gtk.Scale grid_linewidth { get; }
-
+        private unowned Adw.SwitchRow tick_left { get; }
         [GtkChild]
-        protected unowned Gtk.Scale grid_opacity { get; }
-
+        private unowned Adw.SwitchRow tick_right { get; }
         [GtkChild]
-        protected unowned Gtk.Scale value_padding { get; }
-
+        private unowned Adw.SwitchRow tick_top { get; }
         [GtkChild]
-        protected unowned Gtk.Scale label_padding { get; }
-
+        private unowned Adw.SwitchRow show_grid { get; }
         [GtkChild]
-        protected unowned Gtk.Scale title_padding { get; }
-
+        private unowned Gtk.Scale grid_linewidth { get; }
         [GtkChild]
-        protected unowned ColorRow text_color { get; }
-
+        private unowned Gtk.Scale grid_opacity { get; }
         [GtkChild]
-        protected unowned ColorRow tick_color { get; }
-
+        private unowned Gtk.Scale value_padding { get; }
         [GtkChild]
-        protected unowned ColorRow axis_color { get; }
-
+        private unowned Gtk.Scale label_padding { get; }
         [GtkChild]
-        protected unowned ColorRow grid_color { get; }
-
+        private unowned Gtk.Scale title_padding { get; }
         [GtkChild]
-        protected unowned ColorRow background_color { get; }
-
+        private unowned ColorRow text_color { get; }
         [GtkChild]
-        protected unowned ColorRow outline_color { get; }
-
+        private unowned ColorRow tick_color { get; }
         [GtkChild]
-        protected unowned StyleColorGroup line_colors { get; }
-
+        private unowned ColorRow axis_color { get; }
         [GtkChild]
-        protected unowned StyleColorGroup errorbar_colors { get; }
+        private unowned ColorRow grid_color { get; }
+        [GtkChild]
+        private unowned ColorRow background_color { get; }
+        [GtkChild]
+        private unowned ColorRow outline_color { get; }
+        [GtkChild]
+        private unowned StyleColorGroup line_colors { get; }
+        [GtkChild]
+        private unowned StyleColorGroup errorbar_colors { get; }
 
         [GtkChild]
         private unowned Gtk.Box poor_contrast_warning { get; }
-
-        [GtkChild]
-        protected unowned Gtk.Scale errorbar_capsize { get; }
-
-        [GtkChild]
-        protected unowned Gtk.Scale errorbar_capthick { get; }
-
-        [GtkChild]
-        protected unowned Gtk.Scale errorbar_linewidth { get; }
-
-        [GtkChild]
-        protected unowned Adw.SwitchRow errorbar_barsabove { get; }
 
         public StyleParameters parameters { get; protected set; }
 
@@ -147,7 +109,7 @@ namespace Graphs {
 
             linestyle.set_selected (data.linestyle);
             linewidth.set_value (data.linewidth);
-            markers.set_selected (data.markerstyle);
+            markerstyle.set_selected (data.markerstyle);
             markersize.set_value (data.markersize);
 
             errorbar_capsize.set_value (data.errorbar_capsize);
@@ -210,13 +172,49 @@ namespace Graphs {
         }
 
         [GtkCallback]
-        private void on_linestyle () {
-            linewidth.set_sensitive (linestyle.get_selected () != 0);
+        private void on_titlesize () {
+            if (parameters == null) return;
+            parameters.data.titlesize = titlesize.get_value ();
+            update ();
         }
 
         [GtkCallback]
-        private void on_markers () {
-            markersize.set_sensitive (markers.get_selected () != 0);
+        private void on_labelsize () {
+            if (parameters == null) return;
+            parameters.data.labelsize = labelsize.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_linestyle () {
+            DataLinestyle val = (DataLinestyle) linestyle.get_selected ();
+            linewidth.set_sensitive (val != 0);
+            if (parameters == null) return;
+            parameters.data.linestyle = val;
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_linewidth () {
+            if (parameters == null) return;
+            parameters.data.linewidth = linewidth.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_markerstyle () {
+            DataMarkerstyle val = (DataMarkerstyle) markerstyle.get_selected ();
+            markersize.set_sensitive (val != 0);
+            if (parameters == null) return;
+            parameters.data.markerstyle = val;
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_markersize () {
+            if (parameters == null) return;
+            parameters.data.markersize = markersize.get_value ();
+            update ();
         }
     }
 }

@@ -31,6 +31,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_titlesize();
 
         adjustment: Adjustment {
           lower: 1;
@@ -47,6 +48,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_labelsize();
 
         adjustment: Adjustment {
           lower: 1;
@@ -83,6 +85,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_linewidth();
 
         adjustment: Adjustment {
           lower: 0;
@@ -91,9 +94,9 @@ template $GraphsStyleEditorBox: Box {
       }
     }
 
-    Adw.ComboRow markers {
+    Adw.ComboRow markerstyle {
       title: _("Markers");
-      notify::selected => $on_markers();
+      notify::selected => $on_markerstyle();
 
       model: StringList {
         strings [
@@ -134,6 +137,7 @@ template $GraphsStyleEditorBox: Box {
         draw-value: true;
         width-request: 200;
         valign: center;
+        value-changed => $on_markersize();
 
         adjustment: Adjustment {
           lower: 0;

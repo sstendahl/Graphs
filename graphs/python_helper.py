@@ -7,7 +7,6 @@ import gio_pyio
 from graphs import ast, curve_fitting, misc, operations
 from graphs.canvas.canvas import Canvas
 from graphs.canvas.figure import Figure
-from graphs.style_editor.editor_box import StyleEditorBox
 from graphs.window import PythonWindow
 
 from matplotlib import rcParams, rcParamsDefault

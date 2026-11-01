@@ -107,10 +107,10 @@ class StyleParameters(Graphs.StyleParameters):
             Graphs.tools_font_style_to_string(font.get_style())
         self.style_params["font.variant"] = \
             Graphs.tools_font_variant_to_string(font.get_variant())
-        titlesize = round(data.titlesize / 2 * self.font_size, 1)
+        titlesize = round(data.titlesize / 2 * font_size, 1)
         self.style_params["figure.titlesize"] = titlesize
         self.style_params["axes.titlesize"] = titlesize
-        labelsize = round(data.labelsize / 2 * self.font_size, 1)
+        labelsize = round(data.labelsize / 2 * font_size, 1)
         self.style_params["axes.labelsize"] = labelsize
 
     def as_tuple(self) -> tuple[RcParams, dict]:
