@@ -130,7 +130,7 @@ namespace Graphs {
 
         public StyleParameters parameters { get; protected set; }
 
-        protected signal void load_request (File file);
+        protected signal void load_request (StyleParameters style);
         protected signal void save_request (File file);
 
         construct {
@@ -139,7 +139,22 @@ namespace Graphs {
         }
 
         public void load (File file) {
-            load_request.emit (file);
+            var validate = StyleManager.get_system_style_params ();
+            var style = StyleManager.get_style_params (file, validate);
+            unowned var data = style.data;
+
+            style_name.set_text (style.name);
+
+            font_chooser.set_font_desc (data.font);
+            titlesize.set_value (data.titlesize);
+            labelsize.set_value (data.labelsize);
+
+            line_colors.set_colors (data.color_cycle);
+            errorbar_colors.set_colors (data.errorbar_cycle);
+
+            load_request.emit (style);
+
+            check_contrast ();
         }
 
         public void save (File file) {

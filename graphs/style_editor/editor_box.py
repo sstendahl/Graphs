@@ -149,16 +149,10 @@ class StyleEditorBox(Graphs.StyleEditorBox):
         self.connect("save_request", self._on_save_request)
 
     @staticmethod
-    def _on_load_request(self, file: Gio.File) -> None:
+    def _on_load_request(self, params: Graphs.StyleParameters) -> None:
         """Load style params from file."""
         self.params, self.graphs_params = None, None
-        system = Graphs.StyleManager.get_instance().get_system_style_params()
-        style_params, graphs_params = style_io.parse(
-            file,
-            system.as_tuple(),
-        )
-        stylename = graphs_params["name"]
-        self.props.style_name.set_text(stylename)
+        style_params, graphs_params = params.as_tuple()
         for key, value in STYLE_DICT.items():
             value = value[0]
             value = graphs_params[
@@ -179,40 +173,6 @@ class StyleEditorBox(Graphs.StyleEditorBox):
                 widget.set_active(bool(value))
             else:
                 raise ValueError
-
-        # font
-        font_description = Pango.FontDescription.new()
-        self.font_size = style_params["font.size"]
-        font_description.set_size(self.font_size * Pango.SCALE)
-        self.props.titlesize.set_value(
-            round(style_params["figure.titlesize"] * 2 / self.font_size, 1),
-        )
-        self.props.labelsize.set_value(
-            round(style_params["axes.labelsize"] * 2 / self.font_size, 1),
-        )
-        font_description.set_family(style_params["font.sans-serif"][0])
-        font_description.set_weight(style_params["font.weight"])
-        inverted_style_dict = {b: a for a, b in FONT_STYLE_DICT.items()}
-        font_description.set_style(
-            inverted_style_dict[style_params["font.style"]],
-        )
-        inverted_variant_dict = {b: a for a, b in FONT_VARIANT_DICT.items()}
-        font_description.set_variant(
-            inverted_variant_dict[style_params["font.variant"]],
-        )
-        self.props.font_chooser.set_font_desc(font_description)
-
-        self.check_contrast()
-
-        # line colors
-        self.props.line_colors.set_colors(
-            style_params["axes.prop_cycle"].by_key()["color"],
-        )
-
-        # error bar colors
-        self.props.errorbar_colors.set_colors(
-            graphs_params["errorbar.color_cycle"].by_key()["color"],
-        )
 
         self.params, self.graphs_params = style_params, graphs_params
 

@@ -17,11 +17,16 @@ class StyleParameters(Graphs.StyleParameters):
 
         # Font
         font = Pango.FontDescription.new()
-        font.set_size(params[0]["font.size"] * Pango.SCALE)
+        font.set_family(params[0]["font.sans-serif"][0])
+        font_size = params[0]["font.size"]
+        font.set_size(font_size * Pango.SCALE)
         font.set_weight(params[0]["font.weight"])
         font.set_style(Pango.parse_style(params[0]["font.style"])[1])
         font.set_variant(Pango.parse_variant(params[0]["font.variant"])[1])
         data.set_font(font)
+        data.titlesize = \
+            round(params[0]["figure.titlesize"] * 2 / font_size, 1)
+        data.labelsize = round(params[0]["axes.labelsize"] * 2 / font_size, 1)
 
         data.linestyle = \
             Graphs.data_linestyle_from_style(params[0]["lines.linestyle"])

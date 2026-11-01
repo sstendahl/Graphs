@@ -34,6 +34,8 @@ namespace Graphs {
 
     public struct StyleData {
         Pango.FontDescription font;
+        double titlesize;
+        double labelsize;
         DataLinestyle linestyle;
         double linewidth;
         DataMarkerstyle markerstyle;
@@ -251,8 +253,8 @@ namespace Graphs {
             return is_dark_style (parameters) ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
-        public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
-            return instance.params_request.emit (style.file, validate);
+        public static StyleParameters get_style_params (File file, StyleParameters? validate = null) {
+            return instance.params_request.emit (file, validate);
         }
 
         public static bool is_dark_style (StyleParameters parameters) {
