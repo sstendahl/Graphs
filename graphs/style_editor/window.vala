@@ -312,8 +312,8 @@ namespace Graphs {
                 }
             }
 
-            var color_cycle = style.color_cycle;
-            var errorbar_cycle = style.errorbar_cycle;
+            var color_cycle = style.data.color_cycle;
+            var errorbar_cycle = style.data.errorbar_cycle;
             for (uint i = 0; i < test_items.get_n_items (); i++) {
                 var item = (DataItem) test_items.get_item (i);
 
@@ -327,7 +327,7 @@ namespace Graphs {
             canvas.figure.set ("bottom_label", _("X Label"));
             canvas.figure.set ("left_label", _("Y Label"));
 
-            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.outline_color, style.text_color));
+            css_provider.load_from_string (CSS_TEMPLATE.printf (content_view.get_name (), style.data.outline_color, style.data.text_color));
             StyleManager.apply_color_scheme (this, editor_box.parameters);
 
             canvas_bin.set_child (canvas);
