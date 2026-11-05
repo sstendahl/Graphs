@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-14 10:32+0000\n"
-"PO-Revision-Date: 2026-10-18 08:14+0330\n"
+"POT-Creation-Date: 2026-11-01 08:32+0000\n"
+"PO-Revision-Date: 2026-11-01 16:12+0330\n"
 "Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
 "Language-Team: Persian\n"
 "Language: fa\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.6\n"
 "X-DL-Lang: fa\n"
 "X-DL-Module: Graphs\n"
 "X-DL-Branch: main\n"
@@ -250,7 +250,7 @@ msgstr "تنها مقدارهای Y"
 msgid "Import only Y values, X values will be generated"
 msgstr "فقط درون‌ریزی مقدارهای Y. مقدارهای X تولید خواهند شد"
 
-#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item/equation_item.vala:24
+#: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72 graphs/item/equation_item.vala:43
 msgid "Equation"
 msgstr "معادله"
 
@@ -1929,17 +1929,21 @@ msgstr "نتوانست داده‌ها را از جدول «%s» وارد کند
 msgid "No data found in table column"
 msgstr "هیچ داده‌ای در ستون جدول پیدا نشد"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr "هیچ موقعیتی برای محور پویش پیدا نشد"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr "چگالی (cps)"
 
@@ -1988,7 +1992,7 @@ msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "پرونده‌های اسکی"
 
-#: graphs/item/data_item.vala:73
+#: graphs/item/data_item.vala:131
 msgid "Dataset"
 msgstr "دادگان"
 
@@ -2066,7 +2070,7 @@ msgstr "نتوانست {font} را بار کند"
 msgid "translator-credits"
 msgstr "دانیال بهزادی <dani.behzi@ubuntu.com>"
 
-#: graphs/actions.vala:183 graphs/item_box.vala:46
+#: graphs/actions.vala:184 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "«⁨%s⁩» حذف شد"
@@ -2139,23 +2143,23 @@ msgstr ""
 msgid "Residuals"
 msgstr "باقیمانده‌ها"
 
-#: graphs/curve_fitting.vala:382
+#: graphs/curve_fitting.vala:373
 msgid "Parameters"
 msgstr "پارامترها"
 
-#: graphs/curve_fitting.vala:398
+#: graphs/curve_fitting.vala:389
 msgid "Statistics"
 msgstr "آمار"
 
-#: graphs/curve_fitting.vala:401
+#: graphs/curve_fitting.vala:392
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:401
+#: graphs/curve_fitting.vala:392
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:583
+#: graphs/curve_fitting.vala:574
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "برازش پارامترها برای %s"
@@ -2164,12 +2168,12 @@ msgstr "برازش پارامترها برای %s"
 msgid "Failed to load project"
 msgstr "شکست در بار کردن پروژه"
 
-#: graphs/data.vala:487
+#: graphs/data.vala:503
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "نتوانست سبک %s را تجزیه کند. پیش‌گزیده به سبک سامانه"
 
-#: graphs/data.vala:907
+#: graphs/data.vala:934
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "نتوانست سبک %s را پیدا کند. پیش‌گزیده به سبک سامانه"
@@ -2205,41 +2209,41 @@ msgstr "پروندهٔ سبک matplotlib"
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "ناتوان در انجام تبدیل. مطمئن شوید نوشتار درست است"
 
-#: graphs/operations.py:272
+#: graphs/operations.py:274
 msgid "No data found in highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:276
+#: graphs/operations.py:278
 msgid "Some items lack error bars; they will be discarded"
 msgstr "مواردی که نوار خطا ندارند دور انداخته خواهند شد"
 
-#: graphs/operations.py:288
+#: graphs/operations.py:290
 msgid "Combined Data"
 msgstr "داده‌های ترکیب شده"
 
-#: graphs/operations.py:310 graphs/operations.py:560 graphs/operations.py:564
+#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
 msgid "No data found within the highlighted area"
 msgstr "هیچ داده‌ای در ناحیهٔ برجسته پیدا نشد"
 
-#: graphs/operations.py:376
+#: graphs/operations.py:378
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "عملیات روی {name} منجر به معادله‌ای قابل رسم نشد"
 
-#: graphs/operations.py:382
+#: graphs/operations.py:384
 msgid "Operation not supported for equations."
 msgstr "عملیات برای معادله‌ها پشتیبانی نمی‌شود."
 
-#: graphs/operations.py:573
+#: graphs/operations.py:575
 msgid "Operation not supported for data items"
 msgstr "عملیات برای موارد داده پشتیبانی نمی‌شود"
 
-#: graphs/operations.py:576
+#: graphs/operations.py:578
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: خطا در انجام عملیات"
 
-#: graphs/operations.py:583
+#: graphs/operations.py:585
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "داده‌هایی که خارج از ناحیهٔ برجسته بودند دور ریخته شدند"
 
@@ -2319,11 +2323,11 @@ msgstr "پروندهٔ {file} برچسب نام ندارد"
 msgid "System"
 msgstr "سامانه"
 
-#: graphs/utilities.vala:248
+#: graphs/utilities.vala:247
 msgid "All Files"
 msgstr "همهٔ پرونده‌ها"
 
-#: graphs/utilities.vala:290
+#: graphs/utilities.vala:289
 msgid "Document Portal"
 msgstr "درگاه سند"
 
