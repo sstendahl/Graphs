@@ -131,6 +131,21 @@ namespace Graphs {
             typename = _("Dataset");
         }
 
+        private static StylePropertyBinding[] bindings = {
+            {"linestyle", (s) => s.linestyle},
+            {"linewidth", (s) => s.linewidth},
+            {"markerstyle", (s) => s.markerstyle},
+            {"markersize", (s) => s.markersize},
+            {"errbarsabove", (s) => s.errorbar_barsabove},
+            {"errcapsize", (s) => s.errorbar_capsize},
+            {"errcapthick", (s) => s.errorbar_capthick},
+            {"errlinewidth", (s) => s.errorbar_linewidth}
+        };
+
+        protected override unowned StylePropertyBinding[]? get_property_bindings () {
+            return bindings;
+        }
+
         public unowned double[] get_xdata () {
             return data.get_xdata ();
         }
