@@ -10,5 +10,14 @@ namespace Graphs {
         construct {
             typename = _("Label");
         }
+
+        private static StylePropertyBinding[] bindings = {
+            {"size", (s) => s.font.get_size ()},
+            {"color", (s) => s.text_color}
+        };
+
+        protected override unowned StylePropertyBinding[]? get_property_bindings () {
+            return bindings;
+        }
     }
 }
