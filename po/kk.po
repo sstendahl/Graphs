@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-08-17 15:13+0000\n"
-"PO-Revision-Date: 2026-08-22 08:22+0500\n"
+"POT-Creation-Date: 2026-11-06 11:51+0000\n"
+"PO-Revision-Date: 2026-11-06 22:28+0500\n"
 "Last-Translator: Baurzhan Muftakhidinov <baurthefirst@gmail.com>\n"
 "Language-Team: Kazakh <Kazakh>\n"
 "Language: kk\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.9\n"
+"X-Generator: Poedit 3.10\n"
 
 #: data/se.sjoerd.Graphs.metainfo.xml.in:6 data/se.sjoerd.Graphs.desktop.in:2 data/ui/sidebar/main.blp:5 graphs/actions.vala:23
 msgid "Graphs"
@@ -254,7 +254,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Тек Y мәндерін импорттау, X мәндері автоматты түрде жасалады"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item.vala:287
+#: graphs/item/equation_item.vala:43
 msgid "Equation"
 msgstr "Теңдеу"
 
@@ -464,9 +464,13 @@ msgstr "Болжанған мәндерге қайта орнату"
 msgid "Import Mode"
 msgstr "Импорттау режимі"
 
-#: data/ui/import/dialog.blp:118 data/ui/sidebar/figure-settings/settings-page.blp:265
+#: data/ui/import/dialog.blp:118 data/ui/sidebar/figure-settings/settings-page.blp:102
 msgid "Set as Default"
 msgstr "Әдепкі ретінде орнату"
+
+#: data/ui/import/importing-item-box.blp:9
+msgid "Importing…"
+msgstr "Импорттау…"
 
 #: data/ui/sidebar/edit-item/base.blp:6
 msgid "Name and Position"
@@ -734,44 +738,32 @@ msgstr "Масштаб"
 msgid "How points are spaced"
 msgstr "Нүктелердің орналасу аралығы"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/figure-settings/settings-page.blp:155
-#: data/ui/sidebar/figure-settings/settings-page.blp:171 data/ui/sidebar/figure-settings/settings-page.blp:187
-#: data/ui/sidebar/figure-settings/settings-page.blp:203 data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Сызықтық"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/sidebar/figure-settings/settings-page.blp:156
-#: data/ui/sidebar/figure-settings/settings-page.blp:172 data/ui/sidebar/figure-settings/settings-page.blp:188
-#: data/ui/sidebar/figure-settings/settings-page.blp:204 data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Логарифмдік (10 негізіндегі)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/sidebar/figure-settings/settings-page.blp:157
-#: data/ui/sidebar/figure-settings/settings-page.blp:173 data/ui/sidebar/figure-settings/settings-page.blp:189
-#: data/ui/sidebar/figure-settings/settings-page.blp:205 data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Логарифмдік (2 негізіндегі)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/sidebar/figure-settings/settings-page.blp:158
-#: data/ui/sidebar/figure-settings/settings-page.blp:174 data/ui/sidebar/figure-settings/settings-page.blp:190
-#: data/ui/sidebar/figure-settings/settings-page.blp:206 data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радиандар"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/sidebar/figure-settings/settings-page.blp:159
-#: data/ui/sidebar/figure-settings/settings-page.blp:175 data/ui/sidebar/figure-settings/settings-page.blp:191
-#: data/ui/sidebar/figure-settings/settings-page.blp:207 data/ui/generate-data.blp:109
+#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Шаршы түбір"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/sidebar/figure-settings/settings-page.blp:160
-#: data/ui/sidebar/figure-settings/settings-page.blp:176 data/ui/sidebar/figure-settings/settings-page.blp:192
-#: data/ui/sidebar/figure-settings/settings-page.blp:208 data/ui/generate-data.blp:110
+#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Кері"
@@ -784,153 +776,93 @@ msgstr "Элементті түзету"
 msgid "Figure Settings"
 msgstr "Фигура баптаулары"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:26
-msgid "Labels"
-msgstr "Белгілер"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:29 graphs/style_editor/window.vala:325
+#: data/ui/sidebar/figure-settings/settings-page.blp:27 graphs/style_editor/window.vala:326
 msgid "Title"
 msgstr "Тақырыбы"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:34
-msgid "Bottom X Axis Label"
-msgstr "Төменгі X осінің белгісі"
+#: data/ui/sidebar/figure-settings/settings-page.blp:33
+msgid "Bottom X Axis"
+msgstr "Төменгі X осі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:39
-msgid "Top X Axis Label"
-msgstr "Жоғарғы X осінің белгісі"
+#: data/ui/sidebar/figure-settings/settings-page.blp:38
+msgid "Top X Axis"
+msgstr "Жоғарғы X осі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:44
-msgid "Left Y Axis Label"
-msgstr "Сол жақ Y осінің белгісі"
+#: data/ui/sidebar/figure-settings/settings-page.blp:43
+msgid "Left Y Axis"
+msgstr "Сол жақ Y осі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:49
-msgid "Right Y Axis Label"
-msgstr "Оң жақ Y осінің белгісі"
+#: data/ui/sidebar/figure-settings/settings-page.blp:48
+msgid "Right Y Axis"
+msgstr "Оң жақ Y осі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:54
-msgid "Axis Limits"
-msgstr "Ось шектеулері"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:68
-msgid "Bottom X Axis Minimum"
-msgstr "Төменгі X осінің минимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:75
-msgid "Bottom X Axis Maximum"
-msgstr "Төменгі X осінің максимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:89
-msgid "Top X Axis Minimum"
-msgstr "Жоғарғы X осінің минимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:96
-msgid "Top X Axis Maximum"
-msgstr "Жоғарғы X осінің максимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:110
-msgid "Left Y Axis Minimum"
-msgstr "Сол жақ Y осінің минимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:117
-msgid "Left Y Axis Maximum"
-msgstr "Сол жақ Y осінің максимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:131
-msgid "Right Y Axis Minimum"
-msgstr "Оң жақ Y осінің минимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:138
-msgid "Right Y Axis Maximum"
-msgstr "Оң жақ Y осінің максимумы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:147
-msgid "Scaling"
-msgstr "Масштабтау"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:151
-msgid "Bottom X Axis Scale"
-msgstr "Төменгі X осінің масштабы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:167
-msgid "Top X Axis Scale"
-msgstr "Жоғарғы X осінің масштабы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:183
-msgid "Left Y Axis Scale"
-msgstr "Сол жақ Y осінің масштабы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:199
-msgid "Right Y Axis Scale"
-msgstr "Оң жақ Y осінің масштабы"
-
-#: data/ui/sidebar/figure-settings/settings-page.blp:215
+#: data/ui/sidebar/figure-settings/settings-page.blp:52
 msgid "Appearance"
 msgstr "Сыртқы түрі"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:218
+#: data/ui/sidebar/figure-settings/settings-page.blp:55
 msgid "Show Legend"
 msgstr "Аңызды көрсету"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:222
+#: data/ui/sidebar/figure-settings/settings-page.blp:59
 msgid "Legend Position"
 msgstr "Аңыз орны"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:227
+#: data/ui/sidebar/figure-settings/settings-page.blp:64
 msgctxt "legend-position"
 msgid "Auto"
 msgstr "Авто"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:228
+#: data/ui/sidebar/figure-settings/settings-page.blp:65
 msgctxt "legend-position"
 msgid "Upper Right"
 msgstr "Жоғарғы оң жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:229
+#: data/ui/sidebar/figure-settings/settings-page.blp:66
 msgctxt "legend-position"
 msgid "Upper Left"
 msgstr "Жоғарғы сол жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:230
+#: data/ui/sidebar/figure-settings/settings-page.blp:67
 msgctxt "legend-position"
 msgid "Lower Left"
 msgstr "Төменгі сол жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:231
+#: data/ui/sidebar/figure-settings/settings-page.blp:68
 msgctxt "legend-position"
 msgid "Lower Right"
 msgstr "Төменгі оң жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:232
+#: data/ui/sidebar/figure-settings/settings-page.blp:69
 msgctxt "legend-position"
 msgid "Center Left"
 msgstr "Ортаңғы сол жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:233
+#: data/ui/sidebar/figure-settings/settings-page.blp:70
 msgctxt "legend-position"
 msgid "Center Right"
 msgstr "Ортаңғы оң жақ"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:234
+#: data/ui/sidebar/figure-settings/settings-page.blp:71
 msgctxt "legend-position"
 msgid "Lower Center"
 msgstr "Төменгі орта"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:235
+#: data/ui/sidebar/figure-settings/settings-page.blp:72
 msgctxt "legend-position"
 msgid "Upper Center"
 msgstr "Жоғарғы орта"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:236
+#: data/ui/sidebar/figure-settings/settings-page.blp:73
 msgctxt "legend-position"
 msgid "Center"
 msgstr "Ортасы"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:242
+#: data/ui/sidebar/figure-settings/settings-page.blp:79
 msgid "Hide Unselected Items"
 msgstr "Таңдалмаған элементтерді жасыру"
 
-#: data/ui/sidebar/figure-settings/settings-page.blp:246 data/ui/sidebar/figure-settings/style-page.blp:5
+#: data/ui/sidebar/figure-settings/settings-page.blp:83 data/ui/sidebar/figure-settings/style-page.blp:5
 #: graphs/style_editor/window.vala:81
 msgid "Style"
 msgstr "Стиль"
@@ -1773,7 +1705,7 @@ msgstr "Импорттау үшін осында тастаңыз"
 msgid "Show Sidebar"
 msgstr "Бүйірлік панельді көрсету"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:437
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
 msgid "Undo"
 msgstr "Болдырмау"
 
@@ -2009,17 +1941,21 @@ msgstr "“%s” кестесінен деректерді импорттау м
 msgid "No data found in table column"
 msgstr "Кесте бағанында деректер табылмады"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:26
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
 #: graphs/file_import/parsers/xrdml/__init__.py:70
+msgid "No positions found for the scan axis"
+msgstr "Сканерлеу осі үшін ешбір орын табылмады"
+
+#: graphs/file_import/parsers/xrdml/__init__.py:80
 msgid "Intensity (cps)"
 msgstr "Қарқындылық (имп/сек)"
 
@@ -2057,53 +1993,55 @@ msgstr "талдаушы баптау виджеттерін іске қоса �
 msgid "Defaults updated"
 msgstr "Бастапқы мәндер жаңартылды"
 
-#: graphs/file_import/file_import.vala:77
+#: graphs/file_import/file_import.vala:96
 msgctxt "file-filter"
 msgid "Supported files"
 msgstr "Қолдау көрсетілетін файлдар"
 
 #. columns
-#: graphs/file_import/file_import.vala:81
+#: graphs/file_import/file_import.vala:100
 msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII файлдары"
 
+#: graphs/item/data_item.vala:131
+msgid "Dataset"
+msgstr "Мәліметтер жиыны"
+
+#: graphs/item/fill_item.vala:79
+msgid "Positive Infinity"
+msgstr "Оң шексіздік"
+
+#: graphs/item/fill_item.vala:80
+msgid "Negative Infinity"
+msgstr "Теріс шексіздік"
+
+#: graphs/item/fill_item.vala:81
+msgid "Custom Equation…"
+msgstr "Пайдаланушылық теңдеу…"
+
+#: graphs/item/fill_item.vala:134
+msgid "Fill"
+msgstr "Толтыру"
+
+#: graphs/item/generated_data_item.vala:25
+msgid "Generated Dataset"
+msgstr "Жасалған мәліметтер жиыны"
+
+#: graphs/item/text_item.vala:11
+msgid "Label"
+msgstr "Белгі"
+
 #. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:134
-msgid "X Axis Minimum"
-msgstr "X осінің минимумы"
+#: graphs/sidebar/figure_settings.vala:87
+msgid "X Axis"
+msgstr "X осі"
 
-#: graphs/sidebar/figure_settings.vala:135
-msgid "Y Axis Minimum"
-msgstr "Y осінің минимумы"
+#: graphs/sidebar/figure_settings.vala:88
+msgid "Y Axis"
+msgstr "Y осі"
 
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:141
-msgid "X Axis Maximum"
-msgstr "X осінің максимумы"
-
-#: graphs/sidebar/figure_settings.vala:142
-msgid "Y Axis Maximum"
-msgstr "Y осінің максимумы"
-
-#. Remove direction prefix if only one is present
-#: graphs/sidebar/figure_settings.vala:160
-msgid "X Axis Scale"
-msgstr "X осінің масштабы"
-
-#: graphs/sidebar/figure_settings.vala:161
-msgid "X Axis Label"
-msgstr "X осінің белгісі"
-
-#: graphs/sidebar/figure_settings.vala:164
-msgid "Y Axis Scale"
-msgstr "Y осінің масштабы"
-
-#: graphs/sidebar/figure_settings.vala:165
-msgid "Y Axis Label"
-msgstr "Y осінің белгісі"
-
-#: graphs/sidebar/figure_settings.vala:245
+#: graphs/sidebar/figure_settings.vala:139
 msgid "Defaults Updated"
 msgstr "Әдепкі параметрлер жаңартылды"
 
@@ -2116,22 +2054,22 @@ msgstr "Түс %d"
 msgid "Example Item"
 msgstr "Мысал элементі"
 
-#: graphs/style_editor/window.vala:224
+#: graphs/style_editor/window.vala:225
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "%s өшіруді шынымен қалайсыз ба?"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:302
+#: graphs/style_editor/window.vala:303
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Графиктер стилінің редакторы — %s"
 
-#: graphs/style_editor/window.vala:326 graphs/style_io.py:247
+#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
 msgid "X Label"
 msgstr "X белгісі"
 
-#: graphs/style_editor/window.vala:327 graphs/style_io.py:248
+#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Y белгісі"
 
@@ -2144,7 +2082,7 @@ msgstr "{font} жүктелмеді"
 msgid "translator-credits"
 msgstr "Baurzhan Muftakhidinov <baurthefirst@gmail.com>"
 
-#: graphs/actions.vala:183 graphs/item_box.vala:46
+#: graphs/actions.vala:184 graphs/item_box.vala:46
 #, c-format
 msgid "Deleted %s"
 msgstr "%s өшірілді"
@@ -2213,41 +2151,41 @@ msgstr ""
 "Сенімділік аралығының қатесі: \n"
 "Ковариация матрицасы тұрақсыз."
 
-#: graphs/curve_fitting.vala:265
+#: graphs/curve_fitting.vala:271
 msgid "Residuals"
 msgstr "Қалдықтар"
 
-#: graphs/curve_fitting.vala:376
+#: graphs/curve_fitting.vala:373
 msgid "Parameters"
 msgstr "Параметрлер"
 
-#: graphs/curve_fitting.vala:392
+#: graphs/curve_fitting.vala:389
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:392
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:395
+#: graphs/curve_fitting.vala:392
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:577
+#: graphs/curve_fitting.vala:574
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "%s үшін сәйкестендіру параметрлері"
 
-#: graphs/data.py:381
+#: graphs/data.py:347
 msgid "Failed to load project"
 msgstr "Жобаны жүктеу сәтсіз аяқталды"
 
-#: graphs/data.vala:487
+#: graphs/data.vala:507
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "%s стилін талдау мүмкін болмады, жүйе стиліне ауыстырылды"
 
-#: graphs/data.vala:842
+#: graphs/data.vala:938
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "%s стилі табылмады, жүйе стиліне ауыстырылды"
@@ -2265,87 +2203,59 @@ msgstr "Экспортталған фигура"
 msgid "No data to export"
 msgstr "Экспорттау үшін мәліметтер жоқ"
 
-#: graphs/export_items.vala:20 graphs/export_items.vala:36
+#: graphs/export_items.vala:25 graphs/export_items.vala:41
 msgid "Exported Data"
 msgstr "Экспортталған мәліметтер"
 
-#: graphs/export_items.vala:29
+#: graphs/export_items.vala:34
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Мәтіндік файлдар"
-
-#: graphs/item.vala:201
-msgid "Dataset"
-msgstr "Мәліметтер жиыны"
-
-#: graphs/item.vala:247
-msgid "Generated Dataset"
-msgstr "Жасалған мәліметтер жиыны"
-
-#: graphs/item.vala:303
-msgid "Label"
-msgstr "Белгі"
-
-#: graphs/item.vala:383
-msgid "Positive Infinity"
-msgstr "Оң шексіздік"
-
-#: graphs/item.vala:384
-msgid "Negative Infinity"
-msgstr "Теріс шексіздік"
-
-#: graphs/item.vala:385
-msgid "Custom Equation…"
-msgstr "Пайдаланушылық теңдеу…"
-
-#: graphs/item.vala:438
-msgid "Fill"
-msgstr "Толтыру"
 
 #: graphs/misc.vala:7
 msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Matplotlib стилінің файлы"
 
-#: graphs/operations.py:125
+#: graphs/operations.py:210
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Түрлендіруді орындау мүмкін емес, синтаксистің дұрыстығына көз жеткізіңіз"
 
-#: graphs/operations.py:187
+#: graphs/operations.py:274
 msgid "No data found in highlighted area"
 msgstr "Ерекшеленген аймақта мәліметтер табылмады"
 
-#: graphs/operations.py:191
+#: graphs/operations.py:278
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Кейбір элементтерде қателік индикаторлары жоқ; олар алынып тасталады"
 
-#: graphs/operations.py:203
+#: graphs/operations.py:290
 msgid "Combined Data"
 msgstr "Біріктірілген мәліметтер"
 
-#: graphs/operations.py:345
+#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
+msgid "No data found within the highlighted area"
+msgstr "Ерекшеленген аймақта мәліметтер табылмады"
+
+#: graphs/operations.py:378
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "{name} бойынша орындалған операция нәтижесінде графикке салынатын теңдеу шықпады"
 
-#: graphs/operations.py:351
+#: graphs/operations.py:384
 msgid "Operation not supported for equations."
 msgstr "Операция теңдеулер үшін қолдау көрсетілмейді."
 
-#: graphs/operations.py:525 graphs/operations.py:529
-msgid "No data found within the highlighted area"
-msgstr "Ерекшеленген аймақта мәліметтер табылмады"
-
-#: graphs/operations.py:538
+#: graphs/operations.py:575
 msgid "Operation not supported for data items"
 msgstr "Операция мәліметтер элементтері үшін қолдау көрсетілмейді"
 
-#: graphs/operations.py:541
+#: graphs/operations.py:578
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Операцияны орындау қатесі"
 
-#: graphs/operations.py:548
+#: graphs/operations.py:585
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Ерекшеленген аймақтан тыс мәліметтер алынып тасталды"
 
@@ -2357,19 +2267,19 @@ msgstr "Жоба файлында мәліметтер жетіспейді"
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Жоба Graphs бағдарламасының үйлесімсіз жаңа нұсқасынан"
 
-#: graphs/project.py:314
+#: graphs/project.py:313
 msgid "Failed to do legacy migration"
 msgstr "Ескі нұсқадан көшіру сәтсіз аяқталды"
 
-#: graphs/project.py:316
+#: graphs/project.py:315
 msgid "Failed to parse project file"
 msgstr "Жоба файлын талдау сәтсіз аяқталды"
 
-#: graphs/project.py:322
+#: graphs/project.py:321
 msgid "Failed to migrate project"
 msgstr "Жобаны көшіру сәтсіз аяқталды"
 
-#: graphs/project.py:328
+#: graphs/project.py:327
 msgid "Failed to validate project"
 msgstr "Жобаны тексеру сәтсіз аяқталды"
 
@@ -2421,52 +2331,115 @@ msgstr "{filename} талдау мүмкін болмады"
 msgid "File {file}, does not contain name tag"
 msgstr "{file} файлында атау тегі жоқ"
 
-#: graphs/styles.vala:103
+#: graphs/styles.vala:133
 msgid "System"
 msgstr "Жүйе"
 
-#: graphs/utilities.vala:248
+#: graphs/utilities.vala:247
 msgid "All Files"
 msgstr "Барлық файлдар"
 
-#: graphs/utilities.vala:290
+#: graphs/utilities.vala:289
 msgid "Document Portal"
 msgstr "Құжаттар порталы"
 
-#: graphs/window.vala:149
+#: graphs/window.vala:165
 msgid "Graphs (Development)"
 msgstr "Graphs (әзірлеу)"
 
-#: graphs/window.vala:176
+#: graphs/window.vala:192
 msgid "Untitled Project"
 msgstr "Атаусыз жоба"
 
-#: graphs/window.vala:177
+#: graphs/window.vala:193
 msgid "Draft"
 msgstr "Шимай"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:183
+#: graphs/window.vala:199
 #, c-format
 msgid "Graphs — %s"
 msgstr "Graphs - %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:399
+#: graphs/window.vala:473
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s %d нүкте арқылы азайтылған егжей-тегжеймен сызылған"
 
-#: graphs/window.vala:405
+#: graphs/window.vala:479
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
 msgstr[0] "%d элемент %d нүкте арқылы азайтылған егжей-тегжеймен сызылған"
 msgstr[1] "%d элемент %d нүкте арқылы азайтылған егжей-тегжеймен сызылған"
 
-#: graphs/window.vala:427
+#: graphs/window.vala:501
 msgid "Open Location"
 msgstr "Орналасқан жерді ашу"
+
+#~ msgid "Labels"
+#~ msgstr "Белгілер"
+
+#~ msgid "Axis Limits"
+#~ msgstr "Ось шектеулері"
+
+#~ msgid "Bottom X Axis Minimum"
+#~ msgstr "Төменгі X осінің минимумы"
+
+#~ msgid "Bottom X Axis Maximum"
+#~ msgstr "Төменгі X осінің максимумы"
+
+#~ msgid "Top X Axis Minimum"
+#~ msgstr "Жоғарғы X осінің минимумы"
+
+#~ msgid "Top X Axis Maximum"
+#~ msgstr "Жоғарғы X осінің максимумы"
+
+#~ msgid "Left Y Axis Minimum"
+#~ msgstr "Сол жақ Y осінің минимумы"
+
+#~ msgid "Left Y Axis Maximum"
+#~ msgstr "Сол жақ Y осінің максимумы"
+
+#~ msgid "Right Y Axis Minimum"
+#~ msgstr "Оң жақ Y осінің минимумы"
+
+#~ msgid "Right Y Axis Maximum"
+#~ msgstr "Оң жақ Y осінің максимумы"
+
+#~ msgid "Scaling"
+#~ msgstr "Масштабтау"
+
+#~ msgid "Bottom X Axis Scale"
+#~ msgstr "Төменгі X осінің масштабы"
+
+#~ msgid "Top X Axis Scale"
+#~ msgstr "Жоғарғы X осінің масштабы"
+
+#~ msgid "Left Y Axis Scale"
+#~ msgstr "Сол жақ Y осінің масштабы"
+
+#~ msgid "Right Y Axis Scale"
+#~ msgstr "Оң жақ Y осінің масштабы"
+
+#~ msgid "X Axis Minimum"
+#~ msgstr "X осінің минимумы"
+
+#~ msgid "Y Axis Minimum"
+#~ msgstr "Y осінің минимумы"
+
+#~ msgid "X Axis Maximum"
+#~ msgstr "X осінің максимумы"
+
+#~ msgid "Y Axis Maximum"
+#~ msgstr "Y осінің максимумы"
+
+#~ msgid "X Axis Label"
+#~ msgstr "X осінің белгісі"
+
+#~ msgid "Y Axis Label"
+#~ msgstr "Y осінің белгісі"
 
 #~ msgid "Edit"
 #~ msgstr "Түзету"
