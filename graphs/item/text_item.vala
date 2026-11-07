@@ -11,6 +11,15 @@ namespace Graphs {
             typename = _("Label");
         }
 
+        public TextItem (StyleParameters parameters, double xanchor, double yanchor, string text) {
+            Object (
+                xanchor: xanchor,
+                yanchor: yanchor,
+                text: text
+            );
+            override (parameters);
+        }
+
         private static StylePropertyBinding[] bindings = {
             {"size", (s) => s.font.get_size ()},
             {"color", (s) => s.text_color}

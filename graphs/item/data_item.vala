@@ -131,6 +131,13 @@ namespace Graphs {
             typename = _("Dataset");
         }
 
+        public DataItem (StyleParameters parameters, owned double[] xdata, owned double[] ydata, owned double[]? xerr = null, owned double[]? yerr = null) {
+            Object (
+                data: new DataHolder ((owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr)
+            );
+            override (parameters);
+        }
+
         private static StylePropertyBinding[] bindings = {
             {"linestyle", (s) => s.linestyle},
             {"linewidth", (s) => s.linewidth},

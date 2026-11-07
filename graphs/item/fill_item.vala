@@ -135,6 +135,13 @@ namespace Graphs {
             alpha = 0.4f;
         }
 
+        public FillItem (StyleParameters parameters, owned double[] xdata, owned double[] lower, owned double[] upper) {
+            Object (
+                data: new FillHolder ((owned) xdata, (owned) lower, (owned) upper)
+            );
+            override (parameters);
+        }
+
         public FillBoundKind get_upper_kind () {
             return _upper.kind;
         }
