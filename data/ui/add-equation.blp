@@ -39,25 +39,35 @@ template $GraphsAddEquationDialog: Adw.Dialog {
           margin-top: 12;
           margin-bottom: 12;
 
-          Adw.PreferencesGroup {
-            separate-rows: true;
-            description: _("Enter a mathematical expression");
+          Box {
+            orientation: vertical;
+            spacing: 18;
 
-            Adw.EntryRow equation {
-              max-width-chars: 25;
-              title: _("Y =");
-              activates-default: true;
-              notify::text => $on_equation_change();
+            Adw.PreferencesGroup {
+              separate-rows: true;
+              description: _("Enter a mathematical expression");
 
-              styles [
-                "preferencesgroup",
-              ]
+              Adw.EntryRow equation {
+                max-width-chars: 25;
+                title: _("Y =");
+                activates-default: true;
+                notify::text => $on_equation_change();
+
+                styles [
+                  "preferencesgroup",
+                ]
+              }
+
+              Adw.EntryRow item_name {
+                max-width-chars: 25;
+                title: _("Name (optional)");
+                activates-default: true;
+              }
             }
 
-            Adw.EntryRow item_name {
-              max-width-chars: 25;
-              title: _("Name (optional)");
-              activates-default: true;
+            Adw.PreferencesGroup variables_group {
+              title: _("Variables");
+              visible: false;
             }
           }
         };
