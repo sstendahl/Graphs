@@ -11,6 +11,7 @@ namespace Graphs {
         public bool can_view_back { get; private set; default = false; }
         public bool can_view_forward { get; private set; default = false; }
         public File file { get; set; }
+        public bool restoring { get; set; default = false; }
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public Gtk.SingleSelection style_selection_model { get; private set; }
@@ -272,6 +273,11 @@ namespace Graphs {
             item.notify.connect (_on_item_change);
             item.notify["xposition"].connect (_on_item_position_change);
             item.notify["yposition"].connect (_on_item_position_change);
+            if (item is VariableItem) {
+                item.notify["value"].connect (_on_variable_value_change);
+            } else if (item is EquationItem) {
+                item.notify["equation"].connect (_on_equation_change);
+            }
         }
 
         private void _disconnect_from_item (Item item) {
@@ -279,6 +285,11 @@ namespace Graphs {
             item.notify.disconnect (_on_item_change);
             item.notify["xposition"].disconnect (_on_item_position_change);
             item.notify["yposition"].disconnect (_on_item_position_change);
+            if (item is VariableItem) {
+                item.notify["value"].disconnect (_on_variable_value_change);
+            } else if (item is EquationItem) {
+                item.notify["equation"].disconnect (_on_equation_change);
+            }
         }
 
         private void _disconnect_from_all_items () {
@@ -290,12 +301,14 @@ namespace Graphs {
         protected void _add_item (Item item) {
             _connect_to_item (item);
             _items.append (item);
+            _update_variable_values ();
             items_changed.emit (_items.length - 1, 0, 1);
         }
 
         protected void _insert_item (Item item, int index) {
             _connect_to_item (item);
             _items.insert (index, item);
+            _update_variable_values ();
             items_changed.emit (index, 0, 1);
         }
 
@@ -327,6 +340,93 @@ namespace Graphs {
             if (_used_errbar_colors.length == errorbar_cycle.length) _used_errbar_colors = {};
         }
 
+        public VariableItem? get_variable_item (string name) {
+            foreach (Item item in _items) {
+                if (!(item is VariableItem)) continue;
+                var variable_item = (VariableItem) item;
+                if (variable_item.variable == name) return variable_item;
+            }
+            return null;
+        }
+
+        private void _update_variable_values () {
+            foreach (Item item in _items) {
+                if (!(item is EquationItem)) continue;
+                var equation_item = (EquationItem) item;
+                foreach (unowned string name in equation_item.get_variables ()) {
+                    VariableItem? variable_item = get_variable_item (name);
+                    if (variable_item != null) {
+                        equation_item.set_variable_value (name, variable_item.value);
+                    }
+                }
+            }
+        }
+
+        private VariableItem[] _create_missing_variables (EquationItem equation_item, Item[] pending) {
+            VariableItem[] created = {};
+            foreach (unowned string name in equation_item.get_variables ()) {
+                if (get_variable_item (name) != null) continue;
+
+                bool is_pending = false;
+                foreach (unowned Item item in pending) {
+                    if (!(item is VariableItem) || ((VariableItem) item).variable != name) continue;
+                    is_pending = true;
+                    break;
+                }
+                foreach (unowned VariableItem item in created) {
+                    if (item.variable == name) is_pending = true;
+                }
+                if (is_pending) continue;
+
+                created += new VariableItem (name, equation_item.get_variable_value (name));
+            }
+            return created;
+        }
+
+        private void _on_variable_value_change (Object object, ParamSpec spec) {
+            var variable_item = (VariableItem) object;
+            foreach (Item item in _items) {
+                if (!(item is EquationItem)) continue;
+                ((EquationItem) item).set_variable_value (variable_item.variable, variable_item.value);
+            }
+        }
+
+        private VariableItem[] _get_unused_variables (GenericSet<unowned Item>? ignored = null) {
+            VariableItem[] unused = {};
+            foreach (Item item in _items) {
+                if (!(item is VariableItem)) continue;
+                if (ignored != null && ignored.contains (item)) continue;
+                var variable_item = (VariableItem) item;
+                bool used = false;
+                foreach (Item other in _items) {
+                    if (!(other is EquationItem)) continue;
+                    if (ignored != null && ignored.contains (other)) continue;
+                    if (((EquationItem) other).has_variable (variable_item.variable)) {
+                        used = true;
+                        break;
+                    }
+                }
+                if (!used) unused += variable_item;
+            }
+            return unused;
+        }
+
+        private void _on_equation_change (Object object, ParamSpec spec) {
+            var equation_item = (EquationItem) object;
+            if (!restoring) {
+                foreach (VariableItem item in _create_missing_variables (equation_item, {})) {
+                    _add_item (item);
+                    item_added.emit (item);
+                }
+                foreach (VariableItem item in _get_unused_variables ()) {
+                    uint index = (uint) _items.index (item);
+                    item_removed.emit (item, index);
+                    _remove_item (index);
+                }
+            }
+            _update_variable_values ();
+        }
+
         /**
          * Add items to be managed.
          *
@@ -349,8 +449,25 @@ namespace Graphs {
             }
             string[] used_names = get_names ();
             uint prev_size = _items.length;
-            _items.append_all (items);
+
+            Item[] all_items = items;
             foreach (Item item in items) {
+                if (!(item is EquationItem)) continue;
+                foreach (VariableItem created in _create_missing_variables ((EquationItem) item, all_items)) {
+                    all_items += created;
+                }
+            }
+
+            foreach (Item item in all_items) {
+                if (item is VariableItem) {
+                    if (get_variable_item (((VariableItem) item).variable) != null) continue;
+                    _items.append (item);
+                    _connect_to_item (item);
+                    item_added.emit (item);
+                    continue;
+                }
+
+                _items.append (item);
                 item.name = Tools.get_duplicate_string (item.name, used_names);
                 used_names += item.name;
                 if (item.color == "") {
@@ -412,7 +529,8 @@ namespace Graphs {
                 _connect_to_item (item);
                 item_added.emit (item);
             }
-            items_changed.emit (prev_size, 0, items.length);
+            _update_variable_values ();
+            items_changed.emit (prev_size, 0, _items.length - prev_size);
             optimize_limits ();
             add_history_state ();
         }
@@ -424,6 +542,7 @@ namespace Graphs {
                 _connect_to_item (item);
             }
             _items = new ManagedArray<Item>.take ((owned) items);
+            _update_variable_values ();
             _update_visibility ();
             _update_used_positions ();
             items_changed.emit (0, removed, _items.length);
@@ -440,6 +559,10 @@ namespace Graphs {
                 foreach (Item dependent in item.get_dependents ()) {
                     to_remove.append (dependent);
                 }
+            }
+
+            foreach (VariableItem item in _get_unused_variables (seen)) {
+                to_remove.append (item);
             }
 
             foreach (Item item in to_remove) {
