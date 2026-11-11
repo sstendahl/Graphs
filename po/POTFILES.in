@@ -46,6 +46,7 @@ data/ui/item-box.blp
 data/ui/smoothen-settings.blp
 data/ui/style-preview.blp
 data/ui/transform.blp
+data/ui/variable-box.blp
 data/ui/window.blp
 data/ui/window-shortcuts.blp
 graphs/canvas/artist.py
@@ -76,6 +77,7 @@ graphs/item/fill_item.vala
 graphs/item/generated_data_item.vala
 graphs/item/marker_item.vala
 graphs/item/text_item.vala
+graphs/item/variable_item.vala
 graphs/math_parser/ast.vala
 graphs/math_parser/evaluator.vala
 graphs/math_parser/lexer.vala
@@ -132,5 +134,6 @@ graphs/styles.vala
 graphs/transform.vala
 graphs/utilities.py
 graphs/utilities.vala
+graphs/variable_box.vala
 graphs/window.py
 graphs/window.vala

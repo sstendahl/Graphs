@@ -240,6 +240,11 @@ namespace Graphs {
             bool data_items_selected = false;
             uint index = 0;
             foreach (Item item in data) {
+                if (item is VariableItem) {
+                    append_variable_row ((VariableItem) item);
+                    index++;
+                    continue;
+                }
                 bool data_item = item is DataItem;
                 append_item_row (item, index, data_item);
 
@@ -269,6 +274,7 @@ namespace Graphs {
             bool items_selected = false;
             bool data_items_selected = false;
             foreach (Item item in data) {
+                if (item is VariableItem) continue;
                 bool data_item = item is DataItem;
 
                 items_selected = items_selected || item.selected;
@@ -364,6 +370,11 @@ namespace Graphs {
                 edit_item (item);
             });
 
+            main_page.item_list.append (row);
+        }
+
+        private void append_variable_row (VariableItem item) {
+            var row = new VariableBox (this, item);
             main_page.item_list.append (row);
         }
 

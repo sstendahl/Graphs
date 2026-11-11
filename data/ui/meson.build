@@ -48,6 +48,7 @@ blueprint_files = [
   'smoothen-settings.blp',
   'style-preview.blp',
   'transform.blp',
+  'variable-box.blp',
   'window.blp',
   'window-shortcuts.blp',
 ]

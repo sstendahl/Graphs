@@ -260,6 +260,7 @@ namespace Graphs {
             bool[] used_positions = {false, false, false, false};
             foreach (Item item in _items) {
                 if (figure_settings.hide_unselected && !item.selected) continue;
+                if (item is VariableItem) continue;
                 used_positions[item.xposition] = true;
                 used_positions[item.yposition + 2] = true;
             }

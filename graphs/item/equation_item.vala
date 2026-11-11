@@ -85,7 +85,7 @@ namespace Graphs {
 
         public double get_variable_value (string name) {
             double? val = _values.lookup (name);
-            return val == null ? 1 : val;
+            return val == null ? VariableItem.DEFAULT_VALUE : val;
         }
 
         public void set_variable_value (string name, double val) {
