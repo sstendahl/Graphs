@@ -4,6 +4,7 @@ Wrapper classes for mpl artists.
 
 Provides GObject based wrappers for mpl artists.
 """
+import time
 from itertools import islice
 
 from gi.repository import GObject, Graphs
@@ -573,6 +574,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
+    _singularities_time = 0
+    _SINGULARITIES_BUDGET = 0.015
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
@@ -580,6 +583,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = ast.sympify(item.get_bound_equation())
         self._axis = axis
         self._view_change_timeout_id = None
+        self._variable_timeout_id = None
         self._view_handler = \
             axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
@@ -613,6 +617,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         if self._view_change_timeout_id is not None:
             GObject.source_remove(self._view_change_timeout_id)
             self._view_change_timeout_id = None
+        if self._variable_timeout_id is not None:
+            GObject.source_remove(self._variable_timeout_id)
+            self._variable_timeout_id = None
         self._axis.callbacks.disconnect(self._view_handler)
         self._item.disconnect(self._equation_handler)
         self._item.disconnect(self._variable_handler)
@@ -636,9 +643,33 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._generate_data()
 
     def _on_variable_change(self, _item, _name) -> None:
+        """
+        Follow a variable of the equation.
+
+        Finding the singularities is too expensive for some equations, so
+        finding singularities is timed and skipped during variable change
+        when it takes too long to avoid poor performance.
+        """
+        hold_legend = getattr(self._axis.figure, "hold_legend", None)
+        if hold_legend is not None:
+            hold_legend()
+        if self._singularities_time <= self._SINGULARITIES_BUDGET:
+            if self._variable_timeout_id is not None:
+                GObject.source_remove(self._variable_timeout_id)
+            self._variable_timeout_callback()
+            return
+        self._generate_data(exact=False)
+        if self._variable_timeout_id is not None:
+            GObject.source_remove(self._variable_timeout_id)
+        self._variable_timeout_id = \
+            GObject.timeout_add(150, self._variable_timeout_callback)
+
+    def _variable_timeout_callback(self) -> bool:
+        self._variable_timeout_id = None
         self._singularities_cache = False
         self._expr = ast.sympify(self._item.get_bound_equation())
         self._generate_data()
+        return False
 
     @GObject.Property(type=int, default=Graphs.EquationLinestyle.SOLID)
     def linestyle(self) -> Graphs.EquationLinestyle:
@@ -658,7 +689,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self):
+    def _generate_data(self, exact: bool = True):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         scale = Graphs.scale_from_string(self._axis.get_xscale())
@@ -674,9 +705,10 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             scale,
         )
         data = utilities.get_xydata(holder)
-        singularities = self._find_singularities(lower, upper)
-        if singularities:
-            data = self._insert_singularity_points(data, singularities)
+        if exact:
+            singularities = self._find_singularities(lower, upper)
+            if singularities:
+                data = self._insert_singularity_points(data, singularities)
 
         self._artist.set_data(*data)
         if self._axis.figure.parent is not None:
@@ -698,7 +730,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             x_min, x_max = lower, upper
 
         domain = sympy.Interval(x_min, x_max)
+        start = time.perf_counter()
         all_singularities = find_singularities(self._expr, misc.X, domain)
+        self._singularities_time = time.perf_counter() - start
 
         self._singularities_cache = {
             "limits": (x_min, x_max),
