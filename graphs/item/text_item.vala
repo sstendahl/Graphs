@@ -21,7 +21,7 @@ namespace Graphs {
         }
 
         private static StylePropertyBinding[] bindings = {
-            {"size", (s) => s.font.get_size ()},
+            {"size", (s) => (double) s.font.get_size () / Pango.SCALE},
             {"color", (s) => s.text_color}
         };
 
