@@ -43,6 +43,28 @@ namespace Graphs {
         return scale.friendly_string ();
     }
 
+    public enum TickDirection {
+        IN,
+        OUT;
+
+        public static TickDirection from_string (string str) {
+            EnumClass enumc = (EnumClass) typeof (TickDirection).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (str);
+            return (TickDirection) eval.value;
+        }
+
+        public unowned string friendly_string () {
+            EnumClass enumc = (EnumClass) typeof (TickDirection).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+    }
+
+    // Python cannot bind Enum instance methods
+    public static unowned string tick_direction_to_string (TickDirection tick_direction) {
+        return tick_direction.friendly_string ();
+    }
+
     public enum LegendPosition {
         BEST,
         UPPER_RIGHT,

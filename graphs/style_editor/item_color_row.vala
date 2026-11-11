@@ -4,7 +4,7 @@ namespace Graphs {
      * Style Color Box
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/item-color-row.ui")]
-    public class StyleItemColorRow : Adw.ActionRow {
+    private class StyleItemColorRow : Adw.ActionRow {
         public int index { get; construct set; }
 
         [GtkChild]

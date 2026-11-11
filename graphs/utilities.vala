@@ -356,5 +356,23 @@ namespace Graphs {
             }
             return index - 1;
         }
+
+        /**
+         * Convert a Pango Style to a friendly string.
+         */
+        public static unowned string font_style_to_string (Pango.Style style) {
+            EnumClass enumc = (EnumClass) typeof (Pango.Style).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (style);
+            return eval.value_nick;
+        }
+
+        /**
+         * Convert a Pango Style to a friendly string.
+         */
+        public static unowned string font_variant_to_string (Pango.Variant variant) {
+            EnumClass enumc = (EnumClass) typeof (Pango.Variant).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (variant);
+            return eval.value_nick;
+        }
     }
 }
