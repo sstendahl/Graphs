@@ -200,6 +200,13 @@ class Data(Graphs.Data):
         """Undo the latest change that was added to the clipboard."""
         if not self.props.can_undo:
             return
+        self.props.restoring = True
+        try:
+            self._restore_previous()
+        finally:
+            self.props.restoring = False
+
+    def _restore_previous(self) -> None:
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
         selected = Gtk.Bitset.new_empty()
@@ -245,6 +252,13 @@ class Data(Graphs.Data):
         """Redo the latest change that was added to the clipboard."""
         if not self.props.can_redo:
             return
+        self.props.restoring = True
+        try:
+            self._restore_next()
+        finally:
+            self.props.restoring = False
+
+    def _restore_next(self) -> None:
         self._history_pos += 1
         state = self._history_states[self._history_pos]
         selected = Gtk.Bitset.new_empty()
