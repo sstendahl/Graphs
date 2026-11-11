@@ -118,16 +118,15 @@ namespace Graphs {
             settings.set_string ("upper-equation", upper_equation.get_text ());
             settings.set_string ("lower-equation", lower_equation.get_text ());
 
-            var item = ItemFactory.new_fill_item (
+            unowned string name = item_name.get_text ();
+
+            var item = new FillItem (
                 window.data.selected_style_params,
                 new double[0], new double[0], new double[0]
-            );
+            ) { name = name == "" ? _("Fill") : name };
             var fill = (FillItem) item;
             apply_bound (fill, upper_bound, upper_equation, true);
             apply_bound (fill, lower_bound, lower_equation, false);
-
-            unowned string name = item_name.get_text ();
-            item.name = name == "" ? _("Fill") : name;
 
             Item[] items = {item};
             window.data.add_items (items);

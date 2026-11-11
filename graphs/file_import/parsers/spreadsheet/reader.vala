@@ -456,10 +456,11 @@ namespace Graphs {
                     xdata = columns[item_settings.column_x].get_data ();
                 }
 
-                Item item = ItemFactory.new_data_item (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr);
-                item.xlabel = xlabel;
-                item.ylabel = ylabel;
-                item.name = settings.filename;
+                Item item = new DataItem (style, (owned) xdata, (owned) ydata, (owned) xerr, (owned) yerr) {
+                    xlabel = xlabel,
+                    ylabel = ylabel,
+                    name = settings.filename,
+                };
                 itemlist.add (item);
             }
 

@@ -72,7 +72,6 @@ graphs/item/__init__.py
 graphs/item/base.vala
 graphs/item/data_item.vala
 graphs/item/equation_item.vala
-graphs/item/factory.vala
 graphs/item/fill_item.vala
 graphs/item/generated_data_item.vala
 graphs/item/text_item.vala

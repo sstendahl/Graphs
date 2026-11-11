@@ -68,7 +68,7 @@ class XrdmlParser(Parser):
             break
         else:
             raise ParseError(_("No positions found for the scan axis"))
-        item = Graphs.ItemFactory.new_data_item(
+        item = Graphs.DataItem.new(
             style,
             xdata,
             ydata,
