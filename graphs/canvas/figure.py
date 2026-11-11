@@ -44,6 +44,8 @@ class Figure(GObject.Object, figure.Figure):
         self.right_axis = self.axis.twinx()
         self.top_right_axis = self.top_left_axis.twinx()
         self._legend_axis = self.axis
+        self._legend_hold = None
+        self._legend_hold_id = None
         self._artists = []
 
         if figure_settings is not None:
@@ -203,7 +205,8 @@ class Figure(GObject.Object, figure.Figure):
                 self._legend_axis.legend(
                     handles=handles,
                     labels=labels,
-                    loc=self._legend_position,
+                    loc=self._legend_position
+                    if self._legend_hold is None else self._legend_hold,
                     frameon=True,
                     reverse=True,
                 )
@@ -221,6 +224,37 @@ class Figure(GObject.Object, figure.Figure):
     def set_property(*args):
         """Pass method on to Figure."""
         figure.Figure.set_property(*args)
+
+    def hold_legend(self) -> None:
+        """Keep the legend in place for as long as a variable is changing."""
+        if self._legend_hold_id is not None:
+            GObject.source_remove(self._legend_hold_id)
+        elif not self._pin_legend():
+            return
+        self._legend_hold_id = \
+            GObject.timeout_add(300, self._release_legend)
+
+    def _pin_legend(self) -> bool:
+        legend = self._legend_axis.get_legend()
+        if legend is None:
+            return False
+        try:
+            bbox = legend.get_window_extent()
+        except (AttributeError, RuntimeError, ValueError):
+            return False
+        transform = self._legend_axis.transAxes.inverted()
+        self._legend_hold = tuple(transform.transform((bbox.x0, bbox.y0)))
+        legend.set_loc(self._legend_hold)
+        return True
+
+    def _release_legend(self) -> bool:
+        self._legend_hold_id = None
+        self._legend_hold = None
+        legend = self._legend_axis.get_legend()
+        if legend is not None:
+            legend.set_loc(self._legend_position)
+            self.queue_draw()
+        return False
 
     def queue_draw(self) -> None:
         """Queue a draw when in a canvas."""
