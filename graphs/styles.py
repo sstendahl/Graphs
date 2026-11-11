@@ -161,8 +161,8 @@ class StyleParameters(Graphs.StyleParameters):
 
         for key in (
             "xtick.major.pad",
-            "ytick.minor.pad",
-            "xtick.major.pad",
+            "ytick.major.pad",
+            "xtick.minor.pad",
             "ytick.minor.pad",
         ):
             self.style_params[key] = data.value_padding
@@ -176,6 +176,13 @@ class StyleParameters(Graphs.StyleParameters):
         self.style_params["axes.facecolor"] = data.background_color
         self.style_params["figure.facecolor"] = data.outline_color
         self.style_params["figure.edgecolor"] = data.outline_color
+        for key in (
+            "text.color",
+            "axes.labelcolor",
+            "xtick.labelcolor",
+            "ytick.labelcolor",
+        ):
+            self.style_params[key] = data.text_color
 
         line_colors = data.color_cycle
         self.style_params["axes.prop_cycle"] = cycler(color=line_colors)

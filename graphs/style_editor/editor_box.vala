@@ -125,7 +125,7 @@ namespace Graphs {
             minor_ticks.set_active (data.minor_ticks);
             major_tick_width.set_value (data.major_tick_width);
             minor_tick_width.set_value (data.minor_tick_width);
-            major_tick_length.set_value (data.major_tick_width);
+            major_tick_length.set_value (data.major_tick_length);
             minor_tick_length.set_value (data.minor_tick_length);
             tick_labels.set_active (data.tick_labels);
             tick_bottom.set_active (data.tick_bottom);
@@ -382,6 +382,7 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_text_color () {
+            check_contrast ();
             if (parameters == null) return;
             parameters.data.text_color = Tools.rgba_to_hex (text_color.color);
             update ();
@@ -425,7 +426,6 @@ namespace Graphs {
 
         [GtkCallback]
         private void on_line_colors () {
-            check_contrast ();
             if (parameters == null) return;
             parameters.data.color_cycle = line_colors.get_colors ();
             update ();
