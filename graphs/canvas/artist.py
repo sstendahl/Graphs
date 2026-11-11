@@ -575,9 +575,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        equation = item.get_equation()
-        self._expr = ast.sympify(equation)
-        self._program = item.get_program()
+        self._expr = ast.sympify(item.get_bound_equation())
         self._axis = axis
         self._view_change_timeout_id = None
         self._view_handler = \
@@ -601,6 +599,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self._equation_handler = \
             item.connect("notify::equation", self._on_equation_change)
+        self._variable_handler = \
+            item.connect("variable-changed", self._on_variable_change)
         self._item = item
 
         self._set_properties(None, None)
@@ -613,6 +613,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             self._view_change_timeout_id = None
         self._axis.callbacks.disconnect(self._view_handler)
         self._item.disconnect(self._equation_handler)
+        self._item.disconnect(self._variable_handler)
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None
@@ -628,10 +629,13 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     # We cannot have a Property of type Graphs.Ast
     def _on_equation_change(self, item, _pspec) -> None:
-        equation = item.get_equation()
         self._singularities_cache = False
-        self._expr = ast.sympify(equation)
-        self._program = item.get_program()
+        self._expr = ast.sympify(item.get_bound_equation())
+        self._generate_data()
+
+    def _on_variable_change(self, _item, _name) -> None:
+        self._singularities_cache = False
+        self._expr = ast.sympify(self._item.get_bound_equation())
         self._generate_data()
 
     @GObject.Property(type=int, default=Graphs.EquationLinestyle.SOLID)
@@ -661,7 +665,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
 
         holder = Graphs.math_tools_program_to_data(
-            self._program,
+            self._item.get_program(),
             lower,
             upper,
             5000,

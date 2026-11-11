@@ -223,6 +223,28 @@ namespace Graphs {
             this._plen = plen;
         }
 
+        private string[] _parameters = {};
+        private int[] _parameter_slots = {};
+
+        internal void add_parameter (string name, int slot) {
+            _parameters += name;
+            _parameter_slots += slot;
+        }
+
+        public string[] get_parameters () {
+            string[] names = {};
+            foreach (unowned string name in _parameters) {
+                if (!(name in names)) names += name;
+            }
+            return names;
+        }
+
+        public void set_parameter (string name, double val) {
+            for (int i = 0; i < _parameters.length; i++) {
+                if (_parameters[i] == name) _data[_parameter_slots[i]] = val;
+            }
+        }
+
         public double[] eval (double[] input) {
             double[] output = new double[input.length];
             MathParser.eval_array (_program, _data, _plen, input, output, input.length);
