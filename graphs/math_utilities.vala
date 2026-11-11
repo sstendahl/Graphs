@@ -86,7 +86,7 @@ namespace Graphs.MathTools {
      * Get all free variables (without x) in an equation.
      */
     public static string[] get_free_variables (string equation) throws MathError {
-        GenericSet<string> strings = new GenericSet<string> (str_hash, str_equal);
+        string[] result = {};
 
         MathParser.Lexer lexer = new MathParser.Lexer ();
         lexer.start_lexing (equation);
@@ -96,19 +96,13 @@ namespace Graphs.MathTools {
             if (lexer.current_type == TokenType.IDENT
                 && lexer.current_ident == Ident.CUSTOM) {
                 string token = lexer.get_current_token_as_string ();
-                if (token != "x") strings.add (token);
+                if (token != "x" && !(token in result)) result += token;
             }
 
             lexer.next ();
         }
 
-        uint length = strings.length;
-        string[] result = new string[length];
-        var iter = strings.iterator ();
-        for (int i = 0; i < length; i++) {
-            result[i] = iter.next_value ();
-        }
-        return (owned) result;
+        return result;
     }
 
     public static double[] arange (int steps) {
@@ -217,6 +211,25 @@ namespace Graphs.MathTools {
         try {
             double[] ydata = ast_to_program (expression).eval (XDATA);
             return CUtilities.finite_double (ydata);
+        } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public static bool validate_parametric_expression (Ast expression) {
+        try {
+            string[] variables = get_free_variables (ast_to_expression (expression));
+            if (variables.length == 0) return validate_expression (expression);
+            ast_to_parametric_program (expression);
+            return true;
+        } catch (MathError e) {
+            return false;
+        }
+    }
+
+    public static bool validate_parametric_equation (string equation) {
+        try {
+            return validate_parametric_expression (expression_to_ast (equation));
         } catch (MathError e) {
             return false;
         }

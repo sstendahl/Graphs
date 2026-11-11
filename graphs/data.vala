@@ -704,7 +704,8 @@ namespace Graphs {
                 unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
                 if (yaxis.fully_locked ()) continue;
-                if (PythonHelper.has_singularities (item.equation, xaxis.min_value, xaxis.max_value)) continue;
+                Ast equation = item.get_bound_equation ();
+                if (PythonHelper.has_singularities (equation, xaxis.min_value, xaxis.max_value)) continue;
 
                 unowned double[] xdata = xaxis.get_xdata ();
                 double[] ydata = item.get_program ().eval (xdata);

@@ -47,6 +47,53 @@ namespace Graphs {
         return MathParser.Compiler.instance ().compile (expr, variable);
     }
 
+    /**
+     * Convert an AST to an executable array program, with variables that
+     * can be set afterwards.
+     */
+    public static Program ast_to_parametric_program (
+        Ast expression, string variable = "x"
+    ) throws MathError {
+        Ast expr = PythonHelper.simplify_expression (expression);
+        string[] names = MathTools.get_free_variables (ast_to_expression (expression));
+        foreach (unowned string name in MathTools.get_free_variables (ast_to_expression (expr))) {
+            if (!(name in names)) throw new MathError.UNKNOWN_FUNCTION ("invalid variable: " + name);
+        }
+        return MathParser.Compiler.instance ().compile (expr, variable, true);
+    }
+
+    private static Expression bind_expression (Expression expr, string name, double val) {
+        switch (expr.type ()) {
+            case ExpressionType.NUMBER:
+                return new Expression.number (expr.val ());
+            case ExpressionType.CONSTANT:
+                return new Expression.constant (expr.ident ());
+            case ExpressionType.VARIABLE:
+                if (expr.name () != name) return new Expression.variable (expr.name ());
+                return new Expression.number (val);
+            case ExpressionType.UNARY:
+                return new Expression.unary (expr.op (), bind_expression (expr.right (), name, val));
+            case ExpressionType.BINARY:
+                return new Expression.binary (
+                    bind_expression (expr.left (), name, val),
+                    expr.op (),
+                    bind_expression (expr.right (), name, val)
+                );
+            case ExpressionType.POSTFIX:
+                return new Expression.postfix (bind_expression (expr.left (), name, val), expr.op ());
+            case ExpressionType.FUNCTION:
+                return new Expression.function (expr.ident (), bind_expression (expr.right (), name, val));
+            default: assert_not_reached ();
+        }
+    }
+
+    /**
+     * Get a copy of an AST in which a variable is replaced by a value.
+     */
+    public static Ast ast_bind_variable (Ast expression, string name, double val) {
+        return new Ast (bind_expression (expression.root (), name, val));
+    }
+
     namespace MathParser {
         [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double ipow (double base, int exp);

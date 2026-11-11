@@ -61,7 +61,7 @@ namespace Graphs {
                     low = figure_settings.min_top;
                     high = figure_settings.max_top;
                 }
-                data = MathTools.equation_to_data (item.equation, low, high);
+                data = MathTools.program_to_data (((EquationItem) item).get_program (), low, high);
             } else return;
 
             var stream = file.replace (null, false, FileCreateFlags.NONE, null);
