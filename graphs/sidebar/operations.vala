@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/operations.ui")]
-    public class Operations : Gtk.Box {
+    private class Operations : Gtk.Box {
 
         [GtkChild]
         public unowned Gtk.Button shift_button { get; }

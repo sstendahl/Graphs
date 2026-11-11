@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/page.ui")]
-    public class EditItemPage : Adw.NavigationPage {
+    private class EditItemPage : Adw.NavigationPage {
         [GtkChild]
         private unowned Gtk.Box edit_item_box { get; }
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/errorbar-group.ui")]
-    public class EditItemErrorBarGroup : Gtk.Box {
+    private class EditItemErrorBarGroup : Gtk.Box {
         [GtkChild]
         private unowned Adw.SwitchRow use_xerr { get; }
         [GtkChild]

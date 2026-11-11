@@ -4,7 +4,7 @@ namespace Graphs {
      * Style Editor Window window
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/window.ui")]
-    public class StyleEditor : Adw.ApplicationWindow {
+    private class StyleEditor : Adw.ApplicationWindow {
 
         private const string CSS_TEMPLATE = ".canvas-view#%s {background-color: %s; color: %s; }";
 

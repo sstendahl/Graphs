@@ -554,7 +554,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/fitting-parameters.ui")]
-    public class FittingParameterBox : Gtk.Box {
+    private class FittingParameterBox : Gtk.Box {
 
         [GtkChild]
         private unowned Gtk.Label label { get; }

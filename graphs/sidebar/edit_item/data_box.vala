@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/data.ui")]
-    public class EditItemDataItemBox : Gtk.Box {
+    private class EditItemDataItemBox : Gtk.Box {
         [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
         [GtkChild]

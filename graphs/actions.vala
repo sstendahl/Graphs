@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     namespace Actions {
-        public void setup_global () {
+        private void setup_global () {
             var application = (Application) GLib.Application.get_default ();
 
             var quit_action = new SimpleAction ("quit", null);
@@ -71,7 +71,7 @@ namespace Graphs {
             application.add_action (style_editor_action);
         }
 
-        public void setup_local (Window window) {
+        private void setup_local (Window window) {
             var data = window.data;
 
             var toggle_sidebar_action = new SimpleAction ("toggle-sidebar", null);

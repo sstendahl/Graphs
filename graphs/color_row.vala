@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/color-row.ui")]
-    public class ColorRow : Adw.ActionRow {
+    private class ColorRow : Adw.ActionRow {
         [GtkChild]
         private unowned ColorSwatch color_swatch { get; }
 

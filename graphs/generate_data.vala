@@ -4,7 +4,7 @@ namespace Graphs {
      * Generate Data dialog.
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/generate-data.ui")]
-    public class GenerateDataDialog : Adw.Dialog {
+    private class GenerateDataDialog : Adw.Dialog {
 
         [GtkChild]
         private unowned Adw.EntryRow equation { get; }

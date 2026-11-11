@@ -4,7 +4,7 @@ namespace Graphs {
      * Smoothen settings dialog
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/smoothen-settings.ui")]
-    public class SmoothenDialog : Adw.Dialog {
+    private class SmoothenDialog : Adw.Dialog {
         [GtkChild]
         private unowned Adw.SpinRow savgol_window { get; }
 
