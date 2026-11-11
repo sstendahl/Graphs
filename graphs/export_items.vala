@@ -8,13 +8,19 @@ namespace Graphs {
                 return;
             }
 
+            // Variables have no data of their own
+            Item[] items = {};
+            foreach (Item item in data) {
+                if (!(item is VariableItem)) items += item;
+            }
+
             var dialog = new Gtk.FileDialog ();
-            if (data.get_n_items () > 1) {
+            if (items.length > 1) {
                 dialog.select_folder.begin (window, null, (d, response) => {
                     try {
                         File file = dialog.select_folder.end (response);
                         var used = new ManagedArray<string> ();
-                        foreach (Item item in data) {
+                        foreach (Item item in items) {
                             string filename = Tools.get_duplicate_string (
                                 item.name.replace ("/", "\\").strip (), used.peek ()
                             );
@@ -26,7 +32,7 @@ namespace Graphs {
                     } catch {}
                 });
             } else {
-                Item item = (Item) data.get_item (0);
+                Item item = items[0];
                 dialog.set_initial_name (item.name + ".txt");
                 dialog.set_filters (Tools.create_file_filters (
                     true,
@@ -37,7 +43,7 @@ namespace Graphs {
                 dialog.save.begin (window, null, (d, response) => {
                     try {
                         File file = dialog.save.end (response);
-                        save_item_as_columns ((Item) data.get_item (0), file, data.figure_settings);
+                        save_item_as_columns (item, file, data.figure_settings);
                         window.add_toast_string_with_file (_("Exported Data"), file);
                     } catch {}
                 });

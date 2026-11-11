@@ -124,6 +124,8 @@ class Figure(GObject.Object, figure.Figure):
         used_axes = [False, False, False, False]
         visible_axes = [False, False, False, False]
         for item in self._items:
+            if isinstance(item, Graphs.VariableItem):
+                continue
             xposition = item.get_xposition()
             yposition = item.get_yposition()
             visible_axes[xposition] = True
@@ -184,6 +186,7 @@ class Figure(GObject.Object, figure.Figure):
         self._artists = [
             artist.new_for_item(self, item)
             for item in reversed(self._items)
+            if not isinstance(item, Graphs.VariableItem)
         ]
         self.update_legend()
 

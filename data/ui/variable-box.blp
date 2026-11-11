@@ -1,0 +1,18 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsVariableBox: Adw.ActionRow {
+  title-lines: 1;
+  use-markup: false;
+  activatable: true;
+
+  [suffix]
+  Scale scale {
+    width-request: 160;
+    valign: center;
+    tooltip-text: _("Change Value");
+    value-changed => $on_scale_changed();
+
+    adjustment: Adjustment {};
+  }
+}
