@@ -32,21 +32,46 @@ namespace Graphs {
         public bool light { get; set; default = true; }
     }
 
-    public struct StyleData {
-        Pango.FontDescription font;
-        DataLinestyle linestyle;
-        double linewidth;
-        DataMarkerstyle markerstyle;
-        double markersize;
-        double errorbar_capsize;
-        double errorbar_capthick;
-        double errorbar_linewidth;
-        bool errorbar_barsabove;
-        string text_color;
-        string background_color;
-        string outline_color;
-        string[] color_cycle;
-        string[] errorbar_cycle;
+    [Compact]
+    public class StyleData {
+        public Pango.FontDescription font;
+        public double titlesize;
+        public double labelsize;
+        public DataLinestyle linestyle;
+        public double linewidth;
+        public DataMarkerstyle markerstyle;
+        public double markersize;
+        public double errorbar_capsize;
+        public double errorbar_capthick;
+        public double errorbar_linewidth;
+        public bool errorbar_barsabove;
+        public double axis_width;
+        public bool draw_frame;
+        public TickDirection tick_direction;
+        public bool minor_ticks;
+        public double major_tick_width;
+        public double minor_tick_width;
+        public double major_tick_length;
+        public double minor_tick_length;
+        public bool tick_labels;
+        public bool tick_bottom;
+        public bool tick_left;
+        public bool tick_right;
+        public bool tick_top;
+        public bool show_grid;
+        public double grid_linewidth;
+        public double grid_opacity;
+        public double value_padding;
+        public double label_padding;
+        public double title_padding;
+        public string text_color;
+        public string tick_color;
+        public string axis_color;
+        public string grid_color;
+        public string background_color;
+        public string outline_color;
+        public string[] color_cycle;
+        public string[] errorbar_cycle;
 
         // Python bindings cannot mutate string array or struct fields
         public void set_color_cycle (string[] color_cycle) {
@@ -64,7 +89,8 @@ namespace Graphs {
 
     public class StyleParameters : Object {
         public string name { get; construct set; }
-        public StyleData data { get; construct set; }
+        private StyleData _data = new StyleData ();
+        public StyleData data { get { return _data; } }
     }
 
     private const string SYSTEM_CSS_TEMPLATE = """
@@ -84,6 +110,7 @@ namespace Graphs {
         public signal void style_deleted (string stylename);
         public signal void style_renamed (string old_name, string new_name);
 
+        protected signal void save_request (File file, StyleParameters parameters);
         protected signal void create_style_request (Style template, File destination, string name);
         protected signal StyleParameters params_request (File file, StyleParameters? validate);
         protected signal Gdk.Texture preview_request (StyleParameters parameters);
@@ -251,8 +278,12 @@ namespace Graphs {
             return is_dark_style (parameters) ? instance.system_style_dark_params : instance.system_style_light_params;
         }
 
-        public static StyleParameters get_style_params (Style style, StyleParameters? validate = null) {
-            return instance.params_request.emit (style.file, validate);
+        public static StyleParameters get_style_params (File file, StyleParameters? validate = null) {
+            return instance.params_request.emit (file, validate);
+        }
+
+        public static void save_style_params (File file, StyleParameters style) {
+            instance.save_request.emit (file, style);
         }
 
         public static bool is_dark_style (StyleParameters parameters) {

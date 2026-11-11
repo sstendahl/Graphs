@@ -4,7 +4,7 @@ namespace Graphs {
      * Add style dialog
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/add-style.ui")]
-    public class AddStyleDialog : Adw.Dialog {
+    private class AddStyleDialog : Adw.Dialog {
 
         [GtkChild]
         private unowned Adw.EntryRow new_style_name { get; }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/style-editor/color-group.ui")]
-    public class StyleColorGroup : Adw.PreferencesGroup {
+    private class StyleColorGroup : Adw.PreferencesGroup {
         [GtkChild]
         private unowned Gtk.ListBox color_box { get; }
 

@@ -9,7 +9,6 @@ python.install_sources(
     'file_import/parsers/xrdml/__init__.py',
     'file_import/__init__.py',
     'item/__init__.py',
-    'style_editor/editor_box.py',
     '__init__.py',
     'ast.py',
     'curve_fitting.py',
