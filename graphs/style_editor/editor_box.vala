@@ -167,6 +167,13 @@ namespace Graphs {
         }
 
         [GtkCallback]
+        private void on_name () {
+            if (parameters == null) return;
+            parameters.name = style_name.get_text ();
+            update ();
+        }
+
+        [GtkCallback]
         private void on_font () {
             if (parameters == null) return;
             parameters.data.font = font.get_font_desc ();
