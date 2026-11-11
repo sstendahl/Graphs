@@ -30,6 +30,17 @@ namespace Graphs {
             }
         }
 
+        public GeneratedDataItem (StyleParameters parameters, Ast equation, string xstart, string xstop, int steps, Scale scale) {
+            Object (
+                equation: equation,
+                xstart: xstart,
+                xstop: xstop,
+                steps: steps,
+                scale: scale
+            );
+            override (parameters);
+        }
+
         private void regenerate () {
             try {
                 data = MathTools.equation_to_data (

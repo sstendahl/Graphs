@@ -26,7 +26,7 @@ namespace Graphs {
 
     protected struct StylePropertyBinding {
         string prop;
-        StylePropertyTransform transform;
+        unowned StylePropertyTransform transform;
     }
 
     public abstract class Item : Object {

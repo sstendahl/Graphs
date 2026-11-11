@@ -43,6 +43,13 @@ namespace Graphs {
             typename = _("Equation");
         }
 
+        public EquationItem (StyleParameters parameters, Ast equation) {
+            Object (
+                equation: equation
+            );
+            override (parameters);
+        }
+
         private static StylePropertyBinding[] bindings = {
             {"linestyle", (s) => s.linestyle - 1},
             {"linewidth", (s) => s.linewidth}

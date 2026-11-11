@@ -280,7 +280,7 @@ class CommonOperations():
 
         new_xdata = numpy.concatenate(new_xdata)
         idx = numpy.argsort(new_xdata)
-        new_item = Graphs.ItemFactory.new_data_item(
+        new_item = Graphs.DataItem.new(
             data.get_selected_style_params(),
             new_xdata[idx],
             numpy.concatenate(new_ydata)[idx],

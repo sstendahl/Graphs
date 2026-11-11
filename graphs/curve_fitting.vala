@@ -230,21 +230,21 @@ namespace Graphs {
             CUtilities.create_equidistant_data (x_min, x_max, Scale.LINEAR, xdata);
             x_fit = new Bytes ((uint8[]) xdata);
 
-            var data_curve = ItemFactory.new_data_item (style, item.get_xdata (), item.get_ydata ());
+            var data_curve = new DataItem (style, item.get_xdata (), item.get_ydata ());
             data_curve.name = item.name;
             data_curve.color = DATA_COLOR;
             data_curve.markersize = 13;
             data_curve.markerstyle = POINT;
             data_curve.linestyle = SOLID;
 
-            var fitted_curve = ItemFactory.new_data_item (style, {}, {});
+            var fitted_curve = new DataItem (style, {}, {});
             fitted_curve.color = FIT_COLOR;
 
-            var fill = ItemFactory.new_fill_item (style, {}, {}, {});
+            var fill = new FillItem (style, {}, {}, {});
             fill.color = FILL_COLOR;
             fill.alpha = FILL_ALPHA;
 
-            var residuals = ItemFactory.new_data_item (style, {}, {});
+            var residuals = new DataItem (style, {}, {});
             residuals.color = DATA_COLOR;
             residuals.markersize = 13;
             residuals.markerstyle = POINT;
@@ -541,8 +541,9 @@ namespace Graphs {
 
             try {
                 Ast ast = expression_to_ast (fitted_equation_string);
-                Item item = ItemFactory.new_equation_item (window.data.selected_style_params, ast);
-                item.name = "Y = " + fitted_equation_string;
+                Item item = new EquationItem (window.data.selected_style_params, ast) {
+                    name = "Y = " + fitted_equation_string,
+                };
                 Item[] items = {item};
                 window.data.add_items (items);
             } catch (MathError e) { assert_not_reached (); }
