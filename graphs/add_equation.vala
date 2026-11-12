@@ -4,7 +4,7 @@ namespace Graphs {
      * Add Equation dialog.
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-equation.ui")]
-    public class AddEquationDialog : Adw.Dialog {
+    private class AddEquationDialog : Adw.Dialog {
 
         [GtkChild]
         private unowned Adw.EntryRow equation { get; }

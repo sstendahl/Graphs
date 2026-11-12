@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/base.ui")]
-    public class EditItemBaseBox : Gtk.Box {
+    private class EditItemBaseBox : Gtk.Box {
         [GtkChild]
         private unowned Adw.EntryRow name_entry { get; }
         [GtkChild]

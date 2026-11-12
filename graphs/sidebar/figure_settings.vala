@@ -3,7 +3,7 @@ namespace Graphs {
     private const BindingFlags SYNC = BindingFlags.BIDIRECTIONAL | BindingFlags.SYNC_CREATE;
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/figure-settings/settings-page.ui")]
-    public class FigureSettingsPage : Adw.NavigationPage {
+    private class FigureSettingsPage : Adw.NavigationPage {
 
         [GtkChild]
         private unowned Adw.EntryRow title_entry { get; }
@@ -141,7 +141,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/figure-settings/style-page.ui")]
-    public class StylePage : Adw.NavigationPage {
+    private class StylePage : Adw.NavigationPage {
 
         [GtkChild]
         private unowned Gtk.GridView style_grid { get; }

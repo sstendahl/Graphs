@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    public class ColorSwatch : Gtk.Widget {
+    private class ColorSwatch : Gtk.Widget {
         private Gdk.RGBA _color = { 1f, 0f, 0f, 1f };
 
         public Gdk.RGBA color {

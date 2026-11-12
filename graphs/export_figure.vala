@@ -4,7 +4,7 @@ namespace Graphs {
      * Export figure dialog
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/export-figure.ui")]
-    public class ExportFigureDialog : Adw.Dialog {
+    private class ExportFigureDialog : Adw.Dialog {
 
         [GtkChild]
         private unowned Adw.SwitchRow transparent { get; }

@@ -4,7 +4,7 @@ namespace Graphs {
      * UI Widget for SQL file import
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/sql/main-group.ui")]
-    public class SqlGroup : Adw.PreferencesGroup {
+    private class SqlGroup : Adw.PreferencesGroup {
         [GtkChild]
         public unowned Adw.ComboRow table_row { get; }
         [GtkChild]

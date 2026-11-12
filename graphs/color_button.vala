@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/color-button.ui")]
-    public class ColorButton : Gtk.Button {
+    private class ColorButton : Gtk.Button {
         [GtkChild]
         private unowned ColorSwatch color_swatch { get; }
 

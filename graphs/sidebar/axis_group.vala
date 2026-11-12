@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/figure-settings/axis-group.ui")]
-    public class AxisGroup : Adw.PreferencesGroup {
+    private class AxisGroup : Adw.PreferencesGroup {
 
         [GtkChild]
         private unowned Adw.EntryRow label_row { get; }

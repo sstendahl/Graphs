@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     namespace Export {
-        public void export_items (Window window) {
+        private void export_items (Window window) {
             Data data = window.data;
             if (data.is_empty ()) {
                 window.add_toast_string (_("No data to export"));

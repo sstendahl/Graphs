@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/main-group.ui")]
-    public class SpreadsheetGroup : Adw.PreferencesGroup {
+    private class SpreadsheetGroup : Adw.PreferencesGroup {
         [GtkChild]
         private unowned Adw.ComboRow sheet_selector;
 
@@ -19,7 +19,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/item-group.ui")]
-    public class SpreadsheetItemGroup : Adw.PreferencesGroup {
+    private class SpreadsheetItemGroup : Adw.PreferencesGroup {
         [GtkChild]
         private unowned Adw.SpinRow column_x { get; }
         [GtkChild]
@@ -111,7 +111,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/spreadsheet/box.ui")]
-    public class SpreadsheetBox : Gtk.Box {
+    private class SpreadsheetBox : Gtk.Box {
         [GtkChild]
         private unowned Gtk.Box items_box { get; }
 
