@@ -375,6 +375,9 @@ namespace Graphs {
 
         private void append_variable_row (VariableItem item) {
             var row = new VariableBox (this, item);
+            row.activated.connect (() => {
+                edit_item (item);
+            });
             main_page.item_list.append (row);
         }
 
