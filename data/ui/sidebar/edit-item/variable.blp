@@ -1,0 +1,41 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsEditItemVariableItemBox: Box {
+  orientation: vertical;
+  spacing: 20;
+
+  Adw.PreferencesGroup group {
+    Adw.EntryRow value {
+      title: _("Value");
+      max-width-chars: 25;
+      notify::text => $on_entry_change();
+      apply => $on_entry_apply();
+    }
+  }
+
+  Adw.PreferencesGroup {
+    title: _("Slider");
+
+    Adw.EntryRow min {
+      title: _("Minimum");
+      max-width-chars: 25;
+      notify::text => $on_entry_change();
+      apply => $on_entry_apply();
+    }
+
+    Adw.EntryRow max {
+      title: _("Maximum");
+      max-width-chars: 25;
+      notify::text => $on_entry_change();
+      apply => $on_entry_apply();
+    }
+
+    Adw.EntryRow step {
+      title: _("Step Size");
+      max-width-chars: 25;
+      notify::text => $on_entry_change();
+      apply => $on_entry_apply();
+    }
+  }
+}
