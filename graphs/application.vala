@@ -130,21 +130,21 @@ namespace Graphs {
             return 0;
         }
 
-        public Window create_main_window () {
+        internal Window create_main_window () {
             Window window = PythonHelper.create_window ();
             main_windows.append (window);
             add_window (window);
             return window;
         }
 
-        public StyleEditor create_style_editor () {
+        internal StyleEditor create_style_editor () {
             var style_editor = new StyleEditor ();
             style_editors.append (style_editor);
             add_window (style_editor);
             return style_editor;
         }
 
-        public static string get_next_css_name () {
+        internal static string get_next_css_name () {
             _css_counter++;
             return "view" + _css_counter.to_string ();
         }
@@ -162,12 +162,12 @@ namespace Graphs {
             return settings_child;
         }
 
-        public void on_main_window_closed (Window window) {
+        internal void on_main_window_closed (Window window) {
             main_windows.remove (window);
             try_quit ();
         }
 
-        public void on_style_editor_closed (StyleEditor style_editor) {
+        internal void on_style_editor_closed (StyleEditor style_editor) {
             style_editors.remove (style_editor);
             try_quit ();
         }

@@ -4,7 +4,7 @@ namespace Graphs {
      * Item Box widget
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/item-box.ui")]
-    public class ItemBox : Adw.ActionRow {
+    private class ItemBox : Adw.ActionRow {
 
         [GtkChild]
         public unowned Gtk.CheckButton check_button { get; }
@@ -97,7 +97,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/importing-item-box.ui")]
-    public class ImportingItemBox : Adw.ActionRow {
+    private class ImportingItemBox : Adw.ActionRow {
         public ImportingItemBox (string filename) {
             Object (title: filename);
         }

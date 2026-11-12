@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/columns/box.ui")]
-    public class ColumnsBox : Gtk.Box {
+    private class ColumnsBox : Gtk.Box {
         [GtkChild]
         public unowned Gtk.Box items_box { get; }
 
@@ -68,7 +68,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/columns/main-group.ui")]
-    public class ColumnsGroup : Adw.PreferencesGroup {
+    private class ColumnsGroup : Adw.PreferencesGroup {
         [GtkChild]
         public unowned Adw.ComboRow delimiter { get; }
         [GtkChild]
@@ -105,7 +105,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/columns/item-group.ui")]
-    public class ColumnsItemGroup : Adw.PreferencesGroup {
+    private class ColumnsItemGroup : Adw.PreferencesGroup {
         [GtkChild]
         public unowned Adw.SpinRow column_x { get; }
         [GtkChild]

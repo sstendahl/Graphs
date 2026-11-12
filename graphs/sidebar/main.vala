@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/main.ui")]
-    public class MainSidebarPage : Adw.NavigationPage {
+    private class MainSidebarPage : Adw.NavigationPage {
         [GtkChild]
         private unowned Gtk.ScrolledWindow scrollwindow_itemlist { get; }
 

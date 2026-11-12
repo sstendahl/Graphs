@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/add-fill.ui")]
-    public class AddFillDialog : Adw.Dialog {
+    private class AddFillDialog : Adw.Dialog {
         [GtkChild]
         private unowned Adw.ComboRow upper_bound { get; }
         [GtkChild]

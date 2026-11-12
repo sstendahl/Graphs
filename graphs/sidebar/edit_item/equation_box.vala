@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/equation.ui")]
-    public class EditItemEquationItemBox : Gtk.Box {
+    private class EditItemEquationItemBox : Gtk.Box {
         [GtkChild]
         private unowned EditItemEquationGroup equation_group { get; }
         [GtkChild]

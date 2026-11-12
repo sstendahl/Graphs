@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/dialog.ui")]
-    public class ImportDialog : Adw.Dialog {
+    private class ImportDialog : Adw.Dialog {
 
         [GtkChild]
         private unowned Adw.NavigationSplitView navigation_view { get; }
@@ -152,7 +152,7 @@ namespace Graphs {
     }
 
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/import/file-row.ui")]
-    public class ImportFileRow : Gtk.ListBoxRow {
+    private class ImportFileRow : Gtk.ListBoxRow {
         [GtkChild]
         private unowned Gtk.Label filename { get; }
 
