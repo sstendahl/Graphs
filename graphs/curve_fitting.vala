@@ -250,6 +250,9 @@ namespace Graphs {
             residuals.markerstyle = POINT;
             residuals.linestyle = SOLID;
 
+            var marker = new MarkerItem (style, HORIZONTAL, 0);
+            marker.linewidth = 0.5;
+
             main_canvas_items = new ListStore (typeof (Item));
             main_canvas_items.append (fitted_curve);
             main_canvas_items.append (fill);
@@ -257,6 +260,7 @@ namespace Graphs {
 
             residuals_canvas_items = new ListStore (typeof (Item));
             residuals_canvas_items.append (residuals);
+            residuals_canvas_items.append (marker);
 
             var figure_settings = window.data.figure_settings;
 
@@ -285,8 +289,6 @@ namespace Graphs {
             canvas = PythonHelper.create_canvas (style, main_canvas_items, false, canvas_settings);
             residuals_canvas = PythonHelper.create_canvas (style, residuals_canvas_items, false, residuals_settings);
             residuals_container.set_visible (settings.get_boolean ("show-residuals"));
-
-            PythonHelper.run_method (this, "_load_canvas");
         }
 
         protected double[] get_p0 () {
