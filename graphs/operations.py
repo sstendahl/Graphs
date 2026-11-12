@@ -5,7 +5,7 @@ import math
 import re
 from gettext import gettext as _
 
-from gi.repository import Gio, Graphs
+from gi.repository import GLib, Gio, Graphs
 
 from graphs import ast, misc, utilities
 
@@ -37,7 +37,7 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
         all_success = getattr(CommonOperations, name)(window)
     else:
         all_success = False
-        for item in data:
+        for item in list(data):
             if not item.get_selected():
                 continue
             if isinstance(item, Graphs.EquationItem):
@@ -46,12 +46,19 @@ def perform_operation(window: Graphs.Window, name: str) -> None:
                 operations_class = DataOperations
             else:
                 continue
+            kwargs = {}
+            if operations_class is EquationOperations:
+                kwargs["used_variables"] = [
+                    other.get_variable() for other in data
+                    if isinstance(other, Graphs.VariableItem)
+                ]
             success, message = operations_class.execute(
                 item,
                 name,
                 figure_settings,
                 interaction_mode,
                 *args,
+                **kwargs,
             )
             if message:
                 window.add_toast_string(message)
@@ -121,7 +128,7 @@ def _get_y_range(item, settings, mode, scale: Graphs.Scale) -> tuple | None:
         else:
             xscale = settings.get_top_scale()
         ydata = utilities.equation_to_data(
-            item.get_equation(), limits, scale=xscale,
+            item.get_bound_equation(), limits, scale=xscale,
         )[1]
     else:
         xdata, ydata = utilities.get_xydata(item.get_data())
@@ -187,7 +194,7 @@ class CommonOperations():
             data = window.get_data()
             figure_settings = data.get_figure_settings()
 
-            for item in data:
+            for item in list(data):
                 if not item.get_selected():
                     continue
                 if isinstance(item, Graphs.EquationItem):
@@ -237,7 +244,7 @@ class CommonOperations():
             lims = get_selected_limits(settings, mode, item.get_xposition())
 
             if isinstance(item, Graphs.EquationItem):
-                equation = item.get_equation()
+                equation = item.get_bound_equation()
                 xdata, ydata = utilities.equation_to_data(equation, lims)
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
@@ -266,6 +273,8 @@ class CommonOperations():
                     some_y = True
                 else:
                     new_yerr = None
+            else:
+                continue
 
             new_xdata.append(xdata)
             new_ydata.append(ydata)
@@ -349,6 +358,34 @@ class CommonOperations():
         return True
 
 
+def _get_general_case(equation):
+    """Get the general form an equation takes for most variable values."""
+    if not isinstance(equation, sympy.Basic):
+        return equation
+
+    def pick(piecewise):
+        if any(condition.has(misc.X) for _case, condition in piecewise.args):
+            return piecewise
+        for case, condition in piecewise.args:
+            if not isinstance(condition, sympy.Eq):
+                return case
+        return piecewise.args[-1][0]
+
+    return equation.replace(
+        lambda expression: isinstance(expression, sympy.Piecewise), pick,
+    )
+
+
+def _get_constant_name(used: list[str]) -> str:
+    """Get a name for a constant of integration that is not in use."""
+    name = "c"
+    index = 0
+    while name in used:
+        index += 1
+        name = f"c{index}"
+    return name
+
+
 class EquationOperations():
     """Operations to be performed on equation items."""
 
@@ -359,6 +396,7 @@ class EquationOperations():
         figure_settings: Graphs.FigureSettings,
         _interaction_mode: Graphs.Mode,
         *args,
+        used_variables: list[str] = (),
     ) -> tuple[bool, str]:
         """Execute the operation on the given item."""
         old_limits = figure_settings.get_limits().values()
@@ -366,19 +404,42 @@ class EquationOperations():
             callback = getattr(EquationOperations, name)
             if name in ("normalize", "center", "transform"):
                 xindex = item.get_xposition() * 2
-                args = [(
-                    old_limits[xindex],
-                    old_limits[xindex + 1],
-                )] + list(args)
+                values = {
+                    sympy.Symbol(variable): item.get_variable_value(variable)
+                    for variable in item.get_variables()
+                }
+                args = [
+                    (old_limits[xindex], old_limits[xindex + 1]),
+                    values,
+                ] + list(args)
             equation = ast.sympify(item.get_equation())
-            equation = callback(equation, *args)
-            equation = Graphs.expression_to_ast(str(equation))
-            if not Graphs.math_tools_validate_expression(equation):
+            equation = _get_general_case(callback(equation, *args))
+            variables = item.get_variables()
+            constant = None
+            if name == "integral":
+                constant = _get_constant_name(
+                    list(used_variables) + variables,
+                )
+                equation += sympy.Symbol(constant)
+                variables.append(constant)
+            try:
+                text = str(equation)
+                equation = Graphs.expression_to_ast(text)
+                valid = \
+                    Graphs.math_tools_validate_parametric_expression(equation)
+                for variable in Graphs.math_tools_get_free_variables(text):
+                    valid = valid and variable in variables
+            except GLib.Error:
+                valid = False
+            if not valid:
                 message = _(
                     "The operation on {name} "
                     "did not result in a plottable equation",
                 ).format(name=item.get_name())
                 return False, message
+            if constant is not None:
+                # Start at zero, so the curve is not shifted
+                item.set_variable_value(constant, 0)
             item.set_equation(equation)
         except (NotImplementedError, AttributeError, KeyError):
             return False, _("Operation not supported for equations.")
@@ -408,16 +469,18 @@ class EquationOperations():
     def normalize(
         equation: sympy.Expr,
         limits: tuple[float, float],
+        values: dict,
     ) -> sympy.Expr:
         """Normalize all selected data."""
         domain = sympy.Interval(*limits)
+        bound = equation.subs(values)
         try:
-            magnitude = float(sympy.maximum(equation, misc.X, domain))
+            magnitude = float(sympy.maximum(bound, misc.X, domain))
         except (TypeError, ValueError, NotImplementedError, OverflowError):
             magnitude = numpy.nan
         if not numpy.isfinite(magnitude) or magnitude <= 0:
             _xdata, ydata = utilities.equation_to_data(
-                Graphs.expression_to_ast(str(equation)),
+                Graphs.expression_to_ast(str(bound)),
                 limits,
             )
             magnitude = numpy.max(numpy.abs(ydata), initial=0)
@@ -429,6 +492,7 @@ class EquationOperations():
     def center(
         equation: sympy.Expr,
         limits: tuple[float, float],
+        values: dict,
         center_maximum: int,
     ) -> sympy.Expr:
         """
@@ -440,7 +504,8 @@ class EquationOperations():
         x = misc.X
         low, high = limits
         if center_maximum == 0:  # Center at maximum Y
-            derivative = sympy.diff(equation, x)
+            bound = equation.subs(values)
+            derivative = sympy.diff(bound, x)
             critical_points = sympy.solveset(
                 derivative,
                 x,
@@ -457,9 +522,9 @@ class EquationOperations():
                     except TypeError:
                         continue
 
-            values = [equation.subs(x, c) for c in candidates]
+            heights = [bound.subs(x, c) for c in candidates]
 
-            best_index = max(range(len(values)), key=lambda i: values[i])
+            best_index = max(range(len(heights)), key=lambda i: heights[i])
             middle_value = candidates[best_index]
         elif center_maximum == 1:  # Center at middle
             middle_value = sympy.Rational(1, 2) * (low + high)
@@ -493,13 +558,14 @@ class EquationOperations():
     def transform(
         equation: sympy.Expr,
         limits: tuple[float, float],
+        values: dict,
         input_x: str,
         input_y: str,
         _discard: bool,
     ) -> str:
         """Perform custom transformation."""
         xdata, ydata = utilities.equation_to_data(
-            Graphs.expression_to_ast(str(equation)),
+            Graphs.expression_to_ast(str(equation.subs(values))),
             limits,
         )
         local_dict = {
@@ -526,7 +592,7 @@ class EquationOperations():
                 input_y = input_y.lower().replace(key, str(value))
 
         equation = re.sub(
-            r"(?<!e)x(?!p)",
+            r"(?<![A-Za-z0-9_])x(?![A-Za-z0-9_])",
             lambda _match: f"({input_x})",
             str(equation),
         )
