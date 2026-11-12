@@ -92,17 +92,22 @@ namespace Graphs {
             this.key_controller = new Gtk.EventControllerKey ();
             ((Gtk.Widget) this).add_controller (key_controller);
 
-            var item_drop_target = new Gtk.DropTarget (typeof (ItemBox), Gdk.DragAction.MOVE);
+            var item_drop_target = new Gtk.DropTarget (typeof (Gtk.ListBoxRow), Gdk.DragAction.MOVE);
             item_drop_target.drop.connect ((drop, val, x, y) => {
-                var value_row = (ItemBox?) val.get_object ();
-                var target_row = main_page.item_list.get_row_at_y ((int) y) as ItemBox;
+                var value_row = (Gtk.ListBoxRow?) val.get_object ();
+                var target_row = main_page.item_list.get_row_at_y ((int) y);
                 // If value or the target row is null, do not accept the drop
                 if (value_row == null || target_row == null) return false;
 
                 // Reject if the value row is not from this instance
-                if (value_row.window != this) return false;
+                if (value_row.get_parent () != main_page.item_list) return false;
 
-                target_row.change_position (value_row.get_index ());
+                // Imports that are in progress are not items yet
+                if (target_row is ImportingItemBox) return false;
+
+                data.change_position (target_row.get_index (), value_row.get_index ());
+                data.add_history_state ();
+                data.add_view_history_state ();
                 target_row.set_state_flags (Gtk.StateFlags.NORMAL, true);
 
                 return true;
@@ -320,10 +325,31 @@ namespace Graphs {
             canvas.grab_focus ();
         }
 
+        private delegate Gtk.ListBoxRow DragRowFactory ();
+
         private void append_item_row (Item item, uint index, bool is_data_item) {
             var row = new ItemBox (this, item, index);
             row.setup_interactions (is_data_item);
+            setup_drag (row, () => new ItemBox (this, item, index));
 
+            row.activated.connect (() => {
+                edit_item (item);
+            });
+
+            main_page.item_list.append (row);
+        }
+
+        private void append_variable_row (VariableItem item) {
+            var row = new VariableBox (this, item);
+            setup_drag (row, () => new VariableBox (this, item));
+
+            row.activated.connect (() => {
+                edit_item (item);
+            });
+            main_page.item_list.append (row);
+        }
+
+        private void setup_drag (Gtk.ListBoxRow row, owned DragRowFactory create_drag_row) {
             double drag_x = 0.0;
             double drag_y = 0.0;
 
@@ -340,7 +366,7 @@ namespace Graphs {
                 drag_x = x;
                 drag_y = y;
 
-                Value val = Value (typeof (ItemBox));
+                Value val = Value (typeof (Gtk.ListBoxRow));
                 val.set_object (row);
 
                 return new Gdk.ContentProvider.for_value (val);
@@ -351,7 +377,7 @@ namespace Graphs {
                 drag_widget.set_size_request (row.get_width (), row.get_height ());
                 drag_widget.add_css_class ("boxed-list");
 
-                var drag_row = new ItemBox (this, item, index);
+                var drag_row = create_drag_row ();
 
                 drag_widget.append (drag_row);
                 drag_widget.drag_highlight_row (drag_row);
@@ -365,20 +391,6 @@ namespace Graphs {
             // Update row visuals during DnD operation
             drop_controller.enter.connect (() => main_page.item_list.drag_highlight_row (row));
             drop_controller.leave.connect (() => main_page.item_list.drag_unhighlight_row ());
-
-            row.activated.connect (() => {
-                edit_item (item);
-            });
-
-            main_page.item_list.append (row);
-        }
-
-        private void append_variable_row (VariableItem item) {
-            var row = new VariableBox (this, item);
-            row.activated.connect (() => {
-                edit_item (item);
-            });
-            main_page.item_list.append (row);
         }
 
         private void append_import_rows () {
