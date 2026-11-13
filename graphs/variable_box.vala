@@ -39,12 +39,10 @@ namespace Graphs {
             updating = true;
             set_title (format_title (item));
 
-            double low = double.min (item.min, item.max);
-            double high = double.max (item.min, item.max);
             double step = item.get_effective_step ();
-            scale.adjustment.configure (item.value, low, high, step, step * 10, 0);
-            scale.set_sensitive (low < high);
-            play_button.set_sensitive (low < high);
+            scale.adjustment.configure (item.value, item.min, item.max, step, step * 10, 0);
+            scale.set_sensitive (item.min < item.max);
+            play_button.set_sensitive (item.min < item.max);
             updating = false;
         }
 

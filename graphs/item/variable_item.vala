@@ -18,12 +18,10 @@ namespace Graphs {
                 if (_value == value) return;
                 _value = value;
                 // Keep the value within reach of the slider
-                if (value < double.min (min, max)) {
-                    if (min <= max) min = value;
-                    else max = value;
-                } else if (value > double.max (min, max)) {
-                    if (min <= max) max = value;
-                    else min = value;
+                if (value < min) {
+                    min = value;
+                } else if (value > max) {
+                    max = value;
                 }
             }
         }
@@ -51,7 +49,7 @@ namespace Graphs {
 
         public double get_effective_step () {
             if (step > 0) return step;
-            double range = (max - min).abs ();
+            double range = max - min;
             if (!(range > 0) || !range.is_finite ()) return 1;
             return Math.pow (10, Math.floor (Math.log10 (range / 100)));
         }
@@ -60,29 +58,16 @@ namespace Graphs {
          * Get the value closest to the given one the slider can take.
          */
         public double snap (double val) {
-            double low = double.min (min, max);
-            double high = double.max (min, max);
-            if (step > 0) {
-                val = low + Math.round ((val - low) / step) * step;
-                val = double.parse ("%.12g".printf (val));
-            } else if (low < high) {
-                double decimals = -Math.floor (Math.log10 ((high - low) / 100));
-                if (decimals >= 0) {
-                    double factor = Math.pow (10, decimals);
-                    val = Math.round (val * factor) / factor;
-                } else {
-                    double factor = Math.pow (10, -decimals);
-                    val = Math.round (val / factor) * factor;
-                }
-            }
-            return val.clamp (low, high);
+            double step = get_effective_step ();
+            val = min + Math.round ((val - min) / step) * step;
+            return double.parse ("%.12g".printf (val)).clamp (min, max);
         }
 
         public void fit_value () {
             if (step > 0) {
                 value = snap (value);
             } else {
-                value = value.clamp (double.min (min, max), double.max (min, max));
+                value = value.clamp (min, max);
             }
         }
 
@@ -111,21 +96,13 @@ namespace Graphs {
             double elapsed = (now - _animation_time) / 1000d;
             _animation_time = now;
 
-            double low = double.min (min, max);
-            double high = double.max (min, max);
-            if (low == high) {
-                _animation_source = 0;
-                animation_changed.emit ();
-                return Source.REMOVE;
-            }
-
-            double distance = (high - low) * elapsed / ANIMATION_DURATION;
+            double distance = (max - min) * elapsed / ANIMATION_DURATION;
             _animation_position += _animation_direction * distance;
-            if (_animation_position >= high) {
-                _animation_position = high;
+            if (_animation_position >= max) {
+                _animation_position = max;
                 _animation_direction = -1;
-            } else if (!(_animation_position > low)) {
-                _animation_position = low;
+            } else if (_animation_position <= min) {
+                _animation_position = min;
                 _animation_direction = 1;
             }
             value = snap (_animation_position);

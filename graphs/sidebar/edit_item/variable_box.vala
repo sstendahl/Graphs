@@ -45,7 +45,10 @@ namespace Graphs {
         private bool is_valid (Adw.EntryRow entry, out double val) {
             if (!try_evaluate_string (entry.get_text (), out val)) return false;
             if (!val.is_finite ()) return false;
-            return entry != step || val > 0;
+            if (entry == step) return val > 0;
+            if (entry == min) return val <= item.max;
+            if (entry == max) return val >= item.min;
+            return true;
         }
 
         [GtkCallback]
