@@ -287,6 +287,7 @@ namespace Graphs {
             item.notify["yposition"].disconnect (_on_item_position_change);
             if (item is VariableItem) {
                 item.notify["value"].disconnect (_on_variable_value_change);
+                ((VariableItem) item).stop_animation ();
             } else if (item is EquationItem) {
                 item.notify["equation"].disconnect (_on_equation_change);
             }
