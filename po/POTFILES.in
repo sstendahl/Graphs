@@ -76,6 +76,7 @@ graphs/item/data_item.vala
 graphs/item/equation_item.vala
 graphs/item/fill_item.vala
 graphs/item/generated_data_item.vala
+graphs/item/marker_item.vala
 graphs/item/text_item.vala
 graphs/item/variable_item.vala
 graphs/math_parser/ast.vala

@@ -5,9 +5,8 @@ from gettext import pgettext as C_
 from gi.repository import Graphs
 
 from graphs import project
-from graphs.file_import import Parser
+from graphs.file_import import ParseError, Parser
 from graphs.item import ItemFactory
-from graphs.misc import ParseError
 from graphs.project import ProjectParseError
 
 

@@ -5,7 +5,13 @@ from gettext import gettext as _
 
 from gi.repository import Graphs, Gtk
 
-from graphs.misc import ParseError
+
+class ParseError(Exception):
+    """Custom Error for parsing files."""
+
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
 
 
 class Parser(Graphs.PythonParser):
