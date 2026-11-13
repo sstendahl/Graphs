@@ -8,8 +8,7 @@ from gi.repository import Graphs
 
 import gio_pyio
 
-from graphs.file_import import Parser
-from graphs.misc import ParseError
+from graphs.file_import import ParseError, Parser
 
 import numpy
 
