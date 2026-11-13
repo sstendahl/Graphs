@@ -252,6 +252,7 @@ namespace Graphs {
 
             var marker = new MarkerItem (style, HORIZONTAL, 0);
             marker.linewidth = 0.5;
+            marker.linestyle = DASHED;
 
             main_canvas_items = new ListStore (typeof (Item));
             main_canvas_items.append (fitted_curve);
