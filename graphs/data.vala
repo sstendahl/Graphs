@@ -374,9 +374,6 @@ namespace Graphs {
                     is_pending = true;
                     break;
                 }
-                foreach (unowned VariableItem item in created) {
-                    if (item.variable == name) is_pending = true;
-                }
                 if (is_pending) continue;
 
                 created += new VariableItem (name, equation_item.get_variable_value (name));

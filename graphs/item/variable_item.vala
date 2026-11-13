@@ -39,7 +39,6 @@ namespace Graphs {
 
         construct {
             typename = _("Variable");
-            if (name == "") name = variable;
         }
 
         public VariableItem (string variable, double value = DEFAULT_VALUE) {
@@ -107,14 +106,6 @@ namespace Graphs {
             }
             value = snap (_animation_position);
             return Source.CONTINUE;
-        }
-
-        public override void dispose () {
-            if (_animation_source != 0) {
-                Source.remove (_animation_source);
-                _animation_source = 0;
-            }
-            base.dispose ();
         }
     }
 }

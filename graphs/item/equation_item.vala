@@ -39,7 +39,7 @@ namespace Graphs {
                     _equation = value;
                     _program = ast_to_parametric_program (value);
                     _variables = MathTools.get_free_variables (ast_to_expression (value));
-                    foreach (unowned string variable in _program.get_parameters ()) {
+                    foreach (unowned string variable in _variables) {
                         _program.set_parameter (variable, get_variable_value (variable));
                     }
                 } catch (MathError e) { assert_not_reached (); }
@@ -49,7 +49,7 @@ namespace Graphs {
 
         public signal void values_changed ();
 
-        public signal void variable_changed (string name);
+        public signal void variable_changed ();
 
         construct {
             typename = _("Equation");
@@ -94,7 +94,7 @@ namespace Graphs {
             if (!has_variable (name)) return;
 
             _program.set_parameter (name, val);
-            variable_changed.emit (name);
+            variable_changed.emit ();
             values_changed.emit ();
         }
     }

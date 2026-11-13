@@ -94,13 +94,5 @@ namespace Graphs {
             if (!item.is_animating ()) window.data.add_history_state ();
             return Source.REMOVE;
         }
-
-        public override void dispose () {
-            if (history_source != 0) {
-                Source.remove (history_source);
-                history_source = 0;
-            }
-            base.dispose ();
-        }
     }
 }

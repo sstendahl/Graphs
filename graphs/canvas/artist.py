@@ -642,7 +642,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         self._expr = ast.sympify_item(item)
         self._generate_data()
 
-    def _on_variable_change(self, _item, _name) -> None:
+    def _on_variable_change(self, _item) -> None:
         """
         Follow a variable of the equation.
 
@@ -650,9 +650,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         finding singularities is timed and skipped during variable change
         when it takes too long to avoid poor performance.
         """
-        hold_legend = getattr(self._axis.figure, "hold_legend", None)
-        if hold_legend is not None:
-            hold_legend()
+        self._axis.figure.hold_legend()
         if self._singularities_time <= self._SINGULARITIES_BUDGET:
             if self._variable_timeout_id is not None:
                 GObject.source_remove(self._variable_timeout_id)

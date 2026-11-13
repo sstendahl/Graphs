@@ -231,14 +231,6 @@ namespace Graphs {
             _parameter_slots += slot;
         }
 
-        public string[] get_parameters () {
-            string[] names = {};
-            foreach (unowned string name in _parameters) {
-                if (!(name in names)) names += name;
-            }
-            return names;
-        }
-
         public void set_parameter (string name, double val) {
             for (int i = 0; i < _parameters.length; i++) {
                 if (_parameters[i] == name) _data[_parameter_slots[i]] = val;
