@@ -39,30 +39,32 @@ namespace Graphs {
         }
     }
 
+    public class FitProblem {
+        public DataHolder data;
+        public string[] free_vars;
+        public Ast expression;
+        public Settings settings;
+        public FittingParameter[] parameters;
+        public Bytes x_fit;
+    }
+
     public class FitResult {
-        private double[] parameters;
-        private double[] diag_covars;
-        private double r2;
-        private double rmse;
+        public double[] parameters;
+        public double[] diag_covars;
+        public double r2;
+        public double rmse;
+        public DataHolder residuals;
+        public string fitted_equation_string;
+        public DataHolder fit;
+        public FillHolder confidence;
 
-        public FitResult (owned double[] parameters, owned double[] diag_covars, double r2, double rmse) {
+        // Python cannot mutate specific field types
+        public void set_parameters (owned double[] parameters) {
             this.parameters = (owned) parameters;
+        }
+
+        public void set_diag_covars (owned double[] diag_covars) {
             this.diag_covars = (owned) diag_covars;
-            this.r2 = r2;
-            this.rmse = rmse;
-        }
-
-        public unowned double[] get_parameters () {
-            return parameters;
-        }
-
-        public unowned double[] get_diag_covars () {
-            return diag_covars;
-        }
-
-        public void get_r2_rmse (out double r2, out double rmse) {
-            r2 = this.r2;
-            rmse = this.rmse;
         }
     }
 
@@ -104,7 +106,7 @@ namespace Graphs {
      * Curve fitting dialog.
      */
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/curve-fitting.ui")]
-    public class CurveFittingDialog : Adw.Dialog {
+    private class CurveFittingDialog : Adw.Dialog {
         private const string DATA_COLOR = "#1A5FB4";
         private const string FIT_COLOR = "#A51D2D";
         private const string FILL_COLOR = "#62A0EA";
@@ -137,26 +139,25 @@ namespace Graphs {
         [GtkChild]
         private unowned Adw.Bin residuals_container { get; }
 
-        public Window window { get; construct set; }
-        protected Settings settings { get; protected set; }
-        protected Ast ast { get; private owned set; }
-        protected string fitted_equation_string { get; protected set; }
-        protected FitResult? fit_result { get; protected set; }
-        protected ListStore main_canvas_items { get; private set; }
-        protected ListStore residuals_canvas_items { get; private set; }
-        protected GLib.Bytes x_fit { get; private set; }
-
+        private Window window;
+        private Settings settings;
+        private Ast ast;
+        private Bytes x_fit;
         private HashTable<string, FittingParameter> fitting_parameters;
         private string[] free_vars = {};
         private FigureSettings canvas_settings;
         private FigureSettings residuals_settings;
+        private DataHolder data;
+        private FitResult? fit_result;
+        private ListStore main_canvas_items;
+        private ListStore residuals_canvas_items;
 
-        protected Canvas? canvas {
+        private Canvas? canvas {
             get { return canvas_container.get_child () as Canvas; }
             set { canvas_container.set_child (value); }
         }
 
-        protected Canvas? residuals_canvas {
+        private Canvas? residuals_canvas {
             get { return residuals_container.get_child () as Canvas; }
             set { residuals_container.set_child (value); }
         }
@@ -171,14 +172,14 @@ namespace Graphs {
             Action confidence_action = settings.create_action ("confidence");
             confidence_action.notify.connect (() => {
                 if (fit_result == null) return;
-                PythonHelper.run_method (this, "_fit_curve");
+                fit_curve ();
             });
             action_map.add_action (confidence_action);
 
             Action optimization_action = settings.create_action ("optimization");
             optimization_action.notify.connect (() => {
                 update_bounds_visibility ();
-                PythonHelper.run_method (this, "_fit_curve");
+                fit_curve ();
             });
             action_map.add_action (optimization_action);
 
@@ -217,7 +218,10 @@ namespace Graphs {
             return StyleManager.get_system_style_params_for (data.selected_style_params);
         }
 
-        protected void setup (DataItem item) {
+        public CurveFittingDialog (Window window, DataItem item) {
+            this.window = window;
+            this.data = item.data;
+
             var style = get_canvas_style ();
 
             double x_min, x_max;
@@ -283,6 +287,8 @@ namespace Graphs {
             load_canvas ();
             Adw.StyleManager.get_default ().notify.connect (load_canvas);
             set_equation_from_selection ();
+
+            present (window);
         }
 
         private void load_canvas () {
@@ -292,29 +298,25 @@ namespace Graphs {
             residuals_container.set_visible (settings.get_boolean ("show-residuals"));
         }
 
-        protected double[] get_p0 () {
-            double[] result = new double[free_vars.length];
+        private void fit_curve () {
+            var problem = new FitProblem ();
+            problem.data = data;
+            problem.free_vars = free_vars;
+            problem.expression = ast;
+            problem.settings = settings;
+            problem.x_fit = x_fit;
+
+            FittingParameter[] parameters = new FittingParameter[free_vars.length];
             for (int i = 0; i < free_vars.length; i++) {
-                result[i] = fitting_parameters.get (free_vars[i]).get_initial ();
+                parameters[i] = fitting_parameters.get (free_vars[i]);
             }
-            return result;
+            problem.parameters = parameters;
+
+            fit_result = new FitResult ();
+            set_results (PythonHelper.curve_fit (problem, fit_result));
         }
 
-        protected void get_bounds (out double[] lower, out double[] upper) {
-            lower = new double[free_vars.length];
-            upper = new double[free_vars.length];
-            for (int i = 0; i < free_vars.length; i++) {
-                unowned FittingParameter param = fitting_parameters.get (free_vars[i]);
-                lower[i] = param.get_lower_bound ();
-                upper[i] = param.get_upper_bound ();
-            }
-        }
-
-        protected unowned string[] get_free_vars () {
-            return free_vars;
-        }
-
-        protected void set_results (CurveFittingError error) {
+        private void set_results (CurveFittingError error) {
             var buffer = text_view.get_buffer ();
             buffer.set_text ("");
             var tag_table = buffer.get_tag_table ();
@@ -350,6 +352,11 @@ namespace Graphs {
             confirm_button.set_sensitive (true);
             if (fit_result == null) return;
 
+            residuals.data = fit_result.residuals;
+            fitted_curve.data = fit_result.fit;
+            fitted_curve.name = "Y = " + fit_result.fitted_equation_string;
+            fill.data = fit_result.confidence;
+
             double min_y, max_y;
             double tmp_min_y, tmp_max_y;
 
@@ -375,8 +382,8 @@ namespace Graphs {
 
             buffer.insert_with_tags_by_name (ref end_iter, _("Parameters") + "\n", -1, "bold");
 
-            unowned double[] diag_covars = fit_result.get_diag_covars ();
-            unowned double[] parameters = fit_result.get_parameters ();
+            unowned double[] diag_covars = fit_result.diag_covars;
+            unowned double[] parameters = fit_result.parameters;
             int conf_level = settings.get_enum ("confidence");
 
             int n = free_vars.length;
@@ -390,9 +397,7 @@ namespace Graphs {
             }
 
             buffer.insert_with_tags_by_name (ref end_iter, "\n" + _("Statistics") + "\n", -1, "bold");
-            double r2, rmse;
-            fit_result.get_r2_rmse (out r2, out rmse);
-            string r2_rmse = "%s: %.3g\n%s: %.3g".printf (_("R²"), r2, _("RMSE"), rmse);
+            string r2_rmse = "%s: %.3g\n%s: %.3g".printf (_("R²"), fit_result.r2, _("RMSE"), fit_result.rmse);
             buffer.insert (ref end_iter, r2_rmse, -1);
         }
 
@@ -449,7 +454,7 @@ namespace Graphs {
             param.set_initial (init);
             param.set_lower_bound (low);
             param.set_upper_bound (high);
-            PythonHelper.run_method (this, "_fit_curve");
+            fit_curve ();
         }
 
         private void update_bounds_visibility () {
@@ -529,7 +534,7 @@ namespace Graphs {
                 }
                 fitting_parameters = new_map;
 
-                PythonHelper.run_method (this, "_fit_curve");
+                fit_curve ();
                 return true;
             } catch (MathError e) {
                 set_results (CurveFittingError.EQUATION);
@@ -543,9 +548,9 @@ namespace Graphs {
             settings.set_string ("custom-equation", custom_equation.get_text ());
 
             try {
-                Ast ast = expression_to_ast (fitted_equation_string);
+                Ast ast = expression_to_ast (fit_result.fitted_equation_string);
                 Item item = new EquationItem (window.data.selected_style_params, ast) {
-                    name = "Y = " + fitted_equation_string,
+                    name = "Y = " + fit_result.fitted_equation_string,
                 };
                 Item[] items = {item};
                 window.data.add_items (items);

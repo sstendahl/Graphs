@@ -49,7 +49,7 @@ namespace Graphs {
             if (is_data_item) {
                 var curve_fitting_action = new SimpleAction ("curve_fitting", null);
                 curve_fitting_action.activate.connect (() => {
-                    PythonHelper.create_curve_fitting_dialog (window, item);
+                    new CurveFittingDialog (window, (DataItem) item);
                 });
                 action_group.add_action (curve_fitting_action);
             }
