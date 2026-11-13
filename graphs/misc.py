@@ -2,15 +2,6 @@
 """Miscallaneous constants."""
 import sympy
 
-
-class ParseError(Exception):
-    """Custom Error for parsing files."""
-
-    def __init__(self, message):
-        self.message = message
-        super().__init__(self.message)
-
-
 X = sympy.Symbol("x")
 Y = sympy.Symbol("y")
 
