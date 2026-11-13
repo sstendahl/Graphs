@@ -344,6 +344,10 @@ namespace Graphs {
             setup_drag (row, () => new VariableBox (this, item));
 
             row.activated.connect (() => {
+                if (item.is_animating ()) {
+                    item.stop_animation ();
+                    data.add_history_state ();
+                }
                 edit_item (item);
             });
             main_page.item_list.append (row);

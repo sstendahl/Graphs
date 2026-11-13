@@ -15,4 +15,17 @@ template $GraphsVariableBox: Adw.ActionRow {
 
     adjustment: Adjustment {};
   }
+
+  [suffix]
+  ToggleButton play_button {
+    icon-name: "media-playback-start-symbolic";
+    tooltip-text: _("Animate");
+    vexpand: false;
+    valign: center;
+    toggled => $on_play_toggled();
+
+    styles [
+      "flat",
+    ]
+  }
 }

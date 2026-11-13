@@ -11,6 +11,9 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Scale scale { get; }
 
+        [GtkChild]
+        private unowned Gtk.ToggleButton play_button { get; }
+
         public Window window { get; construct set; }
         public VariableItem item { get; construct set; }
 
@@ -27,7 +30,9 @@ namespace Graphs {
             item.notify["min"].connect (update);
             item.notify["max"].connect (update);
             item.notify["step"].connect (update);
+            item.animation_changed.connect (update_animation);
             update ();
+            update_animation ();
         }
 
         private void update () {
@@ -39,6 +44,18 @@ namespace Graphs {
             double step = item.get_effective_step ();
             scale.adjustment.configure (item.value, low, high, step, step * 10, 0);
             scale.set_sensitive (low < high);
+            play_button.set_sensitive (low < high);
+            updating = false;
+        }
+
+        private void update_animation () {
+            updating = true;
+            bool animating = item.is_animating ();
+            play_button.set_active (animating);
+            play_button.set_icon_name (
+                animating ? "media-playback-pause-symbolic" : "media-playback-start-symbolic"
+            );
+            play_button.set_tooltip_text (animating ? _("Stop Animation") : _("Animate"));
             updating = false;
         }
 
@@ -54,6 +71,17 @@ namespace Graphs {
             queue_history_state ();
         }
 
+        [GtkCallback]
+        private void on_play_toggled () {
+            if (updating) return;
+            if (play_button.get_active ()) {
+                item.start_animation ();
+            } else {
+                item.stop_animation ();
+                window.data.add_history_state ();
+            }
+        }
+
         /**
          * Dragging the slider gives many values, only the one it ends up in
          * the end at should be a step in the history.
@@ -65,7 +93,7 @@ namespace Graphs {
 
         private bool on_history_timeout () {
             history_source = 0;
-            window.data.add_history_state ();
+            if (!item.is_animating ()) window.data.add_history_state ();
             return Source.REMOVE;
         }
 
