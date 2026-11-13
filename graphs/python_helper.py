@@ -20,7 +20,7 @@ from sympy.calculus.singularities import singularities
 _REQUESTS = (
     "create-canvas",
     "create-window",
-    "curve-fitting-dialog",
+    "curve-fit",
     "export-figure",
     "has-singularities",
     "perform-operation",
@@ -88,12 +88,12 @@ class PythonHelper(Graphs.PythonHelper):
         return PythonWindow()
 
     @staticmethod
-    def _on_curve_fitting_dialog_request(
+    def _on_curve_fit_request(
         self,
-        window: Graphs.Window,
-        item: Graphs.Item,
-    ) -> None:
-        return curve_fitting.CurveFittingDialog(window, item)
+        problem: Graphs.FitProblem,
+        result: Graphs.FitResult,
+    ) -> Graphs.CurveFittingError:
+        return curve_fitting.fit_curve(problem, result)
 
     @staticmethod
     def _on_export_figure_request(
