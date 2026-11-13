@@ -127,9 +127,9 @@ def _get_y_range(item, settings, mode, scale: Graphs.Scale) -> tuple | None:
             xscale = settings.get_bottom_scale()
         else:
             xscale = settings.get_top_scale()
-        ydata = utilities.equation_to_data(
-            item.get_bound_equation(), limits, scale=xscale,
-        )[1]
+        ydata = utilities.get_xydata(Graphs.math_tools_program_to_data(
+            item.get_program(), *limits, 5000, xscale,
+        ))[1]
     else:
         xdata, ydata = utilities.get_xydata(item.get_data())
         if mode == Graphs.Mode.SELECT:
@@ -244,8 +244,11 @@ class CommonOperations():
             lims = get_selected_limits(settings, mode, item.get_xposition())
 
             if isinstance(item, Graphs.EquationItem):
-                equation = item.get_bound_equation()
-                xdata, ydata = utilities.equation_to_data(equation, lims)
+                xdata, ydata = utilities.get_xydata(
+                    Graphs.math_tools_program_to_data(
+                        item.get_program(), *lims, 5000, Graphs.Scale.LINEAR,
+                    ),
+                )
                 new_xerr, new_yerr = None, None
             elif isinstance(item, Graphs.DataItem):
                 item_data = item.get_data()

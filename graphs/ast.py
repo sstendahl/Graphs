@@ -185,3 +185,12 @@ def _sympify(expr):
 def sympify(expression: Graphs.Ast):
     """Sympify an Expression."""
     return _sympify(expression.root())
+
+
+def sympify_item(item: Graphs.EquationItem):
+    """Sympify the equation of an item, with the values of its variables."""
+    values = {
+        sympy.Symbol(name): item.get_variable_value(name)
+        for name in item.get_variables()
+    }
+    return sympify(item.get_equation()).subs(values)

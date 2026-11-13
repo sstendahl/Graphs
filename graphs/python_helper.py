@@ -125,12 +125,12 @@ class PythonHelper(Graphs.PythonHelper):
     @staticmethod
     def _on_has_singularities_request(
         self,
-        equation: str,
+        item: Graphs.EquationItem,
         xstart: float,
         xstop: float,
     ) -> None:
         domain = sympy.Interval(xstart, xstop)
-        return singularities(ast.sympify(equation), misc.X, domain)
+        return singularities(ast.sympify_item(item), misc.X, domain)
 
     @staticmethod
     def _on_perform_operation_request(

@@ -28,9 +28,9 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
-        public signal bool has_singularities_request (Ast equation, double xstart, double xstop);
-        public static bool has_singularities (Ast equation, double xstart, double xstop) {
-            return instance.has_singularities_request.emit (equation, xstart, xstop);
+        public signal bool has_singularities_request (EquationItem item, double xstart, double xstop);
+        public static bool has_singularities (EquationItem item, double xstart, double xstop) {
+            return instance.has_singularities_request.emit (item, xstart, xstop);
         }
 
         protected signal void perform_operation_request (Window window, string name);

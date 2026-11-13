@@ -580,7 +580,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        self._expr = ast.sympify(item.get_bound_equation())
+        self._expr = ast.sympify_item(item)
         self._axis = axis
         self._view_change_timeout_id = None
         self._variable_timeout_id = None
@@ -639,7 +639,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     # We cannot have a Property of type Graphs.Ast
     def _on_equation_change(self, item, _pspec) -> None:
         self._singularities_cache = False
-        self._expr = ast.sympify(item.get_bound_equation())
+        self._expr = ast.sympify_item(item)
         self._generate_data()
 
     def _on_variable_change(self, _item, _name) -> None:
@@ -667,7 +667,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     def _variable_timeout_callback(self) -> bool:
         self._variable_timeout_id = None
         self._singularities_cache = False
-        self._expr = ast.sympify(self._item.get_bound_equation())
+        self._expr = ast.sympify_item(self._item)
         self._generate_data()
         return False
 

@@ -97,17 +97,5 @@ namespace Graphs {
             variable_changed.emit (name);
             values_changed.emit ();
         }
-
-        /**
-         * Get the equation with the variables replaced by their values, giving a
-         * normal equation without free variables to evaluate
-         */
-        public Ast get_bound_equation () {
-            Ast result = _equation;
-            foreach (unowned string variable in _variables) {
-                result = ast_bind_variable (result, variable, get_variable_value (variable));
-            }
-            return result;
-        }
     }
 }
