@@ -24,11 +24,6 @@ class CurveFittingDialog(Graphs.CurveFittingDialog):
         self.setup(item)
         self.present(window)
 
-    def _load_canvas(self) -> None:
-        """Initialize and set main canvas."""
-        ax = self.props.residuals_canvas.figure.axis
-        ax.axhline(y=0, color="black", linestyle="--", linewidth=0.5)
-
     def _fit_curve(self) -> None:
         """Handle fit curve request."""
         free_vars = self.get_free_vars()

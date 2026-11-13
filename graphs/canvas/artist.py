@@ -123,6 +123,8 @@ def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
         cls = TextItemArtistWrapper
     elif isinstance(item, Graphs.FillItem):
         cls = FillItemArtistWrapper
+    elif isinstance(item, Graphs.MarkerItem):
+        cls = MarkerItemArtistWrapper
     artist_wrapper = cls(
         fig.axes[item.get_yposition() * 2 + item.get_xposition()],
         item,
@@ -822,6 +824,30 @@ class TextItemArtistWrapper(ItemArtistWrapper):
             rotation=item.get_rotation(),
             clip_on=True,
         )
+        self._color_artist = self._artist
+
+
+class MarkerItemArtistWrapper(ItemArtistWrapper):
+    """Wrapper for MarkerItem."""
+
+    __gtype_name__ = "GraphsMarkerItemArtistWrapper"
+
+    def __init__(self, axis: pyplot.axis, item: Graphs.Item):
+        super().__init__()
+
+        match item.get_direction():
+            case Graphs.MarkerDirection.HORIZONTAL:
+                self._artist = axis.axhline(
+                    y=item.get_anchor(),
+                    color=item.get_color(),
+                    linestyle=Graphs.python_equation_linestyle_to_style(
+                        item.get_linestyle(),
+                    ),
+                    linewidth=item.get_linewidth(),
+                )
+            case _:
+                raise NotImplementedError
+
         self._color_artist = self._artist
 
 
