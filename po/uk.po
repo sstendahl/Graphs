@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-23 10:56+0000\n"
-"PO-Revision-Date: 2026-10-23 20:56+0300\n"
+"POT-Creation-Date: 2026-11-13 11:53+0000\n"
+"PO-Revision-Date: 2026-11-14 22:09+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -164,8 +164,8 @@ msgstr ""
 "ation;Fitting;xrdml;креслення;графік;креслення;наука;математика;рівняння;дані"
 ";креслити;рисунок;візуалізація;апроксимація;"
 
-#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
-#: data/ui/style-editor/window.blp:299
+#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:289
+#: data/ui/style-editor/window.blp:301
 msgid "New Window"
 msgstr "Нове вікно"
 
@@ -582,39 +582,39 @@ msgstr "Лінія і позначки"
 
 #: data/ui/sidebar/edit-item/data.blp:12
 #: data/ui/sidebar/edit-item/equation.blp:14
-#: data/ui/style-editor/editor-box.blp:62
+#: data/ui/style-editor/editor-box.blp:66
 msgid "Linestyle"
 msgstr "Стиль лінії"
 
-#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:67
+#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "None"
 msgstr "Немає"
 
 #: data/ui/sidebar/edit-item/data.blp:18
 #: data/ui/sidebar/edit-item/equation.blp:18
-#: data/ui/style-editor/editor-box.blp:68
+#: data/ui/style-editor/editor-box.blp:72
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Суцільна"
 
 #: data/ui/sidebar/edit-item/data.blp:19
 #: data/ui/sidebar/edit-item/equation.blp:19
-#: data/ui/style-editor/editor-box.blp:69
+#: data/ui/style-editor/editor-box.blp:73
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Пунктирна"
 
 #: data/ui/sidebar/edit-item/data.blp:20
 #: data/ui/sidebar/edit-item/equation.blp:20
-#: data/ui/style-editor/editor-box.blp:70
+#: data/ui/style-editor/editor-box.blp:74
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Штрихова"
 
 #: data/ui/sidebar/edit-item/data.blp:21
 #: data/ui/sidebar/edit-item/equation.blp:21
-#: data/ui/style-editor/editor-box.blp:71
+#: data/ui/style-editor/editor-box.blp:75
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Штрих-пунктирна"
@@ -624,145 +624,146 @@ msgstr "Штрих-пунктирна"
 msgid "Linewidth"
 msgstr "Товщина лінії"
 
-#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:94
+#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:99
 msgid "Markers"
 msgstr "Позначки"
 
-#: data/ui/sidebar/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:99
+#: data/ui/sidebar/edit-item/data.blp:47
+#: data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Немає"
 
 #: data/ui/sidebar/edit-item/data.blp:48
-#: data/ui/style-editor/editor-box.blp:100
+#: data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Крапка"
 
 #: data/ui/sidebar/edit-item/data.blp:49
-#: data/ui/style-editor/editor-box.blp:101
+#: data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Піксель"
 
 #: data/ui/sidebar/edit-item/data.blp:50
-#: data/ui/style-editor/editor-box.blp:102
+#: data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Коло"
 
 #: data/ui/sidebar/edit-item/data.blp:51
-#: data/ui/style-editor/editor-box.blp:103
+#: data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Трикутник вниз"
 
 #: data/ui/sidebar/edit-item/data.blp:52
-#: data/ui/style-editor/editor-box.blp:104
+#: data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Трикутник вгору"
 
 #: data/ui/sidebar/edit-item/data.blp:53
-#: data/ui/style-editor/editor-box.blp:105
+#: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Трикутник ліворуч"
 
 #: data/ui/sidebar/edit-item/data.blp:54
-#: data/ui/style-editor/editor-box.blp:106
+#: data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Трикутник праворуч"
 
 #: data/ui/sidebar/edit-item/data.blp:55
-#: data/ui/style-editor/editor-box.blp:107
+#: data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Восьмикутник"
 
 #: data/ui/sidebar/edit-item/data.blp:56
-#: data/ui/style-editor/editor-box.blp:108
+#: data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Квадрат"
 
 #: data/ui/sidebar/edit-item/data.blp:57
-#: data/ui/style-editor/editor-box.blp:109
+#: data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "П'ятикутник"
 
 #: data/ui/sidebar/edit-item/data.blp:58
-#: data/ui/style-editor/editor-box.blp:110
+#: data/ui/style-editor/editor-box.blp:115
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Зірка"
 
 #: data/ui/sidebar/edit-item/data.blp:59
-#: data/ui/style-editor/editor-box.blp:111
+#: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Шестикутник 1"
 
 #: data/ui/sidebar/edit-item/data.blp:60
-#: data/ui/style-editor/editor-box.blp:112
+#: data/ui/style-editor/editor-box.blp:117
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Шестикутник 2"
 
 #: data/ui/sidebar/edit-item/data.blp:61
-#: data/ui/style-editor/editor-box.blp:113
+#: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Плюс"
 
 #: data/ui/sidebar/edit-item/data.blp:62
-#: data/ui/style-editor/editor-box.blp:114
+#: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/sidebar/edit-item/data.blp:64
-#: data/ui/style-editor/editor-box.blp:116
+#: data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Ромб"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/sidebar/edit-item/data.blp:66
-#: data/ui/style-editor/editor-box.blp:118
+#: data/ui/style-editor/editor-box.blp:123
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Тонкий ромб"
 
 #: data/ui/sidebar/edit-item/data.blp:67
-#: data/ui/style-editor/editor-box.blp:119
+#: data/ui/style-editor/editor-box.blp:124
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Вертикальна лінія"
 
 #: data/ui/sidebar/edit-item/data.blp:68
-#: data/ui/style-editor/editor-box.blp:120
+#: data/ui/style-editor/editor-box.blp:125
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Горизонтальна лінія"
 
 #: data/ui/sidebar/edit-item/data.blp:69
-#: data/ui/style-editor/editor-box.blp:121
+#: data/ui/style-editor/editor-box.blp:126
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Заповнений плюс"
 
 #: data/ui/sidebar/edit-item/data.blp:70
-#: data/ui/style-editor/editor-box.blp:122
+#: data/ui/style-editor/editor-box.blp:127
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "Заповнений X"
 
 #: data/ui/sidebar/edit-item/data.blp:76
-#: data/ui/style-editor/editor-box.blp:128
+#: data/ui/style-editor/editor-box.blp:133
 msgid "Marker Size"
 msgstr "Розмір позначки"
 
@@ -789,7 +790,7 @@ msgid "Simplify"
 msgstr "Спростити"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:9
-#: data/ui/style-editor/editor-box.blp:146
+#: data/ui/style-editor/editor-box.blp:152
 msgid "Error Bars"
 msgstr "Позначки похибок"
 
@@ -802,7 +803,7 @@ msgid "Show Vertical"
 msgstr "Показувати вертикально"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:22
-#: data/ui/style-editor/editor-box.blp:194
+#: data/ui/style-editor/editor-box.blp:203
 msgid "Draw Above Data"
 msgstr "Малювати над даними"
 
@@ -811,17 +812,17 @@ msgid "Color"
 msgstr "Колір"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:30
-#: data/ui/style-editor/editor-box.blp:149
+#: data/ui/style-editor/editor-box.blp:155
 msgid "Cap Length"
 msgstr "Довжина кінчика"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:44
-#: data/ui/style-editor/editor-box.blp:164
+#: data/ui/style-editor/editor-box.blp:171
 msgid "Cap Thickness"
 msgstr "Товщина кінчика"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:58
-#: data/ui/style-editor/editor-box.blp:179
+#: data/ui/style-editor/editor-box.blp:187
 msgid "Line Width"
 msgstr "Товщина лінії"
 
@@ -893,7 +894,7 @@ msgid "Figure Settings"
 msgstr "Параметри рисунка"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:27
-#: graphs/style_editor/window.vala:326
+#: graphs/style_editor/window.vala:320
 msgid "Title"
 msgstr "Заголовок"
 
@@ -981,7 +982,7 @@ msgstr "Приховати непозначені елементи"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:83
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:81
+#: graphs/style_editor/window.vala:72
 msgid "Style"
 msgstr "Стиль"
 
@@ -1050,18 +1051,18 @@ msgstr "Експортувати дані…"
 msgid "Export Figure…"
 msgstr "Експортувати рисунок…"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:291
-#: data/ui/style-editor/window.blp:303
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:293
+#: data/ui/style-editor/window.blp:305
 msgid "Keyboard Shortcuts"
 msgstr "Клавіатурні скорочення"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:292
-#: data/ui/style-editor/window.blp:304
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:294
+#: data/ui/style-editor/window.blp:306
 msgid "Help"
 msgstr "Довідка"
 
-#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:293
-#: data/ui/style-editor/window.blp:305
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:295
+#: data/ui/style-editor/window.blp:307
 msgid "About Graphs"
 msgstr "Про «Графіки»"
 
@@ -1237,191 +1238,191 @@ msgstr "Додати колір"
 msgid "Style Name"
 msgstr "Назва стилю"
 
-#: data/ui/style-editor/editor-box.blp:14
+#: data/ui/style-editor/editor-box.blp:15
 msgid "Font"
 msgstr "Шрифт"
 
-#: data/ui/style-editor/editor-box.blp:26
+#: data/ui/style-editor/editor-box.blp:28
 msgid "Title Size"
 msgstr "Розмір заголовка"
 
-#: data/ui/style-editor/editor-box.blp:27
+#: data/ui/style-editor/editor-box.blp:29
 msgid "Title size in relation to text size"
 msgstr "Розмір заголовка відносно розміру тексту"
 
-#: data/ui/style-editor/editor-box.blp:42
+#: data/ui/style-editor/editor-box.blp:45
 msgid "Label Size"
 msgstr "Розмір мітки"
 
-#: data/ui/style-editor/editor-box.blp:43
+#: data/ui/style-editor/editor-box.blp:46
 msgid "Label size in relation to text size"
 msgstr "Розмір мітки відносно розміру тексту"
 
-#: data/ui/style-editor/editor-box.blp:59
+#: data/ui/style-editor/editor-box.blp:63
 msgid "Lines"
 msgstr "Лінії"
 
-#: data/ui/style-editor/editor-box.blp:77
+#: data/ui/style-editor/editor-box.blp:81
 msgid "Line width"
 msgstr "Товщина лінії"
 
-#: data/ui/style-editor/editor-box.blp:199
+#: data/ui/style-editor/editor-box.blp:209
 msgid "Axes"
 msgstr "Вісі"
 
-#: data/ui/style-editor/editor-box.blp:202
+#: data/ui/style-editor/editor-box.blp:212
 msgid "Axis Width"
 msgstr "Товщина вісі"
 
-#: data/ui/style-editor/editor-box.blp:216
+#: data/ui/style-editor/editor-box.blp:227
 msgid "Draw Frame"
 msgstr "Рамка креслення"
 
-#: data/ui/style-editor/editor-box.blp:221
+#: data/ui/style-editor/editor-box.blp:233
 msgid "Ticks"
 msgstr "Позначки"
 
-#: data/ui/style-editor/editor-box.blp:224
+#: data/ui/style-editor/editor-box.blp:236
 msgid "Tick Directions"
 msgstr "Напрямки поділок"
 
-#: data/ui/style-editor/editor-box.blp:228
+#: data/ui/style-editor/editor-box.blp:241
 msgid "Inwards"
 msgstr "Всередину"
 
-#: data/ui/style-editor/editor-box.blp:229
+#: data/ui/style-editor/editor-box.blp:242
 msgid "Outwards"
 msgstr "Назовні"
 
-#: data/ui/style-editor/editor-box.blp:235
+#: data/ui/style-editor/editor-box.blp:248
 msgid "Minor Ticks"
 msgstr "Допоміжні позначки"
 
-#: data/ui/style-editor/editor-box.blp:239
+#: data/ui/style-editor/editor-box.blp:253
 msgid "Major Tick Width"
 msgstr "Товщина основних поділок"
 
-#: data/ui/style-editor/editor-box.blp:254
+#: data/ui/style-editor/editor-box.blp:269
 msgid "Minor Tick Width"
 msgstr "Товщина додаткових поділок"
 
-#: data/ui/style-editor/editor-box.blp:270
+#: data/ui/style-editor/editor-box.blp:286
 msgid "Major Tick Length"
 msgstr "Довжина основних поділок"
 
-#: data/ui/style-editor/editor-box.blp:285
+#: data/ui/style-editor/editor-box.blp:302
 msgid "Minor Tick Length"
 msgstr "Довжина додаткових поділок"
 
-#: data/ui/style-editor/editor-box.blp:301
+#: data/ui/style-editor/editor-box.blp:319
 msgid "Show Tick Labels on all Axes"
 msgstr "Показувати мітки поділок на усіх вісях"
 
-#: data/ui/style-editor/editor-box.blp:305
+#: data/ui/style-editor/editor-box.blp:324
 msgid "Ticks on Bottom Axis"
 msgstr "Поділки на нижній вісі"
 
-#: data/ui/style-editor/editor-box.blp:309
+#: data/ui/style-editor/editor-box.blp:329
 msgid "Ticks on Left Axis"
 msgstr "Поділки на лівій вісі"
 
-#: data/ui/style-editor/editor-box.blp:313
+#: data/ui/style-editor/editor-box.blp:334
 msgid "Ticks on Right Axis"
 msgstr "Поділки на правій вісі"
 
-#: data/ui/style-editor/editor-box.blp:317
+#: data/ui/style-editor/editor-box.blp:339
 msgid "Ticks on Top Axis"
 msgstr "Поділки на верхній вісі"
 
-#: data/ui/style-editor/editor-box.blp:322
+#: data/ui/style-editor/editor-box.blp:345
 msgid "Grid"
 msgstr "Ґратка"
 
-#: data/ui/style-editor/editor-box.blp:325
+#: data/ui/style-editor/editor-box.blp:348
 msgid "Show Grid"
 msgstr "Показати ґратку"
 
-#: data/ui/style-editor/editor-box.blp:329
+#: data/ui/style-editor/editor-box.blp:353
 msgid "Grid Width"
 msgstr "Товщина ґратки"
 
-#: data/ui/style-editor/editor-box.blp:345
+#: data/ui/style-editor/editor-box.blp:370
 msgid "Grid Opacity"
 msgstr "Непрозорість ґратки"
 
-#: data/ui/style-editor/editor-box.blp:362
+#: data/ui/style-editor/editor-box.blp:388
 msgid "Padding"
 msgstr "Фаска"
 
-#: data/ui/style-editor/editor-box.blp:363
+#: data/ui/style-editor/editor-box.blp:389
 msgid "Padding for different parts of the figure"
 msgstr "Інтервал між різними частинами рисунка"
 
-#: data/ui/style-editor/editor-box.blp:366
+#: data/ui/style-editor/editor-box.blp:392
 msgid "Value Padding"
 msgstr "Інтервал значень"
 
-#: data/ui/style-editor/editor-box.blp:367
+#: data/ui/style-editor/editor-box.blp:393
 msgid "Padding between axes and values"
 msgstr "Інтервал між осями і значеннями"
 
-#: data/ui/style-editor/editor-box.blp:382
+#: data/ui/style-editor/editor-box.blp:409
 msgid "Label Padding"
 msgstr "Інтервал міток"
 
-#: data/ui/style-editor/editor-box.blp:383
+#: data/ui/style-editor/editor-box.blp:410
 msgid "Padding between axes and labels"
 msgstr "Інтервал між осями і мітками"
 
-#: data/ui/style-editor/editor-box.blp:398
+#: data/ui/style-editor/editor-box.blp:426
 msgid "Title Padding"
 msgstr "Інтервал заголовка"
 
-#: data/ui/style-editor/editor-box.blp:399
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Padding between axes and the title"
 msgstr "Інтервал між осями та заголовком"
 
-#: data/ui/style-editor/editor-box.blp:415
+#: data/ui/style-editor/editor-box.blp:444
 msgid "Colors"
 msgstr "Кольори"
 
-#: data/ui/style-editor/editor-box.blp:419
+#: data/ui/style-editor/editor-box.blp:448
 msgid "Label text might be hard to read"
 msgstr "Текст мітки може бути складним для читання"
 
-#: data/ui/style-editor/editor-box.blp:431
+#: data/ui/style-editor/editor-box.blp:460
 msgid "Poor Contrast"
 msgstr "Погана контрастність"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:476
 msgid "Text Color"
 msgstr "Колір тексту"
 
-#: data/ui/style-editor/editor-box.blp:458
+#: data/ui/style-editor/editor-box.blp:488
 msgid "Tick Color"
 msgstr "Колір поділок"
 
-#: data/ui/style-editor/editor-box.blp:469
+#: data/ui/style-editor/editor-box.blp:500
 msgid "Axis Color"
 msgstr "Колір осей"
 
-#: data/ui/style-editor/editor-box.blp:480
+#: data/ui/style-editor/editor-box.blp:512
 msgid "Grid Color"
 msgstr "Колір сітки"
 
-#: data/ui/style-editor/editor-box.blp:491
+#: data/ui/style-editor/editor-box.blp:524
 msgid "Background Color"
 msgstr "Колір тла"
 
-#: data/ui/style-editor/editor-box.blp:502
+#: data/ui/style-editor/editor-box.blp:536
 msgid "Outline Color"
 msgstr "Колір контуру"
 
-#: data/ui/style-editor/editor-box.blp:509
+#: data/ui/style-editor/editor-box.blp:544
 msgid "Line Colors"
 msgstr "Кольори ліній"
 
-#: data/ui/style-editor/editor-box.blp:513
+#: data/ui/style-editor/editor-box.blp:549
 msgid "Error Bar Colors"
 msgstr "Кольори позначок похибок"
 
@@ -1471,19 +1472,19 @@ msgid "Open Style"
 msgstr "Відкрити стиль"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:184
 msgid "Graphs Style Editor"
 msgstr "Редактор стилю графіка"
 
-#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
+#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:314
 msgid "Import File…"
 msgstr "Імпортувати файл…"
 
-#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:311
+#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:313
 msgid "Create Style…"
 msgstr "Створити стиль…"
 
-#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
+#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:315
 msgid "Open File…"
 msgstr "Відкрити файл…"
 
@@ -1491,24 +1492,24 @@ msgstr "Відкрити файл…"
 msgid "Open Preview"
 msgstr "Попередньо переглянути"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
+#: data/ui/style-editor/window.blp:272 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Не вдалося завантажити полотно"
 
-#: data/ui/style-editor/window.blp:280
+#: data/ui/style-editor/window.blp:282
 msgid "Open Style…"
 msgstr "Відкрити стиль…"
 
-#: data/ui/style-editor/window.blp:281
+#: data/ui/style-editor/window.blp:283
 msgid "Save Style…"
 msgstr "Зберегти стиль…"
 
-#: data/ui/style-editor/window.blp:282
+#: data/ui/style-editor/window.blp:284
 msgid "Save Style as…"
 msgstr "Зберегти стиль як…"
 
-#: data/ui/style-editor/window.blp:283
+#: data/ui/style-editor/window.blp:285
 msgid "Close Style…"
 msgstr "Закрити стиль…"
 
@@ -2027,12 +2028,12 @@ msgstr "Не вдалося обробити файл."
 msgid "Item %d"
 msgstr "Елемент %d"
 
-#: graphs/file_import/parsers/project/__init__.py:22
+#: graphs/file_import/parsers/project/__init__.py:21
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Проєкт"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
+#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "файл проєкту «Графіків»"
@@ -2072,21 +2073,21 @@ msgstr ""
 msgid "No data found in table column"
 msgstr "Не знайдено даних у стовпчику таблиці"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:26
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "XRDML PANalytical"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:70
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "No positions found for the scan axis"
 msgstr "Не знайдено позицій для вісі сканування"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:80
+#: graphs/file_import/parsers/xrdml/__init__.py:79
 msgid "Intensity (cps)"
 msgstr "Інтенсивність (cps)"
 
@@ -2109,15 +2110,15 @@ msgid "R (1/s)"
 msgstr "R (1/s)"
 
 #: graphs/file_import/parsers/xry/parser.vala:104
-#: graphs/file_import/__init__.py:89
+#: graphs/file_import/__init__.py:95
 msgid "Import failed"
 msgstr "Імпортування зазнало невдачі"
 
-#: graphs/file_import/__init__.py:57
+#: graphs/file_import/__init__.py:63
 msgid "parser failed to init settings."
 msgstr "обробнику не вдалося ініціалізувати параметри."
 
-#: graphs/file_import/__init__.py:72
+#: graphs/file_import/__init__.py:78
 msgid "parser failed to init settings widgets."
 msgstr "обробнику не вдалося ініціалізувати віджети параметрів."
 
@@ -2160,6 +2161,11 @@ msgstr "Заповнення"
 msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
+#: graphs/item/marker_item.vala:15
+#| msgid "Markers"
+msgid "Marker"
+msgstr "Позначка"
+
 #: graphs/item/text_item.vala:11
 msgid "Label"
 msgstr "Мітка"
@@ -2182,26 +2188,26 @@ msgstr "Оновлено типові значення"
 msgid "Color %d"
 msgstr "Колір %d"
 
-#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+#: graphs/style_editor/window.vala:56 graphs/style_editor/window.vala:57
 msgid "Example Item"
 msgstr "Приклад запису"
 
-#: graphs/style_editor/window.vala:225
+#: graphs/style_editor/window.vala:218
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Ви справді хочете вилучити %s?"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:303
+#: graphs/style_editor/window.vala:297
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Редактор стилю графіка – %s"
 
-#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
+#: graphs/style_editor/window.vala:321 graphs/style_io.py:247
 msgid "X Label"
 msgstr "Мітка X"
 
-#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
+#: graphs/style_editor/window.vala:322 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Мітка Y"
 
@@ -2283,27 +2289,27 @@ msgstr ""
 "Похибка довірчої смуги: \n"
 "Коваріаційна матриця нестабільна."
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:276
 msgid "Residuals"
 msgstr "Лишки"
 
-#: graphs/curve_fitting.vala:382
+#: graphs/curve_fitting.vala:376
 msgid "Parameters"
 msgstr "Параметри"
 
-#: graphs/curve_fitting.vala:398
+#: graphs/curve_fitting.vala:392
 msgid "Statistics"
 msgstr "Статистика"
 
-#: graphs/curve_fitting.vala:401
+#: graphs/curve_fitting.vala:395
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:401
+#: graphs/curve_fitting.vala:395
 msgid "RMSE"
 msgstr "КСКП"
 
-#: graphs/curve_fitting.vala:583
+#: graphs/curve_fitting.vala:578
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Параметри апроксимації для %s"
@@ -2312,14 +2318,14 @@ msgstr "Параметри апроксимації для %s"
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
-#: graphs/data.vala:503
+#: graphs/data.vala:507
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
 "Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/data.vala:934
+#: graphs/data.vala:938
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
@@ -2474,15 +2480,15 @@ msgstr "Не вдалося обробити {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "У файлі {file} не міститься теґу name"
 
-#: graphs/styles.vala:107
+#: graphs/styles.vala:160
 msgid "System"
 msgstr "Система"
 
-#: graphs/utilities.vala:248
+#: graphs/utilities.vala:247
 msgid "All Files"
 msgstr "усі файли"
 
-#: graphs/utilities.vala:290
+#: graphs/utilities.vala:289
 msgid "Document Portal"
 msgstr "Портал документів"
 
