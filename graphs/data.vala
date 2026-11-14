@@ -11,7 +11,6 @@ namespace Graphs {
         public bool can_view_back { get; private set; default = false; }
         public bool can_view_forward { get; private set; default = false; }
         public File file { get; set; }
-        public bool restoring { get; set; default = false; }
         [CCode (notify = false)]
         public bool unsaved { get; set; default = false; }
         public Gtk.SingleSelection style_selection_model { get; private set; }
@@ -41,6 +40,7 @@ namespace Graphs {
         private string[] _used_errbar_colors;
         private Settings _settings;
         private bool _notify_selection_changed = true;
+        private bool _restoring = false;
         private Limits[] _view_history_states = new Limits[HISTORY_SIZE];
         private int _current_view_history_state = 0;
         private int _oldest_view_history_state = 0;
@@ -411,7 +411,7 @@ namespace Graphs {
 
         private void _on_equation_change (Object object, ParamSpec spec) {
             var equation_item = (EquationItem) object;
-            if (!restoring) {
+            if (!_restoring) {
                 foreach (VariableItem item in _create_missing_variables (equation_item, {})) {
                     _add_item (item);
                     item_added.emit (item);
@@ -893,12 +893,16 @@ namespace Graphs {
         }
 
         public void undo () {
+            _restoring = true;
             PythonHelper.run_method (this, "_undo");
+            _restoring = false;
             add_view_history_state ();
         }
 
         public void redo () {
+            _restoring = true;
             PythonHelper.run_method (this, "_redo");
+            _restoring = false;
             add_view_history_state ();
         }
 
