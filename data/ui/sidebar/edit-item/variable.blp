@@ -31,11 +31,31 @@ template $GraphsEditItemVariableItemBox: Box {
       apply => $on_entry_apply();
     }
 
-    Adw.EntryRow step {
-      title: _("Step Size");
-      max-width-chars: 25;
-      notify::text => $on_entry_change();
-      apply => $on_entry_apply();
+    Adw.SpinRow steps {
+      title: _("Steps");
+      input => $on_steps_input();
+
+      adjustment: Adjustment {
+        step-increment: 1;
+        page-increment: 100;
+        lower: 1;
+        upper: 1000000;
+      };
+    }
+
+    Adw.ComboRow scale {
+      title: _("Step Spacing");
+
+      model: StringList {
+        strings [
+          C_("scale", "Linear"),
+          C_("scale", "Logarithmic (Base 10)"),
+          C_("scale", "Logarithmic (Base 2)"),
+          C_("scale", "Radians"),
+          C_("scale", "Square Root"),
+          C_("scale", "Inverse"),
+        ]
+      };
     }
   }
 }

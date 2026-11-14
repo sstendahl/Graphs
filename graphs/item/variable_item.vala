@@ -28,7 +28,8 @@ namespace Graphs {
 
         public double min { get; set; default = -10; }
         public double max { get; set; default = 10; }
-        public double step { get; set; default = 0; }
+        public int steps { get; set; default = 200; }
+        public Scale scale { get; set; default = Scale.LINEAR; }
 
         private uint _animation_source = 0;
         private int _animation_direction = 1;
@@ -46,28 +47,46 @@ namespace Graphs {
             this.value = value;
         }
 
-        public double get_effective_step () {
-            if (step > 0) return step;
-            double range = max - min;
-            if (!(range > 0) || !range.is_finite ()) return 1;
-            return Math.pow (10, Math.floor (Math.log10 (range / 100)));
+        /**
+         * Whether a value can be on the scale of the slider
+         */
+        public bool supports_scale (double val) {
+            switch (scale) {
+                case Scale.LOG:
+                case Scale.LOG2:
+                case Scale.INVERSE:
+                    return val > 0;
+                case Scale.SQUAREROOT:
+                    return val >= 0;
+                default:
+                    return true;
+            }
+        }
+
+        public bool has_range () {
+            return min < max && supports_scale (min);
         }
 
         /**
-         * Get the value closest to the given one the slider can take.
+         * Get the position of the slider the value is closest to in steps
          */
-        public double snap (double val) {
-            double step = get_effective_step ();
-            val = min + Math.round ((val - min) / step) * step;
+        public int get_position () {
+            if (!has_range ()) return 0;
+            double fraction = get_fraction_at_value (value, min, max, scale);
+            if (scale == Scale.INVERSE) fraction = 1 - fraction;
+            return (int) Math.round (fraction.clamp (0, 1) * steps);
+        }
+
+        public double get_value_at (int position) {
+            if (!has_range ()) return value;
+            double fraction = (double) position / steps;
+            if (scale == Scale.INVERSE) fraction = 1 - fraction;
+            double val = get_value_at_fraction (fraction, min, max, scale);
             return double.parse ("%.12g".printf (val)).clamp (min, max);
         }
 
         public void fit_value () {
-            if (step > 0) {
-                value = snap (value);
-            } else {
-                value = value.clamp (min, max);
-            }
+            value = value.clamp (min, max);
         }
 
         public bool is_animating () {
@@ -75,9 +94,9 @@ namespace Graphs {
         }
 
         public void start_animation () {
-            if (is_animating () || min == max) return;
+            if (is_animating () || !has_range ()) return;
             _animation_time = get_monotonic_time ();
-            _animation_position = value;
+            _animation_position = (double) get_position () / steps;
             _animation_direction = 1;
             _animation_source = Timeout.add (1000 / ANIMATION_FPS, on_animation_tick);
             animation_changed.emit ();
@@ -95,16 +114,15 @@ namespace Graphs {
             double elapsed = (now - _animation_time) / 1000d;
             _animation_time = now;
 
-            double distance = (max - min) * elapsed / ANIMATION_DURATION;
-            _animation_position += _animation_direction * distance;
-            if (_animation_position >= max) {
-                _animation_position = max;
+            _animation_position += _animation_direction * elapsed / ANIMATION_DURATION;
+            if (_animation_position >= 1) {
+                _animation_position = 1;
                 _animation_direction = -1;
-            } else if (_animation_position <= min) {
-                _animation_position = min;
+            } else if (_animation_position <= 0) {
+                _animation_position = 0;
                 _animation_direction = 1;
             }
-            value = snap (_animation_position);
+            value = get_value_at ((int) Math.round (_animation_position * steps));
             return Source.CONTINUE;
         }
     }

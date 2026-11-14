@@ -29,7 +29,8 @@ namespace Graphs {
             item.notify["value"].connect (update);
             item.notify["min"].connect (update);
             item.notify["max"].connect (update);
-            item.notify["step"].connect (update);
+            item.notify["steps"].connect (update);
+            item.notify["scale"].connect (update);
             item.animation_changed.connect (update_animation);
             update ();
             update_animation ();
@@ -39,10 +40,9 @@ namespace Graphs {
             updating = true;
             set_title (format_title (item));
 
-            double step = item.get_effective_step ();
-            scale.adjustment.configure (item.value, item.min, item.max, step, step * 10, 0);
-            scale.set_sensitive (item.min < item.max);
-            play_button.set_sensitive (item.min < item.max);
+            scale.adjustment.configure (item.get_position (), 0, item.steps, 1, 10, 0);
+            scale.set_sensitive (item.has_range ());
+            play_button.set_sensitive (item.has_range ());
             updating = false;
         }
 
@@ -65,7 +65,7 @@ namespace Graphs {
         [GtkCallback]
         private void on_scale_changed () {
             if (updating) return;
-            item.value = item.snap (scale.get_value ());
+            item.value = item.get_value_at ((int) Math.round (scale.get_value ()));
             queue_history_state ();
         }
 
