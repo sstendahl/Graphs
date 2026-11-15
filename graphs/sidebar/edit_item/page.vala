@@ -11,6 +11,11 @@ namespace Graphs {
                 edit_item_box.remove (widget);
             }
 
+            if (item is VariableItem) {
+                edit_item_box.append (new EditItemVariableItemBox ((VariableItem) item));
+                return;
+            }
+
             edit_item_box.append (new EditItemBaseBox (item));
 
             if (item is GeneratedDataItem) {

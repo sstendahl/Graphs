@@ -16,9 +16,16 @@ namespace Graphs {
             } catch (MathError e) { assert_not_reached (); }
         }
 
+        private bool validate () {
+            if (item is EquationItem) {
+                return MathTools.validate_parametric_equation (equation.get_text ());
+            }
+            return MathTools.validate_equation (equation.get_text ());
+        }
+
         [GtkCallback]
         private void on_equation_change () {
-            if (MathTools.validate_equation (equation.get_text ())) {
+            if (validate ()) {
                 equation.remove_css_class ("error");
                 equation.set_show_apply_button (true);
             } else {

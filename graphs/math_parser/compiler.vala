@@ -7,6 +7,8 @@ namespace Graphs.MathParser {
         private double[] data;
         private int n_data;
         private unowned string variable_name;
+        private bool allow_parameters;
+        private HashTable<string, Array<int>> parameters;
 
         private static Once<Compiler> _instance;
         private static Mutex _mutex;
@@ -15,9 +17,10 @@ namespace Graphs.MathParser {
             return _instance.once (() => { return new Compiler (); });
         }
 
-        public Program compile (Ast expr, string variable) throws MathError {
+        public Program compile (Ast expr, string variable, bool allow_parameters = false) throws MathError {
             _mutex.lock ();
             try {
+                this.allow_parameters = allow_parameters;
                 return compile_locked (expr, variable);
             } finally {
                 _mutex.unlock ();
@@ -25,6 +28,7 @@ namespace Graphs.MathParser {
         }
 
         private Program compile_locked (Ast expr, string variable) throws MathError {
+            this.parameters = new HashTable<string, Array<int>> (str_hash, str_equal);
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
@@ -38,7 +42,7 @@ namespace Graphs.MathParser {
             /* At this point program may have more memory allocated than we
              * actually use. Since we only ever use this in the array
              * evaluator we do not need to shrink here */
-            return new Program ((owned) this.program, (owned) this.data, n_ops);
+            return new Program ((owned) this.program, (owned) this.data, n_ops, (owned) this.parameters);
         }
 
         private void add_instruction (OpCode op) {
@@ -72,6 +76,18 @@ namespace Graphs.MathParser {
 
         private bool variable (Expression expr) {
             if (expr.name () != variable_name) {
+                if (allow_parameters) {
+                    unowned Array<int>? slots = parameters.lookup (expr.name ());
+                    if (slots == null) {
+                        var new_slots = new Array<int> ();
+                        slots = new_slots;
+                        parameters.insert (expr.name (), (owned) new_slots);
+                    }
+                    slots.append_val (n_data);
+                    add_constant (1d);
+                    return true;
+                }
+
                 // We can safely override the variable_name here as we no longer
                 // need to check it as is this the error path.
                 this.variable_name = expr.name ();

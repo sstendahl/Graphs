@@ -105,6 +105,22 @@ FUNCTION_MAPPING = {
     Graphs.Ident.ABS: sympy.Abs,
 }
 
+_SUPPORTED_FUNCTIONS = tuple(
+    function for function in FUNCTION_MAPPING.values()
+    if isinstance(function, type)
+) + (_Factorial,)
+_SPECIAL_VALUES = (sympy.zoo, sympy.nan, sympy.I, sympy.oo, -sympy.oo)
+
+
+def is_supported(expression: sympy.Expr) -> bool:
+    """Check if an expression is real and only uses functions we know."""
+    if expression.has(*_SPECIAL_VALUES):
+        return False
+    return all(
+        isinstance(function, _SUPPORTED_FUNCTIONS)
+        for function in expression.atoms(Function)
+    )
+
 
 def _sympify(expr):
     """Sympify an Expression."""
@@ -185,3 +201,12 @@ def _sympify(expr):
 def sympify(expression: Graphs.Ast):
     """Sympify an Expression."""
     return _sympify(expression.root())
+
+
+def sympify_item(item: Graphs.EquationItem):
+    """Sympify the equation of an item, with the values of its variables."""
+    values = {
+        sympy.Symbol(name): item.get_variable_value(name)
+        for name in item.get_variables()
+    }
+    return sympify(item.get_equation()).subs(values)
