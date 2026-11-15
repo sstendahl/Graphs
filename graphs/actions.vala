@@ -172,7 +172,7 @@ namespace Graphs {
                 Item[] items = {};
                 var name_builder = new StringBuilder ();
                 foreach (Item item in data) {
-                    if (item.selected) {
+                    if (item.selected && !(item is VariableItem)) {
                         items += item;
                         name_builder.append (item.name);
                         name_builder.append (", ");

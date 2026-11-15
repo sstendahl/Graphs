@@ -41,10 +41,10 @@ namespace Graphs {
      * Convert an AST to an executable array program.
      */
     public static Program ast_to_program (
-        Ast expression, string variable = "x"
+        Ast expression, string variable = "x", bool allow_parameters = false
     ) throws MathError {
         Ast expr = PythonHelper.simplify_expression (expression);
-        return MathParser.Compiler.instance ().compile (expr, variable);
+        return MathParser.Compiler.instance ().compile (expr, variable, allow_parameters);
     }
 
     namespace MathParser {

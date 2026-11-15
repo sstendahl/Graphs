@@ -54,6 +54,17 @@ class ItemFactory():
             case "TextItem":
                 dictionary.pop("type")
                 return Graphs.TextItem(**dictionary)
+            case "VariableItem":
+                dictionary.pop("type")
+                # The range follows the value, so it has to be set last
+                limits = {
+                    prop: dictionary.pop(prop, None) for prop in ("min", "max")
+                }
+                item = Graphs.VariableItem(**dictionary)
+                for prop, limit in limits.items():
+                    if limit is not None:
+                        item.set_property(prop, limit)
+                return item
             case "FillItem":
                 dictionary.pop("type")
                 dictionary.pop("upper_source", None)

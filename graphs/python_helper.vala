@@ -28,9 +28,9 @@ namespace Graphs {
             instance.export_figure_request.emit (file, settings, data);
         }
 
-        public signal bool has_singularities_request (Ast equation, double xstart, double xstop);
-        public static bool has_singularities (Ast equation, double xstart, double xstop) {
-            return instance.has_singularities_request.emit (equation, xstart, xstop);
+        public signal bool has_singularities_request (EquationItem item, double xstart, double xstop);
+        public static bool has_singularities (EquationItem item, double xstart, double xstop) {
+            return instance.has_singularities_request.emit (item, xstart, xstop);
         }
 
         protected signal void perform_operation_request (Window window, string name);
@@ -44,10 +44,10 @@ namespace Graphs {
         }
 
         protected signal string simplify_expression_request (Ast input);
-        public static Ast simplify_expression (Ast input) {
-            try {
-                return expression_to_ast (instance.simplify_expression_request.emit (input));
-            } catch (MathError e) { assert_not_reached (); }
+        public static Ast simplify_expression (Ast input) throws MathError {
+            string? simplified = instance.simplify_expression_request.emit (input);
+            if (simplified == null) throw new MathError.DOMAIN ("unsupported expression");
+            return expression_to_ast (simplified);
         }
     }
 

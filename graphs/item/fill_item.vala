@@ -227,7 +227,7 @@ namespace Graphs {
             if (item is DataItem) {
                 return item.notify["data"].connect (recompute);
             } else if (item is EquationItem) {
-                return item.notify["equation"].connect (recompute);
+                return ((EquationItem) item).values_changed.connect (() => recompute ());
             }
             return 0;
         }

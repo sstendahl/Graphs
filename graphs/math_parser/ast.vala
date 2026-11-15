@@ -216,11 +216,25 @@ namespace Graphs {
         private OpCode[] _program;
         private double[] _data;
         private int _plen;
+        private HashTable<string, Array<int>> _parameters;
 
-        public Program (owned OpCode[] program, owned double[] data, int plen) {
+        public Program (
+            owned OpCode[] program, owned double[] data, int plen,
+            owned HashTable<string, Array<int>> parameters
+        ) {
             this._program = (owned) program;
             this._data = (owned) data;
             this._plen = plen;
+            this._parameters = (owned) parameters;
+        }
+
+        public void set_parameter (string name, double val) {
+            unowned Array<int>? slots = _parameters.lookup (name);
+            if (slots == null) return;
+
+            for (uint i = 0; i < slots.length; i++) {
+                _data[slots.index (i)] = val;
+            }
         }
 
         public double[] eval (double[] input) {

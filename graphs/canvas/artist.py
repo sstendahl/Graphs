@@ -4,6 +4,7 @@ Wrapper classes for mpl artists.
 
 Provides GObject based wrappers for mpl artists.
 """
+import time
 from itertools import islice
 
 from gi.repository import GObject, Graphs
@@ -573,15 +574,16 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     legend = GObject.Property(type=bool, default=True)
     _singularities_cache = {}
+    _singularities_time = 0
+    _SINGULARITIES_BUDGET = 0.015
 
     def __init__(self, axis: pyplot.axis, item: Graphs.Item):
         super().__init__()
 
-        equation = item.get_equation()
-        self._expr = ast.sympify(equation)
-        self._program = item.get_program()
+        self._expr = ast.sympify_item(item)
         self._axis = axis
         self._view_change_timeout_id = None
+        self._variable_timeout_id = None
         self._view_handler = \
             axis.callbacks.connect("xlim_changed", self._on_view_change)
         self._artist = axis.plot(
@@ -603,6 +605,8 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         self._equation_handler = \
             item.connect("notify::equation", self._on_equation_change)
+        self._variable_handler = \
+            item.connect("variable-changed", self._on_variable_change)
         self._item = item
 
         self._set_properties(None, None)
@@ -613,8 +617,12 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         if self._view_change_timeout_id is not None:
             GObject.source_remove(self._view_change_timeout_id)
             self._view_change_timeout_id = None
+        if self._variable_timeout_id is not None:
+            GObject.source_remove(self._variable_timeout_id)
+            self._variable_timeout_id = None
         self._axis.callbacks.disconnect(self._view_handler)
         self._item.disconnect(self._equation_handler)
+        self._item.disconnect(self._variable_handler)
 
     def _timeout_callback(self) -> bool:
         self._view_change_timeout_id = None
@@ -630,11 +638,36 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
     # We cannot have a Property of type Graphs.Ast
     def _on_equation_change(self, item, _pspec) -> None:
-        equation = item.get_equation()
         self._singularities_cache = False
-        self._expr = ast.sympify(equation)
-        self._program = item.get_program()
+        self._expr = ast.sympify_item(item)
         self._generate_data()
+
+    def _on_variable_change(self, _item) -> None:
+        """
+        Follow a variable of the equation.
+
+        Finding the singularities is too expensive for some equations, so
+        finding singularities is timed and skipped during variable change
+        when it takes too long to avoid poor performance.
+        """
+        self._axis.figure.hold_legend()
+        if self._singularities_time <= self._SINGULARITIES_BUDGET:
+            if self._variable_timeout_id is not None:
+                GObject.source_remove(self._variable_timeout_id)
+            self._variable_timeout_callback()
+            return
+        self._generate_data(exact=False)
+        if self._variable_timeout_id is not None:
+            GObject.source_remove(self._variable_timeout_id)
+        self._variable_timeout_id = \
+            GObject.timeout_add(150, self._variable_timeout_callback)
+
+    def _variable_timeout_callback(self) -> bool:
+        self._variable_timeout_id = None
+        self._singularities_cache = False
+        self._expr = ast.sympify_item(self._item)
+        self._generate_data()
+        return False
 
     @GObject.Property(type=int, default=Graphs.EquationLinestyle.SOLID)
     def linestyle(self) -> Graphs.EquationLinestyle:
@@ -654,7 +687,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             linewidth *= 0.35
         self._artist.set_linewidth(linewidth)
 
-    def _generate_data(self):
+    def _generate_data(self, exact: bool = True):
         """Generate new data for the artist."""
         x_start, x_stop = self._axis.get_xlim()
         scale = Graphs.scale_from_string(self._axis.get_xscale())
@@ -663,16 +696,17 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
         upper = Graphs.get_value_at_fraction(2, x_start, x_stop, scale)
 
         holder = Graphs.math_tools_program_to_data(
-            self._program,
+            self._item.get_program(),
             lower,
             upper,
             5000,
             scale,
         )
         data = utilities.get_xydata(holder)
-        singularities = self._find_singularities(lower, upper)
-        if singularities:
-            data = self._insert_singularity_points(data, singularities)
+        if exact:
+            singularities = self._find_singularities(lower, upper)
+            if singularities:
+                data = self._insert_singularity_points(data, singularities)
 
         self._artist.set_data(*data)
         if self._axis.figure.parent is not None:
@@ -694,7 +728,9 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
             x_min, x_max = lower, upper
 
         domain = sympy.Interval(x_min, x_max)
+        start = time.perf_counter()
         all_singularities = find_singularities(self._expr, misc.X, domain)
+        self._singularities_time = time.perf_counter() - start
 
         self._singularities_cache = {
             "limits": (x_min, x_max),

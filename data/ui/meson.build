@@ -25,6 +25,7 @@ blueprint_files = [
   'sidebar/edit-item/fill.blp',
   'sidebar/edit-item/generated-data.blp',
   'sidebar/edit-item/page.blp',
+  'sidebar/edit-item/variable.blp',
   'sidebar/figure-settings/axis-group.blp',
   'sidebar/figure-settings/settings-page.blp',
   'sidebar/figure-settings/style-page.blp',
@@ -48,6 +49,7 @@ blueprint_files = [
   'smoothen-settings.blp',
   'style-preview.blp',
   'transform.blp',
+  'variable-box.blp',
   'window.blp',
   'window-shortcuts.blp',
 ]
