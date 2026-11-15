@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-11-13 11:53+0000\n"
-"PO-Revision-Date: 2026-11-13 15:51+0100\n"
+"POT-Creation-Date: 2026-11-15 18:32+0000\n"
+"PO-Revision-Date: 2026-11-15 20:46+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -255,7 +255,7 @@ msgid "Import only Y values, X values will be generated"
 msgstr "Uvozite samo vrednosti Y, ustvarjene bodo vrednosti X"
 
 #: data/ui/import/columns/item-group.blp:57 data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item/equation_item.vala:43
+#: graphs/item/equation_item.vala:55
 msgid "Equation"
 msgstr "Enačba"
 
@@ -678,7 +678,7 @@ msgstr "Nariši manj podatkovnih točk za hitrejše delovanje"
 msgid "Line"
 msgstr "Črta"
 
-#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48 data/ui/curve-fitting.blp:90
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:52 data/ui/curve-fitting.blp:90
 #: data/ui/generate-data.blp:52 data/ui/transform.blp:71
 msgid "Y ="
 msgstr "Y ="
@@ -727,7 +727,7 @@ msgstr "X-začetek"
 msgid "X Stop"
 msgstr "X-konec"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/generate-data.blp:88
+#: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/sidebar/edit-item/variable.blp:35 data/ui/generate-data.blp:88
 msgid "Steps"
 msgstr "Koraki"
 
@@ -739,32 +739,32 @@ msgstr "Prilagodi velikost"
 msgid "How points are spaced"
 msgstr "Kako so točke razmaknjene"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/generated-data.blp:53 data/ui/sidebar/edit-item/variable.blp:51 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "linearna"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/generated-data.blp:54 data/ui/sidebar/edit-item/variable.blp:52 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "logaritemska (osnova 10)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/generated-data.blp:55 data/ui/sidebar/edit-item/variable.blp:53 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "logaritemska (osnova 2)"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/generated-data.blp:56 data/ui/sidebar/edit-item/variable.blp:54 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "radianska"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/generate-data.blp:109
+#: data/ui/sidebar/edit-item/generated-data.blp:57 data/ui/sidebar/edit-item/variable.blp:55 data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "kvadratni koren"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/generate-data.blp:110
+#: data/ui/sidebar/edit-item/generated-data.blp:58 data/ui/sidebar/edit-item/variable.blp:56 data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "preobrnjena"
@@ -772,6 +772,26 @@ msgstr "preobrnjena"
 #: data/ui/sidebar/edit-item/page.blp:5
 msgid "Edit Item"
 msgstr "Uredi element"
+
+#: data/ui/sidebar/edit-item/variable.blp:10
+msgid "Value"
+msgstr "Vrednost"
+
+#: data/ui/sidebar/edit-item/variable.blp:18
+msgid "Slider"
+msgstr "Drsnik"
+
+#: data/ui/sidebar/edit-item/variable.blp:21 data/ui/fitting-parameters.blp:45
+msgid "Minimum"
+msgstr "Najmanj"
+
+#: data/ui/sidebar/edit-item/variable.blp:28 data/ui/fitting-parameters.blp:59
+msgid "Maximum"
+msgstr "Največ"
+
+#: data/ui/sidebar/edit-item/variable.blp:47
+msgid "Step Spacing"
+msgstr "Razmik koraka"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5 data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
@@ -1390,13 +1410,17 @@ msgstr "Zapri slog ..."
 msgid "Add Equation"
 msgstr "Dodaj enačbo"
 
-#: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
+#: data/ui/add-equation.blp:48 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Vnesite matematični izraz"
 
-#: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
+#: data/ui/add-equation.blp:63 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Ime (neobvezno)"
+
+#: data/ui/add-equation.blp:69
+msgid "Variables"
+msgstr "Spremenljivke"
 
 #: data/ui/color-button.blp:4 data/ui/color-row.blp:5
 msgid "Change Color"
@@ -1586,14 +1610,6 @@ msgstr "Uporabi enako velikost kot aplikacija"
 msgid "Initial Guess"
 msgstr "Začetno ugibanje"
 
-#: data/ui/fitting-parameters.blp:45
-msgid "Minimum"
-msgstr "Najmanj"
-
-#: data/ui/fitting-parameters.blp:59
-msgid "Maximum"
-msgstr "Največ"
-
 #: data/ui/generate-data.blp:6
 msgid "Generate Data"
 msgstr "Tvori podatke"
@@ -1694,6 +1710,14 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Zavrzi neizbrane podatke"
 
+#: data/ui/variable-box.blp:13
+msgid "Change Value"
+msgstr "Spremeni vrednost"
+
+#: data/ui/variable-box.blp:22 graphs/variable_box.vala:56
+msgid "Animate"
+msgstr "Animiraj"
+
 #: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "Spustite tukaj za uvoz"
@@ -1702,7 +1726,7 @@ msgstr "Spustite tukaj za uvoz"
 msgid "Show Sidebar"
 msgstr "Pokaži stransko vrstico"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:541
 msgid "Undo"
 msgstr "Razveljavi"
 
@@ -2033,6 +2057,16 @@ msgstr "Označevalnik"
 msgid "Label"
 msgstr "Oznaka"
 
+#: graphs/item/variable_item.vala:42
+msgid "Variable"
+msgstr "Spremenljivka"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/sidebar/edit_item/variable_box.vala:23
+#, c-format
+msgid "Variable %s"
+msgstr "Spremenljivka %s"
+
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:87
 msgid "X Axis"
@@ -2087,6 +2121,16 @@ msgstr "Martin Srebotnjak <miles@filmsi.net>"
 #, c-format
 msgid "Deleted %s"
 msgstr "Izbrisano %s"
+
+#: graphs/add_equation.vala:97
+msgid "Shared with other equations"
+msgstr "Souporaba z drugimi enačbami"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/add_equation.vala:108
+#, c-format
+msgid "%s ="
+msgstr "%s ="
 
 #: graphs/application.vala:14
 msgid "New window"
@@ -2181,12 +2225,12 @@ msgstr "Parametri prileganja za %s"
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
-#: graphs/data.vala:507
+#: graphs/data.vala:629
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "Ni bilo mogoče razčleniti sloga %s; povrnitev na privzeti sistemski slog"
 
-#: graphs/data.vala:938
+#: graphs/data.vala:1064
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "Ni bilo mogoče najti sloga %s; povrnitev na privzeti sistemski slog"
@@ -2204,11 +2248,11 @@ msgstr "Izvožena slika"
 msgid "No data to export"
 msgstr "Ni podatkov za izvoz"
 
-#: graphs/export_items.vala:25 graphs/export_items.vala:41
+#: graphs/export_items.vala:31 graphs/export_items.vala:47
 msgid "Exported Data"
 msgstr "Izvoženi podatki"
 
-#: graphs/export_items.vala:34
+#: graphs/export_items.vala:40
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Besedilne datoteke"
@@ -2218,45 +2262,45 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Datoteka sloga Matplotlib"
 
-#: graphs/operations.py:210
+#: graphs/operations.py:217
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr "Pretvorbe ni mogoče izvesti, preverite, ali je skladnja pravilna"
 
-#: graphs/operations.py:274
+#: graphs/operations.py:286
 msgid "No data found in highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:278
+#: graphs/operations.py:290
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Nekateri elementi so brez stolpcev napake; ti bodo opuščeni"
 
-#: graphs/operations.py:290
+#: graphs/operations.py:302
 msgid "Combined Data"
 msgstr "Združeni podatki"
 
-#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
+#: graphs/operations.py:324 graphs/operations.py:631 graphs/operations.py:635
 msgid "No data found within the highlighted area"
 msgstr "Znotraj poudarjenega območja ni najdenih podatkov"
 
-#: graphs/operations.py:378
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "Operacija na {name} ni rezultirala v enačbi, ki jo je možno izrisati"
 
-#: graphs/operations.py:384
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "Operacija ni podprta za enačbe."
 
-#: graphs/operations.py:575
+#: graphs/operations.py:644
 msgid "Operation not supported for data items"
 msgstr "Operacija ni podprta za podatkovne elemente"
 
-#: graphs/operations.py:578
+#: graphs/operations.py:647
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Napaka pri izvajanju operacije"
 
-#: graphs/operations.py:585
+#: graphs/operations.py:654
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
@@ -2344,31 +2388,41 @@ msgstr "Vse datoteke"
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
-#: graphs/window.vala:165
+#: graphs/variable_box.vala:56
+msgid "Stop Animation"
+msgstr "Ustavi animacijo"
+
+#. Translators: The name of a variable followed by its value
+#: graphs/variable_box.vala:62
+#, c-format
+msgid "%s = %s"
+msgstr "%s = %s"
+
+#: graphs/window.vala:170
 msgid "Graphs (Development)"
 msgstr "Grafikoni (razvojni)"
 
-#: graphs/window.vala:192
+#: graphs/window.vala:197
 msgid "Untitled Project"
 msgstr "Neimenovan projekt"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:198
 msgid "Draft"
 msgstr "Osnutek"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:199
+#: graphs/window.vala:204
 #, c-format
 msgid "Graphs — %s"
 msgstr "Grafi — %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:473
+#: graphs/window.vala:503
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s je izrisan z manj podrobnostmi, s/z %d točkami"
 
-#: graphs/window.vala:479
+#: graphs/window.vala:509
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
@@ -2377,6 +2431,6 @@ msgstr[1] "%d element je izrisan z manj podrobnostmi, s/z %d točkami"
 msgstr[2] "%d elementa sta izrisana z manj podrobnostmi, s/z %d točkami"
 msgstr[3] "%d elementi so izrisani z manj podrobnostmi, s/z %d točkami"
 
-#: graphs/window.vala:501
+#: graphs/window.vala:531
 msgid "Open Location"
 msgstr "Odpri mesto"
