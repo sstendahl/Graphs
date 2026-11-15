@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-11-13 11:53+0000\n"
-"PO-Revision-Date: 2026-11-14 22:09+0200\n"
+"POT-Creation-Date: 2026-11-15 18:32+0000\n"
+"PO-Revision-Date: 2026-11-15 20:37+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -308,7 +308,7 @@ msgstr "Імпортувати лише значення Y, значення X �
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item/equation_item.vala:43
+#: graphs/item/equation_item.vala:55
 msgid "Equation"
 msgstr "Рівняння"
 
@@ -779,7 +779,7 @@ msgstr "Малювати менше точок даних для удоскон�
 msgid "Line"
 msgstr "Лінія"
 
-#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:52
 #: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
 #: data/ui/transform.blp:71
 msgid "Y ="
@@ -834,7 +834,8 @@ msgstr "Початок за x"
 msgid "X Stop"
 msgstr "Кінець за x"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/generate-data.blp:88
+#: data/ui/sidebar/edit-item/generated-data.blp:36
+#: data/ui/sidebar/edit-item/variable.blp:35 data/ui/generate-data.blp:88
 msgid "Steps"
 msgstr "Кроки"
 
@@ -849,37 +850,37 @@ msgid "How points are spaced"
 msgstr "Як буде встановлено інтервал між точками"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
-#: data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/variable.blp:51 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Лінійна"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:54
-#: data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/variable.blp:52 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Логарифмічна (з основою 10)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:55
-#: data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/variable.blp:53 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Логарифмічна (з основою 2)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:56
-#: data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/variable.blp:54 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Радіани"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:57
-#: data/ui/generate-data.blp:109
+#: data/ui/sidebar/edit-item/variable.blp:55 data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Квадратний корінь"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:58
-#: data/ui/generate-data.blp:110
+#: data/ui/sidebar/edit-item/variable.blp:56 data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Обернена"
@@ -887,6 +888,27 @@ msgstr "Обернена"
 #: data/ui/sidebar/edit-item/page.blp:5
 msgid "Edit Item"
 msgstr "Змінити запис"
+
+#: data/ui/sidebar/edit-item/variable.blp:10
+msgid "Value"
+msgstr "Значення"
+
+#: data/ui/sidebar/edit-item/variable.blp:18
+msgid "Slider"
+msgstr "Повзунок"
+
+#: data/ui/sidebar/edit-item/variable.blp:21 data/ui/fitting-parameters.blp:45
+msgid "Minimum"
+msgstr "Мінімум"
+
+#: data/ui/sidebar/edit-item/variable.blp:28 data/ui/fitting-parameters.blp:59
+msgid "Maximum"
+msgstr "Максимум"
+
+#: data/ui/sidebar/edit-item/variable.blp:47
+#| msgid "Step Size"
+msgid "Step Spacing"
+msgstr "Інтервал кроку"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
@@ -1517,13 +1539,17 @@ msgstr "Закрити стиль…"
 msgid "Add Equation"
 msgstr "Додати рівняння"
 
-#: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
+#: data/ui/add-equation.blp:48 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Введіть математичний вираз"
 
-#: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
+#: data/ui/add-equation.blp:63 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Назва (необов’язково):"
+
+#: data/ui/add-equation.blp:69
+msgid "Variables"
+msgstr "Змінні"
 
 #: data/ui/color-button.blp:4 data/ui/color-row.blp:5
 msgid "Change Color"
@@ -1713,14 +1739,6 @@ msgstr "Розмір, як у програмі"
 msgid "Initial Guess"
 msgstr "Початкове значення"
 
-#: data/ui/fitting-parameters.blp:45
-msgid "Minimum"
-msgstr "Мінімум"
-
-#: data/ui/fitting-parameters.blp:59
-msgid "Maximum"
-msgstr "Максимум"
-
 #: data/ui/generate-data.blp:6
 msgid "Generate Data"
 msgstr "Створення даних"
@@ -1822,6 +1840,15 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Відкинути непозначені дані"
 
+#: data/ui/variable-box.blp:13
+#| msgid "Change Color"
+msgid "Change Value"
+msgstr "Змінити значення"
+
+#: data/ui/variable-box.blp:22 graphs/variable_box.vala:56
+msgid "Animate"
+msgstr "Анімація"
+
 #: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "Скиньте сюди для імпортування"
@@ -1830,7 +1857,7 @@ msgstr "Скиньте сюди для імпортування"
 msgid "Show Sidebar"
 msgstr "Показати бічну панель"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:541
 msgid "Undo"
 msgstr "Скасувати"
 
@@ -2162,13 +2189,22 @@ msgid "Generated Dataset"
 msgstr "Створений набір даних"
 
 #: graphs/item/marker_item.vala:15
-#| msgid "Markers"
 msgid "Marker"
 msgstr "Позначка"
 
 #: graphs/item/text_item.vala:11
 msgid "Label"
 msgstr "Мітка"
+
+#: graphs/item/variable_item.vala:42
+msgid "Variable"
+msgstr "Змінна"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/sidebar/edit_item/variable_box.vala:23
+#, c-format
+msgid "Variable %s"
+msgstr "Змінна %s"
 
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:87
@@ -2224,6 +2260,16 @@ msgstr "Юрій Чорноіван <yurchor@ukr.net>, 2024"
 #, c-format
 msgid "Deleted %s"
 msgstr "Вилучено %s"
+
+#: graphs/add_equation.vala:97
+msgid "Shared with other equations"
+msgstr "Спільне із іншими рівняннями"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/add_equation.vala:108
+#, c-format
+msgid "%s ="
+msgstr "%s ="
 
 #: graphs/application.vala:14
 msgid "New window"
@@ -2318,14 +2364,14 @@ msgstr "Параметри апроксимації для %s"
 msgid "Failed to load project"
 msgstr "Не вдалося завантажити проєкт"
 
-#: graphs/data.vala:507
+#: graphs/data.vala:629
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
 "Не вдалося обробити стиль %s — повертаємося до типового загальносистемного "
 "стилю"
 
-#: graphs/data.vala:938
+#: graphs/data.vala:1064
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
@@ -2345,11 +2391,11 @@ msgstr "Експортований рисунок"
 msgid "No data to export"
 msgstr "Немає даних для експортування"
 
-#: graphs/export_items.vala:25 graphs/export_items.vala:41
+#: graphs/export_items.vala:31 graphs/export_items.vala:47
 msgid "Exported Data"
 msgstr "Експортовані дані"
 
-#: graphs/export_items.vala:34
+#: graphs/export_items.vala:40
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "текстові файли"
@@ -2359,48 +2405,48 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "файл стилю Matplotlib"
 
-#: graphs/operations.py:210
+#: graphs/operations.py:217
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Не вдалося виконати перетворення. Переконайтеся, що правильно вказано "
 "синтаксичну конструкцію"
 
-#: graphs/operations.py:274
+#: graphs/operations.py:286
 msgid "No data found in highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:278
+#: graphs/operations.py:290
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Для деяких записів немає позначок похибок; ці записи буде відкинуто"
 
-#: graphs/operations.py:290
+#: graphs/operations.py:302
 msgid "Combined Data"
 msgstr "Поєднані дані"
 
-#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
+#: graphs/operations.py:324 graphs/operations.py:631 graphs/operations.py:635
 msgid "No data found within the highlighted area"
 msgstr "У підсвіченій області даних не знайдено"
 
-#: graphs/operations.py:378
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr ""
 "Дія над {name} не призвела до створення придатного до побудови рівняння"
 
-#: graphs/operations.py:384
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "Підтримки дії у рівняннях не передбачено."
 
-#: graphs/operations.py:575
+#: graphs/operations.py:644
 msgid "Operation not supported for data items"
 msgstr "Підтримки дії над записами даних не передбачено"
 
-#: graphs/operations.py:578
+#: graphs/operations.py:647
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: помилка під час виконання дії"
 
-#: graphs/operations.py:585
+#: graphs/operations.py:654
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Дані поза підсвіченою областю було відкинуто"
 
@@ -2492,31 +2538,41 @@ msgstr "усі файли"
 msgid "Document Portal"
 msgstr "Портал документів"
 
-#: graphs/window.vala:165
+#: graphs/variable_box.vala:56
+msgid "Stop Animation"
+msgstr "Зупинити анімацію"
+
+#. Translators: The name of a variable followed by its value
+#: graphs/variable_box.vala:62
+#, c-format
+msgid "%s = %s"
+msgstr "%s = %s"
+
+#: graphs/window.vala:170
 msgid "Graphs (Development)"
 msgstr "Графіки (Розробка)"
 
-#: graphs/window.vala:192
+#: graphs/window.vala:197
 msgid "Untitled Project"
 msgstr "Проєкт без назви"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:198
 msgid "Draft"
 msgstr "Чернетка"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:199
+#: graphs/window.vala:204
 #, c-format
 msgid "Graphs — %s"
 msgstr "Графіки — %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:473
+#: graphs/window.vala:503
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s намальовано зі зменшеною деталізацією з використанням %d точок"
 
-#: graphs/window.vala:479
+#: graphs/window.vala:509
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
@@ -2529,7 +2585,7 @@ msgstr[2] ""
 msgstr[3] ""
 "%d пункт намальовано зі зменшеною деталізацією з використанням %d точок"
 
-#: graphs/window.vala:501
+#: graphs/window.vala:531
 msgid "Open Location"
 msgstr "Відкрити адресу"
 
@@ -2736,9 +2792,6 @@ msgstr "Відкрити адресу"
 
 #~ msgid "The operation on "
 #~ msgstr "Дія над "
-
-#~ msgid "Step Size"
-#~ msgstr "Розмір кроку"
 
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
