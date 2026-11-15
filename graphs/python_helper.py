@@ -14,8 +14,8 @@ from matplotlib import rcParams, rcParamsDefault
 import numpy
 
 import sympy
-from sympy.calculus.singularities import singularities
 from sympy.abc import x
+from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
     "create-canvas",
