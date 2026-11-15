@@ -4,7 +4,7 @@ from gi.repository import Gio, Graphs
 
 import gio_pyio
 
-from graphs import ast, curve_fitting, misc, operations
+from graphs import ast, curve_fitting, operations
 from graphs.canvas.canvas import Canvas
 from graphs.canvas.figure import Figure
 from graphs.window import PythonWindow
@@ -15,6 +15,7 @@ import numpy
 
 import sympy
 from sympy.calculus.singularities import singularities
+from sympy.abc import x
 
 _REQUESTS = (
     "create-canvas",
@@ -130,7 +131,7 @@ class PythonHelper(Graphs.PythonHelper):
         xstop: float,
     ) -> None:
         domain = sympy.Interval(xstart, xstop)
-        return singularities(ast.sympify_item(item), misc.X, domain)
+        return singularities(ast.sympify_item(item), x, domain)
 
     @staticmethod
     def _on_perform_operation_request(

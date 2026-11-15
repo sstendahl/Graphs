@@ -9,7 +9,7 @@ from itertools import islice
 
 from gi.repository import GObject, Graphs
 
-from graphs import ast, misc, utilities
+from graphs import ast, utilities
 
 from matplotlib import artist, pyplot
 from matplotlib.figure import Figure
@@ -20,6 +20,7 @@ from scipy.stats import median_abs_deviation
 
 import sympy
 from sympy.calculus.singularities import singularities as find_singularities
+from sympy.abc import x
 
 
 def _find_row_extrema(rows):
@@ -729,7 +730,7 @@ class EquationItemArtistWrapper(ItemArtistWrapper):
 
         domain = sympy.Interval(x_min, x_max)
         start = time.perf_counter()
-        all_singularities = find_singularities(self._expr, misc.X, domain)
+        all_singularities = find_singularities(self._expr, x, domain)
         self._singularities_time = time.perf_counter() - start
 
         self._singularities_cache = {
