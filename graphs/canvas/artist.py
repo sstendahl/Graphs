@@ -19,8 +19,8 @@ import numpy
 from scipy.stats import median_abs_deviation
 
 import sympy
-from sympy.calculus.singularities import singularities as find_singularities
 from sympy.abc import x
+from sympy.calculus.singularities import singularities as find_singularities
 
 
 def _find_row_extrema(rows):
