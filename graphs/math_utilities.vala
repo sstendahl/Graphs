@@ -220,7 +220,7 @@ namespace Graphs.MathTools {
         try {
             string[] variables = get_free_variables (ast_to_expression (expression));
             if (variables.length == 0) return validate_expression (expression);
-            ast_to_parametric_program (expression);
+            ast_to_program (expression, "x", true);
             return true;
         } catch (MathError e) {
             return false;
