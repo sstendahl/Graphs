@@ -55,10 +55,6 @@ namespace Graphs {
         Ast expression, string variable = "x"
     ) throws MathError {
         Ast expr = PythonHelper.simplify_expression (expression);
-        string[] names = MathTools.get_free_variables (ast_to_expression (expression));
-        foreach (unowned string name in MathTools.get_free_variables (ast_to_expression (expr))) {
-            if (!(name in names)) throw new MathError.UNKNOWN_FUNCTION ("invalid variable: " + name);
-        }
         return MathParser.Compiler.instance ().compile (expr, variable, true);
     }
 

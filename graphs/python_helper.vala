@@ -44,10 +44,10 @@ namespace Graphs {
         }
 
         protected signal string simplify_expression_request (Ast input);
-        public static Ast simplify_expression (Ast input) {
-            try {
-                return expression_to_ast (instance.simplify_expression_request.emit (input));
-            } catch (MathError e) { assert_not_reached (); }
+        public static Ast simplify_expression (Ast input) throws MathError {
+            string? simplified = instance.simplify_expression_request.emit (input);
+            if (simplified == null) throw new MathError.DOMAIN ("unsupported expression");
+            return expression_to_ast (simplified);
         }
     }
 

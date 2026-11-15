@@ -146,4 +146,7 @@ class PythonHelper(Graphs.PythonHelper):
 
     @staticmethod
     def _on_simplify_expression_request(self, expression: str) -> str:
-        return str(sympy.simplify(ast.sympify(expression)))
+        simplified = sympy.simplify(ast.sympify(expression))
+        if not ast.is_supported(simplified):
+            return None
+        return str(simplified)
