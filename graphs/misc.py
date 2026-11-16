@@ -8,8 +8,3 @@ AXES_DIRECTIONS = (
     ("bottom", "right"),  # right_axis
     ("top", "right"),  # top_right_axis
 )
-
-LIMITS = [
-    f"{prefix}-{direction}" for direction in DIRECTIONS
-    for prefix in ("min", "max")
-]

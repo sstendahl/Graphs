@@ -28,7 +28,7 @@ namespace Graphs {
                 value.notify["custom-style"].connect (_on_custom_style);
                 value.notify["use-custom-style"].connect (_on_use_custom_style);
                 value.notify["hide-unselected"].connect (_on_hide_unselected);
-                value.notify.connect ((v, param) => figure_settings_changed.emit (param.name));
+                value.notify.connect (_on_figure_settings_change);
                 _update_used_positions ();
                 _on_use_custom_style.begin ();
             }
@@ -1021,6 +1021,13 @@ namespace Graphs {
                 selection_changed.emit (index (item), 1);
 
             item.visible = !figure_settings.hide_unselected || item.selected;
+        }
+
+        private void _on_figure_settings_change (Object settings, ParamSpec spec) {
+            if (spec.name == "min-selected" || spec.name == "max-selected") return;
+            if (spec.name in LIMIT_NAMES) return;
+
+            figure_settings_changed.emit (spec.name);
         }
 
         private void _update_visibility () {
