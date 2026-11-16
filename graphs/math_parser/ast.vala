@@ -216,11 +216,11 @@ namespace Graphs {
         private OpCode[] _program;
         private double[] _data;
         private int _plen;
-        private HashTable<string, Array<int>> _parameters;
+        private HashTable<string, Gtk.Bitset> _parameters;
 
         public Program (
             owned OpCode[] program, owned double[] data, int plen,
-            owned HashTable<string, Array<int>> parameters
+            owned HashTable<string, Gtk.Bitset> parameters
         ) {
             this._program = (owned) program;
             this._data = (owned) data;
@@ -229,12 +229,15 @@ namespace Graphs {
         }
 
         public void set_parameter (string name, double val) {
-            unowned Array<int>? slots = _parameters.lookup (name);
+            unowned var slots = _parameters.lookup (name);
             if (slots == null) return;
 
-            for (uint i = 0; i < slots.length; i++) {
-                _data[slots.index (i)] = val;
-            }
+            uint i;
+            var iter = Gtk.BitsetIter ();
+            iter.init_first (slots, out i);
+            do {
+                _data[i] = val;
+            } while (iter.next (out i));
         }
 
         public double[] eval (double[] input) {
