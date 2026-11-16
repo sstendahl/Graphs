@@ -9,13 +9,8 @@ from operator import itemgetter
 
 from gi.repository import Gio, Graphs, Gtk
 
-from graphs import misc, project
+from graphs import project
 from graphs.item import ItemFactory
-
-_FIGURE_SETTINGS_HISTORY_IGNORELIST = misc.LIMITS + [
-    "min-selected",
-    "max-selected",
-]
 
 
 class Data(Graphs.Data):
@@ -95,8 +90,6 @@ class Data(Graphs.Data):
 
     @staticmethod
     def _on_figure_settings_changed(self, prop: str) -> None:
-        if prop in _FIGURE_SETTINGS_HISTORY_IGNORELIST:
-            return
         self._current_batch.append((
             Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
             (

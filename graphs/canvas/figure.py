@@ -9,10 +9,18 @@ import logging
 
 from gi.repository import GObject, Gio, Graphs
 
-from graphs import misc
 from graphs.canvas import artist
 
 from matplotlib import figure, pyplot
+
+
+DIRECTIONS = ["bottom", "top", "left", "right"]
+AXES_DIRECTIONS = (
+    ("bottom", "left"),  # axis
+    ("top", "left"),  # top_left_axis
+    ("bottom", "right"),  # right_axis
+    ("top", "right"),  # top_right_axis
+)
 
 
 def _ellipsize(text: str, max_chars: int) -> str:
@@ -143,7 +151,7 @@ class Figure(GObject.Object, figure.Figure):
         draw_frame = params["axes.spines.bottom"]
         ticks = "both" if params["xtick.minor.visible"] else "major"
         for directions, axis, used \
-                in zip(misc.AXES_DIRECTIONS, self.axes, used_axes):
+                in zip(AXES_DIRECTIONS, self.axes, used_axes):
             axis.get_xaxis().set_visible(False)
             axis.get_yaxis().set_visible(False)
             # Set tick where requested, as long as that axis is not occupied
@@ -153,7 +161,7 @@ class Figure(GObject.Object, figure.Figure):
                 or params[f"ytick.{directions[1]}"]
             ):
                 tick_params = {}
-                for i, direction in enumerate(misc.DIRECTIONS):
+                for i, direction in enumerate(DIRECTIONS):
                     tick_shown = (
                         (draw_frame and not visible_axes[i])
                         or direction in directions
@@ -172,7 +180,7 @@ class Figure(GObject.Object, figure.Figure):
             axis_legend = axis.get_legend()
             if axis_legend is not None:
                 axis_legend.remove()
-            for direction in misc.DIRECTIONS:
+            for direction in DIRECTIONS:
                 axis.spines[direction].set_visible(
                     direction in directions and used or draw_frame,
                 )
