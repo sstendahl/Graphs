@@ -7,13 +7,14 @@ from gettext import gettext as _
 
 from gi.repository import GLib, Gio, Graphs
 
-from graphs import ast, misc, utilities
+from graphs import ast, utilities
 
 import numpy
 
 import scipy
 
 import sympy
+from sympy.abc import k, x, y
 
 
 def perform_operation(window: Graphs.Window, name: str) -> None:
@@ -367,7 +368,7 @@ def _get_general_case(equation):
         return equation
 
     def pick(piecewise):
-        if any(condition.has(misc.X) for _case, condition in piecewise.args):
+        if any(condition.has(x) for _case, condition in piecewise.args):
             return piecewise
         for case, condition in piecewise.args:
             if not isinstance(condition, sympy.Eq):
@@ -451,7 +452,7 @@ class EquationOperations():
     @staticmethod
     def translate_x(equation: sympy.Expr, offset: float) -> sympy.Expr:
         """Translate all selected data on the x-axis."""
-        return equation.subs(misc.X, misc.X - offset)
+        return equation.subs(x, y - offset)
 
     @staticmethod
     def translate_y(equation: sympy.Expr, offset: float) -> sympy.Expr:
@@ -461,7 +462,7 @@ class EquationOperations():
     @staticmethod
     def multiply_x(equation: sympy.Expr, multiplier: float) -> sympy.Expr:
         """Multiply all selected data on the x-axis."""
-        return equation.subs(misc.X, misc.X / multiplier)
+        return equation.subs(x, x / multiplier)
 
     @staticmethod
     def multiply_y(equation: sympy.Expr, multiplier: float) -> sympy.Expr:
@@ -478,7 +479,7 @@ class EquationOperations():
         domain = sympy.Interval(*limits)
         bound = equation.subs(values)
         try:
-            magnitude = float(sympy.maximum(bound, misc.X, domain))
+            magnitude = float(sympy.maximum(bound, x, domain))
         except (TypeError, ValueError, NotImplementedError, OverflowError):
             magnitude = numpy.nan
         if not numpy.isfinite(magnitude) or magnitude <= 0:
@@ -504,7 +505,6 @@ class EquationOperations():
         Depending on the key, will center either on the middle coordinate, or
         on the maximum value of the data
         """
-        x = misc.X
         low, high = limits
         if center_maximum == 0:  # Center at maximum Y
             bound = equation.subs(values)
@@ -536,26 +536,24 @@ class EquationOperations():
     @staticmethod
     def derivative(equation: sympy.Expr) -> sympy.Expr:
         """Calculate derivative of all selected data."""
-        return sympy.diff(equation, misc.X)
+        return sympy.diff(equation, x)
 
     @staticmethod
     def integral(equation: sympy.Expr) -> sympy.Expr:
         """Calculate indefinite integral of all selected data."""
-        return sympy.integrate(equation, misc.X)
+        return sympy.integrate(equation, x)
 
     @staticmethod
     def fft(equation: sympy.Expr) -> sympy.Expr:
         """Perform Fourier transformation on all selected data."""
-        k = sympy.Symbol("k")
-        equation = sympy.fourier_transform(equation, misc.X, k)
-        return equation.subs(k, misc.X)
+        equation = sympy.fourier_transform(equation, x, k)
+        return equation.subs(k, x)
 
     @staticmethod
     def inverse_fft(equation: sympy.Expr) -> sympy.Expr:
         """Perform Inverse Fourier transformation on all selected data."""
-        k = sympy.Symbol("k")
-        equation = sympy.fourier_transform(equation, misc.X, k)
-        return equation.subs(k, misc.X)
+        equation = sympy.fourier_transform(equation, x, k)
+        return equation.subs(k, x)
 
     @staticmethod
     def transform(
@@ -852,8 +850,8 @@ class DataOperations():
         expr_x = ast.sympify(Graphs.expression_to_ast(input_x)).subs(ld)
         expr_y = ast.sympify(Graphs.expression_to_ast(input_y)).subs(ld)
 
-        f_x = sympy.lambdify((misc.X, misc.Y), expr_x, modules="scipy")
-        f_y = sympy.lambdify((misc.X, misc.Y), expr_y, modules="scipy")
+        f_x = sympy.lambdify((x, y), expr_x, modules="scipy")
+        f_y = sympy.lambdify((x, y), expr_y, modules="scipy")
 
         out_x = f_x(xdata, ydata)
         out_y = f_y(xdata, ydata)
