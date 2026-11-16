@@ -10,8 +10,7 @@ import math
 
 from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
 
-from graphs import misc
-from graphs.canvas.figure import Figure
+from graphs.canvas.figure import AXES_DIRECTIONS, Figure
 
 from matplotlib import backend_tools as tools
 from matplotlib.backend_bases import (
@@ -122,7 +121,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         """Whether the lower and upper x or y limits of axis are locked."""
         if self._figure_settings is None:
             return False, False
-        x, y = misc.AXES_DIRECTIONS[self.figure.axes.index(axis)]
+        x, y = AXES_DIRECTIONS[self.figure.axes.index(axis)]
         direction = x if dim == "x" else y
         return (
             self._figure_settings.get_property(f"lock-min-{direction}"),
@@ -136,7 +135,7 @@ class Canvas(Graphs.Canvas, FigureCanvas):
     def restore_locked_limits(self) -> None:
         """Reset all locked limits to their figure settings values."""
         settings = self._figure_settings
-        for ax, (x, y) in zip(self.figure.axes, misc.AXES_DIRECTIONS):
+        for ax, (x, y) in zip(self.figure.axes, AXES_DIRECTIONS):
             for direction, get_lim, set_lim in (
                 (x, ax.get_xlim, ax.set_xlim),
                 (y, ax.get_ylim, ax.set_ylim),

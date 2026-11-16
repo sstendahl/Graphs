@@ -122,7 +122,6 @@ graphs/item_box.vala
 graphs/managed_array.vala
 graphs/math_utilities.vala
 graphs/migrate.py
-graphs/misc.py
 graphs/misc.vala
 graphs/operations.py
 graphs/project.py
