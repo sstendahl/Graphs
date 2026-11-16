@@ -298,6 +298,9 @@ namespace Graphs {
         }
 
         public bool is_view_based () {
+            if (_upper.kind == FillBoundKind.DATA && _lower.kind == FillBoundKind.DATA) {
+                return false;
+            }
             return get_target_x () == null;
         }
 
