@@ -1,10 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Miscallaneous constants."""
-import sympy
-
-X = sympy.Symbol("x")
-Y = sympy.Symbol("y")
-
 DIRECTIONS = ["bottom", "top", "left", "right"]
 
 AXES_DIRECTIONS = (
