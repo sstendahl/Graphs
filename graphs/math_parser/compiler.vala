@@ -8,7 +8,7 @@ namespace Graphs.MathParser {
         private int n_data;
         private unowned string variable_name;
         private bool allow_parameters;
-        private HashTable<string, Array<int>> parameters;
+        private HashTable<string, Gtk.Bitset> parameters;
 
         private static Once<Compiler> _instance;
         private static Mutex _mutex;
@@ -28,7 +28,7 @@ namespace Graphs.MathParser {
         }
 
         private Program compile_locked (Ast expr, string variable) throws MathError {
-            this.parameters = new HashTable<string, Array<int>> (str_hash, str_equal);
+            this.parameters = new HashTable<string, Gtk.Bitset> (str_hash, str_equal);
             this.program = new OpCode[16];
             this.n_ops = 0;
             this.data = new double[8];
@@ -77,13 +77,12 @@ namespace Graphs.MathParser {
         private bool variable (Expression expr) {
             if (expr.name () != variable_name) {
                 if (allow_parameters) {
-                    unowned Array<int>? slots = parameters.lookup (expr.name ());
+                    var slots = parameters.lookup (expr.name ());
                     if (slots == null) {
-                        var new_slots = new Array<int> ();
-                        slots = new_slots;
-                        parameters.insert (expr.name (), (owned) new_slots);
+                        slots = new Gtk.Bitset.empty ();
+                        parameters.insert (expr.name (), slots);
                     }
-                    slots.append_val (n_data);
+                    slots.add (n_data);
                     add_constant (1d);
                     return true;
                 }
