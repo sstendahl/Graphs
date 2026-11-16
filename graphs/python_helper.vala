@@ -18,9 +18,9 @@ namespace Graphs {
             return instance.create_window_request ();
         }
 
-        protected signal CurveFittingDialog curve_fitting_dialog_request (Window window, Item item);
-        public static CurveFittingDialog create_curve_fitting_dialog (Window window, Item item) {
-            return instance.curve_fitting_dialog_request.emit (window, item);
+        protected signal CurveFittingError curve_fit_request (FitProblem problem, FitResult result);
+        public static CurveFittingError curve_fit (FitProblem problem, FitResult result) {
+            return instance.curve_fit_request.emit (problem, result);
         }
 
         public signal void export_figure_request (File file, Settings settings, Data data);
