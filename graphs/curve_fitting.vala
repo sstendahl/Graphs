@@ -252,7 +252,7 @@ namespace Graphs {
             residuals.color = DATA_COLOR;
             residuals.markersize = 13;
             residuals.markerstyle = POINT;
-            residuals.linestyle = SOLID;
+            residuals.linestyle = NONE;
 
             var marker = new MarkerItem (style, HORIZONTAL, 0);
             marker.linewidth = 0.5;
