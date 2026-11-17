@@ -3,7 +3,7 @@ namespace Graphs {
     /**
      * Database reader class that handles all database operations
      */
-    public class DatabaseReader : Object {
+    private class DatabaseReader : Object {
         private Sqlite.Database db;
         public string[] table_names;
         private ImportSettings settings;
