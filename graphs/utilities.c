@@ -273,7 +273,6 @@ filter_nonfinite (gdouble *xdata, gdouble *ydata, gsize n)
     }
 
     /* Compact data in place */
-#pragma omp parallel for
   for (gsize i = 0; i < n; ++i)
     {
       if (mask[i])
