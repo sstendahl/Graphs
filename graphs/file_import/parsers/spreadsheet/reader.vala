@@ -385,7 +385,7 @@ namespace Graphs {
         }
     }
 
-    public class SpreadsheetReader : Object {
+    private class SpreadsheetReader : Object {
         private SpreadsheetParserInternal parser;
         private string[] sheet_names;
         private HashTable<uint, Column> columns;

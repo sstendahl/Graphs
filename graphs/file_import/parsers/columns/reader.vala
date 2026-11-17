@@ -17,7 +17,7 @@ namespace Graphs {
     /**
      * Reader class for parsing column-based text files
      */
-    public class ColumnsReader {
+    private class ColumnsReader {
         private ImportSettings settings;
         private unichar separator;
         private Regex delimiter_regex;
