@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 namespace Graphs {
-    enum ColumnsDelimiter {
+    private enum ColumnsDelimiter {
         WHITESPACE,
         TAB,
         COLON,
@@ -41,7 +41,7 @@ namespace Graphs {
         }
     }
 
-    enum ColumnsSeparator {
+    private enum ColumnsSeparator {
         COMMA,
         PERIOD;
 
@@ -62,7 +62,7 @@ namespace Graphs {
         }
     }
 
-    public struct ColumnsItemSettings {
+    private struct ColumnsItemSettings {
         public int column_x;
         public int column_y;
         public int xerr_index;
