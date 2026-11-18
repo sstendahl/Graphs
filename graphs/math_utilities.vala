@@ -182,12 +182,10 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
     public static bool validate_expression (Ast expression) {
         try {
-            double[] ydata = ast_to_program (expression).eval (XDATA);
-            return CUtilities.finite_double (ydata);
+            ast_to_program (expression);
+            return true;
         } catch (MathError e) {
             return false;
         }
@@ -195,10 +193,8 @@ namespace Graphs.MathTools {
 
     public static bool validate_parametric_expression (Ast expression) {
         try {
-            var program = ast_to_program (expression, "x", true);
-            if (get_free_variables (expression).length != 0) return true;
-            double[] ydata = program.eval (XDATA);
-            return CUtilities.finite_double (ydata);
+            ast_to_program (expression, "x", true);
+            return true;
         } catch (MathError e) {
             return false;
         }

@@ -323,7 +323,7 @@ class CommonOperations():
         if not any(groups):
             if mode == Graphs.Mode.SELECT:
                 msg = _("No data found within the highlighted area")
-            window.add_toast_string(msg)
+                window.add_toast_string(msg)
             return False
 
         shifts = [

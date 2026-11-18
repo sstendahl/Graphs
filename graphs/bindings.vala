@@ -10,12 +10,6 @@ namespace Graphs.CUtilities {
         out double out_max
     );
 
-    [CCode (cname = "finite_double")]
-    private extern bool finite_double (
-        [CCode (array_length = true)]
-        double[] data
-    );
-
     [CCode (cname = "fill_double")]
     private extern void fill_double (
         [CCode (array_length = true)]
