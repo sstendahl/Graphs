@@ -182,8 +182,6 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    private const double[] XDATA = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
     public static bool validate_expression (Ast expression) {
         try {
             ast_to_program (expression);
