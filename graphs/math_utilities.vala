@@ -82,29 +82,6 @@ namespace Graphs.MathTools {
         return Math.round (number * factor) / factor;
     }
 
-    /**
-     * Get all free variables (without x) in an equation.
-     */
-    public static string[] get_free_variables (string equation) throws MathError {
-        string[] result = {};
-
-        MathParser.Lexer lexer = new MathParser.Lexer ();
-        lexer.start_lexing (equation);
-
-        // we assume a correct input so we are only interested in custom idents
-        while (lexer.current_type != TokenType.END) {
-            if (lexer.current_type == TokenType.IDENT
-                && lexer.current_ident == Ident.CUSTOM) {
-                string token = lexer.get_current_token_as_string ();
-                if (token != "x" && !(token in result)) result += token;
-            }
-
-            lexer.next ();
-        }
-
-        return result;
-    }
-
     public static double[] arange (int steps) {
         double[] result = new double[steps];
         CUtilities.arange (result);
@@ -218,10 +195,10 @@ namespace Graphs.MathTools {
 
     public static bool validate_parametric_expression (Ast expression) {
         try {
-            string[] variables = get_free_variables (ast_to_expression (expression));
-            if (variables.length == 0) return validate_expression (expression);
-            ast_to_program (expression, "x", true);
-            return true;
+            var program = ast_to_program (expression, "x", true);
+            if (get_free_variables (expression).length != 0) return true;
+            double[] ydata = program.eval (XDATA);
+            return CUtilities.finite_double (ydata);
         } catch (MathError e) {
             return false;
         }

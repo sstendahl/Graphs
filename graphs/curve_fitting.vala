@@ -505,7 +505,7 @@ namespace Graphs {
 
             try {
                 ast = expression_to_ast (equation);
-                free_vars = MathTools.get_free_variables (equation);
+                free_vars = get_free_variables (ast);
 
                 if (free_vars.length == 0) {
                     set_results (CurveFittingError.EQUATION);
