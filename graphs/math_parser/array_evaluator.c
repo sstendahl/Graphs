@@ -133,6 +133,14 @@ eval_array (const GraphsOpCode *program, const gdouble *data, gsize plen,
               stack[sp - 1] = atan (stack[sp - 1]);
               break;
 
+            case GRAPHS_OP_CODE_SINH:
+              stack[sp - 1] = sinh (stack[sp - 1]);
+              break;
+
+            case GRAPHS_OP_CODE_COSH:
+              stack[sp - 1] = cosh (stack[sp - 1]);
+              break;
+
             case GRAPHS_OP_CODE_LN:
               stack[sp - 1] = log (stack[sp - 1]);
               break;

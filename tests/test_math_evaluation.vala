@@ -97,6 +97,13 @@ private void test_inverse_trig_functions () {
     assert_evaluate_result ("atand(1)", 45);
 }
 
+private void test_hyperbolic_functions () {
+    assert_evaluate_result ("sinh(0)", 0);
+    assert_evaluate_result ("cosh(0)", 1);
+    assert_evaluate_result ("sinh(1)", (Math.E - 1 / Math.E) / 2);
+    assert_evaluate_result ("cosh(1)", (Math.E + 1 / Math.E) / 2);
+}
+
 private void test_misc_functions () {
     assert_evaluate_result ("sqrt(16)", 4);
     assert_evaluate_result ("abs(-5)", 5);
@@ -237,6 +244,7 @@ void main (string[] args) {
     Test.add_func ("/math-parser/eval/constants", test_constants);
     Test.add_func ("/math-parser/eval/trig-radians", test_trig_functions_radians);
     Test.add_func ("/math-parser/eval/trig-degrees", test_trig_functions_degrees);
+    Test.add_func ("/math-parser/eval/hyperbolic", test_hyperbolic_functions);
     Test.add_func ("/math-parser/eval/inverse-trig", test_inverse_trig_functions);
     Test.add_func ("/math-parser/eval/misc-functions", test_misc_functions);
     Test.add_func ("/math-parser/eval/nested-expressions", test_nested_expressions);

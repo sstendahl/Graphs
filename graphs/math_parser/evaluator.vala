@@ -110,6 +110,10 @@ namespace Graphs.MathParser {
                 case Ident.ASECD: return Math.acos (1d / x) * RADIANS_TO_DEGREES;
                 case Ident.ACSCD: return Math.asin (1d / x) * RADIANS_TO_DEGREES;
 
+                // hyperbolic
+                case Ident.SINH: return Math.sinh (x);
+                case Ident.COSH: return Math.cosh (x);
+
                 // misc
                 case Ident.LN: return Math.log (x);
                 case Ident.LOG2: return Math.log2 (x);

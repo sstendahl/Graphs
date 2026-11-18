@@ -97,6 +97,8 @@ FUNCTION_MAPPING = {
     Graphs.Ident.ACOTD: _deg_inv_trig(sympy.acot, "acotd"),
     Graphs.Ident.ASECD: _deg_inv_trig(sympy.asec, "asecd"),
     Graphs.Ident.ACSCD: _deg_inv_trig(sympy.acsc, "acscd"),
+    Graphs.Ident.SINH: sympy.sinh,
+    Graphs.Ident.COSH: sympy.cosh,
     Graphs.Ident.LN: sympy.log,
     Graphs.Ident.LOG2: _log(2, "log2"),
     Graphs.Ident.LOG10: _log(10, "log10"),
