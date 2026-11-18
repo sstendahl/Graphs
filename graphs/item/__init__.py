@@ -101,14 +101,8 @@ class ItemFactory():
     @staticmethod
     def to_dict(item: Graphs.Item, items: list[Graphs.Item]) -> dict:
         """Serialize an item to a dict."""
-        dictionary = {
-            key: ItemFactory.serialize_property(item, key)
-            for key in dir(item.props) if key != "typename"
-        }
-        typename = item.__gtype__.name[6:]
-        dictionary["type"] = typename
-        dictionary.pop("visible")
-        match typename:
+        dictionary = item.to_variant().unpack()
+        match dictionary["type"]:
             case "FillItem":
                 upper = item.get_upper_equation()
                 lower = item.get_lower_equation()
