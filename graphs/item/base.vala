@@ -115,6 +115,23 @@ namespace Graphs {
             }
         }
 
+        public Variant to_variant () {
+            var builder = new VariantBuilder (new VariantType ("a{sv}"));
+
+            foreach (var spec in get_class ().list_properties ()) {
+                unowned string prop = spec.name;
+                if (prop == "typename" || prop == "visible")
+                    continue;
+
+                builder.add ("{sv}", prop, serialize_property (prop));
+            }
+
+            string typename = get_type ().name ().substring (6);
+            builder.add ("{sv}", "type", new Variant.string (typename));
+
+            return builder.end ();
+        }
+
         private GenericSet<unowned Item>? _dependents = null;
 
         public void register_dependent (Item dependent) {
