@@ -11,8 +11,6 @@ from graphs.window import PythonWindow
 
 from matplotlib import rcParams, rcParamsDefault
 
-import numpy
-
 import sympy
 from sympy.abc import x
 from sympy.calculus.singularities import singularities
