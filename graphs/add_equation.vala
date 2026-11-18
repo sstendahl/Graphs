@@ -162,8 +162,8 @@ namespace Graphs {
         private void on_equation_change () {
             try {
                 unowned string text = equation.get_text ();
-                expression_to_ast (text);
-                update_variables (MathTools.get_free_variables (text));
+                var expression = expression_to_ast (text);
+                update_variables (get_free_variables (expression));
             } catch (MathError e) {
                 // Dont change the variables while the equation is being edited
             }
