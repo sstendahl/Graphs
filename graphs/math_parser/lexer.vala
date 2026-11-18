@@ -348,6 +348,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.COS:
                         if (c == 'd') { current_ident = Ident.COSD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.COSH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.COT:
@@ -420,6 +421,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.SIN:
                         if (c == 'd') { current_ident = Ident.SIND; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.SINH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.SQ:
