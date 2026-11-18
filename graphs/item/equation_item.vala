@@ -97,5 +97,15 @@ namespace Graphs {
             variable_changed.emit ();
             values_changed.emit ();
         }
+
+        public override Variant? serialize_property (string prop) {
+            if (prop == "equation") {
+                try {
+                    return new Variant.string (ast_to_expression (_equation));
+                } catch (MathError e) { assert_not_reached (); }
+            }
+
+            return base.serialize_property (prop);
+        }
     }
 }

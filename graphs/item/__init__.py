@@ -2,8 +2,6 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
-from graphs import utilities
-
 
 class ItemFactory():
     """Item factory."""
@@ -129,21 +127,4 @@ class ItemFactory():
     @staticmethod
     def serialize_property(item: Graphs.Item, prop: str):
         """Return an item's property in a serializable format."""
-        if prop == "data":
-            holder = item.get_data()
-            if isinstance(item, Graphs.DataItem):
-                return (
-                    utilities.bytes_to_list(holder.get_xdata_b()),
-                    utilities.bytes_to_list(holder.get_ydata_b()),
-                    utilities.bytes_to_list(holder.get_xerr_b()),
-                    utilities.bytes_to_list(holder.get_yerr_b()),
-                )
-            elif isinstance(item, Graphs.FillItem):
-                return (
-                    utilities.bytes_to_list(holder.get_xdata_b()),
-                    utilities.bytes_to_list(holder.get_lower_b()),
-                    utilities.bytes_to_list(holder.get_upper_b()),
-                )
-        elif prop == "equation":
-            return Graphs.ast_to_expression(item.get_property(prop))
-        return item.get_property(prop)
+        return item.serialize_property(prop).unpack()
