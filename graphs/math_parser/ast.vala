@@ -54,6 +54,9 @@ namespace Graphs {
         ASIN, ACOS, ATAN, ACOT, ASEC, ACSC,
         ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
 
+        // hyperbolic
+        SINH, COSH,
+
         // misc math
         LN,
         LOG2,
@@ -201,6 +204,8 @@ namespace Graphs {
         ASIN,
         ACOS,
         ATAN,
+        SINH,
+        COSH,
 
         // misc
         LN,

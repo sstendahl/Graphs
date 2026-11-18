@@ -211,6 +211,9 @@ namespace Graphs.MathParser {
                 case Ident.ASECD: asec (); to_degrees (); return true;
                 case Ident.ACSCD: acsc (); to_degrees (); return true;
 
+                case Ident.SINH: add_instruction (OpCode.SINH); return true;
+                case Ident.COSH: add_instruction (OpCode.COSH); return true;
+
                 case Ident.LN: add_instruction (OpCode.LN); return true;
                 case Ident.LOG2: add_instruction (OpCode.LOG2); return true;
                 case Ident.LOG10: add_instruction (OpCode.LOG10); return true;
