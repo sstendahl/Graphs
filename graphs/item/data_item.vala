@@ -51,6 +51,31 @@ namespace Graphs {
         public Bytes? get_yerr_b () {
             return _yerr == null ? null : new Bytes ((uint8[]) _yerr);
         }
+
+        public Variant to_variant () {
+            var type = new VariantType ("ad");
+            var xdata_builder = new VariantBuilder (type);
+            var ydata_builder = new VariantBuilder (type);
+            var xerr_builder = _xerr == null ? null : new VariantBuilder (type);
+            var yerr_builder = _yerr == null ? null : new VariantBuilder (type);
+
+            for (uint i = 0; i < _xdata.length; i++) {
+                xdata_builder.add ("d", _xdata[i]);
+                ydata_builder.add ("d", _ydata[i]);
+                if (xerr_builder != null)
+                    xerr_builder.add ("d", _xerr[i]);
+                if (yerr_builder != null)
+                    yerr_builder.add ("d", _yerr[i]);
+            }
+
+            return new Variant (
+                "(adadmadmad)",
+                xdata_builder,
+                ydata_builder,
+                xerr_builder,
+                yerr_builder
+            );
+        }
     }
 
     public enum DataLinestyle {
@@ -171,6 +196,13 @@ namespace Graphs {
 
         public bool has_yerr () {
             return data.get_yerr () != null;
+        }
+
+        public override Variant? serialize_property (string prop) {
+            if (prop == "data")
+                return data.to_variant ();
+
+            return base.serialize_property (prop);
         }
     }
 }
