@@ -69,23 +69,6 @@ array_minmax (const gdouble *restrict data, gsize len, gboolean ignore_zero,
   return TRUE;
 }
 
-gboolean
-finite_double (const gdouble *restrict data, gsize len)
-{
-  gboolean found = FALSE;
-
-#pragma omp simd reduction(|| : found)
-  for (gsize i = 0; i < len; i++)
-    {
-      if (!isfinite (data[i]))
-        continue;
-
-      found = TRUE;
-    }
-
-  return found;
-}
-
 void
 fill_double (gdouble *restrict out, gsize len, gdouble value)
 {
