@@ -164,6 +164,7 @@ namespace Graphs.MathParser {
                         case Ident.PI: return new Expression.constant (Ident.PI);
                         case Ident.E: return new Expression.constant (Ident.E);
                         case Ident.INF: return new Expression.constant (Ident.INF);
+                        case Ident.I: return new Expression.constant (Ident.I);
                         default: throw new MathError.SYNTAX ("missing argument");
                     }
                 case TokenType.LPAREN:

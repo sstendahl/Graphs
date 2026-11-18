@@ -45,6 +45,7 @@ namespace Graphs {
         PI,
         E,
         INF,
+        I,
 
         // trig
         SIN, COS, TAN, COT, SEC, CSC,
@@ -150,6 +151,7 @@ namespace Graphs {
                 case Ident.PI: return Math.PI;
                 case Ident.E: return Math.E;
                 case Ident.INF: return double.INFINITY;
+                case Ident.I: return double.NAN;
                 default: assert_not_reached ();
             }
         }
