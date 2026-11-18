@@ -136,7 +136,7 @@ namespace Graphs {
 
         private void update_validity () {
             bool variables_valid = true;
-            bool equation_valid = MathTools.validate_parametric_equation (equation.get_text ());
+            bool equation_valid = MathTools.validate_equation (equation.get_text (), true);
 
             int index = 0;
             foreach (unowned string variable in variables) {
