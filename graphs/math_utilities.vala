@@ -182,35 +182,18 @@ namespace Graphs.MathTools {
         return result;
     }
 
-    public static bool validate_expression (Ast expression) {
+    public static bool validate_expression (Ast expression, bool allow_parameters = false) {
         try {
-            ast_to_program (expression);
+            ast_to_program (expression, "x", allow_parameters);
             return true;
         } catch (MathError e) {
             return false;
         }
     }
 
-    public static bool validate_parametric_expression (Ast expression) {
+    public static bool validate_equation (string equation, bool allow_parameters = false) {
         try {
-            ast_to_program (expression, "x", true);
-            return true;
-        } catch (MathError e) {
-            return false;
-        }
-    }
-
-    public static bool validate_parametric_equation (string equation) {
-        try {
-            return validate_parametric_expression (expression_to_ast (equation));
-        } catch (MathError e) {
-            return false;
-        }
-    }
-
-    public static bool validate_equation (string equation) {
-        try {
-            return validate_expression (expression_to_ast (equation));
+            return validate_expression (expression_to_ast (equation), allow_parameters);
         } catch (MathError e) {
             return false;
         }
