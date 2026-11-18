@@ -236,7 +236,10 @@ namespace Graphs.MathParser {
                                 current_ident = Ident.E;
                                 state = TrieState.E;
                                 break;
-                            case 'i': state = TrieState.I; break;
+                            case 'i':
+                                current_ident = Ident.I;
+                                state = TrieState.I;
+                                break;
                             case 's': state = TrieState.S; break;
                             case 'c': state = TrieState.C; break;
                             case 't': state = TrieState.T; break;

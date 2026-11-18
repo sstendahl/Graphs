@@ -141,6 +141,8 @@ def _sympify(expr):
                 return sympy.E
             case Graphs.Ident.INF:
                 return sympy.oo
+            case Graphs.Ident.I:
+                return sympy.I
             case _:
                 raise ValueError(f"unsupported constant operator: {constant}")
 

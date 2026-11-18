@@ -62,6 +62,7 @@ namespace Graphs.MathParser {
                 case Ident.PI: builder.append ("pi"); return;
                 case Ident.E: builder.append_c ('e'); return;
                 case Ident.INF: builder.append ("inf"); return;
+                case Ident.I: builder.append_c ('i'); return;
                 default: assert_not_reached ();
             }
         }
