@@ -431,7 +431,7 @@ class EquationOperations():
                 equation = Graphs.expression_to_ast(text)
                 valid = \
                     Graphs.math_tools_validate_parametric_expression(equation)
-                for variable in Graphs.math_tools_get_free_variables(text):
+                for variable in Graphs.get_free_variables(equation):
                     valid = valid and variable in variables
             except GLib.Error:
                 valid = False

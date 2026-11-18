@@ -38,7 +38,7 @@ namespace Graphs {
 
                     _equation = value;
                     _program = ast_to_program (value, "x", true);
-                    _variables = MathTools.get_free_variables (ast_to_expression (value));
+                    _variables = get_free_variables (value);
                     foreach (unowned string variable in _variables) {
                         _program.set_parameter (variable, get_variable_value (variable));
                     }

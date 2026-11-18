@@ -82,8 +82,8 @@ namespace Graphs {
     public class Expression {
         private ExpressionType _type;
 
-        private Expression _left;
-        private Expression _right;
+        private Expression _left = null;
+        private Expression _right = null;
 
         // This value will either be an Ident or an Operator, but as we only
         // need one at a time, save space reserving just a single uint.

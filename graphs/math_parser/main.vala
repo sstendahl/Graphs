@@ -47,6 +47,13 @@ namespace Graphs {
         return MathParser.Compiler.instance ().compile (expr, variable, allow_parameters);
     }
 
+    /**
+     * Get all free variables (without x) in an equation.
+     */
+    public static string[] get_free_variables (Ast equation) {
+        return MathParser.VariableFinder.instance ().find_variables (equation);
+    }
+
     namespace MathParser {
         [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double ipow (double base, int exp);
