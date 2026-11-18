@@ -88,6 +88,33 @@ namespace Graphs {
             }
         }
 
+        public virtual Variant? serialize_property (string prop) {
+            ParamSpec? pspec = get_class ().find_property (prop);
+            if (pspec == null) return null;
+            var type = pspec.value_type;
+
+            Value val = Value (type);
+            get_property (prop, ref val);
+
+            if (type.is_enum ())
+                return new Variant.int32 (val.get_enum ());
+
+            switch (pspec.value_type) {
+                case Type.STRING:
+                    return new Variant.string (val.get_string ());
+                case Type.BOOLEAN:
+                    return new Variant.boolean (val.get_boolean ());
+                case Type.INT:
+                    return new Variant.int32 (val.get_int ());
+                case Type.DOUBLE:
+                    return new Variant.double (val.get_double ());
+                case Type.FLOAT:
+                    return new Variant.double ((double) val.get_float ());
+                default:
+                    return null;
+            }
+        }
+
         private GenericSet<unowned Item>? _dependents = null;
 
         public void register_dependent (Item dependent) {

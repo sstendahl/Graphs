@@ -40,6 +40,26 @@ namespace Graphs {
         public Bytes get_upper_b () {
             return new Bytes ((uint8[]) _upper);
         }
+
+        public Variant to_variant () {
+            var type = new VariantType ("ad");
+            var xdata_builder = new VariantBuilder (type);
+            var lower_builder = new VariantBuilder (type);
+            var upper_builder = new VariantBuilder (type);
+
+            for (uint i = 0; i < _xdata.length; i++) {
+                xdata_builder.add ("d", _xdata[i]);
+                lower_builder.add ("d", _lower[i]);
+                upper_builder.add ("d", _upper[i]);
+            }
+
+            return new Variant (
+                "(adadad)",
+                xdata_builder,
+                lower_builder,
+                upper_builder
+            );
+        }
     }
 
     public enum FillBoundKind {
@@ -328,6 +348,13 @@ namespace Graphs {
                 }
             }
             bounds_changed ();
+        }
+
+        public override Variant? serialize_property (string prop) {
+            if (prop == "data")
+                return data.to_variant ();
+
+            return base.serialize_property (prop);
         }
     }
 }
