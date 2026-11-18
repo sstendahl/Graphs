@@ -54,7 +54,6 @@ namespace Graphs {
         return MathParser.VariableFinder.instance ().find_variables (equation);
     }
 
-
     namespace MathParser {
         [CCode (cname = "ipow", cheader_filename = "math_parser/array_evaluator.h")]
         private extern double ipow (double base, int exp);
