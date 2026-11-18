@@ -44,8 +44,6 @@ FIGURE_IGNORELIST = (
     "lock_max_right",
 )
 
-XDATA = numpy.linspace(0, 10, 10)
-
 
 class PythonHelper(Graphs.PythonHelper):
     """Python helper for python only calls."""
