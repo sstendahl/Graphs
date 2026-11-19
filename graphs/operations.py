@@ -451,7 +451,7 @@ class EquationOperations():
     @staticmethod
     def translate_x(equation: sympy.Expr, offset: float) -> sympy.Expr:
         """Translate all selected data on the x-axis."""
-        return equation.subs(x, y - offset)
+        return equation.subs(x, x - offset)
 
     @staticmethod
     def translate_y(equation: sympy.Expr, offset: float) -> sympy.Expr:
