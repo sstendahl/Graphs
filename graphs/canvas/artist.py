@@ -511,7 +511,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             marker=Graphs.python_data_markerstyle_to_style(
                 item.get_markerstyle(),
             ),
-            capsize=item.get_errcapsize(),
+            capsize=item.get_errcapsize() or 1,
             capthick=item.get_errcapthick(),
             elinewidth=item.get_errlinewidth(),
             barsabove=item.get_errbarsabove(),
@@ -520,6 +520,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
 
         self._data, self._caps, self._bars = self._artist
         self._color_artist = self._data
+
+        # Hide caps using marker size if their cap size was 0.
+        if item.get_errcapsize() == 0:
+            for cap in self._caps:
+                cap.set_markersize(0)
 
         # We iterate over bar and caps in assignments to handle all
         # combinations with error bars on either or both axes.
