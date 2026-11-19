@@ -1074,6 +1074,7 @@ namespace Graphs {
         }
 
         private async void reset_items () {
+            if (old_selected_style_params == null) return;
             var old_cycle = old_selected_style_params.data.color_cycle;
             var new_cycle = selected_style_params.data.color_cycle;
             var old_err_cycle = old_selected_style_params.data.errorbar_cycle;
