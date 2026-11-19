@@ -644,6 +644,8 @@ class DataOperations():
             message = _("{name}: Error performing the operation")
             return False, message.format(name=exception.__class__.__name__)
         xerr, yerr = utilities.get_xyerr(data)
+        full_xdata = utilities.get_xydata(data)[0]
+        was_sorted = bool(numpy.all(numpy.diff(full_xdata) >= 0))
         if interaction_mode == Graphs.Mode.SELECT:
             if discard:
                 logging.debug("Discard is true")
@@ -651,6 +653,8 @@ class DataOperations():
                     "Data that was outside of the highlighted area has"
                     " been discarded",
                 )
+                xerr = xerr[mask] if xerr is not None else None
+                yerr = yerr[mask] if yerr is not None else None
             elif new_xdata is None:  # If cut action was performed
                 new_xdata, new_ydata = utilities.get_xydata(data)
                 new_xdata = new_xdata[~mask]
@@ -665,10 +669,12 @@ class DataOperations():
                 xdata[mask] = new_xdata
                 ydata[mask] = new_ydata
                 new_xdata, new_ydata = xdata, ydata
-        if sort:
+        if sort and was_sorted:
             logging.debug("Sorting data")
-            idx = numpy.argsort(new_xdata)
+            idx = numpy.argsort(new_xdata, kind="stable")
             new_xdata, new_ydata = new_xdata[idx], new_ydata[idx]
+            xerr = xerr[idx] if xerr is not None else None
+            yerr = yerr[idx] if yerr is not None else None
         item.set_data(Graphs.DataHolder.new(new_xdata, new_ydata, xerr, yerr))
         return True, message
 
