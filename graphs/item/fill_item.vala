@@ -60,6 +60,24 @@ namespace Graphs {
                 upper_builder
             );
         }
+
+        public FillHolder.from_variant (Variant variant) {
+            var xdata = variant.get_child_value (0);
+            var lower = variant.get_child_value (1);
+            var upper = variant.get_child_value (2);
+
+            uint n = (uint) xdata.n_children ();
+
+            _xdata = new double[n];
+            _lower = new double[n];
+            _upper = new double[n];
+
+            for (uint i = 0; i < n; i++) {
+                _xdata[i] = xdata.get_child_value (i).get_double ();
+                _lower[i] = lower.get_child_value (i).get_double ();
+                _upper[i] = upper.get_child_value (i).get_double ();
+            }
+        }
     }
 
     public enum FillBoundKind {
