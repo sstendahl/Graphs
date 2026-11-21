@@ -2,20 +2,20 @@
 # Copyright (C) 2026 Graphs's COPYRIGHT HOLDER
 # This file is distributed under the same license as the Graphs package.
 # Leônidas Araújo <leorusvellt@hotmail.com>, 2024.
-# Álvaro Burns <>, 2025.
-# Juliano de Souza Camargo <julianosc@pm.me>, 2024-2026.
 # Rafael Fontenelle <rafaelff@gnome.org>, 2024-2026.
 # Renan de Jesus Melo <renanjmelo@gmail.com>, 2026.
 # Luiggi R. Cardoso <lrc@gnome.org>, 2026.
+# Álvaro Burns <(null)>, 2025-2026.
+# Juliano de Souza Camargo <julianosc@pm.me>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-10-28 11:52+0000\n"
-"PO-Revision-Date: 2026-10-30 22:06-0300\n"
-"Last-Translator: Luiggi R. Cardoso <lrc@gnome.org>\n"
-"Language-Team: Brazilian Portuguese <br.gnome.org/Traducao>\n"
+"POT-Creation-Date: 2026-11-19 16:15+0000\n"
+"PO-Revision-Date: 2026-11-21 08:33-0300\n"
+"Last-Translator: Juliano de Souza Camargo <julianosc@pm.me>\n"
+"Language-Team: Brazilian Portuguese <https://br.gnome.org/traducao/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -168,8 +168,8 @@ msgstr ""
 msgid "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualization;Fitting;xrdml;"
 msgstr "Plotting;Graph;Graphing;Science;Mathematics;Math;Equations;Data;Plot;Visualisation;Fitting;xrdml;Plotagem;Gráfico;Ciência;Matemática;Equações;Dados;Visualização;"
 
-#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:287
-#: data/ui/style-editor/window.blp:299
+#: data/se.sjoerd.Graphs.desktop.in:16 data/ui/style-editor/window.blp:289
+#: data/ui/style-editor/window.blp:301
 msgid "New Window"
 msgstr "Nova janela"
 
@@ -312,7 +312,7 @@ msgstr "Importar apenas valores Y, os valores X serão gerados"
 
 #: data/ui/import/columns/item-group.blp:57
 #: data/ui/sidebar/edit-item/equation-group.blp:5 data/ui/curve-fitting.blp:72
-#: graphs/item/equation_item.vala:43
+#: graphs/item/equation_item.vala:55
 msgid "Equation"
 msgstr "Equação"
 
@@ -585,39 +585,39 @@ msgstr "Linha e marcadores"
 
 #: data/ui/sidebar/edit-item/data.blp:12
 #: data/ui/sidebar/edit-item/equation.blp:14
-#: data/ui/style-editor/editor-box.blp:62
+#: data/ui/style-editor/editor-box.blp:66
 msgid "Linestyle"
 msgstr "Estilo da linha"
 
-#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:67
+#: data/ui/sidebar/edit-item/data.blp:17 data/ui/style-editor/editor-box.blp:71
 msgctxt "linestyle"
 msgid "None"
 msgstr "Nenhum"
 
 #: data/ui/sidebar/edit-item/data.blp:18
 #: data/ui/sidebar/edit-item/equation.blp:18
-#: data/ui/style-editor/editor-box.blp:68
+#: data/ui/style-editor/editor-box.blp:72
 msgctxt "linestyle"
 msgid "Solid"
 msgstr "Sólida"
 
 #: data/ui/sidebar/edit-item/data.blp:19
 #: data/ui/sidebar/edit-item/equation.blp:19
-#: data/ui/style-editor/editor-box.blp:69
+#: data/ui/style-editor/editor-box.blp:73
 msgctxt "linestyle"
 msgid "Dotted"
 msgstr "Pontilhada"
 
 #: data/ui/sidebar/edit-item/data.blp:20
 #: data/ui/sidebar/edit-item/equation.blp:20
-#: data/ui/style-editor/editor-box.blp:70
+#: data/ui/style-editor/editor-box.blp:74
 msgctxt "linestyle"
 msgid "Dashed"
 msgstr "Tracejada"
 
 #: data/ui/sidebar/edit-item/data.blp:21
 #: data/ui/sidebar/edit-item/equation.blp:21
-#: data/ui/style-editor/editor-box.blp:71
+#: data/ui/style-editor/editor-box.blp:75
 msgctxt "linestyle"
 msgid "Dashdot"
 msgstr "Traço e ponto"
@@ -627,145 +627,146 @@ msgstr "Traço e ponto"
 msgid "Linewidth"
 msgstr "Espessura"
 
-#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:94
+#: data/ui/sidebar/edit-item/data.blp:42 data/ui/style-editor/editor-box.blp:99
 msgid "Markers"
 msgstr "Marcadores"
 
-#: data/ui/sidebar/edit-item/data.blp:47 data/ui/style-editor/editor-box.blp:99
+#: data/ui/sidebar/edit-item/data.blp:47
+#: data/ui/style-editor/editor-box.blp:104
 msgctxt "markerstyle"
 msgid "None"
 msgstr "Nenhum"
 
 #: data/ui/sidebar/edit-item/data.blp:48
-#: data/ui/style-editor/editor-box.blp:100
+#: data/ui/style-editor/editor-box.blp:105
 msgctxt "markerstyle"
 msgid "Point"
 msgstr "Ponto"
 
 #: data/ui/sidebar/edit-item/data.blp:49
-#: data/ui/style-editor/editor-box.blp:101
+#: data/ui/style-editor/editor-box.blp:106
 msgctxt "markerstyle"
 msgid "Pixel"
 msgstr "Pixel"
 
 #: data/ui/sidebar/edit-item/data.blp:50
-#: data/ui/style-editor/editor-box.blp:102
+#: data/ui/style-editor/editor-box.blp:107
 msgctxt "markerstyle"
 msgid "Circle"
 msgstr "Círculo"
 
 #: data/ui/sidebar/edit-item/data.blp:51
-#: data/ui/style-editor/editor-box.blp:103
+#: data/ui/style-editor/editor-box.blp:108
 msgctxt "markerstyle"
 msgid "Triangle Down"
 msgstr "Triângulo para baixo"
 
 #: data/ui/sidebar/edit-item/data.blp:52
-#: data/ui/style-editor/editor-box.blp:104
+#: data/ui/style-editor/editor-box.blp:109
 msgctxt "markerstyle"
 msgid "Triangle Up"
 msgstr "Triângulo para cima"
 
 #: data/ui/sidebar/edit-item/data.blp:53
-#: data/ui/style-editor/editor-box.blp:105
+#: data/ui/style-editor/editor-box.blp:110
 msgctxt "markerstyle"
 msgid "Triangle Left"
 msgstr "Triângulo para esquerda"
 
 #: data/ui/sidebar/edit-item/data.blp:54
-#: data/ui/style-editor/editor-box.blp:106
+#: data/ui/style-editor/editor-box.blp:111
 msgctxt "markerstyle"
 msgid "Triangle Right"
 msgstr "Triângulo para direita"
 
 #: data/ui/sidebar/edit-item/data.blp:55
-#: data/ui/style-editor/editor-box.blp:107
+#: data/ui/style-editor/editor-box.blp:112
 msgctxt "markerstyle"
 msgid "Octagon"
 msgstr "Octógono"
 
 #: data/ui/sidebar/edit-item/data.blp:56
-#: data/ui/style-editor/editor-box.blp:108
+#: data/ui/style-editor/editor-box.blp:113
 msgctxt "markerstyle"
 msgid "Square"
 msgstr "Quadrado"
 
 #: data/ui/sidebar/edit-item/data.blp:57
-#: data/ui/style-editor/editor-box.blp:109
+#: data/ui/style-editor/editor-box.blp:114
 msgctxt "markerstyle"
 msgid "Pentagon"
 msgstr "Pentágono"
 
 #: data/ui/sidebar/edit-item/data.blp:58
-#: data/ui/style-editor/editor-box.blp:110
+#: data/ui/style-editor/editor-box.blp:115
 msgctxt "markerstyle"
 msgid "Star"
 msgstr "Estrela"
 
 #: data/ui/sidebar/edit-item/data.blp:59
-#: data/ui/style-editor/editor-box.blp:111
+#: data/ui/style-editor/editor-box.blp:116
 msgctxt "markerstyle"
 msgid "Hexagon 1"
 msgstr "Hexágono 1"
 
 #: data/ui/sidebar/edit-item/data.blp:60
-#: data/ui/style-editor/editor-box.blp:112
+#: data/ui/style-editor/editor-box.blp:117
 msgctxt "markerstyle"
 msgid "Hexagon 2"
 msgstr "Hexágono 2"
 
 #: data/ui/sidebar/edit-item/data.blp:61
-#: data/ui/style-editor/editor-box.blp:113
+#: data/ui/style-editor/editor-box.blp:118
 msgctxt "markerstyle"
 msgid "Plus"
 msgstr "Cruz"
 
 #: data/ui/sidebar/edit-item/data.blp:62
-#: data/ui/style-editor/editor-box.blp:114
+#: data/ui/style-editor/editor-box.blp:119
 msgctxt "markerstyle"
 msgid "X"
 msgstr "X"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/sidebar/edit-item/data.blp:64
-#: data/ui/style-editor/editor-box.blp:116
+#: data/ui/style-editor/editor-box.blp:121
 msgctxt "markerstyle"
 msgid "Diamond"
 msgstr "Diamante"
 
 #. Translators: Diamond as in Cards Symbol
 #: data/ui/sidebar/edit-item/data.blp:66
-#: data/ui/style-editor/editor-box.blp:118
+#: data/ui/style-editor/editor-box.blp:123
 msgctxt "markerstyle"
 msgid "Thin Diamond"
 msgstr "Diamante fino"
 
 #: data/ui/sidebar/edit-item/data.blp:67
-#: data/ui/style-editor/editor-box.blp:119
+#: data/ui/style-editor/editor-box.blp:124
 msgctxt "markerstyle"
 msgid "Vertical Line"
 msgstr "Linha vertical"
 
 #: data/ui/sidebar/edit-item/data.blp:68
-#: data/ui/style-editor/editor-box.blp:120
+#: data/ui/style-editor/editor-box.blp:125
 msgctxt "markerstyle"
 msgid "Horizontal Line"
 msgstr "Linha horizontal"
 
 #: data/ui/sidebar/edit-item/data.blp:69
-#: data/ui/style-editor/editor-box.blp:121
+#: data/ui/style-editor/editor-box.blp:126
 msgctxt "markerstyle"
 msgid "Filled Plus"
 msgstr "Cruz preenchida"
 
 #: data/ui/sidebar/edit-item/data.blp:70
-#: data/ui/style-editor/editor-box.blp:122
+#: data/ui/style-editor/editor-box.blp:127
 msgctxt "markerstyle"
 msgid "Filled X"
 msgstr "X preenchido"
 
 #: data/ui/sidebar/edit-item/data.blp:76
-#: data/ui/style-editor/editor-box.blp:128
+#: data/ui/style-editor/editor-box.blp:133
 msgid "Marker Size"
 msgstr "Tamanho do marcador"
 
@@ -781,7 +782,7 @@ msgstr "Desenha menos pontos para aprimorar a performance"
 msgid "Line"
 msgstr "Linha"
 
-#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:48
+#: data/ui/sidebar/edit-item/equation-group.blp:9 data/ui/add-equation.blp:52
 #: data/ui/curve-fitting.blp:90 data/ui/generate-data.blp:52
 #: data/ui/transform.blp:71
 msgid "Y ="
@@ -792,7 +793,7 @@ msgid "Simplify"
 msgstr "Simplificar"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:9
-#: data/ui/style-editor/editor-box.blp:146
+#: data/ui/style-editor/editor-box.blp:152
 msgid "Error Bars"
 msgstr "Barras de erro"
 
@@ -805,7 +806,7 @@ msgid "Show Vertical"
 msgstr "Mostrar vertical"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:22
-#: data/ui/style-editor/editor-box.blp:194
+#: data/ui/style-editor/editor-box.blp:203
 msgid "Draw Above Data"
 msgstr "Sobrepor aos dados"
 
@@ -814,17 +815,17 @@ msgid "Color"
 msgstr "Cor"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:30
-#: data/ui/style-editor/editor-box.blp:149
+#: data/ui/style-editor/editor-box.blp:155
 msgid "Cap Length"
 msgstr "Comprimento do remate"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:44
-#: data/ui/style-editor/editor-box.blp:164
+#: data/ui/style-editor/editor-box.blp:171
 msgid "Cap Thickness"
 msgstr "Espessura do remate"
 
 #: data/ui/sidebar/edit-item/errorbar-group.blp:58
-#: data/ui/style-editor/editor-box.blp:179
+#: data/ui/style-editor/editor-box.blp:187
 msgid "Line Width"
 msgstr "Largura da linha"
 
@@ -836,7 +837,8 @@ msgstr "Início de X"
 msgid "X Stop"
 msgstr "Fim de X"
 
-#: data/ui/sidebar/edit-item/generated-data.blp:36 data/ui/generate-data.blp:88
+#: data/ui/sidebar/edit-item/generated-data.blp:36
+#: data/ui/sidebar/edit-item/variable.blp:35 data/ui/generate-data.blp:88
 msgid "Steps"
 msgstr "Passos"
 
@@ -851,37 +853,37 @@ msgid "How points are spaced"
 msgstr "Como pontos são espaçados"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:53
-#: data/ui/generate-data.blp:105
+#: data/ui/sidebar/edit-item/variable.blp:51 data/ui/generate-data.blp:105
 msgctxt "scale"
 msgid "Linear"
 msgstr "Linear"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:54
-#: data/ui/generate-data.blp:106
+#: data/ui/sidebar/edit-item/variable.blp:52 data/ui/generate-data.blp:106
 msgctxt "scale"
 msgid "Logarithmic (Base 10)"
 msgstr "Logarítmico (Base 10)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:55
-#: data/ui/generate-data.blp:107
+#: data/ui/sidebar/edit-item/variable.blp:53 data/ui/generate-data.blp:107
 msgctxt "scale"
 msgid "Logarithmic (Base 2)"
 msgstr "Logarítmico (Base 2)"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:56
-#: data/ui/generate-data.blp:108
+#: data/ui/sidebar/edit-item/variable.blp:54 data/ui/generate-data.blp:108
 msgctxt "scale"
 msgid "Radians"
 msgstr "Radianos"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:57
-#: data/ui/generate-data.blp:109
+#: data/ui/sidebar/edit-item/variable.blp:55 data/ui/generate-data.blp:109
 msgctxt "scale"
 msgid "Square Root"
 msgstr "Raiz quadrada"
 
 #: data/ui/sidebar/edit-item/generated-data.blp:58
-#: data/ui/generate-data.blp:110
+#: data/ui/sidebar/edit-item/variable.blp:56 data/ui/generate-data.blp:110
 msgctxt "scale"
 msgid "Inverse"
 msgstr "Inverso"
@@ -890,13 +892,33 @@ msgstr "Inverso"
 msgid "Edit Item"
 msgstr "Editar item"
 
+#: data/ui/sidebar/edit-item/variable.blp:10
+msgid "Value"
+msgstr "Valor"
+
+#: data/ui/sidebar/edit-item/variable.blp:18
+msgid "Slider"
+msgstr "Deslizador"
+
+#: data/ui/sidebar/edit-item/variable.blp:21 data/ui/fitting-parameters.blp:45
+msgid "Minimum"
+msgstr "Mínimo"
+
+#: data/ui/sidebar/edit-item/variable.blp:28 data/ui/fitting-parameters.blp:59
+msgid "Maximum"
+msgstr "Máximo"
+
+#: data/ui/sidebar/edit-item/variable.blp:47
+msgid "Step Spacing"
+msgstr "Espaçamento do passo"
+
 #: data/ui/sidebar/figure-settings/settings-page.blp:5
 #: data/ui/sidebar/main.blp:30
 msgid "Figure Settings"
 msgstr "Ajustes da figura"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:27
-#: graphs/style_editor/window.vala:326
+#: graphs/style_editor/window.vala:320
 msgid "Title"
 msgstr "Título"
 
@@ -984,7 +1006,7 @@ msgstr "Ocultar itens não selecionados"
 
 #: data/ui/sidebar/figure-settings/settings-page.blp:83
 #: data/ui/sidebar/figure-settings/style-page.blp:5
-#: graphs/style_editor/window.vala:81
+#: graphs/style_editor/window.vala:72
 msgid "Style"
 msgstr "Estilo"
 
@@ -1049,18 +1071,18 @@ msgstr "Exportar dados…"
 msgid "Export Figure…"
 msgstr "Exportar figura…"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:291
-#: data/ui/style-editor/window.blp:303
+#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:293
+#: data/ui/style-editor/window.blp:305
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:292
-#: data/ui/style-editor/window.blp:304
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:294
+#: data/ui/style-editor/window.blp:306
 msgid "Help"
 msgstr "Ajuda"
 
-#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:293
-#: data/ui/style-editor/window.blp:305
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:295
+#: data/ui/style-editor/window.blp:307
 msgid "About Graphs"
 msgstr "Sobre o Gráficos"
 
@@ -1237,192 +1259,192 @@ msgstr "Adicionar cor"
 msgid "Style Name"
 msgstr "Nome do estilo"
 
-#: data/ui/style-editor/editor-box.blp:14
+#: data/ui/style-editor/editor-box.blp:15
 msgid "Font"
 msgstr "Fonte"
 
-#: data/ui/style-editor/editor-box.blp:26
+#: data/ui/style-editor/editor-box.blp:28
 msgid "Title Size"
 msgstr "Tamanho do título"
 
-#: data/ui/style-editor/editor-box.blp:27
+#: data/ui/style-editor/editor-box.blp:29
 msgid "Title size in relation to text size"
 msgstr "Tamanho do título em relação ao tamanho do texto"
 
-#: data/ui/style-editor/editor-box.blp:42
+#: data/ui/style-editor/editor-box.blp:45
 msgid "Label Size"
 msgstr "Tamanho do rótulo"
 
-#: data/ui/style-editor/editor-box.blp:43
+#: data/ui/style-editor/editor-box.blp:46
 msgid "Label size in relation to text size"
 msgstr "Tamanho do rótulo em relação ao tamanho do texto"
 
-#: data/ui/style-editor/editor-box.blp:59
+#: data/ui/style-editor/editor-box.blp:63
 msgid "Lines"
 msgstr "Linhas"
 
-#: data/ui/style-editor/editor-box.blp:77
+#: data/ui/style-editor/editor-box.blp:81
 msgid "Line width"
 msgstr "Largura da linha"
 
-#: data/ui/style-editor/editor-box.blp:199
+#: data/ui/style-editor/editor-box.blp:209
 msgid "Axes"
 msgstr "Eixos"
 
-#: data/ui/style-editor/editor-box.blp:202
+#: data/ui/style-editor/editor-box.blp:212
 msgid "Axis Width"
 msgstr "Largura do eixo"
 
 # Apenas a área de plotagem é emoldurada.
-#: data/ui/style-editor/editor-box.blp:216
+#: data/ui/style-editor/editor-box.blp:227
 msgid "Draw Frame"
 msgstr "Emoldurar plotagem"
 
-#: data/ui/style-editor/editor-box.blp:221
+#: data/ui/style-editor/editor-box.blp:233
 msgid "Ticks"
 msgstr "Marcas de escala"
 
-#: data/ui/style-editor/editor-box.blp:224
+#: data/ui/style-editor/editor-box.blp:236
 msgid "Tick Directions"
 msgstr "Direções das marcas"
 
-#: data/ui/style-editor/editor-box.blp:228
+#: data/ui/style-editor/editor-box.blp:241
 msgid "Inwards"
 msgstr "Para dentro"
 
-#: data/ui/style-editor/editor-box.blp:229
+#: data/ui/style-editor/editor-box.blp:242
 msgid "Outwards"
 msgstr "Para fora"
 
-#: data/ui/style-editor/editor-box.blp:235
+#: data/ui/style-editor/editor-box.blp:248
 msgid "Minor Ticks"
 msgstr "Marcas secundárias"
 
-#: data/ui/style-editor/editor-box.blp:239
+#: data/ui/style-editor/editor-box.blp:253
 msgid "Major Tick Width"
 msgstr "Largura das marcas principais"
 
-#: data/ui/style-editor/editor-box.blp:254
+#: data/ui/style-editor/editor-box.blp:269
 msgid "Minor Tick Width"
 msgstr "Largura das marcas secundárias"
 
-#: data/ui/style-editor/editor-box.blp:270
+#: data/ui/style-editor/editor-box.blp:286
 msgid "Major Tick Length"
 msgstr "Comprimento das marcas principais"
 
-#: data/ui/style-editor/editor-box.blp:285
+#: data/ui/style-editor/editor-box.blp:302
 msgid "Minor Tick Length"
 msgstr "Comprimento das marcas secundárias"
 
-#: data/ui/style-editor/editor-box.blp:301
+#: data/ui/style-editor/editor-box.blp:319
 msgid "Show Tick Labels on all Axes"
 msgstr "Mostrar os rótulos das marcas em todos os eixos"
 
-#: data/ui/style-editor/editor-box.blp:305
+#: data/ui/style-editor/editor-box.blp:324
 msgid "Ticks on Bottom Axis"
 msgstr "Marcas no eixo inferior"
 
-#: data/ui/style-editor/editor-box.blp:309
+#: data/ui/style-editor/editor-box.blp:329
 msgid "Ticks on Left Axis"
 msgstr "Marcas no eixo esquerdo"
 
-#: data/ui/style-editor/editor-box.blp:313
+#: data/ui/style-editor/editor-box.blp:334
 msgid "Ticks on Right Axis"
 msgstr "Marcas no eixo direito"
 
-#: data/ui/style-editor/editor-box.blp:317
+#: data/ui/style-editor/editor-box.blp:339
 msgid "Ticks on Top Axis"
 msgstr "Marcas no eixo superior"
 
-#: data/ui/style-editor/editor-box.blp:322
+#: data/ui/style-editor/editor-box.blp:345
 msgid "Grid"
 msgstr "Grade"
 
-#: data/ui/style-editor/editor-box.blp:325
+#: data/ui/style-editor/editor-box.blp:348
 msgid "Show Grid"
 msgstr "Mostrar grade"
 
-#: data/ui/style-editor/editor-box.blp:329
+#: data/ui/style-editor/editor-box.blp:353
 msgid "Grid Width"
 msgstr "Largura da grade"
 
-#: data/ui/style-editor/editor-box.blp:345
+#: data/ui/style-editor/editor-box.blp:370
 msgid "Grid Opacity"
 msgstr "Opacidade da grade"
 
-#: data/ui/style-editor/editor-box.blp:362
+#: data/ui/style-editor/editor-box.blp:388
 msgid "Padding"
 msgstr "Espaçamento"
 
-#: data/ui/style-editor/editor-box.blp:363
+#: data/ui/style-editor/editor-box.blp:389
 msgid "Padding for different parts of the figure"
 msgstr "Espaçamento para diferentes partes da figura"
 
-#: data/ui/style-editor/editor-box.blp:366
+#: data/ui/style-editor/editor-box.blp:392
 msgid "Value Padding"
 msgstr "Valor do espaçamento"
 
-#: data/ui/style-editor/editor-box.blp:367
+#: data/ui/style-editor/editor-box.blp:393
 msgid "Padding between axes and values"
 msgstr "Espaçamento entre eixos e valores"
 
-#: data/ui/style-editor/editor-box.blp:382
+#: data/ui/style-editor/editor-box.blp:409
 msgid "Label Padding"
 msgstr "Espaçamento do rótulo"
 
-#: data/ui/style-editor/editor-box.blp:383
+#: data/ui/style-editor/editor-box.blp:410
 msgid "Padding between axes and labels"
 msgstr "Espaçamento entre eixos e rótulos"
 
-#: data/ui/style-editor/editor-box.blp:398
+#: data/ui/style-editor/editor-box.blp:426
 msgid "Title Padding"
 msgstr "Espaçamento do título"
 
-#: data/ui/style-editor/editor-box.blp:399
+#: data/ui/style-editor/editor-box.blp:427
 msgid "Padding between axes and the title"
 msgstr "Espaçamento entre eixos e o título"
 
-#: data/ui/style-editor/editor-box.blp:415
+#: data/ui/style-editor/editor-box.blp:444
 msgid "Colors"
 msgstr "Cores"
 
-#: data/ui/style-editor/editor-box.blp:419
+#: data/ui/style-editor/editor-box.blp:448
 msgid "Label text might be hard to read"
 msgstr "O texto do rótulo pode ser difícil de ler"
 
-#: data/ui/style-editor/editor-box.blp:431
+#: data/ui/style-editor/editor-box.blp:460
 msgid "Poor Contrast"
 msgstr "Contraste ruim"
 
-#: data/ui/style-editor/editor-box.blp:447
+#: data/ui/style-editor/editor-box.blp:476
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: data/ui/style-editor/editor-box.blp:458
+#: data/ui/style-editor/editor-box.blp:488
 msgid "Tick Color"
 msgstr "Cor da marca"
 
-#: data/ui/style-editor/editor-box.blp:469
+#: data/ui/style-editor/editor-box.blp:500
 msgid "Axis Color"
 msgstr "Cor do eixo"
 
-#: data/ui/style-editor/editor-box.blp:480
+#: data/ui/style-editor/editor-box.blp:512
 msgid "Grid Color"
 msgstr "Cor da grade"
 
-#: data/ui/style-editor/editor-box.blp:491
+#: data/ui/style-editor/editor-box.blp:524
 msgid "Background Color"
 msgstr "Cor da área de plotagem"
 
-#: data/ui/style-editor/editor-box.blp:502
+#: data/ui/style-editor/editor-box.blp:536
 msgid "Outline Color"
 msgstr "Cor do entorno"
 
-#: data/ui/style-editor/editor-box.blp:509
+#: data/ui/style-editor/editor-box.blp:544
 msgid "Line Colors"
 msgstr "Cores das linhas"
 
-#: data/ui/style-editor/editor-box.blp:513
+#: data/ui/style-editor/editor-box.blp:549
 msgid "Error Bar Colors"
 msgstr "Cores da barra de erro"
 
@@ -1472,19 +1494,19 @@ msgid "Open Style"
 msgstr "Abre um estilo"
 
 #: data/ui/style-editor/window.blp:5 data/ui/style-editor/window.blp:67
-#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:191
+#: data/ui/style-editor/window.blp:238 graphs/style_editor/window.vala:184
 msgid "Graphs Style Editor"
 msgstr "Editor de estilo de Gráficos"
 
-#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:312
+#: data/ui/style-editor/window.blp:105 data/ui/style-editor/window.blp:314
 msgid "Import File…"
 msgstr "Importar um arquivo…"
 
-#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:311
+#: data/ui/style-editor/window.blp:116 data/ui/style-editor/window.blp:313
 msgid "Create Style…"
 msgstr "Criar estilo…"
 
-#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:313
+#: data/ui/style-editor/window.blp:128 data/ui/style-editor/window.blp:315
 msgid "Open File…"
 msgstr "Abrir um arquivo…"
 
@@ -1492,24 +1514,24 @@ msgstr "Abrir um arquivo…"
 msgid "Open Preview"
 msgstr "Abrir prévia"
 
-#: data/ui/style-editor/window.blp:270 data/ui/curve-fitting.blp:176
+#: data/ui/style-editor/window.blp:272 data/ui/curve-fitting.blp:176
 #: data/ui/window.blp:349
 msgid "Canvas Failed to Load"
 msgstr "Falha ao carregar a tela"
 
-#: data/ui/style-editor/window.blp:280
+#: data/ui/style-editor/window.blp:282
 msgid "Open Style…"
 msgstr "Abrir estilo…"
 
-#: data/ui/style-editor/window.blp:281
+#: data/ui/style-editor/window.blp:283
 msgid "Save Style…"
 msgstr "Salvar estilo…"
 
-#: data/ui/style-editor/window.blp:282
+#: data/ui/style-editor/window.blp:284
 msgid "Save Style as…"
 msgstr "Salvar estilo como…"
 
-#: data/ui/style-editor/window.blp:283
+#: data/ui/style-editor/window.blp:285
 msgid "Close Style…"
 msgstr "Fechar estilo…"
 
@@ -1517,13 +1539,17 @@ msgstr "Fechar estilo…"
 msgid "Add Equation"
 msgstr "Adicionar equação"
 
-#: data/ui/add-equation.blp:44 data/ui/generate-data.blp:48
+#: data/ui/add-equation.blp:48 data/ui/generate-data.blp:48
 msgid "Enter a mathematical expression"
 msgstr "Insira uma expressão matemática"
 
-#: data/ui/add-equation.blp:59 data/ui/generate-data.blp:59
+#: data/ui/add-equation.blp:63 data/ui/generate-data.blp:59
 msgid "Name (optional)"
 msgstr "Nome (opcional)"
+
+#: data/ui/add-equation.blp:69
+msgid "Variables"
+msgstr "Variáveis"
 
 #: data/ui/color-button.blp:4 data/ui/color-row.blp:5
 msgid "Change Color"
@@ -1715,14 +1741,6 @@ msgstr "Use o mesmo tamanho do programa"
 msgid "Initial Guess"
 msgstr "Palpite inicial"
 
-#: data/ui/fitting-parameters.blp:45
-msgid "Minimum"
-msgstr "Mínimo"
-
-#: data/ui/fitting-parameters.blp:59
-msgid "Maximum"
-msgstr "Máximo"
-
 #: data/ui/generate-data.blp:6
 msgid "Generate Data"
 msgstr "Gerar dados"
@@ -1823,6 +1841,14 @@ msgstr "X ="
 msgid "Discard Unselected Data"
 msgstr "Descartar dados não selecionados"
 
+#: data/ui/variable-box.blp:13
+msgid "Change Value"
+msgstr "Alterar valor"
+
+#: data/ui/variable-box.blp:22 graphs/variable_box.vala:56
+msgid "Animate"
+msgstr "Animar"
+
 #: data/ui/window.blp:220
 msgid "Drop Here to Import"
 msgstr "Arraste aqui para importar"
@@ -1831,7 +1857,7 @@ msgstr "Arraste aqui para importar"
 msgid "Show Sidebar"
 msgstr "Mostrar barra lateral"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:511
+#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:541
 msgid "Undo"
 msgstr "Desfazer"
 
@@ -2029,12 +2055,12 @@ msgstr "Falha ao analisar o arquivo."
 msgid "Item %d"
 msgstr "Item %d"
 
-#: graphs/file_import/parsers/project/__init__.py:22
+#: graphs/file_import/parsers/project/__init__.py:21
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projeto"
 
-#: graphs/file_import/parsers/project/__init__.py:23 graphs/project.vala:21
+#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Arquivo de projeto do Gráficos"
@@ -2074,21 +2100,21 @@ msgstr ""
 msgid "No data found in table column"
 msgstr "Nenhum dado encontrado na coluna da tabela"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/__init__.py:24
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:26
+#: graphs/file_import/parsers/xrdml/__init__.py:25
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:70
+#: graphs/file_import/parsers/xrdml/__init__.py:69
 msgid "No positions found for the scan axis"
 msgstr "Nenhuma posição encontrada para o eixo de escaneamento"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:80
+#: graphs/file_import/parsers/xrdml/__init__.py:79
 msgid "Intensity (cps)"
 msgstr "Intensidade (cps)"
 
@@ -2111,15 +2137,15 @@ msgid "R (1/s)"
 msgstr "R (1/s)"
 
 #: graphs/file_import/parsers/xry/parser.vala:104
-#: graphs/file_import/__init__.py:89
+#: graphs/file_import/__init__.py:95
 msgid "Import failed"
 msgstr "A importação falhou"
 
-#: graphs/file_import/__init__.py:57
+#: graphs/file_import/__init__.py:63
 msgid "parser failed to init settings."
 msgstr "Analisador falhou ao inicializar configurações."
 
-#: graphs/file_import/__init__.py:72
+#: graphs/file_import/__init__.py:78
 msgid "parser failed to init settings widgets."
 msgstr "Analisador falhou ao inicializar o widget de configurações."
 
@@ -2138,23 +2164,23 @@ msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "Arquivos ASCII"
 
-#: graphs/item/data_item.vala:131
+#: graphs/item/data_item.vala:156
 msgid "Dataset"
 msgstr "Conjunto de dados"
 
-#: graphs/item/fill_item.vala:79
+#: graphs/item/fill_item.vala:99
 msgid "Positive Infinity"
 msgstr "Infinito positivo"
 
-#: graphs/item/fill_item.vala:80
+#: graphs/item/fill_item.vala:100
 msgid "Negative Infinity"
 msgstr "Infinito negativo"
 
-#: graphs/item/fill_item.vala:81
+#: graphs/item/fill_item.vala:101
 msgid "Custom Equation…"
 msgstr "Equação personalizada…"
 
-#: graphs/item/fill_item.vala:134
+#: graphs/item/fill_item.vala:154
 msgid "Fill"
 msgstr "Preencher"
 
@@ -2162,10 +2188,24 @@ msgstr "Preencher"
 msgid "Generated Dataset"
 msgstr "Conjunto de dados gerados"
 
+#: graphs/item/marker_item.vala:15
+msgid "Marker"
+msgstr "Marcador"
+
 # Não seria melhor Rótulo?
 #: graphs/item/text_item.vala:11
 msgid "Label"
 msgstr "Camada"
+
+#: graphs/item/variable_item.vala:42
+msgid "Variable"
+msgstr "Variável"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/sidebar/edit_item/variable_box.vala:23
+#, c-format
+msgid "Variable %s"
+msgstr "Variável %s"
 
 #. Remove direction prefix if only one is present
 #: graphs/sidebar/figure_settings.vala:87
@@ -2185,26 +2225,26 @@ msgstr "Padrões atualizados"
 msgid "Color %d"
 msgstr "Cor %d"
 
-#: graphs/style_editor/window.vala:62 graphs/style_editor/window.vala:65
+#: graphs/style_editor/window.vala:56 graphs/style_editor/window.vala:57
 msgid "Example Item"
 msgstr "Exemplo de item"
 
-#: graphs/style_editor/window.vala:225
+#: graphs/style_editor/window.vala:218
 #, c-format
 msgid "Are you sure you want to delete %s?"
 msgstr "Tem certeza de que deseja excluir %s?"
 
 #. Translators: Window title that will be formatted with the stylename.
-#: graphs/style_editor/window.vala:303
+#: graphs/style_editor/window.vala:297
 #, c-format
 msgid "Graphs Style Editor — %s"
 msgstr "Editor de estilo de Gráficos — %s"
 
-#: graphs/style_editor/window.vala:327 graphs/style_io.py:247
+#: graphs/style_editor/window.vala:321 graphs/style_io.py:247
 msgid "X Label"
 msgstr "Rótulo X"
 
-#: graphs/style_editor/window.vala:328 graphs/style_io.py:248
+#: graphs/style_editor/window.vala:322 graphs/style_io.py:248
 msgid "Y Label"
 msgstr "Rótulo Y"
 
@@ -2227,6 +2267,16 @@ msgstr ""
 msgid "Deleted %s"
 msgstr "Excluir %s"
 
+#: graphs/add_equation.vala:97
+msgid "Shared with other equations"
+msgstr "Partilhada com outras equações"
+
+#. Translators: Formatted with the name of a variable
+#: graphs/add_equation.vala:108
+#, c-format
+msgid "%s ="
+msgstr "%s ="
+
 #: graphs/application.vala:14
 msgid "New window"
 msgstr "Nova janela"
@@ -2235,7 +2285,7 @@ msgstr "Nova janela"
 msgid "[FILE…]"
 msgstr "[ARQUIVO…]"
 
-#: graphs/curve_fitting.vala:81
+#: graphs/curve_fitting.vala:83
 msgid ""
 "Please enter valid \n"
 "numeric parameters."
@@ -2243,7 +2293,7 @@ msgstr ""
 "Por favor, insira um \n"
 "parâmetro numérico válido."
 
-#: graphs/curve_fitting.vala:82
+#: graphs/curve_fitting.vala:84
 msgid ""
 "Constraint error: ensure \n"
 "Lower < Initial < Upper."
@@ -2251,7 +2301,7 @@ msgstr ""
 "Erro de restrição: assegure \n"
 "Mínimo < Inicial < Máximo."
 
-#: graphs/curve_fitting.vala:83
+#: graphs/curve_fitting.vala:85
 msgid ""
 "Matrix error: Data is \n"
 "insufficient for this model."
@@ -2259,7 +2309,7 @@ msgstr ""
 "Erro de Matriz: Os dados são \n"
 "insuficientes para este modelo."
 
-#: graphs/curve_fitting.vala:84
+#: graphs/curve_fitting.vala:86
 msgid ""
 "Fit failed: Max iterations \n"
 "reached without converging."
@@ -2267,7 +2317,7 @@ msgstr ""
 "Ajuste falhou: Máximo de interações \n"
 "alcançado sem conversão."
 
-#: graphs/curve_fitting.vala:85
+#: graphs/curve_fitting.vala:87
 msgid ""
 "Domain error: Equation not \n"
 "valid for this data range."
@@ -2275,7 +2325,7 @@ msgstr ""
 "Erro de domínio: Equação inválida \n"
 "para este intervalo de dados."
 
-#: graphs/curve_fitting.vala:86
+#: graphs/curve_fitting.vala:88
 msgid ""
 "Invalid equation: Check \n"
 "syntax and variables."
@@ -2283,7 +2333,7 @@ msgstr ""
 "Equação inválida: Verifique \n"
 "a sintaxe e variáveis."
 
-#: graphs/curve_fitting.vala:87
+#: graphs/curve_fitting.vala:89
 msgid ""
 "Confidence band error: \n"
 "Covariance matrix is unstable."
@@ -2291,37 +2341,37 @@ msgstr ""
 "Erro de banda de confiança: \n"
 "Matriz de covariância é instável."
 
-#: graphs/curve_fitting.vala:271
+#: graphs/curve_fitting.vala:280
 msgid "Residuals"
 msgstr "Resíduos"
 
-#: graphs/curve_fitting.vala:373
+#: graphs/curve_fitting.vala:383
 msgid "Parameters"
 msgstr "Parâmetros"
 
-#: graphs/curve_fitting.vala:389
+#: graphs/curve_fitting.vala:399
 msgid "Statistics"
 msgstr "Estatísticas"
 
-#: graphs/curve_fitting.vala:392
+#: graphs/curve_fitting.vala:400
 msgid "R²"
 msgstr "R²"
 
-#: graphs/curve_fitting.vala:392
+#: graphs/curve_fitting.vala:400
 msgid "RMSE"
 msgstr "RMSE"
 
-#: graphs/curve_fitting.vala:574
+#: graphs/curve_fitting.vala:583
 #, c-format
 msgid "Fitting Parameters for %s"
 msgstr "Ajustando parâmetros para %s"
 
-#: graphs/data.py:347
+#: graphs/data.py:340
 msgid "Failed to load project"
 msgstr "Falha ao carregar o projeto"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.vala:503
+#: graphs/data.vala:629
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr ""
@@ -2329,7 +2379,7 @@ msgstr ""
 "sistema"
 
 # Aqui, parece haver um erro na string original.
-#: graphs/data.vala:934
+#: graphs/data.vala:1071
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr ""
@@ -2349,11 +2399,11 @@ msgstr "Figura exportada"
 msgid "No data to export"
 msgstr "Não há dados para exportar"
 
-#: graphs/export_items.vala:25 graphs/export_items.vala:41
+#: graphs/export_items.vala:31 graphs/export_items.vala:47
 msgid "Exported Data"
 msgstr "Dados exportados"
 
-#: graphs/export_items.vala:34
+#: graphs/export_items.vala:40
 msgctxt "file-filter"
 msgid "Text Files"
 msgstr "Arquivos de texto"
@@ -2363,47 +2413,47 @@ msgctxt "file-filter"
 msgid "Matplotlib Style File"
 msgstr "Arquivo de estilo Matplotlib"
 
-#: graphs/operations.py:210
+#: graphs/operations.py:218
 msgid "Unable to perform transformation, make sure the syntax is correct"
 msgstr ""
 "Não foi possível executar a transformação. Verifique se a sintaxe está "
 "correta"
 
-#: graphs/operations.py:274
+#: graphs/operations.py:287
 msgid "No data found in highlighted area"
 msgstr "Nenhum dado encontrado dentro da área destacada"
 
-#: graphs/operations.py:278
+#: graphs/operations.py:291
 msgid "Some items lack error bars; they will be discarded"
 msgstr "Alguns itens não possuem barras de erro; eles serão descartados"
 
-#: graphs/operations.py:290
+#: graphs/operations.py:303
 msgid "Combined Data"
 msgstr "Dados combinados"
 
-#: graphs/operations.py:312 graphs/operations.py:562 graphs/operations.py:566
+#: graphs/operations.py:325 graphs/operations.py:628 graphs/operations.py:632
 msgid "No data found within the highlighted area"
 msgstr "Nenhum dado encontrado na área destacada"
 
-#: graphs/operations.py:378
+#: graphs/operations.py:439
 #, python-brace-format
 msgid "The operation on {name} did not result in a plottable equation"
 msgstr "A operação em {name} não resultou em uma equação plotável"
 
-#: graphs/operations.py:384
+#: graphs/operations.py:448
 msgid "Operation not supported for equations."
 msgstr "Operação não suportada para equações."
 
-#: graphs/operations.py:575
+#: graphs/operations.py:641
 msgid "Operation not supported for data items"
 msgstr "Operação não suportada para itens de dados"
 
-#: graphs/operations.py:578
+#: graphs/operations.py:644
 #, python-brace-format
 msgid "{name}: Error performing the operation"
 msgstr "{name}: Erro ao executar a operação"
 
-#: graphs/operations.py:585
+#: graphs/operations.py:653
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Os dados que estavam fora da área destacada foram descartados"
 
@@ -2483,7 +2533,7 @@ msgstr "Não foi possível analisar {filename}"
 msgid "File {file}, does not contain name tag"
 msgstr "Arquivo {file}, não contém uma etiqueta de nome"
 
-#: graphs/styles.vala:107
+#: graphs/styles.vala:160
 msgid "System"
 msgstr "Sistema"
 
@@ -2495,38 +2545,48 @@ msgstr "Todos os arquivos"
 msgid "Document Portal"
 msgstr "Portal de documentos"
 
-#: graphs/window.vala:165
+#: graphs/variable_box.vala:56
+msgid "Stop Animation"
+msgstr "Parar animação"
+
+#. Translators: The name of a variable followed by its value
+#: graphs/variable_box.vala:62
+#, c-format
+msgid "%s = %s"
+msgstr "%s = %s"
+
+#: graphs/window.vala:170
 msgid "Graphs (Development)"
 msgstr "Gráficos (Desenvolvimento)"
 
-#: graphs/window.vala:192
+#: graphs/window.vala:197
 msgid "Untitled Project"
 msgstr "Projeto sem título"
 
-#: graphs/window.vala:193
+#: graphs/window.vala:198
 msgid "Draft"
 msgstr "Rascunho"
 
 #. Translators: Window title that will be formatted with the project name.
-#: graphs/window.vala:199
+#: graphs/window.vala:204
 #, c-format
 msgid "Graphs — %s"
 msgstr "Gráficos — %s"
 
 #. Translators: Formatted with item name and data points respectively
-#: graphs/window.vala:473
+#: graphs/window.vala:503
 #, c-format
 msgid "%s is drawn with reduced detail using %d points"
 msgstr "%s é desenhado em detalhe reduzido usando %d pontos"
 
-#: graphs/window.vala:479
+#: graphs/window.vala:509
 #, c-format
 msgid "%d item is drawn with reduced detail using %d points"
 msgid_plural "%d items are drawn with reduced detail using %d points"
 msgstr[0] "%d item é desenhado em detalhe reduzido usando %d pontos"
 msgstr[1] "%d itens são desenhados em detalhe reduzido usando %d pontos"
 
-#: graphs/window.vala:501
+#: graphs/window.vala:531
 msgid "Open Location"
 msgstr "Abrir local"
 
@@ -2712,9 +2772,6 @@ msgstr "Abrir local"
 
 #~ msgid "Line Properties"
 #~ msgstr "Propriedades da linha"
-
-#~ msgid "Step Size"
-#~ msgstr "Taxa de variação"
 
 #, python-brace-format
 #~ msgid "{error} - Unable to add data from equation"
