@@ -7,7 +7,7 @@ from collections.abc import Iterator
 from gettext import gettext as _
 from operator import itemgetter
 
-from gi.repository import Gio, Graphs, Gtk
+from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import project
 from graphs.item import ItemFactory
@@ -76,15 +76,20 @@ class Data(Graphs.Data):
         ))
 
     @staticmethod
-    def _on_item_changed(self, item: Graphs.Item, prop: str) -> None:
-        index = self.index(item)
+    def _on_item_changed(
+        self,
+        index: int,
+        prop: str,
+        old_value: GLib.Variant,
+        new_value: GLib.Variant,
+    ) -> None:
         self._current_batch.append((
             Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
             (
                 index,
                 prop,
-                copy.deepcopy(self._data_copy[index][prop]),
-                ItemFactory.serialize_property(item, prop),
+                old_value.unpack(),
+                new_value.unpack(),
             ),
         ))
 
@@ -102,9 +107,6 @@ class Data(Graphs.Data):
     def _set_data_copy(self) -> None:
         """Set a deep copy for the data."""
         self._current_batch: list = []
-        self._data_copy = copy.deepcopy(
-            [ItemFactory.to_dict(item, self) for item in self],
-        )
         self._figure_settings_copy = copy.deepcopy({
             prop.replace("_", "-"):
             self.props.figure_settings.get_property(prop)
@@ -191,8 +193,6 @@ class Data(Graphs.Data):
 
     def _undo(self) -> None:
         """Undo the latest change that was added to the clipboard."""
-        if not self.props.can_undo:
-            return
         batch = self._history_states[self._history_pos][0]
         self._history_pos -= 1
         selected = Gtk.Bitset.new_empty()
@@ -236,8 +236,6 @@ class Data(Graphs.Data):
 
     def _redo(self) -> None:
         """Redo the latest change that was added to the clipboard."""
-        if not self.props.can_redo:
-            return
         self._history_pos += 1
         state = self._history_states[self._history_pos]
         selected = Gtk.Bitset.new_empty()

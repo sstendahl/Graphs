@@ -46,6 +46,7 @@ namespace Graphs {
         private int _oldest_view_history_state = 0;
         private int _newest_view_history_state = 0;
         private StyleParameters old_selected_style_params;
+        private Variant[] _data_copy;
 
         public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
@@ -53,7 +54,7 @@ namespace Graphs {
 
         // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
-        protected signal void item_changed (Item item, string prop_name);
+        protected signal void item_changed (uint index, string prop, Variant old_value, Variant new_value);
         protected signal void item_added (Item item);
         protected signal void item_removed (Item item, uint index);
         protected signal void figure_settings_changed (string prop);
@@ -108,6 +109,7 @@ namespace Graphs {
             });
 
             _view_history_states[0] = figure_settings.get_limits ();
+            _set_data_copy ();
             PythonHelper.run_method (this, "_init_history_states");
         }
 
@@ -544,6 +546,7 @@ namespace Graphs {
             _update_visibility ();
             _update_used_positions ();
             items_changed.emit (0, removed, _items.length);
+            _set_data_copy ();
         }
 
         public void delete_items (Item[] items) {
@@ -884,8 +887,17 @@ namespace Graphs {
 
         // Section history
 
+        private void _set_data_copy () {
+            int n_items = _items.length;
+            _data_copy = new Variant[n_items];
+            for (int i = 0; i < n_items; i++) {
+                _data_copy[i] = _items.get (i).to_variant ();
+            }
+        }
+
         public void add_history_state () {
             if (!add_history_state_request.emit ()) return;
+            _set_data_copy ();
             this.can_undo = true;
             this.can_redo = false;
             this.unsaved = true;
@@ -893,15 +905,19 @@ namespace Graphs {
         }
 
         public void undo () {
+            if (!can_undo) return;
             _restoring = true;
             PythonHelper.run_method (this, "_undo");
+            _set_data_copy ();
             _restoring = false;
             add_view_history_state ();
         }
 
         public void redo () {
+            if (!can_redo) return;
             _restoring = true;
             PythonHelper.run_method (this, "_redo");
+            _set_data_copy ();
             _restoring = false;
             add_view_history_state ();
         }
@@ -1008,10 +1024,18 @@ namespace Graphs {
 
         // Section listeners
 
-        private void _on_item_change (Object item, ParamSpec spec) {
+        private void _on_item_change (Object object, ParamSpec spec) {
             if (spec.name == "visible") return;
 
-            item_changed.emit ((Item) item, spec.name);
+            var item = (Item) object;
+            unowned string prop = spec.name;
+            uint i = index (item);
+            item_changed.emit (
+                i,
+                prop,
+                _data_copy[i].lookup_value (prop, null),
+                item.serialize_property (prop)
+            );
         }
 
         private void _on_item_selected (Object object, ParamSpec spec) {
