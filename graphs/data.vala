@@ -56,8 +56,8 @@ namespace Graphs {
         // Clipboard signals
         protected signal void position_changed (uint index1, uint index2);
         protected signal void item_changed (uint index, string prop, Variant old_value, Variant new_value);
-        protected signal void item_added (Item item);
-        protected signal void item_removed (Item item, uint index);
+        protected signal void item_added (Variant variant);
+        protected signal void item_removed (Variant variant, uint index);
         protected signal void figure_settings_changed (string prop, Variant old_value, Variant new_value);
 
         construct {
@@ -417,11 +417,11 @@ namespace Graphs {
             if (!_restoring) {
                 foreach (VariableItem item in _create_missing_variables (equation_item, {})) {
                     _add_item (item);
-                    item_added.emit (item);
+                    item_added.emit (item.to_variant (index));
                 }
                 foreach (VariableItem item in _get_unused_variables ()) {
                     uint index = (uint) _items.index (item);
-                    item_removed.emit (item, index);
+                    item_removed.emit (item.to_variant (this.index), index);
                     _remove_item (index);
                 }
             }
@@ -464,7 +464,7 @@ namespace Graphs {
                     if (get_variable_item (((VariableItem) item).variable) != null) continue;
                     _items.append (item);
                     _connect_to_item (item);
-                    item_added.emit (item);
+                    item_added.emit (item.to_variant (index));
                     continue;
                 }
 
@@ -528,7 +528,7 @@ namespace Graphs {
                 }
                 item.visible = !figure_settings.hide_unselected || item.selected;
                 _connect_to_item (item);
-                item_added.emit (item);
+                item_added.emit (item.to_variant (index));
             }
             _update_variable_values ();
             items_changed.emit (prev_size, 0, _items.length - prev_size);
@@ -571,7 +571,7 @@ namespace Graphs {
                 int position = _items.index (item);
                 if (position < 0) continue;
                 uint index = (uint) position;
-                item_removed.emit (item, index);
+                item_removed.emit (item.to_variant (this.index), index);
                 _remove_item (index);
 
                 string axis_label;
@@ -892,7 +892,7 @@ namespace Graphs {
             int n_items = _items.length;
             _data_copy = new Variant[n_items];
             for (int i = 0; i < n_items; i++) {
-                _data_copy[i] = _items.get (i).to_variant ();
+                _data_copy[i] = _items.get (i).to_variant (index);
             }
 
             _figure_settings_copy = new HashTable<string, Variant> (str_hash, str_equal);

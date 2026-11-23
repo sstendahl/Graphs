@@ -374,5 +374,21 @@ namespace Graphs {
 
             return base.serialize_property (prop);
         }
+
+        protected override void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
+            try {
+                if (_upper.equation != null)
+                    builder.add ("{sv}", "upper_equation", new Variant.string (ast_to_expression (_upper.equation)));
+
+                if (_lower.equation != null)
+                    builder.add ("{sv}", "lower_equation", new Variant.string (ast_to_expression (_lower.equation)));
+
+                if (_upper.item != null)
+                    builder.add ("{sv}", "upper_source", new Variant.int32 ((int) callback (_upper.item)));
+
+                if (_lower.item != null)
+                    builder.add ("{sv}", "lower_source", new Variant.int32 ((int) callback (_lower.item)));
+            } catch (MathError e) { assert_not_reached (); }
+        }
     }
 }
