@@ -258,7 +258,7 @@ class ProjectValidator:
                         index, prop, value = itemgetter(0, 1, 3)(change)
                         self.items[index].deserialize_property(
                             prop,
-                            utilities.value_to_gvariant(value)
+                            utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
@@ -279,7 +279,7 @@ class ProjectValidator:
                         index, prop, value = itemgetter(0, 1, 2)(change)
                         self.items[index].deserialize_property(
                             prop,
-                            utilities.value_to_gvariant(value)
+                            utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()

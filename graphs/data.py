@@ -65,7 +65,8 @@ class Data(Graphs.Data):
 
     @staticmethod
     def _on_item_removed(self, item: GLib.Variant, index: int) -> None:
-        self._current_batch.append((Graphs.ChangeType.ITEM_REMOVED, item))
+        change = Graphs.ChangeType.ITEM_REMOVED, (index, item)
+        self._current_batch.append(change)
 
     @staticmethod
     def _on_item_changed(
