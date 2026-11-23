@@ -60,5 +60,16 @@ namespace Graphs {
 
             return base.serialize_property (prop);
         }
+
+        public override bool deserialize_property (string prop, Variant variant) {
+            if (prop == "equation") {
+                try {
+                    equation = expression_to_ast (variant.get_string ());
+                    return true;
+                } catch (MathError e) { assert_not_reached (); }
+            }
+
+            return base.deserialize_property (prop, variant);
+        }
     }
 }

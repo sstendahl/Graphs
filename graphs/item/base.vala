@@ -115,6 +115,41 @@ namespace Graphs {
             }
         }
 
+        public virtual bool deserialize_property (string prop, Variant variant) {
+            ParamSpec? pspec = get_class ().find_property (prop);
+            if (pspec == null) return false;
+            var type = pspec.value_type;
+
+            Value val = Value (type);
+
+            if (type.is_enum ()) {
+                val.set_enum (variant.get_int32 ());
+            } else {
+                switch (pspec.value_type) {
+                    case Type.STRING:
+                        val.set_string (variant.get_string ());
+                        break;
+                    case Type.BOOLEAN:
+                        val.set_boolean (variant.get_boolean ());
+                        break;
+                    case Type.INT:
+                        val.set_int (variant.get_int32 ());
+                        break;
+                    case Type.DOUBLE:
+                        val.set_double (variant.get_double ());
+                        break;
+                    case Type.FLOAT:
+                        val.set_float ((float) variant.get_double ());
+                        break;
+                    default:
+                        return false;
+                }
+            }
+
+            set_property (prop, val);
+            return true;
+        }
+
         public Variant to_variant () {
             var builder = new VariantBuilder (new VariantType ("a{sv}"));
 
