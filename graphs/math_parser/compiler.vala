@@ -179,6 +179,42 @@ namespace Graphs.MathParser {
             add_instruction (OpCode.ASIN);
         }
 
+        private void coth () {
+            // coth(x) = 1 / tanh(x)
+            add_instruction (OpCode.TANH);
+            add_instruction (OpCode.INV);
+        }
+
+        private void sech () {
+            // sech(x) = 1 / cosh(x)
+            add_instruction (OpCode.COSH);
+            add_instruction (OpCode.INV);
+        }
+
+        private void csch () {
+            // csch(x) = 1 / sinh(x)
+            add_instruction (OpCode.SINH);
+            add_instruction (OpCode.INV);
+        }
+
+        private void acoth () {
+            // acoth(x) = atanh(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ATANH);
+        }
+
+        private void asech () {
+            // asech(x) = acosh(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ACOSH);
+        }
+
+        private void acsch () {
+            // acsch(x) = asinh(1 / x)
+            add_instruction (OpCode.INV);
+            add_instruction (OpCode.ASINH);
+        }
+
         private bool function (Expression expr) {
             if (!emit (expr.right ())) return false;
 
@@ -213,6 +249,17 @@ namespace Graphs.MathParser {
 
                 case Ident.SINH: add_instruction (OpCode.SINH); return true;
                 case Ident.COSH: add_instruction (OpCode.COSH); return true;
+                case Ident.TANH: add_instruction (OpCode.TANH); return true;
+                case Ident.COTH: coth (); return true;
+                case Ident.SECH: sech (); return true;
+                case Ident.CSCH: csch (); return true;
+
+                case Ident.ASINH: add_instruction (OpCode.ASINH); return true;
+                case Ident.ACOSH: add_instruction (OpCode.ACOSH); return true;
+                case Ident.ATANH: add_instruction (OpCode.ATANH); return true;
+                case Ident.ACOTH: acoth (); return true;
+                case Ident.ASECH: asech (); return true;
+                case Ident.ACSCH: acsch (); return true;
 
                 case Ident.LN: add_instruction (OpCode.LN); return true;
                 case Ident.LOG2: add_instruction (OpCode.LOG2); return true;

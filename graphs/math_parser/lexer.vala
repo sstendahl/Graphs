@@ -210,7 +210,6 @@ namespace Graphs.MathParser {
                SI, SIN,
                SQ, SQR,
             T, TA, TAN,
-
         }
 
         private void handle_identifier () {
@@ -281,10 +280,12 @@ namespace Graphs.MathParser {
 
                     case TrieState.ACOS:
                         if (c == 'd') { current_ident = Ident.ACOSD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ACOSH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.ACOT:
                         if (c == 'd') { current_ident = Ident.ACOTD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ACOTH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.ACS:
@@ -293,6 +294,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.ACSC:
                         if (c == 'd') { current_ident = Ident.ACSCD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ACSCH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.AR:
@@ -317,6 +319,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.ASEC:
                         if (c == 'd') { current_ident = Ident.ASECD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ASECH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.ASI:
@@ -325,6 +328,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.ASIN:
                         if (c == 'd') { current_ident = Ident.ASIND; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ASINH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.AT:
@@ -337,6 +341,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.ATAN:
                         if (c == 'd') { current_ident = Ident.ATAND; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.ATANH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.C:
@@ -356,6 +361,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.COT:
                         if (c == 'd') { current_ident = Ident.COTD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.COTH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.CS:
@@ -364,6 +370,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.CSC:
                         if (c == 'd') { current_ident = Ident.CSCD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.CSCH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.E:
@@ -416,6 +423,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.SEC:
                         if (c == 'd') { current_ident = Ident.SECD; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.SECH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     case TrieState.SI:
@@ -445,6 +453,7 @@ namespace Graphs.MathParser {
 
                     case TrieState.TAN:
                         if (c == 'd') { current_ident = Ident.TAND; state = TrieState.CUSTOM; }
+                        else if (c == 'h') { current_ident = Ident.TANH; state = TrieState.CUSTOM; }
                         else { current_ident = Ident.CUSTOM; state = TrieState.CUSTOM; } break;
 
                     default: assert_not_reached ();

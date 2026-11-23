@@ -113,6 +113,18 @@ namespace Graphs.MathParser {
                 // hyperbolic
                 case Ident.SINH: return Math.sinh (x);
                 case Ident.COSH: return Math.cosh (x);
+                case Ident.TANH: return Math.tanh (x);
+                case Ident.COTH: return 1d / Math.tanh (x);
+                case Ident.SECH: return 1d / Math.cosh (x);
+                case Ident.CSCH: return 1d / Math.sinh (x);
+
+                // inverse hyperbolic
+                case Ident.ASINH: return Math.asinh (x);
+                case Ident.ACOSH: return Math.acosh (x);
+                case Ident.ATANH: return Math.atanh (x);
+                case Ident.ACOTH: return Math.atanh (1d / x);
+                case Ident.ASECH: return Math.acosh (1d / x);
+                case Ident.ACSCH: return Math.asinh (1d / x);
 
                 // misc
                 case Ident.LN: return Math.log (x);

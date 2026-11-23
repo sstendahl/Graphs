@@ -98,10 +98,33 @@ private void test_inverse_trig_functions () {
 }
 
 private void test_hyperbolic_functions () {
+    // Hyperbolic sine, cosine and tangent.
     assert_evaluate_result ("sinh(0)", 0);
     assert_evaluate_result ("cosh(0)", 1);
+    assert_evaluate_result ("tanh(0)", 0);
+
     assert_evaluate_result ("sinh(1)", (Math.E - 1 / Math.E) / 2);
     assert_evaluate_result ("cosh(1)", (Math.E + 1 / Math.E) / 2);
+    assert_evaluate_result ("tanh(1)", Math.tanh (1));
+
+    // Hyperbolic cosecant, secant and cotangent.
+    assert_evaluate_result ("csch(1)", 1 / Math.sinh (1));
+    assert_evaluate_result ("sech(0)", 1);
+    assert_evaluate_result ("coth(1)", 1 / Math.tanh (1));
+
+    // Inverse hyperbolic sine, cosine and tangent.
+    assert_evaluate_result ("asinh(0)", 0);
+    assert_evaluate_result ("acosh(1)", 0);
+    assert_evaluate_result ("atanh(0)", 0);
+
+    assert_evaluate_result ("asinh(sinh(1))", 1);
+    assert_evaluate_result ("acosh(cosh(1))", 1);
+    assert_evaluate_result ("atanh(tanh(1))", 1);
+
+    // Inverse hyperbolic cosecant, secant and cotangent.
+    assert_evaluate_result ("acsch(1)", Math.asinh (1));
+    assert_evaluate_result ("asech(1)", 0);
+    assert_evaluate_result ("acoth(2)", 0.5 * Math.log (3));
 }
 
 private void test_misc_functions () {
