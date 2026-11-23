@@ -52,3 +52,24 @@ def equation_to_data(
         scale,
     )
     return get_xydata(holder)
+
+
+def value_to_gvariant(value) -> GLib.Variant:
+    """Convert a value to a GVariant."""
+    if isinstance(value, (tuple, list)):
+        if len(value) == 4:
+            # DataHolder
+            return GLib.Variant("(adadmadmad)", value)
+        elif len(value) == 3:
+            # FillHolder
+            return GLib.Variant("(adadad)", value)
+    elif isinstance(value, bool):
+        return GLib.Variant("b", value)
+    elif isinstance(value, int):
+        return GLib.Variant("i", value)
+    elif isinstance(value, float):
+        return GLib.Variant("d", value)
+    elif isinstance(value, str):
+        return GLib.Variant("s", value)
+    else:
+        raise TypeError(f"Unsupported type: {type(value).__name__}")

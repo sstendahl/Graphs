@@ -76,6 +76,29 @@ namespace Graphs {
                 yerr_builder
             );
         }
+
+        public DataHolder.from_variant (Variant variant) {
+            var xdata = variant.get_child_value (0);
+            var ydata = variant.get_child_value (1);
+            var xerr = variant.get_child_value (2);
+            var yerr = variant.get_child_value (3);
+
+            uint n = (uint) xdata.n_children ();
+
+            _xdata = new double[n];
+            _ydata = new double[n];
+            _xerr = xerr.is_of_type (new VariantType ("mad")) ? null : new double[n];
+            _yerr = yerr.is_of_type (new VariantType ("mad")) ? null : new double[n];
+
+            for (uint i = 0; i < n; i++) {
+                _xdata[i] = xdata.get_child_value (i).get_double ();
+                _ydata[i] = ydata.get_child_value (i).get_double ();
+                if (_xerr != null)
+                    _xerr[i] = xerr.get_child_value (i).get_double ();
+                if (_yerr != null)
+                    _yerr[i] = yerr.get_child_value (i).get_double ();
+            }
+        }
     }
 
     public enum DataLinestyle {
@@ -203,6 +226,15 @@ namespace Graphs {
                 return data.to_variant ();
 
             return base.serialize_property (prop);
+        }
+
+        public override bool deserialize_property (string prop, Variant variant) {
+            if (prop == "data") {
+                data = new DataHolder.from_variant (variant);
+                return true;
+            }
+
+            return base.deserialize_property (prop, variant);
         }
     }
 }

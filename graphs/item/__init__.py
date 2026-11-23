@@ -2,6 +2,8 @@
 """Module for data Items."""
 from gi.repository import Graphs
 
+from graphs import utilities
+
 
 class ItemFactory():
     """Item factory."""
@@ -88,15 +90,7 @@ class ItemFactory():
     @staticmethod
     def deserialize_property(item: Graphs.Item, prop: str, value) -> None:
         """Set an item's property from a serializable format."""
-        if prop == "data":
-            if isinstance(item, Graphs.DataItem):
-                item.set_data(Graphs.DataHolder.new(*value))
-            elif isinstance(item, Graphs.FillItem):
-                item.set_data(Graphs.FillHolder.new(*value))
-        elif prop == "equation":
-            item.set_property(prop, Graphs.expression_to_ast(value))
-        else:
-            item.set_property(prop, value)
+        item.deserialize_property(prop, utilities.value_to_gvariant(value))
 
     @staticmethod
     def to_dict(item: Graphs.Item, items: list[Graphs.Item]) -> dict:
