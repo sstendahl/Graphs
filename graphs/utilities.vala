@@ -106,6 +106,30 @@ namespace Graphs {
 
     namespace Tools {
         /**
+         * Convert a value to a variant for serialization.
+         */
+        public Variant? value_to_variant (Value val) {
+            var type = val.type ();
+            if (type.is_enum ())
+                return new Variant.int32 (val.get_enum ());
+
+            switch (type) {
+                case Type.STRING:
+                    return new Variant.string (val.get_string ());
+                case Type.BOOLEAN:
+                    return new Variant.boolean (val.get_boolean ());
+                case Type.INT:
+                    return new Variant.int32 (val.get_int ());
+                case Type.DOUBLE:
+                    return new Variant.double (val.get_double ());
+                case Type.FLOAT:
+                    return new Variant.double ((double) val.get_float ());
+                default:
+                    return null;
+            }
+        }
+
+        /**
          * Reset a settings instance to default values.
          */
         public void reset_settings (Settings settings) {

@@ -51,7 +51,7 @@ class Data(Graphs.Data):
         limits = self.props.figure_settings.get_limits().values()
         self._history_states = [([], limits)]
         self._history_pos = -1
-        self._set_data_copy()
+        self._current_batch = []
 
     @staticmethod
     def _on_position_changed(self, index1: int, index2: int) -> None:
@@ -94,24 +94,20 @@ class Data(Graphs.Data):
         ))
 
     @staticmethod
-    def _on_figure_settings_changed(self, prop: str) -> None:
+    def _on_figure_settings_changed(
+        self,
+        prop: str,
+        old_value: GLib.Variant,
+        new_value: GLib.Variant,
+    ) -> None:
         self._current_batch.append((
             Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
             (
                 prop,
-                copy.deepcopy(self._figure_settings_copy[prop]),
-                copy.deepcopy(self.props.figure_settings.get_property(prop)),
+                old_value.unpack(),
+                new_value.unpack(),
             ),
         ))
-
-    def _set_data_copy(self) -> None:
-        """Set a deep copy for the data."""
-        self._current_batch: list = []
-        self._figure_settings_copy = copy.deepcopy({
-            prop.replace("_", "-"):
-            self.props.figure_settings.get_property(prop)
-            for prop in dir(self.props.figure_settings.props)
-        })
 
     def _collapse_current_batch(self) -> None:
         """
@@ -188,7 +184,7 @@ class Data(Graphs.Data):
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
             self._history_states = self._history_states[1:]
-        self._set_data_copy()
+        self._current_batch = []
         return True
 
     def _undo(self) -> None:
@@ -232,7 +228,7 @@ class Data(Graphs.Data):
         self.props.can_redo = True
         self.props.can_undo = \
             abs(self._history_pos) < len(self._history_states)
-        self._set_data_copy()
+        self._current_batch = []
 
     def _redo(self) -> None:
         """Redo the latest change that was added to the clipboard."""
@@ -270,7 +266,7 @@ class Data(Graphs.Data):
         self.get_figure_settings().set_limits(Graphs.Limits.new(state[1]))
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
-        self._set_data_copy()
+        self._current_batch = []
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
@@ -303,7 +299,7 @@ class Data(Graphs.Data):
         self.set_items(ItemFactory.new_from_dicts(project_dict["data"]))
 
         # Set clipboard
-        self._set_data_copy()
+        self._current_batch = []
         self._history_states = project_dict["history-states"]
         self._history_pos = project_dict["history-position"]
         view_states = project_dict["view-history-states"]
