@@ -47,6 +47,7 @@ namespace Graphs {
         private int _newest_view_history_state = 0;
         private StyleParameters old_selected_style_params;
         private Variant[] _data_copy;
+        private HashTable <string, Variant> _figure_settings_copy;
 
         public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
@@ -57,7 +58,7 @@ namespace Graphs {
         protected signal void item_changed (uint index, string prop, Variant old_value, Variant new_value);
         protected signal void item_added (Item item);
         protected signal void item_removed (Item item, uint index);
-        protected signal void figure_settings_changed (string prop);
+        protected signal void figure_settings_changed (string prop, Variant old_value, Variant new_value);
 
         construct {
             items_changed.connect (_update_used_positions);
@@ -893,6 +894,13 @@ namespace Graphs {
             for (int i = 0; i < n_items; i++) {
                 _data_copy[i] = _items.get (i).to_variant ();
             }
+
+            _figure_settings_copy = new HashTable<string, Variant> (str_hash, str_equal);
+            foreach (var spec in _figure_settings.get_class ().list_properties ()) {
+                Value val = Value (spec.value_type);
+                _figure_settings.get_property (spec.name, ref val);
+                _figure_settings_copy.set (spec.name, Tools.value_to_variant (val));
+            }
         }
 
         public void add_history_state () {
@@ -1048,10 +1056,16 @@ namespace Graphs {
         }
 
         private void _on_figure_settings_change (Object settings, ParamSpec spec) {
-            if (spec.name == "min-selected" || spec.name == "max-selected") return;
-            if (spec.name in LIMIT_NAMES) return;
+            var prop = spec.name;
+            if (prop == "min-selected" || prop == "max-selected") return;
+            if (prop in LIMIT_NAMES) return;
 
-            figure_settings_changed.emit (spec.name);
+            Value val = Value (spec.value_type);
+            figure_settings.get_property (prop, ref val);
+            var new_value = Tools.value_to_variant (val);
+            var old_value = _figure_settings_copy.get (prop);
+
+            figure_settings_changed.emit (prop, old_value, new_value);
         }
 
         private void _update_visibility () {
