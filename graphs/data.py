@@ -9,7 +9,7 @@ from operator import itemgetter
 
 from gi.repository import GLib, Gio, Graphs, Gtk
 
-from graphs import project
+from graphs import project, utilities
 from graphs.item import ItemFactory
 
 
@@ -48,8 +48,7 @@ class Data(Graphs.Data):
         return self.get_item(pos)
 
     def _init_history_states(self) -> None:
-        limits = self.props.figure_settings.get_limits().values()
-        self._history_states = [([], limits)]
+        self._history_states = [([], self.props.figure_settings.get_limits())]
         self._history_pos = -1
         self._current_batch = []
 
@@ -88,8 +87,8 @@ class Data(Graphs.Data):
             (
                 index,
                 prop,
-                old_value.unpack(),
-                new_value.unpack(),
+                old_value,
+                new_value,
             ),
         ))
 
@@ -104,8 +103,8 @@ class Data(Graphs.Data):
             Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
             (
                 prop,
-                old_value.unpack(),
-                new_value.unpack(),
+                old_value,
+                new_value,
             ),
         ))
 
@@ -179,7 +178,7 @@ class Data(Graphs.Data):
         if self._history_pos != -1:
             self._history_states = self._history_states[:self._history_pos + 1]
         self._history_pos = -1
-        limits = self.get_figure_settings().get_limits().values()
+        limits = self.get_figure_settings().get_limits()
         self._history_states.append((self._current_batch, limits))
         # Keep history states length limited to 100 spots
         if len(self._history_states) > 101:
@@ -202,11 +201,7 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     else:
-                        ItemFactory.deserialize_property(
-                            self[index],
-                            prop,
-                            value,
-                        )
+                        self[index].deserialize_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
@@ -218,12 +213,13 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    self.props.figure_settings.set_property(
+                    Graphs.tools_deserialize_property(
+                        self.props.figure_settings,
                         change[0],
                         change[1],
                     )
         self.set_selection(selected, mask)
-        limits = Graphs.Limits.new(self._history_states[self._history_pos][1])
+        limits = self._history_states[self._history_pos][1]
         self.get_figure_settings().set_limits(limits)
         self.props.can_redo = True
         self.props.can_undo = \
@@ -245,11 +241,7 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     else:
-                        ItemFactory.deserialize_property(
-                            self[index],
-                            prop,
-                            value,
-                        )
+                        self[index].deserialize_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
                     dictionary = copy.deepcopy(change)
                     self._add_item(ItemFactory.new_from_dict(dictionary, self))
@@ -258,20 +250,46 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[1], change[0])
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    self.props.figure_settings.set_property(
+                    Graphs.tools_deserialize_property(
+                        self.props.figure_settings,
                         change[0],
                         change[2],
                     )
         self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(Graphs.Limits.new(state[1]))
+        self.get_figure_settings().set_limits(state[1])
         self.props.can_redo = self._history_pos < -1
         self.props.can_undo = True
         self._current_batch = []
+
+    @staticmethod
+    def _serialize_history_state(state):
+        changes = []
+        for change_type, change in state[0]:
+            match change_type:
+                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
+                    index, prop, old_value, new_value = change
+                    new_change = (
+                        index,
+                        prop,
+                        old_value.unpack(),
+                        new_value.unpack(),
+                    )
+                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
+                    prop, old_value, new_value = change
+                    new_change = (prop, old_value.unpack(), new_value.unpack())
+                case _:
+                    new_change = change
+            changes.append((change_type, new_change))
+        return changes, state[1].values()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
         view_pos, view_states = self.get_view_history()
+        history_states = [
+            self._serialize_history_state(state)
+            for state in self._history_states
+        ]
         return {
             "version": self.get_version(),
             "data": [ItemFactory.to_dict(item, self) for item in self],
@@ -279,11 +297,36 @@ class Data(Graphs.Data):
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
             },
-            "history-states": self._history_states,
+            "history-states": history_states,
             "history-position": self._history_pos,
             "view-history-states": [lims.values() for lims in view_states],
             "view-history-position": view_pos,
         }
+
+    @staticmethod
+    def _deserialize_history_state(state):
+        changes = []
+        for change_type, change in state[0]:
+            match change_type:
+                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
+                    index, prop, old_value, new_value = change
+                    new_change = (
+                        index,
+                        prop,
+                        utilities.value_to_gvariant(old_value),
+                        utilities.value_to_gvariant(new_value),
+                    )
+                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
+                    prop, old_value, new_value = change
+                    new_change = (
+                        prop,
+                        utilities.value_to_gvariant(old_value),
+                        utilities.value_to_gvariant(new_value),
+                    )
+                case _:
+                    new_change = change
+            changes.append((change_type, new_change))
+        return changes, Graphs.Limits.new(state[1])
 
     def load_from_project_dict(self, project_dict: dict) -> None:
         """Load data from dict."""
@@ -300,7 +343,10 @@ class Data(Graphs.Data):
 
         # Set clipboard
         self._current_batch = []
-        self._history_states = project_dict["history-states"]
+        self._history_states = [
+            self._deserialize_history_state(state)
+            for state in project_dict["history-states"]
+        ]
         self._history_pos = project_dict["history-position"]
         view_states = project_dict["view-history-states"]
         limits = list(map(Graphs.Limits.new, view_states))

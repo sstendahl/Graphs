@@ -130,6 +130,66 @@ namespace Graphs {
         }
 
         /**
+         * Convert a serialized variant to a value.
+         */
+        public Value? variant_to_value (Variant variant, Type type) {
+            Value val = Value (type);
+
+            if (type.is_enum ()) {
+                val.set_enum (variant.get_int32 ());
+            } else {
+                switch (type) {
+                    case Type.STRING:
+                        val.set_string (variant.get_string ());
+                        break;
+                    case Type.BOOLEAN:
+                        val.set_boolean (variant.get_boolean ());
+                        break;
+                    case Type.INT:
+                        val.set_int (variant.get_int32 ());
+                        break;
+                    case Type.DOUBLE:
+                        val.set_double (variant.get_double ());
+                        break;
+                    case Type.FLOAT:
+                        val.set_float ((float) variant.get_double ());
+                        break;
+                    default:
+                        return null;
+                }
+            }
+
+            return val;
+        }
+
+        /**
+         * Serialize a property of an object to GVariant.
+         */
+        public Variant? serialize_property (Object object, string prop) {
+            ParamSpec? pspec = object.get_class ().find_property (prop);
+            if (pspec == null) return null;
+
+            Value val = Value (pspec.value_type);
+            object.get_property (prop, ref val);
+
+            return value_to_variant (val);
+        }
+
+        /**
+         * Deserialize a property of an object from GVariant.
+         */
+        public bool deserialize_property (Object object, string prop, Variant variant) {
+            ParamSpec? pspec = object.get_class ().find_property (prop);
+            if (pspec == null) return false;
+
+            var val = Tools.variant_to_value (variant, pspec.value_type);
+            if (val == null) return false;
+
+            object.set_property (prop, val);
+            return true;
+        }
+
+        /**
          * Reset a settings instance to default values.
          */
         public void reset_settings (Settings settings) {
