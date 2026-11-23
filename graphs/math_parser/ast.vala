@@ -56,7 +56,10 @@ namespace Graphs {
         ASIND, ACOSD, ATAND, ACOTD, ASECD, ACSCD,
 
         // hyperbolic
-        SINH, COSH,
+        SINH, COSH, TANH, COTH, SECH, CSCH,
+
+        // inverse hyperbolic
+        ASINH, ACOSH, ATANH, ACOTH, ASECH, ACSCH,
 
         // misc math
         LN,
@@ -206,8 +209,14 @@ namespace Graphs {
         ASIN,
         ACOS,
         ATAN,
+
+        // hyperbolic
         SINH,
         COSH,
+        TANH,
+        ASINH,
+        ACOSH,
+        ATANH,
 
         // misc
         LN,
