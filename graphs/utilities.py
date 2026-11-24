@@ -56,7 +56,13 @@ def equation_to_data(
 
 def value_to_gvariant(value) -> GLib.Variant:
     """Convert a value to a GVariant."""
-    if isinstance(value, (tuple, list)):
+    if isinstance(value, dict):
+        dictionary = {
+            key: value_to_gvariant(val)
+            for key, val in value.items()
+        }
+        return GLib.Variant("a{sv}", dictionary)
+    elif isinstance(value, (tuple, list)):
         if len(value) == 4:
             # DataHolder
             return GLib.Variant("(adadmadmad)", value)

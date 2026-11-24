@@ -29,6 +29,8 @@ namespace Graphs {
         unowned StylePropertyTransform transform;
     }
 
+    protected delegate uint ItemIndexFunction (Item item);
+
     public abstract class Item : Object {
         public string typename { get; construct set; }
         public string name { get; set; default = ""; }
@@ -96,7 +98,7 @@ namespace Graphs {
             return Tools.deserialize_property (this, prop, variant);
         }
 
-        public Variant to_variant () {
+        public Variant to_variant (ItemIndexFunction callback) {
             var builder = new VariantBuilder (new VariantType ("a{sv}"));
 
             foreach (var spec in get_class ().list_properties ()) {
@@ -110,7 +112,12 @@ namespace Graphs {
             string typename = get_type ().name ().substring (6);
             builder.add ("{sv}", "type", new Variant.string (typename));
 
+            link_dependencies (builder, callback);
+
             return builder.end ();
+        }
+
+        protected virtual void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
         }
 
         private GenericSet<unowned Item>? _dependents = null;
