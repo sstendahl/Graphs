@@ -39,6 +39,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "edit-paste-symbolic";
               label: _("Combine");
+              can-shrink: true;
             }
           }
 
@@ -55,6 +56,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "edit-cut-symbolic";
               label: _("Cut");
+              can-shrink: true;
             }
           }
 
@@ -71,6 +73,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "shift-symbolic";
               label: _("Shift");
+              can-shrink: true;
             }
           }
 
@@ -88,15 +91,14 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "normalize-symbolic";
               label: _("Normalize");
+              can-shrink: true;
             }
           }
 
           Adw.SplitButton smoothen_button {
-            can-shrink: true;
             tooltip-text: _("Smoothen data");
             menu-model: smoothen_menu;
             clicked => $perform_operation();
-
             layout {
               column: 0;
               row: 2;
@@ -105,9 +107,9 @@ template $GraphsOperations: Box {
 
             Adw.ButtonContent {
               halign: center;
-              can-shrink: true;
               icon-name: "smoothen-symbolic";
               label: _("Smoothen");
+              can-shrink: true;
             }
           }
 
@@ -127,6 +129,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "center-symbolic";
               label: _("Center");
+              can-shrink: true;
             }
           }
         }
@@ -156,6 +159,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "derivative2-symbolic";
               label: _("Derivative");
+              can-shrink: true;
             }
           }
 
@@ -173,6 +177,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "integral-symbolic";
               label: _("Integral");
+              can-shrink: true;
             }
           }
 
@@ -191,6 +196,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "fast-fourier-transform-symbolic";
               label: _("FFT");
+              can-shrink: true;
             }
           }
 
@@ -209,6 +215,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "inverse-fast-fourier-transform-symbolic";
               label: _("Inverse FFT");
+              can-shrink: true;
             }
           }
 
@@ -227,6 +234,7 @@ template $GraphsOperations: Box {
               halign: center;
               icon-name: "transform-symbolic";
               label: _("Custom Transformation");
+              can-shrink: true;
             }
           }
         }
@@ -265,6 +273,7 @@ template $GraphsOperations: Box {
             Adw.ButtonContent {
               icon-name: "horizontal-arrows-symbolic";
               label: _("Translate X");
+              can-shrink: true;
             }
           }
 
@@ -292,6 +301,7 @@ template $GraphsOperations: Box {
             Adw.ButtonContent {
               icon-name: "vertical-arrows-symbolic";
               label: _("Translate Y");
+              can-shrink: true;
             }
           }
 
@@ -319,6 +329,7 @@ template $GraphsOperations: Box {
             Adw.ButtonContent {
               icon-name: "horizontal-arrows-symbolic";
               label: _("Multiply X");
+              can-shrink: true;
             }
           }
 
@@ -346,6 +357,7 @@ template $GraphsOperations: Box {
             Adw.ButtonContent {
               icon-name: "vertical-arrows-symbolic";
               label: _("Multiply Y");
+              can-shrink: true;
             }
           }
         }
