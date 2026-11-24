@@ -12,7 +12,6 @@ from gi.repository import Gio, Graphs
 import gio_pyio
 
 from graphs import migrate, utilities
-from graphs.item import ItemFactory
 
 CURRENT_PROJECT_VERSION = 2
 
@@ -235,7 +234,13 @@ class ProjectValidator:
         )
 
         # Validate items
-        self.items = ItemFactory.new_from_dicts(self.project_dict["data"])
+        data = [
+            utilities.value_to_gvariant(item)
+            for item in self.project_dict["data"]
+        ]
+        self.items = Graphs.items_from_variants(data)
+        if not self.items:
+            raise ProjectParseError(_("Invalid Item encountered."))
 
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
@@ -256,13 +261,21 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
-                        self.items[index].deserialize_property(
+                        Graphs.tools_deserialize_property(
+                            self.items[index],
                             prop,
                             utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
-                        data = copy.deepcopy(change)
-                        new_item = ItemFactory.new_from_dict(data, self.items)
+
+                        def callback(i):
+                            return self.items[i]
+
+                        variant = utilities.value_to_gvariant(change)
+                        new_item = Graphs.item_from_variant(variant, callback)
+                        if new_item is None:
+                            msg = _("Invalid Item encountered.")
+                            raise ProjectParseError(msg)
                         self.items.append(new_item)
                     case Graphs.ChangeType.ITEM_REMOVED:
                         self.items.pop(change[0])
@@ -277,17 +290,24 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
-                        self.items[index].deserialize_property(
+                        Graphs.tools_deserialize_property(
+                            self.items[index],
                             prop,
                             utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()
                     case Graphs.ChangeType.ITEM_REMOVED:
-                        data = copy.deepcopy(change[1])
-                        self.items.insert(change[0], None)
-                        item = ItemFactory.new_from_dict(data, self.items)
-                        self.items[change[0]] = item
+                        index, data = change
+
+                        def callback(i):
+                            if i > index:
+                                i += 1
+                            return self.items[i]
+
+                        data = utilities.value_to_gvariant(data)
+                        item = Graphs.item_from_variant(data, callback)
+                        self.items.insert(index, item)
                     case Graphs.ChangeType.ITEMS_SWAPPED:
                         self.items.insert(change[0], self.items.pop(change[1]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:

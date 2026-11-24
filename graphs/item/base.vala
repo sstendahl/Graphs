@@ -30,6 +30,83 @@ namespace Graphs {
     }
 
     protected delegate uint ItemIndexFunction (Item item);
+    protected delegate Item ItemFindFunction (uint index);
+
+    public Item? item_from_variant (Variant variant, ItemFindFunction callback) {
+        Item item;
+
+        var type = variant.lookup_value ("type", VariantType.STRING);
+        if (type == null) return null;
+        switch (type.get_string ()) {
+            case "DataItem":
+                item = new DataItem.empty ();
+                break;
+            case "GeneratedDataItem":
+                item = new GeneratedDataItem.empty ();
+                break;
+            case "EquationItem":
+                item = new EquationItem.empty ();
+                break;
+            case "TextItem":
+                item = new TextItem.empty ();
+                break;
+            case "MarkerItem":
+                item = new MarkerItem.empty ();
+                break;
+            case "VariableItem":
+                item = new VariableItem.empty ();
+                break;
+            case "FillItem":
+                item = new FillItem.empty ();
+                break;
+            default:
+                return null;
+        }
+
+        foreach (unowned var spec in item.get_class ().list_properties ()) {
+            string prop = spec.name;
+            if (prop == "typename" || prop == "visible") continue;
+            var val = variant.lookup_value (prop, null);
+            if (val == null) return null;
+            if (!Tools.deserialize_property (item, prop, val)) return null;
+        }
+
+        item.resolve_dependencies (variant, callback);
+
+        return item;
+    }
+
+    public Item[]? items_from_variants (Variant[] variants) {
+        uint n = variants.length;
+        Item[] items = new Item[n];
+
+        for (uint i = 0; i < n; i++) {
+            unowned var variant = variants[i];
+            var type = variant.lookup_value ("type", VariantType.STRING);
+            if (type == null) return null;
+
+            if (type.get_string () == "FillItem") {
+                items[i] = null;
+                continue;
+            }
+
+            var item = item_from_variant (variant, () => { assert_not_reached (); });
+            if (item == null) return null;
+            items[i] = item;
+        }
+
+        for (uint i = 0; i < n; i++) {
+            if (items[i] != null) continue;
+
+            var item = item_from_variant (variants[i], (index) => {
+                return items[index];
+            });
+            if (item == null) return null;
+            items[i] = item;
+        }
+
+        return items;
+    }
 
     public abstract class Item : Object {
         public string typename { get; construct set; }
@@ -90,14 +167,6 @@ namespace Graphs {
             }
         }
 
-        public virtual Variant? serialize_property (string prop) {
-            return Tools.serialize_property (this, prop);
-        }
-
-        public virtual bool deserialize_property (string prop, Variant variant) {
-            return Tools.deserialize_property (this, prop, variant);
-        }
-
         public Variant to_variant (ItemIndexFunction callback) {
             var builder = new VariantBuilder (new VariantType ("a{sv}"));
 
@@ -106,7 +175,7 @@ namespace Graphs {
                 if (prop == "typename" || prop == "visible")
                     continue;
 
-                builder.add ("{sv}", prop, serialize_property (prop));
+                builder.add ("{sv}", prop, Tools.serialize_property (this, prop));
             }
 
             string typename = get_type ().name ().substring (6);
@@ -117,7 +186,10 @@ namespace Graphs {
             return builder.end ();
         }
 
-        protected virtual void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
+        internal virtual void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
+        }
+
+        internal virtual void resolve_dependencies (Variant variant, ItemFindFunction callback) {
         }
 
         private GenericSet<unowned Item>? _dependents = null;

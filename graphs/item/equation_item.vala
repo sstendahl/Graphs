@@ -62,6 +62,8 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal EquationItem.empty () {}
+
         private static StylePropertyBinding[] bindings = {
             {"linestyle", (s) => s.linestyle - 1},
             {"linewidth", (s) => s.linewidth}
@@ -96,27 +98,6 @@ namespace Graphs {
             _program.set_parameter (name, val);
             variable_changed.emit ();
             values_changed.emit ();
-        }
-
-        public override Variant? serialize_property (string prop) {
-            if (prop == "equation") {
-                try {
-                    return new Variant.string (ast_to_expression (_equation));
-                } catch (MathError e) { assert_not_reached (); }
-            }
-
-            return base.serialize_property (prop);
-        }
-
-        public override bool deserialize_property (string prop, Variant variant) {
-            if (prop == "equation") {
-                try {
-                    equation = expression_to_ast (variant.get_string ());
-                    return true;
-                } catch (MathError e) { assert_not_reached (); }
-            }
-
-            return base.deserialize_property (prop, variant);
         }
     }
 }

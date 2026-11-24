@@ -8,7 +8,6 @@ python.install_sources(
     'file_import/parsers/project/__init__.py',
     'file_import/parsers/xrdml/__init__.py',
     'file_import/__init__.py',
-    'item/__init__.py',
     '__init__.py',
     'ast.py',
     'curve_fitting.py',

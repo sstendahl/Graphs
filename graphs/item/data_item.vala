@@ -186,6 +186,8 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal DataItem.empty () {}
+
         private static StylePropertyBinding[] bindings = {
             {"linestyle", (s) => s.linestyle},
             {"linewidth", (s) => s.linewidth},
@@ -219,22 +221,6 @@ namespace Graphs {
 
         public bool has_yerr () {
             return data.get_yerr () != null;
-        }
-
-        public override Variant? serialize_property (string prop) {
-            if (prop == "data")
-                return data.to_variant ();
-
-            return base.serialize_property (prop);
-        }
-
-        public override bool deserialize_property (string prop, Variant variant) {
-            if (prop == "data") {
-                data = new DataHolder.from_variant (variant);
-                return true;
-            }
-
-            return base.deserialize_property (prop, variant);
         }
     }
 }

@@ -4,9 +4,8 @@ from gettext import pgettext as C_
 
 from gi.repository import Graphs
 
-from graphs import project
+from graphs import project, utilities
 from graphs.file_import import ParseError, Parser
-from graphs.item import ItemFactory
 from graphs.project import ProjectParseError
 
 
@@ -32,6 +31,10 @@ class ProjectParser(Parser):
         """Import data from project file."""
         try:
             project_dict = project.read_project_file(settings.get_file())
-            items.add_all(ItemFactory.new_from_dicts(project_dict["data"]))
+            data = [
+                utilities.value_to_gvariant(item)
+                for item in project_dict["data"]
+            ]
+            items.add_all(Graphs.items_from_variants(data))
         except ProjectParseError as e:
             raise ParseError(e.message) from e

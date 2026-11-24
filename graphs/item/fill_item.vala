@@ -180,6 +180,8 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal FillItem.empty () {}
+
         public FillBoundKind get_upper_kind () {
             return _upper.kind;
         }
@@ -368,14 +370,7 @@ namespace Graphs {
             bounds_changed ();
         }
 
-        public override Variant? serialize_property (string prop) {
-            if (prop == "data")
-                return data.to_variant ();
-
-            return base.serialize_property (prop);
-        }
-
-        protected override void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
+        internal override void link_dependencies (VariantBuilder builder, ItemIndexFunction callback) {
             try {
                 if (_upper.equation != null)
                     builder.add ("{sv}", "upper_equation", new Variant.string (ast_to_expression (_upper.equation)));
@@ -388,6 +383,28 @@ namespace Graphs {
 
                 if (_lower.item != null)
                     builder.add ("{sv}", "lower_source", new Variant.int32 ((int) callback (_lower.item)));
+            } catch (MathError e) { assert_not_reached (); }
+        }
+
+        internal override void resolve_dependencies (Variant variant, ItemFindFunction callback) {
+            try {
+                Variant? val;
+
+                val = variant.lookup_value ("upper_equation", VariantType.STRING);
+                if (val != null)
+                    _upper.equation = expression_to_ast (val.get_string ());
+
+                val = variant.lookup_value ("lower_equation", VariantType.STRING);
+                if (val != null)
+                    _lower.equation = expression_to_ast (val.get_string ());
+
+                val = variant.lookup_value ("upper_source", VariantType.INT32);
+                if (val != null)
+                    _upper.item = callback ((uint) val.get_int32 ());
+
+                val = variant.lookup_value ("lower_source", VariantType.INT32);
+                if (val != null)
+                    _lower.item = callback ((uint) val.get_int32 ());
             } catch (MathError e) { assert_not_reached (); }
         }
     }
