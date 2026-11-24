@@ -6,9 +6,10 @@ Acts as an interface between matplotlib and GObject and contains a custom
 implementation of a `SpanSelector` as well as a dummy toolbar used for
 interactive navigation in conjunction with graphs-specific structures.
 """
+import io
 import math
 
-from gi.repository import Adw, GObject, Gdk, Gio, Graphs, Gtk
+from gi.repository import Adw, GLib, GObject, Gdk, Gio, Graphs, Gtk
 
 from graphs.canvas.figure import AXES_DIRECTIONS, Figure
 
@@ -50,6 +51,8 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         )
         figure = Figure(style_params, items, self, figure_settings)
         self.props.figure = figure
+        self._style_params = style_params
+        self._items = items
         self._figure_settings = figure_settings
         self._idle_draw_id = 0
         self.set_draw_func(self._draw_func)
@@ -407,6 +410,33 @@ class Canvas(Graphs.Canvas, FigureCanvas):
         if scale == Graphs.Scale.INVERSE:
             value1, value2 = value2, value1
         return value1, value2
+
+    def copy_figure(self) -> None:
+        """Copy the figure in the canvas to the clipboard."""
+        figure = Figure(
+            self._style_params,
+            self._items,
+            figure_settings=self._figure_settings,
+        )
+        width, height = self.figure.get_size_inches()
+        figure.set_size_inches(width, height)
+        svg, png = io.BytesIO(), io.BytesIO()
+        figure.savefig(svg, format="svg", bbox_inches=None)
+        dpi = 2 * self.get_width() / width
+        figure.savefig(png, format="png", dpi=dpi, bbox_inches=None)
+        figure.detach()
+
+        images = (
+            ("image/svg+xml", svg),
+            ("image/png", png),
+        )
+        self.get_clipboard().set_content(Gdk.ContentProvider.new_union([
+            Gdk.ContentProvider.new_for_bytes(
+                mime_type,
+                GLib.Bytes.new(image.getvalue()),
+            )
+            for mime_type, image in images
+        ]))
 
     def _on_resize(self, widget, width, height) -> None:
         """Handle the legend update on window resizes."""

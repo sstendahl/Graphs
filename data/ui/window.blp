@@ -89,6 +89,11 @@ template $GraphsWindow: Adw.ApplicationWindow {
     }
 
     Shortcut {
+      trigger: "<control><shift>C";
+      action: "action(win.copy-figure)";
+    }
+
+    Shortcut {
       trigger: "<control>period";
       action: "action(win.styles)";
     }
