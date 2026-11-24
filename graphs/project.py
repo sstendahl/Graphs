@@ -300,14 +300,17 @@ class ProjectValidator:
                     case Graphs.ChangeType.ITEM_REMOVED:
                         index, data = change
 
-                        def callback(i):
+                        def callback(i, index=index):
                             if i > index:
                                 i += 1
                             return self.items[i]
 
                         data = utilities.value_to_gvariant(data)
-                        item = Graphs.item_from_variant(data, callback)
-                        self.items.insert(index, item)
+                        new_item = Graphs.item_from_variant(data, callback)
+                        if new_item is None:
+                            msg = _("Invalid Item encountered.")
+                            raise ProjectParseError(msg)
+                        self.items.insert(index, new_item)
                     case Graphs.ChangeType.ITEMS_SWAPPED:
                         self.items.insert(change[0], self.items.pop(change[1]))
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:

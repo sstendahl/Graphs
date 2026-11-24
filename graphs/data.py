@@ -204,7 +204,7 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEM_REMOVED:
                     index = change[0]
 
-                    def callback(i):
+                    def callback(i, index=index):
                         if i > index:
                             i += 1
                         return self.get_item(i)
