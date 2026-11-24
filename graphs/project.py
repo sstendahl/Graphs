@@ -11,7 +11,7 @@ from gi.repository import Gio, Graphs
 
 import gio_pyio
 
-from graphs import migrate
+from graphs import migrate, utilities
 from graphs.item import ItemFactory
 
 CURRENT_PROJECT_VERSION = 2
@@ -256,10 +256,9 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 3)(change)
-                        ItemFactory.deserialize_property(
-                            self.items[index],
+                        self.items[index].deserialize_property(
                             prop,
-                            value,
+                            utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         data = copy.deepcopy(change)
@@ -278,10 +277,9 @@ class ProjectValidator:
                 match change_type:
                     case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                         index, prop, value = itemgetter(0, 1, 2)(change)
-                        ItemFactory.deserialize_property(
-                            self.items[index],
+                        self.items[index].deserialize_property(
                             prop,
-                            value,
+                            utilities.value_to_gvariant(value),
                         )
                     case Graphs.ChangeType.ITEM_ADDED:
                         self.items.pop()

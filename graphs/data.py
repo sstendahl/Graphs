@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Data management module."""
-import copy
 import logging
 from collections import OrderedDict
 from collections.abc import Iterator
@@ -61,18 +60,13 @@ class Data(Graphs.Data):
         ))
 
     @staticmethod
-    def _on_item_added(self, item: Graphs.Item) -> None:
-        self._current_batch.append((
-            Graphs.ChangeType.ITEM_ADDED,
-            ItemFactory.to_dict(item, self),
-        ))
+    def _on_item_added(self, item: GLib.Variant) -> None:
+        self._current_batch.append((Graphs.ChangeType.ITEM_ADDED, item))
 
     @staticmethod
-    def _on_item_removed(self, item: Graphs.Item, index: int) -> None:
-        self._current_batch.append((
-            Graphs.ChangeType.ITEM_REMOVED,
-            (index, ItemFactory.to_dict(item, self)),
-        ))
+    def _on_item_removed(self, item: GLib.Variant, index: int) -> None:
+        change = Graphs.ChangeType.ITEM_REMOVED, (index, item)
+        self._current_batch.append(change)
 
     @staticmethod
     def _on_item_changed(
@@ -205,7 +199,7 @@ class Data(Graphs.Data):
                 case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
-                    dictionary = copy.deepcopy(change[1])
+                    dictionary = change[1].unpack()
                     items = list(self)
                     items.insert(change[0], None)
                     item = ItemFactory.new_from_dict(dictionary, items)
@@ -243,7 +237,7 @@ class Data(Graphs.Data):
                     else:
                         self[index].deserialize_property(prop, value)
                 case Graphs.ChangeType.ITEM_ADDED:
-                    dictionary = copy.deepcopy(change)
+                    dictionary = change.unpack()
                     self._add_item(ItemFactory.new_from_dict(dictionary, self))
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
@@ -274,6 +268,11 @@ class Data(Graphs.Data):
                         old_value.unpack(),
                         new_value.unpack(),
                     )
+                case Graphs.ChangeType.ITEM_ADDED:
+                    new_change = change.unpack()
+                case Graphs.ChangeType.ITEM_REMOVED:
+                    item, index = change
+                    new_change = item.unpack(), index
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     prop, old_value, new_value = change
                     new_change = (prop, old_value.unpack(), new_value.unpack())
@@ -292,7 +291,7 @@ class Data(Graphs.Data):
         ]
         return {
             "version": self.get_version(),
-            "data": [ItemFactory.to_dict(item, self) for item in self],
+            "data": [item.to_variant(self.index).unpack() for item in self],
             "figure-settings": {
                 key.replace("_", "-"): figure_settings.get_property(key)
                 for key in dir(figure_settings.props)
@@ -316,6 +315,11 @@ class Data(Graphs.Data):
                         utilities.value_to_gvariant(old_value),
                         utilities.value_to_gvariant(new_value),
                     )
+                case Graphs.ChangeType.ITEM_ADDED:
+                    new_change = utilities.value_to_gvariant(change)
+                case Graphs.ChangeType.ITEM_REMOVED:
+                    item, index = change
+                    new_change = utilities.value_to_gvariant(item), index
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     prop, old_value, new_value = change
                     new_change = (
