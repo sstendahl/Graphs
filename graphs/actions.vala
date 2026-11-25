@@ -274,6 +274,14 @@ namespace Graphs {
             window.bind_property ("is_main_view", export_figure_action, "enabled", BindingFlags.SYNC_CREATE);
             window.add_action (export_figure_action);
 
+            var copy_figure_action = new SimpleAction ("copy-figure", null);
+            copy_figure_action.activate.connect (() => {
+                Canvas canvas = window.canvas;
+                PythonHelper.copy_figure (window.data, canvas.get_width (), canvas.get_height ());
+                window.add_toast_string (_("Copied figure to clipboard"));
+            });
+            window.add_action (copy_figure_action);
+
             window.add_action (new SimpleAction ("zoom-in", null));
             window.add_action (new SimpleAction ("zoom-out", null));
 

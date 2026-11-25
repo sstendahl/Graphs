@@ -23,6 +23,11 @@ namespace Graphs {
             return instance.curve_fit_request.emit (problem, result);
         }
 
+        public signal void copy_figure_request (Data data, int width, int height);
+        public static void copy_figure (Data data, int width, int height) {
+            instance.copy_figure_request.emit (data, width, height);
+        }
+
         public signal void export_figure_request (File file, Settings settings, Data data);
         public static void export_figure (File file, Settings settings, Data data) {
             instance.export_figure_request.emit (file, settings, data);

@@ -1,6 +1,8 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Python Helper - Python part."""
-from gi.repository import Gio, Graphs
+import io
+
+from gi.repository import GLib, Gdk, Gio, Graphs
 
 import gio_pyio
 
@@ -16,6 +18,7 @@ from sympy.abc import x
 from sympy.calculus.singularities import singularities
 
 _REQUESTS = (
+    "copy-figure",
     "create-canvas",
     "create-window",
     "curve-fit",
@@ -92,6 +95,35 @@ class PythonHelper(Graphs.PythonHelper):
         return curve_fitting.fit_curve(problem, result)
 
     @staticmethod
+    def _on_copy_figure_request(
+        self,
+        data: Graphs.Data,
+        width: int,
+        height: int,
+    ) -> None:
+        """Copy the figure at the size it is shown to the clipboard."""
+        figure = Figure(
+            data.get_selected_style_params(),
+            data,
+            figure_settings=data.get_figure_settings(),
+        )
+        dpi = figure.get_dpi()
+        figure.set_size_inches(width / dpi, height / dpi)
+        svg, png = io.BytesIO(), io.BytesIO()
+        figure.savefig(svg, format="svg", bbox_inches=None)
+        figure.savefig(png, format="png", dpi=2 * dpi, bbox_inches=None)
+        figure.detach()
+        images = (("image/svg+xml", svg), ("image/png", png))
+        Gdk.Display.get_default().get_clipboard().set_content(
+            Gdk.ContentProvider.new_union([
+                Gdk.ContentProvider.new_for_bytes(
+                    mime_type,
+                    GLib.Bytes.new(image.getvalue()),
+                )
+                for mime_type, image in images
+            ]),
+        )
+
     def _on_export_figure_request(
         self,
         file: Gio.File,
