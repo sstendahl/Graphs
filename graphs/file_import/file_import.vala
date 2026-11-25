@@ -238,6 +238,8 @@ namespace Graphs {
         }
 
         public void load_from_settings (Settings? default_settings) {
+            items.remove_all ();
+
             if (default_settings == null) {
                 has_schema = false;
                 return;
