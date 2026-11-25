@@ -14,6 +14,7 @@ blueprint_files = [
   'import/spreadsheet/main-group.blp',
   'import/spreadsheet/item-group.blp',
   'import/sql/main-group.blp',
+  'import/xrdml/main-group.blp',
   'import/dialog.blp',
   'import/file-row.blp',
   'import/importing-item-box.blp',

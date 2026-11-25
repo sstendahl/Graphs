@@ -81,6 +81,16 @@
     <value nick="custom" value="6"/>
   </enum>
 
+  <enum id="se.sjoerd.Graphs.import-params.xrdml.x-axis">
+    <value nick="scan-axis" value="0"/>
+    <value nick="q-space" value="1"/>
+  </enum>
+
+  <enum id="se.sjoerd.Graphs.import-params.xrdml.intensity">
+    <value nick="cps" value="0"/>
+    <value nick="counts" value="1"/>
+  </enum>
+
   <schema id="se.sjoerd.Graphs" path="/se/sjoerd/Graphs/">
     <child name="actions" schema="se.sjoerd.Graphs.actions"/>
     <child name="add-equation" schema="se.sjoerd.Graphs.add-equation"/>
@@ -232,6 +242,16 @@
     <child name="columns" schema="se.sjoerd.Graphs.import-params.columns"/>
     <child name="spreadsheet" schema="se.sjoerd.Graphs.import-params.spreadsheet"/>
     <child name="sql" schema="se.sjoerd.Graphs.import-params.sql"/>
+    <child name="xrdml" schema="se.sjoerd.Graphs.import-params.xrdml"/>
+  </schema>
+
+  <schema id="se.sjoerd.Graphs.import-params.xrdml">
+    <key name="x-axis" enum="se.sjoerd.Graphs.import-params.xrdml.x-axis">
+      <default>"scan-axis"</default>
+    </key>
+    <key name="intensity" enum="se.sjoerd.Graphs.import-params.xrdml.intensity">
+      <default>"cps"</default>
+    </key>
   </schema>
 
   <schema id="se.sjoerd.Graphs.import-params.columns">

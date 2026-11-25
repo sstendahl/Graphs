@@ -15,6 +15,7 @@ data/ui/import/sql/main-group.blp
 data/ui/import/spreadsheet/box.blp
 data/ui/import/spreadsheet/main-group.blp
 data/ui/import/spreadsheet/item-group.blp
+data/ui/import/xrdml/main-group.blp
 data/ui/import/dialog.blp
 data/ui/import/file-row.blp
 data/ui/import/importing-item-box.blp
@@ -65,7 +66,9 @@ graphs/file_import/parsers/spreadsheet/ui.vala
 graphs/file_import/parsers/sql/main.vala
 graphs/file_import/parsers/sql/reader.vala
 graphs/file_import/parsers/sql/ui.vala
-graphs/file_import/parsers/xrdml/__init__.py
+graphs/file_import/parsers/xrdml/main.vala
+graphs/file_import/parsers/xrdml/reader.vala
+graphs/file_import/parsers/xrdml/ui.vala
 graphs/file_import/parsers/xry/parser.vala
 graphs/file_import/__init__.py
 graphs/file_import/dialog.vala

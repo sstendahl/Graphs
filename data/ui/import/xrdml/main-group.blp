@@ -1,0 +1,30 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $GraphsXrdmlGroup: Adw.PreferencesGroup {
+  Adw.ComboRow scan {
+    title: _("Scan");
+  }
+
+  Adw.ComboRow x_axis {
+    title: _("X-Axis");
+
+    model: StringList {
+      strings [
+        _("Scan Angle"),
+        _("q (Reciprocal Space)"),
+      ]
+    };
+  }
+
+  Adw.ComboRow intensity {
+    title: _("Intensity");
+
+    model: StringList {
+      strings [
+        _("Counts per Second"),
+        _("Counts"),
+      ]
+    };
+  }
+}
