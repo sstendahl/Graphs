@@ -276,7 +276,8 @@ namespace Graphs {
 
             var copy_figure_action = new SimpleAction ("copy-figure", null);
             copy_figure_action.activate.connect (() => {
-                PythonHelper.run_method (window.canvas, "copy_figure");
+                Canvas canvas = window.canvas;
+                PythonHelper.copy_figure (window.data, canvas.get_width (), canvas.get_height ());
                 window.add_toast_string (_("Copied figure to clipboard"));
             });
             window.add_action (copy_figure_action);
