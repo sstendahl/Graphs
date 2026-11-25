@@ -1,12 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Data management module."""
 import logging
-from collections import OrderedDict
 from collections.abc import Iterator
 from gettext import gettext as _
-from operator import itemgetter
 
-from gi.repository import GLib, Gio, Graphs, Gtk
+from gi.repository import Gio, Graphs
 
 from graphs import project, utilities
 
@@ -19,18 +17,6 @@ class Data(Graphs.Data):
     def __init__(self):
         super().__init__()
         self.connect("load-request", self._on_load_request)
-        self.connect("position-changed", self._on_position_changed)
-        self.connect("item-changed", self._on_item_changed)
-        self.connect("item-added", self._on_item_added)
-        self.connect("item-removed", self._on_item_removed)
-        self.connect(
-            "figure-settings-changed",
-            self._on_figure_settings_changed,
-        )
-        self.connect(
-            "add-history-state-request",
-            self._on_add_history_state_request,
-        )
 
     def __len__(self) -> int:
         """Magic alias for `get_n_items()`."""
@@ -45,260 +31,46 @@ class Data(Graphs.Data):
         """Magic alias for retrieving items."""
         return self.get_item(pos)
 
-    def _init_history_states(self) -> None:
-        self._history_states = [([], self.props.figure_settings.get_limits())]
-        self._history_pos = -1
-        self._current_batch = []
-
-    @staticmethod
-    def _on_position_changed(self, index1: int, index2: int) -> None:
-        """Change item position of index2 to that of index1."""
-        self._current_batch.append((
-            Graphs.ChangeType.ITEMS_SWAPPED,
-            (index2, index1),
-        ))
-
-    @staticmethod
-    def _on_item_added(self, item: GLib.Variant) -> None:
-        self._current_batch.append((Graphs.ChangeType.ITEM_ADDED, item))
-
-    @staticmethod
-    def _on_item_removed(self, item: GLib.Variant, index: int) -> None:
-        change = Graphs.ChangeType.ITEM_REMOVED, (index, item)
-        self._current_batch.append(change)
-
-    @staticmethod
-    def _on_item_changed(
-        self,
-        index: int,
-        prop: str,
-        old_value: GLib.Variant,
-        new_value: GLib.Variant,
-    ) -> None:
-        self._current_batch.append((
-            Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
-            (
-                index,
-                prop,
-                old_value,
-                new_value,
-            ),
-        ))
-
-    @staticmethod
-    def _on_figure_settings_changed(
-        self,
-        prop: str,
-        old_value: GLib.Variant,
-        new_value: GLib.Variant,
-    ) -> None:
-        self._current_batch.append((
-            Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
-            (
-                prop,
-                old_value,
-                new_value,
-            ),
-        ))
-
-    def _collapse_current_batch(self) -> None:
-        """
-        Collapse transitive changes within the current history batch.
-
-        This method reduces redundant "change" entries in the current history
-        batch:
-        - Multiple consecutive item and figure settings changes to the same
-          property are collapsed into a single change.
-        - If a collapsed change would be meaningless (the original old value
-          is equal to the most recent new value), that change is dropped.
-        - If the batch contains structural changes like items added or removed,
-          the method aborts and leaves the batch unchanged.
-        """
-        if not self._current_batch:
-            # Nothing to collapse
-            return
-
-        collapsed = OrderedDict()
-
-        for change_type, data in self._current_batch:
-            match change_type:
-                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
-                    index, prop, _old_value, new_value = data
-                    key = (change_type, index, prop)
-
-                    if key not in collapsed:
-                        collapsed[key] = (change_type, data)
-                    else:
-                        first_old = collapsed[key][1][2]
-                        if first_old == new_value:
-                            collapsed.pop(key)
-                        else:
-                            collapsed[key] = (
-                                Graphs.ChangeType.ITEM_PROPERTY_CHANGED,
-                                (index, prop, first_old, new_value),
-                            )
-
-                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    prop, _old_value, new_value = data
-                    key = (change_type, prop)
-
-                    if key not in collapsed:
-                        collapsed[key] = (change_type, data)
-                    else:
-                        first_old = collapsed[key][1][1]
-                        if first_old == new_value:
-                            collapsed.pop(key)
-                        else:
-                            collapsed[key] = (
-                                Graphs.ChangeType.FIGURE_SETTINGS_CHANGED,
-                                (prop, first_old, new_value),
-                            )
-
-                case _:
-                    # On any other change such as items added or removed we
-                    # abort collapsing
-                    return
-
-        self._current_batch = list(collapsed.values())
-
-    @staticmethod
-    def _on_add_history_state_request(self) -> bool:
-        """Add a state to the clipboard."""
-        self._collapse_current_batch()
-        if not self._current_batch:
-            # Nothing to add
-            return False
-        if self._history_pos != -1:
-            self._history_states = self._history_states[:self._history_pos + 1]
-        self._history_pos = -1
-        limits = self.get_figure_settings().get_limits()
-        self._history_states.append((self._current_batch, limits))
-        # Keep history states length limited to 100 spots
-        if len(self._history_states) > 101:
-            self._history_states = self._history_states[1:]
-        self._current_batch = []
-        return True
-
-    def _undo(self) -> None:
-        """Undo the latest change that was added to the clipboard."""
-        batch = self._history_states[self._history_pos][0]
-        self._history_pos -= 1
-        selected = Gtk.Bitset.new_empty()
-        mask = Gtk.Bitset.new_empty()
-        for change_type, change in reversed(batch):
-            match change_type:
-                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
-                    index, prop, value = itemgetter(0, 1, 2)(change)
-                    if prop == "selected":
-                        mask.add(index)
-                        if value:
-                            selected.add(index)
-                    else:
-                        Graphs.tools_deserialize_property(
-                            self[index],
-                            prop,
-                            value,
-                        )
-                case Graphs.ChangeType.ITEM_ADDED:
-                    self._remove_item(self.get_n_items() - 1)
-                case Graphs.ChangeType.ITEM_REMOVED:
-                    index = change[0]
-
-                    def callback(i, index=index):
-                        if i > index:
-                            i += 1
-                        return self.get_item(i)
-
-                    item = Graphs.item_from_variant(change[1], callback)
-                    self._insert_item(item, index)
-                case Graphs.ChangeType.ITEMS_SWAPPED:
-                    self.change_position(change[0], change[1])
-                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    Graphs.tools_deserialize_property(
-                        self.props.figure_settings,
-                        change[0],
-                        change[1],
-                    )
-        self.set_selection(selected, mask)
-        limits = self._history_states[self._history_pos][1]
-        self.get_figure_settings().set_limits(limits)
-        self.props.can_redo = True
-        self.props.can_undo = \
-            abs(self._history_pos) < len(self._history_states)
-        self._current_batch = []
-
-    def _redo(self) -> None:
-        """Redo the latest change that was added to the clipboard."""
-        self._history_pos += 1
-        state = self._history_states[self._history_pos]
-        selected = Gtk.Bitset.new_empty()
-        mask = Gtk.Bitset.new_empty()
-        for change_type, change in state[0]:
-            match change_type:
-                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
-                    index, prop, value = itemgetter(0, 1, 3)(change)
-                    if prop == "selected":
-                        mask.add(index)
-                        if value:
-                            selected.add(index)
-                    else:
-                        Graphs.tools_deserialize_property(
-                            self[index],
-                            prop,
-                            value,
-                        )
-                case Graphs.ChangeType.ITEM_ADDED:
-                    item = Graphs.item_from_variant(change, self.get_item)
-                    self._add_item(item)
-                case Graphs.ChangeType.ITEM_REMOVED:
-                    self._remove_item(change[0])
-                case Graphs.ChangeType.ITEMS_SWAPPED:
-                    self.change_position(change[1], change[0])
-                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    Graphs.tools_deserialize_property(
-                        self.props.figure_settings,
-                        change[0],
-                        change[2],
-                    )
-        self.set_selection(selected, mask)
-        self.get_figure_settings().set_limits(state[1])
-        self.props.can_redo = self._history_pos < -1
-        self.props.can_undo = True
-        self._current_batch = []
-
     @staticmethod
     def _serialize_history_state(state):
         changes = []
-        for change_type, change in state[0]:
-            match change_type:
-                case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
-                    index, prop, old_value, new_value = change
-                    new_change = (
-                        index,
-                        prop,
-                        old_value.unpack(),
-                        new_value.unpack(),
-                    )
-                case Graphs.ChangeType.ITEM_ADDED:
-                    new_change = change.unpack()
-                case Graphs.ChangeType.ITEM_REMOVED:
-                    item, index = change
-                    new_change = item.unpack(), index
-                case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
-                    prop, old_value, new_value = change
-                    new_change = (prop, old_value.unpack(), new_value.unpack())
-                case _:
-                    new_change = change
+        for change in state.changes:
+            if isinstance(change, Graphs.DataHistoryPropertyChange):
+                new_change = (
+                    change.index(),
+                    change.prop(),
+                    change.old_value().unpack(),
+                    change.new_value().unpack(),
+                )
+                change_type = Graphs.ChangeType.ITEM_PROPERTY_CHANGED
+            elif isinstance(change, Graphs.DataHistoryItemAdded):
+                new_change = change.item().unpack()
+                change_type = Graphs.ChangeType.ITEM_ADDED
+            elif isinstance(change, Graphs.DataHistoryItemRemoved):
+                new_change = (change.item().unpack(), change.index)
+                change_type = Graphs.ChangeType.ITEM_REMOVED
+            elif isinstance(change, Graphs.DataHistoryItemsSwapped):
+                # This was swapped in previous implementations
+                new_change = (change.index2(), change.index1())
+                change_type = Graphs.ChangeType.ITEMS_SWAPPED
+            elif isinstance(change, Graphs.DataHistoryFigureSettingsChange):
+                new_change = (
+                    change.prop(),
+                    change.old_value().unpack(),
+                    change.new_value().unpack(),
+                )
+                change_type = Graphs.ChangeType.FIGURE_SETTINGS_CHANGED
             changes.append((change_type, new_change))
-        return changes, state[1].values()
+        return changes, state.limits.values()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""
         figure_settings = self.get_figure_settings()
+        history_pos, history_states = self.get_data_history()
         view_pos, view_states = self.get_view_history()
         history_states = [
             self._serialize_history_state(state)
-            for state in self._history_states
+            for state in history_states
         ]
         return {
             "version": self.get_version(),
@@ -308,7 +80,7 @@ class Data(Graphs.Data):
                 for key in dir(figure_settings.props)
             },
             "history-states": history_states,
-            "history-position": self._history_pos,
+            "history-position": history_pos,
             "view-history-states": [lims.values() for lims in view_states],
             "view-history-position": view_pos,
         }
@@ -320,28 +92,38 @@ class Data(Graphs.Data):
             match change_type:
                 case Graphs.ChangeType.ITEM_PROPERTY_CHANGED:
                     index, prop, old_value, new_value = change
-                    new_change = (
+                    new_change = Graphs.DataHistoryPropertyChange.new(
                         index,
                         prop,
                         utilities.value_to_gvariant(old_value),
                         utilities.value_to_gvariant(new_value),
                     )
                 case Graphs.ChangeType.ITEM_ADDED:
-                    new_change = utilities.value_to_gvariant(change)
+                    new_change = Graphs.DataHistoryItemAdded.new(
+                        utilities.value_to_gvariant(change),
+                    )
                 case Graphs.ChangeType.ITEM_REMOVED:
                     item, index = change
-                    new_change = utilities.value_to_gvariant(item), index
+                    new_change = Graphs.DataHistoryItemRemoved.new(
+                        utilities.value_to_gvariant(item),
+                        index,
+                    )
+                case Graphs.ChangeType.ITEMS_SWAPPED:
+                    index2, index1 = change
+                    new_change = Graphs.DataHistoryItemsSwapped.new(
+                        index1,
+                        index2,
+                    )
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                     prop, old_value, new_value = change
-                    new_change = (
+                    new_change = Graphs.DataHistoryFigureSettingsChange.new(
                         prop,
                         utilities.value_to_gvariant(old_value),
                         utilities.value_to_gvariant(new_value),
                     )
-                case _:
-                    new_change = change
-            changes.append((change_type, new_change))
-        return changes, Graphs.Limits.new(state[1])
+            changes.append(new_change)
+        limits = Graphs.Limits.new(state[1])
+        return Graphs.DataHistoryState.new(limits, changes)
 
     def load_from_project_dict(self, project_dict: dict) -> None:
         """Load data from dict."""
@@ -361,20 +143,14 @@ class Data(Graphs.Data):
         self.set_items(Graphs.items_from_variants(data))
 
         # Set clipboard
-        self._current_batch = []
-        self._history_states = [
+        history_states = [
             self._deserialize_history_state(state)
             for state in project_dict["history-states"]
         ]
-        self._history_pos = project_dict["history-position"]
+        self.set_data_history(project_dict["history-position"], history_states)
         view_states = project_dict["view-history-states"]
         limits = list(map(Graphs.Limits.new, view_states))
         self.set_view_history(project_dict["view-history-position"], limits)
-
-        # Set clipboard/view buttons
-        self.props.can_undo = \
-            abs(self._history_pos) < len(self._history_states)
-        self.props.can_redo = self._history_pos < -1
 
     def _save(self) -> None:
         project.save_project_dict(self.props.file, self.get_project_dict())

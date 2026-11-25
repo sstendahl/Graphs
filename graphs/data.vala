@@ -6,8 +6,8 @@ namespace Graphs {
     public class Data : Object, ListModel, Gtk.SelectionModel {
         private const int HISTORY_SIZE = 100;
 
-        public bool can_undo { get; protected set; default = false; }
-        public bool can_redo { get; protected set; default = false; }
+        public bool can_undo { get; private set; default = false; }
+        public bool can_redo { get; private set; default = false; }
         public bool can_view_back { get; private set; default = false; }
         public bool can_view_forward { get; private set; default = false; }
         public File file { get; set; }
@@ -45,20 +45,17 @@ namespace Graphs {
         private int _current_view_history_state = 0;
         private int _oldest_view_history_state = 0;
         private int _newest_view_history_state = 0;
+        private DataHistoryState[] _data_history_states = new DataHistoryState[HISTORY_SIZE];
+        private int _current_data_history_state = 0;
+        private int _oldest_data_history_state = 0;
+        private int _newest_data_history_state = 0;
+        private ManagedArray<DataHistoryChange> _current_batch = new ManagedArray<DataHistoryChange> ();
         private StyleParameters old_selected_style_params;
         private Variant[] _data_copy;
         private HashTable <string, Variant> _figure_settings_copy;
 
         public signal void style_changed ();
         protected signal string load_request (File file, ProjectParseFlags parse_flags);
-        protected signal bool add_history_state_request ();
-
-        // Clipboard signals
-        protected signal void position_changed (uint index1, uint index2);
-        protected signal void item_changed (uint index, string prop, Variant old_value, Variant new_value);
-        protected signal void item_added (Variant variant);
-        protected signal void item_removed (Variant variant, uint index);
-        protected signal void figure_settings_changed (string prop, Variant old_value, Variant new_value);
 
         construct {
             items_changed.connect (_update_used_positions);
@@ -109,9 +106,8 @@ namespace Graphs {
                 reset_items.begin ();
             });
 
-            _view_history_states[0] = figure_settings.get_limits ();
+            _clear_history ();
             _set_data_copy ();
-            PythonHelper.run_method (this, "_init_history_states");
         }
 
         // Section ListModel
@@ -246,11 +242,7 @@ namespace Graphs {
             this.can_view_back = false;
             this.can_view_forward = false;
             this.figure_settings = new FigureSettings (_settings);
-            _view_history_states[0] = figure_settings.get_limits ();
-            _current_view_history_state = 0;
-            _oldest_view_history_state = 0;
-            _newest_view_history_state = 0;
-            PythonHelper.run_method (this, "_init_history_states");
+            _clear_history ();
             this.file = null;
             this.unsaved = false;
             notify_property ("unsaved");
@@ -302,21 +294,21 @@ namespace Graphs {
             }
         }
 
-        protected void _add_item (Item item) {
+        private void _add_item (Item item) {
             _connect_to_item (item);
             _items.append (item);
             _update_variable_values ();
             items_changed.emit (_items.length - 1, 0, 1);
         }
 
-        protected void _insert_item (Item item, int index) {
+        private void _insert_item (Item item, int index) {
             _connect_to_item (item);
             _items.insert (index, item);
             _update_variable_values ();
             items_changed.emit (index, 0, 1);
         }
 
-        protected void _remove_item (uint index) {
+        private void _remove_item (uint index) {
             _disconnect_from_item (_items[(int) index]);
             _items.remove_at ((int) index);
             items_changed.emit (index, 1, 0);
@@ -417,11 +409,11 @@ namespace Graphs {
             if (!_restoring) {
                 foreach (VariableItem item in _create_missing_variables (equation_item, {})) {
                     _add_item (item);
-                    item_added.emit (item.to_variant (index));
+                    _current_batch.append (new DataHistoryItemAdded (item.to_variant (index)));
                 }
                 foreach (VariableItem item in _get_unused_variables ()) {
                     uint index = (uint) _items.index (item);
-                    item_removed.emit (item.to_variant (this.index), index);
+                    _current_batch.append (new DataHistoryItemRemoved (item.to_variant (this.index), index));
                     _remove_item (index);
                 }
             }
@@ -464,7 +456,7 @@ namespace Graphs {
                     if (get_variable_item (((VariableItem) item).variable) != null) continue;
                     _items.append (item);
                     _connect_to_item (item);
-                    item_added.emit (item.to_variant (index));
+                    _current_batch.append (new DataHistoryItemAdded (item.to_variant (index)));
                     continue;
                 }
 
@@ -528,7 +520,7 @@ namespace Graphs {
                 }
                 item.visible = !figure_settings.hide_unselected || item.selected;
                 _connect_to_item (item);
-                item_added.emit (item.to_variant (index));
+                _current_batch.append (new DataHistoryItemAdded (item.to_variant (index)));
             }
             _update_variable_values ();
             items_changed.emit (prev_size, 0, _items.length - prev_size);
@@ -571,7 +563,7 @@ namespace Graphs {
                 int position = _items.index (item);
                 if (position < 0) continue;
                 uint index = (uint) position;
-                item_removed.emit (item.to_variant (this.index), index);
+                _current_batch.append (new DataHistoryItemRemoved (item.to_variant (this.index), index));
                 _remove_item (index);
 
                 string axis_label;
@@ -692,7 +684,7 @@ namespace Graphs {
             uint position = uint.min (index1, index2);
             uint changed = uint.max (index1, index2) - position + 1;
             items_changed.emit (position, changed, changed);
-            position_changed.emit (index1, index2);
+            _current_batch.append (new DataHistoryItemsSwapped (index1, index2));
         }
 
         [Compact]
@@ -888,6 +880,22 @@ namespace Graphs {
 
         // Section history
 
+        private void _clear_history () {
+            var limits = figure_settings.get_limits ();
+
+            _view_history_states[0] = limits;
+            _current_view_history_state = 0;
+            _oldest_view_history_state = 0;
+            _newest_view_history_state = 0;
+
+            _data_history_states[0] = new DataHistoryState (limits, {});
+            _current_data_history_state = 0;
+            _oldest_data_history_state = 0;
+            _newest_data_history_state = 0;
+
+            _current_batch.clear ();
+        }
+
         private void _set_data_copy () {
             int n_items = _items.length;
             _data_copy = new Variant[n_items];
@@ -904,8 +912,18 @@ namespace Graphs {
         }
 
         public void add_history_state () {
-            if (!add_history_state_request.emit ()) return;
+            var change = new DataHistoryState (figure_settings.get_limits (), _current_batch.steal ());
+
+            int next = (_current_data_history_state + 1) % HISTORY_SIZE;
+            _data_history_states[next] = change;
+            _current_data_history_state = next;
+            _newest_data_history_state = next;
+
+            if (next == _oldest_data_history_state)
+                _oldest_data_history_state = (_oldest_data_history_state + 1) % HISTORY_SIZE;
+
             _set_data_copy ();
+            _current_batch.clear ();
             this.can_undo = true;
             this.can_redo = false;
             this.unsaved = true;
@@ -915,18 +933,106 @@ namespace Graphs {
         public void undo () {
             if (!can_undo) return;
             _restoring = true;
-            PythonHelper.run_method (this, "_undo");
+
+            unowned var changes = _data_history_states[_current_data_history_state].changes;
+            _current_data_history_state = (_current_data_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
+            unowned var limits = _data_history_states[_current_data_history_state].limits;
+
+            var selected = new Gtk.Bitset.empty ();
+            var mask = new Gtk.Bitset.empty ();
+
+            for (int i = changes.length; i > 0; i--) {
+                unowned var change = changes[i - 1];
+
+                if (change is DataHistoryPropertyChange) {
+                    unowned var property_change = (DataHistoryPropertyChange) change;
+                    uint index = property_change.index ();
+                    unowned string prop = property_change.prop ();
+                    unowned Variant val = property_change.old_value ();
+                    if (prop == "selected") {
+                        mask.add (index);
+                        if (val.get_boolean ()) selected.add (index);
+                    } else {
+                        Tools.deserialize_property (get_item (index), prop, val);
+                    }
+                } else if (change is DataHistoryItemAdded) {
+                    _remove_item (_items.length - 1);
+                } else if (change is DataHistoryItemRemoved) {
+                    unowned var item_removed = (DataHistoryItemRemoved) change;
+                    uint index = item_removed.index ();
+                    var item = item_from_variant (item_removed.item (), (i) => {
+                        var j = i;
+                        if (i > index) j++;
+                        return (Item) get_item (j);
+                    });
+                    _insert_item (item, (int) index);
+                } else if (change is DataHistoryItemsSwapped) {
+                    unowned var items_swapped = (DataHistoryItemsSwapped) change;
+                    change_position (items_swapped.index2 (), items_swapped.index1 ());
+                } else if (change is DataHistoryFigureSettingsChange) {
+                    unowned var figure_settings_change = (DataHistoryFigureSettingsChange) change;
+                    Tools.deserialize_property (figure_settings, figure_settings_change.prop (), figure_settings_change.old_value ());
+                }
+            }
+
+            set_selection (selected, mask);
+            figure_settings.set_limits (limits);
             _set_data_copy ();
+            _current_batch.clear ();
             _restoring = false;
+
+            this.can_undo = _current_data_history_state != _oldest_data_history_state;
+            this.can_redo = true;
             add_view_history_state ();
         }
 
         public void redo () {
             if (!can_redo) return;
             _restoring = true;
-            PythonHelper.run_method (this, "_redo");
+
+            _current_data_history_state = (_current_data_history_state + 1) % HISTORY_SIZE;
+            unowned var state = _data_history_states[_current_data_history_state];
+
+            var selected = new Gtk.Bitset.empty ();
+            var mask = new Gtk.Bitset.empty ();
+
+            foreach (unowned var change in state.changes) {
+                if (change is DataHistoryPropertyChange) {
+                    unowned var property_change = (DataHistoryPropertyChange) change;
+                    uint index = property_change.index ();
+                    unowned string prop = property_change.prop ();
+                    unowned Variant val = property_change.old_value ();
+                    if (prop == "selected") {
+                        mask.add (index);
+                        if (val.get_boolean ()) selected.add (index);
+                    } else {
+                        Tools.deserialize_property (get_item (index), prop, val);
+                    }
+                } else if (change is DataHistoryItemAdded) {
+                    unowned var item_added = (DataHistoryItemAdded) change;
+                    _add_item (item_from_variant (item_added.item (), (i) => {
+                        return (Item) get_item (i);
+                    }));
+                } else if (change is DataHistoryItemRemoved) {
+                    unowned var item_removed = (DataHistoryItemRemoved) change;
+                    _remove_item (item_removed.index ());
+                } else if (change is DataHistoryItemsSwapped) {
+                    unowned var items_swapped = (DataHistoryItemsSwapped) change;
+                    change_position (items_swapped.index1 (), items_swapped.index2 ());
+                } else if (change is DataHistoryFigureSettingsChange) {
+                    unowned var figure_settings_change = (DataHistoryFigureSettingsChange) change;
+                    Tools.deserialize_property (figure_settings, figure_settings_change.prop (), figure_settings_change.new_value ());
+                }
+            }
+
+            set_selection (selected, mask);
+            figure_settings.set_limits (state.limits);
             _set_data_copy ();
+            _current_batch.clear ();
             _restoring = false;
+
+            this.can_undo = true;
+            this.can_redo = _current_data_history_state != _newest_data_history_state;
             add_view_history_state ();
         }
 
@@ -965,6 +1071,39 @@ namespace Graphs {
 
             this.can_view_back = true;
             this.can_view_forward = _current_view_history_state != _newest_view_history_state;
+        }
+
+        protected int get_data_history (out DataHistoryState[] history) {
+            int n_states;
+            if (_newest_data_history_state >= _oldest_data_history_state)
+                n_states = _newest_data_history_state - _oldest_data_history_state + 1;
+            else
+                n_states = HISTORY_SIZE - _oldest_data_history_state + _newest_data_history_state + 1;
+
+            history = new DataHistoryState[n_states];
+
+            int index = _oldest_data_history_state;
+            for (int i = 0; i < n_states; i++) {
+                history[i] = _data_history_states[index];
+                index = (index + 1) % HISTORY_SIZE;
+            }
+
+            return ((_current_data_history_state - _oldest_data_history_state + HISTORY_SIZE) % HISTORY_SIZE) - n_states;
+        }
+
+        protected void set_data_history (int pos, owned DataHistoryState[] history)
+            requires (history.length <= HISTORY_SIZE) {
+            int n_states = history.length;
+            for (int i = 0; i < n_states; i++) {
+                _data_history_states[i] = history[i];
+            }
+
+            _oldest_data_history_state = 0;
+            _newest_data_history_state = n_states - 1;
+            _current_data_history_state = _newest_data_history_state + pos + 1;
+
+            this.can_undo = pos.abs () < n_states;
+            this.can_redo = pos < -1;
         }
 
         protected int get_view_history (out Limits[] history) {
@@ -1038,12 +1177,12 @@ namespace Graphs {
             var item = (Item) object;
             unowned string prop = spec.name;
             uint i = index (item);
-            item_changed.emit (
+            _current_batch.append (new DataHistoryPropertyChange (
                 i,
                 prop,
                 _data_copy[i].lookup_value (prop, null),
                 Tools.serialize_property (item, prop)
-            );
+            ));
         }
 
         private void _on_item_selected (Object object, ParamSpec spec) {
@@ -1065,7 +1204,7 @@ namespace Graphs {
             var new_value = Tools.value_to_variant (val);
             var old_value = _figure_settings_copy.get (prop);
 
-            figure_settings_changed.emit (prop, old_value, new_value);
+            _current_batch.append (new DataHistoryFigureSettingsChange (prop, old_value, new_value));
         }
 
         private void _update_visibility () {

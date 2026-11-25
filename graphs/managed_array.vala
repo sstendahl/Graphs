@@ -11,13 +11,17 @@ namespace Graphs {
         public int length { get { return _length; } }
 
         public ManagedArray (int len = 8) {
-            this._length = 0;
-            this._data = new T[len];
+            clear (len);
         }
 
         public ManagedArray.take (owned T[] data) {
             this._length = data.length;
             this._data = (owned) data;
+        }
+
+        public void clear (int len = 8) {
+            this._length = 0;
+            this._data = new T[len];
         }
 
         public bool is_empty () {

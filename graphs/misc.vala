@@ -95,14 +95,6 @@ namespace Graphs {
         return pos.friendly_string ();
     }
 
-    public enum ChangeType {
-        ITEM_PROPERTY_CHANGED,
-        ITEM_ADDED,
-        ITEM_REMOVED,
-        ITEMS_SWAPPED,
-        FIGURE_SETTINGS_CHANGED
-    }
-
     public enum Mode {
         PAN,
         ZOOM,
