@@ -47,6 +47,8 @@ namespace Graphs {
             this.value = value;
         }
 
+        internal VariableItem.empty () {}
+
         /**
          * Whether a value can be on the scale of the slider
          */

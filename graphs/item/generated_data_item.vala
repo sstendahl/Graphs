@@ -41,7 +41,12 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal GeneratedDataItem.empty () {
+            base.empty ();
+        }
+
         private void regenerate () {
+            if (_equation == null) return;
             try {
                 data = MathTools.equation_to_data (
                     _equation,
@@ -49,27 +54,6 @@ namespace Graphs {
                     evaluate_string (xstop),
                     steps, scale);
             } catch (MathError e) { assert_not_reached (); }
-        }
-
-        public override Variant? serialize_property (string prop) {
-            if (prop == "equation") {
-                try {
-                    return new Variant.string (ast_to_expression (_equation));
-                } catch (MathError e) { assert_not_reached (); }
-            }
-
-            return base.serialize_property (prop);
-        }
-
-        public override bool deserialize_property (string prop, Variant variant) {
-            if (prop == "equation") {
-                try {
-                    equation = expression_to_ast (variant.get_string ());
-                    return true;
-                } catch (MathError e) { assert_not_reached (); }
-            }
-
-            return base.deserialize_property (prop, variant);
         }
     }
 }

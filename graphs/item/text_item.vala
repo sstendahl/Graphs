@@ -20,6 +20,8 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal TextItem.empty () {}
+
         private static StylePropertyBinding[] bindings = {
             {"size", (s) => (double) s.font.get_size () / Pango.SCALE},
             {"color", (s) => s.text_color}

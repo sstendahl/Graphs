@@ -9,7 +9,6 @@ from operator import itemgetter
 from gi.repository import GLib, Gio, Graphs, Gtk
 
 from graphs import project, utilities
-from graphs.item import ItemFactory
 
 
 class Data(Graphs.Data):
@@ -195,15 +194,23 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     else:
-                        self[index].deserialize_property(prop, value)
+                        Graphs.tools_deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
                     self._remove_item(self.get_n_items() - 1)
                 case Graphs.ChangeType.ITEM_REMOVED:
-                    dictionary = change[1].unpack()
-                    items = list(self)
-                    items.insert(change[0], None)
-                    item = ItemFactory.new_from_dict(dictionary, items)
-                    self._insert_item(item, change[0])
+                    index = change[0]
+
+                    def callback(i, index=index):
+                        if i > index:
+                            i += 1
+                        return self.get_item(i)
+
+                    item = Graphs.item_from_variant(change[1], callback)
+                    self._insert_item(item, index)
                 case Graphs.ChangeType.ITEMS_SWAPPED:
                     self.change_position(change[0], change[1])
                 case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
@@ -235,10 +242,14 @@ class Data(Graphs.Data):
                         if value:
                             selected.add(index)
                     else:
-                        self[index].deserialize_property(prop, value)
+                        Graphs.tools_deserialize_property(
+                            self[index],
+                            prop,
+                            value,
+                        )
                 case Graphs.ChangeType.ITEM_ADDED:
-                    dictionary = change.unpack()
-                    self._add_item(ItemFactory.new_from_dict(dictionary, self))
+                    item = Graphs.item_from_variant(change, self.get_item)
+                    self._add_item(item)
                 case Graphs.ChangeType.ITEM_REMOVED:
                     self._remove_item(change[0])
                 case Graphs.ChangeType.ITEMS_SWAPPED:
@@ -343,7 +354,11 @@ class Data(Graphs.Data):
                 },
             ),
         )
-        self.set_items(ItemFactory.new_from_dicts(project_dict["data"]))
+        data = [
+            utilities.value_to_gvariant(item)
+            for item in project_dict["data"]
+        ]
+        self.set_items(Graphs.items_from_variants(data))
 
         # Set clipboard
         self._current_batch = []
