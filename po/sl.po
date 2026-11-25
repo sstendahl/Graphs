@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-11-25 09:36+0000\n"
-"PO-Revision-Date: 2026-11-25 11:14+0100\n"
+"POT-Creation-Date: 2026-11-25 10:44+0000\n"
+"PO-Revision-Date: 2026-11-25 20:23+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -1928,12 +1928,12 @@ msgstr "Razčlenjevanje datoteke ni uspelo,"
 msgid "Item %d"
 msgstr "Element %d"
 
-#: graphs/file_import/parsers/project/__init__.py:21
+#: graphs/file_import/parsers/project/__init__.py:20
 msgctxt "import-mode"
 msgid "Project"
 msgstr "Projekt"
 
-#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:21
+#: graphs/file_import/parsers/project/__init__.py:21 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Projektna datoteka programa Grafi"
@@ -2234,7 +2234,7 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "Parametri prileganja za %s"
 
-#: graphs/data.py:384
+#: graphs/data.py:399
 msgid "Failed to load project"
 msgstr "Nalaganje projekta ni uspelo"
 
@@ -2317,27 +2317,31 @@ msgstr "{name}: Napaka pri izvajanju operacije"
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "Podatki zunaj poudarjenega območja so bili zavrženi"
 
-#: graphs/project.py:61
+#: graphs/project.py:60
 msgid "Project file is missing data"
 msgstr "V datoteki projekta manjkajo podatki"
 
-#: graphs/project.py:82
+#: graphs/project.py:81
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "Project je iz novejše nezdružljive različice Grafov"
 
-#: graphs/project.py:311
+#: graphs/project.py:243 graphs/project.py:277 graphs/project.py:311
+msgid "Invalid Item encountered."
+msgstr "Najden neveljaven element."
+
+#: graphs/project.py:334
 msgid "Failed to do legacy migration"
 msgstr "Migracija opuščenega je spodletela"
 
-#: graphs/project.py:313
+#: graphs/project.py:336
 msgid "Failed to parse project file"
 msgstr "Razčlenjevanje projektne datoteke ni uspelo"
 
-#: graphs/project.py:319
+#: graphs/project.py:342
 msgid "Failed to migrate project"
 msgstr "Migriranje projekta ni uspelo"
 
-#: graphs/project.py:325
+#: graphs/project.py:348
 msgid "Failed to validate project"
 msgstr "Preverjanje projekta ni uspelo"
 
@@ -2393,11 +2397,11 @@ msgstr "Datoteka {file} ne vsebuje oznake z imenom"
 msgid "System"
 msgstr "Sistem"
 
-#: graphs/utilities.vala:331
+#: graphs/utilities.vala:352
 msgid "All Files"
 msgstr "Vse datoteke"
 
-#: graphs/utilities.vala:373
+#: graphs/utilities.vala:394
 msgid "Document Portal"
 msgstr "Portal dokumentov"
 
