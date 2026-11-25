@@ -67,7 +67,7 @@ namespace Graphs {
             string prop = spec.name;
             if (prop == "typename" || prop == "visible") continue;
             var val = variant.lookup_value (prop, null);
-            if (val == null) return null;
+            if (val == null) continue;
             if (!Tools.deserialize_property (item, prop, val)) return null;
         }
 
