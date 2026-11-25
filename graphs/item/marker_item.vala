@@ -23,6 +23,8 @@ namespace Graphs {
             override (parameters);
         }
 
+        internal MarkerItem.empty () {}
+
         private static StylePropertyBinding[] bindings = {
             {"color", (s) => s.axis_color}
         };

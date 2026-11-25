@@ -1042,7 +1042,7 @@ namespace Graphs {
                 i,
                 prop,
                 _data_copy[i].lookup_value (prop, null),
-                item.serialize_property (prop)
+                Tools.serialize_property (item, prop)
             );
         }
 

@@ -110,6 +110,17 @@ namespace Graphs {
          */
         public Variant? value_to_variant (Value val) {
             var type = val.type ();
+
+            if (type == typeof (DataHolder))
+                return ((DataHolder) val).to_variant ();
+            if (type == typeof (FillHolder))
+                return ((FillHolder) val).to_variant ();
+            if (type == typeof (Ast)) {
+                try {
+                    return ast_to_expression ((Ast) val);
+                } catch (MathError e) { return null; }
+            }
+
             if (type.is_enum ())
                 return new Variant.int32 (val.get_enum ());
 
@@ -134,6 +145,16 @@ namespace Graphs {
          */
         public Value? variant_to_value (Variant variant, Type type) {
             Value val = Value (type);
+
+            if (type == typeof (DataHolder))
+                return new DataHolder.from_variant (variant);
+            if (type == typeof (FillHolder))
+                return new FillHolder.from_variant (variant);
+            if (type == typeof (Ast)) {
+                try {
+                    return expression_to_ast (variant.get_string ());
+                } catch (MathError e) { return null; }
+            }
 
             if (type.is_enum ()) {
                 val.set_enum (variant.get_int32 ());
@@ -182,7 +203,7 @@ namespace Graphs {
             ParamSpec? pspec = object.get_class ().find_property (prop);
             if (pspec == null) return false;
 
-            var val = Tools.variant_to_value (variant, pspec.value_type);
+            var val = variant_to_value (variant, pspec.value_type);
             if (val == null) return false;
 
             object.set_property (prop, val);
