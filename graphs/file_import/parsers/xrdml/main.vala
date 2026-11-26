@@ -13,8 +13,12 @@ namespace Graphs {
         }
 
         public override void init_import_settings (ImportSettings settings) throws ParseError {
-            settings.set_item ("reader", new XrdmlReader (settings.file));
-            settings.set_int ("scan", 0);
+            var reader = new XrdmlReader (settings.file);
+            settings.set_item ("reader", reader);
+
+            var scans = new bool[reader.n_scans];
+            scans[0] = true;  // set first scan selected by default
+            settings.set_value ("scans", scans);
         }
 
         public override void append_settings_widgets (ImportSettings settings, Gtk.Box settings_box) throws ParseError {

@@ -2,8 +2,34 @@ using Gtk 4.0;
 using Adw 1;
 
 template $GraphsXrdmlGroup: Adw.PreferencesGroup {
-  Adw.ComboRow scan {
-    title: _("Scan");
+  Adw.ExpanderRow scans {
+    title: _("Scans");
+
+    [suffix]
+    Box {
+      valign: center;
+      spacing: 6;
+
+      Button {
+        label: C_("select scans", "All");
+        tooltip-text: _("Select All Scans");
+        clicked => $on_select_all();
+
+        styles [
+          "flat",
+        ]
+      }
+
+      Button {
+        label: C_("select scans", "None");
+        tooltip-text: _("Select No Scans");
+        clicked => $on_select_none();
+
+        styles [
+          "flat",
+        ]
+      }
+    }
   }
 
   Adw.ComboRow x_axis {

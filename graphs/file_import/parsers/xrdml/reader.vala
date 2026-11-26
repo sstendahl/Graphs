@@ -32,6 +32,7 @@ namespace Graphs {
                 delete doc;
             }
             if (scans.length == 0) throw new ParseError.INVALID (_("The file does not contain any data points"));
+            describe_scans ();
 
             foreach (XrdmlScan scan in scans) {
                 if (scan.q != null) has_q = true;
@@ -42,16 +43,51 @@ namespace Graphs {
         public ItemList parse (ImportSettings settings, StyleParameters style) {
             bool use_q = settings.get_string ("x-axis") == "q-space";
             bool use_cps = settings.get_string ("intensity") == "cps";
-            int selected = settings.get_int ("scan");
+            bool[] selected = (bool[]) settings.get_value ("scans");
 
             var items = new ItemList ();
             for (int i = 0; i < scans.length; i++) {
-                if (selected >= 0 && i != selected) continue; // -1 means all scans
+                if (!selected[i]) continue;
                 string name = settings.filename;
-                if (scans.length > 1) name = "%s - %d".printf (name, i + 1);
+                if (scans[i].description != null) {
+                    name = "%s (%s)".printf (name, scans[i].description);
+                } else if (scans.length > 1) {
+                    name = "%s - %d".printf (name, i + 1);
+                }
                 items.add (scans[i].create_item (style, name, use_q, use_cps));
             }
             return items;
+        }
+
+        public unowned string? get_description (int index) {
+            return scans[index].description;
+        }
+
+        // find proper name for the scans using the varying parameter
+        private void describe_scans () {
+            if (scans.length < 2) return;
+
+            var descriptions = new string[scans.length];
+            foreach (unowned string axis in scans[0].fixed_axes) {
+                bool changes = false;
+                foreach (XrdmlScan scan in scans) {
+                    if (scan.get_fixed (axis) != scans[0].get_fixed (axis)) changes = true;
+                }
+                if (!changes) continue;
+
+                for (int i = 0; i < scans.length; i++) {
+                    string? fixed = scans[i].get_fixed (axis);
+                    if (fixed == null) return;
+                    descriptions[i] = descriptions[i] == null ? fixed : "%s, %s".printf (descriptions[i], fixed);
+                }
+            }
+
+            var unique = new GenericSet<string> (str_hash, str_equal);
+            foreach (unowned string? description in descriptions) {
+                if (description == null || description in unique) return;
+                unique.add (description);
+            }
+            for (int i = 0; i < scans.length; i++) scans[i].description = descriptions[i];
         }
     }
 
@@ -65,6 +101,10 @@ namespace Graphs {
 
         public double[]? q = null;
         public double counting_time = 0;
+        public string? description = null;
+
+        public string[] fixed_axes = {};
+        private string[] fixed_positions = {};
 
         private double[] positions;
         private string position_label = "";
@@ -78,8 +118,16 @@ namespace Graphs {
 
             read_intensities (data_points);
             read_positions (scan, data_points);
+            read_fixed_positions (data_points);
             bool reflection = measurement->get_prop ("sampleMode") != "Transmission";
             calculate_q (data_points, get_wavelength (measurement), reflection);
+        }
+
+        public string? get_fixed (string axis) {
+            for (int i = 0; i < fixed_axes.length; i++) {
+                if (fixed_axes[i] == axis) return fixed_positions[i];
+            }
+            return null;
         }
 
         public DataItem create_item (StyleParameters style, string name, bool use_q, bool use_cps) {
@@ -102,7 +150,7 @@ namespace Graphs {
         }
 
         private void read_intensities (Xml.Node* data_points) throws ParseError {
-            // older files have <intensities>, newer ones <counts>
+            // older files use <intensities>, newer file use <counts>
             Xml.Node* node = get_child (data_points, "intensities");
             if (node != null) {
                 intensities = parse_values (node);
@@ -141,7 +189,34 @@ namespace Graphs {
             double[]? values = get_positions (node, intensities.length);
             if (values == null) throw new ParseError.INVALID (_("No positions found for the scan axis"));
             positions = values;
-            position_label = label ?? "%s (%s)".printf (axis, node->get_prop ("unit") ?? "");
+            string unit = node->get_prop ("unit") ?? "";
+            if (unit == "deg") unit = "$\\degree$";
+            position_label = label ?? "%s (%s)".printf (axis, unit);
+        }
+
+        private void read_fixed_positions (Xml.Node* data_points) throws ParseError {
+            int size = intensities.length;
+            for (Xml.Node* node = data_points->children; node != null; node = node->next) {
+                if (!is_element (node, "positions")) continue;
+                double[]? values = get_positions (node, size);
+                if (values == null || varies (values)) continue;
+
+                string axis = node->get_prop ("axis") ?? "";
+                string unit = node->get_prop ("unit") ?? "";
+                unit = unit == "deg" ? "°" : " " + unit;
+                fixed_axes += axis;
+                fixed_positions += "%s = %s%s".printf (get_symbol (axis), format_number (values[0]), unit.chomp ());
+            }
+
+            // omega offset of a coupled scan, e.g. wobble scans
+            double[]? two_theta = get_positions (get_positions_node (data_points, "2Theta"), size);
+            double[]? omega = get_positions (get_positions_node (data_points, "Omega"), size);
+            if (two_theta == null || omega == null || !varies (two_theta)) return;
+            var offsets = new double[size];
+            for (int i = 0; i < size; i++) offsets[i] = Math.round ((omega[i] - two_theta[i] / 2) * 1e4);
+            if (varies (offsets)) return;
+            fixed_axes += "offset";
+            fixed_positions += "ω − θ = %s°".printf (format_number (omega[0] - two_theta[0] / 2));
         }
 
         private void calculate_q (Xml.Node* data_points, double wavelength, bool reflection) throws ParseError {
@@ -234,6 +309,27 @@ namespace Graphs {
             double step = size > 1 ? (end - start) / (size - 1) : 0;
             for (int i = 0; i < size; i++) values[i] = start + i * step;
             return values;
+        }
+
+        private static string get_symbol (string axis) {
+            switch (axis) {
+                case "2Theta": return "2θ";
+                case "Omega": return "ω";
+                case "Phi": return "φ";
+                case "Chi": return "χ";
+                case "Psi": return "ψ";
+                default: return axis;
+            }
+        }
+
+        // up to four decimals, without trailing zeros
+        private static string format_number (double value) {
+            string text = "%.4f".printf (Math.round (value * 1e4) / 1e4 + 0.0);
+            if (text.contains (".") || text.contains (",")) {
+                while (text.has_suffix ("0")) text = text.substring (0, text.length - 1);
+                if (text.has_suffix (".") || text.has_suffix (",")) text = text.substring (0, text.length - 1);
+            }
+            return text.replace ("-", "−");
         }
 
         private static bool varies (double[] values) {
