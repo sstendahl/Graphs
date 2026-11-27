@@ -13,7 +13,7 @@ def startup(debug: bool, localedir: str, gettext_package: str) -> None:
     from gi.repository import Graphs
 
     from graphs.canvas import scales
-    from graphs.file_import.parsers import project, xrdml
+    from graphs.file_import.parsers import project
     from graphs.python_helper import PythonHelper
     from graphs.styles import StyleManager
 
@@ -49,7 +49,7 @@ def startup(debug: bool, localedir: str, gettext_package: str) -> None:
         project.ProjectParser(),
         Graphs.SqlParser.new(),
         Graphs.SpreadsheetParser.new(),
-        xrdml.XrdmlParser(),
+        Graphs.XrdmlParser.new(),
         Graphs.XryParser.new(),
     ]
     Graphs.DataImporter.new(parsers)
