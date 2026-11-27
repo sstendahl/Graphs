@@ -47,7 +47,7 @@ class Data(Graphs.Data):
                 new_change = change.item().unpack()
                 change_type = Graphs.ChangeType.ITEM_ADDED
             elif isinstance(change, Graphs.DataHistoryItemRemoved):
-                new_change = (change.item().unpack(), change.index())
+                new_change = (change.index(), change.item().unpack())
                 change_type = Graphs.ChangeType.ITEM_REMOVED
             elif isinstance(change, Graphs.DataHistoryItemsSwapped):
                 # This was swapped in previous implementations
@@ -103,7 +103,7 @@ class Data(Graphs.Data):
                         utilities.value_to_gvariant(change),
                     )
                 case Graphs.ChangeType.ITEM_REMOVED:
-                    item, index = change
+                    index, item = change
                     new_change = Graphs.DataHistoryItemRemoved.new(
                         utilities.value_to_gvariant(item),
                         index,
