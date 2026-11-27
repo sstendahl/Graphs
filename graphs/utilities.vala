@@ -413,10 +413,6 @@ namespace Graphs {
                 }
             }
 
-            // Remove /var from file path and home path for rpm-ostree based distros
-            if (filepath.has_prefix ("/var/home")) {
-                filepath = filepath.substring (4);
-            }
             unowned string home = Environment.get_home_dir ();
             if (filepath.has_prefix (home)) {
                 filepath = "~" + filepath.substring (home.length);
