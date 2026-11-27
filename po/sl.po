@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-11-25 10:44+0000\n"
-"PO-Revision-Date: 2026-11-25 20:23+0100\n"
+"POT-Creation-Date: 2026-11-27 13:20+0000\n"
+"PO-Revision-Date: 2026-11-27 22:02+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Slovenian <gnome-si@googlegroups.com>\n"
 "Language: sl\n"
@@ -444,6 +444,67 @@ msgstr "En stolpec"
 #: data/ui/import/spreadsheet/item-group.blp:57
 msgid "X Value Equation"
 msgstr "Enačba vrednosti X"
+
+#: data/ui/import/xrdml/main-group.blp:6
+#, fuzzy
+msgid "Scans"
+msgstr "Pregledi/Optična branja/Skeni"
+
+#: data/ui/import/xrdml/main-group.blp:14
+#, fuzzy
+msgctxt "select scans"
+msgid "All"
+msgstr "Vse"
+
+#: data/ui/import/xrdml/main-group.blp:15
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Select All"
+msgid "Select All Scans"
+msgstr "Izbere vse"
+
+#: data/ui/import/xrdml/main-group.blp:24
+#, fuzzy
+#| msgctxt "linestyle"
+#| msgid "None"
+msgctxt "select scans"
+msgid "None"
+msgstr "Brez"
+
+#: data/ui/import/xrdml/main-group.blp:25
+#, fuzzy
+#| msgctxt "shortcut window"
+#| msgid "Select None"
+msgid "Select No Scans"
+msgstr "Ne izberi ničesar"
+
+#: data/ui/import/xrdml/main-group.blp:36
+msgid "X-Axis"
+msgstr "Os X"
+
+#: data/ui/import/xrdml/main-group.blp:40
+#, fuzzy
+msgid "Scan Angle"
+msgstr "Kot optičnega branja"
+
+#: data/ui/import/xrdml/main-group.blp:41
+#, fuzzy
+msgid "q (Reciprocal Space)"
+msgstr "Q (recipročni prostor)"
+
+#: data/ui/import/xrdml/main-group.blp:47
+msgid "Intensity"
+msgstr "Intenzivnost"
+
+#: data/ui/import/xrdml/main-group.blp:51
+#, fuzzy
+msgid "Counts per Second"
+msgstr "Število na sekundo"
+
+#: data/ui/import/xrdml/main-group.blp:52
+#, fuzzy
+msgid "Counts"
+msgstr "Števci"
 
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
@@ -1948,7 +2009,7 @@ msgctxt "file-filter"
 msgid "Spreadsheet"
 msgstr "Preglednica"
 
-#: graphs/file_import/parsers/spreadsheet/reader.vala:13
+#: graphs/file_import/parsers/spreadsheet/reader.vala:13 graphs/file_import/parsers/xrdml/reader.vala:15
 msgid "Failed to open File."
 msgstr "Odpiranje datoteke ni uspelo."
 
@@ -1971,23 +2032,50 @@ msgstr "Ni mogoče uvoziti podatkov iz tabele »%s«, številskih stolpcev ni mo
 msgid "No data found in table column"
 msgstr "V stolpcu tabele ni podatkov"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/main.vala:9
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/main.vala:10
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalitični XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:69
+#: graphs/file_import/parsers/xrdml/reader.vala:21 graphs/file_import/parsers/xrdml/reader.vala:375
+msgid "The file is not a valid XRDML file"
+msgstr "Datoteka ni veljavna datoteka XRDML"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:34 graphs/file_import/parsers/xrdml/reader.vala:117
+msgid "The file does not contain any data points"
+msgstr "Datoteka ne vsebuje podatkovnih točk"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:148
+msgid "Intensity (cps)"
+msgstr "Intenzivnost (cps)"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:148
+#, fuzzy
+msgid "Intensity (counts)"
+msgstr "Intenzivnost (števci)"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:160 graphs/file_import/parsers/xrdml/reader.vala:168
+msgid "The file does not contain any intensities"
+msgstr "Datoteka ne vsebuje intenzivnosti"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:190
 msgid "No positions found for the scan axis"
 msgstr "Za os skeniranja ni bilo najdenih položajev"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:79
-msgid "Intensity (cps)"
-msgstr "Intenzivnost (cps)"
+#: graphs/file_import/parsers/xrdml/ui.vala:34
+#, fuzzy, c-format
+msgid "Scan %d"
+msgstr "Preišči %d"
+
+#: graphs/file_import/parsers/xrdml/ui.vala:67
+#, c-format
+msgid "%d of %d selected"
+msgstr "Izbrano %d od %d"
 
 #: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
