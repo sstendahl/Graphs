@@ -83,7 +83,7 @@ namespace Graphs {
 
             Adw.StyleManager.get_default ().notify.connect (() => {
                 if (!figure_settings.use_custom_style) {
-                    handle_style_change.begin ();
+                    handle_style_change.begin (false, true);
                 }
             });
 
@@ -472,9 +472,10 @@ namespace Graphs {
 
         // Section style
 
-        private async void handle_style_change (bool recolor_items = false) {
+        private async void handle_style_change (bool recolor_items = false, bool system_style_changed = false) {
             notify_property ("selected_stylename");
             run_python_method ("_update_selected_style");
+            if (system_style_changed) run_python_method ("_update_errorbar_colors");
             style_changed.emit (recolor_items);
         }
 

@@ -40,7 +40,10 @@ class Data(Graphs.Data):
         super().__init__()
         self.connect("load-request", self._on_load_request)
         self.connect("position-changed", self._on_position_changed)
-        self.connect("item-changed", self._on_item_changed)
+        self._item_changed_handler = self.connect(
+            "item-changed",
+            self._on_item_changed,
+        )
         self.connect("item-added", self._on_item_added)
         self.connect("item-removed", self._on_item_removed)
         self.connect(
@@ -125,6 +128,28 @@ class Data(Graphs.Data):
         self.set_errbar_color_cycle(
             graphs_params["errorbar.color_cycle"].by_key()["color"],
         )
+
+    def _update_errorbar_colors(self) -> None:
+        """Make error bars in the style's color follow the system style."""
+        old_params = self._old_style_params[1]
+        new_params = self._selected_style_params[1]
+        if "errorbar.color_cycle" not in old_params:
+            return
+        old_cycle = old_params["errorbar.color_cycle"].by_key()["color"]
+        new_cycle = new_params["errorbar.color_cycle"].by_key()["color"]
+        if old_cycle == new_cycle:
+            return
+
+        for index, item in enumerate(self):
+            if not isinstance(item, Graphs.DataItem) \
+                    or item.get_errcolor() not in old_cycle:
+                continue
+            position = old_cycle.index(item.get_errcolor())
+            errcolor = new_cycle[position % len(new_cycle)]
+            with self.handler_block(self._item_changed_handler):
+                item.set_errcolor(errcolor)
+            if index < len(self._data_copy):
+                self._data_copy[index]["errcolor"] = errcolor
 
     def _init_history_states(self) -> None:
         limits = self.props.figure_settings.get_limits().values()
