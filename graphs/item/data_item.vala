@@ -159,7 +159,45 @@ namespace Graphs {
         }
     }
 
+    public enum DataPlotType {
+        LINE,
+        STAIRS,
+        BARS,
+        STEMS;
+
+        public unowned string to_style () {
+            EnumClass enumc = (EnumClass) typeof (DataPlotType).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+
+        public static DataPlotType from_style (string style) {
+            EnumClass enumc = (EnumClass) typeof (DataPlotType).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (style);
+            return (DataPlotType) eval.value;
+        }
+    }
+
+    public enum DataStepPosition {
+        PRE,
+        MID,
+        POST;
+
+        public unowned string to_style () {
+            EnumClass enumc = (EnumClass) typeof (DataStepPosition).class_ref ();
+            unowned EnumValue? eval = enumc.get_value (this);
+            return eval.value_nick;
+        }
+
+        public static DataStepPosition from_style (string style) {
+            EnumClass enumc = (EnumClass) typeof (DataStepPosition).class_ref ();
+            unowned EnumValue? eval = enumc.get_value_by_nick (style);
+            return (DataStepPosition) eval.value;
+        }
+    }
+
     public class DataItem : Item, LegendableItem {
+        public double barwidth { get; set; default = 0.8; }
         public DataHolder data { get; set; default = new DataHolder.empty (); }
         public bool downsample { get; set; default = true; }
         public bool errbarsabove { get; set; default = false; }
@@ -172,8 +210,10 @@ namespace Graphs {
         public double linewidth { get; set; default = 3; }
         public DataMarkerstyle markerstyle { get; set; default = 0; }
         public double markersize { get; set; default = 7; }
+        public DataPlotType plottype { get; set; default = LINE; }
         public bool showxerr { get; set; default = true; }
         public bool showyerr { get; set; default = true; }
+        public DataStepPosition stepposition { get; set; default = MID; }
 
         construct {
             typename = _("Dataset");
@@ -193,6 +233,9 @@ namespace Graphs {
             {"linewidth", (s) => s.linewidth},
             {"markerstyle", (s) => s.markerstyle},
             {"markersize", (s) => s.markersize},
+            {"plottype", (s) => s.plottype},
+            {"stepposition", (s) => s.stepposition},
+            {"barwidth", (s) => s.barwidth},
             {"errbarsabove", (s) => s.errorbar_barsabove},
             {"errcapsize", (s) => s.errorbar_capsize},
             {"errcapthick", (s) => s.errorbar_capthick},

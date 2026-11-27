@@ -17,6 +17,12 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Scale labelsize { get; }
         [GtkChild]
+        private unowned Adw.ComboRow plottype { get; }
+        [GtkChild]
+        private unowned Adw.ComboRow stepposition { get; }
+        [GtkChild]
+        private unowned Gtk.Scale barwidth { get; }
+        [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
         [GtkChild]
         private unowned Gtk.Scale linewidth { get; }
@@ -108,6 +114,9 @@ namespace Graphs {
             titlesize.set_value (data.titlesize);
             labelsize.set_value (data.labelsize);
 
+            plottype.set_selected (data.plottype);
+            stepposition.set_selected (data.stepposition);
+            barwidth.set_value (data.barwidth);
             linestyle.set_selected (data.linestyle);
             linewidth.set_value (data.linewidth);
             markerstyle.set_selected (data.markerstyle);
@@ -191,6 +200,27 @@ namespace Graphs {
         private void on_labelsize () {
             if (parameters == null) return;
             parameters.data.labelsize = labelsize.get_value ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_plottype () {
+            if (parameters == null) return;
+            parameters.data.plottype = (DataPlotType) plottype.get_selected ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_stepposition () {
+            if (parameters == null) return;
+            parameters.data.stepposition = (DataStepPosition) stepposition.get_selected ();
+            update ();
+        }
+
+        [GtkCallback]
+        private void on_barwidth () {
+            if (parameters == null) return;
+            parameters.data.barwidth = barwidth.get_value ();
             update ();
         }
 

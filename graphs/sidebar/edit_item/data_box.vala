@@ -3,11 +3,23 @@ namespace Graphs {
     [GtkTemplate (ui = "/se/sjoerd/Graphs/ui/sidebar/edit-item/data.ui")]
     private class EditItemDataItemBox : Gtk.Box {
         [GtkChild]
+        private unowned Adw.ComboRow plottype { get; }
+        [GtkChild]
+        private unowned Adw.ComboRow stepposition { get; }
+        [GtkChild]
+        private unowned Adw.ActionRow barwidth_row { get; }
+        [GtkChild]
+        private unowned Gtk.Scale barwidth { get; }
+        [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
+        [GtkChild]
+        private unowned Adw.ActionRow linewidth_row { get; }
         [GtkChild]
         private unowned Gtk.Scale linewidth { get; }
         [GtkChild]
         private unowned Adw.ComboRow markerstyle { get; }
+        [GtkChild]
+        private unowned Adw.ActionRow markersize_row { get; }
         [GtkChild]
         private unowned Gtk.Scale markersize { get; }
         [GtkChild]
@@ -26,6 +38,24 @@ namespace Graphs {
                 );
             }
 
+            item.bind_property (
+                "plottype",
+                plottype,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "stepposition",
+                stepposition,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "barwidth",
+                barwidth.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
             item.bind_property (
                 "linestyle",
                 linestyle,
@@ -50,6 +80,18 @@ namespace Graphs {
                 "value",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+        }
+
+        [GtkCallback]
+        private void on_plottype () {
+            var type = (DataPlotType) plottype.get_selected ();
+            bool bars = type == BARS;
+            stepposition.set_visible (type == STAIRS);
+            barwidth_row.set_visible (bars);
+            linestyle.set_visible (!bars);
+            linewidth_row.set_visible (!bars);
+            markerstyle.set_visible (!bars);
+            markersize_row.set_visible (!bars);
         }
 
         [GtkCallback]

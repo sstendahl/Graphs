@@ -110,6 +110,16 @@ def _fix_nan_extrema(
     return breaks
 
 
+def _to_stems(xdata, ydata):
+    """Return lines from zero to each point, separated by NaN."""
+    zeros = numpy.zeros_like(ydata)
+    gaps = numpy.full_like(ydata, numpy.nan)
+    return (
+        numpy.column_stack((xdata, xdata, gaps)).ravel(),
+        numpy.column_stack((zeros, ydata, gaps)).ravel(),
+    )
+
+
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -197,6 +207,11 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     selected = GObject.Property(type=bool, default=True)
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
+    barwidth = GObject.Property(type=float, default=0.8)
+    stepposition = GObject.Property(
+        type=int,
+        default=Graphs.DataStepPosition.MID,
+    )
     legend = GObject.Property(type=bool, default=True)
     downsample = GObject.Property(type=bool, default=True)
 
@@ -263,7 +278,14 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             xdata, ydata = xdata[indices], ydata[indices]
             xerr = None if xerr is None else xerr[indices]
             yerr = None if yerr is None else yerr[indices]
-        self._data.set_data((xdata, ydata))
+        if self._plottype == Graphs.DataPlotType.BARS:
+            skipped = indices is not None \
+                and numpy.any(numpy.diff(indices) > 1)
+            self._draw_bars(*self._to_bars(xdata, ydata, skipped))
+        elif self._plottype == Graphs.DataPlotType.STEMS:
+            self._data.set_data(*_to_stems(xdata, ydata))
+        else:
+            self._data.set_data((xdata, ydata))
 
         if xerr is not None:
             start = numpy.column_stack((xdata - xerr, ydata))
@@ -279,9 +301,52 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._ycaps[0].set_data(xdata, ydata - yerr)
             self._ycaps[1].set_data(xdata, ydata + yerr)
 
+    def _to_bars(self, xdata, ydata, skipped) -> tuple:
+        """Return the left edges, widths and heights of the bars."""
+        transform = self._axis.xaxis.get_transform()
+        steps = numpy.diff(numpy.sort(transform.transform(self._full[0])))
+        steps = steps[steps > 0]
+        finite = numpy.isfinite(xdata)
+        if not steps.size or not finite.any():
+            return [], [], []
+
+        centers = transform.transform(xdata[finite])
+        heights = ydata[finite]
+        if skipped:
+            order = numpy.argsort(centers)
+            centers, heights = centers[order], heights[order]
+            middles = (centers[1:] + centers[:-1]) / 2
+            left = numpy.concatenate((centers[:1], middles))
+            right = numpy.concatenate((middles, centers[-1:]))
+        else:
+            start, stop = transform.transform(self._axis.get_xlim())
+            pixel = abs(stop - start) / max(self._axis.bbox.width, 1)
+            half = max(self.props.barwidth * steps.min(), pixel) / 2
+            left, right = centers - half, centers + half
+        inverse = transform.inverted()
+        left = inverse.transform(left)
+        return left, inverse.transform(right) - left, heights
+
+    def _draw_bars(self, left, widths, heights) -> None:
+        """Replace the bars, a BarContainer can't be updated in place."""
+        self._barcontainer.remove()
+        self._barcontainer = self._axis.bar(
+            left,
+            heights,
+            widths,
+            align="edge",
+            color=self._data.get_color(),
+            alpha=self._data.get_alpha(),
+            label=self._artist.get_label(),
+            visible=self._visible,
+        )
+
     def _apply_visibility(self) -> None:
         """Apply the combined visibility flags to line, bars and caps."""
-        self._data.set_visible(self._visible)
+        bars = self._plottype == Graphs.DataPlotType.BARS
+        self._data.set_visible(self._visible and not bars)
+        for patch in self._barcontainer:
+            patch.set_visible(self._visible and bars)
         for bar, caps, show in (
             (self._xbar, self._xcaps, self._showxerr),
             (self._ybar, self._ycaps, self._showyerr),
@@ -336,6 +401,29 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         """Set markerstyle property."""
         markerstyle = Graphs.python_data_markerstyle_to_style(markerstyle)
         self._data.set_marker(markerstyle)
+
+    @GObject.Property(type=int, default=Graphs.DataPlotType.LINE)
+    def plottype(self) -> Graphs.DataPlotType:
+        """Get plottype property."""
+        return self._plottype
+
+    @plottype.setter
+    def plottype(self, plottype: Graphs.DataPlotType) -> None:
+        """Set plottype property."""
+        self._plottype = plottype
+        self._apply_drawstyle()
+        self._apply_lod()
+        self._apply_visibility()
+
+    def _apply_drawstyle(self, *_args) -> None:
+        """Draw stairs as steps and only mark the tips of stems."""
+        stems = self._plottype == Graphs.DataPlotType.STEMS
+        self._data.set_markevery(slice(1, None, 3) if stems else None)
+        if self._plottype == Graphs.DataPlotType.STAIRS:
+            position = Graphs.DataStepPosition(self.props.stepposition)
+            self._data.set_drawstyle("steps-" + position.value_nick)
+        else:
+            self._data.set_drawstyle("default")
 
     @GObject.Property(type=float, default=0)
     def errcapsize(self) -> float:
@@ -401,6 +489,35 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             cap.set_markerfacecolor(errcolor)
             cap.set_markeredgecolor(errcolor)
 
+    def get_artist(self) -> artist:
+        """Get underlying mpl artist."""
+        if self._plottype == Graphs.DataPlotType.BARS:
+            return self._barcontainer
+        return self._artist
+
+    @GObject.Property(type=str, default="")
+    def name(self) -> str:
+        """Get name/label property."""
+        return self._artist.get_label()
+
+    @name.setter
+    def name(self, name: str) -> None:
+        """Set name/label property."""
+        self._artist.set_label(name)
+        self._barcontainer.set_label(name)
+
+    @GObject.Property(type=str, default="000000")
+    def color(self) -> str:
+        """Get color property."""
+        return self._data.get_color()
+
+    @color.setter
+    def color(self, color: str) -> None:
+        """Set color property."""
+        self._data.set_color(color)
+        for patch in self._barcontainer:
+            patch.set_facecolor(color)
+
     @GObject.Property(type=float, default=1)
     def alpha(self) -> float:
         """Get alpha property."""
@@ -410,7 +527,7 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     def alpha(self, alpha: float) -> None:
         """Set alpha property of the line, error bars and caps."""
         self._data.set_alpha(alpha)
-        for part in (*self._bars, *self._caps):
+        for part in (*self._barcontainer, *self._bars, *self._caps):
             part.set_alpha(alpha)
 
     @GObject.Property(type=bool, default=True)
@@ -495,6 +612,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._axis = axis
         self._lod_timeout_id = None
         self.props.downsample = item.get_downsample()
+        self.props.barwidth = item.get_barwidth()
+        self.props.stepposition = item.get_stepposition()
         self._store(item.props.data)
         xdata, ydata, xerr, yerr = self._full
         self._artist = axis.errorbar(
@@ -519,7 +638,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         )
 
         self._data, self._caps, self._bars = self._artist
-        self._color_artist = self._data
+        self._barcontainer = axis.bar([], [])
+        self._plottype = item.get_plottype()
+        self._apply_drawstyle()
 
         # Hide caps using marker size if their cap size was 0.
         if item.get_errcapsize() == 0:
@@ -553,6 +674,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._apply_lod()
 
         self.connect("notify::downsample", self._apply_lod)
+        self.connect("notify::barwidth", self._apply_lod)
+        self.connect("notify::stepposition", self._apply_drawstyle)
         self._view_handler = \
             axis.callbacks.connect("xlim_changed", self._queue_lod)
         self._parent = axis.figure.parent

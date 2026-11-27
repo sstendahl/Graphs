@@ -45,6 +45,9 @@ FONT_SIZE_KEYS = [
 STYLE_CUSTOM_PARAMS = [
     "name",
     "ticklabels",
+    "plottype",
+    "stepposition",
+    "barwidth",
     "errorbar.capsize",
     "errorbar.capthick",
     "errorbar.linewidth",

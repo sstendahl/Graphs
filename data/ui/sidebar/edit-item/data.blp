@@ -6,7 +6,50 @@ template $GraphsEditItemDataItemBox: Box {
   spacing: 20;
 
   Adw.PreferencesGroup {
-    title: _("Line and Markers");
+    title: _("Appearance");
+
+    Adw.ComboRow plottype {
+      title: _("Plot Type");
+      notify::selected => $on_plottype();
+
+      model: StringList {
+        strings [
+          C_("plottype", "Line"),
+          C_("plottype", "Stairs"),
+          C_("plottype", "Bars"),
+          C_("plottype", "Stems"),
+        ]
+      };
+    }
+
+    Adw.ComboRow stepposition {
+      title: _("Step Position");
+      visible: false;
+
+      model: StringList {
+        strings [
+          C_("stepposition", "At Point"),
+          C_("stepposition", "Halfway"),
+          C_("stepposition", "At Next Point"),
+        ]
+      };
+    }
+
+    Adw.ActionRow barwidth_row {
+      title: _("Bar Width");
+      visible: false;
+
+      Scale barwidth {
+        draw-value: true;
+        digits: 2;
+        width-request: 200;
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+        };
+      }
+    }
 
     Adw.ComboRow linestyle {
       title: _("Linestyle");
@@ -23,7 +66,7 @@ template $GraphsEditItemDataItemBox: Box {
       };
     }
 
-    Adw.ActionRow {
+    Adw.ActionRow linewidth_row {
       title: _("Linewidth");
 
       Scale linewidth {
@@ -72,7 +115,7 @@ template $GraphsEditItemDataItemBox: Box {
       };
     }
 
-    Adw.ActionRow {
+    Adw.ActionRow markersize_row {
       title: _("Marker Size");
 
       Scale markersize {

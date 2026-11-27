@@ -240,9 +240,11 @@ namespace Graphs {
             data_curve.markersize = 13;
             data_curve.markerstyle = POINT;
             data_curve.linestyle = SOLID;
+            data_curve.plottype = LINE;
 
             var fitted_curve = new DataItem (style, {}, {});
             fitted_curve.color = FIT_COLOR;
+            fitted_curve.plottype = LINE;
 
             var fill = new FillItem (style, {}, {}, {});
             fill.color = FILL_COLOR;
@@ -253,6 +255,7 @@ namespace Graphs {
             residuals.markersize = 13;
             residuals.markerstyle = POINT;
             residuals.linestyle = NONE;
+            residuals.plottype = LINE;
 
             var marker = new MarkerItem (style, HORIZONTAL, 0);
             marker.linewidth = 0.5;

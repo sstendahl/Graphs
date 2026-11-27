@@ -280,6 +280,8 @@ namespace Graphs {
                 item.notify["value"].connect (_on_variable_value_change);
             } else if (item is EquationItem) {
                 item.notify["equation"].connect (_on_equation_change);
+            } else if (item is DataItem) {
+                item.notify["plottype"].connect (optimize_limits);
             }
         }
 
@@ -293,6 +295,8 @@ namespace Graphs {
                 ((VariableItem) item).stop_animation ();
             } else if (item is EquationItem) {
                 item.notify["equation"].disconnect (_on_equation_change);
+            } else if (item is DataItem) {
+                item.notify["plottype"].disconnect (optimize_limits);
             }
         }
 
@@ -756,6 +760,32 @@ namespace Graphs {
                 }
             }
 
+            public void update_bar_edges (double[] data) {
+                double min = double.INFINITY, next_min = double.INFINITY;
+                double max = -double.INFINITY, next_max = -double.INFINITY;
+                foreach (double val in data) {
+                    if (!val.is_finite ()) continue;
+                    if (val < min) {
+                        next_min = min;
+                        min = val;
+                    } else if (val > min && val < next_min) {
+                        next_min = val;
+                    }
+                    if (val > max) {
+                        next_max = max;
+                        max = val;
+                    } else if (val < max && val > next_max) {
+                        next_max = val;
+                    }
+                }
+                if (!next_min.is_finite ()) return;
+
+                update_min_max ({
+                    get_value_at_fraction (-0.5, min, next_min, scale),
+                    get_value_at_fraction (-0.5, max, next_max, scale)
+                });
+            }
+
             public unowned double[] get_xdata () {
                 if (xdata == null) {
                     xdata = new double[5000];
@@ -813,15 +843,23 @@ namespace Graphs {
                 unowned AxisInfo xaxis = axes[item.xposition * 2];
                 unowned AxisInfo yaxis = axes[item.yposition * 2 + 1];
 
+                unowned double[] xdata = data_item.get_xdata ();
+                unowned double[] ydata = data_item.get_ydata ();
+                double[] x_visible, y_visible;
                 if (xaxis.any_locked () || yaxis.any_locked ()) {
                     // Only optimize for the data within the locked limits
-                    double[] xdata, ydata;
-                    filter_locked (xaxis, yaxis, data_item.get_xdata (), data_item.get_ydata (), out xdata, out ydata);
-                    xaxis.update_min_max (xdata);
-                    yaxis.update_min_max (ydata);
-                } else {
-                    xaxis.update_min_max (data_item.get_xdata ());
-                    yaxis.update_min_max (data_item.get_ydata ());
+                    filter_locked (xaxis, yaxis, xdata, ydata, out x_visible, out y_visible);
+                    xdata = x_visible;
+                    ydata = y_visible;
+                }
+                xaxis.update_min_max (xdata);
+                yaxis.update_min_max (ydata);
+
+                if (data_item.plottype == BARS) {
+                    xaxis.update_bar_edges (xdata);
+                }
+                if (data_item.plottype == BARS || data_item.plottype == STEMS) {
+                    yaxis.update_min_max ({0});
                 }
             }
 
