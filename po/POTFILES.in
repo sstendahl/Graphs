@@ -114,11 +114,11 @@ graphs/curve_fitting.py
 graphs/curve_fitting.vala
 graphs/data.py
 graphs/data.vala
-graphs/history.vala
 graphs/export_figure.vala
 graphs/export_items.vala
 graphs/figure_settings.vala
 graphs/generate_data.vala
+graphs/history.vala
 graphs/item_box.vala
 graphs/managed_array.vala
 graphs/math_utilities.vala

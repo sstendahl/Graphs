@@ -934,9 +934,9 @@ namespace Graphs {
             if (!can_undo) return;
             _restoring = true;
 
-            unowned var changes = _data_history_states[_current_data_history_state].changes;
+            unowned var changes = _data_history_states[_current_data_history_state].changes ();
             _current_data_history_state = (_current_data_history_state - 1 + HISTORY_SIZE) % HISTORY_SIZE;
-            unowned var limits = _data_history_states[_current_data_history_state].limits;
+            unowned var limits = _data_history_states[_current_data_history_state].limits ();
 
             var selected = new Gtk.Bitset.empty ();
             var mask = new Gtk.Bitset.empty ();
@@ -996,12 +996,12 @@ namespace Graphs {
             var selected = new Gtk.Bitset.empty ();
             var mask = new Gtk.Bitset.empty ();
 
-            foreach (unowned var change in state.changes) {
+            foreach (unowned var change in state.changes ()) {
                 if (change is DataHistoryPropertyChange) {
                     unowned var property_change = (DataHistoryPropertyChange) change;
                     uint index = property_change.index ();
                     unowned string prop = property_change.prop ();
-                    unowned Variant val = property_change.old_value ();
+                    unowned Variant val = property_change.new_value ();
                     if (prop == "selected") {
                         mask.add (index);
                         if (val.get_boolean ()) selected.add (index);
@@ -1026,7 +1026,7 @@ namespace Graphs {
             }
 
             set_selection (selected, mask);
-            figure_settings.set_limits (state.limits);
+            figure_settings.set_limits (state.limits ());
             _set_data_copy ();
             _current_batch.clear ();
             _restoring = false;

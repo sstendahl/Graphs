@@ -34,7 +34,7 @@ class Data(Graphs.Data):
     @staticmethod
     def _serialize_history_state(state):
         changes = []
-        for change in state.changes:
+        for change in state.changes():
             if isinstance(change, Graphs.DataHistoryPropertyChange):
                 new_change = (
                     change.index(),
@@ -47,7 +47,7 @@ class Data(Graphs.Data):
                 new_change = change.item().unpack()
                 change_type = Graphs.ChangeType.ITEM_ADDED
             elif isinstance(change, Graphs.DataHistoryItemRemoved):
-                new_change = (change.item().unpack(), change.index)
+                new_change = (change.item().unpack(), change.index())
                 change_type = Graphs.ChangeType.ITEM_REMOVED
             elif isinstance(change, Graphs.DataHistoryItemsSwapped):
                 # This was swapped in previous implementations
@@ -61,7 +61,7 @@ class Data(Graphs.Data):
                 )
                 change_type = Graphs.ChangeType.FIGURE_SETTINGS_CHANGED
             changes.append((change_type, new_change))
-        return changes, state.limits.values()
+        return changes, state.limits().values()
 
     def get_project_dict(self) -> dict:
         """Convert data to dict."""

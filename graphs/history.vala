@@ -9,12 +9,20 @@ namespace Graphs {
     }
 
     public class DataHistoryState {
-        public Limits limits;
-        public DataHistoryChange[] changes;
+        private Limits _limits;
+        private DataHistoryChange[] _changes;
 
         public DataHistoryState (Limits limits, owned DataHistoryChange[] changes) {
-            this.limits = limits;
-            this.changes = (owned) changes;
+            this._limits = limits;
+            this._changes = (owned) changes;
+        }
+
+        public unowned Limits limits () {
+            return _limits;
+        }
+
+        public unowned DataHistoryChange[] changes () {
+            return _changes;
         }
     }
 
