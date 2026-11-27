@@ -239,7 +239,7 @@ class ProjectValidator:
             for item in self.project_dict["data"]
         ]
         self.items = Graphs.items_from_variants(data)
-        if not self.items:
+        if data and not self.items:
             raise ProjectParseError(_("Invalid Item encountered."))
 
         # Validate view history
