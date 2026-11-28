@@ -41,6 +41,9 @@ namespace Graphs {
         public double linewidth;
         public DataMarkerstyle markerstyle;
         public double markersize;
+        public DataPlotType plottype;
+        public DataStepPosition stepposition;
+        public double barwidth;
         public double errorbar_capsize;
         public double errorbar_capthick;
         public double errorbar_linewidth;

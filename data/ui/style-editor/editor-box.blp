@@ -60,6 +60,54 @@ template $GraphsStyleEditorBox: Box {
   }
 
   Adw.PreferencesGroup {
+    title: _("Datasets");
+
+    Adw.ComboRow plottype {
+      title: _("Plot Type");
+      notify::selected => $on_plottype();
+
+      model: StringList {
+        strings [
+          C_("plottype", "Line"),
+          C_("plottype", "Stairs"),
+          C_("plottype", "Bars"),
+          C_("plottype", "Stems"),
+        ]
+      };
+    }
+
+    Adw.ComboRow stepposition {
+      title: _("Stair Step Position");
+      notify::selected => $on_stepposition();
+
+      model: StringList {
+        strings [
+          C_("stepposition", "At Point"),
+          C_("stepposition", "Halfway"),
+          C_("stepposition", "At Next Point"),
+        ]
+      };
+    }
+
+    Adw.ActionRow {
+      title: _("Bar Width");
+
+      Scale barwidth {
+        draw-value: true;
+        digits: 2;
+        width-request: 200;
+        valign: center;
+        value-changed => $on_barwidth();
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 1;
+        };
+      }
+    }
+  }
+
+  Adw.PreferencesGroup {
     title: _("Lines");
 
     Adw.ComboRow linestyle {
