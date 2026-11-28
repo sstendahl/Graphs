@@ -51,6 +51,41 @@ template $GraphsEditItemDataItemBox: Box {
       }
     }
 
+    Adw.ComboRow baralign {
+      title: _("Bar Alignment");
+      visible: false;
+
+      model: StringList {
+        strings [
+          C_("baralign", "Center"),
+          C_("baralign", "Left Edge"),
+          C_("baralign", "Right Edge"),
+        ]
+      };
+    }
+
+    Adw.ActionRow edgewidth_row {
+      title: _("Edge Width");
+      visible: false;
+
+      Scale edgewidth {
+        draw-value: true;
+        width-request: 200;
+        value-changed => $on_edgewidth();
+
+        adjustment: Adjustment {
+          lower: 0;
+          upper: 10;
+        };
+      }
+    }
+
+    $GraphsColorRow edgecolor_row {
+      title: _("Edge Color");
+      visible: false;
+      sensitive: false;
+    }
+
     Adw.ComboRow linestyle {
       title: _("Linestyle");
       notify::selected => $on_linestyle();

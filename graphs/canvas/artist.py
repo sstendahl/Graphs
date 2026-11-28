@@ -120,6 +120,24 @@ def _to_stems(xdata, ydata):
     )
 
 
+def _bar_edges(positions, width, before, skipped):
+    """Return the left and right edges of the bars around each position."""
+    left = positions - before * width
+    right = left + width
+    finite = numpy.flatnonzero(numpy.isfinite(positions))
+    if skipped and finite.size:
+        order = finite[numpy.argsort(positions[finite])]
+        ordered = positions[order]
+        gaps = numpy.diff(
+            ordered,
+            prepend=ordered[0] - width,
+            append=ordered[-1] + width,
+        )
+        left[order] = ordered - before * gaps[:-1]
+        right[order] = ordered + (1 - before) * gaps[1:]
+    return left, right
+
+
 def new_for_item(fig: Figure, item: Graphs.Item) -> GObject.Object:
     """
     Create a new artist for an item.
@@ -208,6 +226,9 @@ class DataItemArtistWrapper(ItemArtistWrapper):
     linewidth = GObject.Property(type=float, default=3)
     markersize = GObject.Property(type=float, default=7)
     barwidth = GObject.Property(type=float, default=0.8)
+    baralign = GObject.Property(type=int, default=Graphs.DataBarAlign.CENTER)
+    edgecolor = GObject.Property(type=str, default="#000000")
+    edgewidth = GObject.Property(type=float, default=0)
     stepposition = GObject.Property(
         type=int,
         default=Graphs.DataStepPosition.MID,
@@ -281,7 +302,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         if self._plottype == Graphs.DataPlotType.BARS:
             skipped = indices is not None \
                 and numpy.any(numpy.diff(indices) > 1)
-            self._draw_bars(*self._to_bars(xdata, ydata, skipped))
+            left, right, xdata = self._to_bars(xdata, skipped)
+            self._draw_bars(left, right - left, ydata)
         elif self._plottype == Graphs.DataPlotType.STEMS:
             self._data.set_data(*_to_stems(xdata, ydata))
         else:
@@ -301,31 +323,35 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self._ycaps[0].set_data(xdata, ydata - yerr)
             self._ycaps[1].set_data(xdata, ydata + yerr)
 
-    def _to_bars(self, xdata, ydata, skipped) -> tuple:
-        """Return the left edges, widths and heights of the bars."""
+    def _to_bars(self, xdata, skipped) -> tuple:
+        """Return the left and right edges and the centers of the bars."""
         transform = self._axis.xaxis.get_transform()
         steps = numpy.diff(numpy.sort(transform.transform(self._full[0])))
         steps = steps[steps > 0]
-        finite = numpy.isfinite(xdata)
-        if not steps.size or not finite.any():
-            return [], [], []
+        if not steps.size:
+            missing = numpy.full_like(xdata, numpy.nan)
+            return missing, missing, xdata
 
-        centers = transform.transform(xdata[finite])
-        heights = ydata[finite]
-        if skipped:
-            order = numpy.argsort(centers)
-            centers, heights = centers[order], heights[order]
-            middles = (centers[1:] + centers[:-1]) / 2
-            left = numpy.concatenate((centers[:1], middles))
-            right = numpy.concatenate((middles, centers[-1:]))
-        else:
-            start, stop = transform.transform(self._axis.get_xlim())
-            pixel = abs(stop - start) / max(self._axis.bbox.width, 1)
-            half = max(self.props.barwidth * steps.min(), pixel) / 2
-            left, right = centers - half, centers + half
+        start, stop = transform.transform(self._axis.get_xlim())
+        pixel = abs(stop - start) / max(self._axis.bbox.width, 1)
+        width = max(self.props.barwidth * steps.min(), pixel)
+        before = 0.5
+        if self.props.baralign == Graphs.DataBarAlign.LEFT_EDGE:
+            before = 0
+        elif self.props.baralign == Graphs.DataBarAlign.RIGHT_EDGE:
+            before = 1
+        left, right = _bar_edges(
+            transform.transform(xdata),
+            width,
+            before,
+            skipped,
+        )
         inverse = transform.inverted()
-        left = inverse.transform(left)
-        return left, inverse.transform(right) - left, heights
+        return (
+            inverse.transform(left),
+            inverse.transform(right),
+            inverse.transform((left + right) / 2),
+        )
 
     def _draw_bars(self, left, widths, heights) -> None:
         """Replace the bars, a BarContainer can't be updated in place."""
@@ -336,6 +362,8 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             widths,
             align="edge",
             color=self._data.get_color(),
+            edgecolor=self.props.edgecolor,
+            linewidth=self.props.edgewidth,
             alpha=self._data.get_alpha(),
             label=self._artist.get_label(),
             visible=self._visible,
@@ -612,7 +640,6 @@ class DataItemArtistWrapper(ItemArtistWrapper):
         self._axis = axis
         self._lod_timeout_id = None
         self.props.downsample = item.get_downsample()
-        self.props.barwidth = item.get_barwidth()
         self.props.stepposition = item.get_stepposition()
         self._store(item.props.data)
         xdata, ydata, xerr, yerr = self._full
@@ -671,10 +698,12 @@ class DataItemArtistWrapper(ItemArtistWrapper):
             self.set_property(prop, item.get_property(prop))
             self.connect(f"notify::{prop}", self._set_properties)
         self._set_properties()
+        for prop in ("barwidth", "baralign", "edgecolor", "edgewidth"):
+            self.set_property(prop, item.get_property(prop))
+            self.connect(f"notify::{prop}", self._apply_lod)
         self._apply_lod()
 
         self.connect("notify::downsample", self._apply_lod)
-        self.connect("notify::barwidth", self._apply_lod)
         self.connect("notify::stepposition", self._apply_drawstyle)
         self._view_handler = \
             axis.callbacks.connect("xlim_changed", self._queue_lod)

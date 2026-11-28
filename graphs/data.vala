@@ -282,6 +282,7 @@ namespace Graphs {
                 item.notify["equation"].connect (_on_equation_change);
             } else if (item is DataItem) {
                 item.notify["plottype"].connect (optimize_limits);
+                item.notify["baralign"].connect (optimize_limits);
             }
         }
 
@@ -297,6 +298,7 @@ namespace Graphs {
                 item.notify["equation"].disconnect (_on_equation_change);
             } else if (item is DataItem) {
                 item.notify["plottype"].disconnect (optimize_limits);
+                item.notify["baralign"].disconnect (optimize_limits);
             }
         }
 
@@ -760,7 +762,7 @@ namespace Graphs {
                 }
             }
 
-            public void update_bar_edges (double[] data) {
+            public void update_bar_edges (double[] data, DataBarAlign align) {
                 double min = double.INFINITY, next_min = double.INFINITY;
                 double max = -double.INFINITY, next_max = -double.INFINITY;
                 foreach (double val in data) {
@@ -780,9 +782,13 @@ namespace Graphs {
                 }
                 if (!next_min.is_finite ()) return;
 
+                double before = 0.5;
+                if (align == LEFT_EDGE) before = 0;
+                else if (align == RIGHT_EDGE) before = 1;
+
                 update_min_max ({
-                    get_value_at_fraction (-0.5, min, next_min, scale),
-                    get_value_at_fraction (-0.5, max, next_max, scale)
+                    get_value_at_fraction (-before, min, next_min, scale),
+                    get_value_at_fraction (before - 1, max, next_max, scale)
                 });
             }
 
@@ -856,7 +862,7 @@ namespace Graphs {
                 yaxis.update_min_max (ydata);
 
                 if (data_item.plottype == BARS) {
-                    xaxis.update_bar_edges (xdata);
+                    xaxis.update_bar_edges (xdata, data_item.baralign);
                 }
                 if (data_item.plottype == BARS || data_item.plottype == STEMS) {
                     yaxis.update_min_max ({0});

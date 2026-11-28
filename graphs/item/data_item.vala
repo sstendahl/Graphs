@@ -196,10 +196,19 @@ namespace Graphs {
         }
     }
 
+    public enum DataBarAlign {
+        CENTER,
+        LEFT_EDGE,
+        RIGHT_EDGE
+    }
+
     public class DataItem : Item, LegendableItem {
+        public DataBarAlign baralign { get; set; default = CENTER; }
         public double barwidth { get; set; default = 0.8; }
         public DataHolder data { get; set; default = new DataHolder.empty (); }
         public bool downsample { get; set; default = true; }
+        public string edgecolor { get; set; default = "#000000"; }
+        public double edgewidth { get; set; default = 0; }
         public bool errbarsabove { get; set; default = false; }
         public double errcapsize { get; set; default = 0; }
         public double errcapthick { get; set; default = 1; }

@@ -11,6 +11,14 @@ namespace Graphs {
         [GtkChild]
         private unowned Gtk.Scale barwidth { get; }
         [GtkChild]
+        private unowned Adw.ComboRow baralign { get; }
+        [GtkChild]
+        private unowned Adw.ActionRow edgewidth_row { get; }
+        [GtkChild]
+        private unowned Gtk.Scale edgewidth { get; }
+        [GtkChild]
+        private unowned ColorRow edgecolor_row { get; }
+        [GtkChild]
         private unowned Adw.ComboRow linestyle { get; }
         [GtkChild]
         private unowned Adw.ActionRow linewidth_row { get; }
@@ -57,6 +65,18 @@ namespace Graphs {
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
             item.bind_property (
+                "baralign",
+                baralign,
+                "selected",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
+                "edgewidth",
+                edgewidth.adjustment,
+                "value",
+                BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
+            );
+            item.bind_property (
                 "linestyle",
                 linestyle,
                 "selected",
@@ -80,6 +100,11 @@ namespace Graphs {
                 "value",
                 BindingFlags.SYNC_CREATE | BindingFlags.BIDIRECTIONAL
             );
+
+            edgecolor_row.color = Tools.hex_to_rgba (item.edgecolor);
+            edgecolor_row.color_chosen.connect (() => {
+                item.edgecolor = Tools.rgba_to_hex (edgecolor_row.color);
+            });
         }
 
         [GtkCallback]
@@ -88,10 +113,18 @@ namespace Graphs {
             bool bars = type == BARS;
             stepposition.set_visible (type == STAIRS);
             barwidth_row.set_visible (bars);
+            baralign.set_visible (bars);
+            edgewidth_row.set_visible (bars);
+            edgecolor_row.set_visible (bars);
             linestyle.set_visible (!bars);
             linewidth_row.set_visible (!bars);
             markerstyle.set_visible (!bars);
             markersize_row.set_visible (!bars);
+        }
+
+        [GtkCallback]
+        private void on_edgewidth () {
+            edgecolor_row.set_sensitive (edgewidth.get_value () != 0);
         }
 
         [GtkCallback]
