@@ -302,7 +302,7 @@ class ProjectValidator:
 
                         def callback(i, index=index):
                             if i > index:
-                                i += 1
+                                i -= 1
                             return self.items[i]
 
                         data = utilities.value_to_gvariant(data)

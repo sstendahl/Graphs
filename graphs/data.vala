@@ -962,7 +962,7 @@ namespace Graphs {
                     uint index = item_removed.index ();
                     var item = item_from_variant (item_removed.item (), (i) => {
                         var j = i;
-                        if (i > index) j++;
+                        if (i > index) j--;
                         return (Item) get_item (j);
                     });
                     _insert_item (item, (int) index);
