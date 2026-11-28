@@ -36,6 +36,10 @@ class StyleParameters(Graphs.StyleParameters):
         data.markerstyle = \
             Graphs.data_markerstyle_from_style(params[0]["lines.marker"])
         data.markersize = params[0]["lines.markersize"]
+        data.plottype = Graphs.data_plot_type_from_style(params[1]["plottype"])
+        data.stepposition = \
+            Graphs.data_step_position_from_style(params[1]["stepposition"])
+        data.barwidth = params[1]["barwidth"]
 
         data.errorbar_capsize = params[1]["errorbar.capsize"]
         data.errorbar_capthick = params[1]["errorbar.capthick"]
@@ -121,6 +125,11 @@ class StyleParameters(Graphs.StyleParameters):
         self.style_params["lines.marker"] = \
             Graphs.python_data_markerstyle_to_style(data.markerstyle)
         self.style_params["lines.markersize"] = data.markersize
+        self.graphs_params["plottype"] = \
+            Graphs.python_data_plot_type_to_style(data.plottype)
+        self.graphs_params["stepposition"] = \
+            Graphs.python_data_step_position_to_style(data.stepposition)
+        self.graphs_params["barwidth"] = data.barwidth
 
         self.graphs_params["errorbar.capsize"] = data.errorbar_capsize
         self.graphs_params["errorbar.capthick"] = data.errorbar_capthick

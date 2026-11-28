@@ -64,6 +64,14 @@ namespace Graphs {
         return markerstyle.to_style ();
     }
 
+    public unowned string python_data_plot_type_to_style (DataPlotType plottype) {
+        return plottype.to_style ();
+    }
+
+    public unowned string python_data_step_position_to_style (DataStepPosition stepposition) {
+        return stepposition.to_style ();
+    }
+
     public unowned string python_equation_linestyle_to_style (EquationLinestyle linestyle) {
         return linestyle.to_style ();
     }
