@@ -221,9 +221,10 @@ class ProjectValidator:
         parse_flags: Graphs.ProjectParseFlags,
     ):
         self.project_dict = copy.deepcopy(project_dict)
+        self.original_dict = project_dict
         self.parse_flags = parse_flags
 
-    def validate(self):
+    def validate(self) -> dict:
         """Run through the history states."""
         # Validate Figure Settings
         self.figure_settings = Graphs.FigureSettings(
@@ -244,16 +245,22 @@ class ProjectValidator:
 
         # Validate view history
         view_history_states = self.project_dict["view-history-states"]
+        view_history_pos = int(self.project_dict["view-history-position"])
+        view_history_states = view_history_states[-100:]
+        assert view_history_pos < 0
+        view_history_pos = max(view_history_pos, -len(view_history_states))
+        assert abs(view_history_pos) <= len(view_history_states)
         for history_state in view_history_states:
             self.figure_settings.set_limits(Graphs.Limits.new(history_state))
-        view_history_pos = int(self.project_dict["view-history-position"])
-        assert view_history_pos < 0
-        assert abs(view_history_pos) <= len(view_history_states)
+        self.original_dict["view-history-states"] = view_history_states
+        self.original_dict["view-history-position"] = view_history_pos
 
         # Validate data history
         history_states = self.project_dict["history-states"]
         history_pos = int(self.project_dict["history-position"])
+        history_states = history_states[-100:]
         assert history_pos < 0
+        history_pos = max(history_pos, -len(history_states))
         assert abs(history_pos) <= len(history_states)
         while history_pos < -1:
             history_pos += 1
@@ -316,6 +323,11 @@ class ProjectValidator:
                     case Graphs.ChangeType.FIGURE_SETTINGS_CHANGED:
                         self.figure_settings.set_property(change[0], change[1])
 
+        self.original_dict["history-states"] = history_states
+        self.original_dict["history-position"] = history_pos
+
+        return self.original_dict
+
 
 def read_project_file(
     file: Gio.File,
@@ -341,7 +353,7 @@ def read_project_file(
     except Exception as e:
         raise ProjectParseError(_("Failed to migrate project")) from e
     try:
-        ProjectValidator(project_dict, parse_flags).validate()
+        project_dict = ProjectValidator(project_dict, parse_flags).validate()
     except ProjectParseError:
         raise
     except Exception as e:
