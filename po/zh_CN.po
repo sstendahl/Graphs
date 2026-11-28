@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Graphs main\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/World/graphs/-/issues\n"
-"POT-Creation-Date: 2026-11-18 20:24+0000\n"
-"PO-Revision-Date: 2026-11-19 08:10+0800\n"
+"POT-Creation-Date: 2026-11-27 13:20+0000\n"
+"PO-Revision-Date: 2026-11-28 11:07+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -153,7 +153,7 @@ msgstr ""
 msgid "New Window"
 msgstr "新建窗口"
 
-#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:140
+#: data/se.sjoerd.Graphs.desktop.in:20 data/ui/sidebar/main.blp:141
 #: graphs/application.vala:15
 msgid "Style Editor"
 msgstr "样式编辑器"
@@ -486,6 +486,52 @@ msgstr "单栏"
 #: data/ui/import/spreadsheet/item-group.blp:57
 msgid "X Value Equation"
 msgstr "X 值方程式"
+
+#: data/ui/import/xrdml/main-group.blp:6
+msgid "Scans"
+msgstr "扫描"
+
+#: data/ui/import/xrdml/main-group.blp:14
+msgctxt "select scans"
+msgid "All"
+msgstr "全部"
+
+#: data/ui/import/xrdml/main-group.blp:15
+msgid "Select All Scans"
+msgstr "全选扫描"
+
+#: data/ui/import/xrdml/main-group.blp:24
+msgctxt "select scans"
+msgid "None"
+msgstr "无"
+
+#: data/ui/import/xrdml/main-group.blp:25
+msgid "Select No Scans"
+msgstr "全部不选"
+
+#: data/ui/import/xrdml/main-group.blp:36
+msgid "X-Axis"
+msgstr "X 轴"
+
+#: data/ui/import/xrdml/main-group.blp:40
+msgid "Scan Angle"
+msgstr "扫描角度"
+
+#: data/ui/import/xrdml/main-group.blp:41
+msgid "q (Reciprocal Space)"
+msgstr "q（倒易空间）"
+
+#: data/ui/import/xrdml/main-group.blp:47
+msgid "Intensity"
+msgstr "强度"
+
+#: data/ui/import/xrdml/main-group.blp:51
+msgid "Counts per Second"
+msgstr "计数每秒"
+
+#: data/ui/import/xrdml/main-group.blp:52
+msgid "Counts"
+msgstr "计数"
 
 #: data/ui/import/dialog.blp:21
 msgid "Import Parameters"
@@ -1044,34 +1090,38 @@ msgstr "导出数据…"
 msgid "Export Figure…"
 msgstr "导出图表…"
 
-#: data/ui/sidebar/main.blp:144 data/ui/style-editor/window.blp:293
+#: data/ui/sidebar/main.blp:137
+msgid "Copy Figure to Clipboard"
+msgstr "将图表复制到剪贴板"
+
+#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:293
 #: data/ui/style-editor/window.blp:305
 msgid "Keyboard Shortcuts"
 msgstr "键盘快捷键"
 
-#: data/ui/sidebar/main.blp:145 data/ui/style-editor/window.blp:294
+#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:294
 #: data/ui/style-editor/window.blp:306
 msgid "Help"
 msgstr "帮助"
 
-#: data/ui/sidebar/main.blp:146 data/ui/style-editor/window.blp:295
+#: data/ui/sidebar/main.blp:147 data/ui/style-editor/window.blp:295
 #: data/ui/style-editor/window.blp:307
 msgid "About Graphs"
 msgstr "关于 Graphs"
 
-#: data/ui/sidebar/main.blp:152
+#: data/ui/sidebar/main.blp:153
 msgid "Add Data from File…"
 msgstr "从文件添加数据…"
 
-#: data/ui/sidebar/main.blp:153
+#: data/ui/sidebar/main.blp:154
 msgid "Add Equation…"
 msgstr "添加方程式…"
 
-#: data/ui/sidebar/main.blp:154
+#: data/ui/sidebar/main.blp:155
 msgid "Add Fill…"
 msgstr "添加填充…"
 
-#: data/ui/sidebar/main.blp:155
+#: data/ui/sidebar/main.blp:156
 msgid "Generate Data…"
 msgstr "生成数据…"
 
@@ -1087,127 +1137,127 @@ msgstr "组合所有选择的数据"
 msgid "Combine"
 msgstr "组合"
 
-#: data/ui/sidebar/operations.blp:46
+#: data/ui/sidebar/operations.blp:47
 msgid "Cut selected data"
 msgstr "剪切选择的数据"
 
-#: data/ui/sidebar/operations.blp:57
+#: data/ui/sidebar/operations.blp:58
 msgid "Cut"
 msgstr "剪切"
 
-#: data/ui/sidebar/operations.blp:62
+#: data/ui/sidebar/operations.blp:64
 msgid "Shift all data vertically with respect to each other"
 msgstr "将所有数据保持现有状态下竖直偏移"
 
-#: data/ui/sidebar/operations.blp:73
+#: data/ui/sidebar/operations.blp:75
 msgid "Shift"
 msgstr "偏移"
 
-#: data/ui/sidebar/operations.blp:79
+#: data/ui/sidebar/operations.blp:82
 msgid "Normalize data"
 msgstr "标准化数据"
 
-#: data/ui/sidebar/operations.blp:90
+#: data/ui/sidebar/operations.blp:93
 msgid "Normalize"
 msgstr "标准化"
 
-#: data/ui/sidebar/operations.blp:96
+#: data/ui/sidebar/operations.blp:99
 msgid "Smoothen data"
 msgstr "平滑数据"
 
-#: data/ui/sidebar/operations.blp:110
+#: data/ui/sidebar/operations.blp:111
 msgid "Smoothen"
 msgstr "平滑"
 
-#: data/ui/sidebar/operations.blp:116
+#: data/ui/sidebar/operations.blp:118
 msgid "Center data"
 msgstr "居中数据"
 
-#: data/ui/sidebar/operations.blp:129
+#: data/ui/sidebar/operations.blp:131
 msgid "Center"
 msgstr "居中"
 
-#: data/ui/sidebar/operations.blp:137 data/ui/transform.blp:23
+#: data/ui/sidebar/operations.blp:140 data/ui/transform.blp:23
 msgid "Transform"
 msgstr "变换"
 
-#: data/ui/sidebar/operations.blp:147
+#: data/ui/sidebar/operations.blp:150
 msgid "Get the derivative of the data"
 msgstr "获取数据的导数"
 
-#: data/ui/sidebar/operations.blp:158
+#: data/ui/sidebar/operations.blp:161
 msgid "Derivative"
 msgstr "导数"
 
-#: data/ui/sidebar/operations.blp:164
+#: data/ui/sidebar/operations.blp:168
 msgid "Get the indefinite integral of the data"
 msgstr "获取数据的不定积分"
 
-#: data/ui/sidebar/operations.blp:175
+#: data/ui/sidebar/operations.blp:179
 msgid "Integral"
 msgstr "积分"
 
-#: data/ui/sidebar/operations.blp:181
+#: data/ui/sidebar/operations.blp:186
 msgid "Get the Fast Fourier Transform of the data"
 msgstr "获取数据的快速傅里叶变换"
 
-#: data/ui/sidebar/operations.blp:193
+#: data/ui/sidebar/operations.blp:198
 msgid "FFT"
 msgstr "FFT"
 
-#: data/ui/sidebar/operations.blp:199
+#: data/ui/sidebar/operations.blp:205
 msgid "Get the Inverse Fast Fourier Transform of the data"
 msgstr "获取数据的快速傅里叶逆变换"
 
-#: data/ui/sidebar/operations.blp:211
+#: data/ui/sidebar/operations.blp:217
 msgid "Inverse FFT"
 msgstr "逆向 FFT"
 
-#: data/ui/sidebar/operations.blp:217
+#: data/ui/sidebar/operations.blp:224
 msgid "Perform custom transformations on the data"
 msgstr "对数据执行自定义转换"
 
-#: data/ui/sidebar/operations.blp:229
+#: data/ui/sidebar/operations.blp:236
 msgid "Custom Transformation"
 msgstr "自定义变换"
 
-#: data/ui/sidebar/operations.blp:237
+#: data/ui/sidebar/operations.blp:245
 msgid "Modify"
 msgstr "修改"
 
-#: data/ui/sidebar/operations.blp:267
+#: data/ui/sidebar/operations.blp:275
 msgid "Translate X"
 msgstr "平移 X"
 
-#: data/ui/sidebar/operations.blp:294
+#: data/ui/sidebar/operations.blp:303
 msgid "Translate Y"
 msgstr "平移 Y"
 
-#: data/ui/sidebar/operations.blp:321
+#: data/ui/sidebar/operations.blp:331
 msgid "Multiply X"
 msgstr "乘以 X"
 
-#: data/ui/sidebar/operations.blp:348
+#: data/ui/sidebar/operations.blp:359
 msgid "Multiply Y"
 msgstr "乘以 Y"
 
-#: data/ui/sidebar/operations.blp:359
+#: data/ui/sidebar/operations.blp:371
 msgid "At Maximum Y Value"
 msgstr "以 Y 最大值"
 
-#: data/ui/sidebar/operations.blp:365
+#: data/ui/sidebar/operations.blp:377
 msgid "At Middle X Value"
 msgstr "以 X 中间值"
 
-#: data/ui/sidebar/operations.blp:374 data/ui/smoothen-settings.blp:35
+#: data/ui/sidebar/operations.blp:386 data/ui/smoothen-settings.blp:35
 msgid "Savitzky–Golay Filter"
 msgstr "SG 滤波器"
 
-#: data/ui/sidebar/operations.blp:380 data/ui/smoothen-settings.blp:58
+#: data/ui/sidebar/operations.blp:392 data/ui/smoothen-settings.blp:58
 msgid "Moving Average"
 msgstr "移动平均"
 
-#: data/ui/sidebar/operations.blp:388
+#: data/ui/sidebar/operations.blp:400
 msgid "Advanced Settings"
 msgstr "高级设置"
 
@@ -1486,7 +1536,7 @@ msgid "Open Preview"
 msgstr "打开预览"
 
 #: data/ui/style-editor/window.blp:272 data/ui/curve-fitting.blp:176
-#: data/ui/window.blp:349
+#: data/ui/window.blp:354
 msgid "Canvas Failed to Load"
 msgstr "画布加载失败"
 
@@ -1818,31 +1868,31 @@ msgstr "更改值"
 msgid "Animate"
 msgstr "动画"
 
-#: data/ui/window.blp:220
+#: data/ui/window.blp:225
 msgid "Drop Here to Import"
 msgstr "拖放到这里来导入"
 
-#: data/ui/window.blp:253
+#: data/ui/window.blp:258
 msgid "Show Sidebar"
 msgstr "显示侧边栏"
 
-#: data/ui/window.blp:262 data/ui/window.blp:308 graphs/window.vala:541
+#: data/ui/window.blp:267 data/ui/window.blp:313 graphs/window.vala:541
 msgid "Undo"
 msgstr "撤消"
 
-#: data/ui/window.blp:269 data/ui/window.blp:316
+#: data/ui/window.blp:274 data/ui/window.blp:321
 msgid "Redo"
 msgstr "重做"
 
-#: data/ui/window.blp:277 data/ui/window.blp:324
+#: data/ui/window.blp:282 data/ui/window.blp:329
 msgid "Optimize View Limits"
 msgstr "优化视图限制"
 
-#: data/ui/window.blp:285 data/ui/window.blp:331
+#: data/ui/window.blp:290 data/ui/window.blp:336
 msgid "Next View"
 msgstr "下一视图"
 
-#: data/ui/window.blp:293 data/ui/window.blp:339
+#: data/ui/window.blp:298 data/ui/window.blp:344
 msgid "Previous View"
 msgstr "上一视图"
 
@@ -1923,70 +1973,75 @@ msgstr "导出图表"
 
 #: data/ui/window-shortcuts.blp:101
 msgctxt "shortcut window"
+msgid "Copy Figure to Clipboard"
+msgstr "将图表复制到剪贴板"
+
+#: data/ui/window-shortcuts.blp:106
+msgctxt "shortcut window"
 msgid "Save Project"
 msgstr "保存工程"
 
-#: data/ui/window-shortcuts.blp:106
+#: data/ui/window-shortcuts.blp:111
 msgctxt "shortcut window"
 msgid "Save Project As"
 msgstr "另存工程为"
 
-#: data/ui/window-shortcuts.blp:112
+#: data/ui/window-shortcuts.blp:117
 msgctxt "shortcut window"
 msgid "View"
 msgstr "视图"
 
-#: data/ui/window-shortcuts.blp:115
+#: data/ui/window-shortcuts.blp:120
 msgctxt "shortcut window"
 msgid "Previous View"
 msgstr "上一视图"
 
-#: data/ui/window-shortcuts.blp:120
+#: data/ui/window-shortcuts.blp:125
 msgctxt "shortcut window"
 msgid "Next View"
 msgstr "下一视图"
 
-#: data/ui/window-shortcuts.blp:125
+#: data/ui/window-shortcuts.blp:130
 msgctxt "shortcut window"
 msgid "Optimize limits"
 msgstr "优化限制"
 
-#: data/ui/window-shortcuts.blp:130
+#: data/ui/window-shortcuts.blp:135
 msgctxt "shortcut window"
 msgid "Zoom in"
 msgstr "放大"
 
-#: data/ui/window-shortcuts.blp:135
+#: data/ui/window-shortcuts.blp:140
 msgctxt "shortcut window"
 msgid "Zoom out"
 msgstr "缩小"
 
-#: data/ui/window-shortcuts.blp:140 data/ui/window-shortcuts.blp:159
+#: data/ui/window-shortcuts.blp:145 data/ui/window-shortcuts.blp:164
 msgctxt "shortcut window"
 msgid "Select None"
 msgstr "全部不选"
 
-#: data/ui/window-shortcuts.blp:145
+#: data/ui/window-shortcuts.blp:150
 msgctxt "shortcut window"
 msgid "Toggle Sidebar"
 msgstr "切换侧边栏"
 
-#: data/ui/window-shortcuts.blp:151
+#: data/ui/window-shortcuts.blp:156
 msgctxt "shortcut window"
 msgid "Actions"
 msgstr "动作"
 
-#: data/ui/window-shortcuts.blp:154
+#: data/ui/window-shortcuts.blp:159
 msgctxt "shortcut window"
 msgid "Select All"
 msgstr "全选"
 
-#: data/ui/window-shortcuts.blp:164
+#: data/ui/window-shortcuts.blp:169
 msgctxt "shortcut window"
 msgid "Undo Action"
 msgstr "撤消动作"
 
-#: data/ui/window-shortcuts.blp:169
+#: data/ui/window-shortcuts.blp:174
 msgctxt "shortcut window"
 msgid "Redo Action"
 msgstr "重做动作"
@@ -2022,12 +2077,12 @@ msgstr "解析文件失败。"
 msgid "Item %d"
 msgstr "项目 %d"
 
-#: graphs/file_import/parsers/project/__init__.py:21
+#: graphs/file_import/parsers/project/__init__.py:20
 msgctxt "import-mode"
 msgid "Project"
 msgstr "工程"
 
-#: graphs/file_import/parsers/project/__init__.py:22 graphs/project.vala:21
+#: graphs/file_import/parsers/project/__init__.py:21 graphs/project.vala:21
 msgctxt "file-filter"
 msgid "Graphs Project File"
 msgstr "Graphs 工程文件"
@@ -2043,6 +2098,7 @@ msgid "Spreadsheet"
 msgstr "电子表格"
 
 #: graphs/file_import/parsers/spreadsheet/reader.vala:13
+#: graphs/file_import/parsers/xrdml/reader.vala:15
 msgid "Failed to open File."
 msgstr "打开文件失败。"
 
@@ -2065,23 +2121,52 @@ msgstr "无法从表格“%s”导入数据，未发现数字栏"
 msgid "No data found in table column"
 msgstr "表格栏内未发现数据"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:24
+#: graphs/file_import/parsers/xrdml/main.vala:9
 msgctxt "import-mode"
 msgid "xrdml"
 msgstr "xrdml"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:25
+#: graphs/file_import/parsers/xrdml/main.vala:10
 msgctxt "file-filter"
 msgid "PANalytical XRDML"
 msgstr "PANalytical XRDML"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:69
+#: graphs/file_import/parsers/xrdml/reader.vala:21
+#: graphs/file_import/parsers/xrdml/reader.vala:375
+msgid "The file is not a valid XRDML file"
+msgstr "该文件不是有效的 XRDML 文件"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:34
+#: graphs/file_import/parsers/xrdml/reader.vala:117
+msgid "The file does not contain any data points"
+msgstr "该文件未包含任何数据点"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:148
+msgid "Intensity (cps)"
+msgstr "强度（cps）"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:148
+msgid "Intensity (counts)"
+msgstr "强度（计数）"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:160
+#: graphs/file_import/parsers/xrdml/reader.vala:168
+msgid "The file does not contain any intensities"
+msgstr "该文件未包含任何强度值"
+
+#: graphs/file_import/parsers/xrdml/reader.vala:190
 msgid "No positions found for the scan axis"
 msgstr "未发现用于该扫描坐标轴的位置"
 
-#: graphs/file_import/parsers/xrdml/__init__.py:79
-msgid "Intensity (cps)"
-msgstr "强度 (cps)"
+#: graphs/file_import/parsers/xrdml/ui.vala:34
+#, c-format
+msgid "Scan %d"
+msgstr "扫描 %d"
+
+#: graphs/file_import/parsers/xrdml/ui.vala:67
+#, c-format
+msgid "%d of %d selected"
+msgstr "选中 %d 项共 %d 项"
 
 #: graphs/file_import/parsers/xry/parser.vala:23
 msgctxt "import-mode"
@@ -2129,23 +2214,23 @@ msgctxt "file-filter"
 msgid "ASCII files"
 msgstr "ASCII 文件"
 
-#: graphs/item/data_item.vala:156
+#: graphs/item/data_item.vala:179
 msgid "Dataset"
 msgstr "数据集"
 
-#: graphs/item/fill_item.vala:99
+#: graphs/item/fill_item.vala:117
 msgid "Positive Infinity"
 msgstr "正无穷"
 
-#: graphs/item/fill_item.vala:100
+#: graphs/item/fill_item.vala:118
 msgid "Negative Infinity"
 msgstr "负无穷"
 
-#: graphs/item/fill_item.vala:101
+#: graphs/item/fill_item.vala:119
 msgid "Custom Equation…"
 msgstr "自定义方程式…"
 
-#: graphs/item/fill_item.vala:154
+#: graphs/item/fill_item.vala:172
 msgid "Fill"
 msgstr "填充"
 
@@ -2212,7 +2297,7 @@ msgstr "X 标签"
 msgid "Y Label"
 msgstr "Y 标签"
 
-#: graphs/__init__.py:41
+#: graphs/__init__.py:40
 #, python-brace-format
 msgid "Could not load {font}"
 msgstr "无法加载 {font}"
@@ -2227,6 +2312,10 @@ msgstr ""
 #, c-format
 msgid "Deleted %s"
 msgstr "已删除 %s"
+
+#: graphs/actions.vala:281
+msgid "Copied figure to clipboard"
+msgstr "已将图表复制到剪贴板"
 
 #: graphs/add_equation.vala:97
 msgid "Shared with other equations"
@@ -2327,16 +2416,16 @@ msgstr "RMSE"
 msgid "Fitting Parameters for %s"
 msgstr "%s 的拟合参数"
 
-#: graphs/data.py:340
+#: graphs/data.py:399
 msgid "Failed to load project"
 msgstr "加载工程失败"
 
-#: graphs/data.vala:629
+#: graphs/data.vala:633
 #, c-format
 msgid "Could not parse style %s, defaulting to system style"
 msgstr "无法解析样式 %s，默认加载系统样式"
 
-#: graphs/data.vala:1071
+#: graphs/data.vala:1109
 #, c-format
 msgid "Could not find style %s, defaulting to system style"
 msgstr "无法找到样式 %s，默认加载系统样式"
@@ -2406,31 +2495,35 @@ msgstr "数据项目不支持该操作"
 msgid "{name}: Error performing the operation"
 msgstr "{name}：执行该操作时出错"
 
-#: graphs/operations.py:651
+#: graphs/operations.py:653
 msgid "Data that was outside of the highlighted area has been discarded"
 msgstr "高亮区域之外的数据已被丢弃"
 
-#: graphs/project.py:61
+#: graphs/project.py:60
 msgid "Project file is missing data"
 msgstr "工程文件缺失数据"
 
-#: graphs/project.py:82
+#: graphs/project.py:81
 msgid "Project is from a newer incompatible version of Graphs"
 msgstr "工程来自 Graphs 更新的不兼容版本"
 
-#: graphs/project.py:313
+#: graphs/project.py:243 graphs/project.py:277 graphs/project.py:311
+msgid "Invalid Item encountered."
+msgstr "遇到了无效的项目。"
+
+#: graphs/project.py:334
 msgid "Failed to do legacy migration"
 msgstr "旧版本文件迁移失败"
 
-#: graphs/project.py:315
+#: graphs/project.py:336
 msgid "Failed to parse project file"
 msgstr "解析工程文件失败"
 
-#: graphs/project.py:321
+#: graphs/project.py:342
 msgid "Failed to migrate project"
 msgstr "迁移工程失败"
 
-#: graphs/project.py:327
+#: graphs/project.py:348
 msgid "Failed to validate project"
 msgstr "校验工程失败"
 
@@ -2488,11 +2581,11 @@ msgstr "文件 {file} 不包含名称标签"
 msgid "System"
 msgstr "系统"
 
-#: graphs/utilities.vala:247
+#: graphs/utilities.vala:352
 msgid "All Files"
 msgstr "所有文件"
 
-#: graphs/utilities.vala:289
+#: graphs/utilities.vala:394
 msgid "Document Portal"
 msgstr "文档门户"
 
